@@ -1,0 +1,11 @@
+{
+  "name": "back2basics",
+  "version": "1.0.0",
+  "description": "<!-- Interview Preparation -->\r ## Questions Separated by Company\r https://github.com/xizhengszhang/Leetcode_company_frequency",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
