@@ -1,0 +1,353 @@
+\documentclass{article}
+
+\usepackage[dvisvgm, usenames, dvipsnames]{color}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{etoolbox}
+\usepackage[utf8]{inputenc}
+\usepackage{fourier} 
+\usepackage{array}
+\usepackage{makecell}
+\usepackage{array, caption, tabularx,  ragged2e,  booktabs}
+\usepackage{amsmath} % for the equation* environment
+\usepackage{bookmark}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\algnewcommand{\LineComment}[1]{\State \(\triangleright\) #1}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
+
+\graphicspath{ {./image/} }
+
+\preto{\section}{\clearpageafterfirst}
+\preto{\subsection}{\filbreak}
+\newcommand{\clearpageafterfirst}{%
+  \gdef\clearpageafterfirst{\clearpage}%
+}
+
+\title{Algorithm Mental Model}
+\author{Michael Rao}
+\date{2022-06-28}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\newpage
+
+\section{Behavioral Mental Model}
+
+When asked behavioral questions, try to use examples that can show your soft skills, prioritizing the below qualities.
+
+\begin{itemize}
+	\item Teamwork
+	\item Communication
+		\begin{itemize}
+			\item Listen
+			\item Understanding the audience (e.g. speaking with devs vs business)
+			\item 
+		\end{itemize}
+	\item Self-motivated
+	\item Creativity
+	\item Adaptability
+	\item Open-Mindedness
+	\item Confidence
+\end{itemize}
+
+\subsection{Questions to ask Interviewer}
+
+\subsubsection{Google}
+
+\begin{itemize}
+	\item Can you tell me what you enjoy the most and the least about working at Google?
+	\item How has your role at Google evolved?
+	\item Given the diverse technical stack in Google, how available are trainings if you want to improve your skill sets?
+	\item Knowing that Google has so many in-house technology, do you think that has any hindrance on your growth as a Software Developer?
+\end{itemize}
+
+\section{Algorithm Master List}
+
+Below are a list of Algorithms that can be applied to certain scenarios. It is extremely useful to know these algorithms
+
+\paragraph{}
+
+\noindent\setlength\tabcolsep{4pt}%
+\begin{tabularx}{\linewidth}{|l|*{4}{>{\RaggedRight\arraybackslash}X|}}
+  \hline
+  \textbf{Algorithm} & \textbf{Usage} & \textbf{Description} \\ [0.5ex]
+  \hline
+  \textbf{Monotonic Stack/Queue} & Range Queries in Array & Extremely useful for min and max tracking in Arrays \\
+  \hline
+  \textbf{Manacher} & Finding longest \textbf{Palindrome} & Finds palindrome by assuming current index is middle and expanding both ways \\
+  \hline
+  \textbf{Dijkstra} & Shortest Path in \textbf{Graph} & Greedy BFS Algorithm that works for edges of positive lengths \\
+  \hline
+  \textbf{Bellman-Ford} & Shortest Path in \textbf{Graph} & BFS Algorithm that works for all lengths \\
+  \hline
+  \textbf{Union Find} & Count number of unions in \textbf{Graph} & Algorithm that assumes all nodes as its own tree and perform unions by finding and comparing parent nodes \\
+  \hline
+  \textbf{Kadane} & Finding Maximum Subarrays & Uses Dynamic Programming and Prefix Sum to find maximum sum in subarray \\
+  \hline
+\end{tabularx}
+\vskip1cm
+
+\subsection{Monotonic Stack/Queue}
+
+\paragraph{}
+
+Monotone Stack is a stack that is monotonically increasing/decreasing.
+
+\begin{algorithm}
+\caption{Mono-Increasing Stack. Flip < to > for Mono-Decreasing Stack}
+\begin{algorithmic}
+\For{int i=0;i<array.length();i++}
+\If{!stack.isEmpty() \&\& array[i] < stack.getLast()}
+	\State $stack.pollLast()$
+	\LineComment{Perform calculations specific to problem if necessary}
+\EndIf
+\State $stack.offer(array[i])$ \Comment{Some problems might require index instead}
+\EndFor
+\LineComment{Perform calculations for rest of the Stack}
+\LineComment{Handle any edge cases that might be left over}
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Manacher's Algorithm}
+
+\subsection{Dijkstra's Algorithm}
+
+\subsection{Bellman-Ford's Algorithm}
+
+\paragraph{}
+
+Bellman-Ford's Algorithm is a BFS algorithm meant to calculate shortest path in a Directed Graph and can account for negative edge values.
+
+\begin{algorithm}
+\caption{Bellman-Ford's Algorithm Generic Steps}
+\begin{algorithmic}
+\LineComment{Create \textbf{an array of vertices} that we will refer to as \textbf{price} that holds cost to get that vertex from source vertex}
+\LineComment{Set every vertex in \textbf{price} to infinite, meaning not reachable}
+\LineComment{Set starting vertex in \textbf{price} to 0 since we don't need to pay to start there}
+\LineComment{Loop through every vertex in our Graph (Unless given a limit on how many nodes can be traversed). The incremental here is typically not used}
+\LineComment{Create \textbf{a copy of the price array} which we will refer to here as \textbf{priceCopy} since this array might be modified multiple times in our next iteration}
+\LineComment{Nest our loop by going through the adjacency list. If source vertex is not reachable, we continue; otherwise, check if price[source]+costToDest < priceCopy[dest], if it is, replace priceCopy[dest] with such value}
+\LineComment{Copy \textbf{priceCopy} back to \textbf{price} after each iteration}
+\LineComment{Return result}
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Union Find Algorithm}
+
+\section{Generic Algorithmic Identification Table}
+
+One of the most important things in solving problems is being able to identify what type of problem it is. Below are some general potential algorithms you would want to consider when given a criteria. Note that they might not always work out immediately but it will get you thinking about the solution quicker. 
+
+\paragraph{}
+
+\noindent\setlength\tabcolsep{4pt}%
+\begin{tabularx}{\linewidth}{|l|*{4}{>{\RaggedRight\arraybackslash}X|}}
+  \hline
+  \textbf{Keywords/Criteria} & \textbf{Potential Algorithm} & \textbf{Sample Problem} \\ [0.5ex]
+  \hline
+  Frequency/Difference/* & Pair, Map, Set & Auxiliary Data Structures, always consider its usage \\
+  \hline
+  Sorted List/Array & Binary Search & Find square root of n \\
+  \hline
+  Min/Max/Kth value & Max/Min Heap & Find Kth smallest number in unsorted list \\
+  \hline
+  Min/Max/Longest Subarray & Sliding Window & Longest Subsequence w/o repeating character \\
+  \hline
+  Return \textbf{all} solutions that .. & Backtracking & Find all Letter Combination of given phone number \\
+  \hline
+\end{tabularx}
+\vskip1cm
+
+Idea of Prefix Sum is similar to Dynamic Programming where we want to cache what we have already calculated in order to get the next value.
+
+\section{Sliding Window}
+
+\subsection{Identifying Sliding Window Problems}
+
+\subsection{Sliding Window Template}
+
+\subsection{Practice Problems}
+
+\subsubsection{Buying and Selling Stock}
+
+\section{Binary Trees}
+
+\subsection{Identifying Binary Tree Problems}
+
+Identifying Binary Tree Problems is trivial since it is always immediately given to you as a Binary Tree.
+
+\subsection{Binary Tree Template}
+
+One template type is as below:
+
+\begin{enumerate}
+	\item Consider all possible traversals for Trees
+		\begin{itemize}
+			\item \textbf{DFS}
+			\item \textbf{BFS}
+			\item \textbf{Preorder Traversal} (Root -> Left SubTree -> Right SubTree)
+			\item \textbf{Inorder Traversal} (Left SubTree -> Root -> Right SubTree)
+				\begin{itemize}
+					\item Inorder on BST always produce an ascending sorted list
+				\end{itemize}
+			\item \textbf{Postorder Traversal} (Left SubTree -> Right SubTree -> Root)
+		\end{itemize}
+	\item Find one or more base cases
+	\item Perform validation/calculation on current node if necessary
+	\item Call the same function on the left subtree
+	\item Call the same function on the right subtree
+	\item Join the results from steps 2 and 3
+\end{enumerate}
+
+\section{Greedy}
+
+Greedy Algorithm is a myopic algorithm that processes the input one piece at a time with no apparent look ahead. In layman's terms, it is an algorithm that doesn't look ahead and tries maximize the immediate situation as much as possible. 
+
+\subsection{Identifying Dynamic Programming Problems}
+
+\subsection{Greedy Template}
+
+\begin{enumerate}
+	\item Use a simple rule to select a request \(i\) (e.g. pick smallest values, shortest paths, etc)
+	\item Reject all requests incompatible with \(i\)
+	\item Repeat until all requests are processed
+\end{enumerate}
+
+\subsection{Interval Scheduling}
+
+Given a set amount of resources (time in this case) and requests where the requests have a start time of \(s(i)\) and end time of \(f(i)\). We want to maximize the \textbf{number of requests fulfilled}.
+
+\subsubsection{Greedy Interval Scheduling Template}
+
+Following the Greedy Template, we first look for a \textbf{simple rule} to follow. 
+
+\begin{enumerate}
+	\item \textbf{rule:} Scan for earliest finish time (e.g. \(min(f(i)\) for all i where i is request)
+	\item Reject all requests incompatible with \(i\)
+	\item Repeat until all requests are processed
+\end{enumerate}
+
+\paragraph{Claim: Given a list of intervals L, greedy algorithm with earliest finish time product \(k^*\) intervals where \(k^*\) is maximum}
+
+\begin{itemize}
+	\item Induction on \(k^*\):
+		\begin{itemize}
+			\item \textbf{Base case}: \(k^*=1\), any interval works
+		\end{itemize}
+\end{itemize}
+
+\subsubsection{Practice Problems}
+
+\paragraph{Maximum Subarray}
+\paragraph{Jump Game}
+\paragraph{Jump Game II}
+\paragraph{Gas Station / University Career Fair}
+
+\section{Dynamic Programming}
+
+\subsection{Identifying Dynamic Programming Problems}
+
+\paragraph{}
+
+Dynamic Programming is the algorithmic model of solving a problem consisting of overlapping sub-problems by means of capturing the solutions of duplicated sub-problems by either \textbf{Memoization} or \textbf{Tabulation}
+
+\subsection{Memoization}
+
+\subsection{Memoization Template}
+
+\begin{enumerate}
+	\item Work out an initial solution
+		\begin{enumerate}
+			\item Visualize the problem by drawing out a Decision Tree
+			\item Solve trivial base cases
+			\item Solve rest of the problem using recursion
+		\end{enumerate}
+	\item Make the initial solution more efficient
+		\begin{enumerate}
+			\item Add a Memo Object, typically a O(1) insert and accessor (e.g. Array, Map)
+			\item Add a base case for the memo values
+			\item Store return values into the memo object
+			\item Add a return using the memo object
+		\end{enumerate}
+\end{enumerate}
+
+\subsubsection{Fibonacci}
+
+\subsubsection{Grid Traveler}
+
+\subsection{Tabulation}
+
+\subsection{Tabulation Template}
+
+\begin{enumerate}
+	\item Visualize the problem as a 1D or 2D table
+	\item Initialize the table with default values
+	\item Initialize the base cases of the table
+	\item Iterate and fill out rest of the table 
+\end{enumerate}
+
+
+\section{BackTracking}
+
+\subsection{Identifying Backtracking Problems}
+
+\subsection{Backtracking Template}
+
+\textbf{Backtracking} is the algorithm used to generate every possibility in a given scenario. 
+
+\begin{enumerate}
+	\item Draw out decisions we can performs as a Decision Tree
+		\begin{itemize}
+			\item e.g. Choose or not Choose to use arr[i]
+		\end{itemize}
+	\item Find out the failure paths if any (e.g. N-Queens)
+\end{enumerate}
+
+\section{String Algorithm}
+
+\subsection{Boyer-Moore String Matching}
+
+\subsection{Aho-Corasick String Searching}
+
+\end{document}
