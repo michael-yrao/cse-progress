@@ -14,7 +14,7 @@ https://github.com/xizhengszhang/Leetcode_company_frequency
   - Graph
   - Trie
 - **documentation/leetcode** section contains all that is needed to pass most interview questions
-  - Naming convention of the files: **${PROBLEM_NAME}_${LEETCODE_NUMBER}_${DIFFICULTY}_${TYPE_OF_PROBLEM}**
+  - Naming convention of the files: ${PROBLEM_NAME}\_${LEETCODE_NUMBER}\_${DIFFICULTY}\_${TYPE_OF_PROBLEM}
   - Visit https://neetcode.io/
   - Start with Blind 75
   - Watch the video explanations if you cannot grasp it first time. It's ok to not get everything right first time, that's why we prep :)
