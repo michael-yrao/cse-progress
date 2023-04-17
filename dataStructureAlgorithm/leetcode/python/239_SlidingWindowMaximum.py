@@ -25,17 +25,17 @@ class Solution:
         for i in range(0,k,1):
             heapq.heappush(minHeap, (nums[i] * -1, i))
 
-        l,r=0,k
+        l,r=0,k-1
         while r < len(nums):
-            result.append(minHeap[0][1] * -1)
+            result.append(minHeap[0][0] * -1)
             # Just realized this solution doesn't work in Python
             # Since we can't just remove an element from the Heap like we can in Java
             # Our workaround here can be as bad as O(n) which totals to a worst case of O(n^2)
-            minHeap.remove(nums[l] * -1)
+            minHeap.remove((nums[l]*-1,l))
             heapq.heapify(minHeap)
-            minHeap.heappush(minHeap,(nums[r] * -1, r))
             l+=1
             r+=1
+            if r < len(nums): heapq.heappush(minHeap,(nums[r] * -1, r))
 
         return result
 
