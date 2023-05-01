@@ -15,5 +15,8 @@ class Solution:
         return True
     
     def isPalindromePythonMagic(self, s: str) -> bool:
+        # Trim out anything in the string that isn't alphanumeric
+        # then set the string to all lowercase since problem is not case-sensitive
         alnum = ''.join([i for i in s if i.isalnum()]).lower()
+        # Return whether or not the string is the same when reversed
         return alnum == alnum[::-1]
