@@ -2,6 +2,7 @@ from typing import List
 
 class Solution:
     def containsNearbyDuplicate(self, nums: List[int], k: int) -> bool:
+        # ! This Algorithm is likely to be useful for Progressive Overflow
         # * k is the maximum distance between i and j
         # * So first thought is a map of value to indices
         # * Then we can go through the keys where size of values is >= 2 and check from there
