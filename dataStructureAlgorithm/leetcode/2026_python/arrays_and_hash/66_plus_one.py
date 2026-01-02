@@ -46,30 +46,29 @@ import unittest
 
 class Solution:
     def plusOneSolution1(self, digits: List[int]) -> List[int]:
-        # loop through once and get the number
-        # loop through a second time to return the list
+        # iterate from last number in list
+        # if digit is 9, set to 0 and continue
+        # otherwise, add 1 and return
+        # if we are out of loop without returning, it means it was all 9s
+        # thus we add 1 in front of list
 
-        largeNumber = 0
-        returnList = []
+        # range(start, end, increment)
+        for i in range(len(digits)-1,-1,-1):
+            if digits[i] != 9:
+                digits[i] += 1
+                return digits
+            digits[i] = 0
 
-        for index, number in reversed(digits):
-            largeNumber += number*(10**index)
-        
-        largeNumberAsString = str(largeNumber+1)
+        return [1] + digits
 
-        for i in range(len(largeNumberAsString)):
-            returnList.append(largeNumberAsString[i])
-        
-        return returnList
-    
 class UnitTest(unittest.TestCase):
     test1 = [4,3,2,1]
     output1 = [4,3,2,2]
     test2 = [1,2,3]
     output2 = [1,2,4]
 
-    def plusOneTest1(self):
+    def test1PlusOneSolution1(self):
         result = Solution().plusOneSolution1(self.test1)
         self.assertEqual(self.output1, result)
-
+        
 unittest.main()
