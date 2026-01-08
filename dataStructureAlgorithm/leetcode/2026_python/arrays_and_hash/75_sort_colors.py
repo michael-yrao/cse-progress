@@ -31,8 +31,8 @@ from typing import List
 
 
 class Solution:
-    def sortColorsCountingSort(self, nums: List[int]) -> None:
-        # since there's only 3 colors, we can just do count
+    def sortColorsBucketSort(self, nums: List[int]) -> None:
+        # since there's only 3 colors, we can just do count/bucket sort
         # and then loop through and replace
         countMap = {}
         for num in nums:
@@ -49,3 +49,28 @@ class Solution:
         """
         Do not return anything, modify nums in-place instead.
         """
+        # quicksort partition
+        # use pointers to swap and increment
+        # use a left pointer and a increment pointer to swap whenever it finds a 0
+        # use a right pointer and the same increment pointer to swap whenever it finds a 2
+        # left and right pointers are there to help faciliate where to put the values, 
+        # thus increment/decrement when swapping. only increment increment counter when left moves
+        # reason we are doing this is to fulfill the one pass requirement
+
+        left, right = 0, len(nums) - 1
+        increment = 0
+
+        def swap(i,j):
+            tmp = nums[i]
+            nums[i] = nums[j]
+            nums[j] = tmp
+            
+        while increment <= right:
+            if nums[increment] == 0:
+                swap(left, increment)
+                left+=1
+            elif nums[increment] == 2:
+                swap(right, increment)
+                right-=1
+                increment-=1
+            increment+=1

@@ -30,14 +30,18 @@ class Solution:
     def sortArrayHeapSort(self, nums: List[int]) -> List[int]:
         # insert data into a min heap
         # then pop one by one into the return list
+        # tree structure given index k:
+        # parent = k/2
+        # left child = 2k + 1
+        # right child = 2k + 2
         return
     
     def sortArrayBSTSort(self, nums: List[int]) -> List[int]:
         return
     
     def sortArrayQuickSort(self, nums: List[int]) -> List[int]:
+
         return
-    
     
     def sortArrayMergeSort(self, nums: List[int]) -> List[int]:
         # recursive divide and conquer
