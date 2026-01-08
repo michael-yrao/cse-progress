@@ -30,6 +30,7 @@ Follow up: If you have figured out the O(n) solution, try coding another solutio
 
 """
 
+import math
 from typing import List
 
 class Solution:
@@ -52,4 +53,26 @@ class Solution:
             # thus we start a new subarray with n only
             currentSum = max(n, currentSum + n)
             maxSum = max(maxSum, currentSum)
+        return maxSum
+    
+    def maxSubarrayPrefixSum(self, nums: List[int]) -> int:
+        # prefix sum solution
+        # we can build a prefix sum list
+        # sum of subarray = pre[j] - pre[i]
+        # keep track of a maxSum
+        # and also a min pre since we need to do pre[j] - pre[i] to get sum
+
+        maxSum = -math.inf
+        preMin = 0
+
+        pre = []
+        pre.append(nums[0])
+
+        for i in range(1,len(nums)):
+            pre.append(pre[i-1]+nums[i])
+
+        for prefixSum in pre:
+            maxSum = max(maxSum, prefixSum - preMin)
+            preMin = min(preMin, prefixSum)
+
         return maxSum
