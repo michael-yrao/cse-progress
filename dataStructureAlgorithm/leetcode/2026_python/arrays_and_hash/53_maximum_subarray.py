@@ -76,3 +76,6 @@ class Solution:
             preMin = min(preMin, prefixSum)
 
         return maxSum
+    
+    def maxSubarrayDivideNConquer(self, nums: List[int]) -> int:
+        return

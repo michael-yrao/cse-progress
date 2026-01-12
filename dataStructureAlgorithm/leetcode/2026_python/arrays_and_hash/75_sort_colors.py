@@ -49,7 +49,7 @@ class Solution:
         """
         Do not return anything, modify nums in-place instead.
         """
-        # quicksort partition
+        # Dutch National Flag Algorithm
         # use pointers to swap and increment
         # use a left pointer and a increment pointer to swap whenever it finds a 0
         # use a right pointer and the same increment pointer to swap whenever it finds a 2
@@ -64,7 +64,7 @@ class Solution:
             tmp = nums[i]
             nums[i] = nums[j]
             nums[j] = tmp
-            
+
         while increment <= right:
             if nums[increment] == 0:
                 swap(left, increment)
