@@ -50,6 +50,13 @@ class Solution:
         Do not return anything, modify nums in-place instead.
         """
         # Dutch National Flag Algorithm
+        #   1. 3 pointers, left, right, increment
+        #   2. left to keep track of 0s, right to keep track of 2s
+        #   3. left starts at 0, right starts at len(nums) - 1
+        #   4. increment pointer to increment through the array
+        #   5. if nums[increment] = 0, swap(left++,increment++)
+        #   6. if nums[increment] = 1, continue loop
+        #   7. if nums[increment] = 2, swap(right--,increment++) 
         # use pointers to swap and increment
         # use a left pointer and a increment pointer to swap whenever it finds a 0
         # use a right pointer and the same increment pointer to swap whenever it finds a 2
