@@ -62,16 +62,21 @@ class Solution:
         # second pointer to keep track of return array
         # where everything before it is valid
 
-        ptr = 1
+        # if 2 or less elements, we already satisfy the solution
+        # thus we can just return
+        if len(nums) < 3:
+            return len(nums)
 
-        for i in range(1,len(nums)):
+        ptr = 2
+
+        for i in range(2,len(nums)):
             # moving ptr means we are adding element to the result
             # thus we move ptr if nums[i] should go into result
             # if nums[i] != nums[ptr-2], it means we can add it
             # ptr-2 since that satisfies the criteria of max of 2
-            if ptr<2 or nums[i] != nums[ptr-2]:
+            if nums[i] != nums[ptr-2]:
                 nums[ptr] = nums[i]
                 ptr+=1
             # if nums[i] == nums[ptr-2], we don't want it in result
             # thus we keep ptr where it is
-            return ptr
+        return ptr
