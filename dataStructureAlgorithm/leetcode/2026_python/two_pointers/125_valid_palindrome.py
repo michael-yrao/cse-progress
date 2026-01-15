@@ -41,10 +41,6 @@ class Solution:
         regex = re.compile('[^a-zA-Z]')
         cleanString = regex.sub('', s).lower()
         
-        # 0 length is palindrome
-        # 1 length is not palindrome
-        if len(cleanString) == 1: return False
-        
         l,r=0,len(cleanString)-1
         while r>=l:
             if cleanString[l] != cleanString[r]:
