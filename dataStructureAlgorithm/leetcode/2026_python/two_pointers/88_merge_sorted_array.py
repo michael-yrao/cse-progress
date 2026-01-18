@@ -45,7 +45,6 @@ class Solution:
         """
         Do not return anything, modify nums1 in-place instead.
         """
-        # since we know 
         # start sorting and merging from the end
         nums1Ptr, nums2Ptr = m - 1, n - 1
 

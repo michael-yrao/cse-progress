@@ -31,8 +31,8 @@ class Solution:
     def validPalindrome(self, s: str) -> bool:
         l, r = 0, len(s) - 1
         while l < r:
-            # if not equal, check substr of each side
-            # but we have to consider 
+            # if not equal, check string if we skipped
+            # either the left side OR the right side
             if s[l] != s[r]:
                 # left skip
                 leftSkip = s[l+1:r+1]
