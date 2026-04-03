@@ -84,7 +84,7 @@ class Solution:
         # if nums[i] != val, replace nums[counter] = nums[i], increment counter
 
         counter = 0
-        for i,value in enumerate(nums):
+        for value in enumerate(nums):
             if value != val:
                 nums[counter] = value
                 counter+=1
