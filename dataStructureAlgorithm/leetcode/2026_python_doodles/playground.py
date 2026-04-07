@@ -206,3 +206,133 @@ class Playground:
                     swap(left,right)
                     left+=1
                 right+=1
+    class MergeSortedArray_20260403:
+        def merge(self, nums1: List[int], m: int, nums2: List[int], n: int) -> None:
+            """
+            Do not return anything, modify nums1 in-place instead.
+            """
+            # sort from the end since we known num1 length covers entirety of m + n
+            # three pointers, leftIterator and rightIterator tracks nums1 and nums2
+            # arrIterator tracks position to place the value
+            arrIterator = m + n - 1
+            leftIterator = m - 1
+            rightIterator = n - 1
+            # while we are in bound for both
+            while leftIterator >= 0 and rightIterator >= 0:
+                if nums1[leftIterator] > nums2[rightIterator]:
+                    nums1[arrIterator] = nums1[leftIterator]
+                    leftIterator-=1
+                else:
+                    nums1[arrIterator] = nums2[rightIterator]
+                    rightIterator-=1
+                arrIterator-=1
+            # now we cover the rest of the array
+            # only one of these loops will run
+            while leftIterator >= 0:
+                nums1[arrIterator] = nums1[leftIterator]
+                leftIterator-=1
+                arrIterator-=1
+            while rightIterator >= 0:
+                nums1[arrIterator] = nums2[rightIterator]
+                rightIterator-=1
+                arrIterator-=1
+    class RotateArray_20260404:
+        def rotate(self, nums: List[int], k: int) -> None:
+            """
+            Do not return anything, modify nums in-place instead.
+            """
+            # rotation algorithm
+            # reverse array
+            # reverse first k elements, exclusive of k. so k-1
+            # reverse len(nums)-k elements
+
+            def reverseArray(l,r):
+                def swap(l,r):
+                    temp = nums[l]
+                    nums[l] = nums[r]
+                    nums[r] = temp
+                while r > l:
+                    swap(l,r)
+                    l+=1
+                    r-=1
+            # edge case when k is larger than length
+            k=k%len(nums)
+            reverseArray(0,len(nums)-1)
+            reverseArray(0,k-1)
+            reverseArray(k,len(nums)-1)
+    class ValidPalindromeII_20260405:
+        def validPalindrome(self, s: str) -> bool:
+        # main scenarios that come to mind are these
+        # abca -> True
+        # abcbda -> True
+        # two pointer but do a skip ahead check for both sides
+
+            def skippable(l,r):
+                while l < r:
+                    if s[l] == s[r]:
+                        # continue
+                        l+=1
+                        r-=1
+                    else:
+                        return False
+                return True
+
+            l, r = 0, len(s)-1
+            while l < r:
+                if s[l] == s[r]:
+                    # continue
+                    l+=1
+                    r-=1
+                else:
+                    # otherwise, we check if we can skip either sides
+                    return skippable(l+1, r) or skippable(l,r-1)
+            return True
+    class SubarraySumEqualsK_20260405:
+        def subarraySum(self, nums: List[int], k: int) -> int:
+            # first thing that comes to mind is prefixSum
+            # property of prefixSum
+            # prefixSum[j] - prefixSum[i] = subarraySum from i to j
+            # so we can say k is subarraySum from i to j
+            # and we want to find all occurences of it
+            # so we can do something like two sum where we look for the diff in a hashmap
+            # we will calculate prefixSum and put it in a hashmap instead of an array
+            # since we are doing that, we need a runningSum variable to keep track of prefixSum
+
+            prefixMap = {}
+            # we need to add 0 to map first to account for scenario where runningSum = k
+            prefixMap[0] = 1
+            runningSum = 0
+            totalCount = 0
+            for n in nums:
+                # increment our runningSum
+                runningSum+=n
+                # check if this k-runningSum already exists
+                totalCount+=prefixMap.get(runningSum - k,0)
+                # add new runningSum to our prefixSum map
+                prefixMap[runningSum] = 1 + prefixMap.get(runningSum,0)
+            return totalCount
+    class ThreeSum_20260407:
+        def threeSum(self, nums: list[int]) -> list[list[int]]:
+            # sort the array
+            # use sorted 2 sum method
+            # a + b + c = 0
+            # loop on a, two sum sorted method to find b and c
+            threeSumSet = set()
+            nums.sort()
+            for i in range(len(nums)):
+                # two sum sorted
+                j = i + 1
+                k = len(nums) - 1
+                while j < k:
+                    if nums[i] + nums[j] + nums[k] == 0:
+                        solution = (nums[i],nums[j],nums[k])
+                        threeSumSet.add(solution)
+                        j+=1
+                        k-=1
+                    elif nums[i] + nums[j] + nums[k] > 0:
+                        k-=1
+                    else:
+                        j+=1
+            return list(threeSumSet)
+
+                

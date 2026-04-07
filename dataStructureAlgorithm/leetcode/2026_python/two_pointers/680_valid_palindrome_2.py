@@ -43,3 +43,30 @@ class Solution:
             l+=1
             r-=1
         return True
+    
+    def validPalindromeVariation(self, s: str) -> bool:
+        # main scenarios that come to mind are these
+        # abca -> True
+        # abcbda -> True
+        # two pointer but do a skip ahead check for both sides
+
+        def skippable(l,r):
+            while l < r:
+                if s[l] == s[r]:
+                    # continue
+                    l+=1
+                    r-=1
+                else:
+                    return False
+            return True
+
+        l, r = 0, len(s)-1
+        while l < r:
+            if s[l] == s[r]:
+                # continue
+                l+=1
+                r-=1
+            else:
+                # otherwise, we check if we can skip either sides
+                return skippable(l+1, r) or skippable(l,r-1)
+        return True
