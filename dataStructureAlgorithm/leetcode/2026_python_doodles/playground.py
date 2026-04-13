@@ -1,3 +1,4 @@
+import heapq
 import math
 from typing import List
 
@@ -334,5 +335,47 @@ class Playground:
                     else:
                         j+=1
             return list(threeSumSet)
+    class TopKFrequentElements_20260409:
+        def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+            # frequency, so we should do a map
+            # then we can keep a min heap of size k
+            # return said heap's values
+            freqMap = {}
+            for n in nums:
+                freqMap[n] = 1 + freqMap.get(n,0)
+            
+            minHeap = []
 
-                
+            for key,value in freqMap.items():
+                # need to do value, key since minHeap will compare on first value in tuple
+                heapq.heappush(minHeap, (value, key))
+                while len(minHeap) > k:
+                    heapq.heappop(minHeap)
+            
+            result = []
+            for freq, key in minHeap:
+                result.append(key)
+            return result
+    class RemoveDuplicatesFromSortedArrayII:
+        def removeDuplicates(self, nums: List[int]) -> int:
+            # O(1) space means we need multiple pointers
+            # First 2 elements of the array are always valid
+            # Thus we start looking at index 2
+            # we will use l to keep track of index to replace
+            # r to traverse through the array
+            # [1,2,2,2,3,3,4]
+            # looking at the above example, we should always check nums[r] == nums[l-2]
+            # any equality means it is invalid and needs to be replaced
+
+            l = r = 2
+
+            while r < len(nums):
+                # everything before l = good
+                # everything at l = replace
+                # not equal means we can replace and move l up
+                if nums[r] != nums[l-2]:
+                    nums[l] = nums[r]
+                    l+=1
+                # equal means we need to keep l in place to perform replacements
+                r+=1
+            return l
