@@ -420,3 +420,71 @@ class Playground:
                 result = binarySearch(k,len(nums)-1)
             
             return result
+    class ProductOfArrayExceptSelf:
+        def productExceptSelf(self, nums: List[int]) -> List[int]:
+            # prefix and suffix product arrays
+            # then loop through and just do result[i] = prefix[i] * suffix[i]
+            # [1,2,3,4]
+            # prefix: [1,1,2,6]
+            # suffix: [24,12,4,1]
+            # result = [24,12,8,6]
+
+            prefix = [1] * len(nums)
+            suffix = [1] * len(nums)
+            result = [1] * len(nums)
+
+            for i in range(1,len(nums)):
+                prefix[i] = prefix[i-1] * nums[i-1]
+            
+            for i in range(len(nums)-2,-1,-1):
+                suffix[i] = suffix[i+1] * nums[i+1]
+
+            for i in range(len(nums)):
+                result[i] = prefix[i] * suffix[i]
+
+            return result
+    class LongestConsecutiveSequence:
+        def longestConsecutiveV1(self, nums: List[int]) -> int:
+            if not nums:
+                return 0
+            
+            num_set = set(nums)
+            longest = 0
+            
+            for num in num_set:
+                # Check if this is the start of a sequence
+                if num - 1 not in num_set:
+                    current = num
+                    count = 1
+                    
+                    # Keep extending the sequence
+                    while current + 1 in num_set:
+                        current += 1
+                        count += 1
+                    
+                    # Update the longest sequence found
+                    longest = max(longest, count)
+            
+            return longest
+        def longestConsecutive(self, nums: List[int]) -> int:
+            # we need to know if current value is start of a sequence
+            # so we should have a map? or a set?, key is the start sequence, value is length?
+            # we don't actually need to keep track of all lengths
+            # we can just assume we are at the start at each index so a set will suffice
+            # go through each value, loop to see if value - 1 exists
+
+            if not nums:
+                return 0
+            consecutiveSet = set(nums)
+            longest = 0
+
+            for num in consecutiveSet:
+                if (num - 1) not in consecutiveSet:
+                    # if starting point, length is 1
+                    length = 1
+                    # since we are starting point, let's check num + 1 until it's not in the set
+                    while (num + length) in consecutiveSet:
+                        length += 1
+                    longest = max(longest,length)
+
+            return longest
