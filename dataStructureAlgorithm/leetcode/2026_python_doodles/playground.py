@@ -1,3 +1,4 @@
+from collections import defaultdict
 import heapq
 import math
 from typing import List
@@ -444,28 +445,6 @@ class Playground:
 
             return result
     class LongestConsecutiveSequence:
-        def longestConsecutiveV1(self, nums: List[int]) -> int:
-            if not nums:
-                return 0
-            
-            num_set = set(nums)
-            longest = 0
-            
-            for num in num_set:
-                # Check if this is the start of a sequence
-                if num - 1 not in num_set:
-                    current = num
-                    count = 1
-                    
-                    # Keep extending the sequence
-                    while current + 1 in num_set:
-                        current += 1
-                        count += 1
-                    
-                    # Update the longest sequence found
-                    longest = max(longest, count)
-            
-            return longest
         def longestConsecutive(self, nums: List[int]) -> int:
             # we need to know if current value is start of a sequence
             # so we should have a map? or a set?, key is the start sequence, value is length?
@@ -488,3 +467,55 @@ class Playground:
                     longest = max(longest,length)
 
             return longest
+    class ContainsDuplicatesII:
+        def containsNearbyDuplicate(self, nums: List[int], k: int) -> bool:
+            # this is like a variation of sliding window / two pointers
+            # keep two pointers and ensure abs(i - j) <= k
+            # initial attempt, we tried just having 2 pointers but that would not work
+            # since we are looking for ANY duplicates, so we need to use a set to keep track of all values we do see
+            seen = set()
+            l = r = 0
+
+            while r < len(nums):
+                while abs(l - r) > k:
+                    seen.remove(nums[l])
+                    l+=1
+                if nums[r] in seen:
+                    return True
+                seen.add(nums[r])
+                r+=1
+            
+            return False
+    class MajorityElementII:
+        def majorityElement(self, nums: List[int]) -> List[int]:
+            # there's at most 2 values that can appear n/3 times or more
+            # how do you apply boyer-moore majority voting algorithm here?
+            # so idea is to be greedy and just have a map of 2 values -> frequency
+            # every time we have a 3rd value in the map, decrement every value in the map
+            # return map.keys()
+
+            freqCount = defaultdict(int)
+
+            for n in nums:
+                # increment times we have seen this value
+                freqCount[n] += 1
+                # check if we have more than 2 values in the map
+                if len(freqCount) <= 2:
+                    continue
+                else:
+                    # if we have more than 2, decrement all
+                    for key, value in freqCount.items():
+                        freqCount[key] -= 1
+                        # we shouldn't pop while we are looping through the map
+                        # thus use another for loop
+                    for n in list(freqCount):
+                        if freqCount[n] == 0:
+                            freqCount.pop(n)
+            
+            result = []
+
+            for n in freqCount:
+                if nums.count(n) > len(nums)//3:
+                    result.append(n)
+            
+            return result
