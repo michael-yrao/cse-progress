@@ -61,7 +61,7 @@ class Playground:
                 if value > majorityValuePair[1]:
                     majorityValuePair = (key, value)
             
-            return majorityValuePair[0]
+            return majorityValuePair[0] # type: ignore
         
         def majorityElementVariation(self, nums: List[int]) -> int:
             # a slightly cleaner approach to the straight forward method 
@@ -71,7 +71,7 @@ class Playground:
                 freqMap[num] = 1 + freqMap.get(num,0)
                 if freqMap[num] > majorityValuePair[1]:
                     majorityValuePair = num, freqMap[num]
-            return majorityValuePair[0]
+            return majorityValuePair[0] # type: ignore
 
         def majorityElementBoyerMoore(self, nums: List[int]) -> int:
             # Boyer Moore assumes there is always a majority element in the array
@@ -153,7 +153,8 @@ class Playground:
             for curSum in prefixSum:
                 maxSum = max(maxSum, curSum - minPrefixSum)
                 minPrefixSum = min(minPrefixSum, curSum)
-            return maxSum
+            return maxSum # type: ignore
+        
         def maxSubArrayKadane(self, nums: List[int]) -> int:
             # constant space dynamic sliding window algorithm
             # we can be greedy and not care for negative sums
@@ -547,3 +548,21 @@ class Playground:
                     totalWater += currentWater
 
                 return totalWater
+    class BestTimeToBuyAndSellStockII:
+        def maxProfit(self, prices: List[int]) -> int:
+            # be greedy and just sell every time we have a profit
+            # e.g. 2 pointer
+            # if prices[r] - prices[l] > 0, "sell" aka, move l and increment profit
+            # move l to r
+            totalProfit = 0
+            l, r = 0, 0
+            while r < len(prices):
+                if prices[l] < prices[r]:
+                    totalProfit += (prices[r] - prices[l])
+                    # we increment 1 here because we "sold"
+                    l+=1
+                else:
+                    # sell is lower than buy, so let's move l to r
+                    l=r
+                r+=1
+            return totalProfit
