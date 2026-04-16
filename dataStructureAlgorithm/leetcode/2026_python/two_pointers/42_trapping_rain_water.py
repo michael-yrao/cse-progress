@@ -84,11 +84,15 @@ class Solution:
             if leftMax < rightMax:
                 # boundaries don't trap water, so we increment first
                 l += 1
+                # this gets us the potential water we can store
                 leftMax = max(leftMax, height[l])
+                # add (potential water - height[i]) to result
                 res += leftMax - height[l]
             else:
                 # boundaries don't trap water, so we decrement first
                 r -= 1
+                # this gets us the potential water we can store
                 rightMax = max(rightMax, height[r])
+                # add (potential water - height[i]) to result
                 res += rightMax - height[r]
         return res
