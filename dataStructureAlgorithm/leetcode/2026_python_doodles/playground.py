@@ -519,3 +519,31 @@ class Playground:
                     result.append(n)
             
             return result
+    class TrappingRainWater:
+        class Solution:
+            def trap(self, height: List[int]) -> int:
+                # knowing water at each index = min(leftMax, rightMax) - height[i]
+                # we need to keep track of leftMax and rightMax of each index
+                # leftMax and rightMax stands for the walls for which this current index
+                # can trap water
+
+                # height   = [0,1,0,2,1,0,1,3,2,1,2,1]
+                # leftMax  = [0,0,1,1,2,2,2,2,3,3,3,3]
+                # rightMax = [3,3,3,3,3,3,3,2,2,2,1,0]
+                # water    = [0,0,1,0,1,2,1,0,0,1,0,0]
+
+                leftMax = [0] * len(height)
+                rightMax = [0] * len(height)
+                totalWater = 0
+
+                for i in range(1,len(height)):
+                    leftMax[i] = max(leftMax[i-1], height[i-1])
+                
+                for i in range(len(height)-2,-1,-1):
+                    rightMax[i] = max(rightMax[i+1],height[i+1])
+
+                for i in range(len(height)):
+                    currentWater = max(0, min(leftMax[i],rightMax[i])-height[i])
+                    totalWater += currentWater
+
+                return totalWater
