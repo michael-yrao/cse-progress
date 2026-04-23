@@ -18,13 +18,13 @@
 |-----------|-------|
 | **Loop** | `while l <= r` |
 | **Midpoint** | `mid = (l + r) // 2` |
-| **Return** | `l` at exit or when found |
+| **Return** | `mid` at exit or when found |
 
 **Update Rules**:
 ```python
-if matrix[mid] == target:
+if nums[mid] == target:
     return mid  # Found exact match
-elif matrix[mid] > target:
+elif nums[mid] > target:
     r = mid - 1  # Search left
 else:
     l = mid + 1  # Search right
@@ -75,6 +75,82 @@ else:  # Predicate is false
 ```
 
 **Example**: [LeetCode 74 - Search a 2D Matrix](https://leetcode.com/problems/search-a-2d-matrix/)
+
+---
+
+## Understanding `is_valid(mid)`
+
+### What is it?
+
+`is_valid(mid)` is **not a literal function**—it's a placeholder representing the **monotonic predicate** specific to your problem.
+
+It answers: *"Does `mid` satisfy the problem's constraint?"*
+
+### Why it matters
+
+For binary search to work on boundaries, you need a **monotonic** condition:
+- **Min Boundary**: `F F F T T T` ← Find first `T`
+- **Max Boundary**: `T T T F F F` ← Find last `T`
+
+### Real Examples
+
+#### Example 1: Koko Eating Bananas (Max Boundary)
+```python
+# Problem: Find minimum speed k such that Koko finishes within h hours
+# is_valid(mid) = "Can Koko finish at speed mid?"
+
+def can_finish(piles, mid, h):
+    hours = sum(math.ceil(pile / mid) for pile in piles)
+    return hours <= h  # This is is_valid(mid)
+
+while l < r:
+    mid = (l + r + 1) // 2
+    if can_finish(piles, mid, h):  # is_valid(mid)
+        l = mid  # Keep mid, search for smaller speeds
+    else:
+        r = mid - 1  # Too slow, search for faster speeds
+```
+
+#### Example 2: LeetCode 74 - Search 2D Matrix (Max Boundary)
+```python
+# Problem: Find which row contains the target
+# is_valid(mid) = "Is the first element of row mid <= target?"
+
+while l < r:
+    mid = (l + r + 1) // 2
+    if matrix[mid][0] <= target:  # is_valid(mid)
+        l = mid  # Keep mid, search later rows
+    else:
+        r = mid - 1  # Row too large, search earlier rows
+```
+
+#### Example 3: LeetCode 34 - Find First Position (Min Boundary)
+```python
+# Problem: Find the first index where nums[mid] >= target
+# is_valid(mid) = "Is nums[mid] >= target?"
+
+while l < r:
+    mid = (l + r) // 2
+    if nums[mid] >= target:  # is_valid(mid)
+        r = mid  # Keep mid, search earlier positions
+    else:
+        l = mid + 1  # Too small, search right
+```
+
+### Pattern Recognition
+
+To identify `is_valid(mid)` in a problem:
+
+1. **Read the problem goal** (find min/max of X that satisfies condition Y)
+2. **Ask: "Does this candidate value work?"**
+3. **That question is your `is_valid(mid)` condition**
+
+| Problem Type | is_valid Question |
+|--------------|-------------------|
+| Koko Eating Bananas | Can Koko finish at this speed? |
+| Search 2D Matrix | Does this row possibly contain the target? |
+| Find First Match | Does this value >= target? |
+| Capacity to Ship | Can I ship all packages with this capacity? |
 
 ---
 
