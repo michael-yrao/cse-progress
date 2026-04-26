@@ -50,6 +50,7 @@ class Solution:
         # then we loop through with two pointers, one at beginning, one at middle and assign interchangeably
         # also if we look at 1->2->3->4->5, we will notice that first half is 1,2,3 and second half is 4,5
         # thus we can't use slow node from floyd's algorithm, we need slow.next for second half
+        # what an amazing problem!! floyd/reverse/merge all in one
 
         # starting slow 
 
