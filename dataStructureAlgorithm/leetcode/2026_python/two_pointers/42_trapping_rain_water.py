@@ -96,3 +96,4 @@ class Solution:
                 # add (potential water - height[i]) to result
                 res += rightMax - height[r]
         return res
+    
