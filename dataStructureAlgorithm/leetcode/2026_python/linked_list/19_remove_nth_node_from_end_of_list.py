@@ -52,18 +52,48 @@ class Solution:
         
         indexToRemove = listLength - n
 
-        # i will be never be indexToRemove - 1 if indexToRemove == 0
+        # edge case
+        # if indexToRemove == 0, i will be never be indexToRemove - 1
         # thus we cover the edge case here
         if indexToRemove == 0:
-            return head.next # type: ignore
+            return head.next
 
         current = head
         
         # from the start, we want to link index indexToRemove - 1 to next.next
         for i in range(listLength - 1):
             if (i == indexToRemove - 1):
-                current.next = current.next.next # type: ignore
+                current.next = current.next.next
                 break
-            current = current.next # type: ignore
+            current = current.next
         
         return head
+    
+    def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
+        # so we know from our previous implementation that we want to remove len - n node from the start
+        # 1->2->3->4->5->None ; n = 2
+        # 1->2->3->5->None ; 2nd value from end is removed; 4th element from the start, index of 3 (5 - 2)
+        # we can use a two pointer approach where l and r are n apart
+        # l will be the element to remove when r becomes None
+        # so we want to re-link when r.next is None since we are removing l
+        # since we are removing a node, we should use a dummy node
+
+        dummy = ListNode(0)
+        dummy.next = head
+
+        l = dummy
+        r = head
+
+        # move r to l + n
+        while n > 0 and r:
+            r = r.next
+            n-=1
+        
+        # now we just move l and r together
+        while r:
+            l = l.next
+            r = r.next
+
+        l.next = l.next.next
+
+        return dummy.next
