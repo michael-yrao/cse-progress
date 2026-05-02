@@ -22,6 +22,7 @@ Constraints:
 """
 
 # Definition for a binary tree node.
+from collections import deque
 from typing import Optional
 
 class TreeNode:
@@ -36,3 +37,34 @@ class Solution:
         # then we want to run isSameTree from there
         # so we can start with a bfs to find the subroot node
         # then we do preorder dfs to check isSameTree
+
+        # bfs is queue based, so we go through the root tree
+        # and populate the queue until we find the node we are looking for
+        # then we run preorder dfs to find subRoot
+
+        def dfs(p,q):
+            if not p and not q:
+                return True
+
+            if p and q and p.val == q.val:
+                return dfs(p.left,q.left) and dfs(p.right,q.right)
+            else:
+                return False
+
+        queue = deque([root])
+
+        while queue:
+            # deque is both a queue and a stack
+            # popleft is equivalent to queue.pop()
+            # popright is equivalent to stack.pop()
+            currentNode = queue.popleft()
+
+            if currentNode.val == subRoot.val:
+                if dfs(currentNode, subRoot):
+                    return True
+            if currentNode.left:
+                queue.append(currentNode.left)
+            if currentNode.right:
+                queue.append(currentNode.right)
+
+        return False
