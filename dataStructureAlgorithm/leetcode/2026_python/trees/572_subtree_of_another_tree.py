@@ -68,3 +68,25 @@ class Solution:
                 queue.append(currentNode.right)
 
         return False
+    
+    def isSubtreeSerialization(self, root: Optional[TreeNode], subRoot: Optional[TreeNode]) -> bool:
+        # one interesting way to do this is to serialize both trees
+        # then with the strings, we can just check if subRootStr is in rootStr
+        # we need to be able to tell when a node starts and ends, so we use a delimiter
+        # we serialize using preorder traversal
+        # we need to enclose both the front and the back of the character
+        # otherwise we would accidentally return true on scenario where root = [12] and subRoot = [2]
+        
+        def serializationPreorderDFS(root):
+            
+            if not root:
+                return "|?|"
+            
+            # preorder, we create the string
+            return ("|"+str(root.val)+"|"+serializationPreorderDFS(root.left)+serializationPreorderDFS(root.right))
+        
+        rootStr = serializationPreorderDFS(root)
+        subRootStr = serializationPreorderDFS(subRoot)
+        
+        # now we just check if subRootStr in rootStr
+        return subRootStr in rootStr
