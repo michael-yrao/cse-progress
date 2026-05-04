@@ -60,6 +60,8 @@ class Solution:
             currentNode = queue.popleft()
 
             if currentNode.val == subRoot.val:
+                # if found, we just return True
+                # if not found, we continue to search
                 if dfs(currentNode, subRoot):
                     return True
             if currentNode.left:
