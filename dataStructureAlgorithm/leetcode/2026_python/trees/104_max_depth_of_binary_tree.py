@@ -20,6 +20,7 @@ Constraints:
 """
 
 # Definition for a binary tree node.
+import collections
 from typing import Optional
 
 class TreeNode:
@@ -41,3 +42,25 @@ class Solution:
         # these 2 returns are the same
         # return max(1+self.maxDepth(root.left),1+self.maxDepth(root.right))
         return 1+max(self.maxDepth(root.left),self.maxDepth(root.right))
+
+    
+    def maxDepthBFS(self, root: Optional[TreeNode]) -> int:
+        # BFS max depth
+        depth = 0
+
+        queue = collections.deque()
+        if root:
+            queue.append(root)
+
+        while queue:
+            lenQueue = len(queue)
+            for i in range(lenQueue):
+                currentNode = queue.popleft()
+                if currentNode:
+                    if currentNode.left:
+                        queue.append(currentNode.left)
+                    if currentNode.right:
+                        queue.append(currentNode.right)
+            depth+=1
+        
+        return depth
