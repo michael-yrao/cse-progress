@@ -43,7 +43,19 @@ class Solution:
         # return max(1+self.maxDepth(root.left),1+self.maxDepth(root.right))
         return 1+max(self.maxDepth(root.left),self.maxDepth(root.right))
 
-    
+    def maxDepthIterativePreorderDFS(self, root: Optional[TreeNode]) -> int:
+        stack = collections.deque()
+        stack.append([root,1])
+        # keep track of max depth
+        depth = 0
+        while stack:
+            currentNode, curDepth = stack.pop()
+            if currentNode:
+                depth = max(curDepth, depth)
+                stack.append([currentNode.left, curDepth + 1])
+                stack.append([currentNode.right, curDepth + 1])
+        return depth
+
     def maxDepthBFS(self, root: Optional[TreeNode]) -> int:
         # BFS max depth
         depth = 0
