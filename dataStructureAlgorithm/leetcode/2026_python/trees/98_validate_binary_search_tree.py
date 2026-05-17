@@ -34,7 +34,7 @@ class TreeNode:
         self.left = left
         self.right = right
 class Solution:
-    def isValidBST(self, root: Optional[TreeNode]) -> bool:
+    def isValidBST_iterativeDFS(self, root: Optional[TreeNode]) -> bool:
         # valid BST means we need to compare current node's value to it's children or vice versa
         # let's do this with iterative DFS
         # we should keep track of what is allowed in current node
@@ -62,3 +62,33 @@ class Solution:
             if currentNode.right:
                 stack.append([currentNode.right, currentNode.val, high])
         return True
+
+
+    def isValidBST_inorderDFS(self, root: Optional[TreeNode]) -> bool:
+        # for BST, inorder DFS looks at the values in ascending order (left -> root -> right)
+        # thus we can just use that as our premise
+        
+        prevValue = -math.inf
+
+        def dfs(root):
+            nonlocal prevValue
+            if not root:
+                return True
+            
+            # left tree, if breaks BST rule, return false
+            if not dfs(root.left):
+                return False
+            
+            # current node
+            # inorder traversal, so our return caller should be smaller than us
+            # if it is bigger, then we just return false
+            # we actually need to store the child value somewhere
+            # going to right side, this wouldn't be child anymore, so we'll just call this prevValue
+            if prevValue >= root.val:
+                return False
+            prevValue = root.val
+            
+            # right tree
+            return dfs(root.right)
+        
+        return dfs(root)
