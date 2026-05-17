@@ -1,0 +1,64 @@
+"""
+Given the root of a binary tree, determine if it is a valid binary search tree (BST).
+
+A valid BST is defined as follows:
+
+    The left of a node contains only nodes with keys strictly less than the node's key.
+    The right subtree of a node contains only nodes with keys strictly greater than the node's key.
+    Both the left and right subtrees must also be binary search trees.
+
+Example 1:
+
+Input: root = [2,1,3]
+Output: true
+
+Example 2:
+
+Input: root = [5,1,4,null,null,3,6]
+Output: false
+Explanation: The root node's value is 5 but its right child's value is 4.
+
+Constraints:
+
+    The number of nodes in the tree is in the range [1, 104].
+    -231 <= Node.val <= 231 - 1
+"""
+# Definition for a binary tree node.
+from collections import deque
+import math
+from typing import Optional
+
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+class Solution:
+    def isValidBST(self, root: Optional[TreeNode]) -> bool:
+        # valid BST means we need to compare current node's value to it's children or vice versa
+        # let's do this with iterative DFS
+        # we should keep track of what is allowed in current node
+        # from the root, we allow everything, so lower bound of -inf and upper bound of inf
+        # when we go left, the upper bound changes to root
+        # when we go right, the lower bound changes to root
+
+        stack = deque()
+        stack.append([root,-math.inf, math.inf])
+
+        while stack:
+            currentNode, low, high = stack.pop()
+            if not currentNode:
+                continue
+
+            # if current node not within bounds, return false
+            # currentNode.val must be greater than low
+            # currentNode.val must be less than high
+            if currentNode.val <= low or currentNode.val >= high:
+                return False
+
+            # current node is valid, update boundaries to children and add to stack
+            if currentNode.left:
+                stack.append([currentNode.left, low, currentNode.val])
+            if currentNode.right:
+                stack.append([currentNode.right, currentNode.val, high])
+        return True
