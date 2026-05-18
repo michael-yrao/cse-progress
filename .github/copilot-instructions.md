@@ -94,14 +94,39 @@ Visual aids, including Big O complexity chart (`data_structure_big_o.png`)
   - Document assessment/interview problems faced
   - Include solutions and key learnings
 
+### 📓 "Why I Got Stuck" Log Template
+Create a running notebook using this format. Review this document every Saturday morning to find your retention leaks.
+
+```markdown
+## ❌ Problem Name: [Insert LeetCode Name & Number]
+* **Date**: [Insert Date]
+* **Topic(s)**: [e.g., Stack / Monotonic Stack]
+
+### 1. Where did I get stuck?
+* [Write a 1-sentence description of the exact roadblock]
+
+### 2. The Core Realization
+* [What was the structural trick or pattern from the solution?]
+
+### 3. Code Snippet to Remember
+```python
+# Paste the specific line of Python or pattern that unlocked the issue
+```
+```
+```
+
 ### Learning Flow
 
 **Recommended Approach**:
-1. Start with Blind 75 problems
-2. Watch NeetCode explanations for weak areas
-3. Practice the problem variations in `2026_python/` organized by type
-4. Review `software_development_concepts.tex` for behavioral questions
-5. Study company-specific patterns in `other/interview/{company}/`
+*Use this structure for the first 16 weeks of your study journey.*
+*   **00:00–00:15 | Recall Warm-up**: Open a problem solved 2–3 days ago. Do not rewrite code; trace its variable state changes on paper or in comments.
+*   **00:15–00:30 | Whiteboard & Ideate**: Read a new problem. Sketch the approach, constraints, and edge cases in plain English. No code!
+*   **00:30–00:45 | Look up / Validate**: If completely stuck or your logic loops, stop. Watch the NeetCode video explanation immediately.
+*   **00:45–01:00 | Python Implementation**: Type out the clean code, trace logic line-by-line, and add comments explaining the "why".
+
+*Use this structure when focusing on System Design and AI Engineering to protect your DSA knowledge.*
+*   **00:00–00:15 | DSA Maintenance Flashcard**: Look at a random past LeetCode prompt. Explain the data structure pattern and optimal Time/Space complexity out loud.
+*   **00:15–01:00 | Architecture Deep Dive**: Spend 45 minutes learning your current block's design or AI concepts via engineering blogs or videos.
 
 ---
 

@@ -97,3 +97,41 @@ class Solution:
         l.next = l.next.next
 
         return dummy.next
+    
+    def removeNthFromEndRecursion(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
+        # we still need a dummy node in case of head removal
+        
+        dummy = ListNode(0)
+        dummy.next = head
+
+        # since it is recursion, we start at end of the list
+        # this return is the caller's next value
+        # however, when we are at nth node from the end
+        # we want the return to be current.next so we remove reference
+        # to the nth node from the end
+        # keep track of current node # from the end
+
+        counter = 0
+        def removeNthNode(head):
+            nonlocal counter
+            if not head:
+                return None
+            
+            # set caller's next to return
+            head.next = removeNthNode(head.next)
+            
+            # [1,2,3] ; n = 2
+            # head is at 3 when we are here for the first time
+            # increment counter
+            counter+=1
+
+            # if counter is at n, return next instead of current
+            # thus removing any reference to nth from the end 
+            if counter == n:
+                return head.next
+            
+            # otherwise return current node
+            return head
+        
+        removeNthNode(dummy)
+        return dummy.next
