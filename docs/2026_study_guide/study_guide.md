@@ -129,6 +129,16 @@ Read syntax out loud, converting mathematical logic definitions into conversatio
 * *Instead of parsing raw characters:* `if stack and stack[-1] == lookup[char]`
 * *Say out loud sentences like:* "If my structural track stack contains items, and the structural marker resting at the absolute tip of my memory stack precisely matches the complementary open bracket configuration matching my current character tag..."
 
+### 📊 Recursive Call Stack State Table
+* **Tracing Case**: [e.g., Input Data, Target Variables]
+
+
+| Execution Phase | Active Call Context | Current Node/State | Variables / Counter | What it Returns to the Caller |
+| :--- | :--- | :--- | :--- | :--- |
+| **1. Dive Down** | `helper(...)` | | - (Paused) | Waiting... |
+| **1. Base Case** | `helper(Base)` | | | |
+| **2. Pop Up** | `helper(...)` | | | |
+
 ---
 
 ## 📓 "Why I Got Stuck" Log Template
