@@ -66,3 +66,26 @@ class Solution:
             current.next = list2
         
         return dummy.next
+    
+    def mergeTwoListsRecursive(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
+        # since we are merging, we have to do forward-order
+        # meaning we have to make our decision on our way down the call stack
+        
+        # if either side is empty, we just set next to the rest of the other list
+        if not list1:
+            return list2
+        
+        if not list2:
+            return list1
+        
+        # knowing neither is None here, we check value
+        # if list1.val is smaller, we want to increment list1
+        # otherwise increment list2
+        if list1.val < list2.val:
+            list1.next = self.mergeTwoListsRecursive(list1.next, list2)
+            # forward traversal, thus since list1 is set in stone, we return it
+            return list1
+        else:
+            list2.next = self.mergeTwoListsRecursive(list1, list2.next)
+            # forward traversal, thus since list2 is set in stone, we return it
+            return list2

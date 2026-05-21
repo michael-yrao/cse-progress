@@ -1,4 +1,5 @@
 from collections import defaultdict
+import collections
 import heapq
 import math
 from typing import List, Optional
@@ -7,6 +8,12 @@ class ListNode:
     def __init__(self, val=0, next=None):
         self.val = val
         self.next = next
+
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
 
 class Playground:
     class MergeSort_20260326:
@@ -648,3 +655,32 @@ class Playground:
                 ptr = ptr.next
             
             return dummy.next
+    class ValidateBinarySearchTree:
+        def isValidBST(self, root: Optional[TreeNode]) -> bool:
+            # so we need to compare children's values to parent's values
+            # what we can do is process preorder
+            # one thing we have to note is that we can't just check if left < parent
+            # we need to make sure the whole chain is good
+            # so we should check if current node is valid by providing it with a range
+            # so if we have one node, we have range of -inf to inf
+            # if we go left, it must be smaller, so we update the upper bound to parent
+            # if we go right, it must be bigger, so we update the lower bound to parent
+            # with that, let's do a preorder dfs iteratively
+
+            stack = collections.deque()
+
+            if not root:
+                return False
+            # node, lower bound, upper bound
+            stack.append([root, -math.inf, math.inf])
+
+            while stack:
+                currentNode, lowerBound, upperBound = stack.pop()
+                # check if current node is valid
+                # exit if not valid
+                if currentNode:
+                    if currentNode.val <= lowerBound or currentNode.val >= upperBound:
+                        return False
+                    stack.append([currentNode.left, lowerBound, currentNode.val])
+                    stack.append([currentNode.right, currentNode.val, upperBound])
+            return True

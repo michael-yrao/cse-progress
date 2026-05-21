@@ -19,6 +19,8 @@ counter += 1             # 2. This increments from the back on the way up
 
 Refer to the drawing in the surface for traces
 
+---
+
 ## 2. ❌ LeetCode 20 - Valid Parentheses (Intuitive Set Filter)
 * **Date**: May 19, 2026
 * **Topic(s)**: Stacks / Set-Membership Optimization
@@ -41,3 +43,24 @@ for char in s:
     elif char in openToCloseMap:    # Pure O(1) Key Lookup
         stack.append(char)
 ```
+## 3. ❌ LeetCode 21 - Merge Two Sorted Lists (Recursive)
+* **Date**: May 20, 2026
+* **Topic(s)**: Recursion / Linked List Forward Traversal
+
+### 1. Where did I get stuck?
+* **Visualizing Return Values**: I struggled to understand why we need to explicitly run `return list1` or `return list2` inside the decision blocks, rather than returning a single final head at the end.
+
+### 2. The Core Realization
+* In forward-traversal recursion, each stack frame acts like an isolated construction worker. Whichever node wins the current comparison gets its `.next` pointer glued to the result of the next recursive call. Once that connection is secure, the frame's job is complete, so it returns itself (`return list1/list2`) because it is the head of that newly verified sorted pipeline segment.
+
+### 3. Code Snippet to Remember
+```python
+if list1.val < list2.val:
+    list1.next = self.mergeTwoLists(list1.next, list2)
+    return list1  # Job complete on list1, hand it backward
+else:
+    list2.next = self.mergeTwoLists(list1, list2.next)
+    return list2  # Job complete on list2, hand it backward
+```
+
+---

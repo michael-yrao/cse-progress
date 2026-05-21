@@ -1,10 +1,36 @@
 # 📅 The Ultimate 8-Block Technical Study Master Plan
 
-## 🧠 THE RETENTION PROTOCOL (Non-Negotiable)
-To guarantee your knowledge permanently sticks over Months 1–7, you must follow the **Spaced Repetition Rule**:
-1. **Never skip the 15-minute warm-up**: It is mathematically more important to retain an old problem than to solve a new one.
-2. **The 2–3 Day Sweet Spot**: Your warm-up problem must always be something you struggled with 2–3 days ago. This is the cognitive science "sweet spot." It is far enough out that your brain must struggle to recall it (building long-term neural pathways), but close enough that you don't have to completely relearn it from scratch. You are practicing pattern retrieval, not rote syntax memorization.
-3. **The Saturday Code Sprint**: In later system design blocks, you *must* code one random past DSA problem from scratch under a 20-minute timer to maintain raw muscle memory.
+# 📅 The 5-Day Backlog Rotation & Retention Protocol
+
+## 🚨 THE PRIORITY ROTATION ENGINE
+Every Sunday night, look at your spreadsheet backlog and select **5 older problems** to populate Monday through Friday's 15-minute warmup slots. Select them using this strict algorithmic filter:
+1. **Priority 1 (High Risk)**: Problems marked `Mastered: N` with the oldest "Latest Attempt Date" (e.g., *36. Valid Sudoku* from Jan 25).
+2. **Priority 2 (Medium Risk)**: Problems marked `Mastered: N` with more recent dates (e.g., *75. Sort Colors* from April 1).
+3. **Priority 3 (Maintenance)**: Problems marked `Mastered: Y` that you haven't touched in over 30 days (e.g., *238. Product of Array Except Self* from April 13).
+
+---
+
+## ⏱️ The 15-Minute "No-Code" Warmup Execution
+Because 15 minutes passes incredibly fast, **never write code during a backlog warmup**. Code writing is reserved for your 45-minute active block. Optimize your 15 minutes like this:
+* **00:00–00:05 | The Read**: Open the LeetCode prompt. Analyze the sample inputs and outputs.
+* **00:05–00:12 | The Conceptual Blueprint**: Out loud, state the optimal Time/Space complexity and the core structural trick. (e.g., *"This is Top K Frequent. I count frequencies with a Hash Map, then use Bucket Sort where array indices represent frequencies to guarantee O(n) runtime."*)
+* **00:12–00:15 | The Verification**: Open your past successful code or your "Why I Got Stuck" log entry to verify if your mental blueprint was 100% accurate.
+
+### 📋 Post-Warmup Spreadsheet Updates:
+* **If your blueprint was flawless**: Update status to `Mastered: Y` and change the "Latest Attempt Date" to today.
+* **If you completely forgot the trick**: Keep status as `Mastered: N`, change the date to today, and flag it to reappear in the warmup slot in exactly 3 days.
+
+---
+
+## 🗂️ The New Weekly Macro-Schedule
+
+*   **Monday – Friday | The Split Focus Routine**:
+    *   *00:00–00:15*: 15-Minute No-Code Backlog Warmup (Managed by the Priority Engine above).
+    *   *00:15–01:00*: 45-Minute Road-Map Deep Dive (Your active block for new/current problems).
+*   **Saturday | The Blind Code Sprint (30–45 Mins)**:
+    *   Pick **one** random problem from your past week's logs. Clear your monitor, open a blank text file, and write the Python solution from memory under a 20-minute timer.
+*   **Sunday | Strict Lockout**:
+    *   Do not open a code editor. Allow your brain to consolidate short-term data into long-term structures.
 
 ---
 
