@@ -56,7 +56,7 @@ class Solution:
         #   4. increment pointer to increment through the array
         #   5. if nums[increment] = 0, swap(left++,increment++)
         #   6. if nums[increment] = 1, continue loop
-        #   7. if nums[increment] = 2, swap(right--,increment++) 
+        #   7. if nums[increment] = 2, swap(right--,increment--) 
         # use pointers to swap and increment
         # use a left pointer and a increment pointer to swap whenever it finds a 0
         # use a right pointer and the same increment pointer to swap whenever it finds a 2

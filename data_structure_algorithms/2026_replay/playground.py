@@ -684,3 +684,27 @@ class Playground:
                     stack.append([currentNode.left, lowerBound, currentNode.val])
                     stack.append([currentNode.right, currentNode.val, upperBound])
             return True
+    class ValidParentheses:
+        def isValid(self, s: str) -> bool:
+            # use a map of open to close brackets
+            openToClose = {'(' : ')', '{' : '}', '[' : ']'}
+            closingSet = set(openToClose.values())
+            # now in order to check if it valid,  we need to push open brackets onto a stack
+            # if we see a closing bracket, we want to validate if the open bracket exists on the stack
+            stack = []
+
+            for char in s:
+                # stack is empty and char is a closing bracket
+                if not stack and char in closingSet:
+                    return False
+                # stack is not None in the case
+                if char in closingSet:
+                    # if matches, pop
+                    # no match = return False
+                    if openToClose[stack[-1]] != char:
+                        return False
+                    stack.pop()
+                elif char in openToClose:
+                    stack.append(char)
+            # return whether stack is empty or not
+            return not stack
