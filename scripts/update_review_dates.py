@@ -50,6 +50,17 @@ def format_date(date: datetime | None) -> str:
     return date.strftime("%Y-%m-%d") if date else ""
 
 
+def parse_latest_attempt_date_from_attempts(attempts: str) -> datetime | None:
+    dates = re.findall(r"\d{4}-\d{2}-\d{2}", attempts)
+    parsed_dates = []
+    for date_text in dates:
+        try:
+            parsed_dates.append(datetime.strptime(date_text, "%Y-%m-%d"))
+        except ValueError:
+            continue
+    return max(parsed_dates) if parsed_dates else None
+
+
 def compute_next_review_date(mastered: str, latest_attempt_date: datetime | None) -> datetime | None:
     if not latest_attempt_date:
         return None
@@ -242,6 +253,8 @@ def main() -> None:
             mastered = match.group("mastered").strip()
             latest = parse_date(match.group("latest"))
             attempts = match.group("attempts").strip()
+            if latest is None:
+                latest = parse_latest_attempt_date_from_attempts(attempts)
             next_review = format_date(compute_next_review_date(mastered, latest))
             table_rows.append({
                 "difficulty": difficulty,
