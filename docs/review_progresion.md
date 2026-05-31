@@ -8,6 +8,9 @@ Notes for future agents:
   - If `Mastered` is `Y`, use `Latest Attempt Date + 30 days`.
   - If `Mastered` is `N`, use `Latest Attempt Date + 2 days`.
 - This Markdown file is generated from current row data by `scripts/update_review_dates.py`.
+- The script also discovers LeetCode problems defined under `data_structure_algorithms/2026_leetcode/*` and adds missing rows automatically.
+- When run from git commit, the helper only scans staged source files to discover newly added or changed problems.
+- The pre-commit hook now triggers when `docs/review_progresion.md` or any `data_structure_algorithms/2026_leetcode/*.py` file is staged.
 - The review table is sorted by Latest Attempt Date descending whenever the script runs.
 - A local git pre-commit hook has been installed to auto-run the script when `docs/review_progresion.md` is staged.
 - When a LeetCode problem is added here or a review row is updated, the file should be refreshed automatically and should not require an explicit ask.
@@ -26,7 +29,6 @@ Notes for future agents:
 | Medium | [15. 3Sum](https://leetcode.com/problems/3sum/) | Y | 2026-06-29 | 2026-05-30 | 2026-01-19, 2026-04-07, 2026-05-30 |
 | Medium | [200. Number of Islands (BFS)](https://leetcode.com/problems/number-of-islands/) | N | 2026-06-01 | 2026-05-30 | 2026-05-30 |
 | Medium | [347. Top K Frequent Elements](https://leetcode.com/problems/top-k-frequent-elements/) | Y | 2026-06-29 | 2026-05-30 | 2026-01-11, 2026-04-09, 2026-05-30 |
-| Easy | [680. Valid Palindrome II (Variable skippable, 1DP)](https://leetcode.com/problems/valid-palindrome-ii/) | N | 2026-06-01 | 2026-05-30 | 2026-05-30 |
 | Medium | [33. Search in Rotated Sorted Array](https://leetcode.com/problems/search-in-rotated-sorted-array/) | N | 2026-05-31 | 2026-05-29 | 2026-04-13, 2026-05-29 |
 | Medium | [49. Group Anagrams](https://leetcode.com/problems/group-anagrams/) | Y | 2026-06-28 | 2026-05-29 | 2026-01-04, 2026-03-27, 2026-05-29 |
 | Medium | [75. Sort Colors (Dutch Flag)](https://leetcode.com/problems/sort-colors/) | Y | 2026-06-27 | 2026-05-28 | 2026-01-08, 2026-04-01, 2026-05-26, 2026-05-28 |
@@ -98,3 +100,7 @@ Notes for future agents:
 | Medium | [912. Sort an Array (Radix Sort)](https://leetcode.com/problems/sort-an-array/) | N |  |  |  |
 | Medium | [912. Sort an Array (Counting Sort)](https://leetcode.com/problems/sort-an-array/) | N |  |  |  |
 | Medium | [912. Sort an Array (Timsort)](https://leetcode.com/problems/sort-an-array/) | N |  |  |  |
+| Unknown | [981. Time Based Key Value Store](https://leetcode.com/problemset/all/?search=981) | N |  |  |  |
+| Medium | [572. Subtree Of Another Tree](https://leetcode.com/problemset/all/?search=572) | N |  |  | 2026-05-02 |
+| Medium | [167. Two Sum 2](https://leetcode.com/problemset/all/?search=167) | N |  |  | 2026-01-19 |
+| Medium | [18. Four Sum](https://leetcode.com/problemset/all/?search=18) | N |  |  | 2026-01-23 |
