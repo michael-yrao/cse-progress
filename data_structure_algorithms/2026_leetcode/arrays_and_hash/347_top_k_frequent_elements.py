@@ -33,7 +33,7 @@ Follow up: Your algorithm's time complexity must be better than O(n log n), wher
 """
 
 import heapq
-from typing import List
+from typing import Counter, List
 
 class Solution:
     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
@@ -60,3 +60,10 @@ class Solution:
             result.append(value)
 
         return result
+    
+    def topKFrequent(nums: list[int], k: int) -> list[int]:
+        # creates a frequency map of num -> freq
+        count = Counter(nums)
+        
+        # nlargest(k, iterable, key) uses a max-heap under the hood
+        return heapq.nlargest(k, count.keys(), key=count.get)

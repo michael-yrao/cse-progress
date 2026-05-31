@@ -4,7 +4,8 @@
   "description": "<!-- Interview Preparation -->\r ## Questions Separated by Company\r https://github.com/xizhengszhang/Leetcode_company_frequency",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "update-review-progression": "python scripts/update_review_dates.py"
   },
   "author": "",
   "license": "ISC"

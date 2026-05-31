@@ -708,3 +708,31 @@ class Playground:
                     stack.append(char)
             # return whether stack is empty or not
             return not stack
+        
+    class ValidPalindromeII:
+        def validPalindrome(self, s: str) -> bool:
+            # valid palindrome can be solved by using two pointer
+            # l and r starting from opposite sides
+            # if we are allowing one character deletion, then when l and r are not equal
+            # we need to check l vs r - 1 and l + 1 vs r
+
+            l, r = 0, len(s) - 1
+
+            def skippable(left,right):
+                while left < right:
+                    if left < len(s) and right > 0 and s[left] == s[right]:
+                        left+=1
+                        right-=1
+                    else:
+                        return False
+                return True
+
+            while l < r:
+                if s[l] == s[r]:
+                    l+=1
+                    r-=1
+                else:
+                    # check skippable
+                    return skippable(l,r-1) or skippable(l+1,r)
+            
+            return True
