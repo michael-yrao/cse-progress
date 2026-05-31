@@ -6,6 +6,7 @@ from pathlib import Path
 
 MARKDOWN_PATH = Path("docs/review_progresion.md")
 TABLE_HEADER = "| Difficulty | Problem | Mastered | Next Review Date | Latest Attempt Date | Attempt Dates |"
+ROW_SEPARATOR = "|---|---|---|---|---|---|"
 
 ROW_RE = re.compile(
     r"^\| (?P<difficulty>[^|]+) \| \[(?P<problem>[^\]]+)\]\((?P<url>[^)]+)\) \| (?P<mastered>[YN]) \| (?P<next>[^|]*) \| (?P<latest>[^|]*) \| (?P<attempts>.*) \|$"
@@ -30,42 +31,82 @@ def compute_next_review_date(mastered: str, latest_attempt_date: datetime | None
     return latest_attempt_date + delta
 
 
+def build_row(entry: dict) -> str:
+    return (
+        f"| {entry['difficulty']} | [{entry['problem']}]({entry['url']})"
+        f" | {entry['mastered']} | {entry['next_review']} | {entry['latest_attempt_date']} | {entry['attempts']} |"
+    )
+
+
 def main() -> None:
     text = MARKDOWN_PATH.read_text(encoding="utf-8")
     lines = text.splitlines()
-    new_lines: list[str] = []
-    updated_rows = 0
-    found_table = False
+
+    prefix_lines: list[str] = []
+    table_rows: list[dict] = []
+    suffix_lines: list[str] = []
+    in_table = False
+    table_header_seen = False
+    table_separator_seen = False
 
     for line in lines:
-        if not found_table and line.strip() == TABLE_HEADER:
-            found_table = True
-            new_lines.append(line)
+        if not in_table:
+            prefix_lines.append(line)
+            if line.strip() == TABLE_HEADER:
+                in_table = True
+                table_header_seen = True
             continue
 
-        if found_table and line.startswith("|"):
-            match = ROW_RE.match(line)
-            if match:
-                mastered = match.group("mastered").strip()
-                latest = parse_date(match.group("latest"))
-                computed = compute_next_review_date(mastered, latest)
-                next_review = format_date(computed)
-                current_next = match.group("next").strip()
-                if current_next != next_review:
-                    updated_rows += 1
-                    row = (
-                        f"| {match.group('difficulty').strip()} | [{match.group('problem')}]({match.group('url')})"
-                        f" | {mastered} | {next_review} | {match.group('latest').strip()} | {match.group('attempts').strip()} |"
-                    )
-                    new_lines.append(row)
-                    continue
-        new_lines.append(line)
+        if in_table and not table_separator_seen:
+            if line.strip() == ROW_SEPARATOR:
+                prefix_lines.append(line)
+                table_separator_seen = True
+                continue
+            # malformed file, keep going and preserve
+            prefix_lines.append(line)
+            continue
 
-    if updated_rows > 0:
+        # parse row lines after header and separator
+        if line.startswith("|") and ROW_RE.match(line):
+            match = ROW_RE.match(line)
+            assert match is not None
+            difficulty = match.group("difficulty").strip()
+            problem = match.group("problem").strip()
+            url = match.group("url").strip()
+            mastered = match.group("mastered").strip()
+            latest = parse_date(match.group("latest"))
+            attempts = match.group("attempts").strip()
+            next_review = format_date(compute_next_review_date(mastered, latest))
+            table_rows.append({
+                "difficulty": difficulty,
+                "problem": problem,
+                "url": url,
+                "mastered": mastered,
+                "latest": latest,
+                "latest_attempt_date": format_date(latest),
+                "attempts": attempts,
+                "next_review": next_review,
+            })
+            continue
+
+        suffix_lines.append(line)
+
+    if not table_header_seen or not table_separator_seen:
+        raise RuntimeError("Could not find review table header and separator in markdown file.")
+
+    sorted_rows = sorted(
+        table_rows,
+        key=lambda entry: (entry["latest"] is not None, entry["latest"]),
+        reverse=True,
+    )
+
+    sorted_lines = [build_row(entry) for entry in sorted_rows]
+    new_lines = prefix_lines + sorted_lines + suffix_lines
+    if new_lines != lines:
         MARKDOWN_PATH.write_text("\n".join(new_lines) + "\n", encoding="utf-8")
-        print(f"Updated {updated_rows} row(s) in {MARKDOWN_PATH}")
+        print(f"Reordered {len(sorted_rows)} rows by latest attempt date in {MARKDOWN_PATH}")
     else:
-        print(f"No updates needed in {MARKDOWN_PATH}")
+        print(f"No reorder needed in {MARKDOWN_PATH}")
 
 
 if __name__ == "__main__":
