@@ -193,5 +193,7 @@ When asking for help with this repository:
 - **Reference concepts**: "This is a Two Pointers problem" or "This uses Monotonic Stack"
 - **Ask for patterns**: Help understanding when to apply specific techniques
 - **Request mental models**: Explanation of problem-solving approach before jumping to code
+- **If any LeetCode problem is mentioned, ensure it is logged in `docs/review_progresion.md`.**
+- If the problem is not already present, add it with title, URL, difficulty, and current attempt info.
 
 This helps provide focused, contextual assistance aligned with your interview prep strategy.
