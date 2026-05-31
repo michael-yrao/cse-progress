@@ -62,7 +62,7 @@ Notes for future agents:
 | Easy | [169. Majority Element](https://leetcode.com/problems/majority-element/) | Y | 2026-06-27 | 2026-05-28 | 2026-01-05, 2026-04-01, 2026-05-28 |
 | Medium | [189. Rotate Array](https://leetcode.com/problems/rotate-array/) | N | 2026-04-06 | 2026-04-04 | 2026-01-11, 2026-04-04 |
 | Medium | [199. Binary Tree Right Side View](https://leetcode.com/problems/binary-tree-right-side-view/) | N | 2026-05-11 | 2026-05-09 | 2026-05-09 |
-| Medium | [200. Number of Islands](https://leetcode.com/problems/number-of-islands/) | N | 2026-06-01 | 2026-05-30 | 2026-05-30 |
+| Medium | [200. Number of Islands (BFS)](https://leetcode.com/problems/number-of-islands/) | N | 2026-06-01 | 2026-05-30 | 2026-05-30 |
 | Easy | [206. Reverse Linked List (Iterative)](https://leetcode.com/problems/reverse-linked-list/) | N | 2026-05-28 | 2026-05-26 | 2026-04-23, 2026-05-26 |
 | Easy | [206. Reverse Linked List (Recursion)](https://leetcode.com/problems/reverse-linked-list/) | N | 2026-04-26 | 2026-04-24 | 2026-04-24 |
 | Easy | [217. Contains Duplicate](https://leetcode.com/problems/contains-duplicate/) | Y | 2026-04-24 | 2026-03-25 | 2026-01-01, 2026-03-25 |
@@ -81,7 +81,11 @@ Notes for future agents:
 | Easy | [543. Diameter of Binary Tree](https://leetcode.com/problems/diameter-of-binary-tree/) | N | 2026-05-02 | 2026-04-30 | 2026-04-30 |
 | Medium | [560. Subarray Sum Equals K](https://leetcode.com/problems/subarray-sum-equals-k/) | N | 2026-04-07 | 2026-04-05 | 2026-04-05 |
 | Medium | [567. Permutation in String](https://leetcode.com/problems/permutation-in-string/) | Y | 2026-05-20 | 2026-04-20 | 2026-04-20 |
-| Easy | [680. Valid Palindrome II](https://leetcode.com/problems/valid-palindrome-ii/) | N | 2026-06-01 | 2026-05-30 | 2026-01-19, 2026-04-05, 2026-05-28, 2026-05-30 |
+| Easy | [680. Valid Palindrome II (Variable skippable, backtracking)](https://leetcode.com/problems/valid-palindrome-ii/) | N | 2026-06-02 | 2026-05-31 | 2026-05-31 |
+| Easy | [680. Valid Palindrome II (Variable skippable, 1DP)](https://leetcode.com/problems/valid-palindrome-ii/) | N | 2026-06-01 | 2026-05-30 | 2026-05-30 |
+| Easy | [680. Valid Palindrome II (Variable skippable, backtracking)](https://leetcode.com/problems/valid-palindrome-ii/) | N | 2026-06-02 | 2026-05-31 | 2026-01-19, 2026-04-05, 2026-05-28, 2026-05-30, 2026-05-31 |
+| Medium | [680. Valid Palindrome II (Variable skippable, 1DP)](https://leetcode.com/problems/valid-palindrome-ii/) | N | 2026-06-02 | 2026-05-31 |  2026-05-31 |
+| Medium | [680. Valid Palindrome II (validPalindromeIIIDPMemo, validPalindromeIII)](https://leetcode.com/problems/valid-palindrome-ii/) | N | 2026-06-02 | 2026-05-31 | 2026-05-31 |
 | Easy | [704. Binary Search](https://leetcode.com/problems/binary-search/) | Y | 2026-06-26 | 2026-05-27 | 2026-03-09, 2026-04-13, 2026-05-27 |
 | Medium | [875. Koko Eating Bananas](https://leetcode.com/problems/koko-eating-bananas/) | N | 2026-04-24 | 2026-04-22 | 2026-04-22 |
 | Medium | [912. Sort an Array (Merge Sort)](https://leetcode.com/problems/sort-an-array/) | N | 2026-03-28 | 2026-03-26 | 2026-01-06, 2026-03-26 |

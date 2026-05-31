@@ -1,5 +1,6 @@
 from collections import defaultdict
 import collections
+from functools import cache, lru_cache
 import heapq
 import math
 from typing import List, Optional
@@ -736,3 +737,89 @@ class Playground:
                     return skippable(l,r-1) or skippable(l+1,r)
             
             return True
+        
+        """
+        What if instead of allowing one skip, we allow skip number of skips
+        """
+        def validPalindromeIII(self, s: str, skip: int) -> bool:
+            # we'll leverage the same idea we did for valid palindrome 2
+            # we use left and right pointer like we would for valid palindrome 1
+            # and then we keep a counter every time we skip an element
+            # now issue becomes, what happens if we can skip on both sides
+            # then doesn't this become a backtracking problem where we need to decide which side to skip?
+
+            def backtrack(l,r,skipsRemaining):
+                if skipsRemaining < 0:
+                    return False
+
+                while l < r:
+                    if s[l] == s[r]:
+                        l+=1
+                        r-=1
+                    else:
+                        # choose whether to go left or right
+                        return backtrack(l+1, r, skipsRemaining-1) or backtrack(l,r-1,skipsRemaining-1)
+                return True
+
+            return backtrack(0,len(s)-1,skip)
+
+        """
+        What if instead of allowing one skip, we allow skip number of skips
+        """
+        def validPalindromeIIIDPMemo(self, s: str, skip: int) -> bool:
+            # we'll leverage the same idea we did for valid palindrome 2
+            # we use left and right pointer like we would for valid palindrome 1
+            # and then we keep a counter every time we skip an element
+            # now issue becomes, what happens if we can skip on both sides
+            # then doesn't this become a backtracking problem where we need to decide which side to skip?
+
+            # store how many skips we have for (l,r, skips) -> skippable
+            # memos should be snapshots, not tracking for our resources
+            memo = {}
+
+            def backtrack(l,r,skipsRemaining):
+                currentState = (l,r,skipsRemaining)
+                
+                if currentState in memo:
+                    return memo[currentState]
+                if skipsRemaining < 0:
+                    return False
+
+                while l < r:
+                    if s[l] == s[r]:
+                        l+=1
+                        r-=1
+                    else:
+                        # choose whether to go left or right
+                        return backtrack(l+1, r, skipsRemaining-1) or backtrack(l,r-1,skipsRemaining-1)
+                return True
+
+            return backtrack(0,len(s)-1,skip)
+
+        """
+        What if instead of allowing one skip, we allow skip number of skips
+        """
+        def validPalindromeIIIDP(self, s: str, skip: int) -> bool:
+            # we'll leverage the same idea we did for valid palindrome 2
+            # we use left and right pointer like we would for valid palindrome 1
+            # and then we keep a counter every time we skip an element
+            # now issue becomes, what happens if we can skip on both sides
+            # then doesn't this become a backtracking problem where we need to decide which side to skip?
+
+            # we can use the built in 'memoization' or cache from python
+            # this will automatically reduce our time complexity from O(n*2^k) to O(n*k)
+            @cache
+            def backtrack(l,r,skipsRemaining):
+                if skipsRemaining < 0:
+                    return False
+
+                while l < r:
+                    if s[l] == s[r]:
+                        l+=1
+                        r-=1
+                    else:
+                        # choose whether to go left or right
+                        return backtrack(l+1, r, skipsRemaining-1) or backtrack(l,r-1,skipsRemaining-1)
+                return True
+
+            return backtrack(0,len(s)-1,skip)
