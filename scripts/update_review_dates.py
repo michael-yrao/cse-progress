@@ -184,7 +184,7 @@ def update_existing_row_difficulties(table_rows: list[dict], staged_files: list[
     return updated_count
 
 
-def discover_source_problems(existing_numbers: set[int], staged_files: list[Path] | None = None) -> list[dict]:
+def discover_source_problems(existing_titles: set[str], staged_files: list[Path] | None = None) -> list[dict]:
     missing_rows: list[dict] = []
     if staged_files is None:
         paths = list(SOURCE_ROOT.rglob("*.py"))
@@ -196,14 +196,15 @@ def discover_source_problems(existing_numbers: set[int], staged_files: list[Path
         if not match:
             continue
         number = int(match.group("number"))
-        if number in existing_numbers:
-            continue
         raw_name = match.group("name")
         title = humanize_raw_name(raw_name)
+        problem_title = f"{number}. {title}"
+        if problem_title.lower() in existing_titles:
+            continue
         difficulty = extract_difficulty_from_source(path) or "Unknown"
         missing_rows.append({
             "difficulty": difficulty,
-            "problem": f"{number}. {title}",
+            "problem": problem_title,
             "url": f"https://leetcode.com/problemset/all/?search={number}",
             "mastered": "N",
             "latest": None,
@@ -211,7 +212,7 @@ def discover_source_problems(existing_numbers: set[int], staged_files: list[Path
             "attempts": "",
             "next_review": "",
         })
-        existing_numbers.add(number)
+        existing_titles.add(problem_title.lower())
     return missing_rows
 
 
@@ -293,17 +294,16 @@ def main() -> None:
         staged_files = get_staged_source_files()
         print(f"Scanning {len(staged_files)} staged source file(s) for new problems.")
 
-    existing_numbers = {
-        int(re.match(r"^(?P<number>\d+)\.", row["problem"]).group("number"))
+    existing_titles = {
+        row["problem"].strip().lower()
         for row in table_rows
-        if re.match(r"^(?P<number>\d+)\.", row["problem"])
     }
 
     updated_count = update_existing_row_difficulties(table_rows, staged_files=staged_files)
     if updated_count:
         print(f"Updated difficulty for {updated_count} existing review row(s) from source comments.")
 
-    discovered = discover_source_problems(existing_numbers, staged_files=staged_files)
+    discovered = discover_source_problems(existing_titles, staged_files=staged_files)
     if discovered:
         table_rows.extend(discovered)
         print(f"Discovered and added {len(discovered)} problem(s) from source files.")

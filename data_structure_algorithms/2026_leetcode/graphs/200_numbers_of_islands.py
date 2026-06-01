@@ -82,3 +82,46 @@ class Solution:
                     islandCount+=1
 
         return islandCount
+
+
+    def numIslandsDFS(self, grid: List[List[str]]) -> int:
+        # so we can do DFS as well to traverse the island
+        # we will traverse if node is land
+        # check all neighbors and mark all land neighbors as visited
+        # when we return, we will add 1 to island count
+
+        visited = set()
+        result = 0
+        neighbors = ([1,0], [-1, 0], [0,1], [0,-1])
+
+        rows, cols = len(grid), len(grid[0])
+
+        def dfs(row, col):
+            # base case to stop is if we find water
+            # if we are out of bounds, return 0
+            if row < 0 or row >= rows or col < 0 or col >= cols:
+                return 0
+
+            # if we find water, return 0
+            if grid[row][col] == '0':
+                return 0
+
+            # if we already visited, return 0
+            if (row, col) in visited:
+                return 0
+            
+            # mark current node as visited
+            visited.add((row, col))
+            # now we go as deep as possible in all 4 directions
+            dfs(row+1,col)
+            dfs(row-1,col)
+            dfs(row,col+1)
+            dfs(row,col-1)
+
+            return 1
+
+        for row in range(rows):
+            for col in range(cols):
+                if grid[row][col] == '1' and (row,col) not in visited:
+                    result+=dfs(row,col)
+        return result

@@ -64,3 +64,35 @@ else:
 ```
 
 ---
+
+## 4. ✅ LeetCode 200 - Number of Islands (DFS)
+* **Date**: May 31, 2026
+* **Topic(s)**: Graph Traversal / DFS / Base Case Handling
+
+### 1. Where did I get stuck?
+* **DFS base-case misses**: I didn't properly stop before visiting water or going out of bounds, which made the recursion logic much harder to follow.
+
+### 2. The Core Realization
+* The DFS helper must short-circuit immediately for invalid positions and for `0` cells. The correct ordering is:
+  - if row or col is out of bounds, return
+  - if grid[row][col] is `0`, return
+  - mark the cell visited
+  - recurse on all four neighbors
+
+### 3. Code Snippet to Remember
+```python
+def dfs(r, c):
+    if r < 0 or r >= rows or c < 0 or c >= cols:
+        return
+    if grid[r][c] == '0':
+        return
+    if visited:
+        return
+    grid[r][c] = '0'
+    dfs(r+1, c)
+    dfs(r-1, c)
+    dfs(r, c+1)
+    dfs(r, c-1)
+```
+
+---
