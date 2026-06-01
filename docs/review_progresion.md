@@ -26,7 +26,6 @@ Notes for future agents:
 
 | Difficulty | Problem | Mastered | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|
-| Medium | [53. Maximum Subarray (Divide and Conquer)](https://leetcode.com/problems/maximum-subarray/) | N | 2026-06-03 | 2026-06-01 | 2026-06-01 |
 | Hard | [76. Minimum Window Substring](https://leetcode.com/problems/minimum-window-substring/) | N | 2026-06-03 | 2026-06-01 | 2026-06-01 |
 | Medium | [81. Search in Rotated Sorted Array II](https://leetcode.com/problems/search-in-rotated-sorted-array-ii/) | N | 2026-06-03 | 2026-06-01 | 2026-06-01 |
 | Hard | [239. Sliding Window Maximum](https://leetcode.com/problems/sliding-window-maximum/) | N | 2026-06-03 | 2026-06-01 | 2026-06-01 |
@@ -109,3 +108,4 @@ Notes for future agents:
 | Easy | [1929. Concatenation of Array](https://leetcode.com/problems/concatenation-of-array/) | Y | 2026-04-24 | 2026-03-25 | 2026-01-01, 2026-03-25 |
 | Medium | [18. Four Sum](https://leetcode.com/problemset/all/?search=18) | N | 2026-01-25 | 2026-01-23 | 2026-01-23 |
 | Medium | [167. Two Sum 2](https://leetcode.com/problemset/all/?search=167) | N | 2026-01-21 | 2026-01-19 | 2026-01-19 |
+| Medium | [53. Maximum Subarray (Divide and Conquer)](https://leetcode.com/problems/maximum-subarray/) | N | | |  |
