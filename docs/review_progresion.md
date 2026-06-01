@@ -9,6 +9,8 @@ Notes for future agents:
   - If `Mastered` is `N`, use `Latest Attempt Date + 2 days`.
 - This Markdown file is generated from current row data by `scripts/update_review_dates.py`.
 - The script also discovers LeetCode problems defined under `data_structure_algorithms/2026_leetcode/*` and adds missing rows automatically.
+- Problem titles in this table should include the method used, such as `(BFS)` or `(DFS)`.
+- If a method is mentioned and the table already contains the same LeetCode number with a different method, a new row should be added rather than overwriting the existing entry.
 - When run from git commit, the helper only scans staged source files to discover newly added or changed problems.
 - The pre-commit hook now triggers when `docs/review_progresion.md` or any `data_structure_algorithms/2026_leetcode/*.py` file is staged.
 - The review table is sorted by Latest Attempt Date descending whenever the script runs.
@@ -25,6 +27,7 @@ Notes for future agents:
 |---|---|---|---|---|---|
 | Medium | [1216. Valid Palindrome III (backtracking)](https://leetcode.com/problems/valid-palindrome-ii/) | N | 2026-06-02 | 2026-05-31 | 2026-05-31 |
 | Medium | [1216. Valid Palindrome III (1DP)](https://leetcode.com/problems/valid-palindrome-ii/) | N | 2026-06-02 | 2026-05-31 | 2026-05-31 |
+| Medium | [200. Number of Islands (DFS)](https://leetcode.com/problems/number-of-islands/) | N | 2026-06-02 | 2026-05-31 | 2026-05-31 |
 | Easy | [680. Valid Palindrome II](https://leetcode.com/problems/valid-palindrome-ii/) | N | 2026-06-01 | 2026-05-30 | 2026-01-19, 2026-04-05, 2026-05-28, 2026-05-30 |
 | Medium | [15. 3Sum](https://leetcode.com/problems/3sum/) | Y | 2026-06-29 | 2026-05-30 | 2026-01-19, 2026-04-07, 2026-05-30 |
 | Medium | [200. Number of Islands (BFS)](https://leetcode.com/problems/number-of-islands/) | N | 2026-06-01 | 2026-05-30 | 2026-05-30 |
@@ -104,3 +107,4 @@ Notes for future agents:
 | Medium | [912. Sort an Array (Counting Sort)](https://leetcode.com/problems/sort-an-array/) | N |  |  |  |
 | Medium | [912. Sort an Array (Timsort)](https://leetcode.com/problems/sort-an-array/) | N |  |  |  |
 | Unknown | [981. Time Based Key Value Store](https://leetcode.com/problemset/all/?search=981) | N |  |  |  |
+| Unknown | [200. Numbers Of Islands](https://leetcode.com/problemset/all/?search=200) | N |  |  |  |
