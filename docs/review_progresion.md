@@ -108,4 +108,4 @@ Notes for future agents:
 | Easy | [242. Valid Anagram](https://leetcode.com/problems/valid-anagram/) | N | 2026-03-27 | 2026-03-25 | 2026-01-01, 2026-03-25 |
 | Easy | [1929. Concatenation of Array](https://leetcode.com/problems/concatenation-of-array/) | Y | 2026-04-24 | 2026-03-25 | 2026-01-01, 2026-03-25 |
 | Medium | [18. Four Sum](https://leetcode.com/problemset/all/?search=18) | N | 2026-01-25 | 2026-01-23 | 2026-01-23 |
-| Medium | [167. Two Sum 2](https://leetcode.com/problemset/all/?search=167) | N | 2026-01-21 | 2026-01-19 | 2026-01-19 |
+| Medium | [167. Two Sum II](https://leetcode.com/problemset/all/?search=167) | N | 2026-01-21 | 2026-01-19 | 2026-01-19 |
