@@ -108,3 +108,4 @@ Notes for future agents:
 | Medium | [912. Sort an Array (Timsort)](https://leetcode.com/problems/sort-an-array/) | N |  |  |  |
 | Unknown | [981. Time Based Key Value Store](https://leetcode.com/problemset/all/?search=981) | N |  |  |  |
 | Unknown | [200. Numbers Of Islands](https://leetcode.com/problemset/all/?search=200) | N |  |  |  |
+| Medium | [695. Max Area Of Island](https://leetcode.com/problemset/all/?search=695) | N |  |  |  |
