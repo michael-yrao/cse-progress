@@ -75,6 +75,20 @@ def compute_next_review_date(mastered: str, latest_attempt_date: datetime | None
     return latest_attempt_date + delta
 
 
+def count_attempt_dates(attempts: str) -> int:
+    return len([part for part in attempts.split(",") if part.strip()])
+
+
+def build_summary_lines(table_rows: list[dict]) -> list[str]:
+    problems_done = sum(1 for row in table_rows if row["latest"] is not None)
+    total_attempts = sum(count_attempt_dates(row["attempts"]) for row in table_rows)
+    return [
+        f"**Problems Done:** {problems_done}",
+        f"**Total Successful Attempts:** {total_attempts}",
+        "",
+    ]
+
+
 def humanize_raw_name(raw_name: str) -> str:
     tokens = raw_name.split("_")
     normalized_tokens: list[str] = []
@@ -430,7 +444,15 @@ def main() -> None:
     )
 
     sorted_lines = [build_row(entry) for entry in sorted_rows]
-    new_lines = prefix_lines + sorted_lines + suffix_lines
+
+    try:
+        header_index = prefix_lines.index(TABLE_HEADER)
+    except ValueError:
+        header_index = len(prefix_lines)
+    summary_lines = build_summary_lines(sorted_rows)
+    new_prefix = prefix_lines[:header_index] + summary_lines + prefix_lines[header_index:]
+
+    new_lines = new_prefix + sorted_lines + suffix_lines
     if new_lines != lines:
         MARKDOWN_PATH.write_text("\n".join(new_lines) + "\n", encoding="utf-8")
         print(f"Reordered {len(sorted_rows)} rows by latest attempt date in {MARKDOWN_PATH}")

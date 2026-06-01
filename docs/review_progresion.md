@@ -24,17 +24,11 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/review_progresion.md` is staged for commit or when the helper script is run.
 
+**Problems Done:** 74
+**Total Successful Attempts:** 127
+
 | Difficulty | Problem | Mastered | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|
-| Medium | [53. Maximum Subarray (Divide and Conquer)](https://leetcode.com/problems/maximum-subarray/) | N | | |  |
-| Hard | [76. Minimum Window Substring](https://leetcode.com/problems/minimum-window-substring/) | N |  |  |  |
-| Medium | [81. Search in Rotated Sorted Array II](https://leetcode.com/problems/search-in-rotated-sorted-array-ii/) | N |  |  |  |
-| Hard | [239. Sliding Window Maximum](https://leetcode.com/problems/sliding-window-maximum/) | N |  |  |  |
-| Medium | [912. Sort an Array (Quick Sort)](https://leetcode.com/problems/sort-an-array/) | N |  |  |  |
-| Medium | [912. Sort an Array (Radix Sort)](https://leetcode.com/problems/sort-an-array/) | N |  |  |  |
-| Medium | [912. Sort an Array (Counting Sort)](https://leetcode.com/problems/sort-an-array/) | N |  |  |  |
-| Medium | [912. Sort an Array (Timsort)](https://leetcode.com/problems/sort-an-array/) | N |  |  |  |
-| Unknown | [981. Time Based Key Value Store](https://leetcode.com/problemset/all/?search=981) | N |  |  |  |
 | Medium | [695. Max Area Of Island (DFS)](https://leetcode.com/problemset/all/?search=695) | N | 2026-06-03 | 2026-06-01 | 2026-06-01 |
 | Medium | [1216. Valid Palindrome III (backtracking)](https://leetcode.com/problems/valid-palindrome-ii/) | N | 2026-06-02 | 2026-05-31 | 2026-05-31 |
 | Medium | [1216. Valid Palindrome III (1DP)](https://leetcode.com/problems/valid-palindrome-ii/) | N | 2026-06-02 | 2026-05-31 | 2026-05-31 |
@@ -109,3 +103,12 @@ Notes for future agents:
 | Easy | [1929. Concatenation of Array](https://leetcode.com/problems/concatenation-of-array/) | Y | 2026-04-24 | 2026-03-25 | 2026-01-01, 2026-03-25 |
 | Medium | [18. Four Sum](https://leetcode.com/problemset/all/?search=18) | N | 2026-01-25 | 2026-01-23 | 2026-01-23 |
 | Medium | [167. Two Sum II](https://leetcode.com/problemset/all/?search=167) | N | 2026-01-21 | 2026-01-19 | 2026-01-19 |
+| Hard | [76. Minimum Window Substring](https://leetcode.com/problems/minimum-window-substring/) | N |  |  |  |
+| Medium | [81. Search in Rotated Sorted Array II](https://leetcode.com/problems/search-in-rotated-sorted-array-ii/) | N |  |  |  |
+| Hard | [239. Sliding Window Maximum](https://leetcode.com/problems/sliding-window-maximum/) | N |  |  |  |
+| Medium | [912. Sort an Array (Quick Sort)](https://leetcode.com/problems/sort-an-array/) | N |  |  |  |
+| Medium | [912. Sort an Array (Radix Sort)](https://leetcode.com/problems/sort-an-array/) | N |  |  |  |
+| Medium | [912. Sort an Array (Counting Sort)](https://leetcode.com/problems/sort-an-array/) | N |  |  |  |
+| Medium | [912. Sort an Array (Timsort)](https://leetcode.com/problems/sort-an-array/) | N |  |  |  |
+| Unknown | [981. Time Based Key Value Store](https://leetcode.com/problemset/all/?search=981) | N |  |  |  |
+| Medium | [53. Maximum Subarray (Divide and Conquer)](https://leetcode.com/problems/maximum-subarray/) | N | | |  |
