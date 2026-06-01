@@ -61,6 +61,13 @@ def parse_latest_attempt_date_from_attempts(attempts: str) -> datetime | None:
     return max(parsed_dates) if parsed_dates else None
 
 
+def extract_problem_number(problem_title: str) -> int | None:
+    match = re.match(r"^(?P<number>\d+)\.", problem_title)
+    if not match:
+        return None
+    return int(match.group("number"))
+
+
 def compute_next_review_date(mastered: str, latest_attempt_date: datetime | None) -> datetime | None:
     if not latest_attempt_date:
         return None
@@ -124,7 +131,7 @@ def extract_difficulty_from_source(path: Path) -> str | None:
     return None
 
 
-def get_staged_source_files() -> list[Path]:
+def get_staged_paths() -> tuple[list[Path], bool]:
     try:
         output = subprocess.check_output(
             ["git", "diff", "--cached", "--name-only", "--diff-filter=ACM"],
@@ -132,54 +139,107 @@ def get_staged_source_files() -> list[Path]:
             cwd=Path.cwd(),
         )
     except (subprocess.CalledProcessError, FileNotFoundError):
-        return []
+        return [], False
 
     staged_paths: list[Path] = []
+    markdown_staged = False
     for line in output.splitlines():
         line = line.strip()
-        if not line or not line.endswith(".py"):
+        if not line:
             continue
-        path = Path(line)
+        normalized = line.replace("\\", "/")
+        if normalized.startswith("./"):
+            normalized = normalized[2:]
+        if normalized == MARKDOWN_PATH.as_posix():
+            markdown_staged = True
+            continue
+        if not normalized.endswith(".py"):
+            continue
+        path = Path(normalized)
         try:
             path.relative_to(SOURCE_ROOT)
         except ValueError:
             continue
         staged_paths.append(path)
-    return staged_paths
+    return staged_paths, markdown_staged
+
+
+def get_staged_problem_numbers(staged_files: list[Path]) -> set[int]:
+    numbers: set[int] = set()
+    for path in staged_files:
+        match = SOURCE_FILE_RE.match(path.name)
+        if match:
+            numbers.add(int(match.group("number")))
+    return numbers
+
+
+def fill_current_date_for_staged_rows(
+    table_rows: list[dict],
+    staged_files: list[Path] | None = None,
+    fill_all_missing: bool = False,
+) -> int:
+    if not staged_files and not fill_all_missing:
+        return 0
+
+    staged_numbers = get_staged_problem_numbers(staged_files) if staged_files else set()
+    now = datetime.now()
+    updated_count = 0
+
+    for row in table_rows:
+        if row["latest"] is not None:
+            continue
+
+        if not fill_all_missing:
+            match = re.match(r"^(?P<number>\d+)\.", row["problem"])
+            if not match:
+                continue
+            number = int(match.group("number"))
+            if number not in staged_numbers:
+                continue
+
+        row["latest"] = now
+        row["latest_attempt_date"] = format_date(now)
+        attempts = [part.strip() for part in row["attempts"].split(",") if part.strip()]
+        today_text = format_date(now)
+        if today_text not in attempts:
+            attempts.append(today_text)
+        row["attempts"] = ", ".join(attempts)
+        row["next_review"] = format_date(compute_next_review_date(row["mastered"], now))
+        updated_count += 1
+
+    return updated_count
 
 
 def update_existing_row_difficulties(table_rows: list[dict], staged_files: list[Path] | None = None) -> int:
-    row_number_to_index: dict[int, int] = {}
+    row_number_to_indices: dict[int, list[int]] = {}
     for index, row in enumerate(table_rows):
         match = re.match(r"^(?P<number>\d+)\.", row["problem"])
         if match:
-            row_number_to_index[int(match.group("number"))] = index
+            number = int(match.group("number"))
+            row_number_to_indices.setdefault(number, []).append(index)
 
-    if not row_number_to_index:
+    if not row_number_to_indices:
         return 0
 
-    if staged_files is None:
-        paths = list(SOURCE_ROOT.rglob("*.py"))
-    else:
-        paths = staged_files
-
+    paths = list(SOURCE_ROOT.rglob("*.py")) if staged_files is None else staged_files
     updated_count = 0
     for path in paths:
         match = SOURCE_FILE_RE.match(path.name)
         if not match:
             continue
         number = int(match.group("number"))
-        row_index = row_number_to_index.get(number)
-        if row_index is None:
-            continue
-
-        if table_rows[row_index]["difficulty"] != "Unknown":
+        row_indices = row_number_to_indices.get(number)
+        if not row_indices:
             continue
 
         difficulty = extract_difficulty_from_source(path)
-        if difficulty:
-            table_rows[row_index]["difficulty"] = difficulty
-            updated_count += 1
+        if not difficulty:
+            continue
+
+        for row_index in row_indices:
+            if table_rows[row_index]["difficulty"] == "Unknown":
+                table_rows[row_index]["difficulty"] = difficulty
+                updated_count += 1
 
     return updated_count
 
@@ -191,6 +251,15 @@ def discover_source_problems(existing_titles: set[str], staged_files: list[Path]
     else:
         paths = staged_files
 
+    use_today = staged_files is not None
+    now = datetime.now() if use_today else None
+
+    existing_numbers = {
+        extract_problem_number(title)
+        for title in existing_titles
+        if extract_problem_number(title) is not None
+    }
+
     for path in paths:
         match = SOURCE_FILE_RE.match(path.name)
         if not match:
@@ -201,18 +270,21 @@ def discover_source_problems(existing_titles: set[str], staged_files: list[Path]
         problem_title = f"{number}. {title}"
         if problem_title.lower() in existing_titles:
             continue
+        if number in existing_numbers:
+            continue
         difficulty = extract_difficulty_from_source(path) or "Unknown"
         missing_rows.append({
             "difficulty": difficulty,
             "problem": problem_title,
             "url": f"https://leetcode.com/problemset/all/?search={number}",
             "mastered": "N",
-            "latest": None,
-            "latest_attempt_date": "",
-            "attempts": "",
-            "next_review": "",
+            "latest": now,
+            "latest_attempt_date": format_date(now) if now else "",
+            "attempts": format_date(now) if now else "",
+            "next_review": format_date(compute_next_review_date("N", now)) if now else "",
         })
         existing_titles.add(problem_title.lower())
+        existing_numbers.add(number)
     return missing_rows
 
 
@@ -278,7 +350,7 @@ def main() -> None:
     parser.add_argument(
         "--staged-only",
         action="store_true",
-        help="Only discover new problems from staged source files.",
+        help="Only discover new problems from staged source files and fill missing dates for staged review rows.",
     )
     parser.add_argument(
         "--all-source",
@@ -288,11 +360,14 @@ def main() -> None:
     args = parser.parse_args()
 
     staged_files = None
+    markdown_staged = False
     if args.staged_only and args.all_source:
         parser.error("--staged-only and --all-source cannot be used together.")
     if args.staged_only:
-        staged_files = get_staged_source_files()
+        staged_files, markdown_staged = get_staged_paths()
         print(f"Scanning {len(staged_files)} staged source file(s) for new problems.")
+        if markdown_staged:
+            print("Detected staged markdown table changes; missing latest dates will be filled with the current date.")
 
     existing_titles = {
         row["problem"].strip().lower()
@@ -302,6 +377,14 @@ def main() -> None:
     updated_count = update_existing_row_difficulties(table_rows, staged_files=staged_files)
     if updated_count:
         print(f"Updated difficulty for {updated_count} existing review row(s) from source comments.")
+
+    staged_date_count = fill_current_date_for_staged_rows(
+        table_rows,
+        staged_files=staged_files,
+        fill_all_missing=markdown_staged,
+    )
+    if staged_date_count:
+        print(f"Filled current date for {staged_date_count} staged review row(s) with missing latest attempt dates.")
 
     discovered = discover_source_problems(existing_titles, staged_files=staged_files)
     if discovered:
