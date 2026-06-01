@@ -164,6 +164,28 @@ def get_staged_paths() -> tuple[list[Path], bool]:
     return staged_paths, markdown_staged
 
 
+def get_staged_markdown_row_titles() -> set[str]:
+    try:
+        output = subprocess.check_output(
+            ["git", "diff", "--cached", "--unified=0", "--", str(MARKDOWN_PATH)],
+            text=True,
+            cwd=Path.cwd(),
+        )
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        return set()
+
+    titles: set[str] = set()
+    for line in output.splitlines():
+        if not line.startswith("+| "):
+            continue
+        added_line = line[1:]
+        match = ROW_RE.match(added_line)
+        if not match:
+            continue
+        titles.add(match.group("problem").strip().lower())
+    return titles
+
+
 def get_staged_problem_numbers(staged_files: list[Path]) -> set[int]:
     numbers: set[int] = set()
     for path in staged_files:
@@ -176,9 +198,9 @@ def get_staged_problem_numbers(staged_files: list[Path]) -> set[int]:
 def fill_current_date_for_staged_rows(
     table_rows: list[dict],
     staged_files: list[Path] | None = None,
-    fill_all_missing: bool = False,
+    staged_markdown_titles: set[str] | None = None,
 ) -> int:
-    if not staged_files and not fill_all_missing:
+    if not staged_files and not staged_markdown_titles:
         return 0
 
     staged_numbers = get_staged_problem_numbers(staged_files) if staged_files else set()
@@ -189,13 +211,19 @@ def fill_current_date_for_staged_rows(
         if row["latest"] is not None:
             continue
 
-        if not fill_all_missing:
+        problem_title_low = row["problem"].strip().lower()
+        if staged_markdown_titles:
+            if problem_title_low not in staged_markdown_titles:
+                continue
+        elif staged_numbers:
             match = re.match(r"^(?P<number>\d+)\.", row["problem"])
             if not match:
                 continue
             number = int(match.group("number"))
             if number not in staged_numbers:
                 continue
+        else:
+            continue
 
         row["latest"] = now
         row["latest_attempt_date"] = format_date(now)
@@ -363,11 +391,15 @@ def main() -> None:
     markdown_staged = False
     if args.staged_only and args.all_source:
         parser.error("--staged-only and --all-source cannot be used together.")
+    staged_markdown_titles: set[str] = set()
     if args.staged_only:
         staged_files, markdown_staged = get_staged_paths()
+        staged_markdown_titles = get_staged_markdown_row_titles() if markdown_staged else set()
         print(f"Scanning {len(staged_files)} staged source file(s) for new problems.")
         if markdown_staged:
-            print("Detected staged markdown table changes; missing latest dates will be filled with the current date.")
+            print(
+                f"Detected staged markdown table changes; only {len(staged_markdown_titles)} changed/added row(s) will be considered for current-date filling."
+            )
 
     existing_titles = {
         row["problem"].strip().lower()
@@ -381,7 +413,7 @@ def main() -> None:
     staged_date_count = fill_current_date_for_staged_rows(
         table_rows,
         staged_files=staged_files,
-        fill_all_missing=markdown_staged,
+        staged_markdown_titles=staged_markdown_titles,
     )
     if staged_date_count:
         print(f"Filled current date for {staged_date_count} staged review row(s) with missing latest attempt dates.")
