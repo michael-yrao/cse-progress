@@ -96,3 +96,25 @@ def dfs(r, c):
 ```
 
 ---
+## ❌ Problem Name: 200. Number of Islands (BFS Variant)
+* **Date**: 2026-06-01
+* **Topic(s)**: Graph / Breadth-First Search (BFS) / Matrix Grid
+
+### 1. Where did I get stuck?
+* My queue expanded exponentially, causing a Memory Limit Exceeded (MLE) crash, because I was marking nodes as visited *after* popping them from the queue instead of the exact millisecond they were appended.
+
+### 2. The Core Realization
+* In a BFS matrix traversal, a neighbor node must be marked as visited immediately upon being pushed to the queue to prevent adjacent nodes from scanning it and pushing redundant duplicates of the same coordinate onto the active queue wavefront.
+
+### 3. Code Snippet to Remember
+```python
+# Mark the neighbor visited the EXACT SAME MILLISECOND it is pushed to the queue
+for rowTraversal, colTraversal in directions:
+    neighborRow = row + rowTraversal
+    neightColumn = col + colTraversal
+    if (0 <= neighborRow < rows and 0 <= neightColumn < cols 
+        and (neighborRow, neightColumn) not in visited 
+        and grid[neighborRow][neightColumn] == '1'):
+            visited.add((neighborRow, neightColumn))  # Safeguard baseline
+            queue.append((neighborRow, neightColumn))  # Push to wavefront
+```

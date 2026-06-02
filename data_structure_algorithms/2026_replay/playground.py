@@ -779,7 +779,7 @@ class Playground:
 
             def backtrack(l,r,skipsRemaining):
                 currentState = (l,r,skipsRemaining)
-                
+
                 if currentState in memo:
                     return memo[currentState]
                 if skipsRemaining < 0:
@@ -823,3 +823,51 @@ class Playground:
                 return True
 
             return backtrack(0,len(s)-1,skip)
+
+    class NumberOfIslands:
+        def numIslands(self, grid: List[List[str]]) -> int:
+        # We want to do BFS method here
+        # So idea is same for both BFS and DFS for this problem
+        # BFS/DFS are there to mark all land for the current island
+        # we do need to check if grid is empty since we need to add initial node to queue
+
+            if not grid: 
+                return 0
+
+            visited = set()
+            queue = collections.deque()
+            directions = [[1,0], [-1,0], [0,1], [0,-1]]
+            islandCounter = 0
+
+            rows, cols = len(grid), len(grid[0])
+
+            def bfs():
+                while queue:
+                    # get current node
+                    row, col = queue.popleft()
+                    # since we added to visited when we first entered bfs
+                    # we don't need to re-add
+                    # go through the neighbors, if good, we add to queue and add to visited
+                    for rowTraversal, colTraversal in directions:
+                        neighborRow = row + rowTraversal
+                        neightColumn = col + colTraversal
+                        if (neighborRow >= 0 and neighborRow < rows and neightColumn >= 0 and neightColumn < cols 
+                            and (neighborRow, neightColumn) not in visited 
+                            and grid[neighborRow][neightColumn] == '1'):
+                                visited.add((neighborRow,neightColumn))
+                                queue.append((neighborRow, neightColumn))
+            for row in range(rows):
+                for col in range(cols):
+                    # if currentNode is not visited
+                    # and currentNode is within bounds
+                    # and currentNode is land
+                    # then we perform BFS to mark all of the land
+                    if (row >= 0 and row < rows and col >= 0 and col < cols 
+                        and (row, col) not in visited 
+                        and grid[row][col] == '1'):
+                        islandCounter+=1
+                        queue.append((row,col))
+                        visited.add((row,col))
+                        bfs()
+            
+            return islandCounter
