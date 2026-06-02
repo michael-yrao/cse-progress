@@ -368,8 +368,9 @@ def main() -> None:
             mastered = match.group("mastered").strip()
             latest = parse_date(match.group("latest"))
             attempts = match.group("attempts").strip()
-            if latest is None:
-                latest = parse_latest_attempt_date_from_attempts(attempts)
+            attempts_latest = parse_latest_attempt_date_from_attempts(attempts)
+            if latest is None or (attempts_latest is not None and attempts_latest > latest):
+                latest = attempts_latest
             next_review = format_date(compute_next_review_date(mastered, latest))
             table_rows.append({
                 "difficulty": difficulty,
