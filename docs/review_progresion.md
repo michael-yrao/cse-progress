@@ -35,7 +35,7 @@ Notes for future agents:
 | Medium | [200. Number of Islands (DFS)](https://leetcode.com/problems/number-of-islands/) | N | 2026-06-02 | 2026-05-31 | 2026-05-31 |
 | Easy | [680. Valid Palindrome II](https://leetcode.com/problems/valid-palindrome-ii/) | N | 2026-06-01 | 2026-05-30 | 2026-01-19, 2026-04-05, 2026-05-28, 2026-05-30 |
 | Medium | [15. 3Sum](https://leetcode.com/problems/3sum/) | Y | 2026-06-29 | 2026-05-30 | 2026-01-19, 2026-04-07, 2026-05-30 |
-| Medium | [200. Number of Islands (BFS)](https://leetcode.com/problems/number-of-islands/) | N | 2026-06-01 | 2026-05-30 | 2026-05-30 |
+| Medium | [200. Number of Islands (BFS)](https://leetcode.com/problems/number-of-islands/) | N | 2026-06-01 | 2026-05-30 | 2026-05-30, 2026-06-01 |
 | Medium | [347. Top K Frequent Elements](https://leetcode.com/problems/top-k-frequent-elements/) | Y | 2026-06-29 | 2026-05-30 | 2026-01-11, 2026-04-09, 2026-05-30 |
 | Medium | [33. Search in Rotated Sorted Array](https://leetcode.com/problems/search-in-rotated-sorted-array/) | N | 2026-05-31 | 2026-05-29 | 2026-04-13, 2026-05-29 |
 | Medium | [49. Group Anagrams](https://leetcode.com/problems/group-anagrams/) | Y | 2026-06-28 | 2026-05-29 | 2026-01-04, 2026-03-27, 2026-05-29 |
