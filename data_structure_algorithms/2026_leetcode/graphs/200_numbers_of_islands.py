@@ -92,7 +92,6 @@ class Solution:
 
         visited = set()
         result = 0
-        neighbors = ([1,0], [-1, 0], [0,1], [0,-1])
 
         rows, cols = len(grid), len(grid[0])
 

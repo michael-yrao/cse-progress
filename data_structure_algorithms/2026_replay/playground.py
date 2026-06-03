@@ -871,3 +871,72 @@ class Playground:
                         bfs()
             
             return islandCounter
+
+        def numIslands(self, grid: List[List[str]]) -> int:
+            # DFS method
+            # Use DFS to mark nodes we've marked
+            
+            islandCounter=0
+            visited = set()
+            rows, cols = len(grid), len(grid[0])
+
+            def dfs(row,col):
+                # base cases
+                # if out of bound
+                if row < 0 or row >= rows or col < 0 or col >= cols:
+                    return 0
+                # if in water
+                if grid[row][col] == '0':
+                    return 0
+                # if visited
+                if (row, col) in visited:
+                    return 0
+                
+                # now that we know this node is good, let's add it to visited
+                visited.add((row,col))
+
+                # mark all of node's neighbors that are part of this island
+                dfs(row+1,col)
+                dfs(row-1,col)
+                dfs(row,col+1)
+                dfs(row,col-1)
+
+                return 1
+
+            for row in range(rows):
+                for col in range(cols):
+                    # if we have a valid node, let's run dfs on it
+                    if grid[row][col] == '1' and (row,col) not in visited:
+                        islandCounter+=1
+                        dfs(row,col)
+
+            return islandCounter
+
+    class DiameterOfBinaryTree:
+        def diameterOfBinaryTree(self, root: Optional[TreeNode]) -> int:
+            # we are basically just adding max of left and max of right depth
+            # so first thing we need to do is get depth
+            # getting depth, we can do by doing postorder dfs
+
+            maxDiameter = 0
+
+            def dfs(node):
+                nonlocal maxDiameter
+                # when we get to leaf, we return 0 to it
+                if not node:
+                    return 0
+
+                # when we first return here, we are at 4 which has a depth of 0
+                curLeft = dfs(node.left)
+                curRight = dfs(node.right)
+
+                # first time we are here, we would return 2
+                # we need to keep track of maximum
+
+                maxDiameter = max(maxDiameter, curLeft+curRight)
+
+                # send up to 2 with 1 + whichever side has longer
+                return 1+max(curLeft,curRight)
+            
+            dfs(root)
+            return maxDiameter
