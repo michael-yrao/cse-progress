@@ -118,3 +118,29 @@ for rowTraversal, colTraversal in directions:
             visited.add((neighborRow, neightColumn))  # Safeguard baseline
             queue.append((neighborRow, neightColumn))  # Push to wavefront
 ```
+
+## ❌ Problem Name: 133. Clone Graph (DFS Variant)
+* **Date**: 2026-06-04
+* **Topic(s)**: Graph / Depth-First Search (DFS) / Deep Copy
+
+### 1. Where did I get stuck?
+* I struggled to conceptualize how a recursive deep copy separates node traversal from connection wiring, and how the code returns values up the call stack without erasing intermediate graph progress.
+
+### 2. The Core Realization
+* This follows a bottom-up Head Recursion pattern. The function must execute `return copy` for every single node in the graph. The execution stack plunges down to create nodes first, and then wires up the graph connections (.append()) on the way back up as the recursive frames unwind.
+
+### 3. Code Snippet to Remember
+```python
+# The Old-to-New hash map acts as BOTH a visited set and a clone cache
+if curr_node in old_to_new:
+    return old_to_new[curr_node]  # Guardrail returns existing clone address
+
+copy = Node(curr_node.val)
+old_to_new[curr_node] = copy      # Map old address to new instance
+
+# Post-processing: Connect neighbors using returned values from the unwinding stack
+for neighbor in curr_node.neighbors:
+    copy.neighbors.append(dfs(neighbor))
+    
+return copy  # Triggers on EVERY node to hand its memory address backward
+```

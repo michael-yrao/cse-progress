@@ -5,12 +5,12 @@
 
 | Pattern | Execution Order | Stack Frame Lifecycle | Core Use Case |
 | :--- | :--- | :--- | :--- |
-| **Forward Recursion** | State updates on the way **DOWN** | Evaluated *before* diving to next frame | Building pipelines, tree down-traversal, accumulations |
-| **Backward Recursion**| State updates on the way **UP** | Evaluated *after* returning from base case | Counting from tail, reversing chains, post-order trees |
+| **Head Recursion** | State updates on the way **DOWN** | Evaluated *before* diving to next frame | Building pipelines, tree down-traversal, accumulations |
+| **Tail Recursion**| State updates on the way **UP** | Evaluated *after* returning from base case | Counting from tail, reversing chains, post-order trees |
 
 ---
 
-## 1. Forward Recursion (Pre-Order Execution)
+## 1. Head Recursion (Pre-Order Execution)
 
 **Use Case**: Building structural pipelines forward, or executing state evaluations on the way down toward the base case.
 
@@ -42,7 +42,7 @@ def mergeTwoLists(self, list1: ListNode, list2: ListNode) -> ListNode:
 
 ---
 
-## 2. Backward Recursion (Post-Order Execution)
+## 2. Tail Recursion (Post-Order Execution)
 
 **Use Case**: Traversing to an unknown endpoint (like a tail pointer) first, then running evaluations backward relative to that end boundary.
 
@@ -90,23 +90,23 @@ Failing to recognize execution direction causes pointer truncation or counter sh
 
 ### Real Examples
 
-#### Example 1: Forward Accumulation Tree Depth (Forward Pattern)
+#### Example 1: Forward Accumulation Tree Depth (Head Pattern)
 ```python
-def maxDepthForward(self, root: TreeNode, current_depth: int = 1) -> int:
+def maxDepthHead(self, root: TreeNode, current_depth: int = 1) -> int:
     if not root: return current_depth - 1
     # State is accumulated on the way down via argument updates
-    left = self.maxDepthForward(root.left, current_depth + 1)
-    right = self.maxDepthForward(root.right, current_depth + 1)
+    left = self.maxDepthHead(root.left, current_depth + 1)
+    right = self.maxDepthHead(root.right, current_depth + 1)
     return max(left, right)
 ```
 
-#### Example 2: Evaluative Bottom-Up Tree Depth (Backward Pattern)
+#### Example 2: Evaluative Bottom-Up Tree Depth (Tail Pattern)
 ```python
-def maxDepthBackward(self, root: TreeNode) -> int:
+def maxDepthTail(self, root: TreeNode) -> int:
     if not root: return 0
     # Dive completely to leaf nodes before running math calculations
-    left = self.maxDepthBackward(root.left)
-    right = self.maxDepthBackward(root.right)
+    left = self.maxDepthTail(root.left)
+    right = self.maxDepthTail(root.right)
     # Work happens on the return path up the stack frames
     return max(left, right) + 1
 ```
@@ -116,8 +116,8 @@ def maxDepthBackward(self, root: TreeNode) -> int:
 
 | Context | How to Identify |
 | :--- | :--- |
-| **Pipeline/Chain Construction** | If current nodes must immediately resolve their connections to lookups before evaluating children, choose **Forward**. |
-| **End-Relative Analytics** | If constraints require metric calculations relative to an unknown end boundary, choose **Backward**. |
+| **Pipeline/Chain Construction** | If current nodes must immediately resolve their connections to lookups before evaluating children, choose **Head**. |
+| **End-Relative Analytics** | If constraints require metric calculations relative to an unknown end boundary, choose **Tail**. |
 
 ---
 
@@ -131,8 +131,8 @@ def maxDepthBackward(self, root: TreeNode) -> int:
 ### Mental Model
 
 ```text
-FORWARD EXECUTION LOGIC              BACKWARD EXECUTION LOGIC
-      (Diving Down)                        (Popping Up)
+    HEAD EXECUTION LOGIC                 TAIL EXECUTION LOGIC
+        (Diving Down)                        (Popping Up)
  ┌─────────────────────────┐          ┌─────────────────────────┐
  │  Step 1: Do Local Work  │          │  Step 3: Do Local Work  │
  └────────────┬────────────┘          └────────────▲────────────┘

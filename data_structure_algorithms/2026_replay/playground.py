@@ -252,6 +252,37 @@ class Playground:
                 nums1[arrIterator] = nums2[rightIterator]
                 rightIterator-=1
                 arrIterator-=1
+        def merge20260604(self, nums1: List[int], m: int, nums2: List[int], n: int) -> None:
+            """
+            Do not return anything, modify nums1 in-place instead.
+            """
+            # since nums1 is already at size m + n
+            # we should just fill from the back
+            # so we are given nums1's actual size is m, so we can just have two pointers
+            # each pointer pointing at m - 1 and n - 1 respectively
+            # one pointer to decrement and put value from the end of nums1
+            # the two pointers to each array will decrement whenever it is bigger
+
+            nums1Ptr, nums2Ptr = m - 1, n - 1
+
+            for i in range(len(nums1)-1,-1,-1):
+                # this only works if both are still in bound
+                # what should we do if one of them goes out of bound
+                if nums1Ptr >= 0 and nums2Ptr >= 0:
+                    if nums1[nums1Ptr] > nums2[nums2Ptr]:
+                        nums1[i] = nums1[nums1Ptr]
+                        nums1Ptr-=1
+                    else:
+                        nums1[i] = nums2[nums2Ptr]
+                        nums2Ptr-=1
+                elif nums1Ptr >= 0:
+                    nums1[i] = nums1[nums1Ptr]
+                    nums1Ptr-=1
+                elif nums2Ptr >= 0:
+                    nums1[i] = nums2[nums2Ptr]
+                    nums2Ptr-=1
+                else:
+                    break
     class RotateArray_20260404:
         def rotate(self, nums: List[int], k: int) -> None:
             """
@@ -940,3 +971,28 @@ class Playground:
             
             dfs(root)
             return maxDiameter
+    class BalancedBinaryTree:
+        def isBalanced(self, root: Optional[TreeNode]) -> bool:
+            # so example 2 is wrong because left node has max depth of 4
+            # while right tree has max depth of 1
+            # basically we are to check maxdepth of each side
+            # if they differ by 1, return false
+            # so we need a subfunction that helps us get depth
+            
+            isBalanced = True
+
+            def dfs(root):
+                nonlocal isBalanced
+                if not root:
+                    return 0
+                
+                leftDepth = dfs(root.left)
+                rightDepth = dfs(root.right)
+
+                if abs(leftDepth - rightDepth) > 1:
+                    isBalanced = False
+                
+                return 1 + max(leftDepth,rightDepth)
+
+            dfs(root)
+            return isBalanced
