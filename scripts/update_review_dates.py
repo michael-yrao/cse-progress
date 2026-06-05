@@ -450,8 +450,22 @@ def main() -> None:
         header_index = prefix_lines.index(TABLE_HEADER)
     except ValueError:
         header_index = len(prefix_lines)
+    
+    # Remove old summary lines from prefix
+    filtered_prefix = []
+    for line in prefix_lines[:header_index]:
+        if not (line.startswith("**Problems Done:**") or line.startswith("**Total Successful Attempts:**") or line.strip() == ""):
+            filtered_prefix.append(line)
+        elif line.strip() == "" and (not filtered_prefix or filtered_prefix[-1].strip() != ""):
+            # Keep empty lines that aren't consecutive
+            filtered_prefix.append(line)
+    
+    # Remove trailing empty lines before inserting summary
+    while filtered_prefix and filtered_prefix[-1].strip() == "":
+        filtered_prefix.pop()
+    
     summary_lines = build_summary_lines(sorted_rows)
-    new_prefix = prefix_lines[:header_index] + summary_lines + prefix_lines[header_index:]
+    new_prefix = filtered_prefix + summary_lines + prefix_lines[header_index:]
 
     new_lines = new_prefix + sorted_lines + suffix_lines
     if new_lines != lines:

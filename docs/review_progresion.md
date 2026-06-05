@@ -23,27 +23,14 @@ Notes for future agents:
 -->
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/review_progresion.md` is staged for commit or when the helper script is run.
-
-**Problems Done:** 74
-**Total Successful Attempts:** 127
-
-**Problems Done:** 74
-**Total Successful Attempts:** 128
-
-**Problems Done:** 74
-**Total Successful Attempts:** 128
-
-**Problems Done:** 74
-**Total Successful Attempts:** 128
-
-**Problems Done:** 74
-**Total Successful Attempts:** 131
-
-**Problems Done:** 74
-**Total Successful Attempts:** 131
+**Problems Done:** 75
+**Total Successful Attempts:** 134
 
 | Difficulty | Problem | Mastered | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|
+| Medium | [133. Clone Graph](https://leetcode.com/problemset/all/?search=133) | N | 2026-06-06 | 2026-06-04 | 2026-06-04 |
+| Easy | [110. Balanced Binary Tree](https://leetcode.com/problems/balanced-binary-tree/) | N | 2026-06-06 | 2026-06-04 | 2026-05-01, 2026-06-04 |
+| Easy | [88. Merge Sorted Array](https://leetcode.com/problems/merge-sorted-array/) | Y | 2026-07-04 | 2026-06-04 | 2026-01-10, 2026-04-03, 2026-06-04 |
 | Medium | [200. Number of Islands (DFS)](https://leetcode.com/problems/number-of-islands/) | N | 2026-06-04 | 2026-06-02 | 2026-05-31, 2026-06-02 |
 | Easy | [543. Diameter of Binary Tree](https://leetcode.com/problems/diameter-of-binary-tree/) | N | 2026-06-04 | 2026-06-02 | 2026-04-30, 2026-06-02 |
 | Easy | [283. Move Zeroes](https://leetcode.com/problems/move-zeroes/) | N | 2026-06-04 | 2026-06-02 | 2026-01-10, 2026-04-02, 2026-06-02 |
@@ -79,7 +66,6 @@ Notes for future agents:
 | Medium | [540. Single Element in a Sorted Array](https://leetcode.com/problems/single-element-in-a-sorted-array/) | N | 2026-05-04 | 2026-05-02 | 2026-05-02 |
 | Medium | [572. Subtree Of Another Tree](https://leetcode.com/problemset/all/?search=572) | N | 2026-05-04 | 2026-05-02 | 2026-05-02 |
 | Easy | [100. Same Tree](https://leetcode.com/problems/same-tree/) | N | 2026-05-03 | 2026-05-01 | 2026-05-01 |
-| Easy | [110. Balanced Binary Tree](https://leetcode.com/problems/balanced-binary-tree/) | N | 2026-05-03 | 2026-05-01 | 2026-05-01, 2026-06-04 |
 | Easy | [21. Merge Two Sorted Lists (Iterative)](https://leetcode.com/problems/merge-two-sorted-lists/) | N | 2026-04-28 | 2026-04-26 | 2026-04-26 |
 | Easy | [141. Linked List Cycle](https://leetcode.com/problems/linked-list-cycle/) | Y | 2026-05-26 | 2026-04-26 | 2026-04-26 |
 | Medium | [143. Reorder List](https://leetcode.com/problems/reorder-list/) | N | 2026-04-28 | 2026-04-26 | 2026-04-26 |
@@ -104,7 +90,6 @@ Notes for future agents:
 | Medium | [560. Subarray Sum Equals K](https://leetcode.com/problems/subarray-sum-equals-k/) | N | 2026-04-07 | 2026-04-05 | 2026-04-05 |
 | Medium | [189. Rotate Array](https://leetcode.com/problems/rotate-array/) | N | 2026-04-06 | 2026-04-04 | 2026-01-11, 2026-04-04 |
 | Easy | [344. Reverse String](https://leetcode.com/problems/reverse-string/) | Y | 2026-05-04 | 2026-04-04 | 2026-01-15, 2026-04-04 |
-| Easy | [88. Merge Sorted Array](https://leetcode.com/problems/merge-sorted-array/) | Y | 2026-04-05 | 2026-04-03 | 2026-01-10, 2026-04-03, 2026-06-04 |
 | Easy | [26. Remove Duplicates from Sorted Array](https://leetcode.com/problems/remove-duplicates-from-sorted-array/) | Y | 2026-05-02 | 2026-04-02 | 2026-01-09, 2026-04-02 |
 | Medium | [53. Maximum Subarray (Kadane)](https://leetcode.com/problems/maximum-subarray/) | N | 2026-04-04 | 2026-04-02 | 2026-01-08, 2026-04-02 |
 | Medium | [53. Maximum Subarray (Prefix Sum)](https://leetcode.com/problems/maximum-subarray/) | N | 2026-04-03 | 2026-04-01 | 2026-01-08, 2026-04-01 |
