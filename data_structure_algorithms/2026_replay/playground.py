@@ -16,6 +16,13 @@ class TreeNode:
         self.left = left
         self.right = right
 
+# Graph nodes
+
+class Node:
+    def __init__(self, val = 0, neighbors = None):
+        self.val = val
+        self.neighbors = neighbors if neighbors is not None else []
+
 class Playground:
     class MergeSort_20260326:
         def sortArrayWithMergeSort(self, nums: List[int]) -> List[int]:
@@ -996,3 +1003,72 @@ class Playground:
 
             dfs(root)
             return isBalanced
+    class CloneGraph:
+        def cloneGraph(self, node: Optional['Node']) -> Optional['Node']:
+            # so the idea is that we want to create a new node for each node
+            # and also create a new node for each of its neighbors
+            # we will use a map of old -> new
+            # this will also serve as our 'visited' list
+
+            oldToNewMap = {}
+
+            # we want to use dfs to help us map
+            def dfs(oldNode):
+                if not oldNode:
+                    return
+
+                # if we already created new node for it
+                # return the new node
+                if oldNode in oldToNewMap:
+                    return oldToNewMap[oldNode]
+                
+                # if not, then let's create the new node
+                newNode = Node(oldNode.val)
+
+                # add it to the map and mark it as visited
+                oldToNewMap[oldNode] = newNode
+
+                # now let's create copies of all its neighbors
+                for neighbor in oldNode.neighbors:
+                    newNode.neighbors.append(dfs(neighbor))
+                
+                return newNode
+            
+            return dfs(node)
+    class LongestCommonPrefix:
+        def longestCommonPrefix(self, strs: List[str]) -> str:
+            # find shortest string in list
+            # iterate through shortest string
+            # loop through each str in list and if str[i] != shortest[i], return current longest
+            # otherwise add to result
+
+            shortestString = min(strs, key=len)
+
+            lcp = ""
+
+            for i in range(len(shortestString)):
+                for str in strs:
+                    if str[i] != shortestString[i]:
+                        return lcp
+                lcp+=shortestString[i]
+            
+            return lcp
+    class SameTree:
+        def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
+            # we can do preorder dfs here
+            # if root is not the same, we just return false without involving children
+
+            # if both null, we are still good
+            if not p and not q:
+                return True
+            
+            # if one is null, we are not good
+            if not p or not q:
+                return False
+
+            # we are not null here, so let's check value
+
+            if p.val != q.val:
+                return False
+            
+            return self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
