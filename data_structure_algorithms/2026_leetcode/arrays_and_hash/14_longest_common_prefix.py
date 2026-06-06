@@ -84,16 +84,6 @@ class Solution:
         # if we are here, that means we matched all so we return the full word        
         return shortestWord
 
-    def minLengthStr(self, strs: List[str]) -> str:
-        shortestString = strs[0]
-
-        for string in strs:
-            if len(string) < shortestString:
-                shortestString = string
-        
-        return shortestString
-
-
 class UnitTest(unittest.TestCase):
 
     test1 = ["bat","bag","bank","band"]
