@@ -144,3 +144,23 @@ for neighbor in curr_node.neighbors:
     
 return copy  # Triggers on EVERY node to hand its memory address backward
 ```
+
+## ❌ Problem Name: 994. Rotting Oranges
+* **Date**: 2026-06-06
+* **Topic(s)**: Graph / Multi-Source BFS / Wavefront Batching
+
+### 1. Where did I get stuck?
+* I tracking minutes incorrectly because my loop incremented time after processing a single node instead of tracking multiple parallel, simultaneous infection origins as a unified single-minute generation wave.
+
+### 2. The Core Realization
+* Multi-source BFS problems tracking dynamic steps require batch-wave processing. By taking a snapshot size measurement of the queue length (`len(queue)`) at the start of each layer and running a strict bounded `range()` loop, an entire generation is fully exhausted before the master time counter increments.
+
+### 3. Code Snippet to Remember
+```python
+while rottenQueue and freshOrangeCounter > 0:
+    numberOfRottenOranges = len(rottenQueue)  # Freeze generation size
+    for _ in range(numberOfRottenOranges):    # Loop exactly that many steps safely
+        currentRow, currentCol = rottenQueue.popleft()
+        # ... neighbor calculations and counters ...
+    minute += 1  # Increment only when the entire generation wavefront finishes
+```
