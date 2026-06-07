@@ -863,7 +863,7 @@ class Playground:
             return backtrack(0,len(s)-1,skip)
 
     class NumberOfIslands:
-        def numIslands(self, grid: List[List[str]]) -> int:
+        def numIslandsBFS(self, grid: List[List[str]]) -> int:
         # We want to do BFS method here
         # So idea is same for both BFS and DFS for this problem
         # BFS/DFS are there to mark all land for the current island
@@ -950,6 +950,48 @@ class Playground:
 
             return islandCounter
 
+        def numIslandsBFS_20260607(self, grid: List[List[str]]) -> int:
+            # BFS Method
+            
+            visited = set()
+            numberOfIslands = 0
+
+            queue = collections.deque()
+
+            rows, cols = len(grid), len(grid[0])
+
+            def bfs():
+                
+                neighbors = [[1,0],[-1,0],[0,1],[0,-1]]
+
+                while queue:
+                    currentRow, currentCol = queue.popleft()
+                    # go through neighbors of currentRow/currentCol
+                    # mark each as visited
+                    for rowInc, colInc in neighbors:
+                        neighborRow = currentRow + rowInc
+                        neighborCol = currentCol + colInc
+
+                        if (neighborRow >= 0 and neighborRow < rows
+                                and neighborCol >= 0 and neighborCol < cols
+                                and (neighborRow, neighborCol) not in visited
+                                and grid[neighborRow][neighborCol] == '1'):
+                            # mark as visited and add to queue
+                            visited.add((neighborRow,neighborCol))
+                            queue.append((neighborRow, neighborCol))
+
+            for row in range(rows):
+                for col in range(cols):
+                    # find the first unvisited land
+                    # bfs on it to mark it
+                    if ((row,col) not in visited and grid[row][col] == '1'):
+                        numberOfIslands+=1
+                        queue.append((row,col))
+                        visited.add((row,col))
+                        bfs()
+            
+            return numberOfIslands
+
     class DiameterOfBinaryTree:
         def diameterOfBinaryTree(self, root: Optional[TreeNode]) -> int:
             # we are basically just adding max of left and max of right depth
@@ -1032,6 +1074,38 @@ class Playground:
                 for neighbor in oldNode.neighbors:
                     newNode.neighbors.append(dfs(neighbor))
                 
+                return newNode
+            
+            return dfs(node)
+        
+        def cloneGraph_20260607(self, node: Optional['Node']) -> Optional['Node']:
+            # we need to keep track if we cloned this already
+            # we also need a way to map old to new, so we will just use a hashmap
+            # the map will handle both
+
+            oldToNewMap = {}
+
+            def dfs(oldNode):
+                # if oldNode is null, return nothing
+                if not oldNode:
+                    return
+                
+                # if already visited and cloned, don't relcone
+                if oldNode in oldToNewMap:
+                    return oldToNewMap[oldNode]
+                
+                # if not mapped yet, we need to clone it
+                # this is also clearly a preorder DFS since we need to clone beforehand
+                newNode = Node(oldNode.val)
+
+                # add to the map
+                oldToNewMap[oldNode] = newNode
+
+                for neighbor in oldNode.neighbors:
+                    # now we want to clone the neighbors
+                    # then set newNode's neighbors to these clones
+                    newNode.neighbors.append(dfs(neighbor))
+
                 return newNode
             
             return dfs(node)
