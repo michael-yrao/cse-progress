@@ -24,11 +24,13 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/review_progresion.md` is staged for commit or when the helper script is run.
 **Problems Done:** 75
-**Total Successful Attempts:** 134
+**Total Successful Attempts:** 137
 
 | Difficulty | Problem | Mastered | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|
-| Medium | [133. Clone Graph](https://leetcode.com/problemset/all/?search=133) | N | 2026-06-06 | 2026-06-04 | 2026-06-04, 2026-06-05 |
+| Medium | [133. Clone Graph](https://leetcode.com/problemset/all/?search=133) | N | 2026-06-07 | 2026-06-05 | 2026-06-04, 2026-06-05 |
+| Easy | [100. Same Tree](https://leetcode.com/problems/same-tree/) | Y | 2026-07-05 | 2026-06-05 | 2026-05-01, 2026-06-05 |
+| Easy | [14. Longest Common Prefix](https://leetcode.com/problems/longest-common-prefix/) | N | 2026-06-07 | 2026-06-05 | 2026-01-03, 2026-03-27, 2026-06-05 |
 | Easy | [110. Balanced Binary Tree](https://leetcode.com/problems/balanced-binary-tree/) | N | 2026-06-06 | 2026-06-04 | 2026-05-01, 2026-06-04 |
 | Easy | [88. Merge Sorted Array](https://leetcode.com/problems/merge-sorted-array/) | Y | 2026-07-04 | 2026-06-04 | 2026-01-10, 2026-04-03, 2026-06-04 |
 | Medium | [200. Number of Islands (DFS)](https://leetcode.com/problems/number-of-islands/) | N | 2026-06-04 | 2026-06-02 | 2026-05-31, 2026-06-02 |
@@ -65,7 +67,6 @@ Notes for future agents:
 | Medium | [162. Find Peak Element](https://leetcode.com/problems/find-peak-element/) | N | 2026-05-04 | 2026-05-02 | 2026-05-02 |
 | Medium | [540. Single Element in a Sorted Array](https://leetcode.com/problems/single-element-in-a-sorted-array/) | N | 2026-05-04 | 2026-05-02 | 2026-05-02 |
 | Medium | [572. Subtree Of Another Tree](https://leetcode.com/problemset/all/?search=572) | N | 2026-05-04 | 2026-05-02 | 2026-05-02 |
-| Easy | [100. Same Tree](https://leetcode.com/problems/same-tree/) | Y | 2026-05-03 | 2026-05-01 | 2026-05-01, 2026-06-05 |
 | Easy | [21. Merge Two Sorted Lists (Iterative)](https://leetcode.com/problems/merge-two-sorted-lists/) | N | 2026-04-28 | 2026-04-26 | 2026-04-26 |
 | Easy | [141. Linked List Cycle](https://leetcode.com/problems/linked-list-cycle/) | Y | 2026-05-26 | 2026-04-26 | 2026-04-26 |
 | Medium | [143. Reorder List](https://leetcode.com/problems/reorder-list/) | N | 2026-04-28 | 2026-04-26 | 2026-04-26 |
@@ -94,7 +95,6 @@ Notes for future agents:
 | Medium | [53. Maximum Subarray (Kadane)](https://leetcode.com/problems/maximum-subarray/) | N | 2026-04-04 | 2026-04-02 | 2026-01-08, 2026-04-02 |
 | Medium | [53. Maximum Subarray (Prefix Sum)](https://leetcode.com/problems/maximum-subarray/) | N | 2026-04-03 | 2026-04-01 | 2026-01-08, 2026-04-01 |
 | Medium | [75. Sort Colors (Bucket Sort)](https://leetcode.com/problems/sort-colors/) | N | 2026-04-03 | 2026-04-01 | 2026-01-07, 2026-04-01 |
-| Easy | [14. Longest Common Prefix](https://leetcode.com/problems/longest-common-prefix/) | N | 2026-03-29 | 2026-03-27 | 2026-01-03, 2026-03-27, 2026-06-05 |
 | Medium | [912. Sort an Array (Merge Sort)](https://leetcode.com/problems/sort-an-array/) | N | 2026-03-28 | 2026-03-26 | 2026-01-06, 2026-03-26 |
 | Easy | [1. Two Sum](https://leetcode.com/problems/two-sum/) | Y | 2026-04-24 | 2026-03-25 | 2026-01-02, 2026-03-25 |
 | Easy | [66. Plus One](https://leetcode.com/problems/plus-one/) | N | 2026-03-27 | 2026-03-25 | 2026-01-02, 2026-03-25 |

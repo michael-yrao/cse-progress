@@ -222,32 +222,33 @@ def fill_current_date_for_staged_rows(
     updated_count = 0
 
     for row in table_rows:
-        if row["latest"] is not None:
-            continue
-
         problem_title_low = row["problem"].strip().lower()
+        is_staged = False
+        
         if staged_markdown_titles:
-            if problem_title_low not in staged_markdown_titles:
-                continue
+            is_staged = problem_title_low in staged_markdown_titles
         elif staged_numbers:
             match = re.match(r"^(?P<number>\d+)\.", row["problem"])
-            if not match:
-                continue
-            number = int(match.group("number"))
-            if number not in staged_numbers:
-                continue
-        else:
+            if match:
+                number = int(match.group("number"))
+                is_staged = number in staged_numbers
+        
+        if not is_staged:
             continue
-
-        row["latest"] = now
-        row["latest_attempt_date"] = format_date(now)
+        
+        # Update attempts for both new rows and existing rows
         attempts = [part.strip() for part in row["attempts"].split(",") if part.strip()]
         today_text = format_date(now)
+        
         if today_text not in attempts:
             attempts.append(today_text)
-        row["attempts"] = ", ".join(attempts)
-        row["next_review"] = format_date(compute_next_review_date(row["mastered"], now))
-        updated_count += 1
+            row["attempts"] = ", ".join(attempts)
+            
+            # Update latest and next review
+            row["latest"] = now
+            row["latest_attempt_date"] = format_date(now)
+            row["next_review"] = format_date(compute_next_review_date(row["mastered"], now))
+            updated_count += 1
 
     return updated_count
 
