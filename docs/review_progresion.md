@@ -28,8 +28,8 @@ Notes for future agents:
 
 | Difficulty | Problem | Mastered | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|
-| Medium | [133. Clone Graph](https://leetcode.com/problemset/all/?search=133) | N | 2026-06-09 | 2026-06-07 | 2026-06-04, 2026-06-05, 2026-06-07 |
-| Medium | [200. Number of Islands (BFS)](https://leetcode.com/problems/number-of-islands/) | N | 2026-06-09 | 2026-06-07 | 2026-05-30, 2026-06-01, 2026-06-07 |
+| Medium | [133. Clone Graph](https://leetcode.com/problemset/all/?search=133) | Y | 2026-07-07 | 2026-06-07 | 2026-06-04, 2026-06-05, 2026-06-07 |
+| Medium | [200. Number of Islands (BFS)](https://leetcode.com/problems/number-of-islands/) | Y | 2026-07-07 | 2026-06-07 | 2026-05-30, 2026-06-01, 2026-06-07 |
 | Medium | [994. Rotting Oranges](https://leetcode.com/problemset/all/?search=994) | N | 2026-06-08 | 2026-06-06 | 2026-06-06 |
 | Easy | [100. Same Tree](https://leetcode.com/problems/same-tree/) | Y | 2026-07-05 | 2026-06-05 | 2026-05-01, 2026-06-05 |
 | Easy | [14. Longest Common Prefix](https://leetcode.com/problems/longest-common-prefix/) | N | 2026-06-07 | 2026-06-05 | 2026-01-03, 2026-03-27, 2026-06-05 |
