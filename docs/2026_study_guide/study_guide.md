@@ -7,8 +7,47 @@ Every Sunday night, look at your spreadsheet backlog and select **5 older proble
 1. **Priority 1 (High Risk)**: Problems marked `Mastered: N` with the oldest "Latest Attempt Date" (e.g., *36. Valid Sudoku* from Jan 25).
 2. **Priority 2 (Medium Risk)**: Problems marked `Mastered: N` with more recent dates (e.g., *75. Sort Colors* from April 1).
 3. **Priority 3 (Maintenance)**: Problems marked `Mastered: Y` that you haven't touched in over 30 days (e.g., *238. Product of Array Except Self* from April 13).
-
 ---
+
+## 🚨 BACKLOG RECOVERY PROTOCOL
+
+**Trigger**: Any time the Next Review Date is 7+ days overdue with no new attempt logged.
+
+### Emergency Double Session Rule
+
+When triggered, run **two 15-minute warmup blocks per day** (morning + evening) until the overdue list is cleared. Do not start any new problems in your active block until the Critical tier is fully resolved.
+
+#### Critical (4+ weeks overdue as of June 7)
+- [ ] 21. Merge Two Sorted Lists (Iterative) — due Apr 28
+- [ ] 162. Find Peak Element — due May 4
+- [ ] 540. Single Element in a Sorted Array — due May 4
+- [ ] 572. Subtree of Another Tree — due May 4
+- [ ] 102. Binary Tree Level Order Traversal — due May 5
+- [ ] 235. Lowest Common Ancestor of a BST — due May 5
+- [ ] 1011. Capacity to Ship Packages Within D Days — due May 5
+- [ ] 2300. Successful Pairs of Spells and Potions — due May 5
+- [ ] 199. Binary Tree Right Side View — due May 11
+- [ ] 21. Merge Two Sorted Lists (Recursion) — due May 23
+- [ ] 19. Remove Nth Node From End of List (Recursion) — due May 23
+
+#### High (2–4 weeks overdue as of June 7)
+- [ ] 206. Reverse Linked List (Iterative) — due May 28
+- [ ] 33. Search in Rotated Sorted Array — due May 31
+- [ ] 18. Four Sum — last attempt Jan 23, never revisited
+- [ ] 167. Two Sum II — last attempt Jan 19, never revisited
+
+#### Recent (< 2 weeks overdue as of June 7)
+- [ ] 680. Valid Palindrome II — due Jun 1
+- [ ] 1216. Valid Palindrome III (backtracking) — due Jun 2
+- [ ] 1216. Valid Palindrome III (1DP) — due Jun 2
+- [ ] 695. Max Area of Island — due Jun 3
+- [ ] 200. Number of Islands (DFS) — due Jun 4
+- [ ] 543. Diameter of Binary Tree — due Jun 4
+- [ ] 283. Move Zeroes — due Jun 4
+
+### Permanent Backlog Rule
+
+If the overdue count ever exceeds **5 problems**, suspend new problem intake entirely. Run double warmup sessions daily until it drops below 5, then resume at half pace (1–2 new per week) until fully cleared.
 
 ## ⏱️ The 15-Minute "No-Code" Warmup Execution
 Because 15 minutes passes incredibly fast, **never write code during a backlog warmup**. Code writing is reserved for your 45-minute active block. Optimize your 15 minutes like this:
@@ -53,6 +92,45 @@ Do not log off early and do not move on to a brand-new coding problem. Spend the
 *Use this structure from Week 17 onward to protect your DSA knowledge.*
 *   **00:00–00:15 | DSA Maintenance Flashcard**: Look at a random past LeetCode prompt. Explain the data structure pattern and optimal Time/Space complexity out loud.
 *   **00:15–01:00 | Architecture Deep Dive**: Spend 45 minutes learning your current block's design or AI concepts via engineering blogs or videos.
+
+---
+
+## 📅 Revised Phase Plan: June–December 2026
+
+> This supersedes the week numbers in the 8-Block Roadmap below. The block structure is preserved;
+> only the ordering and timing are corrected based on actual progress as of June 7, 2026.
+
+| Phase | Approx. Dates | New Problems | Categories |
+|---|---|---|---|
+| **Recovery + Standard Graphs** | Jun 8–21 | 6–8 | Course Schedule I & II, Pacific Atlantic Water Flow, Surrounded Regions, Graph Valid Tree, Number of Connected Components, Redundant Connection |
+| **Heap / Priority Queue** | Jun 22–Jul 5 | 7 | Kth Largest in Stream, Last Stone Weight, K Closest Points to Origin, Task Scheduler, Design Twitter, Find Median from Data Stream, Merge K Sorted Lists |
+| **Tries** | Jul 6–12 | 3 | Implement Trie, Design Add and Search Words, Word Search II |
+| **Advanced Graphs** | Jul 13–Aug 2 | 6 | Network Delay Time (Dijkstra), Swim in Rising Water, Alien Dictionary, Cheapest Flights Within K Stops, Min Cost to Connect All Points, Reconstruct Itinerary |
+| **Sliding Window (finish) + Stack** | Aug 3–23 | 8 | Min Window Substring, Sliding Window Maximum; Min Stack, Evaluate Reverse Polish Notation, Generate Parentheses, Daily Temperatures, Car Fleet, Largest Rectangle in Histogram |
+| **Intervals + Greedy** | Aug 24–Sep 13 | 14 | Insert Interval, Merge Intervals, Non-overlapping Intervals, Min Interval to Include Each Query, Meeting Rooms I & II; Jump Game I & II, Gas Station, Hand of Straights, Merge Triplets, Partition Labels, Valid Parenthesis String |
+| **Backtracking** | Sep 14–Oct 11 | 9 | Subsets I & II, Combination Sum I & II, Permutations, Word Search, Palindrome Partitioning, Letter Combinations, N-Queens |
+| **1D Dynamic Programming** | Oct 12–Nov 8 | 12 | Climbing Stairs, Min Cost Climbing Stairs, House Robber I & II, Longest Palindromic Substring, Palindromic Substrings, Decode Ways, Coin Change, Max Product Subarray, Word Break, Longest Increasing Subsequence, Partition Equal Subset Sum |
+| **2D Dynamic Programming** | Nov 9–Dec 6 | 11 | Unique Paths, Longest Common Subsequence, Stock with Cooldown, Coin Change II, Target Sum, Interleaving String, Longest Increasing Path in Matrix, Distinct Subsequences, Edit Distance, Burst Balloons, Regular Expression Matching |
+| **Bit Manipulation + Math & Geometry** | Dec 7–28 | 15 | Single Number, # of 1 Bits, Counting Bits, Reverse Bits, Missing Number, Sum of Two Integers, Reverse Integer; Rotate Image, Spiral Matrix, Set Matrix Zeroes, Happy Number, Pow(x,n), Multiply Strings, Detect Squares |
+| **Buffer + Final EOY Review** | Dec 29–31 | — | Review all `Mastered: N` problems. Target: ≤ 20 unmastered at EOY |
+
+### Why Heap Comes Before Advanced Graphs
+
+Dijkstra's algorithm (required for Network Delay Time, Cheapest Flights, Swim in Rising Water) uses `heapq` as its core data structure. Attempting those problems without heapq fluency means learning two things simultaneously. Complete Heap/PQ first so Advanced Graphs is purely about the graph logic.
+
+### Why Tries Slot Between Heap and Advanced Graphs
+
+Tries are 3 problems and complete in roughly one week. Grouping them here keeps the heavy graph block contiguous (Standard Graphs → Tries → Advanced Graphs) rather than fragmenting it later.
+
+### Sort Algorithm Variants — Trimmed
+
+`912. Sort an Array` variants are capped at two: **Merge Sort** (already done) and **Quick Sort**. The remaining variants (Radix, Counting, Timsort, Divide and Conquer) are not NeetCode 150 problems and consume week slots needed for the EOY goal. Remove them from the active tracker.
+
+### Pace Targets
+
+- **New problems per week**: 3–4. Do not exceed 4 unless the current category is trivially easy.
+- **Max overdue backlog before pausing new intake**: 5 problems.
+- **DP phases (1D + 2D)**: Allow 4–5 weeks each. Do not compress below 4 weeks per phase.
 
 ---
 
@@ -192,5 +270,5 @@ Create a running notebook using this format. Review this document every Saturday
 
 ## 🚫 Core Rules for Success
 1.  **Strict 45-Minute Cap**: If a new problem isn't solved in 45 minutes, stop, look up the solution, and make it tomorrow's 15-minute recall warm-up.
-2.  **Quality > Quantity**: Aim for 3 to 4 perfectly understood problems per week instead of rushing.
+2.  **Quality > Quantity — Hard Mastery Bar**: Aim for 3 to 4 perfectly understood problems per week. A problem is `Mastered: Y` only when you can write the complete solution on a blank page with no hints and state the correct time/space complexity unprompted. "Mostly remembered it" = `N`. If a problem has 3+ attempts and is still `N`, it has a specific conceptual gap — create or update its stuck log entry rather than scheduling another repetition without first naming the gap.
 3.  **Sunday Lockout**: Do not open a code editor on Sundays. Give your neural pathways a break so short-term data transitions into long-term memory structures.
