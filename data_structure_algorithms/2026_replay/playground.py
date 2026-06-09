@@ -1146,3 +1146,104 @@ class Playground:
                 return False
             
             return self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
+    class MergeSortedLinkedList_20260608:
+        def mergeTwoListsIterative(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
+            # iterative just means we are to have two pointers
+            # one at start of each linked list
+            # move only if one value is assigned
+
+            dummyNode = ListNode(-1)
+            iterator = dummyNode
+
+            ptr1 = list1
+            ptr2 = list2
+
+            while ptr1 and ptr2:
+                if ptr1.val < ptr2.val:
+                    iterator.next = ptr1
+                    ptr1 = ptr1.next
+                else:
+                    iterator.next = ptr2
+                    ptr2 = ptr2.next
+                iterator = iterator.next
+            
+            # now one or the other will be empty
+            # assign iterator's next to either or
+            if ptr1:
+                iterator.next = ptr1
+            if ptr2:
+                iterator.next = ptr2
+            
+            return dummyNode.next
+        def mergeTwoListsRecursive(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
+            # to do this recursively, let's think of what we are trying to do
+            # if list1 is null, we are basically just list2
+            # and vice versa
+            # so that is our base case
+
+            if not list1 and not list2:
+                return None
+
+            if not list1:
+                return list2
+            
+            if not list2:
+                return list1
+            
+            # now if both are not null, we move based on who is smaller
+            # so this is a preorder recursion, aka make decision before we enter recursion
+
+            # if we moved list1, so we should assign list1.next
+            # if we moved list2, we should assign list2.next
+
+            if list1.val < list2.val:
+                list1.next = self.mergeTwoListsRecursive(list1.next, list2)
+                return list1
+            else:
+                list2.next = self.mergeTwoListsRecursive(list1, list2.next)
+                return list2
+    class ReverseList_20260608:
+        def reverseListIterative(self, head: Optional[ListNode]) -> Optional[ListNode]:
+            # we need to keep track of prev, cur and next
+            # easiest way to think about this is to look at basic 1->2->None
+
+            # 1's prev is None
+            # 1's next is 2
+            # cur we can use as incremental
+            prev = None
+            cur = head
+
+            while cur:
+                next = cur.next
+                # reversing means set current's next to current's previous
+                # then we set prev to cur
+                # then we move cur to next
+                cur.next = prev
+                prev = cur
+                cur = next
+            
+            # we return prev cause cur is empty at this point
+            return prev
+    class ValidPalindromeII_20260608:
+        def validPalindrome(self, s: str) -> bool:
+            # two pointer
+            # look both sides if no match
+            l, r = 0, len(s) - 1
+
+            def skippable(l,r) -> bool:
+                while l < r:
+                    if s[l] == s[r]:
+                        l+=1
+                        r-=1
+                    else:
+                        return False
+                return True
+
+            while l < r:
+                if s[l] == s[r]:
+                    l+=1
+                    r-=1
+                else:
+                    return skippable(l+1,r) or skippable(l,r-1)
+            
+            return True

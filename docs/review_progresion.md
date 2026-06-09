@@ -23,11 +23,12 @@ Notes for future agents:
 -->
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/review_progresion.md` is staged for commit or when the helper script is run.
-**Problems Done:** 76
-**Total Successful Attempts:** 140
+**Problems Done:** 77
+**Total Successful Attempts:** 141
 
 | Difficulty | Problem | Mastered | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|
+| Medium | [207. Course Schedule](https://leetcode.com/problemset/all/?search=207) | N | 2026-06-11 | 2026-06-09 | 2026-06-09 |
 | Medium | [133. Clone Graph](https://leetcode.com/problemset/all/?search=133) | Y | 2026-07-07 | 2026-06-07 | 2026-06-04, 2026-06-05, 2026-06-07 |
 | Medium | [200. Number of Islands (BFS)](https://leetcode.com/problems/number-of-islands/) | Y | 2026-07-07 | 2026-06-07 | 2026-05-30, 2026-06-01, 2026-06-07 |
 | Medium | [994. Rotting Oranges](https://leetcode.com/problemset/all/?search=994) | N | 2026-06-08 | 2026-06-06 | 2026-06-06 |
