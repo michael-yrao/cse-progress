@@ -1247,3 +1247,48 @@ class Playground:
                     return skippable(l+1,r) or skippable(l,r-1)
             
             return True
+    class MoveZeroes_20260609:
+        def moveZeroes(self, nums: List[int]) -> None:
+            """
+            Do not return anything, modify nums in-place instead.
+            """
+            # two pointers
+            # moving 0s to the end means moving all the non-zeroes to the front
+            # left pointer to determine where to put the non-zero values
+            # right pointer to traverse the array
+
+            l = r = 0
+
+            while r < len(nums):
+                # we move l if current spot is not a 0
+                if nums[r] != 0:
+                    tmp = nums[l]
+                    nums[l] = nums[r]
+                    nums[r] = tmp
+                    l+=1
+    class DiameterOfBinaryTree_20260609:
+        def diameterOfBinaryTree(self, root: Optional[TreeNode]) -> int:
+            # we are basically just adding max of left and max of right depth
+            # so first thing we need to do is get depth
+            # getting depth, we can do by doing postorder dfs
+
+            currentMaxDiameter = 0
+
+            def dfs(node):
+                nonlocal currentMaxDiameter
+                if not node:
+                    return 0
+                
+                # if not None, we are gonna return 1 extra to the caller
+
+                leftSize = dfs(node.left)
+                rightSize = dfs(node.right)
+
+                # return size to caller
+
+                currentMaxDiameter = max(currentMaxDiameter, leftSize + rightSize)
+
+                return 1 + max(leftSize,rightSize)
+            
+            dfs(root)
+            return currentMaxDiameter

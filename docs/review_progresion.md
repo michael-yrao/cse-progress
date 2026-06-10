@@ -23,16 +23,19 @@ Notes for future agents:
 -->
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/review_progresion.md` is staged for commit or when the helper script is run.
-**Problems Done:** 77
-**Total Successful Attempts:** 149
+**Problems Done:** 78
+**Total Successful Attempts:** 152
 
 | Difficulty | Problem | Mastered | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|
+| Medium | [210. Course Schedule II](https://leetcode.com/problemset/all/?search=210) | N | 2026-06-11 | 2026-06-09 | 2026-06-09 |
 | Easy | [680. Valid Palindrome II](https://leetcode.com/problems/valid-palindrome-ii/) | Y | 2026-07-09 | 2026-06-09 | 2026-01-19, 2026-04-05, 2026-05-28, 2026-05-30, 2026-06-08, 2026-06-09 |
 | Easy | [206. Reverse Linked List (Iterative)](https://leetcode.com/problems/reverse-linked-list/) | Y | 2026-07-09 | 2026-06-09 | 2026-04-23, 2026-05-26, 2026-06-08, 2026-06-09 |
 | Easy | [21. Merge Two Sorted Lists (Recursion)](https://leetcode.com/problems/merge-two-sorted-lists/) | Y | 2026-07-09 | 2026-06-09 | 2026-05-20, 2026-05-21, 2026-06-08, 2026-06-09 |
 | Easy | [21. Merge Two Sorted Lists (Iterative)](https://leetcode.com/problems/merge-two-sorted-lists/) | Y | 2026-07-09 | 2026-06-09 | 2026-04-26, 2026-06-08, 2026-06-09 |
 | Medium | [207. Course Schedule](https://leetcode.com/problemset/all/?search=207) | N | 2026-06-11 | 2026-06-09 | 2026-06-09 |
+| Easy | [543. Diameter of Binary Tree](https://leetcode.com/problems/diameter-of-binary-tree/) | N | 2026-06-11 | 2026-06-09 | 2026-04-30, 2026-06-02, 2026-06-09 |
+| Easy | [283. Move Zeroes](https://leetcode.com/problems/move-zeroes/) | N | 2026-06-11 | 2026-06-09 | 2026-01-10, 2026-04-02, 2026-06-02, 2026-06-09 |
 | Medium | [133. Clone Graph](https://leetcode.com/problemset/all/?search=133) | Y | 2026-07-07 | 2026-06-07 | 2026-06-04, 2026-06-05, 2026-06-07 |
 | Medium | [200. Number of Islands (BFS)](https://leetcode.com/problems/number-of-islands/) | Y | 2026-07-07 | 2026-06-07 | 2026-05-30, 2026-06-01, 2026-06-07 |
 | Medium | [994. Rotting Oranges](https://leetcode.com/problemset/all/?search=994) | N | 2026-06-08 | 2026-06-06 | 2026-06-06 |
@@ -41,8 +44,6 @@ Notes for future agents:
 | Easy | [110. Balanced Binary Tree](https://leetcode.com/problems/balanced-binary-tree/) | N | 2026-06-06 | 2026-06-04 | 2026-05-01, 2026-06-04 |
 | Easy | [88. Merge Sorted Array](https://leetcode.com/problems/merge-sorted-array/) | Y | 2026-07-04 | 2026-06-04 | 2026-01-10, 2026-04-03, 2026-06-04 |
 | Medium | [200. Number of Islands (DFS)](https://leetcode.com/problems/number-of-islands/) | N | 2026-06-04 | 2026-06-02 | 2026-05-31, 2026-06-02 |
-| Easy | [543. Diameter of Binary Tree](https://leetcode.com/problems/diameter-of-binary-tree/) | N | 2026-06-04 | 2026-06-02 | 2026-04-30, 2026-06-02 |
-| Easy | [283. Move Zeroes](https://leetcode.com/problems/move-zeroes/) | N | 2026-06-04 | 2026-06-02 | 2026-01-10, 2026-04-02, 2026-06-02 |
 | Medium | [695. Max Area Of Island (DFS)](https://leetcode.com/problemset/all/?search=695) | N | 2026-06-03 | 2026-06-01 | 2026-06-01 |
 | Medium | [1216. Valid Palindrome III (backtracking)](https://leetcode.com/problems/valid-palindrome-iii/) | N | 2026-06-02 | 2026-05-31 | 2026-05-31 |
 | Medium | [1216. Valid Palindrome III (1DP)](https://leetcode.com/problems/valid-palindrome-iii/) | N | 2026-06-02 | 2026-05-31 | 2026-05-31 |
