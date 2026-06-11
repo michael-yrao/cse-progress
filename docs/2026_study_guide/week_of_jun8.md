@@ -12,8 +12,8 @@
 | ~~**Tue Jun 9 (morning)**~~ | ~~283. Move Zeroes + 543. Diameter of Binary Tree — Easy pair~~ | — | ~~Course Schedule II (LC 210)~~ |
 | **Tue Jun 9 (evening)** | — | 572 + 162 — MISSED, carried to Wed | — |
 | ~~**Wed Jun 10**~~ | ~~572. Subtree of Another Tree + 540. Single Element~~ | ~~162. Find Peak Element~~ | ~~Pacific Atlantic Water Flow (LC 417)~~ |
-| **Thu Jun 11** | — | — | — (carried to Fri) |
-| **Fri Jun 12** | 102. Binary Tree Level Order Traversal + 1011. Capacity to Ship Packages Within D Days | 235. LCA of a BST + 2300. Successful Pairs of Spells and Potions | Pacific Atlantic — trace edge cases + Review Course Schedule I notes |
+| **Thu Jun 11** | 102. Binary Tree Level Order Traversal | 235. LCA of a BST | Pacific Atlantic — trace, edge cases |
+| **Fri Jun 12** | 1011. Capacity to Ship Packages Within D Days | 2300. Successful Pairs of Spells and Potions | Review Course Schedule I notes |
 | **Sat Jun 13** | 199. Binary Tree Right Side View (warmup before sprint) | — | Blind sprint: rewrite Course Schedule I from memory (20-min timer, blank file) |
 | **Sun Jun 14** | Lockout | | |
 
