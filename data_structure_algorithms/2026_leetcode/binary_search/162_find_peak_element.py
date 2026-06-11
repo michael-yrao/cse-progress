@@ -45,3 +45,28 @@ class Solution:
                 r = mid  # peak on left or at mid
         
         return l
+    
+    def findPeakElement_20260610(self, nums: List[int]) -> int:
+        # key is that a peak must exist
+        # and a peak is only applicable to its immediate neighbors
+        # logn time also means binary search
+        # so we are looking for the first number that sits in between two smaller numbers
+        # looking at example 2
+        # [1,2,1,3,5,6,4]
+        #          l m r
+        # so 3 is smaller than 5 but bigger than 1
+        # so we should go right since 5 is potentially an answer
+        # so if nums[m] < nums[m+1], we move l = m + 1 since this is min boundary
+        # otherwise, we move r = m
+        # peak element means I have to check m-1 and m+1
+
+        l, r = 0, len(nums) - 1
+
+        while l < r:
+            m = (l+r)//2
+            if nums[m] < nums[m+1]:
+                l = m + 1
+            else:
+                r = m
+        
+        return l
