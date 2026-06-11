@@ -24,14 +24,14 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/review_progresion.md` is staged for commit or when the helper script is run.
 **Problems Done:** 79
-**Total Successful Attempts:** 159
+**Total Successful Attempts:** 157
 
 | Difficulty | Problem | Mastered | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|
+| Medium | [417. Pacific Atlantic Water Flow](https://leetcode.com/problems/pacific-atlantic-water-flow/) | N | 2026-06-13 | 2026-06-11 | 2026-06-10, 2026-06-11 |
 | Medium | [162. Find Peak Element](https://leetcode.com/problems/find-peak-element/) | N | 2026-06-12 | 2026-06-10 | 2026-05-02, 2026-06-10 |
 | Medium | [540. Single Element in a Sorted Array](https://leetcode.com/problems/single-element-in-a-sorted-array/) | N | 2026-06-12 | 2026-06-10 | 2026-05-02, 2026-06-10 |
 | Medium | [572. Subtree Of Another Tree](https://leetcode.com/problemset/all/?search=572) | Y | 2026-07-10 | 2026-06-10 | 2026-05-02, 2026-06-10 |
-| Medium | [981. Time Based Key-Value Store](https://leetcode.com/problems/time-based-key-value-store/) | N |  |  |  |
 | Medium | [210. Course Schedule II](https://leetcode.com/problemset/all/?search=210) | N | 2026-06-11 | 2026-06-09 | 2026-06-09 |
 | Easy | [680. Valid Palindrome II](https://leetcode.com/problems/valid-palindrome-ii/) | Y | 2026-07-09 | 2026-06-09 | 2026-01-19, 2026-04-05, 2026-05-28, 2026-05-30, 2026-06-08, 2026-06-09 |
 | Easy | [206. Reverse Linked List (Iterative)](https://leetcode.com/problems/reverse-linked-list/) | Y | 2026-07-09 | 2026-06-09 | 2026-04-23, 2026-05-26, 2026-06-08, 2026-06-09 |
@@ -107,6 +107,7 @@ Notes for future agents:
 | Easy | [1929. Concatenation of Array](https://leetcode.com/problems/concatenation-of-array/) | Y | 2026-04-24 | 2026-03-25 | 2026-01-01, 2026-03-25 |
 | Medium | [18. Four Sum](https://leetcode.com/problemset/all/?search=18) | N | 2026-01-25 | 2026-01-23 | 2026-01-23 |
 | Medium | [167. Two Sum II](https://leetcode.com/problemset/all/?search=167) | N | 2026-01-21 | 2026-01-19 | 2026-01-19 |
+| Medium | [981. Time Based Key-Value Store](https://leetcode.com/problems/time-based-key-value-store/) | N |  |  |  |
 | Hard | [76. Minimum Window Substring](https://leetcode.com/problems/minimum-window-substring/) | N |  |  |  |
 | Medium | [81. Search in Rotated Sorted Array II](https://leetcode.com/problems/search-in-rotated-sorted-array-ii/) | N |  |  |  |
 | Hard | [239. Sliding Window Maximum](https://leetcode.com/problems/sliding-window-maximum/) | N |  |  |  |
@@ -115,4 +116,3 @@ Notes for future agents:
 | Medium | [912. Sort an Array (Counting Sort)](https://leetcode.com/problems/sort-an-array/) | N |  |  |  |
 | Medium | [912. Sort an Array (Timsort)](https://leetcode.com/problems/sort-an-array/) | N |  |  |  |
 | Medium | [53. Maximum Subarray (Divide and Conquer)](https://leetcode.com/problems/maximum-subarray/) | N | | |  |
-| Medium | [417. Pacific Atlantic Water Flow](https://leetcode.com/problems/pacific-atlantic-water-flow/) | N | | |  |

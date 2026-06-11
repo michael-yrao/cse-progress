@@ -58,3 +58,42 @@ class Solution:
                 r=mid-1
             
         return -1
+
+    def singleNonDuplicate_20260610(self, nums: List[int]) -> int:
+        # logn means binary search and constant space means no extra array
+        # so knowing every element appears twice except for one, what does this mean
+        # [1,1,2,3,3,4,4,8,8]
+        #  l       m       r
+        # how do we know where to move m
+        # so if we have 1 number being single, we know the array is always odd count
+        # so let's check if answer is on the right
+        # [1,1,2,2,3,3,4,8,8]
+        #  l       m       r
+        # we also notice this is not an exact find binary search
+        # so we are looking for the earliest number to break the pattern
+        # which means this is a min boundary binary search
+        # also we also notice we start odd and need to continue going to the odd side
+        # so that means we should do m % 2 to determine which side to go to
+        # in here, we have m % 2 = 0 but we can't really decide on this
+        # so if we don't have a single digit, nums[m] == nums[m+1]
+        # that means if equal, then answer is in the upper bound
+        # but this is with assumption that m is the first digit of the duplicate
+        # so we need to make sure that is the case
+        # and we do that by doing if m % 2 == 1, shift m down by 1
+        l, r = 0, len(nums) - 1
+
+        while l < r:
+            m = (l+r)//2
+            # apply shift down logic so m is always at first of the duplicates
+            if m % 2 == 1:
+                m-=1
+            # knowing nums[m] == nums[m+1] for if there are no singles
+            # that means if this is true, number is in the upper quadrant
+            # so we set l = m + 2
+            # biasing left since this is min boundary
+            if nums[m] == nums[m+1]:
+                l = m + 2
+            else:
+                r = m
+
+        return nums[l]

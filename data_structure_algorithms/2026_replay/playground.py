@@ -1292,3 +1292,25 @@ class Playground:
             
             dfs(root)
             return currentMaxDiameter
+    class SubTreeOfAnotherTree:
+        def isSubtree(self, root: Optional[TreeNode], subRoot: Optional[TreeNode]) -> bool:
+            # If we serialize each tree into a string in preorder form
+            # subroot string must exist in root
+
+            def serializeTree(node):
+                # example 1 gives us
+                # 34125 ; 412
+                # now we need to be able to tell nodes apart so we need a delimiter
+                # 3|4|1|2|5 ; 4|1|2
+                # we also do need to consider nulls it seems like from example 2
+                if not node:
+                    return "|?|"
+
+                # if not null, we will just put our value in pipes
+                
+                return "|"+str(node.val)+"|"+serializeTree(node.left)+"|"+serializeTree(node.right)
+
+            rootStr = serializeTree(root)
+            subrootStr = serializeTree(subRoot)
+
+            return subrootStr in rootStr
