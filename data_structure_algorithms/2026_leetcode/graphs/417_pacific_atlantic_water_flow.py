@@ -109,3 +109,63 @@ class Solution:
                     result.append([row,col])
         
         return result
+
+
+    def pacificAtlantic_20260611(self, heights: List[List[int]]) -> List[List[int]]:
+        # so all this question is asking is to return all nodes that can get to both oceans
+        # which is just DFS. Thinking normally, higher number is mountains which is normally from the middle
+        # however, it's hard to traverse from the middle
+        # what we should instead do is traverse from each side since we know each side reaches one of the oceans for sure
+        # then whether or not its neighbors are bigger
+        # if it is bigger, that means it can also reach this ocean
+        # so we should have two sets, one for pacific, one for atlantic
+
+        rows, cols = len(heights), len(heights[0])
+
+        canVisitPacific = set()
+        canVisitAtlantic = set()
+
+        def dfs(row, col, visitedSet, priorHeight):
+            # base cases
+            # - if out of bounds
+            # - if already visited
+            # - if current height is lower than prior height
+
+            if row < 0 or row >= rows or col < 0 or col >= cols:
+                return
+
+            if (row,col) in visitedSet:
+                return
+            
+            if heights[row][col] < priorHeight:
+                return
+            
+            # knowing we have a valid node, we add it to visitedSet saying we can reach such ocean from here
+            visitedSet.add((row,col))
+
+            # now we check its neighbors
+            dfs(row+1,col,visitedSet,heights[row][col])
+            dfs(row-1,col,visitedSet,heights[row][col])
+            dfs(row,col+1,visitedSet,heights[row][col])
+            dfs(row,col-1,visitedSet,heights[row][col])
+
+        for row in range(rows):
+            # first column, which is pacific
+            dfs(row, 0, canVisitPacific, heights[row][0])
+            # last column, which is atlantic
+            dfs(row, cols-1, canVisitAtlantic, heights[row][cols-1])
+
+        for col in range(cols):
+            # first row, which is pacific
+            dfs(0, col, canVisitPacific,heights[0][col])
+            # last row, which is atlantic
+            dfs(rows-1, col, canVisitAtlantic,heights[rows-1][col])
+
+        result = []
+
+        for row in range(rows):
+            for col in range(cols):
+                if (row,col) in canVisitAtlantic and (row,col) in canVisitPacific:
+                    result.append([row,col])
+        
+        return result

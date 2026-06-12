@@ -23,6 +23,7 @@ Constraints:
 """
 # Definition for a binary tree node.
 from collections import deque
+import collections
 from typing import List, Optional
 
 class TreeNode:
@@ -60,3 +61,31 @@ class Solution:
             if currentList:
                 returnList.append(currentList)
         return returnList
+    
+    
+    def levelOrder_20260611(self, root: Optional[TreeNode]) -> List[List[int]]:
+        # basically just write out BFS
+        # we do keep to keep track of levels it looks like
+        # so we will just keep track of size of queue every time we loop around
+
+        if not root:
+            return []
+
+        queue = collections.deque()
+
+        queue.append(root)
+
+        result = []
+
+        while queue:
+            sizeCurrentLevel = len(queue)
+            currentLevel = []
+            for _ in range(sizeCurrentLevel):
+                currentNode = queue.popleft()
+                currentLevel.append(currentNode.val)
+                if currentNode.left:
+                    queue.append(currentNode.left)
+                if currentNode.right:
+                    queue.append(currentNode.right)
+            result.append(currentLevel)
+        return result
