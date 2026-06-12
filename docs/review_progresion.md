@@ -29,6 +29,7 @@ Notes for future agents:
 | Difficulty | Problem | Mastered | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|
 | Medium | [417. Pacific Atlantic Water Flow](https://leetcode.com/problems/pacific-atlantic-water-flow/) | Y | 2026-07-11 | 2026-06-11 | 2026-06-10, 2026-06-11 |
+| Easy | [733. Flood Fill](https://leetcode.com/problems/flood-fill/) | N | 2026-06-13 | 2026-06-11 | 2026-06-11 |
 | Medium | [162. Find Peak Element](https://leetcode.com/problems/find-peak-element/) | N | 2026-06-12 | 2026-06-10 | 2026-05-02, 2026-06-10 |
 | Medium | [540. Single Element in a Sorted Array](https://leetcode.com/problems/single-element-in-a-sorted-array/) | N | 2026-06-12 | 2026-06-10 | 2026-05-02, 2026-06-10 |
 | Medium | [572. Subtree Of Another Tree](https://leetcode.com/problems/subtree-of-another-tree/) | Y | 2026-07-10 | 2026-06-10 | 2026-05-02, 2026-06-10 |
