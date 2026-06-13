@@ -24,8 +24,8 @@ Notes for future agents:
 -->
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/review_progresion.md` is staged for commit or when the helper script is run.
-**Problems Done:** 77
-**Total Successful Attempts:** 152
+**Problems Done:** 78
+**Total Successful Attempts:** 155
 
 | Difficulty | Problem | Comfort | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|
@@ -41,6 +41,9 @@ Notes for future agents:
 | Medium | [572. Subtree Of Another Tree](https://leetcode.com/problemset/all/?search=572) | Blank | 2026-06-14 | 2026-06-12 | 2026-05-02, 2026-06-12 |
 | Easy | [21. Merge Two Sorted Lists (Iterative)](https://leetcode.com/problems/merge-two-sorted-lists/) | Blank | 2026-06-14 | 2026-06-12 | 2026-04-26, 2026-06-12 |
 | Unknown | [981. Time Based Key Value Store](https://leetcode.com/problemset/all/?search=981) | Blank | 2026-06-14 | 2026-06-12 | 2026-06-12 |
+| Medium | [417. Pacific Atlantic Water Flow](https://leetcode.com/problems/pacific-atlantic-water-flow/) | Clean | 2026-07-12 | 2026-06-12 | 2026-06-12 |
+| Medium | [1011. Capacity To Ship Packages Within D Days](https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/) | Clean | 2026-07-12 | 2026-06-12 | 2026-05-03, 2026-06-12 |
+| Medium | [2300. Successful Pairs of Spells and Potions](https://leetcode.com/problems/successful-pairs-of-spells-and-potions/) | Shaky | 2026-06-22 | 2026-06-12 | 2026-05-03, 2026-06-12 |
 | Medium | [133. Clone Graph](https://leetcode.com/problemset/all/?search=133) | Clean | 2026-07-07 | 2026-06-07 | 2026-06-04, 2026-06-05, 2026-06-07 |
 | Medium | [200. Number of Islands (BFS)](https://leetcode.com/problems/number-of-islands/) | Clean | 2026-07-07 | 2026-06-07 | 2026-05-30, 2026-06-01, 2026-06-07 |
 | Medium | [994. Rotting Oranges](https://leetcode.com/problemset/all/?search=994) | Blank | 2026-06-08 | 2026-06-06 | 2026-06-06 |
@@ -69,8 +72,6 @@ Notes for future agents:
 | Medium | [19. Remove Nth Node From End of List (Iterative)](https://leetcode.com/problems/remove-nth-node-from-end-of-list/) | Clean | 2026-06-17 | 2026-05-18 | 2026-04-29, 2026-05-18 |
 | Medium | [1448. Count Good Nodes in Binary Tree](https://leetcode.com/problems/count-good-nodes-in-binary-tree/) | Blank | 2026-05-17 | 2026-05-15 | 2026-05-15 |
 | Medium | [199. Binary Tree Right Side View](https://leetcode.com/problems/binary-tree-right-side-view/) | Blank | 2026-05-11 | 2026-05-09 | 2026-05-09 |
-| Medium | [1011. Capacity To Ship Packages Within D Days](https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/) | Blank | 2026-05-05 | 2026-05-03 | 2026-05-03 |
-| Medium | [2300. Successful Pairs of Spells and Potions](https://leetcode.com/problems/successful-pairs-of-spells-and-potions/) | Blank | 2026-05-05 | 2026-05-03 | 2026-05-03 |
 | Easy | [141. Linked List Cycle](https://leetcode.com/problems/linked-list-cycle/) | Clean | 2026-05-26 | 2026-04-26 | 2026-04-26 |
 | Medium | [143. Reorder List](https://leetcode.com/problems/reorder-list/) | Blank | 2026-04-28 | 2026-04-26 | 2026-04-26 |
 | Easy | [206. Reverse Linked List (Recursion)](https://leetcode.com/problems/reverse-linked-list/) | Blank | 2026-04-26 | 2026-04-24 | 2026-04-24 |
