@@ -30,7 +30,6 @@ Notes for future agents:
 | Difficulty | Problem | Comfort | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|
 | Medium | [207. Course Schedule I](https://leetcode.com/problems/course-schedule/) | Clean | 2026-07-12 | 2026-06-12 | 2026-06-08, 2026-06-12 |
-| Medium | [210. Course Schedule II](https://leetcode.com/problems/course-schedule-ii/) | Blank | 2026-06-14 | 2026-06-12 | 2026-06-12 |
 | Easy | [733. Flood Fill](https://leetcode.com/problems/flood-fill/) | Blank | 2026-06-14 | 2026-06-12 | 2026-06-12 |
 | Easy | [543. Diameter of Binary Tree](https://leetcode.com/problems/diameter-of-binary-tree/) | Blank | 2026-06-14 | 2026-06-12 | 2026-04-30, 2026-06-02, 2026-06-12 |
 | Easy | [283. Move Zeroes](https://leetcode.com/problems/move-zeroes/) | Blank | 2026-06-14 | 2026-06-12 | 2026-01-10, 2026-04-02, 2026-06-02, 2026-06-12 |
@@ -44,9 +43,10 @@ Notes for future agents:
 | Medium | [572. Subtree Of Another Tree](https://leetcode.com/problems/subtree-of-another-tree/) | Clean | 2026-07-12 | 2026-06-12 | 2026-05-02, 2026-06-12 |
 | Easy | [21. Merge Two Sorted Lists (Iterative)](https://leetcode.com/problems/merge-two-sorted-lists/) | Blank | 2026-06-14 | 2026-06-12 | 2026-04-26, 2026-06-12 |
 | Unknown | [981. Time Based Key Value Store](https://leetcode.com/problems/time-based-key-value-store/) | Blank | 2026-06-14 | 2026-06-12 | 2026-06-12 |
-| Medium | [417. Pacific Atlantic Water Flow](https://leetcode.com/problems/pacific-atlantic-water-flow/) | Clean | 2026-07-12 | 2026-06-12 | 2026-06-12 |
 | Medium | [1011. Capacity To Ship Packages Within D Days](https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/) | Clean | 2026-07-12 | 2026-06-12 | 2026-05-03, 2026-06-12 |
 | Medium | [2300. Successful Pairs of Spells and Potions](https://leetcode.com/problems/successful-pairs-of-spells-and-potions/) | Shaky | 2026-06-22 | 2026-06-12 | 2026-05-03, 2026-06-12 |
+| Medium | [417. Pacific Atlantic Water Flow](https://leetcode.com/problems/pacific-atlantic-water-flow/) | Clean | 2026-07-11 | 2026-06-11 | 2026-06-11 |
+| Medium | [210. Course Schedule II](https://leetcode.com/problems/course-schedule-ii/) | Blank | 2026-06-11 | 2026-06-09 | 2026-06-09 |
 | Medium | [133. Clone Graph](https://leetcode.com/problems/clone-graph/) | Clean | 2026-07-07 | 2026-06-07 | 2026-06-04, 2026-06-05, 2026-06-07 |
 | Medium | [200. Number of Islands (BFS)](https://leetcode.com/problems/number-of-islands/) | Clean | 2026-07-07 | 2026-06-07 | 2026-05-30, 2026-06-01, 2026-06-07 |
 | Medium | [994. Rotting Oranges](https://leetcode.com/problems/rotting-oranges/) | Blank | 2026-06-08 | 2026-06-06 | 2026-06-06 |
