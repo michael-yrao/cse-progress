@@ -6,9 +6,9 @@ After any problem discussion (solving, reviewing, or mentioning a problem by num
 
 1. Check the current week's schedule file (`docs/2026_study_guide/week_of_*.md`) and mark the problem as completed in the table.
 2. If the user hasn't mentioned how they felt, ask: "How did that feel — Clean, Shaky, or Blank?"
-   - **Clean**: Solved from blank page, correct complexity, no hints needed
-   - **Shaky**: Got the solution but needed a nudge or wasn't fully confident
-   - **Blank**: Couldn't recall the approach, had to look it up
+   - **Clean**: Solved from blank page, correct complexity, no hints needed. If you had to second-guess the data structure or peek at anything — that's Shaky, not Clean.
+   - **Shaky**: Got the solution but needed a nudge, peeked at a hint, or weren't fully confident in the approach mid-way through.
+   - **Blank**: Couldn't recall the approach, had to look it up.
 3. Update `docs/review_progresion.md` with the reported Comfort level and run the review script.
 
 ## Comfort-Based Spaced Repetition
