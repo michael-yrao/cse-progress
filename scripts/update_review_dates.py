@@ -11,8 +11,13 @@ SOURCE_ROOT = Path("data_structure_algorithms/2026_leetcode")
 TABLE_HEADER = "| Difficulty | Problem | Comfort | Next Review Date | Latest Attempt Date | Attempt Dates |"
 ROW_SEPARATOR = "|---|---|---|---|---|---|"
 
+COMFORT_CLEAN = "🟢"
+COMFORT_SHAKY = "🟡"
+COMFORT_BLANK = "🔴"
+COMFORT_VALUES = f"{COMFORT_CLEAN}|{COMFORT_SHAKY}|{COMFORT_BLANK}"
+
 ROW_RE = re.compile(
-    r"^\| (?P<difficulty>[^|]+) \| \[(?P<problem>[^\]]+)\]\((?P<url>[^)]+)\) \| (?P<comfort>Clean|Shaky|Blank) \| (?P<next>[^|]*) \| (?P<latest>[^|]*) \| (?P<attempts>.*) \|$"
+    r"^\| (?P<difficulty>[^|]+) \| \[(?P<problem>[^\]]+)\]\((?P<url>[^)]+)\) \| (?P<comfort>" + COMFORT_VALUES + r") \| (?P<next>[^|]*) \| (?P<latest>[^|]*) \| (?P<attempts>.*) \|$"
 )
 # Permissive variant used only when parsing git diff output, where old lines may still have Y/N.
 DIFF_ROW_RE = re.compile(
@@ -75,7 +80,7 @@ def extract_problem_number(problem_title: str) -> int | None:
 def compute_next_review_date(comfort: str, latest_attempt_date: datetime | None) -> datetime | None:
     if not latest_attempt_date:
         return None
-    days = 30 if comfort == "Clean" else 10 if comfort == "Shaky" else 2
+    days = 30 if comfort == COMFORT_CLEAN else 10 if comfort == COMFORT_SHAKY else 2
     return latest_attempt_date + timedelta(days=days)
 
 
@@ -86,12 +91,12 @@ def count_attempt_dates(attempts: str) -> int:
 def build_summary_lines(table_rows: list[dict]) -> list[str]:
     problems_done = sum(1 for row in table_rows if row["latest"] is not None)
     total_attempts = sum(count_attempt_dates(row["attempts"]) for row in table_rows)
-    clean = sum(1 for row in table_rows if row["comfort"] == "Clean")
-    shaky = sum(1 for row in table_rows if row["comfort"] == "Shaky")
-    blank = sum(1 for row in table_rows if row["comfort"] == "Blank" and row["latest"] is not None)
+    clean = sum(1 for row in table_rows if row["comfort"] == COMFORT_CLEAN)
+    shaky = sum(1 for row in table_rows if row["comfort"] == COMFORT_SHAKY)
+    blank = sum(1 for row in table_rows if row["comfort"] == COMFORT_BLANK and row["latest"] is not None)
     return [
         "",
-        "| Problems Done | Clean | Shaky | Blank | Total Attempts |",
+        f"| Problems Done | {COMFORT_CLEAN} Clean | {COMFORT_SHAKY} Shaky | {COMFORT_BLANK} Blank | Total Attempts |",
         "|:---:|:---:|:---:|:---:|:---:|",
         f"| {problems_done} | {clean} | {shaky} | {blank} | {total_attempts} |",
         "",
@@ -352,7 +357,7 @@ def discover_source_problems(existing_titles: set[str], staged_files: list[Path]
             "difficulty": difficulty,
             "problem": problem_title,
             "url": f"https://leetcode.com/problems/{slug}/",
-            "comfort": "Blank",
+            "comfort": COMFORT_BLANK,
             "latest": now,
             "latest_attempt_date": format_date(now) if now else "",
             "attempts": format_date(now) if now else "",
@@ -493,6 +498,8 @@ def main() -> None:
             return True
         # stats data row: | digits | digits | digits | digits | digits |
         return bool(re.match(r"^\|\s*\d+\s*\|\s*\d+\s*\|\s*\d+\s*\|\s*\d+\s*\|\s*\d+\s*\|$", s))
+
+
 
     # Remove old summary lines from prefix
     filtered_prefix = []
