@@ -24,8 +24,8 @@ Notes for future agents:
 -->
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/review_progresion.md` is staged for commit or when the helper script is run.
-**Problems Done:** 81
-**Total Successful Attempts:** 159
+**Problems Done:** 80
+**Total Successful Attempts:** 158
 
 | Difficulty | Problem | Comfort | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|
@@ -42,7 +42,6 @@ Notes for future agents:
 | Medium | [540. Single Element in a Sorted Array](https://leetcode.com/problems/single-element-in-a-sorted-array/) | Blank | 2026-06-14 | 2026-06-12 | 2026-05-02, 2026-06-12 |
 | Medium | [572. Subtree Of Another Tree](https://leetcode.com/problems/subtree-of-another-tree/) | Clean | 2026-07-12 | 2026-06-12 | 2026-05-02, 2026-06-12 |
 | Easy | [21. Merge Two Sorted Lists (Iterative)](https://leetcode.com/problems/merge-two-sorted-lists/) | Blank | 2026-06-14 | 2026-06-12 | 2026-04-26, 2026-06-12 |
-| Unknown | [981. Time Based Key Value Store](https://leetcode.com/problems/time-based-key-value-store/) | Blank | 2026-06-14 | 2026-06-12 | 2026-06-12 |
 | Medium | [1011. Capacity To Ship Packages Within D Days](https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/) | Clean | 2026-07-12 | 2026-06-12 | 2026-05-03, 2026-06-12 |
 | Medium | [2300. Successful Pairs of Spells and Potions](https://leetcode.com/problems/successful-pairs-of-spells-and-potions/) | Shaky | 2026-06-22 | 2026-06-12 | 2026-05-03, 2026-06-12 |
 | Medium | [417. Pacific Atlantic Water Flow](https://leetcode.com/problems/pacific-atlantic-water-flow/) | Clean | 2026-07-11 | 2026-06-11 | 2026-06-11 |
@@ -110,6 +109,7 @@ Notes for future agents:
 | Easy | [1929. Concatenation of Array](https://leetcode.com/problems/concatenation-of-array/) | Clean | 2026-04-24 | 2026-03-25 | 2026-01-01, 2026-03-25 |
 | Medium | [18. Four Sum](https://leetcode.com/problems/4sum/) | Blank | 2026-01-25 | 2026-01-23 | 2026-01-23 |
 | Medium | [167. Two Sum II](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/) | Blank | 2026-01-21 | 2026-01-19 | 2026-01-19 |
+| Medium | [981. Time Based Key Value Store](https://leetcode.com/problems/time-based-key-value-store/) | Blank |  |  |  |
 | Hard | [76. Minimum Window Substring](https://leetcode.com/problems/minimum-window-substring/) | Blank |  |  |  |
 | Medium | [81. Search in Rotated Sorted Array II](https://leetcode.com/problems/search-in-rotated-sorted-array-ii/) | Blank |  |  |  |
 | Hard | [239. Sliding Window Maximum](https://leetcode.com/problems/sliding-window-maximum/) | Blank |  |  |  |
