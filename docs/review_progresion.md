@@ -29,7 +29,7 @@ Notes for future agents:
 
 | Difficulty | Problem | Comfort | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|
-| Medium | [207. Course Schedule I](https://leetcode.com/problems/course-schedule-i/) | Blank | 2026-06-14 | 2026-06-12 | 2026-06-12 |
+| Medium | [207. Course Schedule I](https://leetcode.com/problems/course-schedule/) | Blank | 2026-06-14 | 2026-06-12 | 2026-06-12 |
 | Medium | [210. Course Schedule II](https://leetcode.com/problems/course-schedule-ii/) | Blank | 2026-06-14 | 2026-06-12 | 2026-06-12 |
 | Easy | [733. Flood Fill](https://leetcode.com/problems/flood-fill/) | Blank | 2026-06-14 | 2026-06-12 | 2026-06-12 |
 | Easy | [543. Diameter of Binary Tree](https://leetcode.com/problems/diameter-of-binary-tree/) | Blank | 2026-06-14 | 2026-06-12 | 2026-04-30, 2026-06-02, 2026-06-12 |
