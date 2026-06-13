@@ -27,11 +27,12 @@ Notes for future agents:
 
 | Problems Done | 🟢 Clean | 🟡 Shaky | 🔴 Blank | Total Attempts |
 |:---:|:---:|:---:|:---:|:---:|
-| 80 | 43 | 5 | 32 | 159 |
+| 80 | 44 | 5 | 31 | 160 |
 
 | Difficulty | Problem | Comfort | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|
 | Medium | [199. Binary Tree Right Side View](https://leetcode.com/problems/binary-tree-right-side-view/) | 🟢 | 2026-07-13 | 2026-06-13 | 2026-05-09, 2026-06-13 |
+| Medium | [540. Single Element in a Sorted Array](https://leetcode.com/problems/single-element-in-a-sorted-array/) | 🟢 | 2026-07-13 | 2026-06-13 | 2026-05-02, 2026-06-12, 2026-06-13 |
 | Medium | [207. Course Schedule I](https://leetcode.com/problems/course-schedule/) | 🟢 | 2026-07-12 | 2026-06-12 | 2026-06-08, 2026-06-12 |
 | Easy | [733. Flood Fill](https://leetcode.com/problems/flood-fill/) | 🟡 | 2026-06-22 | 2026-06-12 | 2026-06-12 |
 | Easy | [543. Diameter of Binary Tree](https://leetcode.com/problems/diameter-of-binary-tree/) | 🔴 | 2026-06-14 | 2026-06-12 | 2026-04-30, 2026-06-02, 2026-06-12 |
@@ -42,7 +43,6 @@ Notes for future agents:
 | Medium | [102. Binary Tree Level Order Traversal](https://leetcode.com/problems/binary-tree-level-order-traversal/) | 🟢 | 2026-07-12 | 2026-06-12 | 2026-05-03, 2026-06-12 |
 | Medium | [235. Lowest Common Ancestor of a Binary Search Tree](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/) | 🟢 | 2026-07-12 | 2026-06-12 | 2026-05-03, 2026-06-12 |
 | Medium | [162. Find Peak Element](https://leetcode.com/problems/find-peak-element/) | 🔴 | 2026-06-14 | 2026-06-12 | 2026-05-02, 2026-06-12 |
-| Medium | [540. Single Element in a Sorted Array](https://leetcode.com/problems/single-element-in-a-sorted-array/) | 🔴 | 2026-06-14 | 2026-06-12 | 2026-05-02, 2026-06-12 |
 | Medium | [572. Subtree Of Another Tree](https://leetcode.com/problems/subtree-of-another-tree/) | 🟢 | 2026-07-12 | 2026-06-12 | 2026-05-02, 2026-06-12 |
 | Easy | [21. Merge Two Sorted Lists (Iterative)](https://leetcode.com/problems/merge-two-sorted-lists/) | 🟢 | 2026-07-12 | 2026-06-12 | 2026-04-26, 2026-06-12 |
 | Medium | [1011. Capacity To Ship Packages Within D Days](https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/) | 🟢 | 2026-07-12 | 2026-06-12 | 2026-05-03, 2026-06-12 |
