@@ -99,7 +99,47 @@ Do not log off early and do not move on to a brand-new coding problem. Spend the
 ## ⏱️ Daily Routine 2: The Design & AI Phase (Blocks 5–8)
 *Use this structure from Week 17 onward to protect your DSA knowledge.*
 *   **00:00–00:15 | DSA Maintenance Flashcard**: Look at a random past LeetCode prompt. Explain the data structure pattern and optimal Time/Space complexity out loud.
-*   **00:15–01:00 | Architecture Deep Dive**: Spend 45 minutes learning your current block's design or AI concepts via engineering blogs or videos.
+*   **00:15–01:00 | Architecture Deep Dive**: Spend 45 minutes on system design practice using the weekly loop below.
+
+> **Phase 2 is not additional work.** It is a mode switch. The same 1-hour daily slot continues — only the content of the 45-minute block changes. DSA is kept warm through the 15-minute maintenance slot and the spaced repetition system in `docs/review_progresion.md`.
+
+### 🗂️ Phase 2 Weekly Macro-Schedule
+
+*   **Monday – Friday | The Split Focus Routine**:
+    *   *00:00–00:15*: DSA Maintenance Flashcard — spaced repetition from `review_progresion.md`, no code, narrate the approach out loud
+    *   *00:15–01:00*: System Design Active Block — see weekly loop below
+*   **Saturday | The Blind Design Sprint (45 min)**:
+    *   Pick one design question from 2 weeks ago. Without notes, whiteboard the full system from scratch under a 30-minute timer. Then spend 15 minutes comparing your design to your notes and identifying what you missed.
+*   **Sunday | Reference Reading (30 min)**:
+    *   Read one chapter of Alex Xu *System Design Interview* Vol 2 or one engineering blog post (Netflix, Uber, Stripe tech blogs). No active practice — passive absorption only.
+
+### 🔁 The Weekly Design Question Loop
+
+Spend a full week on **one** design question. Same depth-over-breadth principle as DSA.
+
+| Day | Focus | What to do |
+|-----|-------|------------|
+| Mon | Requirements + Scale | Clarify functional/non-functional requirements. Estimate QPS, storage, bandwidth. Write these down — don't skip |
+| Tue | High-level design | Draw the major components and data flow. API contracts. No deep dives yet |
+| Wed | Deep dive: Storage | Pick the database layer. Justify SQL vs NoSQL. Define schema. Think about sharding/replication if scale demands it |
+| Thu | Deep dive: Bottlenecks | Where does this system break at 10x load? Add caching, queues, CDN where justified. Explain the tradeoff for each |
+| Fri | Full timed mock | Run the full design from scratch in 45 minutes. Use the 5-step framework: Requirements → Scale → High-level → Deep dive → Bottlenecks |
+
+### 📋 Recommended Design Question Order (Phase 2)
+
+Start with fintech-relevant designs — these map directly to interview questions at Stripe, Robinhood, and Two Sigma, and connect to your real-world experience:
+
+1. **Rate limiter** — simplest, teaches token bucket vs sliding window, good warm-up
+2. **Payment processing system** — your domain; own this cold
+3. **Notification system** — teaches async queues (Kafka/SQS), fan-out patterns
+4. **URL shortener** — classic; teaches consistent hashing, caching, DB design
+5. **Reconciliation pipeline** — you've built this; narrate your real MS experience then generalize to scale
+6. **Distributed ledger / accounting system** — deepest domain advantage; save for late Phase 2
+
+Only move to FAANG-style designs (Twitter, YouTube, Google Drive) after the above 6 are solid. Walk into Stripe talking about reconciliation, not social feeds.
+
+### 🔑 The Narration Rule
+Every design session must be narrated out loud — not written silently. Interviewers score your communication, not your diagram. If you can't explain a tradeoff in one sentence, you don't own it yet.
 
 ---
 
