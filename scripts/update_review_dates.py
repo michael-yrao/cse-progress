@@ -86,11 +86,13 @@ def count_attempt_dates(attempts: str) -> int:
 def build_summary_lines(table_rows: list[dict]) -> list[str]:
     problems_done = sum(1 for row in table_rows if row["latest"] is not None)
     total_attempts = sum(count_attempt_dates(row["attempts"]) for row in table_rows)
-    mastered = sum(1 for row in table_rows if row["comfort"] == "Clean")
+    clean = sum(1 for row in table_rows if row["comfort"] == "Clean")
+    shaky = sum(1 for row in table_rows if row["comfort"] == "Shaky")
+    blank = sum(1 for row in table_rows if row["comfort"] == "Blank" and row["latest"] is not None)
     return [
-        f"**Problems Done:** {problems_done}",
-        f"**Total Successful Attempts:** {total_attempts}",
-        f"**Mastered (Clean):** {mastered}",
+        "| Problems Done | Clean | Shaky | Blank | Total Attempts |",
+        "|:---:|:---:|:---:|:---:|:---:|",
+        f"| {problems_done} | {clean} | {shaky} | {blank} | {total_attempts} |",
         "",
     ]
 
@@ -481,13 +483,25 @@ def main() -> None:
     except ValueError:
         header_index = len(prefix_lines)
     
+    def _is_summary_line(line: str) -> bool:
+        s = line.strip()
+        if any(s.startswith(p) for p in (
+            "**Problems Done:**", "**Total Successful Attempts:**", "**Mastered",
+            "| Problems Done |", "|:---:|:---:|",
+        )):
+            return True
+        # stats data row: | digits | digits | digits | digits | digits |
+        return bool(re.match(r"^\|\s*\d+\s*\|\s*\d+\s*\|\s*\d+\s*\|\s*\d+\s*\|\s*\d+\s*\|$", s))
+
     # Remove old summary lines from prefix
     filtered_prefix = []
     for line in prefix_lines[:header_index]:
-        if not (line.startswith("**Problems Done:**") or line.startswith("**Total Successful Attempts:**") or line.startswith("**Mastered") or line.strip() == ""):
-            filtered_prefix.append(line)
-        elif line.strip() == "" and (not filtered_prefix or filtered_prefix[-1].strip() != ""):
-            # Keep empty lines that aren't consecutive
+        if _is_summary_line(line):
+            continue
+        if line.strip() == "":
+            if filtered_prefix and filtered_prefix[-1].strip() != "":
+                filtered_prefix.append(line)
+        else:
             filtered_prefix.append(line)
     
     # Remove trailing empty lines before inserting summary
