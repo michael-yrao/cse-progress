@@ -24,11 +24,14 @@ Notes for future agents:
 -->
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/review_progresion.md` is staged for commit or when the helper script is run.
-**Problems Done:** 76
-**Total Successful Attempts:** 140
+**Problems Done:** 77
+**Total Successful Attempts:** 143
 
 | Difficulty | Problem | Comfort | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|
+| Medium | [417. Pacific Atlantic Water Flow](https://leetcode.com/problems/pacific-atlantic-water-flow/) | Clean | 2026-07-12 | 2026-06-12 | 2026-06-12 |
+| Medium | [1011. Capacity To Ship Packages Within D Days](https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/) | Clean | 2026-07-12 | 2026-06-12 | 2026-05-03, 2026-06-12 |
+| Medium | [2300. Successful Pairs of Spells and Potions](https://leetcode.com/problems/successful-pairs-of-spells-and-potions/) | Shaky | 2026-06-22 | 2026-06-12 | 2026-05-03, 2026-06-12 |
 | Medium | [133. Clone Graph](https://leetcode.com/problemset/all/?search=133) | Clean | 2026-07-07 | 2026-06-07 | 2026-06-04, 2026-06-05, 2026-06-07 |
 | Medium | [200. Number of Islands (BFS)](https://leetcode.com/problems/number-of-islands/) | Clean | 2026-07-07 | 2026-06-07 | 2026-05-30, 2026-06-01, 2026-06-07 |
 | Medium | [994. Rotting Oranges](https://leetcode.com/problemset/all/?search=994) | Blank | 2026-06-08 | 2026-06-06 | 2026-06-06 |
@@ -64,8 +67,6 @@ Notes for future agents:
 | Medium | [199. Binary Tree Right Side View](https://leetcode.com/problems/binary-tree-right-side-view/) | Blank | 2026-05-11 | 2026-05-09 | 2026-05-09 |
 | Medium | [102. Binary Tree Level Order Traversal](https://leetcode.com/problems/binary-tree-level-order-traversal/) | Blank | 2026-05-05 | 2026-05-03 | 2026-05-03 |
 | Medium | [235. Lowest Common Ancestor of a Binary Search Tree](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/) | Blank | 2026-05-05 | 2026-05-03 | 2026-05-03 |
-| Medium | [1011. Capacity To Ship Packages Within D Days](https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/) | Blank | 2026-05-05 | 2026-05-03 | 2026-05-03 |
-| Medium | [2300. Successful Pairs of Spells and Potions](https://leetcode.com/problems/successful-pairs-of-spells-and-potions/) | Blank | 2026-05-05 | 2026-05-03 | 2026-05-03 |
 | Medium | [162. Find Peak Element](https://leetcode.com/problems/find-peak-element/) | Blank | 2026-05-04 | 2026-05-02 | 2026-05-02 |
 | Medium | [540. Single Element in a Sorted Array](https://leetcode.com/problems/single-element-in-a-sorted-array/) | Blank | 2026-05-04 | 2026-05-02 | 2026-05-02 |
 | Medium | [572. Subtree Of Another Tree](https://leetcode.com/problemset/all/?search=572) | Blank | 2026-05-04 | 2026-05-02 | 2026-05-02 |

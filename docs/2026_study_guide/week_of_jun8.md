@@ -13,7 +13,7 @@
 | **Tue Jun 9 (evening)** | — | 572 + 162 — MISSED, carried to Wed | — |
 | **Wed Jun 10** | 572. Subtree of Another Tree + 540. Single Element — Easy then Medium (~7+8 min) | 162. Find Peak Element | Pacific Atlantic Water Flow (LC 417) |
 | **Thu Jun 11** | 102. Binary Tree Level Order Traversal | 235. LCA of a BST | Pacific Atlantic — trace, edge cases |
-| **Fri Jun 12** | 1011. Capacity to Ship Packages Within D Days | 2300. Successful Pairs of Spells and Potions | Review Course Schedule I notes |
+| ~~**Fri Jun 12**~~ | ~~1011. Capacity to Ship Packages Within D Days~~ — Clean | ~~2300. Successful Pairs of Spells and Potions~~ — Shaky | ~~417. Pacific Atlantic Water Flow~~ — Clean |
 | **Sat Jun 13** | 199. Binary Tree Right Side View (warmup before sprint) | — | Blind sprint: rewrite Course Schedule I from memory (20-min timer, blank file) |
 | **Sun Jun 14** | Lockout | | |
 
@@ -23,7 +23,7 @@
 
 - **Easy pair rule:** 2 Easy problems per slot at ~7 min each. If either one goes blank, drop back to 1 per slot and flag it.
 - **572 + 540 slot (Wed morning):** 572 is Easy (~7 min), 540 gets the remaining ~8 min. If 540 needs more time, mark Mastered: N and bump it.
-- **Mastery bar:** Blank-page rewrite, no hints, correct time/space complexity. "Mostly remembered" = N.
+- **Mastery bar:** Blank-page rewrite, no hints, correct time/space complexity. Second-guessing the data structure mid-solve = Shaky, not Clean.
 
 ---
 
