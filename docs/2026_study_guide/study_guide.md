@@ -109,22 +109,32 @@ Do not log off early and do not move on to a brand-new coding problem. Spend the
     *   *00:00–00:15*: DSA Maintenance Flashcard — spaced repetition from `review_progresion.md`, no code, narrate the approach out loud
     *   *00:15–01:00*: System Design Active Block — see weekly loop below
 *   **Saturday | Split Sprint (60 min)**:
-    *   *First 30 min — Randomized DSA*: Pull a problem from the company-frequency PDF pool (see pool below). The problem is unmarked — no category label. Identify the pattern first, then solve it. This trains the recognition skill that NeetCode 150 alone doesn't build.
+    *   *First 30 min — Randomized DSA*: Pull a problem from the live sources below (no category label). Identify the pattern first, then solve it. This trains the recognition skill that NeetCode 150 alone doesn't build.
     *   *Last 30 min — Blind Design Sprint*: Pick a system design question from 2 weeks ago. Without notes, whiteboard the full design from scratch under a 20-minute timer. Spend the remaining 10 minutes comparing to your notes and naming what you missed.
 *   **Sunday | Reference Reading (30 min)**:
     *   Read one chapter of Alex Xu *System Design Interview* Vol 2 or one engineering blog post (Netflix, Uber, Stripe tech blogs). No active practice — passive absorption only.
     *   After Vol 1 & 2: move to *Designing Data-Intensive Applications* by Martin Kleppmann (`leetCodeCompanyFrequency/System Design/` in your local files). Goes deeper than Alex Xu on distributed systems — good for Staff-level depth and FAANG loops.
 
-#### 📂 Saturday Randomized DSA Pool
-Pull problems from your existing company-frequency PDFs, covering both fintech targets and big tech:
+#### 📂 Saturday Randomized DSA Sources
 
-| Tier | Companies | Why |
-|------|-----------|-----|
-| **Fintech targets (late 2026)** | Stripe, Robinhood, Citadel, Bloomberg, Goldman Sachs, JPMorgan | Domain-adjacent; interview first |
-| **Big tech (early 2027)** | Google, Amazon (1yr + 6mo), Meta/Facebook (1yr + 6mo), Microsoft, Apple | Higher DSA bar; interview after system design is ready |
-| **Supplementary** | Netflix, Uber, Airbnb, DoorDash, LinkedIn, Databricks | Good pattern variety; rotate in as needed |
+> The company-frequency PDFs in this repo are from ~2021–2022 and are outdated for specific problem selection — companies rotate their banks regularly. Use them only to understand historical *pattern distribution* (e.g. Google skews graph/DP heavy). For actual problem selection, use live sources.
 
-Rotate through companies on a weekly basis. Use the 6-month frequency PDFs first (higher signal — more recently asked), then the all-time lists. Don't pull from companies you're actively interviewing at in the same week — keep those problems as unknowns.
+| Source | Signal | Notes |
+|--------|--------|-------|
+| **LeetCode company filter (Premium), 6-month window** | Highest | Most accurate recency signal; worth the subscription once actively interviewing |
+| **NeetCode.io company lists** | High | Curated and kept fresher than static PDFs; free |
+| **LeetCode Discuss / Blind** | High | Real candidates posting recent questions; search by company + "2025" or "2026" |
+| **Glassdoor interview questions** | Medium | Less technical detail but useful for recency confirmation |
+
+**Company priority for the pool:**
+
+| Tier | Companies | When to focus |
+|------|-----------|---------------|
+| **Fintech targets** | Stripe, Robinhood, Citadel, Bloomberg, Goldman Sachs, JPMorgan | Late 2026 — interview here first |
+| **Big tech** | Google, Amazon, Meta, Microsoft, Apple | Early 2027 — after system design is prepped |
+| **Supplementary** | Netflix, Uber, Airbnb, DoorDash, LinkedIn, Databricks | Rotate in for pattern variety |
+
+Don't pull from a company you're actively interviewing at that week — keep those problems as genuine unknowns.
 
 ### 🔁 The Weekly Design Question Loop
 
