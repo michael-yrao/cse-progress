@@ -26,6 +26,7 @@ Notes for future agents:
 > **Auto-refresh note:** this table is regenerated automatically when `docs/review_progresion.md` is staged for commit or when the helper script is run.
 **Problems Done:** 80
 **Total Successful Attempts:** 159
+**Mastered (Clean):** 38
 
 | Difficulty | Problem | Comfort | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|

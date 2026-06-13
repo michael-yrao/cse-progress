@@ -86,9 +86,11 @@ def count_attempt_dates(attempts: str) -> int:
 def build_summary_lines(table_rows: list[dict]) -> list[str]:
     problems_done = sum(1 for row in table_rows if row["latest"] is not None)
     total_attempts = sum(count_attempt_dates(row["attempts"]) for row in table_rows)
+    mastered = sum(1 for row in table_rows if row["comfort"] == "Clean")
     return [
         f"**Problems Done:** {problems_done}",
         f"**Total Successful Attempts:** {total_attempts}",
+        f"**Mastered (Clean):** {mastered}",
         "",
     ]
 
@@ -482,7 +484,7 @@ def main() -> None:
     # Remove old summary lines from prefix
     filtered_prefix = []
     for line in prefix_lines[:header_index]:
-        if not (line.startswith("**Problems Done:**") or line.startswith("**Total Successful Attempts:**") or line.strip() == ""):
+        if not (line.startswith("**Problems Done:**") or line.startswith("**Total Successful Attempts:**") or line.startswith("**Mastered") or line.strip() == ""):
             filtered_prefix.append(line)
         elif line.strip() == "" and (not filtered_prefix or filtered_prefix[-1].strip() != ""):
             # Keep empty lines that aren't consecutive
