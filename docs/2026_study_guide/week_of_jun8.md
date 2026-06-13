@@ -14,7 +14,7 @@
 | ~~**Wed Jun 10**~~ | ~~572. Subtree of Another Tree + 540. Single Element — Easy then Medium (~7+8 min)~~ | ~~162. Find Peak Element~~ | ~~Pacific Atlantic Water Flow (LC 417)~~ |
 | ~~**Thu Jun 11**~~ | ~~102. Binary Tree Level Order Traversal~~ | ~~235. LCA of a BST~~ | ~~Pacific Atlantic — trace, edge cases~~ |
 | ~~**Fri Jun 12**~~ | ~~1011. Capacity to Ship Packages Within D Days~~ — Clean | ~~2300. Successful Pairs of Spells and Potions~~ — Shaky | ~~417. Pacific Atlantic Water Flow~~ — Clean |
-| **Sat Jun 13** | 199. Binary Tree Right Side View (warmup before sprint) | — | Blind sprint: rewrite Course Schedule I from memory (20-min timer, blank file) |
+| **Sat Jun 13** | 199. Binary Tree Right Side View (warmup before sprint) | 540. Single Element + 162. Find Peak Element — due Sun, pulled forward (~8 min each) | Blind sprint: rewrite Course Schedule I from memory (20-min timer) → then 210. Course Schedule II re-solve (overdue, Blank) (25 min) |
 | **Sun Jun 14** | Lockout | | |
 
 ---
@@ -38,7 +38,9 @@
 
 ## Week 2 Preview (June 15–21)
 
-Clear remaining 9 overdue problems (all Medium/Hard, 1 per slot) in the first half of the week, then shift to new standard graph problems:
+**Monday spillover:** six Easy problems land Mon Jun 15 (due during Sunday lockout, still rated Blank): 543, 283, 680, 206 (Iterative), 21 (Iterative), 21 (Recursion). Run them as three Easy pairs across Monday's two warmup slots plus one pair at the start of the active block. Rate honestly — any that come back Clean/Shaky exit the 2-day bounce cycle.
+
+Then clear the remaining Medium/Hard overdue problems (1 per slot) through midweek, and shift to new standard graph problems:
 
 - Surrounded Regions (LC 130)
 - Graph Valid Tree (LC 261)
