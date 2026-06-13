@@ -80,3 +80,41 @@ class Solution:
             else:
                 l=mid+1 
         return l
+    
+    def shipWithinDays_20260612(self, weights: List[int], days: int) -> int:
+        # so we can't have minWeight of less than highest of weights, otherwise we'll just never ship everything
+        # so absolute minWeight can be is just max(weights)
+        # so what about the maximum this needs to be, probably just sum(weights) since that would mean finishing in 1 day
+        # so now we know the boundaries of our solutions
+        # we can start from the middle
+        # if we can finish everything in 5 days, it means we can try to go lower in weight
+        # so this is a minimum boundary binary search problem
+
+        left = max(weights)
+        right = sum(weights)
+
+        def canShip(capacity):
+            numberOfDaysUsed = 1
+            currentDayCapacity = capacity
+            for weight in weights:
+                # if we can still carry this weight
+                # let's add more
+                if currentDayCapacity >= weight:
+                    currentDayCapacity-=weight
+                # if we can't carry anymore, reset currentDayCapacity and we move onto next date
+                else:
+                    numberOfDaysUsed+=1
+                    currentDayCapacity = capacity
+                    currentDayCapacity-=weight
+            # if number of days used is less than or equal to days
+            # it means we can ship
+            return numberOfDaysUsed <= days
+
+        while left < right:
+            middle = (left+right)//2
+            if canShip(middle):
+                right = middle
+            else:
+                left = middle + 1
+        
+        return left

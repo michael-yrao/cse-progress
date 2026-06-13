@@ -127,6 +127,44 @@ class Solution:
                 canTake.append(neighborMap[courseTaken].pop())
 
         return numOfCoursesTaken >= numCourses
+    
+    def canFinish_20260612(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
+        # so we need to find all courses we can take immediately, this is the starting queue of our BFS
+        # we need to find how many pre-req each course has, this allows us to add to queue of BFS
+        # then we also need a map to see which prereq allows which class to be taken, this tells us about the neighbors of the BFS
+        # don't think we need to take care of circular since we'd never have a course in queue that is not possible to take
+
+        numberOfCoursesTaken = 0
+
+        hasPrereq = [0] * numCourses
+
+        prereqMap = collections.defaultdict(list)
+
+        for row in prerequisites:
+            course = row[0]
+            prereq = row[1]
+            hasPrereq[course]+=1
+            prereqMap[prereq].append(course)
+
+        canTake = collections.deque()
+
+        for i in range(len(hasPrereq)):
+            if hasPrereq[i] == 0:
+                canTake.append(i)
+        
+        while canTake:
+            currentCourse = canTake.popleft()
+            # say we took this course
+            numberOfCoursesTaken+=1
+
+            for course in prereqMap[currentCourse]:
+                # since we just took current course, we decrement the amount of courses each of its dependency
+                hasPrereq[course]-=1
+                if hasPrereq[course] == 0:
+                    canTake.append(course)
+                
+
+        return numberOfCoursesTaken >= numCourses
 
 if __name__ == "__main__":
     numCourses = 2
