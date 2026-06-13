@@ -90,6 +90,7 @@ def build_summary_lines(table_rows: list[dict]) -> list[str]:
     shaky = sum(1 for row in table_rows if row["comfort"] == "Shaky")
     blank = sum(1 for row in table_rows if row["comfort"] == "Blank" and row["latest"] is not None)
     return [
+        "",
         "| Problems Done | Clean | Shaky | Blank | Total Attempts |",
         "|:---:|:---:|:---:|:---:|:---:|",
         f"| {problems_done} | {clean} | {shaky} | {blank} | {total_attempts} |",
