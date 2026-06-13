@@ -8,11 +8,15 @@ from pathlib import Path
 
 MARKDOWN_PATH = Path("docs/review_progresion.md")
 SOURCE_ROOT = Path("data_structure_algorithms/2026_leetcode")
-TABLE_HEADER = "| Difficulty | Problem | Mastered | Next Review Date | Latest Attempt Date | Attempt Dates |"
+TABLE_HEADER = "| Difficulty | Problem | Comfort | Next Review Date | Latest Attempt Date | Attempt Dates |"
 ROW_SEPARATOR = "|---|---|---|---|---|---|"
 
 ROW_RE = re.compile(
-    r"^\| (?P<difficulty>[^|]+) \| \[(?P<problem>[^\]]+)\]\((?P<url>[^)]+)\) \| (?P<mastered>[YN]) \| (?P<next>[^|]*) \| (?P<latest>[^|]*) \| (?P<attempts>.*) \|$"
+    r"^\| (?P<difficulty>[^|]+) \| \[(?P<problem>[^\]]+)\]\((?P<url>[^)]+)\) \| (?P<comfort>Clean|Shaky|Blank) \| (?P<next>[^|]*) \| (?P<latest>[^|]*) \| (?P<attempts>.*) \|$"
+)
+# Permissive variant used only when parsing git diff output, where old lines may still have Y/N.
+DIFF_ROW_RE = re.compile(
+    r"^\| (?P<difficulty>[^|]+) \| \[(?P<problem>[^\]]+)\]\((?P<url>[^)]+)\) \| (?P<comfort>[^|]+) \| (?P<next>[^|]*) \| (?P<latest>[^|]*) \| (?P<attempts>.*) \|$"
 )
 SOURCE_FILE_RE = re.compile(r"^(?P<number>\d+)_(?P<name>.+)\.py$")
 ROMAN_NUMERALS = {
@@ -68,11 +72,11 @@ def extract_problem_number(problem_title: str) -> int | None:
     return int(match.group("number"))
 
 
-def compute_next_review_date(mastered: str, latest_attempt_date: datetime | None) -> datetime | None:
+def compute_next_review_date(comfort: str, latest_attempt_date: datetime | None) -> datetime | None:
     if not latest_attempt_date:
         return None
-    delta = timedelta(days=30 if mastered == "Y" else 2)
-    return latest_attempt_date + delta
+    days = 30 if comfort == "Clean" else 10 if comfort == "Shaky" else 2
+    return latest_attempt_date + timedelta(days=days)
 
 
 def count_attempt_dates(attempts: str) -> int:
@@ -104,7 +108,7 @@ def humanize_raw_name(raw_name: str) -> str:
 def build_row(entry: dict) -> str:
     return (
         f"| {entry['difficulty']} | [{entry['problem']}]({entry['url']})"
-        f" | {entry['mastered']} | {entry['next_review']} | {entry['latest_attempt_date']} | {entry['attempts']} |"
+        f" | {entry['comfort']} | {entry['next_review']} | {entry['latest_attempt_date']} | {entry['attempts']} |"
     )
 
 
@@ -178,7 +182,12 @@ def get_staged_paths() -> tuple[list[Path], bool]:
     return staged_paths, markdown_staged
 
 
-def get_staged_markdown_row_titles() -> set[str]:
+def get_staged_rows_with_changed_attempts() -> set[str]:
+    """Return problem titles where attempt dates genuinely changed or the row is brand new.
+
+    Excludes rows where only the Comfort column changed (e.g. Y→Clean migrations),
+    so that structural renames do not accidentally stamp today's date as a review.
+    """
     try:
         output = subprocess.check_output(
             ["git", "diff", "--cached", "--unified=0", "--", str(MARKDOWN_PATH)],
@@ -188,16 +197,29 @@ def get_staged_markdown_row_titles() -> set[str]:
     except (subprocess.CalledProcessError, FileNotFoundError):
         return set()
 
-    titles: set[str] = set()
+    removed: dict[str, str] = {}  # title_lower -> attempts string from the old (-) line
+    added: dict[str, str] = {}    # title_lower -> attempts string from the new (+) line
+
     for line in output.splitlines():
-        if not line.startswith("+| "):
+        if not (line.startswith("-| ") or line.startswith("+| ")):
             continue
-        added_line = line[1:]
-        match = ROW_RE.match(added_line)
+        raw_line = line[1:]
+        match = DIFF_ROW_RE.match(raw_line)
         if not match:
             continue
-        titles.add(match.group("problem").strip().lower())
-    return titles
+        title = match.group("problem").strip().lower()
+        attempts = match.group("attempts").strip()
+        if line.startswith("-| "):
+            removed[title] = attempts
+        else:
+            added[title] = attempts
+
+    changed: set[str] = set()
+    for title, new_attempts in added.items():
+        old_attempts = removed.get(title)
+        if old_attempts is None or new_attempts != old_attempts:
+            changed.add(title)
+    return changed
 
 
 def get_staged_problem_numbers(staged_files: list[Path]) -> set[int]:
@@ -247,7 +269,7 @@ def fill_current_date_for_staged_rows(
             # Update latest and next review
             row["latest"] = now
             row["latest_attempt_date"] = format_date(now)
-            row["next_review"] = format_date(compute_next_review_date(row["mastered"], now))
+            row["next_review"] = format_date(compute_next_review_date(row["comfort"], now))
             updated_count += 1
 
     return updated_count
@@ -320,7 +342,7 @@ def discover_source_problems(existing_titles: set[str], staged_files: list[Path]
             "difficulty": difficulty,
             "problem": problem_title,
             "url": f"https://leetcode.com/problemset/all/?search={number}",
-            "mastered": "N",
+            "comfort": "Blank",
             "latest": now,
             "latest_attempt_date": format_date(now) if now else "",
             "attempts": format_date(now) if now else "",
@@ -366,18 +388,18 @@ def main() -> None:
             difficulty = match.group("difficulty").strip()
             problem = match.group("problem").strip()
             url = match.group("url").strip()
-            mastered = match.group("mastered").strip()
+            comfort = match.group("comfort").strip()
             latest = parse_date(match.group("latest"))
             attempts = match.group("attempts").strip()
             attempts_latest = parse_latest_attempt_date_from_attempts(attempts)
             if latest is None or (attempts_latest is not None and attempts_latest > latest):
                 latest = attempts_latest
-            next_review = format_date(compute_next_review_date(mastered, latest))
+            next_review = format_date(compute_next_review_date(comfort, latest))
             table_rows.append({
                 "difficulty": difficulty,
                 "problem": problem,
                 "url": url,
-                "mastered": mastered,
+                "comfort": comfort,
                 "latest": latest,
                 "latest_attempt_date": format_date(latest),
                 "attempts": attempts,
@@ -410,11 +432,11 @@ def main() -> None:
     staged_markdown_titles: set[str] = set()
     if args.staged_only:
         staged_files, markdown_staged = get_staged_paths()
-        staged_markdown_titles = get_staged_markdown_row_titles() if markdown_staged else set()
+        staged_markdown_titles = get_staged_rows_with_changed_attempts() if markdown_staged else set()
         print(f"Scanning {len(staged_files)} staged source file(s) for new problems.")
         if markdown_staged:
             print(
-                f"Detected staged markdown table changes; only {len(staged_markdown_titles)} changed/added row(s) will be considered for current-date filling."
+                f"Detected staged markdown table changes; only {len(staged_markdown_titles)} row(s) with changed attempt dates will receive a current-date fill."
             )
 
     existing_titles = {
