@@ -27,7 +27,7 @@ Notes for future agents:
 
 | Problems Done | Clean | Shaky | Blank | Total Attempts |
 |:---:|:---:|:---:|:---:|:---:|
-| 80 | 38 | 2 | 40 | 159 |
+| 80 | 43 | 5 | 32 | 159 |
 
 | Difficulty | Problem | Comfort | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|
@@ -35,16 +35,16 @@ Notes for future agents:
 | Medium | [207. Course Schedule I](https://leetcode.com/problems/course-schedule/) | Clean | 2026-07-12 | 2026-06-12 | 2026-06-08, 2026-06-12 |
 | Easy | [733. Flood Fill](https://leetcode.com/problems/flood-fill/) | Shaky | 2026-06-22 | 2026-06-12 | 2026-06-12 |
 | Easy | [543. Diameter of Binary Tree](https://leetcode.com/problems/diameter-of-binary-tree/) | Blank | 2026-06-14 | 2026-06-12 | 2026-04-30, 2026-06-02, 2026-06-12 |
-| Easy | [283. Move Zeroes](https://leetcode.com/problems/move-zeroes/) | Blank | 2026-06-14 | 2026-06-12 | 2026-01-10, 2026-04-02, 2026-06-02, 2026-06-12 |
-| Easy | [680. Valid Palindrome II](https://leetcode.com/problems/valid-palindrome-ii/) | Blank | 2026-06-14 | 2026-06-12 | 2026-01-19, 2026-04-05, 2026-05-28, 2026-05-30, 2026-06-12 |
-| Easy | [206. Reverse Linked List (Iterative)](https://leetcode.com/problems/reverse-linked-list/) | Blank | 2026-06-14 | 2026-06-12 | 2026-04-23, 2026-05-26, 2026-06-12 |
-| Easy | [21. Merge Two Sorted Lists (Recursion)](https://leetcode.com/problems/merge-two-sorted-lists/) | Blank | 2026-06-14 | 2026-06-12 | 2026-05-20, 2026-05-21, 2026-06-12 |
+| Easy | [283. Move Zeroes](https://leetcode.com/problems/move-zeroes/) | Clean | 2026-07-12 | 2026-06-12 | 2026-01-10, 2026-04-02, 2026-06-02, 2026-06-12 |
+| Easy | [680. Valid Palindrome II](https://leetcode.com/problems/valid-palindrome-ii/) | Clean | 2026-07-12 | 2026-06-12 | 2026-01-19, 2026-04-05, 2026-05-28, 2026-05-30, 2026-06-12 |
+| Easy | [206. Reverse Linked List (Iterative)](https://leetcode.com/problems/reverse-linked-list/) | Shaky | 2026-06-22 | 2026-06-12 | 2026-04-23, 2026-05-26, 2026-06-12 |
+| Easy | [21. Merge Two Sorted Lists (Recursion)](https://leetcode.com/problems/merge-two-sorted-lists/) | Shaky | 2026-06-22 | 2026-06-12 | 2026-05-20, 2026-05-21, 2026-06-12 |
 | Medium | [102. Binary Tree Level Order Traversal](https://leetcode.com/problems/binary-tree-level-order-traversal/) | Clean | 2026-07-12 | 2026-06-12 | 2026-05-03, 2026-06-12 |
 | Medium | [235. Lowest Common Ancestor of a Binary Search Tree](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/) | Clean | 2026-07-12 | 2026-06-12 | 2026-05-03, 2026-06-12 |
 | Medium | [162. Find Peak Element](https://leetcode.com/problems/find-peak-element/) | Blank | 2026-06-14 | 2026-06-12 | 2026-05-02, 2026-06-12 |
 | Medium | [540. Single Element in a Sorted Array](https://leetcode.com/problems/single-element-in-a-sorted-array/) | Blank | 2026-06-14 | 2026-06-12 | 2026-05-02, 2026-06-12 |
 | Medium | [572. Subtree Of Another Tree](https://leetcode.com/problems/subtree-of-another-tree/) | Clean | 2026-07-12 | 2026-06-12 | 2026-05-02, 2026-06-12 |
-| Easy | [21. Merge Two Sorted Lists (Iterative)](https://leetcode.com/problems/merge-two-sorted-lists/) | Blank | 2026-06-14 | 2026-06-12 | 2026-04-26, 2026-06-12 |
+| Easy | [21. Merge Two Sorted Lists (Iterative)](https://leetcode.com/problems/merge-two-sorted-lists/) | Clean | 2026-07-12 | 2026-06-12 | 2026-04-26, 2026-06-12 |
 | Medium | [1011. Capacity To Ship Packages Within D Days](https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/) | Clean | 2026-07-12 | 2026-06-12 | 2026-05-03, 2026-06-12 |
 | Medium | [2300. Successful Pairs of Spells and Potions](https://leetcode.com/problems/successful-pairs-of-spells-and-potions/) | Shaky | 2026-06-22 | 2026-06-12 | 2026-05-03, 2026-06-12 |
 | Medium | [417. Pacific Atlantic Water Flow](https://leetcode.com/problems/pacific-atlantic-water-flow/) | Clean | 2026-07-11 | 2026-06-11 | 2026-06-11 |
@@ -71,7 +71,7 @@ Notes for future agents:
 | Easy | [704. Binary Search](https://leetcode.com/problems/binary-search/) | Clean | 2026-06-26 | 2026-05-27 | 2026-03-09, 2026-04-13, 2026-05-27 |
 | Easy | [226. Invert Binary Tree](https://leetcode.com/problems/invert-binary-tree/) | Clean | 2026-06-25 | 2026-05-26 | 2026-04-30, 2026-05-26 |
 | Medium | [36. Valid Sudoku](https://leetcode.com/problems/valid-sudoku/) | Clean | 2026-06-21 | 2026-05-22 | 2026-01-25, 2026-05-22 |
-| Medium | [19. Remove Nth Node From End of List (Recursion)](https://leetcode.com/problems/remove-nth-node-from-end-of-list/) | Blank | 2026-05-23 | 2026-05-21 | 2026-05-18, 2026-05-21 |
+| Medium | [19. Remove Nth Node From End of List (Recursion)](https://leetcode.com/problems/remove-nth-node-from-end-of-list/) | Shaky | 2026-05-31 | 2026-05-21 | 2026-05-18, 2026-05-21 |
 | Easy | [20. Valid Parentheses](https://leetcode.com/problems/valid-parentheses/) | Clean | 2026-06-20 | 2026-05-21 | 2026-05-19, 2026-05-21 |
 | Medium | [98. Validate Binary Search Tree](https://leetcode.com/problems/validate-binary-search-tree/) | Clean | 2026-06-19 | 2026-05-20 | 2026-05-16, 2026-05-20 |
 | Medium | [19. Remove Nth Node From End of List (Iterative)](https://leetcode.com/problems/remove-nth-node-from-end-of-list/) | Clean | 2026-06-17 | 2026-05-18 | 2026-04-29, 2026-05-18 |
@@ -109,8 +109,8 @@ Notes for future agents:
 | Easy | [217. Contains Duplicate](https://leetcode.com/problems/contains-duplicate/) | Clean | 2026-04-24 | 2026-03-25 | 2026-01-01, 2026-03-25 |
 | Easy | [242. Valid Anagram](https://leetcode.com/problems/valid-anagram/) | Blank | 2026-03-27 | 2026-03-25 | 2026-01-01, 2026-03-25 |
 | Easy | [1929. Concatenation of Array](https://leetcode.com/problems/concatenation-of-array/) | Clean | 2026-04-24 | 2026-03-25 | 2026-01-01, 2026-03-25 |
-| Medium | [18. Four Sum](https://leetcode.com/problems/4sum/) | Blank | 2026-01-25 | 2026-01-23 | 2026-01-23 |
-| Medium | [167. Two Sum II](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/) | Blank | 2026-01-21 | 2026-01-19 | 2026-01-19 |
+| Medium | [18. Four Sum](https://leetcode.com/problems/4sum/) | Clean | 2026-02-22 | 2026-01-23 | 2026-01-23 |
+| Medium | [167. Two Sum II](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/) | Clean | 2026-02-18 | 2026-01-19 | 2026-01-19 |
 | Medium | [981. Time Based Key Value Store](https://leetcode.com/problems/time-based-key-value-store/) | Blank |  |  |  |
 | Hard | [76. Minimum Window Substring](https://leetcode.com/problems/minimum-window-substring/) | Blank |  |  |  |
 | Medium | [81. Search in Rotated Sorted Array II](https://leetcode.com/problems/search-in-rotated-sorted-array-ii/) | Blank |  |  |  |
