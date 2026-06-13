@@ -73,7 +73,7 @@ Notes for future agents:
 | Medium | [98. Validate Binary Search Tree](https://leetcode.com/problems/validate-binary-search-tree/) | Clean | 2026-06-19 | 2026-05-20 | 2026-05-16, 2026-05-20 |
 | Medium | [19. Remove Nth Node From End of List (Iterative)](https://leetcode.com/problems/remove-nth-node-from-end-of-list/) | Clean | 2026-06-17 | 2026-05-18 | 2026-04-29, 2026-05-18 |
 | Medium | [1448. Count Good Nodes in Binary Tree](https://leetcode.com/problems/count-good-nodes-in-binary-tree/) | Blank | 2026-05-17 | 2026-05-15 | 2026-05-15 |
-| Medium | [199. Binary Tree Right Side View](https://leetcode.com/problems/binary-tree-right-side-view/) | Blank | 2026-05-11 | 2026-05-09 | 2026-05-09 |
+| Medium | [199. Binary Tree Right Side View](https://leetcode.com/problems/binary-tree-right-side-view/) | Clean | 2026-07-13 | 2026-06-13 | 2026-05-09, 2026-06-13 |
 | Easy | [141. Linked List Cycle](https://leetcode.com/problems/linked-list-cycle/) | Clean | 2026-05-26 | 2026-04-26 | 2026-04-26 |
 | Medium | [143. Reorder List](https://leetcode.com/problems/reorder-list/) | Blank | 2026-04-28 | 2026-04-26 | 2026-04-26 |
 | Easy | [206. Reverse Linked List (Recursion)](https://leetcode.com/problems/reverse-linked-list/) | Blank | 2026-04-26 | 2026-04-24 | 2026-04-24 |
