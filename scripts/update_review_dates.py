@@ -183,10 +183,11 @@ def get_staged_paths() -> tuple[list[Path], bool]:
 
 
 def get_staged_rows_with_changed_attempts() -> set[str]:
-    """Return problem titles where attempt dates genuinely changed or the row is brand new.
+    """Return problem titles for rows that are brand new in the staged diff.
 
-    Excludes rows where only the Comfort column changed (e.g. Y→Clean migrations),
-    so that structural renames do not accidentally stamp today's date as a review.
+    Modified rows are excluded entirely: a row whose dates were edited or cleared
+    was changed deliberately (backdating, un-logging a never-done problem) and
+    must not be re-stamped with today's date.
     """
     try:
         output = subprocess.check_output(
@@ -214,12 +215,11 @@ def get_staged_rows_with_changed_attempts() -> set[str]:
         else:
             added[title] = attempts
 
-    changed: set[str] = set()
-    for title, new_attempts in added.items():
-        old_attempts = removed.get(title)
-        if old_attempts is None or new_attempts != old_attempts:
-            changed.add(title)
-    return changed
+    new_rows: set[str] = set()
+    for title in added:
+        if title not in removed:
+            new_rows.add(title)
+    return new_rows
 
 
 def get_staged_problem_numbers(staged_files: list[Path]) -> set[int]:
@@ -441,7 +441,7 @@ def main() -> None:
         print(f"Scanning {len(staged_files)} staged source file(s) for new problems.")
         if markdown_staged:
             print(
-                f"Detected staged markdown table changes; only {len(staged_markdown_titles)} row(s) with changed attempt dates will receive a current-date fill."
+                f"Detected staged markdown table changes; only {len(staged_markdown_titles)} newly added row(s) are eligible for a current-date fill."
             )
 
     existing_titles = {
