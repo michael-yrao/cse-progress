@@ -68,3 +68,32 @@ class Solution:
 
         return successRate
     
+    def successfulPairs_20260612(self, spells: List[int], potions: List[int], success: int) -> List[int]:
+        # ok so first thing to notice is that size of output = len(spells)
+        # i guess naive solution is just to loop through both and multiply and do an output so O(n*m)
+        # key thing is that we actually just want number of successes, so we can order the potions
+        # if we are doing that, we can binary search on potions and find the smallest potion such that we can succeed on
+        # so min boundary binary search
+
+        result = [0] * len(spells)
+
+        potions.sort()
+
+        for index in range(len(spells)):
+            l, r = 0, len(potions) - 1
+            while l < r:
+                m = (l+r)//2
+                if potions[m]*spells[index] >= success:
+                    r = m
+                else:
+                    l = m + 1
+            
+            # now l is at the smallest potion possible to succeed
+            # but looking at the example, it's possible we just have 0
+            if potions[l] * spells[index] < success:
+                result[index] = 0
+            else:
+                # if l is bigger, that means we need to do len - l
+                result[index] = len(potions) - l
+                
+        return result
