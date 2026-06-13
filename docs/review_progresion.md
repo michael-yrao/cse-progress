@@ -34,11 +34,11 @@ Notes for future agents:
 | Easy | [680. Valid Palindrome II](https://leetcode.com/problems/valid-palindrome-ii/) | Blank | 2026-06-14 | 2026-06-12 | 2026-01-19, 2026-04-05, 2026-05-28, 2026-05-30, 2026-06-12 |
 | Easy | [206. Reverse Linked List (Iterative)](https://leetcode.com/problems/reverse-linked-list/) | Blank | 2026-06-14 | 2026-06-12 | 2026-04-23, 2026-05-26, 2026-06-12 |
 | Easy | [21. Merge Two Sorted Lists (Recursion)](https://leetcode.com/problems/merge-two-sorted-lists/) | Blank | 2026-06-14 | 2026-06-12 | 2026-05-20, 2026-05-21, 2026-06-12 |
-| Medium | [102. Binary Tree Level Order Traversal](https://leetcode.com/problems/binary-tree-level-order-traversal/) | Blank | 2026-06-14 | 2026-06-12 | 2026-05-03, 2026-06-12 |
-| Medium | [235. Lowest Common Ancestor of a Binary Search Tree](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/) | Blank | 2026-06-14 | 2026-06-12 | 2026-05-03, 2026-06-12 |
+| Medium | [102. Binary Tree Level Order Traversal](https://leetcode.com/problems/binary-tree-level-order-traversal/) | Clean | 2026-07-12 | 2026-06-12 | 2026-05-03, 2026-06-12 |
+| Medium | [235. Lowest Common Ancestor of a Binary Search Tree](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/) | Clean | 2026-07-12 | 2026-06-12 | 2026-05-03, 2026-06-12 |
 | Medium | [162. Find Peak Element](https://leetcode.com/problems/find-peak-element/) | Blank | 2026-06-14 | 2026-06-12 | 2026-05-02, 2026-06-12 |
 | Medium | [540. Single Element in a Sorted Array](https://leetcode.com/problems/single-element-in-a-sorted-array/) | Blank | 2026-06-14 | 2026-06-12 | 2026-05-02, 2026-06-12 |
-| Medium | [572. Subtree Of Another Tree](https://leetcode.com/problemset/all/?search=572) | Blank | 2026-06-14 | 2026-06-12 | 2026-05-02, 2026-06-12 |
+| Medium | [572. Subtree Of Another Tree](https://leetcode.com/problems/subtree-of-another-tree/) | Clean | 2026-07-12 | 2026-06-12 | 2026-05-02, 2026-06-12 |
 | Easy | [21. Merge Two Sorted Lists (Iterative)](https://leetcode.com/problems/merge-two-sorted-lists/) | Blank | 2026-06-14 | 2026-06-12 | 2026-04-26, 2026-06-12 |
 | Unknown | [981. Time Based Key Value Store](https://leetcode.com/problemset/all/?search=981) | Blank | 2026-06-14 | 2026-06-12 | 2026-06-12 |
 | Medium | [417. Pacific Atlantic Water Flow](https://leetcode.com/problems/pacific-atlantic-water-flow/) | Clean | 2026-07-12 | 2026-06-12 | 2026-06-12 |
