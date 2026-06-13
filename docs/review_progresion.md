@@ -24,6 +24,7 @@ Notes for future agents:
 -->
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/review_progresion.md` is staged for commit or when the helper script is run.
+
 | Problems Done | Clean | Shaky | Blank | Total Attempts |
 |:---:|:---:|:---:|:---:|:---:|
 | 80 | 38 | 2 | 40 | 159 |
