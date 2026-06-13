@@ -55,10 +55,11 @@ Best fit if you want deep technical work, not managing people.
 
 | Phase | Window | Focus |
 |-------|--------|-------|
-| 1. Close the interview gap | Now – Dec 2026 | Complete NeetCode 150. Interview at ≥3 fintech-adjacent companies (Stripe, Coinbase, Bloomberg, Robinhood, Jane Street, Two Sigma) to calibrate market level |
-| 2. Land L5 (or equivalent) at a top-tier company | Jan–Jun 2027 | Stripe, Robinhood, and trading firms all value your GL/reconciliation/Snowflake domain. Expect L5 first — don't hold out for L6 on day 1 |
-| 3. Build Staff-level scope | 2027–2029 | Own a technical domain, not a feature. Propose and drive cross-team initiatives. Produce at least one design doc that outlasts your tenure. Mentor 2–3 engineers. Get your skip-level to know your name |
-| 4. Promote to Staff | 2029–2031 | Most companies want: (a) cross-team technical influence, (b) a flagship project they can point to, (c) strong peer/skip endorsements |
+| 1. DSA + passive system design | Now – Dec 2026 | Finish NeetCode 150. Read Alex Xu *System Design Interview* Vol 1 on Sundays (passive, no pressure). Do NOT interview at FAANG yet — system design isn't ready |
+| 2. Fintech-adjacent interviews | Late 2026 – Jun 2027 | Interview at Stripe, Robinhood, Bloomberg, Two Sigma, Jane Street. These companies weight domain knowledge heavily and have lighter/more practical system design rounds. "Design a reconciliation system" is one you've literally built. Use these loops as calibration reps |
+| 3. Active system design prep + FAANG | Jan–Jun 2027 | Begin formal system design practice (one design per week, narrated out loud). Now FAANG loops are viable — DSA is solid and design is prepped. Target L5 first, don't hold out for L6 on day 1 |
+| 4. Build Staff-level scope | 2027–2029 | Own a technical domain, not a feature. Propose and drive cross-team initiatives. Produce at least one design doc that outlasts your tenure. Mentor 2–3 engineers. Get your skip-level to know your name |
+| 5. Promote to Staff | 2029–2031 | Most companies want: (a) cross-team technical influence, (b) a flagship project they can point to, (c) strong peer/skip endorsements |
 
 **Public signal to build in parallel** (any one of these is enough):
 - Write 3–5 technical posts on fintech system design — the Snowflake accounting migration is a strong topic
@@ -90,11 +91,18 @@ Best fit if you want to build a company or run engineering at scale.
 
 ## 12-Month Priority List (June 2026 – June 2027)
 
-1. **Rewrite the resume** — the 2022 PDF doesn't show 4 years of your best work; use `docs/resume_draft_2026.md` as the base
+1. **Resume done** — `resume/MichaelRao_2026_Resume.docx` in this repo is the working copy; finalize when Word is available
 2. **Have a Staff/Principal level conversation at MS** — the Snowflake/Serenity modernization is your leverage; use it now
 3. **Finish NeetCode 150** — cse-review is your tracker; 5 problems/week gets you there by year-end
-4. **Interview at 2–3 fintech-adjacent companies** — Stripe, Robinhood, Two Sigma, Citadel Securities; this is a calibration exercise, not just job hunting
-5. **Write one technical post** — the accounting architecture migration (Snowflake + Serenity) is a great topic; it converts private work into public credibility
+4. **Read Alex Xu every Sunday** — *System Design Interview* Vol 1, one chapter per week, passive reading only; no practice problems yet
+5. **Interview at 2–3 fintech-adjacent companies (late 2026)** — Stripe, Robinhood, Two Sigma, Citadel Securities; do this before FAANG, not after
+6. **Write one technical post** — the accounting architecture migration (Snowflake + Serenity) is a great topic; it converts private work into public credibility
+
+### Interview sequencing — why order matters
+| Stage | Target | Why |
+|-------|--------|-----|
+| Late 2026 | Stripe, Robinhood, Bloomberg, Two Sigma | Domain knowledge covers the design gap; good calibration reps |
+| Early 2027 | FAANG (Google, Meta, Amazon) | System design is now prepped; DSA is solid; don't go here first |
 
 ---
 
