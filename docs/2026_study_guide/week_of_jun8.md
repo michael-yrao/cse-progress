@@ -10,9 +10,9 @@
 |-----|------------------------|------------------------|-----------------------|
 | ~~**Mon Jun 8**~~ | ~~21. Merge Two Sorted Lists (Iterative) + 21. Merge Two Sorted Lists (Recursion) — Easy pair~~ | ~~206. Reverse Linked List (Iterative) + 680. Valid Palindrome II — Easy pair~~ | ~~Course Schedule I (LC 207)~~ |
 | ~~**Tue Jun 9 (morning)**~~ | ~~283. Move Zeroes + 543. Diameter of Binary Tree — Easy pair~~ | — | ~~Course Schedule II (LC 210)~~ |
-| **Tue Jun 9 (evening)** | — | 572 + 162 — MISSED, carried to Wed | — |
-| **Wed Jun 10** | 572. Subtree of Another Tree + 540. Single Element — Easy then Medium (~7+8 min) | 162. Find Peak Element | Pacific Atlantic Water Flow (LC 417) |
-| **Thu Jun 11** | 102. Binary Tree Level Order Traversal | 235. LCA of a BST | Pacific Atlantic — trace, edge cases |
+| ~~**Tue Jun 9 (evening)**~~ | — | ~~572 + 162 — MISSED, carried to Wed~~ | — |
+| ~~**Wed Jun 10**~~ | ~~572. Subtree of Another Tree + 540. Single Element — Easy then Medium (~7+8 min)~~ | ~~162. Find Peak Element~~ | ~~Pacific Atlantic Water Flow (LC 417)~~ |
+| ~~**Thu Jun 11**~~ | ~~102. Binary Tree Level Order Traversal~~ | ~~235. LCA of a BST~~ | ~~Pacific Atlantic — trace, edge cases~~ |
 | ~~**Fri Jun 12**~~ | ~~1011. Capacity to Ship Packages Within D Days~~ — Clean | ~~2300. Successful Pairs of Spells and Potions~~ — Shaky | ~~417. Pacific Atlantic Water Flow~~ — Clean |
 | **Sat Jun 13** | 199. Binary Tree Right Side View (warmup before sprint) | — | Blind sprint: rewrite Course Schedule I from memory (20-min timer, blank file) |
 | **Sun Jun 14** | Lockout | | |
