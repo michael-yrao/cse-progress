@@ -338,10 +338,11 @@ def discover_source_problems(existing_titles: set[str], staged_files: list[Path]
         if number in existing_numbers:
             continue
         difficulty = extract_difficulty_from_source(path) or "Unknown"
+        slug = raw_name.lower().replace("_", "-")
         missing_rows.append({
             "difficulty": difficulty,
             "problem": problem_title,
-            "url": f"https://leetcode.com/problemset/all/?search={number}",
+            "url": f"https://leetcode.com/problems/{slug}/",
             "comfort": "Blank",
             "latest": now,
             "latest_attempt_date": format_date(now) if now else "",
