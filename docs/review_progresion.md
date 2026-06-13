@@ -25,11 +25,11 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/review_progresion.md` is staged for commit or when the helper script is run.
 **Problems Done:** 81
-**Total Successful Attempts:** 158
+**Total Successful Attempts:** 159
 
 | Difficulty | Problem | Comfort | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|
-| Medium | [207. Course Schedule I](https://leetcode.com/problems/course-schedule/) | Blank | 2026-06-14 | 2026-06-12 | 2026-06-12 |
+| Medium | [207. Course Schedule I](https://leetcode.com/problems/course-schedule/) | Clean | 2026-07-12 | 2026-06-12 | 2026-06-08, 2026-06-12 |
 | Medium | [210. Course Schedule II](https://leetcode.com/problems/course-schedule-ii/) | Blank | 2026-06-14 | 2026-06-12 | 2026-06-12 |
 | Easy | [733. Flood Fill](https://leetcode.com/problems/flood-fill/) | Blank | 2026-06-14 | 2026-06-12 | 2026-06-12 |
 | Easy | [543. Diameter of Binary Tree](https://leetcode.com/problems/diameter-of-binary-tree/) | Blank | 2026-06-14 | 2026-06-12 | 2026-04-30, 2026-06-02, 2026-06-12 |
