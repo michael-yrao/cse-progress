@@ -257,8 +257,12 @@ def fill_current_date_for_staged_rows(
         
         if not is_staged:
             continue
-        
-        # Update attempts for both new rows and existing rows
+
+        # Only stamp rows that have no attempt history yet. Rows with dates were
+        # edited deliberately (e.g. backdated corrections) and must be respected.
+        if row["latest"] is not None:
+            continue
+
         attempts = [part.strip() for part in row["attempts"].split(",") if part.strip()]
         today_text = format_date(now)
         
