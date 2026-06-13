@@ -108,10 +108,23 @@ Do not log off early and do not move on to a brand-new coding problem. Spend the
 *   **Monday – Friday | The Split Focus Routine**:
     *   *00:00–00:15*: DSA Maintenance Flashcard — spaced repetition from `review_progresion.md`, no code, narrate the approach out loud
     *   *00:15–01:00*: System Design Active Block — see weekly loop below
-*   **Saturday | The Blind Design Sprint (45 min)**:
-    *   Pick one design question from 2 weeks ago. Without notes, whiteboard the full system from scratch under a 30-minute timer. Then spend 15 minutes comparing your design to your notes and identifying what you missed.
+*   **Saturday | Split Sprint (60 min)**:
+    *   *First 30 min — Randomized DSA*: Pull a problem from the company-frequency PDF pool (see pool below). The problem is unmarked — no category label. Identify the pattern first, then solve it. This trains the recognition skill that NeetCode 150 alone doesn't build.
+    *   *Last 30 min — Blind Design Sprint*: Pick a system design question from 2 weeks ago. Without notes, whiteboard the full design from scratch under a 20-minute timer. Spend the remaining 10 minutes comparing to your notes and naming what you missed.
 *   **Sunday | Reference Reading (30 min)**:
     *   Read one chapter of Alex Xu *System Design Interview* Vol 2 or one engineering blog post (Netflix, Uber, Stripe tech blogs). No active practice — passive absorption only.
+    *   After Vol 1 & 2: move to *Designing Data-Intensive Applications* by Martin Kleppmann (`leetCodeCompanyFrequency/System Design/` in your local files). Goes deeper than Alex Xu on distributed systems — good for Staff-level depth and FAANG loops.
+
+#### 📂 Saturday Randomized DSA Pool
+Pull problems from your existing company-frequency PDFs, covering both fintech targets and big tech:
+
+| Tier | Companies | Why |
+|------|-----------|-----|
+| **Fintech targets (late 2026)** | Stripe, Robinhood, Citadel, Bloomberg, Goldman Sachs, JPMorgan | Domain-adjacent; interview first |
+| **Big tech (early 2027)** | Google, Amazon (1yr + 6mo), Meta/Facebook (1yr + 6mo), Microsoft, Apple | Higher DSA bar; interview after system design is ready |
+| **Supplementary** | Netflix, Uber, Airbnb, DoorDash, LinkedIn, Databricks | Good pattern variety; rotate in as needed |
+
+Rotate through companies on a weekly basis. Use the 6-month frequency PDFs first (higher signal — more recently asked), then the all-time lists. Don't pull from companies you're actively interviewing at in the same week — keep those problems as unknowns.
 
 ### 🔁 The Weekly Design Question Loop
 
@@ -124,6 +137,18 @@ Spend a full week on **one** design question. Same depth-over-breadth principle 
 | Wed | Deep dive: Storage | Pick the database layer. Justify SQL vs NoSQL. Define schema. Think about sharding/replication if scale demands it |
 | Thu | Deep dive: Bottlenecks | Where does this system break at 10x load? Add caching, queues, CDN where justified. Explain the tradeoff for each |
 | Fri | Full timed mock | Run the full design from scratch in 45 minutes. Use the 5-step framework: Requirements → Scale → High-level → Deep dive → Bottlenecks |
+
+### 🔄 Phase 2 DSA Hybrid Rule
+
+The 15-minute daily maintenance flashcard keeps mastered patterns warm. But not all categories will be fully clean by end of Phase 1. Apply this rule:
+
+| Category status at end of Phase 1 | Phase 2 DSA approach |
+|------------------------------------|----------------------|
+| Majority Clean (solved cold, correct complexity) | 15-min flashcard only — no new problems needed |
+| Majority Shaky/Blank | Continue 1 new problem per week in that category during the weekday active block, alongside design work |
+| Backlog spikes above 5 overdue | Pause design block entirely. Run emergency double warmup until cleared. Same rule as Phase 1 |
+
+The Saturday randomized DSA sprint covers the pattern recognition gap regardless of category status — it's always on.
 
 ### 📋 Recommended Design Question Order (Phase 2)
 
