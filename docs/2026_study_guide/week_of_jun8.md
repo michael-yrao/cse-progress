@@ -14,8 +14,8 @@
 | ~~**Wed Jun 10**~~ | ~~572. Subtree of Another Tree + 540. Single Element — Easy then Medium (7+8 min)~~ | ~~162. Find Peak Element~~ | ~~Pacific Atlantic Water Flow (LC 417)~~ |
 | ~~**Thu Jun 11**~~ | ~~102. Binary Tree Level Order Traversal~~ | ~~235. LCA of a BST~~ | ~~Pacific Atlantic — trace, edge cases~~ |
 | ~~**Fri Jun 12**~~ | ~~1011. Capacity to Ship Packages Within D Days~~ — Clean | ~~2300. Successful Pairs of Spells and Potions~~ — Shaky | ~~417. Pacific Atlantic Water Flow~~ — Clean |
-| **Sat Jun 13** | 199. Binary Tree Right Side View (warmup before sprint) | 540. Single Element + 162. Find Peak Element — due Sun, pulled forward (~8 min each) | Blind sprint: rewrite Course Schedule I from memory (20-min timer) → then 210. Course Schedule II re-solve (overdue, Blank) (25 min) |
-| **Sun Jun 14** | Lockout | | |
+| ~~**Sat Jun 13**~~ | ~~199. Binary Tree Right Side View~~ — Clean | ~~540. Single Element + 162. Find Peak Element~~ — Clean | ~~Blind sprint: rewrite Course Schedule I from memory (20-min timer)~~ — Clean → ~~210. Course Schedule II re-solve~~ — Clean |
+| **Sun Jun 14** | See week_of_jun15.md (exception — no lockout, no system design book) | | |
 
 ---
 
@@ -29,10 +29,12 @@
 
 ## End-of-Week Targets
 
-- [ ] 14 of 22 overdue problems reviewed (adjusted after 572 + 162 missed Tue evening)
-- [ ] Course Schedule I — can rewrite from memory on Saturday
-- [ ] Course Schedule II — completed Tuesday
-- [ ] Pacific Atlantic Water Flow — started, understand multi-source BFS from two borders
+- [x] 14 of 22 overdue problems reviewed — hit exactly (21i, 21r, 206, 680, 283, 543, 572, 540, 162, 102, 235, 1011, 2300, 199)
+- [x] Course Schedule I — rewrote from memory on Saturday — Clean
+- [x] Course Schedule II — re-solved Saturday — Clean
+- [x] Pacific Atlantic Water Flow — Clean (Jun 12)
+
+**Week closed. All targets met.**
 
 ---
 
