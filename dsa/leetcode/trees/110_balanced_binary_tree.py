@@ -58,3 +58,28 @@ class Solution:
         
         dfs(root)
         return isBalanced
+    
+    def isBalanced_20260614(self, root: Optional[TreeNode]) -> bool:
+        # so this is height diff, we check if max depth of left and max depth of right differ by more than 1
+        
+        if not root:
+            return True
+        
+        def dfs(node):
+            if not node:
+                return 0
+            
+            # get left and right depth
+            leftDepth = dfs(node.left)
+            rightDepth = dfs(node.right)
+
+            # if we already know either is bad, just return -1
+            if leftDepth == -1 or rightDepth == -1:
+                return -1
+
+            if abs(leftDepth-rightDepth) > 1:
+                return -1
+
+            return 1 + max(leftDepth, rightDepth)
+        
+        return dfs(root) != -1
