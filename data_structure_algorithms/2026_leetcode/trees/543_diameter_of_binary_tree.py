@@ -56,3 +56,28 @@ class Solution:
         
         dfs(root)
         return maxDiameter
+    
+    def diameterOfBinaryTree_20260614(self, root: Optional[TreeNode]) -> int:
+        # we are basically just adding max of left and max of right depth
+        # if we are just 3 nodes, we want to go as far down as possible
+        # return length after we get back up, so that is postorder DFS
+
+        maxDiameter = 0
+
+        def dfs(node):
+            nonlocal maxDiameter
+            if not node:
+                return 0
+            
+            leftSize = dfs(node.left)
+            rightSize = dfs(node.right)
+
+            # with both left and right side returning
+            # we need to check size of diameter
+            maxDiameter = max(maxDiameter, leftSize + rightSize)
+
+            # keep moving back up, so we add 1 to the size
+            return 1 + max(leftSize, rightSize)
+
+        dfs(root)
+        return maxDiameter
