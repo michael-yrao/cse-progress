@@ -25,7 +25,7 @@ Contains organized LeetCode problems serving as the core interview prep material
 
 Example: `ClimbStairs_70_E_1DP.java` (Easy, 1D Dynamic Programming)
 
-**Active problem set**: `2026_leetcode/` — organized by algorithm type:
+**Active problem set**: `leetcode/` — organized by algorithm type:
   - `1d_dynamic_programming/`, `arrays_and_hash/`, `backtracking/`, `binary_search/`
   - `graphs/`, `greedy/`, `linked_list/`, `sliding_window/`, `stack/`, `trees/`
   - `two_pointers/`
@@ -115,7 +115,7 @@ Create a running notebook using this format. Review this document every Saturday
 
 ## File Type Handling
 
-- **Python**: `.py` files in `data_structure_algorithms/2026_leetcode/` (organized by algorithm type) — the active set
+- **Python**: `.py` files in `data_structure_algorithms/leetcode/` (organized by algorithm type) — the active set
 - **Java/TypeScript/legacy Python**: in `data_structure_algorithms/archive/` — reference only
 - **LaTeX**: `.tex` files in `docs/archive/2022/` — requires LaTeX compiler to view rendered PDFs
 
@@ -134,7 +134,7 @@ Create a running notebook using this format. Review this document every Saturday
 
 | Task | Location |
 |------|----------|
-| Find problems by algorithm type | `data_structure_algorithms/2026_leetcode/{type}/` |
+| Find problems by algorithm type | `data_structure_algorithms/leetcode/{type}/` |
 | Spaced-repetition tracker | `docs/practice/review_progresion.md` |
 | Algorithm pattern cheatsheets | `docs/reference/` |
 | Study schedule / stuck log | `docs/practice/` |
