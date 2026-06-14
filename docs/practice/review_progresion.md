@@ -27,10 +27,11 @@ Notes for future agents:
 
 | Problems Done | 🟢 Clean | 🟡 Shaky | 🔴 Blank | Total Attempts |
 |:---:|:---:|:---:|:---:|:---:|
-| 80 | 46 | 7 | 27 | 165 |
+| 81 | 46 | 8 | 27 | 166 |
 
 | Difficulty | Problem | Comfort | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|
+| Medium | [130. Surrounded Regions](https://leetcode.com/problems/surrounded-regions/) | 🟡 | 2026-06-24 | 2026-06-14 | 2026-06-14 |
 | Easy | [543. Diameter of Binary Tree](https://leetcode.com/problems/diameter-of-binary-tree/) | 🟡 | 2026-06-24 | 2026-06-14 | 2026-04-30, 2026-06-02, 2026-06-12, 2026-06-14 |
 | Easy | [110. Balanced Binary Tree](https://leetcode.com/problems/balanced-binary-tree/) | 🟡 | 2026-06-24 | 2026-06-14 | 2026-05-01, 2026-06-04, 2026-06-14 |
 | Medium | [199. Binary Tree Right Side View](https://leetcode.com/problems/binary-tree-right-side-view/) | 🟢 | 2026-07-13 | 2026-06-13 | 2026-05-09, 2026-06-13 |
