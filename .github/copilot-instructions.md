@@ -115,8 +115,8 @@ Create a running notebook using this format. Review this document every Saturday
 
 ## File Type Handling
 
-- **Python**: `.py` files in `data_structure_algorithms/leetcode/` (organized by algorithm type) — the active set
-- **Java/TypeScript/legacy Python**: in `data_structure_algorithms/archive/` — reference only
+- **Python**: `.py` files in `dsa/leetcode/` (organized by algorithm type) — the active set
+- **Java/TypeScript/legacy Python**: in `dsa/archive/` — reference only
 - **LaTeX**: `.tex` files in `docs/archive/2022/` — requires LaTeX compiler to view rendered PDFs
 
 ---
@@ -134,11 +134,11 @@ Create a running notebook using this format. Review this document every Saturday
 
 | Task | Location |
 |------|----------|
-| Find problems by algorithm type | `data_structure_algorithms/leetcode/{type}/` |
+| Find problems by algorithm type | `dsa/leetcode/{type}/` |
 | Spaced-repetition tracker | `docs/practice/review_progresion.md` |
 | Algorithm pattern cheatsheets | `docs/reference/` |
 | Study schedule / stuck log | `docs/practice/` |
-| Legacy solutions (Java, 2022 Python) | `data_structure_algorithms/archive/` |
+| Legacy solutions (Java, 2022 Python) | `dsa/archive/` |
 | Find Big O reference | `image/data_structure_big_o.png` |
 
 ---
