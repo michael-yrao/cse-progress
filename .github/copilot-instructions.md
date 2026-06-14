@@ -193,7 +193,7 @@ When asking for help with this repository:
 - **Reference concepts**: "This is a Two Pointers problem" or "This uses Monotonic Stack"
 - **Ask for patterns**: Help understanding when to apply specific techniques
 - **Request mental models**: Explanation of problem-solving approach before jumping to code
-- **If any LeetCode problem is mentioned, ensure it is logged in `docs/review_progresion.md`.**
+- **If any LeetCode problem is mentioned, ensure it is logged in `docs/practice/review_progresion.md`.**
 - Problem titles should include the solution method used, e.g. `(BFS)` or `(DFS)`.
 - If a method is mentioned and the same problem number already exists with a different method, add a new row for the new method instead of editing the old row.
 - When a review row is created or staged for commit with a missing latest date, the helper should auto-populate the current date.
