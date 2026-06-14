@@ -93,3 +93,45 @@ class Solution:
             return []
         else:
             return courseList
+
+    def findOrder_20260613(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
+        # this is basically identical to course schedule i
+        # 1. get counter of how many prereq a course needs before taking
+        # 2. map prereq -> list[courses]
+        # 3. get list of courses we can take now
+        # 4. add course into result as we take them
+
+        prereqMap = collections.defaultdict(list)
+
+        prereqCounter = [0] * numCourses
+
+        for row in prerequisites:
+            course = row[0]
+            prereqCounter[course]+=1
+            prereq = row[1]
+            prereqMap[prereq].append(course)
+        
+        canTake = collections.deque()
+
+        for i in range(len(prereqCounter)):
+            if prereqCounter[i] == 0:
+                canTake.append(i)
+        
+        result = []
+
+        while canTake:
+            currentCourse = canTake.popleft()
+            # take current course
+            result.append(currentCourse)
+
+            # check neighbors
+            for course in prereqMap[currentCourse]:
+                # since we took the course, decrement counter
+                prereqCounter[course]-=1
+                if prereqCounter[course] == 0:
+                    canTake.append(course)
+        
+        if len(result) < numCourses:
+            return []
+        else:
+            return result

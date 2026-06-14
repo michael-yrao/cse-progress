@@ -165,6 +165,49 @@ class Solution:
                 
 
         return numberOfCoursesTaken >= numCourses
+    
+    def canFinish_20260613(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
+        # need to know all courses we can take first
+        # aka, the courses that have no prereq
+        # we also need to know what each course unlocks
+        # so we need a map from prereq -> list[course]
+        # we also need a counter for how many prereq a course has
+
+        prereqMap = collections.defaultdict(list)
+
+        prereqCounter = [0] * numCourses
+
+        numberOfCoursesTaken = 0
+
+        for row in prerequisites:
+            course = row[0]
+            prereq = row[1]
+            prereqMap[prereq].append(course)
+            prereqCounter[course]+=1
+
+        # get list of courses we can take right now
+
+        canTake = collections.deque()
+
+        for i in range(len(prereqCounter)):
+            if prereqCounter[i] == 0:
+                canTake.append(i)
+        
+        while canTake:
+            # take this course
+            currentCourse = canTake.popleft()
+            # increment courses taken
+            numberOfCoursesTaken+=1
+            
+            # check courses that need currentCourse as prereq
+            for course in prereqMap[currentCourse]:
+                # since we just took current course, we can decrement how many courses are needed to take this course
+                prereqCounter[course]-=1
+                # if 0, then we can take it, so we add it the queue
+                if prereqCounter[course] == 0:
+                    canTake.append(course)
+        
+        return numberOfCoursesTaken >= numCourses
 
 if __name__ == "__main__":
     numCourses = 2
