@@ -25,41 +25,24 @@ Contains organized LeetCode problems serving as the core interview prep material
 
 Example: `ClimbStairs_70_E_1DP.java` (Easy, 1D Dynamic Programming)
 
-**Organization by Year/Language**:
-- `2022_leetcode/java/`: Problems solved in Java (legacy)
-- `2022_leetcode/python/`: Python solutions from 2022
-- `2026_python/`: Current problem set organized by algorithm type
-  - `1d_dynamic_programming/`, `2d_dynamic_programming/`
-  - `arrays_and_hash/`, `backtracking/`, `binary_search/`
-  - `graphs/`, `greedy/`, `heap_n_priorityqueue/`
-  - `linked_list/`, `sliding_window/`, `stack/`, `trees/`, `tries/`
-  - `two_pointers/`, `bit_manipulation/`, `intervals/`, `math_n_geometry/`
-  - `advanced_graphs/`, `system_design/`
+**Active problem set**: `2026_leetcode/` — organized by algorithm type:
+  - `1d_dynamic_programming/`, `arrays_and_hash/`, `backtracking/`, `binary_search/`
+  - `graphs/`, `greedy/`, `linked_list/`, `sliding_window/`, `stack/`, `trees/`
+  - `two_pointers/`
+
+**Archive** (legacy, not actively used): `archive/` — contains `2022_leetcode/` (Java + Python), `2026_replay/` (playground), `other/` (company interview problems in Java), `codeforce/`, `typescript/`
 
 **Important Notes**:
 - Blind 75 focus: Covers most interview categories except strings (no Boyer-Moore, etc.)
 - Watch video explanations on NeetCode for deeper understanding
-- Don't expect to solve everything immediately — preparation is iterative
 
-### 📁 `/dataStructureAlgorithm/other/`
-
-**`learning/`**: Foundational material by topic
-- Covers basics of core algorithms and data structures
-
-**`interview/`**: Real interview problems
-- Organized by company
-- Reflects actual assessment and interview experiences
-
-### 📁 `/documentation/`
+### 📁 `/docs/archive/2022/`
 
 **`algorithm_mental_model.tex`**: The "why" behind problem-solving approaches
 - Explains mental frameworks for recognizing problem types
-- Key for understanding when to apply specific algorithms
 
 **`software_development_concepts.tex`**: Conceptual knowledge
-- OOP principles
-- Big O notations and complexity analysis
-- Behavioral interview topics
+- OOP principles, Big O notations, behavioral interview topics
 
 ### 📁 `/image/`
 
@@ -132,12 +115,9 @@ Create a running notebook using this format. Review this document every Saturday
 
 ## File Type Handling
 
-- **Java**: `.java` files in `2022_leetcode/java/`
-- **Python**: `.py` files in `2026_python/` (organized by algorithm type)
-- **TypeScript**: `.ts` files (minimal, mostly learning examples)
-- **LaTeX**: `.tex` files in `documentation/`
-  - Requires LaTeX compiler to view rendered PDFs
-  - Raw files document conceptual thinking
+- **Python**: `.py` files in `data_structure_algorithms/2026_leetcode/` (organized by algorithm type) — the active set
+- **Java/TypeScript/legacy Python**: in `data_structure_algorithms/archive/` — reference only
+- **LaTeX**: `.tex` files in `docs/archive/2022/` — requires LaTeX compiler to view rendered PDFs
 
 ---
 
@@ -146,19 +126,7 @@ Create a running notebook using this format. Review this document every Saturday
 - **No centralized build system**: Solutions are standalone by language
 - **Java**: Compile with `javac ClassName.java`
 - **Python**: Execute with `python filename.py`
-- **TypeScript**: Requires `tsc` compilation (configured in `tsconfig.json`)
-
 **Note**: The repo is a study/reference collection, not a production application.
-
----
-
-## Code Organization Principles
-
-1. **Year/Language Separation**: Keep legacy and current methods separate
-2. **Algorithm Categorization**: `2026_python/` organizes by problem type for discovery
-3. **Naming Clarity**: File names encode key information for quick scanning
-4. **Mental Models First**: Reference `algorithm_mental_model.tex` before solving
-5. **Reference External Resources**: Link to NeetCode, LeetCode, and other materials
 
 ---
 
@@ -166,11 +134,11 @@ Create a running notebook using this format. Review this document every Saturday
 
 | Task | Location |
 |------|----------|
-| Find problems by algorithm type | `2026_python/{type}/` |
-| Find problems by year/language | `2022_leetcode/{year}/{language}/` |
-| Learn algorithm concepts | `documentation/algorithm_mental_model.tex` |
-| Learn interview fundamentals | `documentation/software_development_concepts.tex` |
-| Review coding interviews | `dataStructureAlgorithm/other/interview/{company}/` |
+| Find problems by algorithm type | `data_structure_algorithms/2026_leetcode/{type}/` |
+| Spaced-repetition tracker | `docs/practice/review_progresion.md` |
+| Algorithm pattern cheatsheets | `docs/reference/` |
+| Study schedule / stuck log | `docs/practice/` |
+| Legacy solutions (Java, 2022 Python) | `data_structure_algorithms/archive/` |
 | Find Big O reference | `image/data_structure_big_o.png` |
 
 ---
