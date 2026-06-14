@@ -27,14 +27,15 @@ Notes for future agents:
 
 | Problems Done | 🟢 Clean | 🟡 Shaky | 🔴 Blank | Total Attempts |
 |:---:|:---:|:---:|:---:|:---:|
-| 80 | 45 | 5 | 30 | 161 |
+| 80 | 46 | 5 | 29 | 163 |
 
 | Difficulty | Problem | Comfort | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|
 | Medium | [199. Binary Tree Right Side View](https://leetcode.com/problems/binary-tree-right-side-view/) | 🟢 | 2026-07-13 | 2026-06-13 | 2026-05-09, 2026-06-13 |
 | Medium | [540. Single Element in a Sorted Array](https://leetcode.com/problems/single-element-in-a-sorted-array/) | 🟢 | 2026-07-13 | 2026-06-13 | 2026-05-02, 2026-06-12, 2026-06-13 |
 | Medium | [162. Find Peak Element](https://leetcode.com/problems/find-peak-element/) | 🟢 | 2026-07-13 | 2026-06-13 | 2026-05-02, 2026-06-12, 2026-06-13 |
-| Medium | [207. Course Schedule I](https://leetcode.com/problems/course-schedule/) | 🟢 | 2026-07-12 | 2026-06-12 | 2026-06-08, 2026-06-12 |
+| Medium | [207. Course Schedule I](https://leetcode.com/problems/course-schedule/) | 🟢 | 2026-07-13 | 2026-06-13 | 2026-06-08, 2026-06-12, 2026-06-13 |
+| Medium | [210. Course Schedule II](https://leetcode.com/problems/course-schedule-ii/) | 🟢 | 2026-07-13 | 2026-06-13 | 2026-06-09, 2026-06-13 |
 | Easy | [733. Flood Fill](https://leetcode.com/problems/flood-fill/) | 🟡 | 2026-06-22 | 2026-06-12 | 2026-06-12 |
 | Easy | [543. Diameter of Binary Tree](https://leetcode.com/problems/diameter-of-binary-tree/) | 🔴 | 2026-06-14 | 2026-06-12 | 2026-04-30, 2026-06-02, 2026-06-12 |
 | Easy | [283. Move Zeroes](https://leetcode.com/problems/move-zeroes/) | 🟢 | 2026-07-12 | 2026-06-12 | 2026-01-10, 2026-04-02, 2026-06-02, 2026-06-12 |
@@ -48,7 +49,6 @@ Notes for future agents:
 | Medium | [1011. Capacity To Ship Packages Within D Days](https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/) | 🟢 | 2026-07-12 | 2026-06-12 | 2026-05-03, 2026-06-12 |
 | Medium | [2300. Successful Pairs of Spells and Potions](https://leetcode.com/problems/successful-pairs-of-spells-and-potions/) | 🟡 | 2026-06-22 | 2026-06-12 | 2026-05-03, 2026-06-12 |
 | Medium | [417. Pacific Atlantic Water Flow](https://leetcode.com/problems/pacific-atlantic-water-flow/) | 🟢 | 2026-07-11 | 2026-06-11 | 2026-06-11 |
-| Medium | [210. Course Schedule II](https://leetcode.com/problems/course-schedule-ii/) | 🔴 | 2026-06-11 | 2026-06-09 | 2026-06-09 |
 | Medium | [133. Clone Graph](https://leetcode.com/problems/clone-graph/) | 🟢 | 2026-07-07 | 2026-06-07 | 2026-06-04, 2026-06-05, 2026-06-07 |
 | Medium | [200. Number of Islands (BFS)](https://leetcode.com/problems/number-of-islands/) | 🟢 | 2026-07-07 | 2026-06-07 | 2026-05-30, 2026-06-01, 2026-06-07 |
 | Medium | [994. Rotting Oranges](https://leetcode.com/problems/rotting-oranges/) | 🔴 | 2026-06-08 | 2026-06-06 | 2026-06-06 |
