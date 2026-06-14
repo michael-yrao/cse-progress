@@ -7,7 +7,7 @@ from datetime import datetime, timedelta
 from pathlib import Path
 
 MARKDOWN_PATH = Path("docs/practice/review_progresion.md")
-SOURCE_ROOT = Path("data_structure_algorithms/2026_leetcode")
+SOURCE_ROOT = Path("data_structure_algorithms/leetcode")
 TABLE_HEADER = "| Difficulty | Problem | Comfort | Next Review Date | Latest Attempt Date | Attempt Dates |"
 ROW_SEPARATOR = "|---|---|---|---|---|---|"
 
