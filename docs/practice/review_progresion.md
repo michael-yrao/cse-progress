@@ -9,12 +9,12 @@ Notes for future agents:
   - If `Comfort` is `Shaky`, use `Latest Attempt Date + 10 days`.
   - If `Comfort` is `Blank`, use `Latest Attempt Date + 2 days`.
 - This Markdown file is generated from current row data by `scripts/update_review_dates.py`.
-- The script also discovers LeetCode problems defined under `data_structure_algorithms/leetcode/*` and adds missing rows automatically.
+- The script also discovers LeetCode problems defined under `dsa/leetcode/*` and adds missing rows automatically.
 - Problem titles in this table should include the method used, such as `(BFS)` or `(DFS)`.
 - If a method is mentioned and the table already contains the same LeetCode number with a different method, a new row should be added rather than overwriting the existing entry.
 - When run from git commit, the helper only scans staged source files to discover newly added or changed problems.
 - The helper also auto-fills the current date for staged review rows that are missing `Latest Attempt Date`.
-- The pre-commit hook now triggers when `docs/practice/review_progresion.md` or any `data_structure_algorithms/leetcode/*.py` file is staged.
+- The pre-commit hook now triggers when `docs/practice/review_progresion.md` or any `dsa/leetcode/*.py` file is staged.
 - The review table is sorted by Latest Attempt Date descending whenever the script runs.
 - A local git pre-commit hook has been installed to auto-run the script when `docs/practice/review_progresion.md` is staged.
 - When a LeetCode problem is added here or a review row is updated, the file should be refreshed automatically and should not require an explicit ask.
