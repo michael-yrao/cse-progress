@@ -97,3 +97,32 @@ class Solution:
                 r = m
 
         return nums[l]
+    
+    def singleNonDuplicate_20260613(self, nums: List[int]) -> int:
+        # logn means binary search and constant space means no extra array
+        # so the problem is really kinda just a trick
+        # what we can notice is that it is sorted, and trying to find an unknown number
+        # so clearly a boundary type of binary search
+        # in order for binary search to work, we need to make sure m is always on the first elemenet of the duplicate
+        # and we should also note that if numbers are duplicated, it means the count is always 2 each time, so in example 2, after mid is correctly placed at the first 7
+        # we will note the left side has size 2, so the single element cannot be there
+
+        l, r = 0, len(nums) - 1
+
+        while l < r:
+            m = (l+r)//2
+            # let's correct m first
+            # if m is equal to m+1, we don't need to do anything
+            # if m is not equal, we need to move m down
+            if m+1 < len(nums) and nums[m] != nums[m+1]:
+                m-=1
+            
+            # now we do the binary search
+            # if left side is even numbers, we know result is in right boundary
+            if m%2 == 0:
+                # m + 2 since we got duplicates
+                l = m + 2
+            else:
+                r = m
+        
+        return nums[l]

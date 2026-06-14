@@ -70,3 +70,23 @@ class Solution:
                 r = m
         
         return l
+    
+    def findPeakElement_20260613(self, nums: List[int]) -> int:
+        # key is that a peak must exist
+        # given peak element index is p
+        # nums[p] > nums[p-1] and nums[p] > nums[p+1]
+        # if nums[i] < nums[i+1], we know nums[i+1] can be a candidate
+        # so we greedily just move to the side that is bigger
+        # since we don't know what we are searching for, this is another boundary style binary search
+        # i guess we are trying to find the first number that fits the criteria
+        # so we'll just default to min boundary
+
+        l, r = 0, len(nums) - 1
+
+        while l < r:
+            m = (l+r)//2
+            if m+1 < len(nums) and nums[m] < nums[m+1]:
+                l = m + 1
+            else:
+                r = m
+        return l
