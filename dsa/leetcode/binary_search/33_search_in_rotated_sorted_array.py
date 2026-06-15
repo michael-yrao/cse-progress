@@ -72,3 +72,39 @@ class Solution:
             result = binarySearch(k,len(nums)-1)
         
         return result
+
+    def search_20260615(self, nums: List[int], target: int) -> int:
+        # Finding a specific number in a rotated sorted array
+        # but since array is rotated, we actually need to find where it rotated at
+        # so min boundary binary search, then based on that, we search both sides for an answer
+        # [4,5,6,7,0,1,2]
+        #  l     m     r
+        # because mid is greater than r, we know we shifted further to the right
+        
+        l, r = 0, len(nums) - 1
+
+        while l < r:
+            m = (l+r)//2
+            if nums[m] > nums[r]:
+                l = m + 1
+            else:
+                r = m
+
+        # rotation happened at l
+        # so we binary search on 0, l-1 and l, r
+
+        def binarySearch(l,r):
+            while l <= r:
+                m = (l+r)//2
+                if nums[m] == target:
+                    return m
+                if nums[m] > target:
+                    r = m - 1
+                else:
+                    l = m + 1
+            return -1
+
+        if binarySearch(0,l-1) == -1:
+            return binarySearch(l,len(nums)-1)
+        else:
+            return binarySearch(0,l-1)

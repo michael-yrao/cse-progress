@@ -27,13 +27,14 @@ Notes for future agents:
 
 | Problems Done | 🟢 Clean | 🟡 Shaky | 🔴 Blank | Total Attempts |
 |:---:|:---:|:---:|:---:|:---:|
-| 81 | 46 | 8 | 27 | 166 |
+| 81 | 46 | 9 | 26 | 167 |
 
 | Difficulty | Problem | Comfort | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|
 | Medium | [130. Surrounded Regions](https://leetcode.com/problems/surrounded-regions/) | 🟡 | 2026-06-24 | 2026-06-14 | 2026-06-14 |
 | Easy | [543. Diameter of Binary Tree](https://leetcode.com/problems/diameter-of-binary-tree/) | 🟡 | 2026-06-24 | 2026-06-14 | 2026-04-30, 2026-06-02, 2026-06-12, 2026-06-14 |
 | Easy | [110. Balanced Binary Tree](https://leetcode.com/problems/balanced-binary-tree/) | 🟡 | 2026-06-24 | 2026-06-14 | 2026-05-01, 2026-06-04, 2026-06-14 |
+| Medium | [33. Search in Rotated Sorted Array](https://leetcode.com/problems/search-in-rotated-sorted-array/) | 🟡 | 2026-06-24 | 2026-06-14 | 2026-04-13, 2026-05-29, 2026-06-14 |
 | Medium | [199. Binary Tree Right Side View](https://leetcode.com/problems/binary-tree-right-side-view/) | 🟢 | 2026-07-13 | 2026-06-13 | 2026-05-09, 2026-06-13 |
 | Medium | [540. Single Element in a Sorted Array](https://leetcode.com/problems/single-element-in-a-sorted-array/) | 🟢 | 2026-07-13 | 2026-06-13 | 2026-05-02, 2026-06-12, 2026-06-13 |
 | Medium | [162. Find Peak Element](https://leetcode.com/problems/find-peak-element/) | 🟢 | 2026-07-13 | 2026-06-13 | 2026-05-02, 2026-06-12, 2026-06-13 |
@@ -63,7 +64,6 @@ Notes for future agents:
 | Medium | [1216. Valid Palindrome III (1DP)](https://leetcode.com/problems/valid-palindrome-iii/) | 🔴 | 2026-06-02 | 2026-05-31 | 2026-05-31 |
 | Medium | [15. 3Sum](https://leetcode.com/problems/3sum/) | 🟢 | 2026-06-29 | 2026-05-30 | 2026-01-19, 2026-04-07, 2026-05-30 |
 | Medium | [347. Top K Frequent Elements](https://leetcode.com/problems/top-k-frequent-elements/) | 🟢 | 2026-06-29 | 2026-05-30 | 2026-01-11, 2026-04-09, 2026-05-30 |
-| Medium | [33. Search in Rotated Sorted Array](https://leetcode.com/problems/search-in-rotated-sorted-array/) | 🔴 | 2026-05-31 | 2026-05-29 | 2026-04-13, 2026-05-29 |
 | Medium | [49. Group Anagrams](https://leetcode.com/problems/group-anagrams/) | 🟢 | 2026-06-28 | 2026-05-29 | 2026-01-04, 2026-03-27, 2026-05-29 |
 | Medium | [75. Sort Colors (Dutch Flag)](https://leetcode.com/problems/sort-colors/) | 🟢 | 2026-06-27 | 2026-05-28 | 2026-01-08, 2026-04-01, 2026-05-26, 2026-05-28 |
 | Easy | [169. Majority Element](https://leetcode.com/problems/majority-element/) | 🟢 | 2026-06-27 | 2026-05-28 | 2026-01-05, 2026-04-01, 2026-05-28 |
