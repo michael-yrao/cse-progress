@@ -4,12 +4,12 @@
 
 After any problem discussion (solving, reviewing, or mentioning a problem by number or name):
 
-1. Check the current week's schedule file (`docs/2026_study_guide/week_of_*.md`) and mark the problem as completed in the table.
+1. Check the current week's schedule file (`docs/practice/schedules/week_of_*.md`) and mark the problem as completed in the table.
 2. If the user hasn't mentioned how they felt, ask: "How did that feel — Clean, Shaky, or Blank?"
    - **Clean**: Solved from blank page, correct complexity, no hints needed. If you had to second-guess the data structure or peek at anything — that's Shaky, not Clean.
    - **Shaky**: Got the solution but needed a nudge, peeked at a hint, or weren't fully confident in the approach mid-way through.
    - **Blank**: Couldn't recall the approach, had to look it up.
-3. Update `docs/review_progresion.md` with the reported Comfort level and run the review script.
+3. Update `docs/practice/review_progresion.md` with the reported Comfort level and run the review script.
 
 ## Comfort-Based Spaced Repetition
 
@@ -23,7 +23,7 @@ Next review intervals (set in `docs/review_progresion.md` and computed by `scrip
 
 ## Study Guide Files
 
-- `docs/review_progresion.md` — spaced repetition tracker (auto-updated by pre-commit hook)
-- `docs/2026_study_guide/study_guide.md` — master plan with backlog recovery protocol
-- `docs/2026_study_guide/week_of_*.md` — current week's day-by-day schedule
-- `docs/2026_study_guide/stuck_log.md` — log for problems attempted 3+ times without mastery
+- `docs/practice/review_progresion.md` — spaced repetition tracker (auto-updated by pre-commit hook)
+- `docs/practice/study_guide.md` — master plan with backlog recovery protocol
+- `docs/practice/schedules/week_of_*.md` — current week's day-by-day schedule
+- `docs/practice/stuck_log.md` — log for problems attempted 3+ times without mastery

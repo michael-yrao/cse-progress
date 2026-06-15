@@ -10,7 +10,7 @@
 
 | Day | Morning Warmup (15 min) | Evening Warmup (15 min) | Active Block (45 min) |
 |-----|------------------------|------------------------|-----------------------|
-| **Sun Jun 14** *(exception — no lockout, no system design book)* | 543. Diameter of Binary Tree + 110. Balanced Binary Tree — Easy pair (Blank, code them) | — | Surrounded Regions (LC 130) — new graph, BFS/DFS from border |
+| ~~**Sun Jun 14**~~ *(exception — no lockout, no system design book)* | ~~543. Diameter of Binary Tree + 110. Balanced Binary Tree — Easy pair~~ | — | ~~Surrounded Regions (LC 130)~~ |
 | **Mon Jun 15** | 14. Longest Common Prefix (Easy, Blank — code it) | 33. Search in Rotated Sorted Array (Medium, Blank — no-code blueprint only) | Graph Valid Tree (LC 261) — detect cycle in undirected graph, Union-Find or DFS |
 | **Tue Jun 16** | 994. Rotting Oranges (Medium, Blank — no-code) | 200. Number of Islands DFS (Medium, Blank — no-code) | Number of Connected Components (LC 323) — Union-Find pattern |
 | **Wed Jun 17** | 695. Max Area of Island DFS (Medium, Blank — no-code; skip if travel is rough) | — | **TRAVEL — skip** |
@@ -34,8 +34,8 @@
 
 | Problem | Status | Due | Slot |
 |---------|--------|-----|------|
-| 543. Diameter of Binary Tree | 🔴 Blank | Jun 14 | Sun warmup |
-| 110. Balanced Binary Tree | 🔴 Blank | Jun 6 | Sun warmup |
+| ~~543. Diameter of Binary Tree~~ | 🟡 Shaky | Jun 14 | ~~Sun warmup~~ |
+| ~~110. Balanced Binary Tree~~ | 🟡 Shaky | Jun 6 | ~~Sun warmup~~ |
 | 14. Longest Common Prefix | 🔴 Blank | Jun 7 | Mon morning |
 | 33. Search in Rotated Sorted Array | 🔴 Blank | May 31 | Mon evening |
 | 994. Rotting Oranges | 🔴 Blank | Jun 8 | Tue morning |
