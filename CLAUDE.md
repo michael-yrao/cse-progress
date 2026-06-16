@@ -25,5 +25,5 @@ Next review intervals (set in `docs/review_progresion.md` and computed by `scrip
 
 - `docs/practice/review_progresion.md` — spaced repetition tracker (auto-updated by pre-commit hook)
 - `docs/practice/study_guide.md` — master plan with backlog recovery protocol
-- `docs/practice/schedules/week_of_<YYYYMMDD>.md` — current week's day-by-day schedule (e.g. `week_of_20260615.md`)
+- `docs/practice/schedules/<YYYYMMDD>_week.md` — current week's day-by-day schedule (e.g. `20260615_week.md`)
 - `docs/practice/stuck_log.md` — log for problems attempted 3+ times without mastery
