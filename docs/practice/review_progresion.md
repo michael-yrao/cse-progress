@@ -27,7 +27,7 @@ Notes for future agents:
 
 | Problems Done | 🟢 Clean | 🟡 Shaky | 🔴 Blank | Total Attempts |
 |:---:|:---:|:---:|:---:|:---:|
-| 82 | 46 | 9 | 27 | 168 |
+| 82 | 47 | 9 | 26 | 169 |
 
 | Difficulty | Problem | Comfort | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|
@@ -36,6 +36,7 @@ Notes for future agents:
 | Easy | [543. Diameter of Binary Tree](https://leetcode.com/problems/diameter-of-binary-tree/) | 🟡 | 2026-06-24 | 2026-06-14 | 2026-04-30, 2026-06-02, 2026-06-12, 2026-06-14 |
 | Easy | [110. Balanced Binary Tree](https://leetcode.com/problems/balanced-binary-tree/) | 🟡 | 2026-06-24 | 2026-06-14 | 2026-05-01, 2026-06-04, 2026-06-14 |
 | Medium | [33. Search in Rotated Sorted Array](https://leetcode.com/problems/search-in-rotated-sorted-array/) | 🟡 | 2026-06-24 | 2026-06-14 | 2026-04-13, 2026-05-29, 2026-06-14 |
+| Easy | [14. Longest Common Prefix](https://leetcode.com/problems/longest-common-prefix/) | 🟢 | 2026-07-14 | 2026-06-14 | 2026-01-03, 2026-03-27, 2026-06-05, 2026-06-14 |
 | Medium | [199. Binary Tree Right Side View](https://leetcode.com/problems/binary-tree-right-side-view/) | 🟢 | 2026-07-13 | 2026-06-13 | 2026-05-09, 2026-06-13 |
 | Medium | [540. Single Element in a Sorted Array](https://leetcode.com/problems/single-element-in-a-sorted-array/) | 🟢 | 2026-07-13 | 2026-06-13 | 2026-05-02, 2026-06-12, 2026-06-13 |
 | Medium | [162. Find Peak Element](https://leetcode.com/problems/find-peak-element/) | 🟢 | 2026-07-13 | 2026-06-13 | 2026-05-02, 2026-06-12, 2026-06-13 |
@@ -57,7 +58,6 @@ Notes for future agents:
 | Medium | [200. Number of Islands (BFS)](https://leetcode.com/problems/number-of-islands/) | 🟢 | 2026-07-07 | 2026-06-07 | 2026-05-30, 2026-06-01, 2026-06-07 |
 | Medium | [994. Rotting Oranges](https://leetcode.com/problems/rotting-oranges/) | 🔴 | 2026-06-08 | 2026-06-06 | 2026-06-06 |
 | Easy | [100. Same Tree](https://leetcode.com/problems/same-tree/) | 🟢 | 2026-07-05 | 2026-06-05 | 2026-05-01, 2026-06-05 |
-| Easy | [14. Longest Common Prefix](https://leetcode.com/problems/longest-common-prefix/) | 🔴 | 2026-06-07 | 2026-06-05 | 2026-01-03, 2026-03-27, 2026-06-05 |
 | Easy | [88. Merge Sorted Array](https://leetcode.com/problems/merge-sorted-array/) | 🟢 | 2026-07-04 | 2026-06-04 | 2026-01-10, 2026-04-03, 2026-06-04 |
 | Medium | [200. Number of Islands (DFS)](https://leetcode.com/problems/number-of-islands/) | 🔴 | 2026-06-04 | 2026-06-02 | 2026-05-31, 2026-06-02 |
 | Medium | [695. Max Area Of Island (DFS)](https://leetcode.com/problems/max-area-of-island/) | 🔴 | 2026-06-03 | 2026-06-01 | 2026-06-01 |
