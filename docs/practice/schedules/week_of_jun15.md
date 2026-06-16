@@ -10,14 +10,14 @@
 
 | Day | Morning Warmup (15 min) | Evening Warmup (15 min) | Active Block (45 min) |
 |-----|------------------------|------------------------|-----------------------|
-| ~~**Sun Jun 14**~~ *(exception — no lockout, no system design book)* | ~~543. Diameter of Binary Tree + 110. Balanced Binary Tree — Easy pair~~ | — | ~~Surrounded Regions (LC 130)~~ |
-| ~~**Mon Jun 15**~~ | ~~14. Longest Common Prefix~~ | ~~33. Search in Rotated Sorted Array~~ *(done Jun 14)* | ~~Graph Valid Tree (LC 261)~~ |
-| **Tue Jun 16** | ~~994. Rotting Oranges (Medium, Blank — no-code)~~ | 200. Number of Islands DFS (Medium, Blank — no-code) | Number of Connected Components (LC 323) — Union-Find pattern |
-| **Wed Jun 17** | 695. Max Area of Island DFS (Medium, Blank — no-code; skip if travel is rough) | — | **TRAVEL — skip** |
-| **Thu Jun 18** | 261. Graph Valid Tree (🔴 redo, due Jun 17 — code it) + 1216. Valid Palindrome III backtracking (Hard, Blank — no-code) | 1216. Valid Palindrome III 1DP (Hard, Blank — no-code) | Redundant Connection (LC 684) — Union-Find, find the cycle edge |
-| **Fri Jun 19** | 19. Remove Nth Node From End of List (Recursion) (Shaky, overdue — no-code) | 1448. Count Good Nodes in Binary Tree (Blank — no-code) | 733. Flood Fill (Shaky, due Jun 22) + 2300. Successful Pairs (Shaky, due Jun 22) — re-solve both from blank page |
-| **Sat Jun 20** *(optional — may be family trip)* | 206. Reverse Linked List Iterative (Shaky, due Jun 22 — code it) | 21. Merge Two Sorted Lists Recursion (Shaky, due Jun 22 — code it) | Blind sprint: rewrite Surrounded Regions (LC 130) or Graph Valid Tree (LC 261) from memory (20-min timer) |
-| **Sun Jun 21** | Lockout | | |
+| ~~**Sun Jun 14, 2026**~~ *(exception — no lockout, no system design book)* | ~~543. Diameter of Binary Tree + 110. Balanced Binary Tree — Easy pair~~ | — | ~~Surrounded Regions (LC 130)~~ |
+| ~~**Mon Jun 15, 2026**~~ | ~~14. Longest Common Prefix~~ | ~~33. Search in Rotated Sorted Array~~ *(done Jun 14)* | ~~Graph Valid Tree (LC 261)~~ |
+| **Tue Jun 16, 2026** | ~~994. Rotting Oranges (Medium, Blank — no-code)~~ | 200. Number of Islands DFS (Medium, Blank — no-code) | Number of Connected Components (LC 323) — Union-Find pattern |
+| **Wed Jun 17, 2026** | 695. Max Area of Island DFS (Medium, Blank — no-code; skip if travel is rough) | — | **TRAVEL — skip** |
+| **Thu Jun 18, 2026** | 261. Graph Valid Tree (🔴 redo, due Jun 17 — code it) + 1216. Valid Palindrome III backtracking (Hard, Blank — no-code) | 1216. Valid Palindrome III 1DP (Hard, Blank — no-code) | Redundant Connection (LC 684) — Union-Find, find the cycle edge |
+| **Fri Jun 19, 2026** | 19. Remove Nth Node From End of List (Recursion) (Shaky, overdue — no-code) | 1448. Count Good Nodes in Binary Tree (Blank — no-code) | 733. Flood Fill (Shaky, due Jun 22) + 2300. Successful Pairs (Shaky, due Jun 22) — re-solve both from blank page |
+| **Sat Jun 20, 2026** *(optional — may be family trip)* | 206. Reverse Linked List Iterative (Shaky, due Jun 22 — code it) | 21. Merge Two Sorted Lists Recursion (Shaky, due Jun 22 — code it) | Blind sprint: rewrite Surrounded Regions (LC 130) or Graph Valid Tree (LC 261) from memory (20-min timer) |
+| **Sun Jun 21, 2026** | Lockout | | |
 
 ---
 
