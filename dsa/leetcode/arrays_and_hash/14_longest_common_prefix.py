@@ -83,6 +83,25 @@ class Solution:
 
         # if we are here, that means we matched all so we return the full word        
         return shortestWord
+    
+    def longestCommonPrefix_20260615(self, strs: List[str]) -> str:
+        # find shortest string in list
+        # then we can go through it and see if other strings match
+        shortestWord = min(strs, key=len)
+
+        lcp = ""
+        # for each letter in shortestWord
+        # check if the str matches it
+        for i in range(len(shortestWord)):
+            for str in strs:
+                # if not equal, we just return current longest
+                if str[i] != shortestWord[i]:
+                    return lcp
+                # if we have not returned, we just let this run and add letter
+                # at end of this loop
+            lcp+=shortestWord[i]
+        
+        return lcp
 
 class UnitTest(unittest.TestCase):
 
