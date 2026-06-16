@@ -61,8 +61,8 @@ Notes for future agents:
 | Easy | [88. Merge Sorted Array](https://leetcode.com/problems/merge-sorted-array/) | 🟢 | 2026-07-04 | 2026-06-04 | 2026-01-10, 2026-04-03, 2026-06-04 |
 | Medium | [200. Number of Islands (DFS)](https://leetcode.com/problems/number-of-islands/) | 🔴 | 2026-06-04 | 2026-06-02 | 2026-05-31, 2026-06-02 |
 | Medium | [695. Max Area Of Island (DFS)](https://leetcode.com/problems/max-area-of-island/) | 🔴 | 2026-06-03 | 2026-06-01 | 2026-06-01 |
-| Medium | [1216. Valid Palindrome III (backtracking)](https://leetcode.com/problems/valid-palindrome-iii/) | 🔴 | 2026-06-02 | 2026-05-31 | 2026-05-31 |
-| Medium | [1216. Valid Palindrome III (1DP)](https://leetcode.com/problems/valid-palindrome-iii/) | 🔴 | 2026-06-02 | 2026-05-31 | 2026-05-31 |
+| Hard | [1216. Valid Palindrome III (backtracking)](https://leetcode.com/problems/valid-palindrome-iii/) | 🔴 | 2026-06-02 | 2026-05-31 | 2026-05-31 |
+| Hard | [1216. Valid Palindrome III (1DP)](https://leetcode.com/problems/valid-palindrome-iii/) | 🔴 | 2026-06-02 | 2026-05-31 | 2026-05-31 |
 | Medium | [15. 3Sum](https://leetcode.com/problems/3sum/) | 🟢 | 2026-06-29 | 2026-05-30 | 2026-01-19, 2026-04-07, 2026-05-30 |
 | Medium | [347. Top K Frequent Elements](https://leetcode.com/problems/top-k-frequent-elements/) | 🟢 | 2026-06-29 | 2026-05-30 | 2026-01-11, 2026-04-09, 2026-05-30 |
 | Medium | [49. Group Anagrams](https://leetcode.com/problems/group-anagrams/) | 🟢 | 2026-06-28 | 2026-05-29 | 2026-01-04, 2026-03-27, 2026-05-29 |
