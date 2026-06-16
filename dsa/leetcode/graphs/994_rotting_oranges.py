@@ -100,3 +100,49 @@ class Solution:
             return -1
         else:
             return minute
+
+    def orangesRotting_20260615(self, grid: List[List[int]]) -> int:
+        # BFS problem
+        # we must first go through the grid and get all rotten oranges
+        # we also need to keep track number of oranges not rotten at the start
+        # and then see if we were able to rotten all of them
+        # BFS on the oranges
+        # we won't need a visited set since we can just mark nodes as rotten
+
+        orangeCounter = 0
+        timeElapsed = 0
+        rottenQueue = collections.deque()
+
+        rows, cols = len(grid), len(grid[0])
+
+        for row in range(rows):
+            for col in range(cols):
+                if grid[row][col] == 2:
+                    rottenQueue.append((row,col))
+                elif grid[row][col] == 1:
+                    orangeCounter+=1
+        
+        # now that we have our base, let's start BFS
+
+        neighbors = [[1,0],[-1,0],[0,1],[0,-1]]
+
+        while rottenQueue and orangeCounter > 0:
+            # since we need to keep track of time, aka how many levels we went through to finish, we need to keep track of size of current queue
+            lenQueue = len(rottenQueue)
+            for _ in range(lenQueue):
+                currentRow, currentCol = rottenQueue.popleft()
+                for rowInc, colInc in neighbors:
+                    neighborRow = currentRow + rowInc
+                    neighborCol = currentCol + colInc
+                    if neighborRow >= 0 and neighborRow < rows and neighborCol >= 0 and neighborCol < cols and grid[neighborRow][neighborCol] == 1:
+                        # rot this node
+                        grid[neighborRow][neighborCol] = 2
+                        # add to queue
+                        rottenQueue.append((neighborRow,neighborCol))
+                        # decrement fresh counter
+                        orangeCounter-=1
+            timeElapsed+=1
+        
+        if orangeCounter != 0:
+            return -1
+        return timeElapsed

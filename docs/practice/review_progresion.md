@@ -27,13 +27,14 @@ Notes for future agents:
 
 | Problems Done | 🟢 Clean | 🟡 Shaky | 🔴 Blank | Total Attempts |
 |:---:|:---:|:---:|:---:|:---:|
-| 82 | 47 | 9 | 26 | 169 |
+| 82 | 47 | 10 | 25 | 170 |
 
 | Difficulty | Problem | Comfort | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|
 | Medium | [261. Graph Valid Tree](https://leetcode.com/problems/graph-valid-tree/) | 🔴 | 2026-06-17 | 2026-06-15 | 2026-06-15 |
 | Medium | [33. Search in Rotated Sorted Array](https://leetcode.com/problems/search-in-rotated-sorted-array/) | 🟡 | 2026-06-25 | 2026-06-15 | 2026-04-13, 2026-05-29, 2026-06-15 |
 | Easy | [14. Longest Common Prefix](https://leetcode.com/problems/longest-common-prefix/) | 🟢 | 2026-07-15 | 2026-06-15 | 2026-01-03, 2026-03-27, 2026-06-05, 2026-06-15 |
+| Medium | [994. Rotting Oranges](https://leetcode.com/problems/rotting-oranges/) | 🟡 | 2026-06-25 | 2026-06-15 | 2026-06-06, 2026-06-15 |
 | Medium | [130. Surrounded Regions](https://leetcode.com/problems/surrounded-regions/) | 🟡 | 2026-06-24 | 2026-06-14 | 2026-06-14 |
 | Easy | [543. Diameter of Binary Tree](https://leetcode.com/problems/diameter-of-binary-tree/) | 🟡 | 2026-06-24 | 2026-06-14 | 2026-04-30, 2026-06-02, 2026-06-12, 2026-06-14 |
 | Easy | [110. Balanced Binary Tree](https://leetcode.com/problems/balanced-binary-tree/) | 🟡 | 2026-06-24 | 2026-06-14 | 2026-05-01, 2026-06-04, 2026-06-14 |
@@ -56,7 +57,6 @@ Notes for future agents:
 | Medium | [417. Pacific Atlantic Water Flow](https://leetcode.com/problems/pacific-atlantic-water-flow/) | 🟢 | 2026-07-11 | 2026-06-11 | 2026-06-11 |
 | Medium | [133. Clone Graph](https://leetcode.com/problems/clone-graph/) | 🟢 | 2026-07-07 | 2026-06-07 | 2026-06-04, 2026-06-05, 2026-06-07 |
 | Medium | [200. Number of Islands (BFS)](https://leetcode.com/problems/number-of-islands/) | 🟢 | 2026-07-07 | 2026-06-07 | 2026-05-30, 2026-06-01, 2026-06-07 |
-| Medium | [994. Rotting Oranges](https://leetcode.com/problems/rotting-oranges/) | 🔴 | 2026-06-08 | 2026-06-06 | 2026-06-06 |
 | Easy | [100. Same Tree](https://leetcode.com/problems/same-tree/) | 🟢 | 2026-07-05 | 2026-06-05 | 2026-05-01, 2026-06-05 |
 | Easy | [88. Merge Sorted Array](https://leetcode.com/problems/merge-sorted-array/) | 🟢 | 2026-07-04 | 2026-06-04 | 2026-01-10, 2026-04-03, 2026-06-04 |
 | Medium | [200. Number of Islands (DFS)](https://leetcode.com/problems/number-of-islands/) | 🔴 | 2026-06-04 | 2026-06-02 | 2026-05-31, 2026-06-02 |
