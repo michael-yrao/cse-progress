@@ -27,10 +27,12 @@ Notes for future agents:
 
 | Problems Done | 🟢 Clean | 🟡 Shaky | 🔴 Blank | Total Attempts |
 |:---:|:---:|:---:|:---:|:---:|
-| 82 | 47 | 10 | 25 | 170 |
+| 83 | 47 | 11 | 25 | 172 |
 
 | Difficulty | Problem | Comfort | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|
+| Medium | [323. Number of Connected Components (BFS)](https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/) | 🔴 | 2026-06-18 | 2026-06-16 | 2026-06-16 |
+| Medium | [200. Number of Islands (DFS)](https://leetcode.com/problems/number-of-islands/) | 🟡 | 2026-06-26 | 2026-06-16 | 2026-05-31, 2026-06-02, 2026-06-16 |
 | Medium | [261. Graph Valid Tree](https://leetcode.com/problems/graph-valid-tree/) | 🔴 | 2026-06-17 | 2026-06-15 | 2026-06-15 |
 | Medium | [33. Search in Rotated Sorted Array](https://leetcode.com/problems/search-in-rotated-sorted-array/) | 🟡 | 2026-06-25 | 2026-06-15 | 2026-04-13, 2026-05-29, 2026-06-15 |
 | Easy | [14. Longest Common Prefix](https://leetcode.com/problems/longest-common-prefix/) | 🟢 | 2026-07-15 | 2026-06-15 | 2026-01-03, 2026-03-27, 2026-06-05, 2026-06-15 |
@@ -59,7 +61,6 @@ Notes for future agents:
 | Medium | [200. Number of Islands (BFS)](https://leetcode.com/problems/number-of-islands/) | 🟢 | 2026-07-07 | 2026-06-07 | 2026-05-30, 2026-06-01, 2026-06-07 |
 | Easy | [100. Same Tree](https://leetcode.com/problems/same-tree/) | 🟢 | 2026-07-05 | 2026-06-05 | 2026-05-01, 2026-06-05 |
 | Easy | [88. Merge Sorted Array](https://leetcode.com/problems/merge-sorted-array/) | 🟢 | 2026-07-04 | 2026-06-04 | 2026-01-10, 2026-04-03, 2026-06-04 |
-| Medium | [200. Number of Islands (DFS)](https://leetcode.com/problems/number-of-islands/) | 🔴 | 2026-06-04 | 2026-06-02 | 2026-05-31, 2026-06-02 |
 | Medium | [695. Max Area Of Island (DFS)](https://leetcode.com/problems/max-area-of-island/) | 🔴 | 2026-06-03 | 2026-06-01 | 2026-06-01 |
 | Hard | [1216. Valid Palindrome III (backtracking)](https://leetcode.com/problems/valid-palindrome-iii/) | 🔴 | 2026-06-02 | 2026-05-31 | 2026-05-31 |
 | Hard | [1216. Valid Palindrome III (1DP)](https://leetcode.com/problems/valid-palindrome-iii/) | 🔴 | 2026-06-02 | 2026-05-31 | 2026-05-31 |
