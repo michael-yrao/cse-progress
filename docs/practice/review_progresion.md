@@ -27,14 +27,14 @@ Notes for future agents:
 
 | Problems Done | 🟢 Clean | 🟡 Shaky | 🔴 Blank | Total Attempts |
 |:---:|:---:|:---:|:---:|:---:|
-| 83 | 48 | 11 | 24 | 173 |
+| 83 | 48 | 11 | 24 | 174 |
 
 | Difficulty | Problem | Comfort | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|
 | Medium | [695. Max Area Of Island (DFS)](https://leetcode.com/problems/max-area-of-island/) | 🟢 | 2026-07-17 | 2026-06-17 | 2026-06-01, 2026-06-17 |
+| Medium | [261. Graph Valid Tree](https://leetcode.com/problems/graph-valid-tree/) | 🔴 | 2026-06-19 | 2026-06-17 | 2026-06-15, 2026-06-17 |
 | Medium | [323. Number of Connected Components (BFS)](https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/) | 🔴 | 2026-06-18 | 2026-06-16 | 2026-06-16 |
 | Medium | [200. Number of Islands (DFS)](https://leetcode.com/problems/number-of-islands/) | 🟡 | 2026-06-26 | 2026-06-16 | 2026-05-31, 2026-06-02, 2026-06-16 |
-| Medium | [261. Graph Valid Tree](https://leetcode.com/problems/graph-valid-tree/) | 🔴 | 2026-06-17 | 2026-06-15 | 2026-06-15 |
 | Medium | [33. Search in Rotated Sorted Array](https://leetcode.com/problems/search-in-rotated-sorted-array/) | 🟡 | 2026-06-25 | 2026-06-15 | 2026-04-13, 2026-05-29, 2026-06-15 |
 | Easy | [14. Longest Common Prefix](https://leetcode.com/problems/longest-common-prefix/) | 🟢 | 2026-07-15 | 2026-06-15 | 2026-01-03, 2026-03-27, 2026-06-05, 2026-06-15 |
 | Medium | [994. Rotting Oranges](https://leetcode.com/problems/rotting-oranges/) | 🟡 | 2026-06-25 | 2026-06-15 | 2026-06-06, 2026-06-15 |
