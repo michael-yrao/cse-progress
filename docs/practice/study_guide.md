@@ -186,9 +186,9 @@ Every design session must be narrated out loud — not written silently. Intervi
 | Phase | Approx. Dates | New Problems | Categories |
 |---|---|---|---|
 | **Recovery + Standard Graphs** | Jun 8–21 | 6–8 | Course Schedule I & II, Pacific Atlantic Water Flow, Surrounded Regions, Graph Valid Tree, Number of Connected Components, Redundant Connection |
-| **Heap / Priority Queue** | Jun 22–Jul 5 | 7 | Kth Largest in Stream, Last Stone Weight, K Closest Points to Origin, Task Scheduler, Design Twitter, Find Median from Data Stream, Merge K Sorted Lists |
-| **Tries** | Jul 6–12 | 3 | Implement Trie, Design Add and Search Words, Word Search II |
-| **Advanced Graphs** | Jul 13–Aug 2 | 6 | Network Delay Time (Dijkstra), Swim in Rising Water, Alien Dictionary, Cheapest Flights Within K Stops, Min Cost to Connect All Points, Reconstruct Itinerary |
+| **Heap / Priority Queue + Linked List catch-up** | Jun 22–Jul 5 | 13 | Kth Largest in Stream, Last Stone Weight, K Closest Points to Origin, Task Scheduler, Design Twitter, Find Median from Data Stream, Merge K Sorted Lists; *catch-up:* Encode and Decode Strings (LC 271), Add Two Numbers (LC 2), Copy List with Random Pointer (LC 138), LRU Cache (LC 146), Find the Duplicate Number (LC 287), Reverse Nodes in K-Group (LC 25) |
+| **Tries + Tree catch-up** | Jul 6–12 | 8 | Implement Trie, Design Add and Search Words, Word Search II; *catch-up:* Construct Binary Tree from Preorder/Inorder (LC 105), Kth Smallest in BST (LC 230), Binary Tree Maximum Path Sum (LC 124), Serialize and Deserialize Binary Tree (LC 297), Median of Two Sorted Arrays (LC 4) |
+| **Advanced Graphs** | Jul 13–Aug 2 | 7 | Network Delay Time (Dijkstra), Swim in Rising Water, Alien Dictionary, Cheapest Flights Within K Stops, Min Cost to Connect All Points, Reconstruct Itinerary, Word Ladder |
 | **Sliding Window (finish) + Stack** | Aug 3–23 | 8 | Min Window Substring, Sliding Window Maximum; Min Stack, Evaluate Reverse Polish Notation, Generate Parentheses, Daily Temperatures, Car Fleet, Largest Rectangle in Histogram |
 | **Intervals + Greedy** | Aug 24–Sep 13 | 14 | Insert Interval, Merge Intervals, Non-overlapping Intervals, Min Interval to Include Each Query, Meeting Rooms I & II; Jump Game I & II, Gas Station, Hand of Straights, Merge Triplets, Partition Labels, Valid Parenthesis String |
 | **Backtracking** | Sep 14–Oct 11 | 9 | Subsets I & II, Combination Sum I & II, Permutations, Word Search, Palindrome Partitioning, Letter Combinations, N-Queens |
