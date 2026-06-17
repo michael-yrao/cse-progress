@@ -124,3 +124,46 @@ class Solution:
                 if grid[row][col] == '1' and (row,col) not in visited:
                     result+=dfs(row,col)
         return result
+
+    def numIslands_20260616(self, grid: List[List[str]]) -> int:
+        # DFS
+        # we need to find the first piece of land
+        # DFS on it, mark each node we visit as visited
+        # when we get out of the DFS, we know we've marked all parts of this island
+
+        visited = set()
+
+        islandCounter = 0
+
+        rows, cols = len(grid), len(grid[0])
+
+        def dfs(row,col):
+            # exit if in bound
+            if row < 0 or row >= rows or col < 0 or col >= cols:
+                return
+            # exit if visited
+            if (row, col) in visited:
+                return
+            # exit if not land
+            if grid[row][col] != '1':
+                return 
+            
+            # knowing this node is valid, mark it as visited
+            visited.add((row,col))
+
+            # visit neighbors
+            dfs(row+1,col)
+            dfs(row-1,col)
+            dfs(row,col+1)
+            dfs(row,col-1)
+
+        for row in range(rows):
+            for col in range(cols):
+                # if we haven't visited this node
+                # and it is a land, it is an unvisited island
+                if (row,col) not in visited and grid[row][col] == '1':
+                    islandCounter+=1
+                    # dfs to mark all nodes connected to this land as visited
+                    dfs(row,col)
+        
+        return islandCounter
