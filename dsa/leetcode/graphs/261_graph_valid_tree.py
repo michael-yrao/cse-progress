@@ -71,3 +71,44 @@ class Solution:
             return True
                     
         return dfs(0,-1) and len(visited) == n
+    
+    def validTree_20260617(self, n: int, edges: List[List[int]]) -> bool:
+        # a graph is a tree if there is no cycle back to any of the nodes excluding the node it came from
+        # this mean we need to keep track of prior node so it does not accidentally see the prior node as a node we've already visited
+        # so excluding the prior node, if we see a node that has already been visited, we return False
+        # otherwise, we just continue checking rest of the nodes
+        # we also do need to make sure every node from 0 to (n-1) are covered
+        # since it means there is a node just disconnected and making the n nodes not a tree
+        # one big thing to note is undirected edges
+        # this means 0 -> 1 and 1 -> 0
+        # so if we are using adjacency map, we need to do both direction
+        # nodes are always from 0 to (n-1)
+
+        adjMap = collections.defaultdict(list)
+        
+        visited = set()
+
+        for node1, node2 in edges:
+            adjMap[node1].append(node2)
+            adjMap[node2].append(node1)
+        
+        def dfs(currentNode, priorNode):
+            # check if we have visited this node
+            if currentNode in visited:
+                return False
+            
+            # if never visited, mark as visited
+            visited.add(currentNode)
+
+            # check neighbors of this node and see if they were visited
+            for neighbor in adjMap[currentNode]:
+                # ignore path we came from
+                if neighbor == priorNode:
+                    continue
+                # if we've already visited this node before
+                # that means we are in a cycle, so we return false
+                if not dfs(neighbor, currentNode):
+                    return False
+            return True
+
+        return dfs(0,-1) and len(visited) == n

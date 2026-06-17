@@ -74,3 +74,41 @@ class Solution:
                     maxArea = max(maxArea, dfs(row,col))
         
         return maxArea
+    
+    def maxAreaOfIsland_20260617(self, grid: List[List[int]]) -> int:
+        # Find island, count number of nodes visited on this DFS
+        # visited set to help us track when we finished going through this island
+        # maxArea to keep track of final max area
+        # currentArea to increment current area
+        visited = set()
+
+        maxArea = 0
+
+        rows, cols = len(grid), len(grid[0])
+
+        def dfs(row,col):
+            # if out of bounds, return 0
+            # if visited, return 0
+            # if not land, return 0
+            if row < 0 or row >= rows or col < 0 or col >= cols:
+                return 0
+            
+            if (row,col) in visited:
+                return 0
+            
+            if grid[row][col] != 1:
+                return 0
+            
+            # if unvisited land, add to visited and do 1 + dfs neighbors
+            visited.add((row,col))
+
+            return 1 + dfs(row+1,col) + dfs(row-1,col) + dfs(row,col+1) + dfs(row, col-1)
+
+        for row in range(rows):
+            for col in range(cols):
+                # if we are at land and we haven't visited this island yet
+                # let's dfs through it
+                if (row,col) not in visited and grid[row][col] == 1:
+                    maxArea = max(maxArea, dfs(row,col))
+        
+        return maxArea
