@@ -21,6 +21,10 @@ Next review intervals (set in `docs/review_progresion.md` and computed by `scrip
 | Shaky   | +10 days    |
 | Blank   | +2 days     |
 
+## Schedule Integrity Rule
+
+When a problem is dropped or deferred from the schedule, a new specific slot must be assigned in the same edit. Never remove a problem without immediately adding it to another day. A deferred problem with no new date is a missed problem.
+
 ## Study Guide Files
 
 - `docs/practice/review_progresion.md` — spaced repetition tracker (auto-updated by pre-commit hook)
