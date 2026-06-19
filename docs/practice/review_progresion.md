@@ -27,10 +27,13 @@ Notes for future agents:
 
 | Problems Done | 🟢 Clean | 🟡 Shaky | 🔴 Blank | Total Attempts |
 |:---:|:---:|:---:|:---:|:---:|
-| 83 | 48 | 11 | 24 | 174 |
+| 84 | 49 | 11 | 24 | 177 |
 
 | Difficulty | Problem | Comfort | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|
+| Medium | [684. Redundant Connection (Union-Find)](https://leetcode.com/problems/redundant-connection/) | 🔴 | 2026-06-20 | 2026-06-18 | 2026-06-18 |
+| Medium | [19. Remove Nth Node From End of List (Recursion)](https://leetcode.com/problems/remove-nth-node-from-end-of-list/) | 🟡 | 2026-06-28 | 2026-06-18 | 2026-05-18, 2026-05-21, 2026-06-18 |
+| Medium | [1448. Count Good Nodes in Binary Tree](https://leetcode.com/problems/count-good-nodes-in-binary-tree/) | 🟢 | 2026-07-18 | 2026-06-18 | 2026-05-15, 2026-06-18 |
 | Medium | [695. Max Area Of Island (DFS)](https://leetcode.com/problems/max-area-of-island/) | 🟢 | 2026-07-17 | 2026-06-17 | 2026-06-01, 2026-06-17 |
 | Medium | [261. Graph Valid Tree](https://leetcode.com/problems/graph-valid-tree/) | 🔴 | 2026-06-19 | 2026-06-17 | 2026-06-15, 2026-06-17 |
 | Medium | [323. Number of Connected Components (BFS)](https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/) | 🔴 | 2026-06-18 | 2026-06-16 | 2026-06-16 |
@@ -74,11 +77,9 @@ Notes for future agents:
 | Easy | [704. Binary Search](https://leetcode.com/problems/binary-search/) | 🟢 | 2026-06-26 | 2026-05-27 | 2026-03-09, 2026-04-13, 2026-05-27 |
 | Easy | [226. Invert Binary Tree](https://leetcode.com/problems/invert-binary-tree/) | 🟢 | 2026-06-25 | 2026-05-26 | 2026-04-30, 2026-05-26 |
 | Medium | [36. Valid Sudoku](https://leetcode.com/problems/valid-sudoku/) | 🟢 | 2026-06-21 | 2026-05-22 | 2026-01-25, 2026-05-22 |
-| Medium | [19. Remove Nth Node From End of List (Recursion)](https://leetcode.com/problems/remove-nth-node-from-end-of-list/) | 🟡 | 2026-05-31 | 2026-05-21 | 2026-05-18, 2026-05-21 |
 | Easy | [20. Valid Parentheses](https://leetcode.com/problems/valid-parentheses/) | 🟢 | 2026-06-20 | 2026-05-21 | 2026-05-19, 2026-05-21 |
 | Medium | [98. Validate Binary Search Tree](https://leetcode.com/problems/validate-binary-search-tree/) | 🟢 | 2026-06-19 | 2026-05-20 | 2026-05-16, 2026-05-20 |
 | Medium | [19. Remove Nth Node From End of List (Iterative)](https://leetcode.com/problems/remove-nth-node-from-end-of-list/) | 🟢 | 2026-06-17 | 2026-05-18 | 2026-04-29, 2026-05-18 |
-| Medium | [1448. Count Good Nodes in Binary Tree](https://leetcode.com/problems/count-good-nodes-in-binary-tree/) | 🔴 | 2026-05-17 | 2026-05-15 | 2026-05-15 |
 | Easy | [141. Linked List Cycle](https://leetcode.com/problems/linked-list-cycle/) | 🟢 | 2026-05-26 | 2026-04-26 | 2026-04-26 |
 | Medium | [143. Reorder List](https://leetcode.com/problems/reorder-list/) | 🔴 | 2026-04-28 | 2026-04-26 | 2026-04-26 |
 | Easy | [206. Reverse Linked List (Recursion)](https://leetcode.com/problems/reverse-linked-list/) | 🔴 | 2026-04-26 | 2026-04-24 | 2026-04-24 |
@@ -122,4 +123,5 @@ Notes for future agents:
 | Medium | [912. Sort an Array (Radix Sort)](https://leetcode.com/problems/sort-an-array/) | 🔴 |  |  |  |
 | Medium | [912. Sort an Array (Counting Sort)](https://leetcode.com/problems/sort-an-array/) | 🔴 |  |  |  |
 | Medium | [912. Sort an Array (Timsort)](https://leetcode.com/problems/sort-an-array/) | 🔴 |  |  |  |
+| Unknown | [686. Redundant Connection](https://leetcode.com/problems/redundant-connection/) | 🔴 |  |  |  |
 | Medium | [53. Maximum Subarray (Divide and Conquer)](https://leetcode.com/problems/maximum-subarray/) | 🔴 | | |  |

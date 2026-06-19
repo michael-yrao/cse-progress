@@ -135,3 +135,38 @@ class Solution:
         
         removeNthNode(dummy)
         return dummy.next
+    
+    def removeNthFromEnd_20260618(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
+        # removing nth node from the end means we need to remove len - n node from the front
+        # this is important since we are given head and we have to iterate from the front at some point
+        # so what we can do is just recursive set current node's next to next
+        # but if we hit len - n -1, we need to set next to next.next
+
+        currentNode = head
+        lenLinkedList = 0
+
+        while currentNode:
+            currentNode = currentNode.next
+            lenLinkedList+=1
+
+        def remove(currentNode, currentIndex):
+            if not currentNode:
+                return None
+            
+            # if we are at the node we need to change for the next
+
+            returnNode = remove(currentNode.next, currentIndex + 1)
+
+            if currentIndex == lenLinkedList - n - 1:
+                currentNode.next = returnNode.next    
+            else:
+                currentNode.next = returnNode
+
+            return currentNode
+
+        dummyNode = ListNode(-1)
+        dummyNode.next = head
+        currentNode = dummyNode
+        remove(currentNode, -1)
+
+        return dummyNode.next

@@ -32,6 +32,7 @@ Constraints:
 """
 # Definition for a binary tree node.
 from collections import deque
+import math
 
 
 class TreeNode:
@@ -66,3 +67,28 @@ class Solution:
                 stack.append([currentNode.right,currentMax])
         
         return result
+    def goodNodes_20260618(self, root: TreeNode) -> int:
+        # so we clearly need to know the previous node and know if it is good or not
+        # we actually seem to need to know current largest so we will pass that going down the tree
+        # basically we check if currentNode is good by comparing it against current largest
+        # keep passing current largest down, so we are doing preorder DFS
+
+        largestValue = -math.inf
+        
+        goodNodeCounter = 0
+
+        def dfs(currentNode, largestNodeValue):
+            nonlocal goodNodeCounter
+            if not currentNode:
+                return
+            
+            if currentNode.val >= largestNodeValue:
+                goodNodeCounter+=1
+                largestNodeValue = currentNode.val
+            
+            dfs(currentNode.left, largestNodeValue)
+            dfs(currentNode.right, largestNodeValue)
+        
+        dfs(root, largestValue)
+
+        return goodNodeCounter
