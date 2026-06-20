@@ -64,3 +64,16 @@ class Solution:
         head.next = None
         # return the base case node
         return returnNode
+    def reverseList_20260620_iterative(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        # iterative reverse linked list
+        # 1 -> 2 -> null
+        prev = None
+        current = head
+
+        while current:
+            next = current.next
+            current.next = prev
+            prev = current
+            current = next
+        
+        return prev

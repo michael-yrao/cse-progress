@@ -95,4 +95,51 @@ class Solution:
                     board[row][col] = 'X'
                 elif board[row][col] == 'S':
                     board[row][col] = 'O'
+                    
+    def solve_20260620(self, board: List[List[str]]) -> None:
+        """
+        Do not return anything, modify board in-place instead.
+        """
+        # so this is pretty much just pacific atlantic water flow
+        # we know the land on the edges are safe, so we are going to mark all nodes connected to the lands on the edges as safe
+        # then go through and mark all the non-safe lands as water
+        # then change the safe land back to land
+
+        rows, cols = len(board), len(board[0])
+
+        safeLand = collections.deque()
+
+        for row in range(rows):
+            if board[row][0] == 'O':
+                safeLand.append((row,0))
+            if board[row][cols-1] == 'O':
+                safeLand.append((row,cols-1))
         
+        for col in range(cols):
+            if board[0][col] == 'O':
+                safeLand.append((0,col))
+            if board[rows-1][col] == 'O':
+                safeLand.append((rows-1,col))
+
+        neighbors = [[1,0],[-1,0],[0,1],[0,-1]]
+
+        # now that we have our starting point, we will do multipoint traversal
+        while safeLand:
+            safeLandSize = len(safeLand)
+            for _ in range(safeLandSize):
+                safeRow, safeCol = safeLand.popleft()
+                # temporary value as a way for us to say safe and visited
+                board[safeRow][safeCol] = 'S'
+                for nr, nc in neighbors:
+                    neighborRow = safeRow + nr
+                    neighborCol = safeCol + nc
+                    if neighborRow >= 0 and neighborRow < rows and neighborCol >= 0 and neighborCol < cols and board[neighborRow][neighborCol] == 'O':
+                        safeLand.append((neighborRow, neighborCol))
+        
+        # now that all safe land are marked, we just go through the board, mark everything O to water
+        for row in range(rows):
+            for col in range(cols):
+                if board[row][col] == 'O':
+                    board[row][col] = 'X'
+                if board[row][col] == 'S':
+                    board[row][col] = 'O'

@@ -89,3 +89,25 @@ class Solution:
             list2.next = self.mergeTwoListsRecursive(list1, list2.next)
             # forward traversal, thus since list2 is set in stone, we return it
             return list2
+
+    def mergeTwoLists_20260620_recursion(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
+        # recursive merge
+
+        # if both are null, return None
+        if not list1 and not list2:
+            return None
+
+        # if one is null, we can just put the other on top
+        if not list1:
+            return list2
+        
+        if not list2:
+            return list1
+
+        # now that we know both has a value, we compare
+        if list1.val < list2.val:
+            list1.next = self.mergeTwoLists(list1.next, list2)
+            return list1
+        else:
+            list2.next = self.mergeTwoLists(list1, list2.next)
+            return list2
