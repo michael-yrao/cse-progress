@@ -81,3 +81,29 @@ class Solution:
                     queue.append((neighborRow, neighborCol))
 
         return image
+    
+    def floodFill_20260619(self, image: List[List[int]], sr: int, sc: int, color: int) -> List[List[int]]:
+        # so we need to keep track of original color of sr, sc, so we can match with its neighbors
+        # we do bfs until all the colors are converted
+        originalColor = image[sr][sc]
+
+        rows, cols = len(image), len(image[0])
+
+        queue = collections.deque()
+        
+        queue.append((sr,sc))
+
+        neighbors = [[1,0],[-1,0],[0,1],[0,-1]]
+
+        while queue:
+            currentRow, currentCol = queue.popleft()
+            # mark node as visited
+            image[currentRow][currentCol] = color
+            # add neighbors
+            for rowInc, colInc in neighbors:
+                neighborRow = currentRow + rowInc
+                neighborCol = currentCol + colInc
+                if neighborRow >= 0 and neighborRow < rows and neighborCol >= 0 and neighborCol < cols and image[neighborRow][neighborCol] == originalColor and originalColor != color:
+                    queue.append((neighborRow, neighborCol))
+
+        return image
