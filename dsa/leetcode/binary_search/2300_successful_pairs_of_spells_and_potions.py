@@ -97,3 +97,37 @@ class Solution:
                 result[index] = len(potions) - l
                 
         return result
+    def successfulPairs_20260619(self, spells: List[int], potions: List[int], success: int) -> List[int]:
+        # result size = spells size
+        # sucess if spells * potions[i] > success
+        # one thing to note is that first example, potions is sorted
+        # and the output wants how many so order does not matter
+        # so we should start by sorting potions
+        # what this means is, we can then find the smallest number in potion such that it is successful
+        # so min boundary for binary search
+        
+        potions.sort()
+        
+        result = [0] * len(spells)
+
+        # for each of the spells, we want to find the min boundary
+
+        for i in range(len(spells)):
+            l, r = 0, len(potions) - 1
+            while l < r:
+                m = (l+r)//2
+                # if greater, drop r = m
+                if spells[i] * potions[m] >= success:
+                    r = m
+                else:
+                    l = m + 1
+            # so now l is the minimum index for success
+            # so 5 - 1, so len(potions) - l
+            # we also do have to consider case of spells[1] where nothing succeeds
+            # so if no success at position l, it means we would never succeed so we set it to 0
+            if spells[i] * potions[l] < success:
+                result[i] = 0
+            else:
+                result[i] = len(potions) - l
+        
+        return result

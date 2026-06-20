@@ -112,3 +112,61 @@ class Solution:
             return True
 
         return dfs(0,-1) and len(visited) == n
+    
+    def validTree_20260619_UnionFind(self, n: int, edges: List[List[int]]) -> bool:
+        # a tree is non-cyclic and is connected to every node
+        # so we need to make sure we traversed through all nodes
+        # so we should have a counter for how many nodes we've visited
+        # we can actually use union find here
+        # so we need parent map and rank map
+        # from graph theory, we know that given n nodes
+        # there will always be n - 1 edges
+
+        if len(edges) != n - 1:
+            return False
+
+        parentMap = {}
+        rankMap = {}
+
+        # initialization phase
+        # set parent to self
+        # set rank to 0
+        for i in range(n):
+            parentMap[i] = i
+            rankMap[i] = 0
+
+        # find the root of node
+        # this is path compression
+        def find(node):
+            # base case
+            if parentMap[node] == node:
+                return parentMap[node]
+            # if we have an actual parent, let's find the root parent
+            parentMap[node] = find(parentMap[node])
+            return parentMap[node]
+
+        # see if we can merge two nodes without making a cycle
+        def union(node1, node2):
+            # we first find the root parent of both nodes
+            node1Root = find(node1)
+            node2Root = find(node2)
+            # if the root parents are the same, we are in a cycle
+            if node1Root == node2Root:
+                return False
+            # otherwise, we check the rank of each and merge them
+
+            if rankMap[node1Root] > rankMap[node2Root]:
+                parentMap[node2Root] = node1Root
+            elif rankMap[node2Root] > rankMap[node1Root]:
+                parentMap[node1Root] = node2Root
+            else:
+                # if equal rank, then pick a random one to be parent and promote rank
+                parentMap[node2Root] = node1Root
+                rankMap[node1Root] += 1
+            return True
+
+        for node1, node2 in edges:
+            if not union(node1,node2):
+                return False
+        
+        return True    

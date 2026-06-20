@@ -30,7 +30,7 @@ import collections
 from typing import List
 
 class Solution:
-    def countComponents(self, n: int, edges: List[List[int]]) -> int:
+    def countComponents_BFS_20260616(self, n: int, edges: List[List[int]]) -> int:
         # first thought is that we iterate through n
         # bfs on each node and mark them as visited as we visit them
         # each time bfs comes back, we basically have a component
@@ -69,4 +69,47 @@ class Solution:
                 componentCounter+=1
         
         return componentCounter
+    def countComponents_20260619_UnionFind(self, n: int, edges: List[List[int]]) -> int:
+        # union find solution
+        # since we are given n nodes, we can say that we started out with n components
+        # then we try to merge as many as we can and when we cannot anymore, we decrement component counter
+        # then we return the end component counter
+
+        parentMap, rankMap = {}, {}
+        componentCounter = n
+
+        # initialize parent and rank maps
+        for i in range(n):
+            parentMap[i] = i
+            rankMap[i] = 0
+        
+        # path compression
+        def findParent(node):
+            if node == parentMap[node]:
+                return parentMap[node]
+            parentMap[node] = findParent(parentMap[node])
+            return parentMap[node]
+        
+        # union by rank
+        def unionByRank(node1, node2):
+            node1Root = findParent(node1)
+            node2Root = findParent(node2)
+            if node1Root == node2Root:
+                return False
             
+            if rankMap[node1Root] > rankMap[node2Root]:
+                parentMap[node2Root] = node1Root
+            elif rankMap[node2Root] > rankMap[node1Root]:
+                parentMap[node1Root] = node2Root
+            else:
+                # if equal, pick a random one to rank up
+                parentMap[node2Root] = node1Root
+                rankMap[node1Root] += 1
+            return True
+        
+        for node1, node2 in edges:
+            # if we can connect, subtract 1 from component counter
+            if unionByRank(node1, node2):
+                componentCounter-=1
+        
+        return componentCounter

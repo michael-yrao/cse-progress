@@ -95,3 +95,5 @@ class Solution:
             # if union was unsuccessful
             if not union(node1, node2):
                 return [node1, node2]
+        
+        return []
