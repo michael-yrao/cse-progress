@@ -27,10 +27,12 @@ Notes for future agents:
 
 | Problems Done | 🟢 Clean | 🟡 Shaky | 🔴 Blank | Total Attempts |
 |:---:|:---:|:---:|:---:|:---:|
-| 86 | 53 | 9 | 24 | 184 |
+| 87 | 53 | 9 | 25 | 186 |
 
 | Difficulty | Problem | Comfort | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|
+| Medium | [261. Graph Valid Tree (DFS)](https://leetcode.com/problems/graph-valid-tree/) | 🔴 | 2026-06-23 | 2026-06-21 | 2026-06-15, 2026-06-17, 2026-06-21 |
+| Medium | [130. Surrounded Regions (Union-Find)](https://leetcode.com/problems/surrounded-regions/) | 🔴 | 2026-06-23 | 2026-06-21 | 2026-06-21 |
 | Easy | [206. Reverse Linked List (Iterative)](https://leetcode.com/problems/reverse-linked-list/) | 🟢 | 2026-07-20 | 2026-06-20 | 2026-04-23, 2026-05-26, 2026-06-12, 2026-06-20 |
 | Easy | [21. Merge Two Sorted Lists (Recursion)](https://leetcode.com/problems/merge-two-sorted-lists/) | 🟢 | 2026-07-20 | 2026-06-20 | 2026-05-20, 2026-05-21, 2026-06-12, 2026-06-20 |
 | Medium | [130. Surrounded Regions (BFS)](https://leetcode.com/problems/surrounded-regions/) | 🟢 | 2026-07-20 | 2026-06-20 | 2026-06-14, 2026-06-20 |
@@ -42,7 +44,6 @@ Notes for future agents:
 | Medium | [19. Remove Nth Node From End of List (Recursion)](https://leetcode.com/problems/remove-nth-node-from-end-of-list/) | 🟡 | 2026-06-28 | 2026-06-18 | 2026-05-18, 2026-05-21, 2026-06-18 |
 | Medium | [1448. Count Good Nodes in Binary Tree](https://leetcode.com/problems/count-good-nodes-in-binary-tree/) | 🟢 | 2026-07-18 | 2026-06-18 | 2026-05-15, 2026-06-18 |
 | Medium | [695. Max Area Of Island (DFS)](https://leetcode.com/problems/max-area-of-island/) | 🟢 | 2026-07-17 | 2026-06-17 | 2026-06-01, 2026-06-17 |
-| Medium | [261. Graph Valid Tree (DFS)](https://leetcode.com/problems/graph-valid-tree/) | 🔴 | 2026-06-19 | 2026-06-17 | 2026-06-15, 2026-06-17 |
 | Medium | [323. Number of Connected Components (BFS)](https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/) | 🔴 | 2026-06-18 | 2026-06-16 | 2026-06-16 |
 | Medium | [200. Number of Islands (DFS)](https://leetcode.com/problems/number-of-islands/) | 🟡 | 2026-06-26 | 2026-06-16 | 2026-05-31, 2026-06-02, 2026-06-16 |
 | Medium | [33. Search in Rotated Sorted Array](https://leetcode.com/problems/search-in-rotated-sorted-array/) | 🟡 | 2026-06-25 | 2026-06-15 | 2026-04-13, 2026-05-29, 2026-06-15 |
