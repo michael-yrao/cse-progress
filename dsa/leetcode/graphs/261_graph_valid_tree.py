@@ -170,3 +170,47 @@ class Solution:
                 return False
         
         return True    
+
+    def validTree_20260621(self, n: int, edges: List[List[int]]) -> bool:
+        # graph theory states a tree is a connected graph with no cycles
+        # and n nodes require n - 1 edges to make a tree
+        # so we can do that basic check first
+        # then we do something like an adjacency map
+        # since these are undirected edges, it basically just means bidirectional
+        # we want to do dfs method today
+        # so we do an adjacency map
+
+        # n nodes must have n - 1 edges to make a tree
+        if n - 1 != len(edges):
+            return False
+
+        # classic graph visited set
+        # we need to also consider number of nodes visited in case one is a straggler
+        visited = set()
+
+        adjMap = collections.defaultdict(list)
+
+        for node1, node2 in edges:
+            adjMap[node1].append(node2)
+            adjMap[node2].append(node1)
+
+        def dfs(currentNode, sourceNode):
+            # if we already visited, return False
+            if currentNode in visited:
+                return False
+            
+            # if we never visited, we add to visited list and visit neighbors
+            visited.add(currentNode)
+
+            for neighbor in adjMap[currentNode]:
+                # ignore the one we came from
+                if neighbor == sourceNode:
+                    continue
+                # check other nodes
+                # if already visited, return False
+                # remember we need to check rest of the nodes, so put it in an if statement
+                if not dfs(neighbor, currentNode):
+                    return False
+            return True
+
+        return dfs(0,-1) and len(visited) == n

@@ -143,3 +143,78 @@ class Solution:
                     board[row][col] = 'X'
                 if board[row][col] == 'S':
                     board[row][col] = 'O'
+    
+    def solve_20260621_UnionFind(self, board: List[List[str]]) -> None:
+        # Union Find version of 130
+        # so the general idea behind union find method is that we are grouping them into components and any component not connected to the virtual node is gone
+        # we want to create an extra node outside to help us mark the edge lands as safe
+        # this node will be our base root parent for union find
+        # but we are not creating a new node per say, we are creating a virtual node
+        # which means it will have a rank and a parent but never exist in the board
+        # we also want to flatten the 2D array structure to 1D
+        # 2D -> 1D : (row, col) -> row * cols + col (index)
+        # 1D -> 2D: row = index // cols, col = index % cols
+        # nodes in 1D would go up to rows * cols, excluding rows * cols
+        # so we will assign the extra node with rows * cols
+        
+        rows = len(board)
+        cols = len(board[0])
+        
+        rankMap = {}
+        parentMap = {}
+        
+        # 1D map representation for parent and rank map
+        for i in range(rows * cols + 1):
+            parentMap[i] = i
+            rankMap[i] = 0
+            
+        
+        def findParent(node):
+            if node == parentMap[node]:
+                return parentMap[node]
+            parentMap[node] = findParent(parentMap[node])
+            return parentMap[node]
+        
+        # union two nodes
+        def union(node1,node2):
+            node1Root = findParent(node1)
+            node2Root = findParent(node2)
+            if node1Root == node2Root:
+                return False
+            if rankMap[node1Root] > rankMap[node2Root]:
+                parentMap[node2Root] = node1Root
+            elif rankMap[node1Root] < rankMap[node2Root]:
+                parentMap[node1Root] = node2Root
+            else:
+                # random assignment
+                parentMap[node2Root] = node1Root
+                rankMap[node1Root] += 1
+            return True
+        
+        neighbors = [[1,0],[-1,0],[0,1],[0,-1]]
+        
+        # Connect the nodes that are on the edge
+        # to the virtual node
+        for row in range(rows):
+            for col in range(cols):
+                current1DNode = row * cols + col
+                virtual1DNode = rows * cols
+                if board[row][col] == 'O':
+                    if row == 0 or row == rows - 1 or col == 0 or col == cols - 1:
+                        union(current1DNode, virtual1DNode)
+                    # union the neighbors as well
+                    for ir, ic in neighbors:
+                        nr, nc = row+ir, col+ic 
+                        if nr >= 0 and nr < rows and nc >= 0 and nc < cols and board[nr][nc] == 'O':
+                            neighbor1DNode = nr * cols + nc
+                            union(current1DNode, neighbor1DNode)
+        
+        # now that we have unioned all the safe nodes
+        # we mark all the Os that have not been saved as water
+        for row in range(rows):
+            for col in range(cols):
+                current1DNode = row * cols + col
+                virtual1DNode = rows * cols
+                if board[row][col] == 'O' and findParent(current1DNode) != findParent(virtual1DNode):
+                    board[row][col] = 'X'
+        
