@@ -25,6 +25,8 @@ Next review intervals (set in `docs/review_progresion.md` and computed by `scrip
 
 When a problem is dropped or deferred from the schedule, a new specific slot must be assigned in the same edit. Never remove a problem without immediately adding it to another day. A deferred problem with no new date is a missed problem.
 
+When a problem results in 🔴 Blank and its next review date falls in the following week, immediately add it to a specific slot in that week's schedule file. Do not leave it only in `review_progresion.md` — it must appear in the schedule or it will be missed. Check the next week's schedule for balance when adding carryover blanks; spread them across available slots rather than stacking on already-heavy days.
+
 ## Study Guide Files
 
 - `docs/practice/review_progresion.md` — spaced repetition tracker (auto-updated by pre-commit hook)
