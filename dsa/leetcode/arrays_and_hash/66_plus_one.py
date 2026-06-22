@@ -61,6 +61,21 @@ class Solution:
 
         return [1] + digits
 
+    def plusOne_20260622(self, digits: List[int]) -> List[int]:
+        # only special case is if all numbers are 9
+        # otherwise, we just increment by 1 starting from the end
+        # since we do addition from the end
+
+        for i in range(len(digits)-1,-1,-1):
+            if digits[i] != 9:
+                digits[i]+=1
+                # no carryforward needed, just return
+                return digits
+            # otherwise, we need to carry over which makes current number 0
+            digits[i] = 0
+        return [1] + digits
+
+
 class UnitTest(unittest.TestCase):
     test1 = [4,3,2,1]
     output1 = [4,3,2,2]
