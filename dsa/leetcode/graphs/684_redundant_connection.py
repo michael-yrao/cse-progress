@@ -97,3 +97,49 @@ class Solution:
                 return [node1, node2]
         
         return []
+
+    def findRedundantConnection_20260622(self, edges: List[List[int]]) -> List[int]:
+        # trees are connected and have no cycles
+        # we also already know this has a redundant connection, so we don't really need to check if n nodes have n - 1 edges
+        # so we will just straight up do union find and return the first set we see that gives the merge issue, which should be the last edge as indicated in the description
+        # we are also given n == edges.length
+        # node starts at 1 and not 0, so small thing there
+
+        parentMap, rankMap = {}, {}
+
+        # set parent to self
+        # set rank to 0
+        for i in range(1,len(edges)+1):
+            parentMap[i] = i
+            rankMap[i] = 0
+        
+        # find root parent of input node
+        def findParent(node):
+            if node == parentMap[node]:
+                return parentMap[node]
+            parentMap[node] = findParent(parentMap[node])
+            return parentMap[node]
+        
+        # see if we are able to connect the nodes without creating a cycle
+        def union(node1, node2):
+            node1Root = findParent(node1)
+            node2Root = findParent(node2)
+            # if same parent, we will have a cycle by connecting
+            if node1Root == node2Root:
+                return False
+            # otherwise, we connect the nodes by rank
+            if rankMap[node1Root] > rankMap[node2Root]:
+                parentMap[node2Root] = node1Root
+            elif rankMap[node1Root] < rankMap[node2Root]:
+                parentMap[node1Root] = node2Root
+            else:
+                # pick at random and promote at random
+                parentMap[node2Root] = node1Root
+                rankMap[node1Root]+=1
+            return True
+        
+        for node1, node2 in edges:
+            if not union(node1, node2):
+                return [node1, node2]
+        
+        return []

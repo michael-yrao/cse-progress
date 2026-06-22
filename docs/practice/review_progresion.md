@@ -27,12 +27,13 @@ Notes for future agents:
 
 | Problems Done | 🟢 Clean | 🟡 Shaky | 🔴 Blank | Total Attempts |
 |:---:|:---:|:---:|:---:|:---:|
-| 87 | 54 | 10 | 23 | 188 |
+| 87 | 54 | 11 | 22 | 189 |
 
 | Difficulty | Problem | Comfort | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|
 | Easy | [66. Plus One](https://leetcode.com/problems/plus-one/) | 🟡 | 2026-07-02 | 2026-06-22 | 2026-01-02, 2026-03-25, 2026-06-22 |
 | Easy | [242. Valid Anagram](https://leetcode.com/problems/valid-anagram/) | 🟢 | 2026-07-22 | 2026-06-22 | 2026-01-01, 2026-03-25, 2026-06-22 |
+| Medium | [684. Redundant Connection (Union-Find)](https://leetcode.com/problems/redundant-connection/) | 🟡 | 2026-07-02 | 2026-06-22 | 2026-06-18, 2026-06-22 |
 | Medium | [261. Graph Valid Tree (DFS)](https://leetcode.com/problems/graph-valid-tree/) | 🔴 | 2026-06-23 | 2026-06-21 | 2026-06-15, 2026-06-17, 2026-06-21 |
 | Medium | [130. Surrounded Regions (Union-Find)](https://leetcode.com/problems/surrounded-regions/) | 🔴 | 2026-06-23 | 2026-06-21 | 2026-06-21 |
 | Easy | [206. Reverse Linked List (Iterative)](https://leetcode.com/problems/reverse-linked-list/) | 🟢 | 2026-07-20 | 2026-06-20 | 2026-04-23, 2026-05-26, 2026-06-12, 2026-06-20 |
@@ -42,7 +43,6 @@ Notes for future agents:
 | Medium | [261. Graph Valid Tree (Union-Find)](https://leetcode.com/problems/graph-valid-tree/) | 🟡 | 2026-06-29 | 2026-06-19 | 2026-06-19 |
 | Medium | [2300. Successful Pairs of Spells and Potions](https://leetcode.com/problems/successful-pairs-of-spells-and-potions/) | 🟢 | 2026-07-19 | 2026-06-19 | 2026-05-03, 2026-06-12, 2026-06-19 |
 | Medium | [323. Number of Connected Components (Union-Find)](https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/) | 🟡 | 2026-06-29 | 2026-06-19 | 2026-06-19 |
-| Medium | [684. Redundant Connection (Union-Find)](https://leetcode.com/problems/redundant-connection/) | 🔴 | 2026-06-20 | 2026-06-18 | 2026-06-18 |
 | Medium | [19. Remove Nth Node From End of List (Recursion)](https://leetcode.com/problems/remove-nth-node-from-end-of-list/) | 🟡 | 2026-06-28 | 2026-06-18 | 2026-05-18, 2026-05-21, 2026-06-18 |
 | Medium | [1448. Count Good Nodes in Binary Tree](https://leetcode.com/problems/count-good-nodes-in-binary-tree/) | 🟢 | 2026-07-18 | 2026-06-18 | 2026-05-15, 2026-06-18 |
 | Medium | [695. Max Area Of Island (DFS)](https://leetcode.com/problems/max-area-of-island/) | 🟢 | 2026-07-17 | 2026-06-17 | 2026-06-01, 2026-06-17 |
