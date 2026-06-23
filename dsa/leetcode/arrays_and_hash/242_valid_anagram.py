@@ -49,6 +49,17 @@ class Solution:
     def isAnagramPython(self, s: str, t: str) -> bool:
         return ''.join(sorted(s)) == ''.join(sorted(t))
     
+    def isAnagram_20260622(self, s: str, t: str) -> bool:
+        sMap, tMap = {}, {}
+
+        for char in s:
+            sMap[char] = sMap.get(char,0) + 1
+        
+        for char in t:
+            tMap[char] = tMap.get(char,0) + 1
+        
+        return sMap == tMap
+    
 class UnitTest(unittest.TestCase):
     test1A = "anagram"
     test1B = "nagaram"

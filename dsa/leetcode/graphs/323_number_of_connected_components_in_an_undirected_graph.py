@@ -113,3 +113,36 @@ class Solution:
                 componentCounter-=1
         
         return componentCounter
+    
+    def countComponents_20260622(self, n: int, edges: List[List[int]]) -> int:
+        # with BFS method, we would loop through the n nodes
+        # we would increment counter each time we enter the BFS
+        # mark each node as visited as we go through there
+        # we also need an adjMap to indicate the neighbors of these nodes
+
+        componentCounter = 0
+        visited = set()
+        adjMap = collections.defaultdict(list)
+
+        for node1, node2 in edges:
+            adjMap[node1].append(node2)
+            adjMap[node2].append(node1)
+
+        queue = collections.deque()
+
+        for i in range(n):
+            # if never visited
+            # add i to our visited list
+            if i not in visited:
+                visited.add(i)
+                queue.append(i)
+
+                while queue:
+                    currentNode = queue.popleft()
+                    for neighbor in adjMap[currentNode]:
+                        if neighbor not in visited:
+                            visited.add(neighbor)
+                            queue.append(neighbor)
+                componentCounter+=1
+        
+        return componentCounter
