@@ -34,7 +34,9 @@ dist/
 .idea/
 
 # Claude Code
-.claude/
+.claude/settings.json
+.claude/settings.local.json
+.claude/worktrees/
 
 # Unit test reports
 TEST*.xml
