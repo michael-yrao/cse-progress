@@ -89,6 +89,18 @@ class Solution:
             if currentSum < 0:
                 currentSum = 0
         return maxSum # type: ignore
-    
+
+    def maxSubArray_20260624(self, nums: List[int]) -> int:
+        maxTotal = -math.inf
+        currentTotal = 0
+
+        for num in nums:
+            currentTotal+=num
+            maxTotal = max(maxTotal, currentTotal)
+            if currentTotal < 0:
+                currentTotal = 0
+        
+        return maxTotal # type: ignore
+
     def maxSubarrayDivideNConquer(self, nums: List[int]) -> int:
         return # type: ignore

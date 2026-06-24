@@ -57,3 +57,24 @@ class Solution:
         reverse(0,n-1)
         reverse(0,k-1)
         reverse(k,n-1)
+
+    def rotate_20260624(self, nums: List[int], k: int) -> None:
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+        # [1,2,3,4] ; 2 ; initial state
+        # [4,3,2,1] ; 2 ; reverse whole array
+        # [3,4,1,2] ; reverse front k ; reverse back len - k
+        k = k % len(nums)
+
+        def reverse(left, right):
+            while left < right:
+                tmp = nums[left]
+                nums[left] = nums[right]
+                nums[right] = tmp
+                left+=1
+                right-=1
+
+        reverse(0,len(nums)-1)
+        reverse(0,k-1)
+        reverse(k,len(nums)-1)
