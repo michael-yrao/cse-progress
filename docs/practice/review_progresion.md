@@ -110,7 +110,7 @@ Notes for future agents:
 | Easy | [1768. Merge Strings Alternately](https://leetcode.com/problems/merge-strings-alternately/) | 🟢 | 2026-05-10 | 2026-04-10 | 2026-01-21, 2026-04-10 |
 | Easy | [125. Valid Palindrome](https://leetcode.com/problems/valid-palindrome/) | 🟢 | 2026-05-05 | 2026-04-05 | 2026-01-15, 2026-04-05 |
 | Medium | [560. Subarray Sum Equals K](https://leetcode.com/problems/subarray-sum-equals-k/) | 🔴 | 2026-04-07 | 2026-04-05 | 2026-04-05 |
-| Medium | [189. Rotate Array](https://leetcode.com/problems/rotate-array/) | 🔴 | 2026-04-06 | 2026-04-04 | 2026-01-11, 2026-04-04 |
+| Medium | [189. Rotate Array](https://leetcode.com/problems/rotate-array/) | 🟢 | 2026-07-24 | 2026-06-24 | 2026-01-11, 2026-04-04, 2026-06-24 |
 | Easy | [344. Reverse String](https://leetcode.com/problems/reverse-string/) | 🟢 | 2026-05-04 | 2026-04-04 | 2026-01-15, 2026-04-04 |
 | Easy | [26. Remove Duplicates from Sorted Array](https://leetcode.com/problems/remove-duplicates-from-sorted-array/) | 🟢 | 2026-05-02 | 2026-04-02 | 2026-01-09, 2026-04-02 |
 | Medium | [53. Maximum Subarray (Prefix Sum)](https://leetcode.com/problems/maximum-subarray/) | 🔴 | 2026-04-03 | 2026-04-01 | 2026-01-08, 2026-04-01 |
