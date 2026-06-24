@@ -214,3 +214,47 @@ class Solution:
             return True
 
         return dfs(0,-1) and len(visited) == n
+
+    def validTree_20260623_DFS(self, n: int, edges: List[List[int]]) -> bool:
+        # graph theory states a tree is a connected graph with no cycles
+        # so we can go through the nodes, perform DFS or BFS
+        # mark them as visited as we go through
+        # undirected, so everything goes in both directions
+        # because of that, we also need to pass a previous node when we do DFS/BFS
+        # this way we don't accidentally consider the edge we came from as a cycle
+        # we also need to consider graph theory n nodes should have n - 1 edges
+        # and there cannot be a node that is disconnected, so keep track of number of nodes we've connected
+
+        if len(edges) != n - 1:
+            return False
+        
+        connectedNodes = 0
+        visited = set()
+
+        adjMap = collections.defaultdict(list)
+
+        for node1, node2 in edges:
+            adjMap[node1].append(node2)
+            adjMap[node2].append(node1)
+        
+        def dfs(currentNode, prevNode):
+            nonlocal connectedNodes
+            # if already visited, return false
+            if currentNode in visited:
+                return False
+            
+            # if not visited, add to visited list
+            visited.add(currentNode)
+            connectedNodes+=1
+
+            # we will traverse neighbors of this currentNode
+            for neighbor in adjMap[currentNode]:
+                # ignore where we came from
+                if neighbor == prevNode:
+                    continue
+                # if one of our dfs returns False, return False
+                if not dfs(neighbor, currentNode):
+                    return False
+            return True
+
+        return dfs(0, -1) and connectedNodes == n

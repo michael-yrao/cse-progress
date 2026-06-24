@@ -218,3 +218,74 @@ class Solution:
                 if board[row][col] == 'O' and findParent(current1DNode) != findParent(virtual1DNode):
                     board[row][col] = 'X'
         
+    def solve_20260623(self, board: List[List[str]]) -> None:
+        """
+        Do not return anything, modify board in-place instead.
+        """
+        # Union Find method
+        # so we can pretend all nodes are its own component at the start
+        # we will create a dummy component that will encapsulate all nodes touching the edges
+        # we'll do union on the neighbor of those
+        # then anything that is not connected to the dummy component is gone
+        # the way to do this is to convert the 2D array to a 1D array
+        # formula for 2D -> 1D for board[row][col] = row * cols + col
+        # going backwards, row = index // cols ; col = index % cols
+        # since we have rows * cols - 1 nodes, we can do dummy component at rows * cols
+
+        rows, cols = len(board), len(board[0])
+
+        dummyComponentIndex = rows * cols
+
+        parentMap, rankMap = {}, {}
+
+        # rows * cols + 1 to account for the dummy component
+        for i in range(rows * cols + 1):
+            parentMap[i] = i
+            rankMap[i] = 0
+        
+        def findParent(node):
+            if node == parentMap[node]:
+                return parentMap[node]
+            parentMap[node] = findParent(parentMap[node])
+            return parentMap[node]
+
+        def union(node1, node2):
+            node1Root = findParent(node1)
+            node2Root = findParent(node2)
+            if node1Root == node2Root:
+                return False
+            if rankMap[node1Root] > rankMap[node2Root]:
+                parentMap[node2Root] = node1Root
+            elif rankMap[node1Root] < rankMap[node2Root]:
+                parentMap[node1Root] = node2Root
+            else:
+                # equal, pick at random
+                parentMap[node2Root] = node1Root
+                rankMap[node1Root]+=1
+            return True
+
+        for row in range(rows):
+            for col in range(cols):
+                index = row * cols + col
+                # union land nodes with its neighbors
+                # and union edge nodes with the virtual node
+                if board[row][col] == 'O':
+                    if row == 0 or row == rows - 1 or col == 0 or col == cols - 1:
+                        union(index, dummyComponentIndex)
+                    neighbors = [[1,0],[-1,0],[0,1],[0,-1]]
+                    for ir, ic in neighbors:
+                        nr, nc = row + ir, col + ic
+                        if nr >= 0 and nr < rows and nc >= 0 and nc < cols and board[nr][nc] == 'O':
+                            neighborIndex = nr * cols + nc
+                            union(index, neighborIndex)
+        
+        # now that all the nodes are connected
+        # we change all nodes not connected to edge nodes/virtual nodes to water
+        
+        for row in range(rows):
+            for col in range(cols):
+                index = row * cols + col
+                # if index is not connectable to virtual node, mark as water
+                if board[row][col] == 'O' and findParent(index) != findParent(dummyComponentIndex):
+                    board[row][col] = 'X'
+                
