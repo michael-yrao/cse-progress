@@ -36,7 +36,7 @@ from typing import List
 class Solution:
     def maxSubArrayKadane(self, nums: List[int]) -> int:
         # Kadane's Algorithm
-        maxSum, currentSum = nums[0]
+        maxSum = currentSum = nums[0]
         for n in nums:
             if currentSum < 0:
                 currentSum = 0
@@ -75,7 +75,20 @@ class Solution:
             maxSum = max(maxSum, prefixSum - preMin)
             preMin = min(preMin, prefixSum)
 
-        return maxSum
+        return maxSum # type: ignore
+    
+    def maxSubArray_20260623_Kadane(self, nums: List[int]) -> int:
+        # Kadane's Algorithm - Reset to 0 if current sum is less than 0
+        # initialize maxSum to -math.inf
+        maxSum = -math.inf
+        currentSum = 0
+
+        for num in nums:
+            currentSum+=num
+            maxSum = max(maxSum, currentSum)
+            if currentSum < 0:
+                currentSum = 0
+        return maxSum # type: ignore
     
     def maxSubarrayDivideNConquer(self, nums: List[int]) -> int:
-        return
+        return # type: ignore
