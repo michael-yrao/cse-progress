@@ -31,12 +31,15 @@ Notes for future agents:
 
 | Difficulty | Problem | Comfort | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|
+| Medium | [53. Maximum Subarray (Kadane)](https://leetcode.com/problems/maximum-subarray/) | 🔴 | 2026-06-25 | 2026-06-23 | 2026-01-08, 2026-04-02, 2026-06-23 |
+| Medium | [261. Graph Valid Tree (DFS)](https://leetcode.com/problems/graph-valid-tree/) | 🟢 | 2026-07-23 | 2026-06-23 | 2026-06-15, 2026-06-17, 2026-06-21, 2026-06-23 |
+| Medium | [130. Surrounded Regions (Union-Find)](https://leetcode.com/problems/surrounded-regions/) | 🟡 | 2026-07-03 | 2026-06-23 | 2026-06-21, 2026-06-23 |
+| Easy | [1046. Last Stone Weight](https://leetcode.com/problems/last-stone-weight/) | 🟢 | 2026-07-23 | 2026-06-23 | 2026-06-23 |
+| Medium | [973. K Closest Points to Origin](https://leetcode.com/problems/k-closest-points-to-origin/) | 🟡 | 2026-07-03 | 2026-06-23 | 2026-06-23 |
 | Easy | [703. Kth Largest Element in a Stream](https://leetcode.com/problems/kth-largest-element-in-a-stream/) | 🟡 | 2026-07-02 | 2026-06-22 | 2026-06-22 |
 | Easy | [66. Plus One](https://leetcode.com/problems/plus-one/) | 🟡 | 2026-07-02 | 2026-06-22 | 2026-01-02, 2026-03-25, 2026-06-22 |
 | Easy | [242. Valid Anagram](https://leetcode.com/problems/valid-anagram/) | 🟢 | 2026-07-22 | 2026-06-22 | 2026-01-01, 2026-03-25, 2026-06-22 |
 | Medium | [684. Redundant Connection (Union-Find)](https://leetcode.com/problems/redundant-connection/) | 🟡 | 2026-07-02 | 2026-06-22 | 2026-06-18, 2026-06-22 |
-| Medium | [261. Graph Valid Tree (DFS)](https://leetcode.com/problems/graph-valid-tree/) | 🔴 | 2026-06-23 | 2026-06-21 | 2026-06-15, 2026-06-17, 2026-06-21 |
-| Medium | [130. Surrounded Regions (Union-Find)](https://leetcode.com/problems/surrounded-regions/) | 🔴 | 2026-06-23 | 2026-06-21 | 2026-06-21 |
 | Easy | [206. Reverse Linked List (Iterative)](https://leetcode.com/problems/reverse-linked-list/) | 🟢 | 2026-07-20 | 2026-06-20 | 2026-04-23, 2026-05-26, 2026-06-12, 2026-06-20 |
 | Easy | [21. Merge Two Sorted Lists (Recursion)](https://leetcode.com/problems/merge-two-sorted-lists/) | 🟢 | 2026-07-20 | 2026-06-20 | 2026-05-20, 2026-05-21, 2026-06-12, 2026-06-20 |
 | Medium | [130. Surrounded Regions (BFS)](https://leetcode.com/problems/surrounded-regions/) | 🟢 | 2026-07-20 | 2026-06-20 | 2026-06-14, 2026-06-20 |
@@ -110,7 +113,6 @@ Notes for future agents:
 | Medium | [189. Rotate Array](https://leetcode.com/problems/rotate-array/) | 🔴 | 2026-04-06 | 2026-04-04 | 2026-01-11, 2026-04-04 |
 | Easy | [344. Reverse String](https://leetcode.com/problems/reverse-string/) | 🟢 | 2026-05-04 | 2026-04-04 | 2026-01-15, 2026-04-04 |
 | Easy | [26. Remove Duplicates from Sorted Array](https://leetcode.com/problems/remove-duplicates-from-sorted-array/) | 🟢 | 2026-05-02 | 2026-04-02 | 2026-01-09, 2026-04-02 |
-| Medium | [53. Maximum Subarray (Kadane)](https://leetcode.com/problems/maximum-subarray/) | 🔴 | 2026-04-04 | 2026-04-02 | 2026-01-08, 2026-04-02 |
 | Medium | [53. Maximum Subarray (Prefix Sum)](https://leetcode.com/problems/maximum-subarray/) | 🔴 | 2026-04-03 | 2026-04-01 | 2026-01-08, 2026-04-01 |
 | Medium | [75. Sort Colors (Bucket Sort)](https://leetcode.com/problems/sort-colors/) | 🔴 | 2026-04-03 | 2026-04-01 | 2026-01-07, 2026-04-01 |
 | Medium | [912. Sort an Array (Merge Sort)](https://leetcode.com/problems/sort-an-array/) | 🔴 | 2026-03-28 | 2026-03-26 | 2026-01-06, 2026-03-26 |
