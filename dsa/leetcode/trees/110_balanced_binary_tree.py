@@ -83,3 +83,27 @@ class Solution:
             return 1 + max(leftDepth, rightDepth)
         
         return dfs(root) != -1
+
+    def isBalanced_20260624(self, root: Optional[TreeNode]) -> bool:
+        # height balance means we need to check difference in height
+        
+        def dfs(root):
+            if not root:
+                return 0
+            
+            leftHeight = dfs(root.left)
+
+            if leftHeight == -1:
+                return -1
+
+            rightHeight = dfs(root.right)
+
+            if rightHeight == -1:
+                return -1
+
+            if abs(leftHeight - rightHeight) > 1:
+                return -1
+
+            return 1 + max(leftHeight, rightHeight)
+        
+        return dfs(root) != -1

@@ -145,6 +145,37 @@ for neighbor in curr_node.neighbors:
 return copy  # Triggers on EVERY node to hand its memory address backward
 ```
 
+## ❌ LeetCode 543 - Diameter of Binary Tree
+* **Date**: 2026-06-24 (5th attempt, still Blank)
+* **Topic(s)**: Binary Tree / DFS / Postorder
+
+### 1. Where did I get stuck?
+* Confusing what `dfs` returns (height) vs what we're maximizing (diameter). Kept returning `1 + left + right` which counts nodes, not computing height.
+
+### 2. The Core Realization
+* `dfs` serves two roles simultaneously:
+  - **Updates** a nonlocal `diameter = max(diameter, left + right)` — the candidate passing through this node
+  - **Returns** `1 + max(left, right)` — the height, so the parent can use it
+* The diameter is never "returned up" — it's tracked separately and updated at every node.
+
+### 3. Code Snippet to Remember
+```python
+def diameterOfBinaryTree(self, root):
+    diameter = 0
+    def dfs(node):
+        nonlocal diameter
+        if not node:
+            return 0
+        left = dfs(node.left)
+        right = dfs(node.right)
+        diameter = max(diameter, left + right)  # candidate at this node
+        return 1 + max(left, right)             # height for parent
+    dfs(root)
+    return diameter
+```
+
+---
+
 ## ❌ Problem Name: 994. Rotting Oranges
 * **Date**: 2026-06-06
 * **Topic(s)**: Graph / Multi-Source BFS / Wavefront Batching
