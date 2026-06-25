@@ -9,4 +9,4 @@ Always run `git status` before staging and committing to catch any modified or u
 
 **Why:** Solution files were left out of a commit because only doc/schedule files were explicitly staged — the user's new .py files were missed.
 
-**How to apply:** Before every commit, run `git status` and include any modified or untracked files under `dsa/leetcode/` in the same commit alongside the tracker/schedule updates. Don't commit docs without also committing the corresponding solution files.
+**How to apply:** Before every commit, run `git status` and include any modified or untracked files under `dsa/leetcode/` in the same commit alongside the tracker/schedule updates. Don't commit docs without also committing the corresponding solution files. Also run `python3 scripts/update_review_dates.py` before the final commit of each session to keep the tracker sorted by latest attempt date.
