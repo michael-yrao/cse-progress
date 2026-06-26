@@ -80,3 +80,23 @@ class Solution:
             # if nums[i] == nums[ptr-2], we don't want it in result
             # thus we keep ptr where it is
         return ptr
+
+    def removeDuplicates_20260625(self, nums: List[int]) -> int:
+        # we use a left and right pointer
+        # left pointer keep tracks of where to write
+        # first 2 elements will never be removed, so we start at index 2
+
+        l = r = 2
+
+        while r < len(nums):
+            # if nums[r] == nums[l-2], then we want to keep l in place
+            # since we want to replace it with the next value
+            if nums[r] == nums[l-2]:
+                r+=1
+                continue
+            # if not the same, replace nums[l] with nums[r] and increment l
+            else:
+                nums[l] = nums[r]
+                l+=1
+            r+=1
+        return l

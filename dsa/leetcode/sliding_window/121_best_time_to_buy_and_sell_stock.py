@@ -51,3 +51,15 @@ class Solution:
             r+=1
         
         return currentMaxProfit
+    def maxProfit_20260625(self, prices: List[int]) -> int:
+        # two pointer
+        l, r = 0, 1
+
+        maxProfit = 0
+
+        while r < len(prices):
+            maxProfit = max(maxProfit, prices[r] - prices[l])
+            if prices[l] > prices[r]:
+                l = r
+            r+=1
+        return maxProfit

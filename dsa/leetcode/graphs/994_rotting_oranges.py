@@ -146,3 +146,52 @@ class Solution:
         if orangeCounter != 0:
             return -1
         return timeElapsed
+
+    def orangesRotting_20260625(self, grid: List[List[int]]) -> int:
+        # multi-origin BFS
+        # get all rotten oranges to start
+        # we don't need visited since we can just mark as rotten for visited
+
+        rows, cols = len(grid), len(grid[0])
+
+        timer = 0
+        freshOranges = 0
+        rottenQueue = collections.deque()
+
+        for row in range(rows):
+            for col in range(cols):
+                if grid[row][col] == 1:
+                    freshOranges+=1
+                elif grid[row][col] == 2:
+                    rottenQueue.append((row,col))
+        
+        # now that we have all the rotten oranges
+        # let's go through them level by level
+        # we do also have to consider oranges that cannot be reached
+        # so we need a counter for how many oranges
+        # so let's do a count in the beginning
+
+        neighbors = [[1,0],[-1,0],[0,1],[0,-1]]
+
+        # while there are rotten oranges left
+        # and while we have oranges to rot
+        while rottenQueue and freshOranges > 0:
+            currentLevel = len(rottenQueue)
+            for _ in range(currentLevel):
+                rottenRow, rottenCol = rottenQueue.popleft()
+                # rot neighbors
+                for ir, ic in neighbors:
+                    nr = rottenRow + ir
+                    nc = rottenCol + ic
+                    if nr >= 0 and nr < rows and nc >= 0 and nc < cols and grid[nr][nc] == 1:
+                        # rot neighbor
+                        grid[nr][nc] = 2
+                        # decrement fresh counter
+                        freshOranges-=1
+                        # add to rotting queue
+                        rottenQueue.append((nr,nc))
+            # increment time passing
+            timer+=1
+        if freshOranges > 0:
+            return -1
+        return timer
