@@ -46,3 +46,22 @@ class Solution:
             r+=1
         
         return False
+    def containsNearbyDuplicate_20260625(self, nums: List[int], k: int) -> bool:
+        # we can use a set
+        # l and r to traverse
+
+        l = r = 0
+
+        windowSet = set()
+
+        while r < len(nums):
+            while (r - l) > k:
+                windowSet.remove(nums[l])
+                l+=1
+            if l != r and abs(r - l) <= k:
+                if nums[r] in windowSet:
+                    return True
+            windowSet.add(nums[r])
+            r+=1
+        
+        return False

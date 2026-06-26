@@ -176,6 +176,29 @@ def diameterOfBinaryTree(self, root):
 
 ---
 
+## ❌ LeetCode 80 - Remove Duplicates from Sorted Array II
+* **Date**: 2026-06-25 (3rd attempt, still Blank)
+* **Topic(s)**: Two Pointers / Write Pointer
+
+### 1. Where did I get stuck?
+* Couldn't recall the approach — no clear mental model for the "at most k duplicates" pattern.
+
+### 2. The Core Realization
+* Use a write pointer `k` starting at 2 (first two elements are always valid). For every element from index 2 onward, only copy it forward if `nums[i] != nums[k-2]`. Comparing to `k-2` (two spots behind the write pointer) is what enforces the "at most 2" constraint — if the element matches what's two spots back, a third duplicate would be written.
+
+### 3. Code Snippet to Remember
+```python
+def removeDuplicates(self, nums):
+    k = 2
+    for i in range(2, len(nums)):
+        if nums[i] != nums[k-2]:
+            nums[k] = nums[i]
+            k += 1
+    return k
+```
+
+---
+
 ## ❌ Problem Name: 994. Rotting Oranges
 * **Date**: 2026-06-06
 * **Topic(s)**: Graph / Multi-Source BFS / Wavefront Batching

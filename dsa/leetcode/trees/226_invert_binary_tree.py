@@ -48,3 +48,15 @@ class Solution:
 
         # return the root
         return root
+    
+    def invertTree_20260625(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
+        if not root:
+            return None
+        
+        leftNode = self.invertTree(root.left)
+        rightNode = self.invertTree(root.right)
+
+        root.left = rightNode
+        root.right = leftNode
+
+        return root
