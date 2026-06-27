@@ -167,3 +167,34 @@ class Solution:
                     dfs(row,col)
         
         return islandCounter
+    def numIslands_20260626(self, grid: List[List[str]]) -> int:
+        # DFS method
+        # we perform DFS whenever we find land
+        # when we find land, we mark land as visited and increment # of islands
+
+        numOfIslands = 0
+        visited = set()
+
+        rows, cols = len(grid), len(grid[0])
+
+        def dfs(row, col):
+            # we return if not land, visited or out of bound
+            if row < 0 or row >= rows or col < 0 or col >= cols:
+                return
+            if (row,col) in visited:
+                return
+            if grid[row][col] == '1':
+                visited.add((row,col))
+                dfs(row-1,col)
+                dfs(row+1,col)
+                dfs(row,col+1)
+                dfs(row,col-1)
+
+        for row in range(rows):
+            for col in range(cols):
+                # found an unvisited land
+                if grid[row][col] == '1' and (row, col) not in visited:
+                    numOfIslands+=1
+                    dfs(row,col)
+        
+        return numOfIslands

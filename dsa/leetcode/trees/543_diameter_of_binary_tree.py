@@ -102,3 +102,22 @@ class Solution:
         
         dfs(root)
         return maxDiameter
+    def diameterOfBinaryTree_20260626(self, root: Optional[TreeNode]) -> int:
+        # key to remember is that height is always 1 + max(left, right)
+
+        maxDiameter = 0
+
+        def dfs(node):
+            nonlocal maxDiameter
+            if not node:
+                return 0
+            
+            leftHeight = dfs(node.left)
+            rightHeight = dfs(node.right)
+            # knowing we return height here, we update diameter here
+            maxDiameter = max(maxDiameter, leftHeight + rightHeight)
+
+            return 1 + max(leftHeight, rightHeight)
+        
+        dfs(root)
+        return maxDiameter
