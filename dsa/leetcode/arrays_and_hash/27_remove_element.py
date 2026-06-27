@@ -86,7 +86,22 @@ class Solution:
         counter = 0
         for value in enumerate(nums):
             if value != val:
-                nums[counter] = value
+                nums[counter] = value # type: ignore
                 counter+=1
         
         return counter
+
+    def removeElement_20260626(self, nums: List[int], val: int) -> int:
+        # two pointer
+        # l to determine where to replace
+        # r to read the value
+        # so if nums[r] != val
+        # we replace nums[l] with nums[r] and increment l
+        l = r = 0
+
+        while r < len(nums):
+            if nums[r] != val:
+                nums[l] = nums[r]
+                l+=1
+            r+=1
+        return l

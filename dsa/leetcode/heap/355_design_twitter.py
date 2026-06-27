@@ -89,3 +89,58 @@ class Twitter:
 # param_2 = obj.getNewsFeed(userId)
 # obj.follow(followerId,followeeId)
 # obj.unfollow(followerId,followeeId)
+
+class Twitter_20260626:
+    # when we initialize twitter, we are not initializing a twitter user
+    # we are the backend, so when we initialize twitter, we are saying we are starting the services for twitter
+    
+    # need a way to track time so we will use a global counter like basic ID
+    idCounter = 0
+
+    def __init__(self):
+        # post tweet needs to store a user's tweets
+        # if we need to retrieve by latest, we need to store those with a timestamp
+        # so we will do user -> list of (timestamp, tweetId)
+        self.tweetMap = collections.defaultdict(list)
+        # also need a map of who follows x, so x -> list of followers
+        self.followingMap = collections.defaultdict(list)
+
+
+    def postTweet(self, userId: int, tweetId: int) -> None:
+        self.tweetMap[userId].append((self.idCounter, tweetId))
+        self.idCounter+=1
+        
+    def getNewsFeed(self, userId: int) -> List[int]:
+        # get the list of users userId follows
+        followingSet = set(self.followingMap[userId])
+        # add self to followingSet
+        followingSet.add(userId)
+        # now we need to get the latest tweets by these users
+        maxHeap = []
+        for followee in followingSet:
+            for time, tweet in self.tweetMap[followee]:
+                heapq.heappush(maxHeap, (-time, tweet))
+
+        result = []
+        # now we get top 10 and return
+        while maxHeap and len(result) < 10:        
+            tweet = heapq.heappop(maxHeap)[1]
+            result.append(tweet)
+        return result
+
+    def follow(self, followerId: int, followeeId: int) -> None:
+        # follow means follower gained a followee
+        self.followingMap[followerId].append(followeeId)
+
+    def unfollow(self, followerId: int, followeeId: int) -> None:
+        if followeeId in self.followingMap[followerId]:
+            self.followingMap[followerId].remove(followeeId)
+        
+
+
+# Your Twitter object will be instantiated and called as such:
+# obj = Twitter()
+# obj.postTweet(userId,tweetId)
+# param_2 = obj.getNewsFeed(userId)
+# obj.follow(followerId,followeeId)
+# obj.unfollow(followerId,followeeId)
