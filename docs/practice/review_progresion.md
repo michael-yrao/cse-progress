@@ -34,7 +34,7 @@ Notes for future agents:
 
 | | 🏆 Retired | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|
-| Solutions | 0 | 61 | 18 | 12 |
+| **Solutions** | 0 | 61 | 18 | 12 |
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|---|

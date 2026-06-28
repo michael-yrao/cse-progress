@@ -108,7 +108,7 @@ def build_summary_lines(table_rows: list[dict]) -> list[str]:
         "",
         f"| | {COMFORT_RETIRED} Retired | {COMFORT_CLEAN} Clean | {COMFORT_SHAKY} Shaky | {COMFORT_BLANK} Blank |",
         "|:---|:---:|:---:|:---:|:---:|",
-        f"| Solutions | {retired} | {clean} | {shaky} | {blank} |",
+        f"| **Solutions** | {retired} | {clean} | {shaky} | {blank} |",
         "",
     ]
 
@@ -528,7 +528,7 @@ def main() -> None:
             return True
         if re.match(r"^> \*\*\d+\*\* problems", s):
             return True
-        if re.match(r"^\| Solutions \|", s):
+        if re.match(r"^\| \*?\*?Solutions\*?\*? \|", s):
             return True
         return bool(re.match(r"^\|\s*\d+\s*(?:\|\s*\d+\s*){3,6}\|$", s))
 
