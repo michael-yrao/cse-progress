@@ -347,5 +347,5 @@ Create a running notebook using this format. Review this document every Saturday
 
 ## 🚫 Core Rules for Success
 1.  **Strict 45-Minute Cap**: If a new problem isn't solved in 45 minutes, stop, look up the solution, and log it 🔴 Blank. It re-appears in 2 days.
-2.  **Quality > Quantity — Hard Comfort Bar**: Aim for 3–4 deeply understood problems per week. A problem is 🟢 Clean only when you can write the complete solution on a blank page with no hints and state the correct time/space complexity unprompted. "Mostly remembered it" = 🟡 Shaky. If a problem has 3+ attempts and is still 🔴 Blank, it has a specific conceptual gap — log it in `stuck_log.md` and name the gap before scheduling another repetition.
+2.  **Quality > Quantity — Hard Comfort Bar**: Aim for 3–4 deeply understood problems per week. A problem is 🟢 Clean only when you can write the complete solution on a blank page with no hints and state the correct time/space complexity unprompted. "Mostly remembered it" = 🟡 Shaky. Every non-Clean result gets logged in `stuck_log.md`: 🔴 Blank gets a full entry naming the conceptual gap; 🟡 Shaky gets a one-liner naming the specific friction point.
 3.  **5-Problem Daily Cap**: Never exceed 5 problems in a day. Active block is always protected — trim warmup slots first. When a problem is bumped, assign it a specific future slot in the same edit.
