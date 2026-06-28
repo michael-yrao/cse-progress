@@ -85,6 +85,44 @@ class Solution:
         
         return result
     
+    def majorityElement_20260627(self, nums: List[int]) -> List[int]:
+        # more than floor of n / 3, and we are adding all elements that fit that criteria
+        # so is it easier to find elements less common
+        # we'll need to keep the size of nums
+        # one thing to note is that there can only be two elements that appear more than n / 3
+        # so we can simulate O(1) space using a map of size 2
+        # we can use this to keep track of frequency
+        # we increment
+
+        size = len(nums)
+        
+        freqMap = defaultdict(int)
+
+        for n in nums:
+            freqMap[n]+=1
+            # if there are more than 2 elements in here
+            # subtract 1 from each until we get one that is equal to zero
+            # then we remove that element
+            if len(freqMap) > 2:
+                for key in freqMap:
+                    freqMap[key]-=1
+                # make a copy of freqMap in a list since we can't remove elements from it while looping through it
+                for key in list(freqMap):
+                    if freqMap[key] == 0:
+                        freqMap.pop(key)
+
+        # because we have been manipulating freqMap, we can't check if those values
+        # are truly greater than n/3
+
+        result = []
+
+        for n in freqMap:
+            if nums.count(n) > len(nums)//3:
+                result.append(n)
+        
+        return result
+
+    
 class UnitTest(unittest.TestCase):
     input = [1,1,2,2,3,3,1,2]
     output = [1,2]
