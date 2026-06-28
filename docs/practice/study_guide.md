@@ -1,8 +1,6 @@
-# 📅 The Ultimate 8-Block Technical Study Master Plan
+# Technical Interview Study Guide
 
-# 📅 The 5-Day Backlog Rotation & Retention Protocol
-
-## 🚨 THE PRIORITY ROTATION ENGINE
+## Weekly Review Priority
 
 Every Sunday, open `docs/practice/dsa_progress.md` and sweep for all problems whose `Next Review Date ≤ end of the coming week`. Slot them into the upcoming schedule before filling active blocks or new content. Use this priority order for warmup slots:
 
@@ -15,7 +13,7 @@ Daily cap is **5 problems**. The active block is never cut — trim from warmup 
 
 ---
 
-## 🚨 BACKLOG RECOVERY PROTOCOL
+## Backlog Recovery
 
 **Trigger**: Any time the Next Review Date is 7+ days overdue with no new attempt logged.
 
@@ -74,22 +72,23 @@ For problems marked **Easy**, the no-code rule is lifted:
 
 ---
 
-## ⏱️ Daily Routine 1: The DSA Phase (Blocks 1–4)
+## Daily Structure: DSA Phase (Blocks 1–4)
 *Use this structure for the first 16 weeks of your study journey.*
 *   **00:00–00:15 | Recall Warm-up**: Open a problem solved 2–3 days ago. Do not rewrite code; trace its variable state changes on paper or in comments.
 *   **00:15–00:30 | Whiteboard & Ideate**: Read a new problem. Sketch the approach, constraints, and edge cases in plain English. No code!
 *   **00:30–00:45 | Look up / Validate**: If completely stuck or your logic loops, stop. Watch the NeetCode video explanation immediately.
 *   **00:45–01:00 | Python Implementation**: Type out the clean code, trace logic line-by-line, and add comments explaining the "why".
 
-## ⚡ THE SPEED DEMON PROTOCOL (If you finish a problem in 10-15 minutes)
-Do not log off early and do not move on to a brand-new coding problem. Spend the remaining 45 minutes on deep optimization:
-*   **Min 15–30 | Run the 3 System-Breaking Edge Cases Manually**: Trace your solution using the Mental Compiler Framework on: 1) An input of size one, 2) An input where the head must be removed, and 3) An input where the tail must be removed. Ensure no `NoneType` errors occur.
-*   **Min 30–45 | Hunt for Alternative Python Solutions**: Go to the LeetCode Solutions tab. Find a solution that uses less memory or cleaner logic. Study how senior engineers minimized their variable assignments.
-*   **Min 45–60 | Scale it up to System Design**: Ask yourself how this logic applies to the real world. (e.g., *If this Linked List represented user browser history, how would a backend system safely delete the last N nodes from a database for millions of users without locking up the database server?*)
+## Early Finish: Depth Extension
+
+If you finish an active block problem in under 15 minutes, don't move on to a new problem. Use the remaining time for depth:
+*   **Min 15–30 | Edge case trace**: Run your solution manually against size-0, size-1, and size-2 inputs. Confirm no index errors or infinite loops.
+*   **Min 30–45 | Alternative approaches**: Check the LeetCode solutions tab for a cleaner or more memory-efficient implementation. Note what trade-offs the author made.
+*   **Min 45–60 | Real-world connection**: Ask how this pattern applies at scale. (e.g., if this linked list represented browser history, how would a backend safely delete the last N entries for millions of users without locking the database?)
 
 ---
 
-## ⏱️ Daily Routine 2: The Design & AI Phase (Blocks 5–8)
+## Daily Structure: Design & AI Phase (Blocks 5–8)
 *Use this structure from Week 17 onward to protect your DSA knowledge.*
 *   **00:00–00:15 | DSA Maintenance Flashcard**: Look at a random past LeetCode prompt. Explain the data structure pattern and optimal Time/Space complexity out loud.
 *   **00:15–01:00 | Architecture Deep Dive**: Spend 45 minutes on system design practice using the weekly loop below.
@@ -211,7 +210,7 @@ Tries are 3 problems and complete in roughly one week. Grouping them here keeps 
 
 ---
 
-## 🗺️ The 8-Block Linear Roadmap
+## Study Roadmap
 
 ### Phase 1: Core Data Structures & Algorithms (Weeks 1–16)
 *   **Block 1: Advanced Linear & Recursion (Weeks 1–3)**
@@ -245,7 +244,7 @@ Tries are 3 problems and complete in roughly one week. Grouping them here keeps 
 
 ---
 
-## 🚀 Recommended Study & Reference Guides
+## Reference Materials
 
 ### 🌐 System Design Resources (Months 5-6)
 1. **The Core Blueprint**: Read the open-source [System Design Primer on GitHub by Donne Martin](https://github.com). It is the absolute best free textbook for web fundamentals, performance trade-offs, and database scaling.
@@ -259,7 +258,7 @@ Tries are 3 problems and complete in roughly one week. Grouping them here keeps 
 
 ---
 
-## 🚀 Week 1 Problems: Block 1 Starter Pack
+## Week 1 Starter Problems
 
 ### 🟢 Day 1: Linked Lists (Refresh Skill)
 *   **Problem**: **Remove Nth Node From End of List** (LeetCode 19)
@@ -278,8 +277,9 @@ Tries are 3 problems and complete in roughly one week. Grouping them here keeps 
 
 ---
 
-## 👁️ The Mental Compiler: Manual Code Tracing Framework
-Mastering the art of debugging in your head or on a whiteboard without hitting the "Run" button is what sets elite engineers apart. Apply these techniques daily:
+## Manual Code Tracing
+
+Debugging in your head or on a whiteboard without running the code is a core interview skill. Apply these techniques when tracing solutions:
 
 ### 1. The Variable State Table
 Do not track changing pointer values or nested loops in your memory. Create a table in your code comments or scratchpad and manually update rows row-by-line:
@@ -322,8 +322,9 @@ Read syntax out loud, converting mathematical logic definitions into conversatio
 
 ---
 
-## 📓 "Why I Got Stuck" Log Template
-Create a running notebook using this format. Review this document every Saturday morning to find your retention leaks.
+## Stuck Log Format
+
+See [stuck_log.md](stuck_log.md) for the live log. Template for reference:
 
 ```markdown
 ## ❌ Problem Name: [Insert LeetCode Name & Number]
@@ -345,7 +346,7 @@ Create a running notebook using this format. Review this document every Saturday
 
 ---
 
-## 🚫 Core Rules for Success
+## Core Rules
 1.  **Strict 45-Minute Cap**: If a new problem isn't solved in 45 minutes, stop, look up the solution, and log it 🔴 Blank. It re-appears in 2 days.
 2.  **Quality > Quantity — Hard Comfort Bar**: Aim for 3–4 deeply understood problems per week. A problem is 🟢 Clean only when you can write the complete solution on a blank page with no hints and state the correct time/space complexity unprompted. "Mostly remembered it" = 🟡 Shaky. Every non-Clean result gets logged in `stuck_log.md`: 🔴 Blank gets a full entry naming the conceptual gap; 🟡 Shaky gets a one-liner naming the specific friction point.
 3.  **5-Problem Daily Cap**: Never exceed 5 problems in a day. Active block is always protected — trim warmup slots first. When a problem is bumped, assign it a specific future slot in the same edit.
