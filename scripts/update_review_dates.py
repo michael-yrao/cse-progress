@@ -106,9 +106,9 @@ def build_summary_lines(table_rows: list[dict]) -> list[str]:
         "",
         f"> **{unique_problems}** problems &nbsp;·&nbsp; **{solutions_done}** solutions &nbsp;·&nbsp; **{total_attempts}** attempts",
         "",
-        f"| {COMFORT_RETIRED} Retired | {COMFORT_CLEAN} Clean | {COMFORT_SHAKY} Shaky | {COMFORT_BLANK} Blank |",
-        "|:---:|:---:|:---:|:---:|",
-        f"| {retired} | {clean} | {shaky} | {blank} |",
+        f"| | {COMFORT_RETIRED} Retired | {COMFORT_CLEAN} Clean | {COMFORT_SHAKY} Shaky | {COMFORT_BLANK} Blank |",
+        "|:---|:---:|:---:|:---:|:---:|",
+        f"| Solutions | {retired} | {clean} | {shaky} | {blank} |",
         "",
     ]
 
@@ -521,12 +521,14 @@ def main() -> None:
         if any(s.startswith(p) for p in (
             "**Problems Done:**", "**Total Successful Attempts:**", "**Mastered",
             "| Problems Done |", "| Unique Problems |", "| Solutions |",
-            f"| {COMFORT_RETIRED} Retired |", "|:---:|",
+            f"| | {COMFORT_RETIRED} Retired |", f"| {COMFORT_RETIRED} Retired |", "|:---|", "|:---:|",
         )):
             return True
         if re.match(r"^\*\*\d+ problems done\*\*$", s):
             return True
         if re.match(r"^> \*\*\d+\*\* problems", s):
+            return True
+        if re.match(r"^\| Solutions \|", s):
             return True
         return bool(re.match(r"^\|\s*\d+\s*(?:\|\s*\d+\s*){3,6}\|$", s))
 

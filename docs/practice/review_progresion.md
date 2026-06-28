@@ -32,9 +32,9 @@ Notes for future agents:
 
 > **81** problems &nbsp;·&nbsp; **91** solutions &nbsp;·&nbsp; **220** attempts
 
-| 🏆 Retired | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
-|:---:|:---:|:---:|:---:|
-| 0 | 61 | 18 | 12 |
+| | 🏆 Retired | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
+|:---|:---:|:---:|:---:|:---:|
+| Solutions | 0 | 61 | 18 | 12 |
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|---|
