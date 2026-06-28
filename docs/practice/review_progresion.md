@@ -127,12 +127,18 @@ Notes for future agents:
 | Easy | [1929. Concatenation of Array](https://leetcode.com/problems/concatenation-of-array/) | 🟢 | 1 | 2026-04-24 | 2026-03-25 | 2026-01-01, 2026-03-25 |
 | Medium | [18. Four Sum](https://leetcode.com/problems/4sum/) | 🟢 | 1 | 2026-02-22 | 2026-01-23 | 2026-01-23 |
 | Medium | [167. Two Sum II](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/) | 🟢 | 1 | 2026-02-18 | 2026-01-19 | 2026-01-19 |
-| Medium | [981. Time Based Key Value Store](https://leetcode.com/problems/time-based-key-value-store/) | 🔴 | 0 |  |  |  |
-| Hard | [76. Minimum Window Substring](https://leetcode.com/problems/minimum-window-substring/) | 🔴 | 0 |  |  |  |
-| Medium | [81. Search in Rotated Sorted Array II](https://leetcode.com/problems/search-in-rotated-sorted-array-ii/) | 🔴 | 0 |  |  |  |
-| Hard | [239. Sliding Window Maximum](https://leetcode.com/problems/sliding-window-maximum/) | 🔴 | 0 |  |  |  |
-| Medium | [912. Sort an Array (Quick Sort)](https://leetcode.com/problems/sort-an-array/) | 🔴 | 0 |  |  |  |
-| Medium | [912. Sort an Array (Radix Sort)](https://leetcode.com/problems/sort-an-array/) | 🔴 | 0 |  |  |  |
-| Medium | [912. Sort an Array (Counting Sort)](https://leetcode.com/problems/sort-an-array/) | 🔴 | 0 |  |  |  |
-| Medium | [912. Sort an Array (Timsort)](https://leetcode.com/problems/sort-an-array/) | 🔴 | 0 |  |  |  |
-| Medium | [53. Maximum Subarray (Divide and Conquer)](https://leetcode.com/problems/maximum-subarray/) | 🔴 | 0 |  |  |  |
+| Unknown | [76. Minimum Window Substring](https://leetcode.com/problems/minimum-window-substring/) | 🔴 | 0 |  |  |  |
+
+---
+
+## Knowledge Expansion Queue
+
+Problems added for algorithmic depth — not part of the spaced repetition tracker or stats. No attempt dates; these enter the schedule when the relevant topic week arrives.
+
+| Difficulty | Problem | Notes |
+|---|---|---|
+| Medium | [912. Sort an Array (Quick Sort)](https://leetcode.com/problems/sort-an-array/) | Sorting algorithms deep-dive |
+| Medium | [912. Sort an Array (Radix Sort)](https://leetcode.com/problems/sort-an-array/) | Sorting algorithms deep-dive |
+| Medium | [912. Sort an Array (Counting Sort)](https://leetcode.com/problems/sort-an-array/) | Sorting algorithms deep-dive |
+| Medium | [912. Sort an Array (Timsort)](https://leetcode.com/problems/sort-an-array/) | Sorting algorithms deep-dive |
+| Medium | [53. Maximum Subarray (Divide and Conquer)](https://leetcode.com/problems/maximum-subarray/) | D&C pattern — active block week of Jul 6 |
