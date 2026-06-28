@@ -59,10 +59,18 @@ For problems marked **Easy**, the no-code rule is lifted:
 *   **Saturday | Blind Code Sprint**:
     *   Pick one problem from the past week's logs. Clear your screen, open a blank file, write the solution from memory.
 *   **Sunday | System Design Sprint (30 min soft target)**:
-    *   Pick one system from the Phase 2 design list below.
-    *   **20 min** — sketch it cold: components, data flow, where it breaks at scale. No references.
-    *   **10 min** — open ByteByteGo or the relevant Alex Xu chapter for *that design only*. Compare. Name what you missed.
-    *   Problems are still allowed if you want more reps — but attempt the design sprint first.
+    *   Pick one system from the Phase 2 design list below. Problems are still allowed after — but attempt the sprint first.
+    *   **Which format to use depends on where you are in the progression:**
+
+    | Stage | When | Format |
+    |-------|------|--------|
+    | **Bootstrap** | First 4–6 systems | Watch ByteByteGo 10 min → close tab → sketch from memory 15 min → compare 5 min |
+    | **Transition** | Systems 5–8 | Attempt cold sketch 10 min (even if incomplete) → watch + compare 20 min |
+    | **Full sprint** | Once vocabulary is built | Sketch cold 20 min → compare to reference 10 min |
+
+    *   **Watch actively, not passively** — pause when a new component appears and ask "why this, not something simpler?" Same energy as watching NeetCode after struggling with a problem.
+    *   **Don't have enough context to sketch at all?** Use the user journey: trace what happens when a user takes one action (e.g. "clicks Pay"). That trace is your sketch. The reference fills in how to make each step reliable at scale.
+    *   Alex Xu and ByteByteGo are references for *that specific system* — not front-to-back reads.
 
 ---
 
@@ -97,9 +105,9 @@ Do not log off early and do not move on to a brand-new coding problem. Spend the
     *   *First 30 min — Randomized DSA*: Pull a problem from the live sources below (no category label). Identify the pattern first, then solve it. This trains the recognition skill that NeetCode 150 alone doesn't build.
     *   *Last 30 min — Blind Design Sprint*: Pick a system design question from 2 weeks ago. Without notes, whiteboard the full design from scratch under a 20-minute timer. Spend the remaining 10 minutes comparing to your notes and naming what you missed.
 *   **Sunday | System Design Sprint (30 min)**:
-    *   Same format as Phase 1 Sundays: sketch cold for 20 min, compare to reference for 10 min.
-    *   By Phase 2 your sketches should be getting close — the comparison is for catching missing tradeoffs and bottleneck reasoning, not basic structure.
-    *   Alex Xu and *Designing Data-Intensive Applications* (Kleppmann) are references to consult *after* the sketch, not front-to-back reads. Look up the specific gap you hit.
+    *   By Phase 2 you should be at the **Full sprint** stage: sketch cold 20 min → compare 10 min.
+    *   The comparison at this stage is for tradeoffs and bottleneck reasoning, not basic structure — you should already know the components.
+    *   Alex Xu and *Designing Data-Intensive Applications* (Kleppmann) are references to look up the specific gap you hit, not front-to-back reads.
 
 #### 📂 Saturday Randomized DSA Sources
 
