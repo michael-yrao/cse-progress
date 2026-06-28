@@ -95,9 +95,9 @@ def build_summary_lines(table_rows: list[dict]) -> list[str]:
     retired = sum(1 for row in table_rows if row["comfort"] == COMFORT_RETIRED)
     return [
         "",
-        f"| Problems Done | {COMFORT_CLEAN} Clean | {COMFORT_SHAKY} Shaky | {COMFORT_BLANK} Blank | {COMFORT_RETIRED} Retired | Total Attempts |",
+        f"| Problems Done | {COMFORT_RETIRED} Retired | {COMFORT_CLEAN} Clean | {COMFORT_SHAKY} Shaky | {COMFORT_BLANK} Blank | Total Attempts |",
         "|:---:|:---:|:---:|:---:|:---:|:---:|",
-        f"| {problems_done} | {clean} | {shaky} | {blank} | {retired} | {total_attempts} |",
+        f"| {problems_done} | {retired} | {clean} | {shaky} | {blank} | {total_attempts} |",
         "",
     ]
 

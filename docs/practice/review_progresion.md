@@ -30,9 +30,9 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/practice/review_progresion.md` is staged for commit or when the helper script is run.
 
-| Problems Done | 🟢 Clean | 🟡 Shaky | 🔴 Blank | 🏆 Retired | Total Attempts |
+| Problems Done | 🏆 Retired | 🟢 Clean | 🟡 Shaky | 🔴 Blank | Total Attempts |
 |:---:|:---:|:---:|:---:|:---:|:---:|
-| 91 | 61 | 18 | 12 | 0 | 220 |
+| 91 | 0 | 61 | 18 | 12 | 220 |
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|---|
