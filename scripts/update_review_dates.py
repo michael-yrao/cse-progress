@@ -104,9 +104,11 @@ def build_summary_lines(table_rows: list[dict]) -> list[str]:
     retired = sum(1 for row in table_rows if row["comfort"] == COMFORT_RETIRED)
     return [
         "",
-        f"| Unique Problems | Solutions | {COMFORT_RETIRED} Retired | {COMFORT_CLEAN} Clean | {COMFORT_SHAKY} Shaky | {COMFORT_BLANK} Blank | Total Attempts |",
-        "|:---:|:---:|:---:|:---:|:---:|:---:|:---:|",
-        f"| {unique_problems} | {solutions_done} | {retired} | {clean} | {shaky} | {blank} | {total_attempts} |",
+        f"**{unique_problems} problems done**",
+        "",
+        f"| Solutions | {COMFORT_RETIRED} Retired | {COMFORT_CLEAN} Clean | {COMFORT_SHAKY} Shaky | {COMFORT_BLANK} Blank | Total Attempts |",
+        "|:---:|:---:|:---:|:---:|:---:|:---:|",
+        f"| {solutions_done} | {retired} | {clean} | {shaky} | {blank} | {total_attempts} |",
         "",
     ]
 
@@ -518,8 +520,10 @@ def main() -> None:
         s = line.strip()
         if any(s.startswith(p) for p in (
             "**Problems Done:**", "**Total Successful Attempts:**", "**Mastered",
-            "| Problems Done |", "| Unique Problems |", "|:---:|:---:|",
+            "| Problems Done |", "| Unique Problems |", "| Solutions |", "|:---:|:---:|",
         )):
+            return True
+        if re.match(r"^\*\*\d+ problems done\*\*$", s):
             return True
         return bool(re.match(r"^\|\s*\d+\s*(?:\|\s*\d+\s*){4,6}\|$", s))
 
