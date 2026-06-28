@@ -19,6 +19,11 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🟡 19. Remove Nth Node From End of List (Recursion) — Jun 28, 2026
+**Sticking point**: Needed to be walked through the dual-return-value problem — returning index alone drops the rewired node reference, so you need either a tuple or nonlocal counter.
+
+---
+
 ## 🔴 229. Majority Element II — Jun 27, 2026
 **Topic**: Boyer-Moore Majority Vote (generalized)
 ### Where did I get stuck?
