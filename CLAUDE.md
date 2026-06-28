@@ -4,16 +4,16 @@
 
 After any problem discussion (solving, reviewing, or mentioning a problem by number or name):
 
-1. Check the current week's schedule file (`docs/practice/schedules/week_of_*.md`) and mark the problem as completed in the table.
+1. Check the current week's schedule file (`docs/foundations/schedules/<YYYYMMDD>_schedule.md`) and mark the problem as completed in the table.
 2. If the user hasn't mentioned how they felt, ask: "How did that feel — Clean, Shaky, or Blank?"
    - **Clean**: Solved from blank page, correct complexity, no hints needed. If you had to second-guess the data structure or peek at anything — that's Shaky, not Clean.
    - **Shaky**: Got the solution but needed a nudge, peeked at a hint, or weren't fully confident in the approach mid-way through.
    - **Blank**: Couldn't recall the approach, had to look it up.
-3. Update `docs/practice/dsa_progress.md` with the reported Comfort level and run the review script.
+3. Update `docs/foundations/core/dsa_progress.md` with the reported Comfort level and run the review script.
 
 ## Comfort-Based Spaced Repetition
 
-Next review intervals (set in `docs/dsa_progress.md` and computed by `scripts/update_review_dates.py`):
+Next review intervals (set in `docs/foundations/core/dsa_progress.md` and computed by `scripts/update_review_dates.py`):
 
 | Comfort | Next Review |
 |---------|-------------|
@@ -29,7 +29,7 @@ After logging any problem result, check its computed next review date and add it
 
 ## Study Guide Files
 
-- `docs/practice/dsa_progress.md` — spaced repetition tracker (auto-updated by pre-commit hook)
-- `docs/practice/study_guide.md` — master plan with backlog recovery protocol
-- `docs/practice/schedules/<YYYYMMDD>_schedule.md` — current week's day-by-day schedule (e.g. `20260615_schedule.md`); archive the prior week's schedule on the first day (Monday) of the new week by moving it to `docs/practice/schedules/archive/`
-- `docs/practice/stuck_log.md` — log for every non-Clean result: 🔴 Blank gets a full entry (where stuck, core realization, code snippet); 🟡 Shaky gets a one-liner (sticking point only)
+- `docs/foundations/core/dsa_progress.md` — spaced repetition tracker (auto-updated by pre-commit hook)
+- `docs/foundations/core/study_guide.md` — master plan with backlog recovery protocol
+- `docs/foundations/schedules/<YYYYMMDD>_schedule.md` — current week's day-by-day schedule (e.g. `20260615_schedule.md`); archive the prior week's schedule on the first day (Monday) of the new week by moving it to `docs/foundations/schedules/archive/`
+- `docs/foundations/core/stuck_log.md` — log for every non-Clean result: 🔴 Blank gets a full entry (where stuck, core realization, code snippet); 🟡 Shaky gets a one-liner (sticking point only)
