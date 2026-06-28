@@ -27,10 +27,14 @@ Notes for future agents:
 
 | Problems Done | 🟢 Clean | 🟡 Shaky | 🔴 Blank | Total Attempts |
 |:---:|:---:|:---:|:---:|:---:|
-| 91 | 60 | 17 | 14 | 213 |
+| 91 | 61 | 18 | 12 | 217 |
 
 | Difficulty | Problem | Comfort | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|
+| Medium | [80. Remove Duplicates from Sorted Array II](https://leetcode.com/problems/remove-duplicates-from-sorted-array-ii/) | 🟡 | 2026-07-07 | 2026-06-27 | 2026-01-13, 2026-04-13, 2026-06-25, 2026-06-27 |
+| Easy | [169. Majority Element](https://leetcode.com/problems/majority-element/) | 🟢 | 2026-07-27 | 2026-06-27 | 2026-01-05, 2026-04-01, 2026-05-28, 2026-06-27 |
+| Medium | [128. Longest Consecutive Sequence](https://leetcode.com/problems/longest-consecutive-sequence/) | 🔴 | 2026-06-29 | 2026-06-27 | 2026-01-26, 2026-04-14, 2026-06-27 |
+| Medium | [53. Maximum Subarray (Prefix Sum)](https://leetcode.com/problems/maximum-subarray/) | 🟢 | 2026-07-27 | 2026-06-27 | 2026-01-08, 2026-04-01, 2026-06-27 |
 | Medium | [355. Design Twitter](https://leetcode.com/problems/design-twitter/) | 🟡 | 2026-07-06 | 2026-06-26 | 2026-06-24, 2026-06-26 |
 | Easy | [543. Diameter of Binary Tree](https://leetcode.com/problems/diameter-of-binary-tree/) | 🟢 | 2026-07-26 | 2026-06-26 | 2026-04-30, 2026-06-02, 2026-06-12, 2026-06-14, 2026-06-24, 2026-06-26 |
 | Medium | [200. Number of Islands (DFS)](https://leetcode.com/problems/number-of-islands/) | 🟢 | 2026-07-26 | 2026-06-26 | 2026-05-31, 2026-06-02, 2026-06-16, 2026-06-26 |
@@ -41,7 +45,6 @@ Notes for future agents:
 | Easy | [226. Invert Binary Tree](https://leetcode.com/problems/invert-binary-tree/) | 🟢 | 2026-07-25 | 2026-06-25 | 2026-04-30, 2026-05-26, 2026-06-25 |
 | Easy | [121. Best Time to Buy and Sell Stock](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/) | 🟡 | 2026-07-05 | 2026-06-25 | 2026-03-22, 2026-04-15, 2026-06-25 |
 | Easy | [219. Contains Duplicate II](https://leetcode.com/problems/contains-duplicate-ii/) | 🟡 | 2026-07-05 | 2026-06-25 | 2026-03-22, 2026-04-14, 2026-06-25 |
-| Medium | [80. Remove Duplicates from Sorted Array II](https://leetcode.com/problems/remove-duplicates-from-sorted-array-ii/) | 🔴 | 2026-06-27 | 2026-06-25 | 2026-01-13, 2026-04-13, 2026-06-25 |
 | Medium | [53. Maximum Subarray (Kadane)](https://leetcode.com/problems/maximum-subarray/) | 🟢 | 2026-07-24 | 2026-06-24 | 2026-01-08, 2026-04-02, 2026-06-23, 2026-06-24 |
 | Easy | [110. Balanced Binary Tree](https://leetcode.com/problems/balanced-binary-tree/) | 🟡 | 2026-07-04 | 2026-06-24 | 2026-05-01, 2026-06-04, 2026-06-14, 2026-06-24 |
 | Medium | [189. Rotate Array](https://leetcode.com/problems/rotate-array/) | 🟢 | 2026-07-24 | 2026-06-24 | 2026-01-11, 2026-04-04, 2026-06-24 |
@@ -89,7 +92,6 @@ Notes for future agents:
 | Medium | [347. Top K Frequent Elements](https://leetcode.com/problems/top-k-frequent-elements/) | 🟢 | 2026-06-29 | 2026-05-30 | 2026-01-11, 2026-04-09, 2026-05-30 |
 | Medium | [49. Group Anagrams](https://leetcode.com/problems/group-anagrams/) | 🟢 | 2026-06-28 | 2026-05-29 | 2026-01-04, 2026-03-27, 2026-05-29 |
 | Medium | [75. Sort Colors (Dutch Flag)](https://leetcode.com/problems/sort-colors/) | 🟢 | 2026-06-27 | 2026-05-28 | 2026-01-08, 2026-04-01, 2026-05-26, 2026-05-28 |
-| Easy | [169. Majority Element](https://leetcode.com/problems/majority-element/) | 🟢 | 2026-06-27 | 2026-05-28 | 2026-01-05, 2026-04-01, 2026-05-28 |
 | Easy | [104. Maximum Depth of Binary Tree](https://leetcode.com/problems/maximum-depth-of-binary-tree/) | 🟢 | 2026-06-26 | 2026-05-27 | 2026-04-30, 2026-05-27 |
 | Easy | [704. Binary Search](https://leetcode.com/problems/binary-search/) | 🟢 | 2026-06-26 | 2026-05-27 | 2026-03-09, 2026-04-13, 2026-05-27 |
 | Medium | [36. Valid Sudoku](https://leetcode.com/problems/valid-sudoku/) | 🟢 | 2026-06-21 | 2026-05-22 | 2026-01-25, 2026-05-22 |
@@ -108,14 +110,12 @@ Notes for future agents:
 | Medium | [122. Best Time to Buy and Sell Stock II](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/) | 🟢 | 2026-05-17 | 2026-04-17 | 2026-01-28, 2026-04-17 |
 | Hard | [42. Trapping Rain Water](https://leetcode.com/problems/trapping-rain-water/) | 🔴 | 2026-04-17 | 2026-04-15 | 2026-04-15 |
 | Medium | [11. Container With Most Water](https://leetcode.com/problems/container-with-most-water/) | 🟢 | 2026-05-14 | 2026-04-14 | 2026-01-31, 2026-04-14 |
-| Medium | [128. Longest Consecutive Sequence](https://leetcode.com/problems/longest-consecutive-sequence/) | 🔴 | 2026-04-16 | 2026-04-14 | 2026-01-26, 2026-04-14 |
 | Medium | [229. Majority Element II](https://leetcode.com/problems/majority-element-ii/) | 🔴 | 2026-04-16 | 2026-04-14 | 2026-01-30, 2026-04-14 |
 | Medium | [238. Product of Array Except Self](https://leetcode.com/problems/product-of-array-except-self/) | 🟢 | 2026-05-13 | 2026-04-13 | 2026-01-24, 2026-04-13 |
 | Easy | [1768. Merge Strings Alternately](https://leetcode.com/problems/merge-strings-alternately/) | 🟢 | 2026-05-10 | 2026-04-10 | 2026-01-21, 2026-04-10 |
 | Easy | [125. Valid Palindrome](https://leetcode.com/problems/valid-palindrome/) | 🟢 | 2026-05-05 | 2026-04-05 | 2026-01-15, 2026-04-05 |
 | Easy | [344. Reverse String](https://leetcode.com/problems/reverse-string/) | 🟢 | 2026-05-04 | 2026-04-04 | 2026-01-15, 2026-04-04 |
 | Easy | [26. Remove Duplicates from Sorted Array](https://leetcode.com/problems/remove-duplicates-from-sorted-array/) | 🟢 | 2026-05-02 | 2026-04-02 | 2026-01-09, 2026-04-02 |
-| Medium | [53. Maximum Subarray (Prefix Sum)](https://leetcode.com/problems/maximum-subarray/) | 🔴 | 2026-04-03 | 2026-04-01 | 2026-01-08, 2026-04-01 |
 | Medium | [912. Sort an Array (Merge Sort)](https://leetcode.com/problems/sort-an-array/) | 🔴 | 2026-03-28 | 2026-03-26 | 2026-01-06, 2026-03-26 |
 | Easy | [1. Two Sum](https://leetcode.com/problems/two-sum/) | 🟢 | 2026-04-24 | 2026-03-25 | 2026-01-02, 2026-03-25 |
 | Easy | [217. Contains Duplicate](https://leetcode.com/problems/contains-duplicate/) | 🟢 | 2026-04-24 | 2026-03-25 | 2026-01-01, 2026-03-25 |
