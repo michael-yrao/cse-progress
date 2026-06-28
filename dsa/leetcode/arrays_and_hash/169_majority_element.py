@@ -83,6 +83,25 @@ class Solution:
             counter += (1 if maxElement == n else -1)
 
         return maxElement
+    
+    def majorityElement_20260627(self, nums: List[int]) -> int:
+        # boyer moores majority voting algorithm
+        # since we know there always exists a majority element
+        # we can assume the first element is majority
+        # decrement when we see another element and increment when we see it
+        # if decrement to 0, set majority to current element
+        
+        majorityElement = nums[0]
+        majorityCounter = 0
+        for n in nums:
+            if n == majorityElement:
+                majorityCounter+=1
+            else:
+                majorityCounter-=1
+                if majorityCounter < 1:
+                    majorityElement = n
+                    majorityCounter = 1
+        return majorityElement
 
 class UnitTest(unittest.TestCase):
     input1 = [3,2,3]

@@ -61,3 +61,20 @@ class Solution:
             longest = max(longest, numMap[n])
             
         return longest
+    
+    def longestConsecutive_20260627(self, nums: List[int]) -> int:
+        # we maintain a set to keep track of the numbers in the list
+        # this way we can access the values in O(1) time and also take care any duplicates
+        numSet = set(nums)
+        
+        maxLength = 0
+        
+        for n in numSet:
+            # we only care if we are start of a sequence
+            if n - 1 not in numSet:
+                currentLength = 1
+                while n + currentLength in numSet:
+                    currentLength+=1
+                maxLength = max(maxLength, currentLength)
+        
+        return maxLength
