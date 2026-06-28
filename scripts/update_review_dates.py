@@ -8,43 +8,31 @@ from pathlib import Path
 
 MARKDOWN_PATH = Path("docs/practice/review_progresion.md")
 SOURCE_ROOT = Path("dsa/leetcode")
-TABLE_HEADER = "| Difficulty | Problem | Comfort | Next Review Date | Latest Attempt Date | Attempt Dates |"
-ROW_SEPARATOR = "|---|---|---|---|---|---|"
+TABLE_HEADER = "| Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Attempt Date | Attempt Dates |"
+TABLE_HEADER_LEGACY = "| Difficulty | Problem | Comfort | Next Review Date | Latest Attempt Date | Attempt Dates |"
+ROW_SEPARATOR = "|---|---|---|---|---|---|---|"
+ROW_SEPARATOR_LEGACY = "|---|---|---|---|---|---|"
 
 COMFORT_CLEAN = "🟢"
 COMFORT_SHAKY = "🟡"
 COMFORT_BLANK = "🔴"
-COMFORT_VALUES = f"{COMFORT_CLEAN}|{COMFORT_SHAKY}|{COMFORT_BLANK}"
+COMFORT_RETIRED = "🏆"
+COMFORT_VALUES = f"{COMFORT_CLEAN}|{COMFORT_SHAKY}|{COMFORT_BLANK}|{COMFORT_RETIRED}"
 
 ROW_RE = re.compile(
-    r"^\| (?P<difficulty>[^|]+) \| \[(?P<problem>[^\]]+)\]\((?P<url>[^)]+)\) \| (?P<comfort>" + COMFORT_VALUES + r") \| (?P<next>[^|]*) \| (?P<latest>[^|]*) \| (?P<attempts>.*) \|$"
+    r"^\| (?P<difficulty>[^|]+) \| \[(?P<problem>[^\]]+)\]\((?P<url>[^)]+)\) \| (?P<comfort>" + COMFORT_VALUES + r") \| (?P<streak>\d+) \| (?P<next>[^|]*) \| (?P<latest>[^|]*) \| (?P<attempts>.*) \|$"
 )
-# Permissive variant used only when parsing git diff output, where old lines may still have Y/N.
+ROW_RE_LEGACY = re.compile(
+    r"^\| (?P<difficulty>[^|]+) \| \[(?P<problem>[^\]]+)\]\((?P<url>[^)]+)\) \| (?P<comfort>🟢|🟡|🔴) \| (?P<next>[^|]*) \| (?P<latest>[^|]*) \| (?P<attempts>.*) \|$"
+)
+# Permissive variant for git diff output — streak field is optional
 DIFF_ROW_RE = re.compile(
-    r"^\| (?P<difficulty>[^|]+) \| \[(?P<problem>[^\]]+)\]\((?P<url>[^)]+)\) \| (?P<comfort>[^|]+) \| (?P<next>[^|]*) \| (?P<latest>[^|]*) \| (?P<attempts>.*) \|$"
+    r"^\| (?P<difficulty>[^|]+) \| \[(?P<problem>[^\]]+)\]\((?P<url>[^)]+)\) \| (?P<comfort>[^|]+) \| (?:(?P<streak>\d+) \| )?(?P<next>[^|]*) \| (?P<latest>[^|]*) \| (?P<attempts>.*) \|$"
 )
 SOURCE_FILE_RE = re.compile(r"^(?P<number>\d+)_(?P<name>.+)\.py$")
 ROMAN_NUMERALS = {
-    "i",
-    "ii",
-    "iii",
-    "iv",
-    "v",
-    "vi",
-    "vii",
-    "viii",
-    "ix",
-    "x",
-    "xi",
-    "xii",
-    "xiii",
-    "xiv",
-    "xv",
-    "xvi",
-    "xvii",
-    "xviii",
-    "xix",
-    "xx",
+    "i", "ii", "iii", "iv", "v", "vi", "vii", "viii", "ix", "x",
+    "xi", "xii", "xiii", "xiv", "xv", "xvi", "xvii", "xviii", "xix", "xx",
 }
 
 
@@ -77,10 +65,20 @@ def extract_problem_number(problem_title: str) -> int | None:
     return int(match.group("number"))
 
 
-def compute_next_review_date(comfort: str, latest_attempt_date: datetime | None) -> datetime | None:
+def compute_next_review_date(comfort: str, latest_attempt_date: datetime | None, streak: int = 1) -> datetime | None:
     if not latest_attempt_date:
         return None
-    days = 30 if comfort == COMFORT_CLEAN else 10 if comfort == COMFORT_SHAKY else 2
+    if comfort in (COMFORT_CLEAN, COMFORT_RETIRED):
+        if streak >= 3:
+            days = 180  # spot check for retired problems
+        elif streak == 2:
+            days = 60
+        else:
+            days = 30
+    elif comfort == COMFORT_SHAKY:
+        days = 10
+    else:  # BLANK
+        days = 2
     return latest_attempt_date + timedelta(days=days)
 
 
@@ -94,11 +92,12 @@ def build_summary_lines(table_rows: list[dict]) -> list[str]:
     clean = sum(1 for row in table_rows if row["comfort"] == COMFORT_CLEAN)
     shaky = sum(1 for row in table_rows if row["comfort"] == COMFORT_SHAKY)
     blank = sum(1 for row in table_rows if row["comfort"] == COMFORT_BLANK and row["latest"] is not None)
+    retired = sum(1 for row in table_rows if row["comfort"] == COMFORT_RETIRED)
     return [
         "",
-        f"| Problems Done | {COMFORT_CLEAN} Clean | {COMFORT_SHAKY} Shaky | {COMFORT_BLANK} Blank | Total Attempts |",
-        "|:---:|:---:|:---:|:---:|:---:|",
-        f"| {problems_done} | {clean} | {shaky} | {blank} | {total_attempts} |",
+        f"| Problems Done | {COMFORT_CLEAN} Clean | {COMFORT_SHAKY} Shaky | {COMFORT_BLANK} Blank | {COMFORT_RETIRED} Retired | Total Attempts |",
+        "|:---:|:---:|:---:|:---:|:---:|:---:|",
+        f"| {problems_done} | {clean} | {shaky} | {blank} | {retired} | {total_attempts} |",
         "",
     ]
 
@@ -118,7 +117,7 @@ def humanize_raw_name(raw_name: str) -> str:
 def build_row(entry: dict) -> str:
     return (
         f"| {entry['difficulty']} | [{entry['problem']}]({entry['url']})"
-        f" | {entry['comfort']} | {entry['next_review']} | {entry['latest_attempt_date']} | {entry['attempts']} |"
+        f" | {entry['comfort']} | {entry['streak']} | {entry['next_review']} | {entry['latest_attempt_date']} | {entry['attempts']} |"
     )
 
 
@@ -128,7 +127,6 @@ def extract_difficulty_from_source(path: Path) -> str | None:
     except OSError:
         return None
 
-    # First attempt: parse top-level triple-quoted docstring/header
     top_doc = re.match(r"^\s*(['\"]{3})(.*?)(\1)", content, re.DOTALL)
     if top_doc:
         body = top_doc.group(2).strip().splitlines()
@@ -145,7 +143,6 @@ def extract_difficulty_from_source(path: Path) -> str | None:
                         return token.capitalize()
             break
 
-    # Fallback: search first several lines for an explicit difficulty comment
     for line in content.splitlines()[:20]:
         candidate = line.strip().lower()
         if candidate.startswith("#"):
@@ -193,12 +190,7 @@ def get_staged_paths() -> tuple[list[Path], bool]:
 
 
 def get_staged_rows_with_changed_attempts() -> set[str]:
-    """Return problem titles for rows that are brand new in the staged diff.
-
-    Modified rows are excluded entirely: a row whose dates were edited or cleared
-    was changed deliberately (backdating, un-logging a never-done problem) and
-    must not be re-stamped with today's date.
-    """
+    """Return problem titles for rows that are brand new in the staged diff."""
     try:
         output = subprocess.check_output(
             ["git", "diff", "--cached", "--unified=0", "--", str(MARKDOWN_PATH)],
@@ -208,8 +200,8 @@ def get_staged_rows_with_changed_attempts() -> set[str]:
     except (subprocess.CalledProcessError, FileNotFoundError):
         return set()
 
-    removed: dict[str, str] = {}  # title_lower -> attempts string from the old (-) line
-    added: dict[str, str] = {}    # title_lower -> attempts string from the new (+) line
+    removed: dict[str, str] = {}
+    added: dict[str, str] = {}
 
     for line in output.splitlines():
         if not (line.startswith("-| ") or line.startswith("+| ")):
@@ -256,7 +248,7 @@ def fill_current_date_for_staged_rows(
     for row in table_rows:
         problem_title_low = row["problem"].strip().lower()
         is_staged = False
-        
+
         if staged_markdown_titles:
             is_staged = problem_title_low in staged_markdown_titles
         elif staged_numbers:
@@ -264,26 +256,22 @@ def fill_current_date_for_staged_rows(
             if match:
                 number = int(match.group("number"))
                 is_staged = number in staged_numbers
-        
+
         if not is_staged:
             continue
 
-        # Only stamp rows that have no attempt history yet. Rows with dates were
-        # edited deliberately (e.g. backdated corrections) and must be respected.
         if row["latest"] is not None:
             continue
 
         attempts = [part.strip() for part in row["attempts"].split(",") if part.strip()]
         today_text = format_date(now)
-        
+
         if today_text not in attempts:
             attempts.append(today_text)
             row["attempts"] = ", ".join(attempts)
-            
-            # Update latest and next review
             row["latest"] = now
             row["latest_attempt_date"] = format_date(now)
-            row["next_review"] = format_date(compute_next_review_date(row["comfort"], now))
+            row["next_review"] = format_date(compute_next_review_date(row["comfort"], now, row["streak"]))
             updated_count += 1
 
     return updated_count
@@ -358,6 +346,7 @@ def discover_source_problems(existing_titles: set[str], staged_files: list[Path]
             "problem": problem_title,
             "url": f"https://leetcode.com/problems/{slug}/",
             "comfort": COMFORT_BLANK,
+            "streak": 0,
             "latest": now,
             "latest_attempt_date": format_date(now) if now else "",
             "attempts": format_date(now) if now else "",
@@ -378,6 +367,7 @@ def main() -> None:
     in_table = False
     table_header_seen = False
     table_separator_seen = False
+    legacy_format = False
 
     for line in lines:
         if not in_table:
@@ -385,59 +375,83 @@ def main() -> None:
             if line.strip() == TABLE_HEADER:
                 in_table = True
                 table_header_seen = True
+            elif line.strip() == TABLE_HEADER_LEGACY:
+                in_table = True
+                table_header_seen = True
+                legacy_format = True
             continue
 
         if in_table and not table_separator_seen:
-            if line.strip() == ROW_SEPARATOR:
+            if line.strip() in (ROW_SEPARATOR, ROW_SEPARATOR_LEGACY):
                 prefix_lines.append(line)
                 table_separator_seen = True
                 continue
-            # malformed file, keep going and preserve
             prefix_lines.append(line)
             continue
 
-        # parse row lines after header and separator
-        if line.startswith("|") and ROW_RE.match(line):
-            match = ROW_RE.match(line)
-            assert match is not None
+        new_match = ROW_RE.match(line) if line.startswith("|") else None
+        legacy_match = ROW_RE_LEGACY.match(line) if (line.startswith("|") and not new_match) else None
+
+        if new_match:
+            match = new_match
             difficulty = match.group("difficulty").strip()
             problem = match.group("problem").strip()
             url = match.group("url").strip()
             comfort = match.group("comfort").strip()
+            streak = int(match.group("streak"))
             latest = parse_date(match.group("latest"))
             attempts = match.group("attempts").strip()
             attempts_latest = parse_latest_attempt_date_from_attempts(attempts)
             if latest is None or (attempts_latest is not None and attempts_latest > latest):
                 latest = attempts_latest
-            next_review = format_date(compute_next_review_date(comfort, latest))
+            next_review = format_date(compute_next_review_date(comfort, latest, streak))
             table_rows.append({
                 "difficulty": difficulty,
                 "problem": problem,
                 "url": url,
                 "comfort": comfort,
+                "streak": streak,
                 "latest": latest,
                 "latest_attempt_date": format_date(latest),
                 "attempts": attempts,
                 "next_review": next_review,
             })
-            continue
-
-        suffix_lines.append(line)
+        elif legacy_match:
+            match = legacy_match
+            difficulty = match.group("difficulty").strip()
+            problem = match.group("problem").strip()
+            url = match.group("url").strip()
+            comfort = match.group("comfort").strip()
+            streak = 1 if comfort == COMFORT_CLEAN else 0
+            latest = parse_date(match.group("latest"))
+            attempts = match.group("attempts").strip()
+            attempts_latest = parse_latest_attempt_date_from_attempts(attempts)
+            if latest is None or (attempts_latest is not None and attempts_latest > latest):
+                latest = attempts_latest
+            next_review = format_date(compute_next_review_date(comfort, latest, streak))
+            table_rows.append({
+                "difficulty": difficulty,
+                "problem": problem,
+                "url": url,
+                "comfort": comfort,
+                "streak": streak,
+                "latest": latest,
+                "latest_attempt_date": format_date(latest),
+                "attempts": attempts,
+                "next_review": next_review,
+            })
+        else:
+            suffix_lines.append(line)
 
     if not table_header_seen or not table_separator_seen:
         raise RuntimeError("Could not find review table header and separator in markdown file.")
 
+    if legacy_format:
+        print("Migrating table from legacy format (no Streak column) to new format.")
+
     parser = argparse.ArgumentParser(description="Update review progression markdown from source problem files.")
-    parser.add_argument(
-        "--staged-only",
-        action="store_true",
-        help="Only discover new problems from staged source files and fill missing dates for staged review rows.",
-    )
-    parser.add_argument(
-        "--all-source",
-        action="store_true",
-        help="Scan all source files for new problems.",
-    )
+    parser.add_argument("--staged-only", action="store_true")
+    parser.add_argument("--all-source", action="store_true")
     args = parser.parse_args()
 
     staged_files = None
@@ -454,10 +468,7 @@ def main() -> None:
                 f"Detected staged markdown table changes; only {len(staged_markdown_titles)} newly added row(s) are eligible for a current-date fill."
             )
 
-    existing_titles = {
-        row["problem"].strip().lower()
-        for row in table_rows
-    }
+    existing_titles = {row["problem"].strip().lower() for row in table_rows}
 
     updated_count = update_existing_row_difficulties(table_rows, staged_files=staged_files)
     if updated_count:
@@ -485,10 +496,13 @@ def main() -> None:
     sorted_lines = [build_row(entry) for entry in sorted_rows]
 
     try:
-        header_index = prefix_lines.index(TABLE_HEADER)
-    except ValueError:
+        header_index = next(
+            i for i, line in enumerate(prefix_lines)
+            if line.strip() in (TABLE_HEADER, TABLE_HEADER_LEGACY)
+        )
+    except StopIteration:
         header_index = len(prefix_lines)
-    
+
     def _is_summary_line(line: str) -> bool:
         s = line.strip()
         if any(s.startswith(p) for p in (
@@ -496,12 +510,8 @@ def main() -> None:
             "| Problems Done |", "|:---:|:---:|",
         )):
             return True
-        # stats data row: | digits | digits | digits | digits | digits |
-        return bool(re.match(r"^\|\s*\d+\s*\|\s*\d+\s*\|\s*\d+\s*\|\s*\d+\s*\|\s*\d+\s*\|$", s))
+        return bool(re.match(r"^\|\s*\d+\s*(?:\|\s*\d+\s*){4,5}\|$", s))
 
-
-
-    # Remove old summary lines from prefix
     filtered_prefix = []
     for line in prefix_lines[:header_index]:
         if _is_summary_line(line):
@@ -511,18 +521,29 @@ def main() -> None:
                 filtered_prefix.append(line)
         else:
             filtered_prefix.append(line)
-    
-    # Remove trailing empty lines before inserting summary
+
     while filtered_prefix and filtered_prefix[-1].strip() == "":
         filtered_prefix.pop()
-    
-    summary_lines = build_summary_lines(sorted_rows)
-    new_prefix = filtered_prefix + summary_lines + prefix_lines[header_index:]
 
+    summary_lines = build_summary_lines(sorted_rows)
+
+    # Replace legacy header/separator with new format
+    header_and_after = []
+    for line in prefix_lines[header_index:]:
+        if line.strip() == TABLE_HEADER_LEGACY:
+            header_and_after.append(TABLE_HEADER)
+        elif line.strip() == ROW_SEPARATOR_LEGACY:
+            header_and_after.append(ROW_SEPARATOR)
+        else:
+            header_and_after.append(line)
+
+    new_prefix = filtered_prefix + summary_lines + header_and_after
     new_lines = new_prefix + sorted_lines + suffix_lines
+
     if new_lines != lines:
         MARKDOWN_PATH.write_text("\n".join(new_lines) + "\n", encoding="utf-8")
-        print(f"Reordered {len(sorted_rows)} rows by latest attempt date in {MARKDOWN_PATH}")
+        action = "Migrated and reordered" if legacy_format else "Reordered"
+        print(f"{action} {len(sorted_rows)} rows by latest attempt date in {MARKDOWN_PATH}")
     else:
         print(f"No reorder needed in {MARKDOWN_PATH}")
 
