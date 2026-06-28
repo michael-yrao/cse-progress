@@ -23,7 +23,7 @@ ROW_RE = re.compile(
     r"^\| (?P<difficulty>[^|]+) \| \[(?P<problem>[^\]]+)\]\((?P<url>[^)]+)\) \| (?P<comfort>" + COMFORT_VALUES + r") \| (?P<streak>\d+) \| (?P<next>[^|]*) \| (?P<latest>[^|]*) \| (?P<attempts>.*) \|$"
 )
 ROW_RE_LEGACY = re.compile(
-    r"^\| (?P<difficulty>[^|]+) \| \[(?P<problem>[^\]]+)\]\((?P<url>[^)]+)\) \| (?P<comfort>🟢|🟡|🔴) \| (?P<next>[^|]*) \| (?P<latest>[^|]*) \| (?P<attempts>.*) \|$"
+    r"^\| (?P<difficulty>[^|]+) \| \[(?P<problem>[^\]]+)\]\((?P<url>[^)]+)\) \| (?P<comfort>🟢|🟡|🔴) \|\s*(?P<next>[^|]*?)\s*\|\s*(?P<latest>[^|]*?)\s*\|\s*(?P<attempts>.*?)\s*\|$"
 )
 # Permissive variant for git diff output — streak field is optional
 DIFF_ROW_RE = re.compile(
