@@ -135,5 +135,4 @@ Notes for future agents:
 | Medium | [912. Sort an Array (Radix Sort)](https://leetcode.com/problems/sort-an-array/) | 🔴 | 0 |  |  |  |
 | Medium | [912. Sort an Array (Counting Sort)](https://leetcode.com/problems/sort-an-array/) | 🔴 | 0 |  |  |  |
 | Medium | [912. Sort an Array (Timsort)](https://leetcode.com/problems/sort-an-array/) | 🔴 | 0 |  |  |  |
-| Unknown | [686. Redundant Connection](https://leetcode.com/problems/redundant-connection/) | 🔴 | 0 |  |  |  |
 | Medium | [53. Maximum Subarray (Divide and Conquer)](https://leetcode.com/problems/maximum-subarray/) | 🔴 | 0 |  |  |  |
