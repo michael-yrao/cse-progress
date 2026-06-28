@@ -1,6 +1,6 @@
 # Stuck Log
 
-Log every non-Clean result. Format is proportional to severity:
+Log every non-Clean result. Add new entries at the top. Format is proportional to severity:
 
 **🔴 Blank** — full entry (conceptual gap worth documenting):
 ```
@@ -19,29 +19,7 @@ Log every non-Clean result. Format is proportional to severity:
 
 ---
 
-## 🟡 27. Remove Element — Jun 26
-**Sticking point**: Two pointer problems still hit-or-miss; confident in the pattern but not fully automatic yet.
-
-## 🟡 355. Design Twitter — Jun 26
-**Sticking point**: Naming — `following` Set was ambiguous about what it stores; should be `subscribedTo` or similar to make the relationship obvious.
-
-## 🔴 128. Longest Consecutive Sequence — Jun 27
-**Topic**: Hash Set / Sequence counting
-### Where did I get stuck?
-Tried a `lenMap` approach instead of the standard HashSet pattern.
-### Core Realization
-Only start counting forward from sequence starts (where `n-1` is not in the set). This avoids O(n²) by ensuring each sequence is walked exactly once.
-### Code Snippet
-```python
-for n in nums:
-    if n - 1 not in num_set:   # only start of a sequence
-        length = 1
-        while n + length in num_set:
-            length += 1
-        longest = max(longest, length)
-```
-
-## 🔴 229. Majority Element II — Jun 27
+## 🔴 229. Majority Element II — Jun 27, 2026
 **Topic**: Boyer-Moore Majority Vote (generalized)
 ### Where did I get stuck?
 Couldn't recall the approach — didn't know Boyer-Moore generalizes to 2 candidates for elements appearing > n/3 times.
@@ -60,165 +38,64 @@ for n in nums:
 
 ---
 
-## 1. LeetCode 19 - Remove Nth Node From End of List (Recursive)
-* **Date**: May 18, 2026
-* **Topic(s)**: Recursion / Call Stack Traversal
-
-### a. Where did I get stuck?
-* **Visualizing backward counting**: I couldn't wrap my head around how recursion counts from the end of a singly linked list without a `prev` pointer.
-
-### b. The Core Realization
-* The computer's call stack acts as a natural memory engine. By placing the `counter += 1` statement *after* the recursive function call, the code executes in exact reverse order (backwards from the tail) as the function execution contexts pop off the stack. 
-
-### c. Code Snippet to Remember
+## 🔴 128. Longest Consecutive Sequence — Jun 27, 2026
+**Topic**: Hash Set / Sequence counting
+### Where did I get stuck?
+Tried a `lenMap` approach instead of the standard HashSet pattern.
+### Core Realization
+Only start counting forward from sequence starts (where `n-1` is not in the set). This avoids O(n²) by ensuring each sequence is walked exactly once.
+### Code Snippet
 ```python
-# The recursive reverse execution pattern:
-head.next = removeFromEnd(node.next) # 1. Go all the way to the end first
-counter += 1             # 2. This increments from the back on the way up
-```
-
-Refer to the drawing in the surface for traces
-
----
-
-## 2. ❌ LeetCode 20 - Valid Parentheses (Intuitive Set Filter)
-* **Date**: May 19, 2026
-* **Topic(s)**: Stacks / Set-Membership Optimization
-
-### a. Where did I get stuck?
-* **Hidden Inner Loops**: My initial design used `if char in openToCloseMap.values()`. This introduced a hidden sequential lookup time because Python must linearly scan through a dictionary's values on every single character iteration.
-
-### b. The Core Realization
-* Readability and intuition are paramount. To keep my intuitive, forward-facing map configuration (`openToCloseMap = {'(': ')'}`), I can decouple the values into an independent, pre-calculated Python Set (`closing_set = set(openToCloseMap.values())`). Because Sets leverage internal hash tables, checking `if char in closing_set` runs in pure \(O(1)\) constant time. This keeps my logic deeply readable to me while preserving mathematically flawless execution speed.
-
-### c. Code Snippet to Remember
-```python
-openToCloseMap = {'(': ')', '{': '}', '[': ']'}
-closing_set = set(openToCloseMap.values()) # Pre-calculate once for O(1) searches
-
-for char in s:
-    if char in closing_set:         # Pure O(1) Set Lookup
-        if not stack or openToCloseMap[stack[-1]] != char: return False
-        stack.pop()
-    elif char in openToCloseMap:    # Pure O(1) Key Lookup
-        stack.append(char)
-```
-## 3. ❌ LeetCode 21 - Merge Two Sorted Lists (Recursive)
-* **Date**: May 20, 2026
-* **Topic(s)**: Recursion / Linked List Forward Traversal
-
-### 1. Where did I get stuck?
-* **Visualizing Return Values**: I struggled to understand why we need to explicitly run `return list1` or `return list2` inside the decision blocks, rather than returning a single final head at the end.
-
-### 2. The Core Realization
-* In forward-traversal recursion, each stack frame acts like an isolated construction worker. Whichever node wins the current comparison gets its `.next` pointer glued to the result of the next recursive call. Once that connection is secure, the frame's job is complete, so it returns itself (`return list1/list2`) because it is the head of that newly verified sorted pipeline segment.
-
-### 3. Code Snippet to Remember
-```python
-if list1.val < list2.val:
-    list1.next = self.mergeTwoLists(list1.next, list2)
-    return list1  # Job complete on list1, hand it backward
-else:
-    list2.next = self.mergeTwoLists(list1, list2.next)
-    return list2  # Job complete on list2, hand it backward
+for n in nums:
+    if n - 1 not in num_set:   # only start of a sequence
+        length = 1
+        while n + length in num_set:
+            length += 1
+        longest = max(longest, length)
 ```
 
 ---
 
-## 4. ✅ LeetCode 200 - Number of Islands (DFS)
-* **Date**: May 31, 2026
-* **Topic(s)**: Graph Traversal / DFS / Base Case Handling
+## 🟡 355. Design Twitter — Jun 26, 2026
+**Sticking point**: Naming — `following` Set was ambiguous about what it stores; should be `subscribedTo` or similar to make the relationship obvious.
 
-### 1. Where did I get stuck?
-* **DFS base-case misses**: I didn't properly stop before visiting water or going out of bounds, which made the recursion logic much harder to follow.
+---
 
-### 2. The Core Realization
-* The DFS helper must short-circuit immediately for invalid positions and for `0` cells. The correct ordering is:
-  - if row or col is out of bounds, return
-  - if grid[row][col] is `0`, return
-  - mark the cell visited
-  - recurse on all four neighbors
+## 🟡 27. Remove Element — Jun 26, 2026
+**Sticking point**: Two pointer problems still hit-or-miss; confident in the pattern but not fully automatic yet.
 
-### 3. Code Snippet to Remember
+---
+
+## 🔴 80. Remove Duplicates from Sorted Array II — Jun 25, 2026
+**Topic**: Two Pointers / Write Pointer
+### Where did I get stuck?
+Couldn't recall the approach — no clear mental model for the "at most k duplicates" pattern.
+### Core Realization
+Use a write pointer `k` starting at 2 (first two elements are always valid). For every element from index 2 onward, only copy it forward if `nums[i] != nums[k-2]`. Comparing to `k-2` (two spots behind the write pointer) is what enforces the "at most 2" constraint — if the element matches what's two spots back, a third duplicate would be written.
+### Code Snippet
 ```python
-def dfs(r, c):
-    if r < 0 or r >= rows or c < 0 or c >= cols:
-        return
-    if grid[r][c] == '0':
-        return
-    if visited:
-        return
-    grid[r][c] = '0'
-    dfs(r+1, c)
-    dfs(r-1, c)
-    dfs(r, c+1)
-    dfs(r, c-1)
+def removeDuplicates(self, nums):
+    k = 2
+    for i in range(2, len(nums)):
+        if nums[i] != nums[k-2]:
+            nums[k] = nums[i]
+            k += 1
+    return k
 ```
 
 ---
-## ❌ Problem Name: 200. Number of Islands (BFS Variant)
-* **Date**: 2026-06-01
-* **Topic(s)**: Graph / Breadth-First Search (BFS) / Matrix Grid
 
-### 1. Where did I get stuck?
-* My queue expanded exponentially, causing a Memory Limit Exceeded (MLE) crash, because I was marking nodes as visited *after* popping them from the queue instead of the exact millisecond they were appended.
+## 🔴 543. Diameter of Binary Tree — Jun 24, 2026
+**Topic**: Binary Tree / DFS / Postorder
+### Where did I get stuck?
+Confusing what `dfs` returns (height) vs what we're maximizing (diameter). Kept returning `1 + left + right` which counts nodes, not computing height.
+### Core Realization
+`dfs` serves two roles simultaneously:
+- **Updates** a nonlocal `diameter = max(diameter, left + right)` — the candidate passing through this node
+- **Returns** `1 + max(left, right)` — the height, so the parent can use it
 
-### 2. The Core Realization
-* In a BFS matrix traversal, a neighbor node must be marked as visited immediately upon being pushed to the queue to prevent adjacent nodes from scanning it and pushing redundant duplicates of the same coordinate onto the active queue wavefront.
-
-### 3. Code Snippet to Remember
-```python
-# Mark the neighbor visited the EXACT SAME MILLISECOND it is pushed to the queue
-for rowTraversal, colTraversal in directions:
-    neighborRow = row + rowTraversal
-    neightColumn = col + colTraversal
-    if (0 <= neighborRow < rows and 0 <= neightColumn < cols 
-        and (neighborRow, neightColumn) not in visited 
-        and grid[neighborRow][neightColumn] == '1'):
-            visited.add((neighborRow, neightColumn))  # Safeguard baseline
-            queue.append((neighborRow, neightColumn))  # Push to wavefront
-```
-
-## ❌ Problem Name: 133. Clone Graph (DFS Variant)
-* **Date**: 2026-06-04
-* **Topic(s)**: Graph / Depth-First Search (DFS) / Deep Copy
-
-### 1. Where did I get stuck?
-* I struggled to conceptualize how a recursive deep copy separates node traversal from connection wiring, and how the code returns values up the call stack without erasing intermediate graph progress.
-
-### 2. The Core Realization
-* This follows a bottom-up Head Recursion pattern. The function must execute `return copy` for every single node in the graph. The execution stack plunges down to create nodes first, and then wires up the graph connections (.append()) on the way back up as the recursive frames unwind.
-
-### 3. Code Snippet to Remember
-```python
-# The Old-to-New hash map acts as BOTH a visited set and a clone cache
-if curr_node in old_to_new:
-    return old_to_new[curr_node]  # Guardrail returns existing clone address
-
-copy = Node(curr_node.val)
-old_to_new[curr_node] = copy      # Map old address to new instance
-
-# Post-processing: Connect neighbors using returned values from the unwinding stack
-for neighbor in curr_node.neighbors:
-    copy.neighbors.append(dfs(neighbor))
-    
-return copy  # Triggers on EVERY node to hand its memory address backward
-```
-
-## ❌ LeetCode 543 - Diameter of Binary Tree
-* **Date**: 2026-06-24 (5th attempt, still Blank)
-* **Topic(s)**: Binary Tree / DFS / Postorder
-
-### 1. Where did I get stuck?
-* Confusing what `dfs` returns (height) vs what we're maximizing (diameter). Kept returning `1 + left + right` which counts nodes, not computing height.
-
-### 2. The Core Realization
-* `dfs` serves two roles simultaneously:
-  - **Updates** a nonlocal `diameter = max(diameter, left + right)` — the candidate passing through this node
-  - **Returns** `1 + max(left, right)` — the height, so the parent can use it
-* The diameter is never "returned up" — it's tracked separately and updated at every node.
-
-### 3. Code Snippet to Remember
+The diameter is never "returned up" — it's tracked separately and updated at every node.
+### Code Snippet
 ```python
 def diameterOfBinaryTree(self, root):
     diameter = 0
@@ -236,40 +113,13 @@ def diameterOfBinaryTree(self, root):
 
 ---
 
-## ❌ LeetCode 80 - Remove Duplicates from Sorted Array II
-* **Date**: 2026-06-25 (3rd attempt, still Blank)
-* **Topic(s)**: Two Pointers / Write Pointer
-
-### 1. Where did I get stuck?
-* Couldn't recall the approach — no clear mental model for the "at most k duplicates" pattern.
-
-### 2. The Core Realization
-* Use a write pointer `k` starting at 2 (first two elements are always valid). For every element from index 2 onward, only copy it forward if `nums[i] != nums[k-2]`. Comparing to `k-2` (two spots behind the write pointer) is what enforces the "at most 2" constraint — if the element matches what's two spots back, a third duplicate would be written.
-
-### 3. Code Snippet to Remember
-```python
-def removeDuplicates(self, nums):
-    k = 2
-    for i in range(2, len(nums)):
-        if nums[i] != nums[k-2]:
-            nums[k] = nums[i]
-            k += 1
-    return k
-```
-
----
-
-## ❌ Problem Name: 994. Rotting Oranges
-* **Date**: 2026-06-06
-* **Topic(s)**: Graph / Multi-Source BFS / Wavefront Batching
-
-### 1. Where did I get stuck?
-* I tracking minutes incorrectly because my loop incremented time after processing a single node instead of tracking multiple parallel, simultaneous infection origins as a unified single-minute generation wave.
-
-### 2. The Core Realization
-* Multi-source BFS problems tracking dynamic steps require batch-wave processing. By taking a snapshot size measurement of the queue length (`len(queue)`) at the start of each layer and running a strict bounded `range()` loop, an entire generation is fully exhausted before the master time counter increments.
-
-### 3. Code Snippet to Remember
+## 🔴 994. Rotting Oranges — Jun 6, 2026
+**Topic**: Graph / Multi-Source BFS / Wavefront Batching
+### Where did I get stuck?
+Tracked minutes incorrectly — loop incremented time after processing a single node instead of treating all simultaneous infection origins as one generation wave.
+### Core Realization
+Multi-source BFS problems tracking dynamic steps require batch-wave processing. Take a snapshot of queue length at the start of each layer and loop exactly that many times before incrementing the time counter.
+### Code Snippet
 ```python
 while rottenQueue and freshOrangeCounter > 0:
     numberOfRottenOranges = len(rottenQueue)  # Freeze generation size
@@ -277,4 +127,118 @@ while rottenQueue and freshOrangeCounter > 0:
         currentRow, currentCol = rottenQueue.popleft()
         # ... neighbor calculations and counters ...
     minute += 1  # Increment only when the entire generation wavefront finishes
+```
+
+---
+
+## 🔴 133. Clone Graph (DFS) — Jun 4, 2026
+**Topic**: Graph / DFS / Deep Copy
+### Where did I get stuck?
+Struggled to conceptualize how recursive deep copy separates node traversal from connection wiring, and how return values propagate up without erasing intermediate graph progress.
+### Core Realization
+Bottom-up recursion pattern. The execution stack creates nodes on the way down, then wires connections (.append()) on the way back up as frames unwind. The old-to-new hash map acts as both a visited set and a clone cache.
+### Code Snippet
+```python
+if curr_node in old_to_new:
+    return old_to_new[curr_node]  # Guardrail returns existing clone address
+
+copy = Node(curr_node.val)
+old_to_new[curr_node] = copy      # Map old address to new instance
+
+for neighbor in curr_node.neighbors:
+    copy.neighbors.append(dfs(neighbor))
+
+return copy  # Triggers on EVERY node to hand its memory address backward
+```
+
+---
+
+## 🔴 200. Number of Islands (BFS) — Jun 1, 2026
+**Topic**: Graph / BFS / Matrix Grid
+### Where did I get stuck?
+Queue expanded exponentially causing MLE — was marking nodes visited after popping instead of immediately when appending.
+### Core Realization
+In BFS matrix traversal, mark a neighbor visited the moment it's pushed to the queue, not when it's popped. Otherwise adjacent nodes will push duplicate coordinates onto the queue.
+### Code Snippet
+```python
+for rowTraversal, colTraversal in directions:
+    neighborRow = row + rowTraversal
+    neighborCol = col + colTraversal
+    if (0 <= neighborRow < rows and 0 <= neighborCol < cols
+            and (neighborRow, neighborCol) not in visited
+            and grid[neighborRow][neighborCol] == '1'):
+        visited.add((neighborRow, neighborCol))  # Mark immediately on push
+        queue.append((neighborRow, neighborCol))
+```
+
+---
+
+## 🔴 200. Number of Islands (DFS) — May 31, 2026
+**Topic**: Graph Traversal / DFS / Base Case Handling
+### Where did I get stuck?
+Didn't properly short-circuit before visiting water or going out of bounds, making recursion logic hard to follow.
+### Core Realization
+The DFS helper must guard in this order: out of bounds → water cell → mark visited → recurse on 4 neighbors.
+### Code Snippet
+```python
+def dfs(r, c):
+    if r < 0 or r >= rows or c < 0 or c >= cols:
+        return
+    if grid[r][c] == '0':
+        return
+    grid[r][c] = '0'
+    dfs(r+1, c); dfs(r-1, c); dfs(r, c+1); dfs(r, c-1)
+```
+
+---
+
+## 🔴 21. Merge Two Sorted Lists (Recursive) — May 20, 2026
+**Topic**: Recursion / Linked List Forward Traversal
+### Where did I get stuck?
+Struggled to understand why each frame returns itself (`return list1/list2`) rather than a single final head at the end.
+### Core Realization
+In forward-traversal recursion each frame is an isolated worker. The winning node glues its `.next` to the result of the next recursive call, then returns itself — because it is now the head of that verified sorted segment.
+### Code Snippet
+```python
+if list1.val < list2.val:
+    list1.next = self.mergeTwoLists(list1.next, list2)
+    return list1
+else:
+    list2.next = self.mergeTwoLists(list1, list2.next)
+    return list2
+```
+
+---
+
+## 🔴 20. Valid Parentheses — May 19, 2026
+**Topic**: Stacks / Set-Membership Optimization
+### Where did I get stuck?
+Used `if char in openToCloseMap.values()` — hidden O(n) linear scan through dict values on every character.
+### Core Realization
+Decouple values into a pre-calculated Set for O(1) membership checks while keeping the readable forward map.
+### Code Snippet
+```python
+openToCloseMap = {'(': ')', '{': '}', '[': ']'}
+closing_set = set(openToCloseMap.values())
+
+for char in s:
+    if char in closing_set:
+        if not stack or openToCloseMap[stack[-1]] != char: return False
+        stack.pop()
+    elif char in openToCloseMap:
+        stack.append(char)
+```
+
+---
+
+## 🔴 19. Remove Nth Node From End of List (Recursive) — May 18, 2026
+**Topic**: Recursion / Call Stack Traversal
+### Where did I get stuck?
+Couldn't visualize how recursion counts from the end of a singly linked list without a `prev` pointer.
+### Core Realization
+The call stack is a natural memory engine. Placing `counter += 1` *after* the recursive call makes it execute in reverse order as frames pop — effectively counting backward from the tail.
+### Code Snippet
+```python
+head.next = removeFromEnd(node.next)  # 1. Go all the way to the end first
+counter += 1                          # 2. Increments from the back on the way up
 ```
