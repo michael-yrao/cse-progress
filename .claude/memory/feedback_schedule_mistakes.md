@@ -13,3 +13,4 @@ When logging a problem result, check whether it was scheduled for today or a dif
 - User does tomorrow's active block today → move today's active block to tomorrow
 - User does a problem from next week → note the original slot is still open
 - Always fix both sides of the swap (mark the right day done, reschedule the displaced problem)
+- **User does a future-scheduled problem early**: move the entry to today's block in the schedule (don't leave it marked done in the future day's slot). The attempt date in the tracker is the source of truth, but the schedule should also reflect the actual day it was done.
