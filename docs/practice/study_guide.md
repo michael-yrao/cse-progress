@@ -3,10 +3,16 @@
 # 📅 The 5-Day Backlog Rotation & Retention Protocol
 
 ## 🚨 THE PRIORITY ROTATION ENGINE
-Every Sunday night, look at your spreadsheet backlog and select **5 older problems** to populate Monday through Friday's 15-minute warmup slots. Select them using this strict algorithmic filter:
-1. **Priority 1 (High Risk)**: Problems marked `Mastered: N` with the oldest "Latest Attempt Date" (e.g., *36. Valid Sudoku* from Jan 25).
-2. **Priority 2 (Medium Risk)**: Problems marked `Mastered: N` with more recent dates (e.g., *75. Sort Colors* from April 1).
-3. **Priority 3 (Maintenance)**: Problems marked `Mastered: Y` that you haven't touched in over 30 days (e.g., *238. Product of Array Except Self* from April 13).
+
+Every Sunday, open `docs/practice/dsa_progress.md` and sweep for all problems whose `Next Review Date ≤ end of the coming week`. Slot them into the upcoming schedule before filling active blocks or new content. Use this priority order for warmup slots:
+
+1. **Priority 1 (High Risk)**: 🔴 Blank — oldest Latest Attempt Date first.
+2. **Priority 2 (Medium Risk)**: 🟡 Shaky — oldest Latest Attempt Date first.
+3. **Priority 3 (Maintenance)**: 🟢 Clean — due this week; no-code format is fine.
+4. **Priority 4 (Spot Check)**: 🏆 Retired — due every 180 days; treat same as Clean no-code.
+
+Daily cap is **5 problems**. The active block is never cut — trim from warmup slots first (max 4 warmup problems across morning + evening combined). When a problem is bumped, slot it to a specific future day in the same edit.
+
 ---
 
 ## 🚨 BACKLOG RECOVERY PROTOCOL
@@ -15,35 +21,7 @@ Every Sunday night, look at your spreadsheet backlog and select **5 older proble
 
 ### Emergency Double Session Rule
 
-When triggered, run **two 15-minute warmup blocks per day** (morning + evening) until the overdue list is cleared. Do not start any new problems in your active block until the Critical tier is fully resolved.
-
-#### Critical (4+ weeks overdue as of June 7)
-- [ ] 21. Merge Two Sorted Lists (Iterative) — due Apr 28
-- [ ] 162. Find Peak Element — due May 4
-- [ ] 540. Single Element in a Sorted Array — due May 4
-- [ ] 572. Subtree of Another Tree — due May 4
-- [ ] 102. Binary Tree Level Order Traversal — due May 5
-- [ ] 235. Lowest Common Ancestor of a BST — due May 5
-- [ ] 1011. Capacity to Ship Packages Within D Days — due May 5
-- [ ] 2300. Successful Pairs of Spells and Potions — due May 5
-- [ ] 199. Binary Tree Right Side View — due May 11
-- [ ] 21. Merge Two Sorted Lists (Recursion) — due May 23
-- [ ] 19. Remove Nth Node From End of List (Recursion) — due May 23
-
-#### High (2–4 weeks overdue as of June 7)
-- [ ] 206. Reverse Linked List (Iterative) — due May 28
-- [ ] 33. Search in Rotated Sorted Array — due May 31
-- [ ] 18. Four Sum — last attempt Jan 23, never revisited
-- [ ] 167. Two Sum II — last attempt Jan 19, never revisited
-
-#### Recent (< 2 weeks overdue as of June 7)
-- [ ] 680. Valid Palindrome II — due Jun 1
-- [ ] 1216. Valid Palindrome III (backtracking) — due Jun 2
-- [ ] 1216. Valid Palindrome III (1DP) — due Jun 2
-- [ ] 695. Max Area of Island — due Jun 3
-- [ ] 200. Number of Islands (DFS) — due Jun 4
-- [ ] 543. Diameter of Binary Tree — due Jun 4
-- [ ] 283. Move Zeroes — due Jun 4
+When triggered, both morning and evening warmup slots are filled with overdue problems until the list is cleared. Do not start any new active block problems until the overdue count drops below 5.
 
 ### Permanent Backlog Rule
 
@@ -55,9 +33,11 @@ Because 15 minutes passes incredibly fast, **never write code during a backlog w
 * **00:05–00:12 | The Conceptual Blueprint**: Out loud, state the optimal Time/Space complexity and the core structural trick. (e.g., *"This is Top K Frequent. I count frequencies with a Hash Map, then use Bucket Sort where array indices represent frequencies to guarantee O(n) runtime."*)
 * **00:12–00:15 | The Verification**: Open your past successful code or your "Why I Got Stuck" log entry to verify if your mental blueprint was 100% accurate.
 
-### 📋 Post-Warmup Spreadsheet Updates:
-* **If your blueprint was flawless**: Update status to `Mastered: Y` and change the "Latest Attempt Date" to today.
-* **If you completely forgot the trick**: Keep status as `Mastered: N`, change the date to today, and flag it to reappear in the warmup slot in exactly 3 days.
+### 📋 Post-Warmup Updates:
+Log the result in `docs/practice/dsa_progress.md` using the comfort system:
+* **Blueprint was flawless** → 🟢 Clean. Streak increments; next review in +30/60/180 days depending on streak.
+* **Needed a nudge or wasn't fully confident** → 🟡 Shaky. Streak resets to 0; next review in +10 days.
+* **Completely forgot the approach** → 🔴 Blank. Streak resets to 0; next review in +2 days.
 
 ### ⚡ Easy Problem Exception
 
@@ -65,19 +45,21 @@ For problems marked **Easy**, the no-code rule is lifted:
 
 * **During warmup**: Code the solution directly. Target **2 easy problems per 15-minute slot** (~7 min each). If you finish the first and still have time, pull the next Easy from the backlog immediately — do not stop at one.
 * **During the active block**: Target **2 easy problems per session** instead of 1. Use the time saved to run the Speed Demon Protocol (edge cases + alternative solutions) on at least one of them.
-* **Mastery bar is the same**: Easy does not lower the standard. Both problems must be completable from a blank page with correct complexity before marking `Mastered: Y`.
+* **Comfort bar is the same**: Easy does not lower the standard. Both problems must be completable from a blank page with correct complexity to log 🟢 Clean.
 
 ---
 
-## 🗂️ The New Weekly Macro-Schedule
+## 🗂️ The Weekly Macro-Schedule
 
-*   **Monday – Friday | The Split Focus Routine**:
-    *   *00:00–00:15*: 15-Minute No-Code Backlog Warmup (Managed by the Priority Engine above).
-    *   *00:15–01:00*: 45-Minute Road-Map Deep Dive (Your active block for new/current problems).
-*   **Saturday | The Blind Code Sprint (30–45 Mins)**:
-    *   Pick **one** random problem from your past week's logs. Clear your monitor, open a blank text file, and write the Python solution from memory under a 20-minute timer.
-*   **Sunday | Strict Lockout**:
-    *   Do not open a code editor. Allow your brain to consolidate short-term data into long-term structures.
+*   **Monday – Saturday | The Split Focus Routine**:
+    *   *Morning warmup (15 min)*: 1–2 problems due today/tomorrow — no-code blueprint format.
+    *   *Evening warmup (15 min)*: 1–2 problems due today/tomorrow — no-code blueprint format.
+    *   *Active block (45 min)*: New or current roadmap problem. Never cut this slot.
+    *   **Daily cap: 5 problems total.** Trim from warmup slots first if over cap.
+*   **Saturday | Blind Code Sprint**:
+    *   Pick one problem from the past week's logs. Clear your screen, open a blank file, write the solution from memory.
+*   **Sunday | Light session or rest**:
+    *   Optional warmup-only day — no active block required. Use it for 🔴 Blank retries or overdue backlog catchup.
 
 ---
 
@@ -195,7 +177,7 @@ Every design session must be narrated out loud — not written silently. Intervi
 | **1D Dynamic Programming** | Oct 12–Nov 8 | 12 | Climbing Stairs, Min Cost Climbing Stairs, House Robber I & II, Longest Palindromic Substring, Palindromic Substrings, Decode Ways, Coin Change, Max Product Subarray, Word Break, Longest Increasing Subsequence, Partition Equal Subset Sum |
 | **2D Dynamic Programming** | Nov 9–Dec 6 | 11 | Unique Paths, Longest Common Subsequence, Stock with Cooldown, Coin Change II, Target Sum, Interleaving String, Longest Increasing Path in Matrix, Distinct Subsequences, Edit Distance, Burst Balloons, Regular Expression Matching |
 | **Bit Manipulation + Math & Geometry** | Dec 7–28 | 15 | Single Number, # of 1 Bits, Counting Bits, Reverse Bits, Missing Number, Sum of Two Integers, Reverse Integer; Rotate Image, Spiral Matrix, Set Matrix Zeroes, Happy Number, Pow(x,n), Multiply Strings, Detect Squares |
-| **Buffer + Final EOY Review** | Dec 29–31 | — | Review all `Mastered: N` problems. Target: ≤ 20 unmastered at EOY |
+| **Buffer + Final EOY Review** | Dec 29–31 | — | Sweep `dsa_progress.md` for all 🔴 Blank and 🟡 Shaky solutions. Target: ≤ 10 non-Clean by EOY |
 
 ### Why Heap Comes Before Advanced Graphs
 
@@ -205,9 +187,9 @@ Dijkstra's algorithm (required for Network Delay Time, Cheapest Flights, Swim in
 
 Tries are 3 problems and complete in roughly one week. Grouping them here keeps the heavy graph block contiguous (Standard Graphs → Tries → Advanced Graphs) rather than fragmenting it later.
 
-### Sort Algorithm Variants — Trimmed
+### Sort Algorithm Variants — Knowledge Expansion Only
 
-`912. Sort an Array` variants are capped at two: **Merge Sort** (already done) and **Quick Sort**. The remaining variants (Radix, Counting, Timsort, Divide and Conquer) are not NeetCode 150 problems and consume week slots needed for the EOY goal. Remove them from the active tracker.
+`912. Sort an Array` variants (Quick Sort, Radix, Counting, Timsort) and `53. Maximum Subarray (Divide and Conquer)` are in the **Knowledge Expansion Queue** at the bottom of `dsa_progress.md`. They are not part of spaced repetition and don't count toward stats. They enter the schedule when a sorting deep-dive week is planned.
 
 ### Pace Targets
 
@@ -352,6 +334,6 @@ Create a running notebook using this format. Review this document every Saturday
 ---
 
 ## 🚫 Core Rules for Success
-1.  **Strict 45-Minute Cap**: If a new problem isn't solved in 45 minutes, stop, look up the solution, and make it tomorrow's 15-minute recall warm-up.
-2.  **Quality > Quantity — Hard Mastery Bar**: Aim for 3 to 4 perfectly understood problems per week. A problem is `Mastered: Y` only when you can write the complete solution on a blank page with no hints and state the correct time/space complexity unprompted. "Mostly remembered it" = `N`. If a problem has 3+ attempts and is still `N`, it has a specific conceptual gap — create or update its stuck log entry rather than scheduling another repetition without first naming the gap.
-3.  **Sunday Lockout**: Do not open a code editor on Sundays. Give your neural pathways a break so short-term data transitions into long-term memory structures.
+1.  **Strict 45-Minute Cap**: If a new problem isn't solved in 45 minutes, stop, look up the solution, and log it 🔴 Blank. It re-appears in 2 days.
+2.  **Quality > Quantity — Hard Comfort Bar**: Aim for 3–4 deeply understood problems per week. A problem is 🟢 Clean only when you can write the complete solution on a blank page with no hints and state the correct time/space complexity unprompted. "Mostly remembered it" = 🟡 Shaky. If a problem has 3+ attempts and is still 🔴 Blank, it has a specific conceptual gap — log it in `stuck_log.md` and name the gap before scheduling another repetition.
+3.  **5-Problem Daily Cap**: Never exceed 5 problems in a day. Active block is always protected — trim warmup slots first. When a problem is bumped, assign it a specific future slot in the same edit.
