@@ -101,12 +101,12 @@ Do not log off early and do not move on to a brand-new coding problem. Spend the
 *   **00:00–00:15 | DSA Maintenance Flashcard**: Look at a random past LeetCode prompt. Explain the data structure pattern and optimal Time/Space complexity out loud.
 *   **00:15–01:00 | Architecture Deep Dive**: Spend 45 minutes on system design practice using the weekly loop below.
 
-> **Phase 2 is not additional work.** It is a mode switch. The same 1-hour daily slot continues — only the content of the 45-minute block changes. DSA is kept warm through the 15-minute maintenance slot and the spaced repetition system in `docs/review_progresion.md`.
+> **Phase 2 is not additional work.** It is a mode switch. The same 1-hour daily slot continues — only the content of the 45-minute block changes. DSA is kept warm through the 15-minute maintenance slot and the spaced repetition system in `docs/dsa_progress.md`.
 
 ### 🗂️ Phase 2 Weekly Macro-Schedule
 
 *   **Monday – Friday | The Split Focus Routine**:
-    *   *00:00–00:15*: DSA Maintenance Flashcard — spaced repetition from `review_progresion.md`, no code, narrate the approach out loud
+    *   *00:00–00:15*: DSA Maintenance Flashcard — spaced repetition from `dsa_progress.md`, no code, narrate the approach out loud
     *   *00:15–01:00*: System Design Active Block — see weekly loop below
 *   **Saturday | Split Sprint (60 min)**:
     *   *First 30 min — Randomized DSA*: Pull a problem from the live sources below (no category label). Identify the pattern first, then solve it. This trains the recognition skill that NeetCode 150 alone doesn't build.
