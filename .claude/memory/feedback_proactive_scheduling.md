@@ -14,3 +14,4 @@ At the end of each practice day (when the user signals they are done or asks to 
 **How to apply:**
 - After every problem log: check tracker for upcoming due dates (today through +7 days) and proactively add any unscheduled problems to the appropriate warmup slot. Spread across morning/evening to avoid stacking.
 - At end of day: show a "Due this week" summary grouped by date before or after pushing. Keep it short — one line per day with problem names and comfort icons.
+- **When filling schedule slots on request**: always verify each candidate's next review date in `review_progresion.md` before adding it. A "pushed list" or leftover pool is a pool of candidates only — not a queue to immediately schedule. Only add problems due within ~1 day of the target slot. Do not add 🟢 Clean problems or problems with distant next review dates just because they are available.
