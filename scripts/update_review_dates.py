@@ -90,7 +90,13 @@ def count_attempt_dates(attempts: str) -> int:
 
 
 def build_summary_lines(table_rows: list[dict]) -> list[str]:
-    problems_done = sum(1 for row in table_rows if row["latest"] is not None)
+    attempted_rows = [row for row in table_rows if row["latest"] is not None]
+    unique_problems = len({
+        extract_problem_number(row["problem"])
+        for row in attempted_rows
+        if extract_problem_number(row["problem"]) is not None
+    })
+    solutions_done = len(attempted_rows)
     total_attempts = sum(count_attempt_dates(row["attempts"]) for row in table_rows)
     clean = sum(1 for row in table_rows if row["comfort"] == COMFORT_CLEAN)
     shaky = sum(1 for row in table_rows if row["comfort"] == COMFORT_SHAKY)
@@ -98,9 +104,9 @@ def build_summary_lines(table_rows: list[dict]) -> list[str]:
     retired = sum(1 for row in table_rows if row["comfort"] == COMFORT_RETIRED)
     return [
         "",
-        f"| Problems Done | {COMFORT_RETIRED} Retired | {COMFORT_CLEAN} Clean | {COMFORT_SHAKY} Shaky | {COMFORT_BLANK} Blank | Total Attempts |",
-        "|:---:|:---:|:---:|:---:|:---:|:---:|",
-        f"| {problems_done} | {retired} | {clean} | {shaky} | {blank} | {total_attempts} |",
+        f"| Unique Problems | Solutions | {COMFORT_RETIRED} Retired | {COMFORT_CLEAN} Clean | {COMFORT_SHAKY} Shaky | {COMFORT_BLANK} Blank | Total Attempts |",
+        "|:---:|:---:|:---:|:---:|:---:|:---:|:---:|",
+        f"| {unique_problems} | {solutions_done} | {retired} | {clean} | {shaky} | {blank} | {total_attempts} |",
         "",
     ]
 
@@ -512,10 +518,10 @@ def main() -> None:
         s = line.strip()
         if any(s.startswith(p) for p in (
             "**Problems Done:**", "**Total Successful Attempts:**", "**Mastered",
-            "| Problems Done |", "|:---:|:---:|",
+            "| Problems Done |", "| Unique Problems |", "|:---:|:---:|",
         )):
             return True
-        return bool(re.match(r"^\|\s*\d+\s*(?:\|\s*\d+\s*){4,5}\|$", s))
+        return bool(re.match(r"^\|\s*\d+\s*(?:\|\s*\d+\s*){4,6}\|$", s))
 
     filtered_prefix = []
     for line in prefix_lines[:header_index]:
