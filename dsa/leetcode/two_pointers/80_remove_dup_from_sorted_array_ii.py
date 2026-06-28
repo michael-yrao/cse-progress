@@ -100,3 +100,24 @@ class Solution:
                 l+=1
             r+=1
         return l
+    def removeDuplicates_20260627(self, nums: List[int]) -> int:
+        # we know first 2 characters will never get removed
+        if len(nums) < 3:
+            return len(nums)
+        
+        # if we are 3 or more, we want to do two pointers
+        # left to keep track where to replace
+        # right to traverse and read
+        l = r = 2
+
+        while r < len(nums):
+            # l - 2 is the golden source
+            # since we know that is correct
+            # [1,1,2,2,3,3]
+            #          l
+            #            r
+            if nums[r] != nums[l-2]:
+                nums[l] = nums[r]
+                l+=1
+            r+=1
+        return l
