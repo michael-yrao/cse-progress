@@ -30,6 +30,9 @@ DIFF_ROW_RE = re.compile(
     r"^\| (?P<difficulty>[^|]+) \| \[(?P<problem>[^\]]+)\]\((?P<url>[^)]+)\) \| (?P<comfort>[^|]+) \| (?:(?P<streak>\d+) \| )?(?P<next>[^|]*) \| (?P<latest>[^|]*) \| (?P<attempts>.*) \|$"
 )
 SOURCE_FILE_RE = re.compile(r"^(?P<number>\d+)_(?P<name>.+)\.py$")
+# Problems with source files that should NOT be auto-discovered (NC150/250 curriculum items
+# that will re-enter the tracker naturally when the user solves and logs them).
+DISCOVERY_SKIP_NUMBERS = {76}
 ROMAN_NUMERALS = {
     "i", "ii", "iii", "iv", "v", "vi", "vii", "viii", "ix", "x",
     "xi", "xii", "xiii", "xiv", "xv", "xvi", "xvii", "xviii", "xix", "xx",
@@ -338,6 +341,8 @@ def discover_source_problems(existing_titles: set[str], staged_files: list[Path]
         if problem_title.lower() in existing_titles:
             continue
         if number in existing_numbers:
+            continue
+        if number in DISCOVERY_SKIP_NUMBERS:
             continue
         difficulty = extract_difficulty_from_source(path) or "Unknown"
         slug = raw_name.lower().replace("_", "-")

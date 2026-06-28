@@ -127,7 +127,6 @@ Notes for future agents:
 | Easy | [1929. Concatenation of Array](https://leetcode.com/problems/concatenation-of-array/) | 🟢 | 1 | 2026-04-24 | 2026-03-25 | 2026-01-01, 2026-03-25 |
 | Medium | [18. Four Sum](https://leetcode.com/problems/4sum/) | 🟢 | 1 | 2026-02-22 | 2026-01-23 | 2026-01-23 |
 | Medium | [167. Two Sum II](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/) | 🟢 | 1 | 2026-02-18 | 2026-01-19 | 2026-01-19 |
-| Unknown | [76. Minimum Window Substring](https://leetcode.com/problems/minimum-window-substring/) | 🔴 | 0 |  |  |  |
 
 ---
 
