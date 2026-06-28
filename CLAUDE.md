@@ -32,4 +32,4 @@ After logging any problem result, check its computed next review date and add it
 - `docs/practice/dsa_progress.md` — spaced repetition tracker (auto-updated by pre-commit hook)
 - `docs/practice/study_guide.md` — master plan with backlog recovery protocol
 - `docs/practice/schedules/<YYYYMMDD>_schedule.md` — current week's day-by-day schedule (e.g. `20260615_schedule.md`); archive the prior week's schedule on the first day (Monday) of the new week by moving it to `docs/practice/schedules/archive/`
-- `docs/practice/stuck_log.md` — log for problems attempted 3+ times without mastery
+- `docs/practice/stuck_log.md` — log for every non-Clean result: 🔴 Blank gets a full entry (where stuck, core realization, code snippet); 🟡 Shaky gets a one-liner (sticking point only)

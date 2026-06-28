@@ -1,5 +1,65 @@
 # Stuck Log
 
+Log every non-Clean result. Format is proportional to severity:
+
+**🔴 Blank** — full entry (conceptual gap worth documenting):
+```
+## 🔴 [Number]. [Title] — [Date]
+**Topic**: ...
+### Where did I get stuck?
+### Core Realization
+### Code Snippet
+```
+
+**🟡 Shaky** — one-liner (name the specific friction point only):
+```
+## 🟡 [Number]. [Title] — [Date]
+**Sticking point**: one sentence describing exactly what tripped you up.
+```
+
+---
+
+## 🟡 27. Remove Element — Jun 26
+**Sticking point**: Two pointer problems still hit-or-miss; confident in the pattern but not fully automatic yet.
+
+## 🟡 355. Design Twitter — Jun 26
+**Sticking point**: Naming — `following` Set was ambiguous about what it stores; should be `subscribedTo` or similar to make the relationship obvious.
+
+## 🔴 128. Longest Consecutive Sequence — Jun 27
+**Topic**: Hash Set / Sequence counting
+### Where did I get stuck?
+Tried a `lenMap` approach instead of the standard HashSet pattern.
+### Core Realization
+Only start counting forward from sequence starts (where `n-1` is not in the set). This avoids O(n²) by ensuring each sequence is walked exactly once.
+### Code Snippet
+```python
+for n in nums:
+    if n - 1 not in num_set:   # only start of a sequence
+        length = 1
+        while n + length in num_set:
+            length += 1
+        longest = max(longest, length)
+```
+
+## 🔴 229. Majority Element II — Jun 27
+**Topic**: Boyer-Moore Majority Vote (generalized)
+### Where did I get stuck?
+Couldn't recall the approach — didn't know Boyer-Moore generalizes to 2 candidates for elements appearing > n/3 times.
+### Core Realization
+At most 2 elements can appear > n/3 times. Track 2 candidates + 2 counts. When a new element matches neither candidate and both counts > 0, decrement both counts (cancel out). After the pass, verify both candidates actually exceed n/3.
+### Code Snippet
+```python
+c1, c2, cnt1, cnt2 = 0, 1, 0, 0
+for n in nums:
+    if n == c1: cnt1 += 1
+    elif n == c2: cnt2 += 1
+    elif cnt1 == 0: c1, cnt1 = n, 1
+    elif cnt2 == 0: c2, cnt2 = n, 1
+    else: cnt1 -= 1; cnt2 -= 1
+```
+
+---
+
 ## 1. LeetCode 19 - Remove Nth Node From End of List (Recursive)
 * **Date**: May 18, 2026
 * **Topic(s)**: Recursion / Call Stack Traversal
