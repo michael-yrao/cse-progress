@@ -107,3 +107,32 @@ class Solution:
                     queue.append((neighborRow, neighborCol))
 
         return image
+
+    def floodFill_20260628(self, image: List[List[int]], sr: int, sc: int, color: int) -> List[List[int]]:
+        # we are saying starting at [sr][sc], we want to change all neighbors that have the same color to the input color
+
+        # nothing to do if initial color is same as color
+        if image[sr][sc] == color:
+            return image
+        
+        # if not equal, we want to perform bfs or dfs until all neighbors are filled
+        # we don't need visited as we can just change the color and it will be same as being visited
+        rows, cols = len(image), len(image[0])
+
+        queue = collections.deque()
+        queue.append((sr,sc))
+        originalColor = image[sr][sc]
+        image[sr][sc] = color
+        while queue:
+            cr, cc = queue.popleft()
+            neighbors = [[1,0],[-1,0],[0,1],[0,-1]]
+            # check valid neighbors and mark them as color and add to queue
+            for ir, ic in neighbors:
+                nr, nc = cr + ir, cc + ic
+                if nr >= 0 and nr < rows and nc >= 0 and nc < cols and image[nr][nc] == originalColor:
+                    # change color (mark as visited)
+                    image[nr][nc] = color
+                    # add to queue so we can mark neighbors of it
+                    queue.append((nr,nc))
+
+        return image
