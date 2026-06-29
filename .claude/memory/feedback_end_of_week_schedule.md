@@ -16,4 +16,4 @@ At the end of the last session of the week (or whenever the user closes out a we
 4. Daily cap: 4 warmup slots + 1 active block = 5 problems max per day
 5. Sunday = system design sprint (no active block)
 
-Commit and push the new schedule file along with the rest of the end-of-session commit.
+At the same time, archive the current week's schedule by moving it to `docs/foundations/schedules/archive/`. Both happen together — archive current, generate next — in a single commit before pushing.
