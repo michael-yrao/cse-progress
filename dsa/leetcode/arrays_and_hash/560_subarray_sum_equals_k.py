@@ -19,6 +19,7 @@ Constraints:
     -1000 <= nums[i] <= 1000
     -107 <= k <= 107
 """
+from collections import defaultdict
 from typing import List
 
 class Solution:
@@ -48,5 +49,36 @@ class Solution:
                 result+=prefixSumMap[prefix_i]
             # since we just saw runningSum, we store it in the map
             prefixSumMap[runningSum] = prefixSumMap.get(runningSum,0) + 1
+        
+        return result
+
+    def subarraySum_20260628(self, nums: List[int], k: int) -> int:
+        # subarray sum is always some form of prefix sum
+        # prefix[j] - prefix[i] = k
+        # issue here is that we are trying to find total number of subarrays that sum up to k
+        # so that means to find all instances of i and j, we need O(n^2)
+        # we can do better by doing a form of two sum where we look for the diff in the map
+        # in this instance, prefix[i] is the diff inside the map
+        # we will do diff -> count since we are doing how many times we've seen this number
+        # we will insert 0 -> 1 in case prefix[i] = prefix[j] - k and prefix[j] = k
+        
+        result = 0
+
+        diffMap = defaultdict(int)
+
+        diffMap[0] = 1
+
+        # this is our prefix[j]
+        runningSum = 0
+
+        for n in nums:
+            # increment runningSum with current value
+            runningSum+=n
+            # two sum formula
+            diff = runningSum - k
+            if diff in diffMap:
+                result+=diffMap[diff]
+            # add runningSum to map
+            diffMap[runningSum]+=1
         
         return result

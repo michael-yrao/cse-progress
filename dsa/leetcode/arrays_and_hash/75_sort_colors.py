@@ -42,7 +42,7 @@ class Solution:
         for color in range(3):
             while countMap.get(color):
                 nums[index] = color
-                countMap[color] = countMap.get(color) - 1
+                countMap[color] = countMap.get(color) - 1 # type: ignore
                 index+=1
 
     def sortColors(self, nums: List[int]) -> None:
@@ -81,3 +81,35 @@ class Solution:
                 right-=1
                 increment-=1
             increment+=1
+            
+    def sortColors_20260628_DutchFlag(self, nums: List[int]) -> None:
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+        # three pointers
+        # left pointer to track where to put 0s
+        # right pointer to track where to put 2s
+        # mid pointer to traverse and read
+        # whatever we put in right is finalized since there's no need to look at the 2s at the end
+        # so end the loop when i goes past r
+        # we 
+
+        def swap(l,r):
+            tmp = nums[l]
+            nums[l] = nums[r]
+            nums[r] = tmp
+        
+        l, r = 0, len(nums) - 1
+        i = 0
+        # no reason to go past r
+        while i <= r:
+            if nums[i] == 0:
+                swap(l,i)
+                l+=1
+            if nums[i] == 2:
+                swap(i,r)
+                r-=1
+                # doing this to prevent incrementing to re-check swapped value
+                i-=1
+            i+=1
+        
