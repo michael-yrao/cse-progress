@@ -170,3 +170,25 @@ class Solution:
         remove(currentNode, -1)
 
         return dummyNode.next
+
+    def removeNthFromEnd_20260628(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
+        # requirement for today is to do this recursively
+        # so we need to know where we are at each step
+        # so we will pass it to the caller in recursion
+        indexFromEnd = 0
+        def remove(node):
+            nonlocal indexFromEnd
+            if not node:
+                return None
+            
+            node.next = remove(node.next)
+            indexFromEnd+=1
+            # if equal, skip node
+            if indexFromEnd == n:
+                return node.next
+            return node
+        
+        dummy = ListNode(-1)
+        dummy.next = head
+        remove(dummy)
+        return dummy.next
