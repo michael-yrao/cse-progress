@@ -1,5 +1,9 @@
 # cse-review
 
+## Agent Memory
+
+Persistent behavioral preferences are stored in `.claude/memory/`. At the start of each session, read `.claude/memory/MEMORY.md` for the index, then load any files relevant to the current task.
+
 ## LeetCode Review Workflow
 
 After any problem discussion (solving, reviewing, or mentioning a problem by number or name):
