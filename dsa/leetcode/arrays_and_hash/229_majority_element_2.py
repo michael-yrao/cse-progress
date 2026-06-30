@@ -121,6 +121,33 @@ class Solution:
                 result.append(n)
         
         return result
+    def majorityElement_20260629(self, nums: List[int]) -> List[int]:
+        # key thing to note here is that there can never be more than 2 elements appearing more than n/3 times
+        # so we keep a map of size 2
+        # if we ever go beyond size 2, we decrement until the freq hits 0
+        # then we remove them from the map
+
+        freqMap = defaultdict(int)
+
+        for n in nums:
+            freqMap[n]+=1
+            # if larger than size 2, decrement by 1 for all
+            if len(freqMap) > 2:
+                for key in freqMap:
+                    freqMap[key]-=1
+                # we can't modify a map while traversing it
+                # so use a set or a list and remove the element with 0 value
+                for key in set(freqMap):
+                    if freqMap[key] == 0:
+                        freqMap.pop(key)
+        
+        # now that we have two max, we need to check if they actually were the biggest
+        minSize = len(nums)//3
+        result = []
+        for key in freqMap:
+            if nums.count(key) > minSize:
+                result.append(key)
+        return result
 
     
 class UnitTest(unittest.TestCase):

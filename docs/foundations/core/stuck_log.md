@@ -19,6 +19,11 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🟡 229. Majority Element II — Jun 16, 2026
+**Sticking point**: Can't use map values directly for the final count check — decrementing during the voting phase means the map is dirty; need a fresh recount over the original array to confirm candidates actually appear > n/3 times.
+
+---
+
 ## 🟡 75. Sort Colors (Dutch Flag) — Jun 28, 2026
 **Sticking point**: Missed that everything between `l` and `i` is always 1s — that invariant is why swapping from `l` never brings back a 2, and why `i` doesn't need to re-examine after a 0-swap.
 
