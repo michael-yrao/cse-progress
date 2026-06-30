@@ -258,3 +258,47 @@ class Solution:
             return True
 
         return dfs(0, -1) and connectedNodes == n
+
+    def validTree_20260629(self, n: int, edges: List[List[int]]) -> bool:
+        # classic union find use case
+        # union find needs parent map and rank map
+        # parent map initially maps each node as its own parent
+        # rank map initially maps each node's rank as 0
+        # we also need to consider graph theory where a tree with n nodes must have n - 1 edges
+
+        if len(edges) + 1 != n:
+            return False 
+        
+        rankMap, parentMap = {}, {}
+
+        for i in range(n):
+            rankMap[i] = 0
+            parentMap[i] = i
+        
+        def findParent(node):
+            if parentMap[node] == node:
+                return parentMap[node]
+            parentMap[node] = findParent(parentMap[node])
+            return parentMap[node]
+        
+        def union(node1, node2):
+            node1Root = findParent(node1)
+            node2Root = findParent(node2)
+            if node1Root == node2Root:
+                return False
+            if rankMap[node1Root] > rankMap[node2Root]:
+                parentMap[node2Root] = node1Root
+            elif rankMap[node1Root] < rankMap[node2Root]:
+                parentMap[node1Root] = node2Root
+            else:
+                # pick at random and promote
+                parentMap[node2Root] = node1Root
+                rankMap[node1Root]+=1
+            return True
+        
+        # go through each edge and check union result
+        for node1, node2 in edges:
+            if not union(node1, node2):
+                return False
+        
+        return True
