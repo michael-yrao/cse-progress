@@ -78,3 +78,17 @@ class Solution:
                 maxLength = max(maxLength, currentLength)
         
         return maxLength
+    def longestConsecutive_20260629(self, nums: List[int]) -> int:
+        # key to this problem is that we don't want to do anything unless we are start of the sequence
+        # convert nums to a set to take care of duplicates
+        # then go through the set and only do something if we are start of sequence
+        numSet = set(nums)
+        maxConsecutive = 0
+        for n in numSet:
+            if n - 1 not in numSet:
+                counter = 1
+                while n + counter in numSet:
+                    counter+=1
+                maxConsecutive = max(maxConsecutive, counter)
+        
+        return maxConsecutive
