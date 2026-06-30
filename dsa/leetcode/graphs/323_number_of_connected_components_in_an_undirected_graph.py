@@ -146,3 +146,41 @@ class Solution:
                 componentCounter+=1
         
         return componentCounter
+    
+    def countComponents_20260629(self, n: int, edges: List[List[int]]) -> int:
+        # for this problem using the union find approach
+        # we want to keep track of number of components
+        # to start, we have n and as we successfully union, we subtract
+
+        numberOfComponents = n
+
+        rankMap, parentMap = {}, {}
+
+        for i in range(n):
+            rankMap[i] = i
+            parentMap[i] = i
+        
+        def find(node):
+            if parentMap[node] != node:
+                parentMap[node] = find(parentMap[node])
+            return parentMap[node]
+        
+        def union(node1, node2):
+            n1r = find(node1)
+            n2r = find(node2)
+            if n1r == n2r:
+                return False
+            if rankMap[n1r] > rankMap[n2r]:
+                parentMap[n2r] = n1r
+            elif rankMap[n1r] < rankMap[n2r]:
+                parentMap[n1r] = n2r
+            else:
+                parentMap[n2r] = n1r
+                rankMap[n1r]+=1
+            return True
+        
+        for n1, n2 in edges:
+            if union(n1,n2):
+                numberOfComponents-=1
+        
+        return numberOfComponents
