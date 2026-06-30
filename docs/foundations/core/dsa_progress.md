@@ -30,11 +30,11 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/core/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **81** problems &nbsp;·&nbsp; **91** solutions &nbsp;·&nbsp; **228** attempts
+> **81** problems &nbsp;·&nbsp; **91** solutions &nbsp;·&nbsp; **229** attempts
 
 | | 🏆 Retired | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|
-| **Solutions** | 0 | 63 | 19 | 9 |
+| **Solutions** | 0 | 64 | 18 | 9 |
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|---|
@@ -77,7 +77,7 @@ Notes for future agents:
 | Medium | [130. Surrounded Regions (BFS)](https://leetcode.com/problems/surrounded-regions/) | 🟢 | 1 | 2026-07-20 | 2026-06-20 | 2026-06-14, 2026-06-20 |
 | Medium | [261. Graph Valid Tree (Union-Find)](https://leetcode.com/problems/graph-valid-tree/) | 🟡 | 0 | 2026-06-29 | 2026-06-19 | 2026-06-19, 2026-06-16 |
 | Medium | [2300. Successful Pairs of Spells and Potions](https://leetcode.com/problems/successful-pairs-of-spells-and-potions/) | 🟢 | 1 | 2026-07-19 | 2026-06-19 | 2026-05-03, 2026-06-12, 2026-06-19 |
-| Medium | [323. Number of Connected Components (Union-Find)](https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/) | 🟢 | 1 | 2026-07-16 | 2026-06-16 | 2026-06-19, 2026-06-16 |
+| Medium | [323. Number of Connected Components (Union-Find)](https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/) | 🟢 | 1 | 2026-07-19 | 2026-06-19 | 2026-06-19, 2026-06-16 |
 | Medium | [1448. Count Good Nodes in Binary Tree](https://leetcode.com/problems/count-good-nodes-in-binary-tree/) | 🟢 | 1 | 2026-07-18 | 2026-06-18 | 2026-05-15, 2026-06-18 |
 | Medium | [695. Max Area Of Island (DFS)](https://leetcode.com/problems/max-area-of-island/) | 🟢 | 1 | 2026-07-17 | 2026-06-17 | 2026-06-01, 2026-06-17 |
 | Easy | [14. Longest Common Prefix](https://leetcode.com/problems/longest-common-prefix/) | 🟢 | 1 | 2026-07-15 | 2026-06-15 | 2026-01-03, 2026-03-27, 2026-06-05, 2026-06-15 |
@@ -116,7 +116,7 @@ Notes for future agents:
 | Medium | [424. Longest Repeating Character Replacement](https://leetcode.com/problems/longest-repeating-character-replacement/) | 🔴 | 0 | 2026-04-21 | 2026-04-19 | 2026-04-19 |
 | Medium | [3. Longest Substring Without Repeating Characters](https://leetcode.com/problems/longest-substring-without-repeating-characters/) | 🟢 | 1 | 2026-05-17 | 2026-04-17 | 2026-04-17 |
 | Medium | [122. Best Time to Buy and Sell Stock II](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/) | 🟢 | 1 | 2026-05-17 | 2026-04-17 | 2026-01-28, 2026-04-17 |
-| Hard | [42. Trapping Rain Water](https://leetcode.com/problems/trapping-rain-water/) | 🔴 | 0 | 2026-04-17 | 2026-04-15 | 2026-04-15 |
+| Hard | [42. Trapping Rain Water](https://leetcode.com/problems/trapping-rain-water/) | 🟡 | 0 | 2026-06-26 | 2026-06-16 | 2026-04-15, 2026-06-16 |
 | Medium | [11. Container With Most Water](https://leetcode.com/problems/container-with-most-water/) | 🟢 | 1 | 2026-05-14 | 2026-04-14 | 2026-01-31, 2026-04-14 |
 | Medium | [238. Product of Array Except Self](https://leetcode.com/problems/product-of-array-except-self/) | 🟢 | 1 | 2026-05-13 | 2026-04-13 | 2026-01-24, 2026-04-13 |
 | Easy | [1768. Merge Strings Alternately](https://leetcode.com/problems/merge-strings-alternately/) | 🟢 | 1 | 2026-05-10 | 2026-04-10 | 2026-01-21, 2026-04-10 |

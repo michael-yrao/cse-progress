@@ -96,4 +96,34 @@ class Solution:
                 # add (potential water - height[i]) to result
                 res += rightMax - height[r]
         return res
-    
+
+    def trap_20260629(self, height: List[int]) -> int:
+        # water at each point is limited by the walls on either side, so min of left/right
+        # we also need to account for current index and how much elevation there is
+        # so water at each index is min(leftWall,rightWall) - height[i]
+        # so at each index, we need to keep track of left and right wall
+        # height    = [0,1,0,2,1,0,1,3,2,1,2,1]
+        # leftWall  = [0,1,1,2,2,2,2,3,3,3,3,3]
+        # rightWall = [3,3,3,3,3,3,3,2,2,2,1,0]
+        # total     = [0,0,1,0,1,2,1,0,0,1,0,0]
+
+        leftWall = [0] * len(height)
+        rightWall = [0] * len(height)
+        curMaxHeight = height[0]
+        for i in range(1,len(height)):
+            leftWall[i] = curMaxHeight
+            curMaxHeight = max(height[i],curMaxHeight)
+        
+        curMaxHeight = height[len(height)-1]
+        for i in range(len(height)-2,-1,-1):
+            rightWall[i] = curMaxHeight
+            curMaxHeight = max(height[i],curMaxHeight)
+        
+        totalWater = 0
+
+        for i in range(len(height)):
+            water = min(rightWall[i],leftWall[i]) - height[i]
+            if water > 0:
+                totalWater+=water
+
+        return totalWater

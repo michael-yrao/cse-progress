@@ -19,6 +19,11 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🟡 42. Trapping Rain Water — Jun 16, 2026
+**Sticking point**: Logic was right (leftMax/rightMax prefix arrays) — the bug was mixing init styles: pre-sized the walls with `[0]*n` but then used `.append()`, which appends past the zeros instead of assigning by index. Pick one: index-assign into a pre-sized list, or append into an empty one.
+
+---
+
 ## 🟡 261. Graph Valid Tree (Union-Find) — Jun 16, 2026
 **Sticking point**: Forgot the `len(edges) != n - 1` guard — Union-Find only catches cycles, not disconnected nodes; the edge count check is what rules out both at once.
 
