@@ -75,6 +75,18 @@ class Solution:
             digits[i] = 0
         return [1] + digits
 
+    def plusOne_20260701(self, digits: List[int]) -> List[int]:
+        # adding one is really easy, except for when we have to carry forward
+        # so only one real case here
+        # start from the end, if not equal to 9. add 1, return
+        # if equal, set to 0 and continue
+
+        for i in range(len(digits)-1,-1,-1):
+            if digits[i] != 9:
+                digits[i]+=1
+                return digits
+            digits[i] = 0
+        return [1] + digits
 
 class UnitTest(unittest.TestCase):
     test1 = [4,3,2,1]
