@@ -56,3 +56,18 @@ class Solution:
             else:
                 r = mid
         return nums[l]
+    def findMin_20260701(self, nums: List[int]) -> int:
+        # rotated array, find start of rotation
+        # so min boundary, then we do exact search on both sides
+
+        l, r = 0, len(nums)-1
+
+        while l < r:
+            m = (l+r)//2
+            # start is up top
+            if nums[m] > nums[r]:
+                l = m + 1
+            else:
+                r = m
+        
+        return nums[l]

@@ -30,7 +30,7 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/core/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **82** problems &nbsp;·&nbsp; **92** solutions &nbsp;·&nbsp; **238** attempts
+> **82** problems &nbsp;·&nbsp; **92** solutions &nbsp;·&nbsp; **239** attempts
 
 | | 🏆 Retired | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|
@@ -41,6 +41,7 @@ Notes for future agents:
 | Easy | [66. Plus One](https://leetcode.com/problems/plus-one/) | 🟢 | 1 | 2026-07-31 | 2026-07-01 | 2026-01-02, 2026-03-25, 2026-06-22, 2026-07-01 |
 | Easy | [141. Linked List Cycle](https://leetcode.com/problems/linked-list-cycle/) | 🟡 | 0 | 2026-07-11 | 2026-07-01 | 2026-04-26, 2026-07-01 |
 | Medium | [684. Redundant Connection (Union-Find)](https://leetcode.com/problems/redundant-connection/) | 🟢 | 1 | 2026-07-31 | 2026-07-01 | 2026-06-18, 2026-06-22, 2026-07-01 |
+| Medium | [153. Find Minimum in Rotated Sorted Array](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/) | 🟢 | 2 | 2026-08-30 | 2026-07-01 | 2026-04-21, 2026-07-01 |
 | Medium | [621. Task Scheduler](https://leetcode.com/problems/task-scheduler/) | 🔴 | 0 | 2026-07-02 | 2026-06-30 | 2026-06-30 |
 | Medium | [19. Remove Nth Node From End of List (Iterative)](https://leetcode.com/problems/remove-nth-node-from-end-of-list/) | 🟡 | 0 | 2026-07-10 | 2026-06-30 | 2026-04-29, 2026-05-18, 2026-06-30 |
 | Medium | [98. Validate Binary Search Tree](https://leetcode.com/problems/validate-binary-search-tree/) | 🔴 | 0 | 2026-07-02 | 2026-06-30 | 2026-05-16, 2026-05-20, 2026-06-30 |
@@ -113,7 +114,6 @@ Notes for future agents:
 | Easy | [206. Reverse Linked List (Recursion)](https://leetcode.com/problems/reverse-linked-list/) | 🔴 | 0 | 2026-04-26 | 2026-04-24 | 2026-04-24 |
 | Medium | [74. Search a 2D Matrix](https://leetcode.com/problems/search-a-2d-matrix/) | 🔴 | 0 | 2026-04-24 | 2026-04-22 | 2026-04-22 |
 | Medium | [875. Koko Eating Bananas](https://leetcode.com/problems/koko-eating-bananas/) | 🔴 | 0 | 2026-04-24 | 2026-04-22 | 2026-04-22 |
-| Medium | [153. Find Minimum in Rotated Sorted Array](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/) | 🟢 | 1 | 2026-05-21 | 2026-04-21 | 2026-04-21 |
 | Medium | [567. Permutation in String](https://leetcode.com/problems/permutation-in-string/) | 🟢 | 1 | 2026-05-20 | 2026-04-20 | 2026-04-20 |
 | Medium | [424. Longest Repeating Character Replacement](https://leetcode.com/problems/longest-repeating-character-replacement/) | 🔴 | 0 | 2026-04-21 | 2026-04-19 | 2026-04-19 |
 | Medium | [3. Longest Substring Without Repeating Characters](https://leetcode.com/problems/longest-substring-without-repeating-characters/) | 🟢 | 1 | 2026-05-17 | 2026-04-17 | 2026-04-17 |
