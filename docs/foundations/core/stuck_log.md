@@ -19,6 +19,41 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🔴 621. Task Scheduler — Jun 30, 2026
+**Topic**: Greedy / heap / frequency map (new problem)
+
+### Where did I get stuck?
+No idea how to start until we discussed. Once given "greedy + frequency map," the map + max-heap was reachable, but the real block was **how the cooldown `n` enters the algorithm** — didn't see that you process time in windows of `n+1` slots.
+
+### Core Realization
+The most frequent task is the bottleneck, so greedily schedule the highest-count tasks first. `n` is tracked *structurally*, not per-task: pop up to `n+1` tasks per cycle and hold them aside (so none can repeat until the cycle ends — that IS the cooldown), then push survivors back. `n+1` = one full repeating unit (the task + its `n`-slot gap = room for `n+1` distinct tasks). Two bugs to remember: (1) counts are stored negated in the max-heap, so re-add survivors when counter `< 0`, not `> 0`; (2) the final cycle must not count trailing idles — early-return when the heap empties and there are no leftovers.
+
+### Code Snippet
+```python
+freqMap = Counter(tasks)
+maxHeap = [(-v, k) for k, v in freqMap.items()]
+heapq.heapify(maxHeap)
+result = 0
+while maxHeap:
+    leftover = []
+    for _ in range(n + 1):
+        if maxHeap:
+            cnt, task = heapq.heappop(maxHeap)
+            cnt += 1                    # decrement (negated)
+            result += 1
+            if cnt < 0:
+                leftover.append((cnt, task))
+        else:
+            if not leftover:            # nothing left → no trailing idles
+                return result
+            result += 1                 # idle
+    for item in leftover:
+        heapq.heappush(maxHeap, item)
+return result
+```
+
+---
+
 ## 🟡 36. Valid Sudoku — Jun 30, 2026 (conceptual/no-code)
 **Sticking point**: Over-complicated the box tracking with `row%3, col%3` — only the box id `(row//3, col//3)` is needed to key each sub-box's set; intra-box position is irrelevant to the duplicate check.
 

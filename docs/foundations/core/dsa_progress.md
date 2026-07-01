@@ -30,14 +30,15 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/core/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **81** problems &nbsp;·&nbsp; **91** solutions &nbsp;·&nbsp; **234** attempts
+> **82** problems &nbsp;·&nbsp; **92** solutions &nbsp;·&nbsp; **235** attempts
 
 | | 🏆 Retired | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|
-| **Solutions** | 0 | 60 | 22 | 9 |
+| **Solutions** | 0 | 60 | 22 | 10 |
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|---|
+| Medium | [621. Task Scheduler](https://leetcode.com/problems/task-scheduler/) | 🔴 | 0 | 2026-07-02 | 2026-06-30 | 2026-06-30 |
 | Medium | [19. Remove Nth Node From End of List (Iterative)](https://leetcode.com/problems/remove-nth-node-from-end-of-list/) | 🟡 | 0 | 2026-07-10 | 2026-06-30 | 2026-04-29, 2026-05-18, 2026-06-30 |
 | Medium | [98. Validate Binary Search Tree](https://leetcode.com/problems/validate-binary-search-tree/) | 🔴 | 0 | 2026-07-02 | 2026-06-30 | 2026-05-16, 2026-05-20, 2026-06-30 |
 | Easy | [20. Valid Parentheses](https://leetcode.com/problems/valid-parentheses/) | 🟡 | 0 | 2026-07-10 | 2026-06-30 | 2026-05-19, 2026-05-21, 2026-06-30 |
