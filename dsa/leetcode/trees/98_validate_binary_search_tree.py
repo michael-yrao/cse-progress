@@ -92,3 +92,39 @@ class Solution:
             return dfs(root.right)
         
         return dfs(root)
+    def isValidBST_20260630(self, root: Optional[TreeNode]) -> bool:
+        # inorder traversal == BST
+        # but we need to create the list, check if data is unique,
+        # and check if sorted == unsorted, which makes this an O(nlogn) approach
+        # we can do better, thinking about the property of BST
+        # going from root, left is always smaller, right is always bigger
+        # we can still do an inorder traversal but we can check while we traverse
+        # so if we go left, caller must be bigger
+        # if we go right, caller must be smaller
+        # starting at root, any number goes, so we just put -math.inf
+
+        callerValue = -math.inf
+
+        def inorderDFS(node):
+            nonlocal callerValue
+            if not node:
+                return True
+            
+            # inorder, left, operation, right
+
+            # if false, we need to return immediately, otherwise continue
+            if not inorderDFS(node.left):
+                return False
+            
+            # when we are here, it means we returned from left side, so we should be bigger than callerValue
+            if node.val <= callerValue:
+                return False
+            # otherwise, we are good and we update callerValue
+            callerValue = node.val
+
+            if not inorderDFS(node.right):
+                return False
+
+            return True
+
+        return inorderDFS(root)

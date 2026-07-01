@@ -19,6 +19,33 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🔴 98. Validate Binary Search Tree — Jun 30, 2026
+**Topic**: Trees / inorder traversal
+
+### Where did I get stuck?
+First reached for the "build the inorder list, then check sorted + unique" approach — which is O(n log n) and had several bugs (appending `dfs()` return values, appending nodes not values, `set != list`, `list.sorted()`). Even after recognizing inorder-of-valid-BST is already sorted, the hard part was converting the "check as you traverse" idea into code: carrying a running `prevValue` / `callerValue` across the recursion and knowing the comparison happens *between* the left recursion and the right recursion.
+
+### Core Realization
+You don't need to store or sort anything. Do a normal inorder DFS, but keep a `nonlocal` running value of the last node visited (init `-inf`). At each node — *after* recursing left, *before* recursing right — assert `node.val > prevValue`, then update it. The left recursion must fully pass before you check the current node; a single failure short-circuits back up. This is the O(n), O(h)-space version.
+
+### Code Snippet
+```python
+callerValue = -math.inf
+def inorderDFS(node):
+    nonlocal callerValue
+    if not node:
+        return True
+    if not inorderDFS(node.left):   # left first
+        return False
+    if node.val <= callerValue:     # then check current
+        return False
+    callerValue = node.val
+    return inorderDFS(node.right)    # then right
+return inorderDFS(root)
+```
+
+---
+
 ## 🟡 19. Remove Nth Node From End of List (Iterative) — Jun 30, 2026
 **Sticking point**: Built a dummy node but then traversed from `head`, making the head's predecessor (the dummy) unreachable — so removing the head (n == length) silently failed. Fix: start the walk from `dummy` with counter at -1.
 
