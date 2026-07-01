@@ -19,6 +19,11 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🟡 19. Remove Nth Node From End of List (Iterative) — Jun 30, 2026
+**Sticking point**: Built a dummy node but then traversed from `head`, making the head's predecessor (the dummy) unreachable — so removing the head (n == length) silently failed. Fix: start the walk from `dummy` with counter at -1.
+
+---
+
 ## 🟡 42. Trapping Rain Water — Jun 29, 2026
 **Sticking point**: Logic was right (leftMax/rightMax prefix arrays) — the bug was mixing init styles: pre-sized the walls with `[0]*n` but then used `.append()`, which appends past the zeros instead of assigning by index. Pick one: index-assign into a pre-sized list, or append into an empty one.
 
