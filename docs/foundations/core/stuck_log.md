@@ -19,6 +19,11 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🟡 20. Valid Parentheses — Jun 30, 2026
+**Sticking point**: Missed the empty-stack guard before popping — a closing bracket that arrives with an empty stack has nothing to match and must return False immediately (also catches the "more closers than openers" case).
+
+---
+
 ## 🔴 98. Validate Binary Search Tree — Jun 30, 2026
 **Topic**: Trees / inorder traversal
 
