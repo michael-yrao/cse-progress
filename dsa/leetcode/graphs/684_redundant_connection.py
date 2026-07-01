@@ -143,3 +143,40 @@ class Solution:
                 return [node1, node2]
         
         return []
+    def findRedundantConnection_20260701_UF(self, edges: List[List[int]]) -> List[int]:
+        # so we know this is a tree with one extra edge
+        # so len(edges) = n
+        # we also look to start our edges from 1
+        n = len(edges)
+        parentMap, rankMap = {}, {}
+        # start from 1
+        for i in range(1,n+1):
+            parentMap[i] = i
+            rankMap[i] = 0
+        
+        def find(node):
+            if parentMap[node] != node:
+                parentMap[node] = find(parentMap[node])
+            return parentMap[node]
+
+        def union(n1,n2):
+            n1r = find(n1)
+            n2r = find(n2)
+            if n1r == n2r:
+                return False
+            if rankMap[n1r] > rankMap[n2r]:
+                parentMap[n2r] = n1r
+            elif rankMap[n1r] < rankMap[n2r]:
+                parentMap[n1r] = n2r
+            else:
+                # pick at random
+                parentMap[n2r] = n1r
+                rankMap[n1r]+=1
+            return True
+        
+        # now we go through each node and find which one unsuccessfully unions without giving us a cycle
+        for n1, n2 in edges:
+            if not union(n1,n2):
+                return [n1,n2]
+        
+        return None # type: ignore
