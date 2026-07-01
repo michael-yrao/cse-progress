@@ -30,15 +30,16 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/core/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **82** problems &nbsp;·&nbsp; **92** solutions &nbsp;·&nbsp; **236** attempts
+> **82** problems &nbsp;·&nbsp; **92** solutions &nbsp;·&nbsp; **237** attempts
 
 | | 🏆 Retired | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|
-| **Solutions** | 0 | 61 | 21 | 10 |
+| **Solutions** | 0 | 60 | 22 | 10 |
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|---|
 | Easy | [66. Plus One](https://leetcode.com/problems/plus-one/) | 🟢 | 1 | 2026-07-31 | 2026-07-01 | 2026-01-02, 2026-03-25, 2026-06-22, 2026-07-01 |
+| Easy | [141. Linked List Cycle](https://leetcode.com/problems/linked-list-cycle/) | 🟡 | 0 | 2026-07-11 | 2026-07-01 | 2026-04-26, 2026-07-01 |
 | Medium | [621. Task Scheduler](https://leetcode.com/problems/task-scheduler/) | 🔴 | 0 | 2026-07-02 | 2026-06-30 | 2026-06-30 |
 | Medium | [19. Remove Nth Node From End of List (Iterative)](https://leetcode.com/problems/remove-nth-node-from-end-of-list/) | 🟡 | 0 | 2026-07-10 | 2026-06-30 | 2026-04-29, 2026-05-18, 2026-06-30 |
 | Medium | [98. Validate Binary Search Tree](https://leetcode.com/problems/validate-binary-search-tree/) | 🔴 | 0 | 2026-07-02 | 2026-06-30 | 2026-05-16, 2026-05-20, 2026-06-30 |
@@ -108,7 +109,6 @@ Notes for future agents:
 | Hard | [1216. Valid Palindrome III (1DP)](https://leetcode.com/problems/valid-palindrome-iii/) | 🔴 | 0 | 2026-06-02 | 2026-05-31 | 2026-05-31 |
 | Medium | [15. 3Sum](https://leetcode.com/problems/3sum/) | 🟢 | 1 | 2026-06-29 | 2026-05-30 | 2026-01-19, 2026-04-07, 2026-05-30 |
 | Medium | [347. Top K Frequent Elements](https://leetcode.com/problems/top-k-frequent-elements/) | 🟢 | 1 | 2026-06-29 | 2026-05-30 | 2026-01-11, 2026-04-09, 2026-05-30 |
-| Easy | [141. Linked List Cycle](https://leetcode.com/problems/linked-list-cycle/) | 🟢 | 1 | 2026-05-26 | 2026-04-26 | 2026-04-26 |
 | Medium | [143. Reorder List](https://leetcode.com/problems/reorder-list/) | 🔴 | 0 | 2026-04-28 | 2026-04-26 | 2026-04-26 |
 | Easy | [206. Reverse Linked List (Recursion)](https://leetcode.com/problems/reverse-linked-list/) | 🔴 | 0 | 2026-04-26 | 2026-04-24 | 2026-04-24 |
 | Medium | [74. Search a 2D Matrix](https://leetcode.com/problems/search-a-2d-matrix/) | 🔴 | 0 | 2026-04-24 | 2026-04-22 | 2026-04-22 |
