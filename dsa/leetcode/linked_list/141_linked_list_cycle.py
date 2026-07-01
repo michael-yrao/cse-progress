@@ -54,3 +54,21 @@ class Solution:
                 return True
             
         return False
+    def hasCycle_20260701(self, head: Optional[ListNode]) -> bool:
+        # floyd's cycle detection algorithm
+        # slow goes one node at a time
+        # fast goes two nodes at a time
+        # if slow == fast at any point, return True
+        # if not true, fast will eventually hit None, thus we return False
+        slow = head
+        fast = head
+
+        while fast:
+            # if we hit the end, no cycle, return False
+            if not fast.next:
+                return False
+            slow = slow.next
+            fast = fast.next.next
+            if slow == fast:
+                return True
+        return False
