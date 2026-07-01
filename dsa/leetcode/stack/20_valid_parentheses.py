@@ -93,3 +93,23 @@ class Solution:
             if char in openToCloseMap:
                 stack.append(char)
         return not stack
+    def isValid_20260630(self, s: str) -> bool:
+        # use a map of open -> close brackets
+        # use a stack, when we see a key, we push, when we see a value not in the key, we peek and pop
+        # actually, that makes it easier to push when not in key especially since we are given s is only parentheses
+        parenthesesMap = {')':'(', '}':'{', ']':'['}
+
+        stack = []
+
+        for char in s:
+            # if open parentheses, put in stack
+            if char not in parenthesesMap:
+                stack.append(char)
+            else:
+                # if closed parentheses, check if top of the stack is the matching open parentheses
+                if not stack or stack[-1] != parenthesesMap[char]:
+                    return False
+                # if it is, pop and continue
+                stack.pop()
+        
+        return len(stack) == 0
