@@ -171,7 +171,7 @@ class Solution:
 
         return dummyNode.next
 
-    def removeNthFromEnd_20260628(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
+    def removeNthFromEnd_20260628_Recursive(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
         # requirement for today is to do this recursively
         # so we need to know where we are at each step
         # so we will pass it to the caller in recursion
@@ -191,4 +191,29 @@ class Solution:
         dummy = ListNode(-1)
         dummy.next = head
         remove(dummy)
+        return dummy.next
+    def removeNthFromEnd_20260630_Iterative(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
+        # iterative
+        # if doing iterative, we need to find the element in front of the one we need to set the next to
+        # so that element is len - n - 2
+
+        node = head
+        length = 0
+        while node:
+            length+=1
+            node = node.next
+        
+        dummy = ListNode(-1)
+        dummy.next = head
+
+        node = dummy
+        counter = -1
+        while node:
+            if counter == length - n - 1:
+                # update next to skip next element
+                if node.next:
+                    node.next = node.next.next
+                    break
+            node = node.next
+            counter+=1
         return dummy.next
