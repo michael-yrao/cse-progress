@@ -92,7 +92,7 @@ class Solution:
             for _ in range(len(tasksLeftOver)):
                 heapq.heappush(maxHeap, tasksLeftOver.pop())
         return result
-    
+    # O(maxHeap * k) solution
     def leastInterval_20260701(self, tasks: List[str], n: int) -> int:
         # from the problem, we know that between two tasks of the same type
         # they must have n space in between, so there must be n + 1 tasks done in total
@@ -130,5 +130,46 @@ class Solution:
             # add taskSet back to heap
             for task in taskSet:
                 heapq.heappush(maxHeap, task)
+        
+        return interval
+    # O(n) solution
+    def leastInterval_20260701_v2(self, tasks: List[str], n: int) -> int:
+        # from the problem, we know that between two tasks of the same type
+        # they must have n space in between, so there must be n + 1 tasks done in total
+        # before the next of the same task can run again
+        # we also know the most frequent task is a bottleneck, so we should prioritize that
+        # so frequency map and max heap
+
+        freqMap = Counter(tasks)
+        interval = 0
+        maxDistinctTasks = n + 1
+        maxHeap = []
+
+        for key,value in freqMap.items():
+            heapq.heappush(maxHeap,(-value,key)) # type: ignore
+
+        # while there are still tasks to be done
+        while maxHeap:
+            # check if we have distinct tasks to do, if not, just do however many tasks are available in maxHeap
+            todoTasks = min(len(maxHeap),maxDistinctTasks)
+            # after we finish doing these tasks, we do also need to put them back into the heap if they are not at 0
+            taskSet = set()
+            for _ in range(todoTasks):
+                # with this method, we know there are tasks to do here
+                # and don't have to consider idles here
+                currentTaskCounter, currentTask = heapq.heappop(maxHeap)
+                currentTaskCounter+=1
+                # for any tasks left over, add to set
+                if currentTaskCounter != 0:
+                    taskSet.add((currentTaskCounter, currentTask))
+            # add taskSet back to heap
+            for task in taskSet:
+                heapq.heappush(maxHeap, task)
+            # if there are tasks left, that means we needed to use the full maxDistinctTasks
+            if maxHeap:
+                interval+=maxDistinctTasks
+            else:
+            # otherwise, we only needed to do todoTasks
+                interval+=todoTasks
         
         return interval
