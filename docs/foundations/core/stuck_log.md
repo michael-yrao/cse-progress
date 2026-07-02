@@ -24,6 +24,11 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🟡 621. Task Scheduler (retry) — Jul 1, 2026
+**Sticking point**: Approach reconstructed correctly (window of n+1 + max-heap), but it's cognitively heavy to hold together and had a `for k,v in freqMap:` crash (must be `.items()`). Submitted successfully after fix.
+
+---
+
 ## 🔴 621. Task Scheduler — Jun 30, 2026
 **Topic**: Greedy / heap / frequency map (new problem)
 

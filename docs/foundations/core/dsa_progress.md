@@ -30,11 +30,11 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/core/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **82** problems &nbsp;·&nbsp; **92** solutions &nbsp;·&nbsp; **239** attempts
+> **82** problems &nbsp;·&nbsp; **92** solutions &nbsp;·&nbsp; **240** attempts
 
 | | 🏆 Retired | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|
-| **Solutions** | 0 | 61 | 21 | 10 |
+| **Solutions** | 0 | 61 | 22 | 9 |
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|---|
@@ -42,7 +42,7 @@ Notes for future agents:
 | Easy | [141. Linked List Cycle](https://leetcode.com/problems/linked-list-cycle/) | 🟡 | 0 | 2026-07-11 | 2026-07-01 | 2026-04-26, 2026-07-01 |
 | Medium | [684. Redundant Connection (Union-Find)](https://leetcode.com/problems/redundant-connection/) | 🟢 | 1 | 2026-07-31 | 2026-07-01 | 2026-06-18, 2026-06-22, 2026-07-01 |
 | Medium | [153. Find Minimum in Rotated Sorted Array](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/) | 🟢 | 2 | 2026-08-30 | 2026-07-01 | 2026-04-21, 2026-07-01 |
-| Medium | [621. Task Scheduler](https://leetcode.com/problems/task-scheduler/) | 🔴 | 0 | 2026-07-02 | 2026-06-30 | 2026-06-30 |
+| Medium | [621. Task Scheduler](https://leetcode.com/problems/task-scheduler/) | 🟡 | 0 | 2026-07-11 | 2026-07-01 | 2026-06-30, 2026-07-01 |
 | Medium | [19. Remove Nth Node From End of List (Iterative)](https://leetcode.com/problems/remove-nth-node-from-end-of-list/) | 🟡 | 0 | 2026-07-10 | 2026-06-30 | 2026-04-29, 2026-05-18, 2026-06-30 |
 | Medium | [98. Validate Binary Search Tree](https://leetcode.com/problems/validate-binary-search-tree/) | 🔴 | 0 | 2026-07-02 | 2026-06-30 | 2026-05-16, 2026-05-20, 2026-06-30 |
 | Easy | [20. Valid Parentheses](https://leetcode.com/problems/valid-parentheses/) | 🟡 | 0 | 2026-07-10 | 2026-06-30 | 2026-05-19, 2026-05-21, 2026-06-30 |

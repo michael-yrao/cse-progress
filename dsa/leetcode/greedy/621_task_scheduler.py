@@ -92,3 +92,43 @@ class Solution:
             for _ in range(len(tasksLeftOver)):
                 heapq.heappush(maxHeap, tasksLeftOver.pop())
         return result
+    
+    def leastInterval_20260701(self, tasks: List[str], n: int) -> int:
+        # from the problem, we know that between two tasks of the same type
+        # they must have n space in between, so there must be n + 1 tasks done in total
+        # before the next of the same task can run again
+        # we also know the most frequent task is a bottleneck, so we should prioritize that
+        # so frequency map and max heap
+
+        freqMap = Counter(tasks)
+        interval = 0
+        distinctTasks = n + 1
+        maxHeap = []
+
+        for key,value in freqMap.items():
+            heapq.heappush(maxHeap,(-value,key)) # type: ignore
+
+        # while there are still tasks to be done
+        while maxHeap:
+            # take out distinctTasks for us to do
+            # after we finish doing these tasks, we do also need to put them back into the heap if they are not at 0
+            taskSet = set()
+            for i in range(distinctTasks):
+                # if heap is empty and taskSet is empty, we are done and don't need to continue
+                if not maxHeap and not taskSet:
+                    return interval
+                # if we can't do any tasks
+                if maxHeap:
+                    # do the task
+                    currentTaskCounter, currentTask = heapq.heappop(maxHeap)
+                    currentTaskCounter+=1
+                # increment cpu time for the task and also increment if we had to idle
+                interval+=1
+                # for any tasks left over, add to set
+                if currentTaskCounter != 0:
+                    taskSet.add((currentTaskCounter, currentTask))
+            # add taskSet back to heap
+            for task in taskSet:
+                heapq.heappush(maxHeap, task)
+        
+        return interval
