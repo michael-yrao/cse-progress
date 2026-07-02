@@ -24,6 +24,41 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🔴 271. Encode and Decode Strings — Jul 1, 2026
+**Topic**: Arrays / strings — message framing (new problem)
+
+### Where did I get stuck?
+Didn't see the core idea (needed the "what makes decoding unambiguous?" nudge), first reached for a non-ASCII sentinel delimiter (works in Python but fragile/dodges the point), and didn't arrive at the O(n) two-index decode without heavy guidance — first pass used `split('#')` per word, which is O(n²).
+
+### Core Realization
+This is a **length-prefix framing** problem (same technique as TCP/HTTP `Content-Length`, protobuf, netstrings). Encode each string as `<len>#<str>`; the decoder reads the length first, then grabs *exactly* that many chars — so the payload can contain any character, including `#`, because the decoder never scans inside the word for boundaries. Length framing is *out-of-band* (decoupled from content), which is why it beats any delimiter scheme. O(n) decode needs a cursor + short lookahead scan, NOT `split` (split touches the whole string → O(n²) in a loop).
+
+### Code Snippet
+```python
+def encode(self, strs):
+    out = ""
+    for word in strs:
+        out += str(len(word)) + '#' + word
+    return out
+
+def decode(self, s):
+    result = []
+    j = 0
+    while j < len(s):
+        i = j
+        while s[i] != '#':      # scan only the length digits
+            i += 1
+        length = int(s[j:i])
+        wordStart = i + 1
+        wordEnd = wordStart + length
+        result.append(s[wordStart:wordEnd])
+        j = wordEnd             # jump past the whole record
+    return result
+```
+Note: it's a cursor-parse, not true two-pointer (no invariant-driven pointer choice — just lookahead + jump).
+
+---
+
 ## 🟡 621. Task Scheduler (retry) — Jul 1, 2026
 **Sticking point**: Approach reconstructed correctly (window of n+1 + max-heap), but it's cognitively heavy to hold together and had a `for k,v in freqMap:` crash (must be `.items()`). Submitted successfully after fix.
 
