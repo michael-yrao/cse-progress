@@ -1,6 +1,8 @@
 # Memory Index
 
 - [Operating principles (READ FIRST)](feedback_operating_principles.md) — north star: (1) close the loop completely & proactively, never make the user catch a gap; (2) user owns thinking + code, you coach. All other feedbacks are instances of these.
+- [Self-evaluation loop](feedback_self_evaluation.md) — on any correction, append to self_eval_log.md; meta-review weekly to promote recurring mistakes into rules
+- [Self-eval log](self_eval_log.md) — append-only running log of corrections (data for the meta-review)
 - [No code edits in cse-review](feedback_no_code_edits.md) — never edit source files; user writes all code, assistant reads/explains only
 - [Git commit checklist](feedback_git_commit.md) — always run git status before committing to catch unstaged solution files
 - [Proactive scheduling](feedback_proactive_scheduling.md) — after logging any result, scan tracker for problems due within 7 days and slot them immediately
