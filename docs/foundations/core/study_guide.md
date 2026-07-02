@@ -204,7 +204,11 @@ Tries are 3 problems and complete in roughly one week. Grouping them here keeps 
 
 ### Pace Targets
 
-- **New problems per week**: 3–4. Do not exceed 4 unless the current category is trivially easy.
+- **New problems per week (phase-dependent)**:
+  - **Now through end of August 2026** (Graphs / Heap / Tries / Sliding Window / Stack — moderate difficulty): **4–5 per week.** Front-load the easier phases to bank a ~5-week lead. Fits the 5/day cap (steady-state reviews ~3.5/day + 5 new ≈ 4.1/day).
+  - **September onward, especially the DP phases (Oct–Dec)**: **drop back to 3 per week.** DP problems are individually much harder/slower and each new one spikes the Blank rate; keep intake low so it doesn't trip the overdue-backlog rule.
+  - Rationale: at 4–5/week through August then 3/week, NC150 still finishes ~late November 2026 with far less Blank-pileup risk than holding 5/week through DP.
+- **Active-block guard**: only ~6 active-block slots exist per week (Sunday = system design). At 5 new/week, 5 slots are consumed by new problems — reserve at least 1 for re-coding Blanks. If Blank re-solves are stacking up, cut new intake that week.
 - **Max overdue backlog before pausing new intake**: 5 problems.
 - **DP phases (1D + 2D)**: Allow 4–5 weeks each. Do not compress below 4 weeks per phase.
 
