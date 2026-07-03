@@ -38,7 +38,7 @@ Notes for future agents:
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|---|
-| Easy | [703. Kth Largest Element in a Stream](https://leetcode.com/problems/kth-largest-element-in-a-stream/) | 🟢 | 1 | 2026-08-02 | 2026-07-03 | 2026-06-22, 2026-07-03 |
+| Easy | [703. Kth Largest Element in a Stream](https://leetcode.com/problems/kth-largest-element-in-a-stream/) | 🟢 | 1 | 2026-08-01 | 2026-07-02 | 2026-06-22, 2026-07-02 |
 | Medium | [98. Validate Binary Search Tree](https://leetcode.com/problems/validate-binary-search-tree/) | 🟡 | 0 | 2026-07-12 | 2026-07-02 | 2026-05-16, 2026-05-20, 2026-06-30, 2026-07-02 |
 | Medium | [323. Number of Connected Components (DFS)](https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/) | 🟡 | 0 | 2026-07-12 | 2026-07-02 | 2026-07-02 |
 | Medium | [271. Encode and Decode Strings](https://leetcode.com/problems/encode-and-decode-strings/) | 🔴 | 0 | 2026-07-03 | 2026-07-01 | 2026-07-01 |
