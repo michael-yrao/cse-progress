@@ -118,3 +118,39 @@ class Solution_20260701:
             result.append(word)
             j=wordEnd
         return result
+    
+class Solution_20260703:
+
+# this problem is the basis of Length Prefix Framing for transmitting over networks
+# we provide a length and a delimiter in front of the string so we don't read the string itself
+# and just provide based on the length in front
+
+    def encode(self, strs: List[str]) -> str:
+        transmissionString = ""
+        for string in strs:
+            lenPrefix = len(string)
+            lenPrefixFrame = str(lenPrefix) + "#" + string
+            transmissionString+=lenPrefixFrame
+        return transmissionString
+
+    def decode(self, s: str) -> List[str]:
+        # to decode, we want to read the len in front and then take that length into result
+        # first thought is to do a split on # and get the first part of the split
+        # but doing this for the entire string would give us O(n^2)
+        # so we will do it manually using pointers
+        # need two pointers, one to track start, one to track end of word
+        result = []
+
+        i = 0
+
+        while i < len(s):
+            j = i
+            while s[j] != '#':
+                j+=1
+            # now we know i -> j is the length
+            lenStr = int(s[i:j])
+            # now the word is from j+1 -> j+1+lenStr
+            word = s[j+1:j+1+lenStr]
+            result.append(word)
+            i=j+1+lenStr
+        return result
