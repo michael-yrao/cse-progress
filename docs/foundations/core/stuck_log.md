@@ -24,6 +24,11 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🟡 323. Number of Connected Components (DFS) — Jul 2, 2026
+**Sticking point**: Inside the recursive `dfs`, used the outer loop variable `i` instead of the parameter `node` (`visited.add(i)`, `adjMap[i]`) — closure capture bug that caused infinite recursion; also double-marked (outer loop + dfs) which short-circuited the count. Rule: recursive helpers act on the parameter passed in, and pick one owner for marking visited.
+
+---
+
 ## 🟡 98. Validate Binary Search Tree (retry) — Jul 2, 2026
 **Sticking point**: Named the inorder idea but didn't implement it as a true inorder initially — the running-`prevValue` check has to sit *between* the left recursion and the right recursion (left → compare current → right), not before/after both. Once the compare was placed mid-traversal it worked.
 

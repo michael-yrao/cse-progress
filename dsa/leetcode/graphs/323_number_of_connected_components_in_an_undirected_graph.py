@@ -184,3 +184,35 @@ class Solution:
                 numberOfComponents-=1
         
         return numberOfComponents
+
+    def countComponents_20260702_DFS(self, n: int, edges: List[List[int]]) -> int:
+        # DFS solution
+        # we basically want to go through the n nodes and run DFS/BFS with adjacency map
+        # we increment counter when we finish a DFS/BFS
+        # the purpose of the DFS is to mark the component as visited
+
+        visited = set()
+        adjMap = collections.defaultdict(list)
+        counter = 0
+
+        for n1, n2 in edges:
+            adjMap[n1].append(n2)
+            adjMap[n2].append(n1)
+        
+        def dfs(node):
+            # return if null or visited
+            if node in visited:
+                return 0
+            # not empty, so we want to mark as visited
+            visited.add(node)
+            # visit neighbors of this guy
+            for neighbor in adjMap[node]:
+                if neighbor not in visited:
+                    dfs(neighbor)
+            return 1
+            
+        for i in range(n):
+            if i not in visited:
+                counter+=dfs(i)
+
+        return counter
