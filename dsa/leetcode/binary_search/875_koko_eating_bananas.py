@@ -60,4 +60,29 @@ class Solution:
             # can finish in mid eating speed, keep it as a candidate
                 r = mid
         return l
+    def minEatingSpeed_20260703(self, piles: List[int], h: int) -> int:
+        # so we can assume max eating speed needed is max(piles)
+        # we are also told h >= len(piles) so don't need to worry about that case
+        # basically we are looking for the smallest eating speedy possible
+        # min boundary binary search, but what is our lower boundary
+        # i guess we can just say 1
+
+        def canFinish(m):
+            timeTaken = 0
+            for bananas in piles:
+                # eat bananas
+                timeTaken+=math.ceil(bananas/m)
+            return timeTaken <= h
+
+        def minBoundaryBinarySearch(l,r):
+            while l < r:
+                m = (l+r)//2
+                # now we determine whether m can finish in h hours
+                # m is still a possible answer, so we set r to m
+                if canFinish(m):
+                    r = m
+                else:
+                    l = m + 1
+            return l
         
+        return minBoundaryBinarySearch(1,max(piles))

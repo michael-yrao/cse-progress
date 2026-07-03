@@ -19,6 +19,11 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🟡 875. Koko Eating Bananas — Jul 3, 2026
+**Sticking point**: Binary search was correct (min-boundary), but `canFinish` counted hours per pile with a `while bananas > 0: bananas -= m` loop → O(bananas/m) per pile, TLE. Fix: hours per pile = ceil division `(bananas + m - 1) // m` in O(1) (partial pile still costs a full hour since Koko can't switch mid-hour).
+
+---
+
 ## 🟡 271. Encode and Decode Strings (retry) — Jul 3, 2026
 **Sticking point**: Two silly slips on the reconstruction — encode built `<len>#` but forgot to append the string itself; decode wrote `while j != '#'` (comparing the index int) instead of `while s[j] != '#'`. Framing logic itself was solid. Out of Blank.
 
