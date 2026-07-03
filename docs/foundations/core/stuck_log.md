@@ -19,6 +19,11 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🟡 271. Encode and Decode Strings (retry) — Jul 3, 2026
+**Sticking point**: Two silly slips on the reconstruction — encode built `<len>#` but forgot to append the string itself; decode wrote `while j != '#'` (comparing the index int) instead of `while s[j] != '#'`. Framing logic itself was solid. Out of Blank.
+
+---
+
 ## 🟡 141. Linked List Cycle — Jul 1, 2026
 **Sticking point**: Fuzzy on the loop guard for Floyd's. `while fast and fast.next` is required because `fast = fast.next.next` dereferences two levels, so both must be non-null before the jump. Fast reaching null = finite list terminated = no cycle (a cyclic list never ends, so fast can never fall off); that's why hitting null returns False.
 
