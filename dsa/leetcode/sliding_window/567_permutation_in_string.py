@@ -68,3 +68,38 @@ class Solution:
                 return True
             r+=1
         return False
+    def checkInclusion_20260702(self, s1: str, s2: str) -> bool:
+        # we are given s1 and s2 are lowercase
+        # so we can use a frequency array to represent these strings
+
+        if len(s1) > len(s2):
+            return False
+
+        s1FreqArray = [0] * 26
+        s2FreqArray = [0] * 26
+
+        for char in s1:
+            charPosition = ord(char) - ord('a')
+            s1FreqArray[charPosition]+=1
+
+        def checkS2ContainsS1():
+            for i in range(26):
+                if s1FreqArray[i] != s2FreqArray[i]:
+                    return False
+            return True
+
+        # basically we are to keep track of a window of size s1 in s2
+        l = r = 0
+        while r < len(s2):
+            charPosition = ord(s2[r]) - ord('a')
+            s2FreqArray[charPosition]+=1
+            # keep window size smaller or equal to len(s1)
+            if r - l + 1 > len(s1):
+                charPosition = ord(s2[l]) - ord('a')
+                s2FreqArray[charPosition]-=1
+                l+=1
+            # now that we know the size is valid, check if s1 is within s2 starting from this index
+            if checkS2ContainsS1():
+                return True
+            r+=1
+        return False
