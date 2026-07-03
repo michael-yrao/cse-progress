@@ -58,3 +58,26 @@ class Solution:
             result.append((currentCoordinate[0],currentCoordinate[1]))
         
         return result
+
+    def kClosest_20260703(self, points: List[List[int]], k: int) -> List[List[int]]:
+        # kth closest so we need to use a heap
+        # we also need to keep track of the point, not just the distance
+        # so the heap will have (distance, (coordinates))
+        def euclideanDistance(x,y):
+            return abs(math.sqrt(x**2+y**2))
+        
+        # k closest, so we want a max heap of size k
+        heap = []
+
+        for x, y in points:
+            distance = euclideanDistance(x,y)
+            heapq.heappush(heap,(-distance, (x,y)))
+            while len(heap) > k:
+                heapq.heappop(heap)
+        
+        result = []
+
+        while heap:
+            x,y=heapq.heappop(heap)[1]
+            result.append([x,y])
+        return result

@@ -30,15 +30,16 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/core/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **83** problems &nbsp;·&nbsp; **94** solutions &nbsp;·&nbsp; **247** attempts
+> **83** problems &nbsp;·&nbsp; **94** solutions &nbsp;·&nbsp; **248** attempts
 
 | | 🏆 Retired | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|
-| **Solutions** | 0 | 61 | 26 | 7 |
+| **Solutions** | 0 | 62 | 25 | 7 |
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|---|
 | Medium | [271. Encode and Decode Strings](https://leetcode.com/problems/encode-and-decode-strings/) | 🟡 | 0 | 2026-07-13 | 2026-07-03 | 2026-07-01, 2026-07-03 |
+| Medium | [973. K Closest Points to Origin](https://leetcode.com/problems/k-closest-points-to-origin/) | 🟢 | 1 | 2026-08-02 | 2026-07-03 | 2026-06-23, 2026-07-03 |
 | Easy | [703. Kth Largest Element in a Stream](https://leetcode.com/problems/kth-largest-element-in-a-stream/) | 🟢 | 1 | 2026-08-01 | 2026-07-02 | 2026-06-22, 2026-07-02 |
 | Medium | [98. Validate Binary Search Tree](https://leetcode.com/problems/validate-binary-search-tree/) | 🟡 | 0 | 2026-07-12 | 2026-07-02 | 2026-05-16, 2026-05-20, 2026-06-30, 2026-07-02 |
 | Medium | [323. Number of Connected Components (DFS)](https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/) | 🟡 | 0 | 2026-07-12 | 2026-07-02 | 2026-07-02 |
@@ -83,7 +84,6 @@ Notes for future agents:
 | Medium | [261. Graph Valid Tree (DFS)](https://leetcode.com/problems/graph-valid-tree/) | 🟢 | 1 | 2026-07-23 | 2026-06-23 | 2026-06-15, 2026-06-17, 2026-06-21, 2026-06-23 |
 | Medium | [130. Surrounded Regions (Union-Find)](https://leetcode.com/problems/surrounded-regions/) | 🟡 | 0 | 2026-07-03 | 2026-06-23 | 2026-06-21, 2026-06-23 |
 | Easy | [1046. Last Stone Weight](https://leetcode.com/problems/last-stone-weight/) | 🟢 | 1 | 2026-07-23 | 2026-06-23 | 2026-06-23 |
-| Medium | [973. K Closest Points to Origin](https://leetcode.com/problems/k-closest-points-to-origin/) | 🟡 | 0 | 2026-07-03 | 2026-06-23 | 2026-06-23 |
 | Easy | [242. Valid Anagram](https://leetcode.com/problems/valid-anagram/) | 🟢 | 1 | 2026-07-22 | 2026-06-22 | 2026-01-01, 2026-03-25, 2026-06-22 |
 | Medium | [323. Number of Connected Components (BFS)](https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/) | 🟡 | 0 | 2026-07-02 | 2026-06-22 | 2026-06-16, 2026-06-22 |
 | Easy | [206. Reverse Linked List (Iterative)](https://leetcode.com/problems/reverse-linked-list/) | 🟢 | 1 | 2026-07-20 | 2026-06-20 | 2026-04-23, 2026-05-26, 2026-06-12, 2026-06-20 |
