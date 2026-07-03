@@ -24,6 +24,11 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🟡 567. Permutation in String — Jul 2, 2026
+**Sticking point**: Pre-filled the window freq array with the counts of the *entire* s2 instead of building it incrementally — a sliding window array must only ever hold what's between l and r, so add s2[r] as r advances and remove s2[l] when the window exceeds len(s1). No prefill of the whole string.
+
+---
+
 ## 🟡 323. Number of Connected Components (DFS) — Jul 2, 2026
 **Sticking point**: Inside the recursive `dfs`, used the outer loop variable `i` instead of the parameter `node` (`visited.add(i)`, `adjMap[i]`) — closure capture bug that caused infinite recursion; also double-marked (outer loop + dfs) which short-circuited the count. Rule: recursive helpers act on the parameter passed in, and pick one owner for marking visited.
 
