@@ -128,3 +128,26 @@ class Solution:
             return True
 
         return inorderDFS(root)
+    def isValidBST_20260702(self, root: Optional[TreeNode]) -> bool:
+        # at any node, it must be greater/lesser than prior node
+        # parent can be anything, so start out with a random prior node value
+        # we keep track of prior node value
+        priorNodeValue = -math.inf
+
+        def inorderDFS(node):
+            nonlocal priorNodeValue
+            if not node:
+                return True
+            
+            if not inorderDFS(node.left):
+                return False
+            
+            if node.val <= priorNodeValue:
+                return False
+            
+            priorNodeValue = node.val
+
+            if not inorderDFS(node.right):
+                return False
+            return True
+        return inorderDFS(root)

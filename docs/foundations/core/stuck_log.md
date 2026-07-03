@@ -24,6 +24,11 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🟡 98. Validate Binary Search Tree (retry) — Jul 2, 2026
+**Sticking point**: Named the inorder idea but didn't implement it as a true inorder initially — the running-`prevValue` check has to sit *between* the left recursion and the right recursion (left → compare current → right), not before/after both. Once the compare was placed mid-traversal it worked.
+
+---
+
 ## 🔴 271. Encode and Decode Strings — Jul 1, 2026
 **Topic**: Arrays / strings — message framing (new problem)
 
