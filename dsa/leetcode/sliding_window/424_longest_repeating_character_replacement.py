@@ -25,6 +25,9 @@ Constraints:
 
 """
 
+from collections import defaultdict
+
+
 class Solution:
     def characterReplacement(self, s: str, k: int) -> int:
         # longest substring is a two pointer / sliding window problem
@@ -89,3 +92,23 @@ class Solution:
             longestSubstringLength = max(longestSubstringLength, r - l + 1)
         
         return longestSubstringLength
+    def characterReplacement_20260702(self, s: str, k: int) -> int:
+        # formula : window length - most frequent element in window <= k
+        # every time this is true, we update the longest counter
+        # so l to keep track of left side of window, r to keep track of right
+        # r is also responsible for adding elements into the window
+        # we do always to keep track of frequency for the items within the window
+        # so we know which one is the most frequent
+        l = r = 0
+        freqMap = defaultdict(int)
+        maxLength = 0
+        while r < len(s):
+            freqMap[s[r]]+=1
+            mostFreq = max(freqMap.values())
+            if r - l + 1 - mostFreq <= k:
+                maxLength = max(maxLength, r - l + 1)
+            else:
+                freqMap[s[l]]-=1
+                l+=1
+            r+=1
+        return maxLength

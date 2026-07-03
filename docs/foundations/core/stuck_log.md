@@ -24,6 +24,11 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🟡 424. Longest Repeating Character Replacement — Jul 2, 2026
+**Sticking point**: Keyed the freq map by index (`freqMap[r]`/`freqMap[l]`) instead of character (`freqMap[s[r]]`/`freqMap[s[l]]`) — so every count was 1 and mostFreq was meaningless. The O(26n) `max(freqMap.values())` version worked once fixed; the O(n) "let maxFreq go stale (never decrement it)" optimization is still not intuitive — revisit.
+
+---
+
 ## 🟡 567. Permutation in String — Jul 2, 2026
 **Sticking point**: Pre-filled the window freq array with the counts of the *entire* s2 instead of building it incrementally — a sliding window array must only ever hold what's between l and r, so add s2[r] as r advances and remove s2[l] when the window exceeds len(s1). No prefill of the whole string.
 
