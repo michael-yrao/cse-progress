@@ -288,4 +288,67 @@ class Solution:
                 # if index is not connectable to virtual node, mark as water
                 if board[row][col] == 'O' and findParent(index) != findParent(dummyComponentIndex):
                     board[row][col] = 'X'
-                
+    def solve_20260703(self, board: List[List[str]]) -> None:
+        """
+        Do not return anything, modify board in-place instead.
+        """
+        # Today's goal is to use union find here
+        # so we want to use a dummy node outside of the grid
+        # and connect all nodes on the border to it
+        # since we are having an external node, we need 1D representation of the board
+        # formula is row * cols + col to convert from 2D -> 1D
+        # this way, our external node will be rows * cols
+        rankMap = {}
+        parentMap = {}
+        rows, cols = len(board), len(board[0])
+        for i in range(rows*cols+1):
+            rankMap[i]=0
+            parentMap[i] = i
+        
+        def find(node):
+            if node == parentMap[node]:
+                return parentMap[node]
+            parentMap[node] = find(parentMap[node])
+            return parentMap[node]
+        
+        def union(n1,n2):
+            n1r = find(n1)
+            n2r = find(n2)
+            if n1r == n2r:
+                return False
+            if rankMap[n1r] > rankMap[n2r]:
+                parentMap[n2r] = n1r
+            elif rankMap[n1r] < rankMap[n2r]:
+                parentMap[n1r] = n2r
+            else:
+                # pick at random
+                parentMap[n2r] = n1r
+                rankMap[n1r]+=1
+
+        externalNode = rows * cols
+        for row in range(rows):
+            for col in range(cols):
+                # if land, we want to try to connect them with their neighbors
+                neighbors = [[1,0],[-1,0],[0,1],[0,-1]]
+                if board[row][col] == 'O':
+                    node = row * cols + col
+                    # we also want to connect edges to the extra node
+                    if row == 0 or col == 0 or row == rows - 1 or col == cols - 1:
+                        union(node, externalNode)
+                    # now we connect with all neighbors
+                    for ir,ic in neighbors:
+                        nr = row + ir
+                        nc = col + ic
+                        if nr >= 0 and nr < rows and nc >= 0 and nc < cols and board[nr][nc] == 'O':
+                            neighborNode = nr * cols + nc
+                            union(node, neighborNode)
+        
+        # now that everyone is connected
+        # let's turn all land that does not have the same parent as external node into water
+        for row in range(rows):
+            for col in range(cols):
+                if board[row][col] == 'O':
+                    node = row * cols + col
+                    if find(node) != find(externalNode):
+                        board[row][col] = 'X'
+        
