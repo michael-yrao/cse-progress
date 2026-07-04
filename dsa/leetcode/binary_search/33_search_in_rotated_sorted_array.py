@@ -140,3 +140,36 @@ class Solution:
             return binarySearch(k, len(nums)-1)
         else:
             return binarySearch(0, k-1)
+    def search_20260704(self, nums: List[int], target: int) -> int:
+        # two part problem
+        # find where the rotation starts using min boundary search
+        # then do exact search on both sides
+
+        l, r = 0, len(nums)-1
+
+        while l<r:
+            m = (l+r)//2
+            # if greater, m cannot possibly be where the rotation starts
+            if nums[m] > nums[r]:
+                l = m + 1
+            else:
+                r = m
+        
+        # now that l is at the rotation point
+        # we search on both sides
+        
+        def binarySearch(l,r):
+            while l <= r:
+                m=(l+r)//2
+                if nums[m] == target:
+                    return m
+                if nums[m] > target:
+                    r = m - 1
+                else:
+                    l = m + 1
+            return -1
+        k = l
+        if binarySearch(0,k-1) == -1:
+            return binarySearch(k,len(nums)-1)
+        else:
+            return binarySearch(0,k-1)

@@ -65,3 +65,24 @@ class Solution:
             r+=1
         
         return False
+    def containsNearbyDuplicate_20260704(self, nums: List[int], k: int) -> bool:
+        # sliding window, use a set
+
+        l = r = 0
+
+        windowSet = set()
+
+        while r < len(nums):
+            # check if r - l > k, if greater, we need to shrink l
+            while r - l > k:
+                windowSet.remove(nums[l])
+                l+=1
+            # now that we know we have a valid window
+            # check if nums[r] already exists in window
+            # if so, we return True
+            if nums[r] in windowSet:
+                return True
+            # if not, we add nums[r] to the window
+            windowSet.add(nums[r])
+            r+=1
+        return False

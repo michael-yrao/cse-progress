@@ -30,11 +30,11 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/core/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **84** problems &nbsp;·&nbsp; **95** solutions &nbsp;·&nbsp; **255** attempts
+> **84** problems &nbsp;·&nbsp; **95** solutions &nbsp;·&nbsp; **257** attempts
 
 | | 🏆 Retired | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|
-| **Solutions** | 0 | 64 | 26 | 5 |
+| **Solutions** | 0 | 66 | 24 | 5 |
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|---|
@@ -47,6 +47,8 @@ Notes for future agents:
 | Easy | [121. Best Time to Buy and Sell Stock](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/) | 🟡 | 0 | 2026-07-13 | 2026-07-03 | 2026-03-22, 2026-04-15, 2026-06-25, 2026-07-03 |
 | Easy | [206. Reverse Linked List (Recursion)](https://leetcode.com/problems/reverse-linked-list/) | 🟡 | 0 | 2026-07-13 | 2026-07-03 | 2026-04-24, 2026-07-03 |
 | Easy | [110. Balanced Binary Tree](https://leetcode.com/problems/balanced-binary-tree/) | 🟢 | 1 | 2026-08-02 | 2026-07-03 | 2026-05-01, 2026-06-04, 2026-06-14, 2026-06-24, 2026-07-03 |
+| Medium | [33. Search in Rotated Sorted Array](https://leetcode.com/problems/search-in-rotated-sorted-array/) | 🟢 | 1 | 2026-08-02 | 2026-07-03 | 2026-04-13, 2026-05-29, 2026-06-15, 2026-06-25, 2026-07-03 |
+| Easy | [219. Contains Duplicate II](https://leetcode.com/problems/contains-duplicate-ii/) | 🟢 | 1 | 2026-08-02 | 2026-07-03 | 2026-03-22, 2026-04-14, 2026-06-25, 2026-07-03 |
 | Easy | [703. Kth Largest Element in a Stream](https://leetcode.com/problems/kth-largest-element-in-a-stream/) | 🟢 | 1 | 2026-08-01 | 2026-07-02 | 2026-06-22, 2026-07-02 |
 | Medium | [98. Validate Binary Search Tree](https://leetcode.com/problems/validate-binary-search-tree/) | 🟡 | 0 | 2026-07-12 | 2026-07-02 | 2026-05-16, 2026-05-20, 2026-06-30, 2026-07-02 |
 | Medium | [323. Number of Connected Components (DFS)](https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/) | 🟡 | 0 | 2026-07-12 | 2026-07-02 | 2026-07-02 |
@@ -79,10 +81,8 @@ Notes for future agents:
 | Easy | [543. Diameter of Binary Tree](https://leetcode.com/problems/diameter-of-binary-tree/) | 🟢 | 1 | 2026-07-26 | 2026-06-26 | 2026-04-30, 2026-06-02, 2026-06-12, 2026-06-14, 2026-06-24, 2026-06-26 |
 | Medium | [200. Number of Islands (DFS)](https://leetcode.com/problems/number-of-islands/) | 🟢 | 1 | 2026-07-26 | 2026-06-26 | 2026-05-31, 2026-06-02, 2026-06-16, 2026-06-26 |
 | Easy | [27. Remove Element](https://leetcode.com/problems/remove-element/) | 🟡 | 0 | 2026-07-06 | 2026-06-26 | 2026-01-05, 2026-03-28, 2026-05-27, 2026-06-26 |
-| Medium | [33. Search in Rotated Sorted Array](https://leetcode.com/problems/search-in-rotated-sorted-array/) | 🟡 | 0 | 2026-07-05 | 2026-06-25 | 2026-04-13, 2026-05-29, 2026-06-15, 2026-06-25 |
 | Medium | [994. Rotting Oranges](https://leetcode.com/problems/rotting-oranges/) | 🟡 | 0 | 2026-07-05 | 2026-06-25 | 2026-06-06, 2026-06-15, 2026-06-25 |
 | Easy | [226. Invert Binary Tree](https://leetcode.com/problems/invert-binary-tree/) | 🟢 | 1 | 2026-07-25 | 2026-06-25 | 2026-04-30, 2026-05-26, 2026-06-25 |
-| Easy | [219. Contains Duplicate II](https://leetcode.com/problems/contains-duplicate-ii/) | 🟡 | 0 | 2026-07-05 | 2026-06-25 | 2026-03-22, 2026-04-14, 2026-06-25 |
 | Medium | [53. Maximum Subarray (Kadane)](https://leetcode.com/problems/maximum-subarray/) | 🟢 | 1 | 2026-07-24 | 2026-06-24 | 2026-01-08, 2026-04-02, 2026-06-23, 2026-06-24 |
 | Medium | [189. Rotate Array](https://leetcode.com/problems/rotate-array/) | 🟢 | 1 | 2026-07-24 | 2026-06-24 | 2026-01-11, 2026-04-04, 2026-06-24 |
 | Medium | [75. Sort Colors (Bucket Sort)](https://leetcode.com/problems/sort-colors/) | 🟢 | 1 | 2026-07-24 | 2026-06-24 | 2026-01-07, 2026-04-01, 2026-06-24 |
