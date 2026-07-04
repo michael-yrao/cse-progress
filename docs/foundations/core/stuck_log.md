@@ -19,6 +19,11 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🟡 121. Best Time to Buy and Sell Stock — Jul 3, 2026
+**Sticking point**: Not intuitive as "two pointer." Better frame: running-minimum one-pass — carry cheapest-price-so-far, and at each day ask "profit if I sold today = price − minSoFar." Best sell at day i depends only on the min before i (same family as Kadane's running-aggregate, not nested pair comparison).
+
+---
+
 ## 🔴 138. Copy List with Random Pointer — Jul 3, 2026
 **Topic**: Linked List / hash map (new problem)
 
