@@ -19,6 +19,36 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🔴 138. Copy List with Random Pointer — Jul 3, 2026
+**Topic**: Linked List / hash map (new problem)
+
+### Where did I get stuck?
+Fully stumped on approach — the `random` pointer can point to a node that hasn't been copied yet (forward reference), so wiring it up in a single front-to-back pass is impossible. Didn't see the fix without hints.
+
+### Core Realization
+Decouple "create the nodes" from "wire the pointers" using a dict `{original → copy}`. **Pass 1:** create every copy node (value only), store `original → copy`. **Pass 2:** walk again and set `copy.next = dict[orig.next]` and `copy.random = dict[orig.random]` — every target copy already exists, so the forward reference is gone. Seed `{None: None}` (or guard) so null pointers don't KeyError; return `dict[head]`. O(n) time, O(n) space. Slicker O(1) interleaving variant exists — learn later.
+
+### Code Snippet
+```python
+def copyRandomList(self, head):
+    if not head:
+        return None
+    old_to_new = {None: None}
+    cur = head
+    while cur:                      # pass 1: create copies
+        old_to_new[cur] = Node(cur.val)
+        cur = cur.next
+    cur = head
+    while cur:                      # pass 2: wire next + random
+        copy = old_to_new[cur]
+        copy.next = old_to_new[cur.next]
+        copy.random = old_to_new[cur.random]
+        cur = cur.next
+    return old_to_new[head]
+```
+
+---
+
 ## 🟡 74. Search a 2D Matrix — Jul 3, 2026
 **Sticking point**: Mixed up the two binary-search flavors. Row search is max-boundary (keeps candidate with `l = m`) so it needs the **ceil** midpoint `(l + r + 1) // 2` — floor stalls into an infinite loop when the window is 2 wide. Also had rows/cols swapped in the bounds, and used `while l < r` on the exact-match column search (needs `<=` or it skips the last cell). Precedence note: must be `(l + r + 1) // 2`, not `l + r + 1 // 2`.
 
