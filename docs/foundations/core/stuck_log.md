@@ -19,6 +19,11 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🟡 74. Search a 2D Matrix — Jul 3, 2026
+**Sticking point**: Mixed up the two binary-search flavors. Row search is max-boundary (keeps candidate with `l = m`) so it needs the **ceil** midpoint `(l + r + 1) // 2` — floor stalls into an infinite loop when the window is 2 wide. Also had rows/cols swapped in the bounds, and used `while l < r` on the exact-match column search (needs `<=` or it skips the last cell). Precedence note: must be `(l + r + 1) // 2`, not `l + r + 1 // 2`.
+
+---
+
 ## 🟡 875. Koko Eating Bananas — Jul 3, 2026
 **Sticking point**: Binary search was correct (min-boundary), but `canFinish` counted hours per pile with a `while bananas > 0: bananas -= m` loop → O(bananas/m) per pile, TLE. Fix: hours per pile = ceil division `(bananas + m - 1) // m` in O(1) (partial pile still costs a full hour since Koko can't switch mid-hour).
 
