@@ -28,6 +28,7 @@ Constraints:
     0 <= prices[i] <= 104
 
 """
+import math
 from typing import List
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
@@ -63,3 +64,15 @@ class Solution:
                 l = r
             r+=1
         return maxProfit
+    def maxProfit_20260703(self, prices: List[int]) -> int:
+        # two pointer
+        l = r = 0
+
+        # we will use r to find the highest to sell and l for the lowest
+        maxPrice = -math.inf
+        while r < len(prices):
+            maxPrice = max(maxPrice, prices[r] - prices[l])
+            if prices[l] > prices[r]:
+                l = r
+            r+=1
+        return maxPrice # type: ignore
