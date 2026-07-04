@@ -107,3 +107,22 @@ class Solution:
             return 1 + max(leftHeight, rightHeight)
         
         return dfs(root) != -1
+    def isBalanced_20260703(self, root: Optional[TreeNode]) -> bool:
+        # we get height from each side
+        # if diff is more than 1, return -1 which will be our False
+
+        def depth(root):
+            if not root:
+                return 0
+            
+            leftDepth = depth(root.left)
+            rightDepth = depth(root.right)
+            # immediately return if we failed already
+            if leftDepth == -1 or rightDepth == -1:
+                return -1
+            if abs(leftDepth - rightDepth) > 1:
+                return -1
+            # if we are still good, return depth back up
+            return 1 + max(leftDepth, rightDepth)
+        
+        return depth(root) != -1
