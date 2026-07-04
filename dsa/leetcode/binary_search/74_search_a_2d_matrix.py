@@ -67,3 +67,37 @@ class Solution:
             else:
                 l = mid + 1
         return False
+    
+    def searchMatrix_20260703(self, matrix: List[List[int]], target: int) -> bool:
+        # we are looking for the maximum row this number could be in
+        # so we can just look at the first column
+        # we find the largest row such that the number is still smaller than target
+        # then we binary search on the columns
+
+        rows, cols = len(matrix), len(matrix[0])
+
+        l,r=0,rows-1
+
+        while l < r:
+            m = (l+r+1)//2
+            # cannot be the solution, thus we set it to l = m
+            if matrix[m][0] > target:
+                r = m - 1
+            else:
+                l = m
+        
+        # now l is the row so we look through the columns
+
+        row = l
+
+        l, r = 0, cols - 1
+
+        while l <= r:
+            m = (l+r)//2
+            if matrix[row][m] == target:
+                return True
+            if matrix[row][m] > target:
+                r = m - 1
+            else:
+                l = m + 1
+        return False
