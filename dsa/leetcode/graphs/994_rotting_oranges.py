@@ -195,3 +195,40 @@ class Solution:
         if freshOranges > 0:
             return -1
         return timer
+    def orangesRotting_20260704(self, grid: List[List[int]]) -> int:
+        # we need to know where all the rotten oranges are to start
+        # this way, we can go through the rotting process simultaneously
+        # we also need to know how many fresh oranges there are to start
+        # this way, we can tell if we are even able to rot all oranges
+        # we don't need a visited set since being rotted = visited
+        time = 0
+        freshCounter = 0
+        rottenQueue = collections.deque()
+
+        rows, cols = len(grid), len(grid[0])
+
+        for row in range(rows):
+            for col in range(cols):
+                if grid[row][col] == 1:
+                    freshCounter+=1
+                elif grid[row][col] == 2:
+                    rottenQueue.append((row,col))
+        
+        neighbors = [[1,0],[-1,0],[0,1],[0,-1]]
+
+        # while we have fresh oranges to rot and while we are able to rot
+        while freshCounter > 0 and rottenQueue:
+            currentLayer = len(rottenQueue)
+            for _ in range(currentLayer):
+                rottenRow, rottenCol = rottenQueue.popleft()
+                for ir, ic in neighbors:
+                    nr = rottenRow + ir
+                    nc = rottenCol + ic
+                    if nr >= 0 and nr < rows and nc >= 0 and nc < cols and grid[nr][nc] == 1:
+                        grid[nr][nc] = 2
+                        freshCounter-=1
+                        rottenQueue.append((nr,nc))
+            time+=1
+        if freshCounter > 0:
+            return -1
+        return time
