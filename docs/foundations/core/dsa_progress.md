@@ -30,11 +30,11 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/core/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **84** problems &nbsp;·&nbsp; **95** solutions &nbsp;·&nbsp; **253** attempts
+> **84** problems &nbsp;·&nbsp; **95** solutions &nbsp;·&nbsp; **254** attempts
 
 | | 🏆 Retired | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|
-| **Solutions** | 0 | 63 | 26 | 6 |
+| **Solutions** | 0 | 63 | 27 | 5 |
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|---|
@@ -45,6 +45,7 @@ Notes for future agents:
 | Medium | [875. Koko Eating Bananas](https://leetcode.com/problems/koko-eating-bananas/) | 🟡 | 0 | 2026-07-13 | 2026-07-03 | 2026-04-22, 2026-07-03 |
 | Medium | [74. Search a 2D Matrix](https://leetcode.com/problems/search-a-2d-matrix/) | 🟡 | 0 | 2026-07-13 | 2026-07-03 | 2026-04-22, 2026-07-03 |
 | Easy | [121. Best Time to Buy and Sell Stock](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/) | 🟡 | 0 | 2026-07-13 | 2026-07-03 | 2026-03-22, 2026-04-15, 2026-06-25, 2026-07-03 |
+| Easy | [206. Reverse Linked List (Recursion)](https://leetcode.com/problems/reverse-linked-list/) | 🟡 | 0 | 2026-07-13 | 2026-07-03 | 2026-04-24, 2026-07-03 |
 | Easy | [703. Kth Largest Element in a Stream](https://leetcode.com/problems/kth-largest-element-in-a-stream/) | 🟢 | 1 | 2026-08-01 | 2026-07-02 | 2026-06-22, 2026-07-02 |
 | Medium | [98. Validate Binary Search Tree](https://leetcode.com/problems/validate-binary-search-tree/) | 🟡 | 0 | 2026-07-12 | 2026-07-02 | 2026-05-16, 2026-05-20, 2026-06-30, 2026-07-02 |
 | Medium | [323. Number of Connected Components (DFS)](https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/) | 🟡 | 0 | 2026-07-12 | 2026-07-02 | 2026-07-02 |
@@ -118,7 +119,6 @@ Notes for future agents:
 | Medium | [15. 3Sum](https://leetcode.com/problems/3sum/) | 🟢 | 1 | 2026-06-29 | 2026-05-30 | 2026-01-19, 2026-04-07, 2026-05-30 |
 | Medium | [347. Top K Frequent Elements](https://leetcode.com/problems/top-k-frequent-elements/) | 🟢 | 1 | 2026-06-29 | 2026-05-30 | 2026-01-11, 2026-04-09, 2026-05-30 |
 | Medium | [143. Reorder List](https://leetcode.com/problems/reorder-list/) | 🔴 | 0 | 2026-04-28 | 2026-04-26 | 2026-04-26 |
-| Easy | [206. Reverse Linked List (Recursion)](https://leetcode.com/problems/reverse-linked-list/) | 🔴 | 0 | 2026-04-26 | 2026-04-24 | 2026-04-24 |
 | Medium | [3. Longest Substring Without Repeating Characters](https://leetcode.com/problems/longest-substring-without-repeating-characters/) | 🟢 | 1 | 2026-05-17 | 2026-04-17 | 2026-04-17 |
 | Medium | [122. Best Time to Buy and Sell Stock II](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/) | 🟢 | 1 | 2026-05-17 | 2026-04-17 | 2026-01-28, 2026-04-17 |
 | Medium | [11. Container With Most Water](https://leetcode.com/problems/container-with-most-water/) | 🟢 | 1 | 2026-05-14 | 2026-04-14 | 2026-01-31, 2026-04-14 |

@@ -77,3 +77,14 @@ class Solution:
             current = next
         
         return prev
+    def reverseList_20260703_recursion(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        # 1 -> 2 -> None
+        if not head or not head.next:
+            return head
+        # node's purpose is to act as a way for us to access the new head
+        node = self.reverseList_20260703_recursion(head.next)
+        # actual work is done here
+        next = head.next
+        next.next = head
+        head.next = None
+        return node
