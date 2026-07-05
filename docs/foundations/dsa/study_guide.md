@@ -213,6 +213,16 @@ Every design session must be narrated out loud — not written silently. Intervi
 | **Bit Manipulation + Math & Geometry** | Dec 7–28 | 15 | Single Number, # of 1 Bits, Counting Bits, Reverse Bits, Missing Number, Sum of Two Integers, Reverse Integer; Rotate Image, Spiral Matrix, Set Matrix Zeroes, Happy Number, Pow(x,n), Multiply Strings, Detect Squares |
 | **Buffer + Final EOY Review** | Dec 29–31 | — | Sweep `dsa_progress.md` for all 🔴 Blank and 🟡 Shaky solutions. Target: ≤ 10 non-Clean by EOY |
 
+### Post-NC150 — The Steady State (Maintenance · Application · Expansion)
+
+Once the roadmap completes and NC150 is Clean/retired, the mode shifts from **acquiring patterns** to three ongoing threads that run in parallel — this is the permanent steady state and the on-ramp to the competitive-programmer goal:
+
+1. **Maintenance** — spaced repetition keeps NC150 alive: 🏆 retired problems spot-check every 180 days; anything that slips to 🟡/🔴 returns to rotation. Never stops.
+2. **Application — *pull, not push*.** Company frequency lists are a **reference pool, not a checklist.** *Pull* problems from them **gated by patterns/techniques already learned** (NC150 + expansion queue), to build **speed and transfer** on your existing foundation. Never march a company list top-to-bottom — your knowledge drives the selection, not the company's list. Log each pull in the tracker: 🟢 confirms transfer works; 🟡/🔴 is a **diagnostic** pointing at a pattern to refresh (not a cue to learn something ad-hoc).
+3. **Expansion — keep learning, deliberately.** Continue working the **Knowledge Expansion Queue** (bottom of `dsa_progress.md`): finish Tier 1 advanced (segment tree, KMP, XOR trie, …), then cross the Interview-ROI line into Tier 2 competitive material toward the competitive-programmer goal. New concepts enter **here, in order, deliberately** — never reactively off a company problem.
+
+**The direction of causation always runs from your knowledge outward.** NC150 + expansion queue = what you know → pull application problems that exercise it, and grow the queue on purpose. Nothing external (a company list, a random hard problem) is allowed to *dictate* the curriculum.
+
 ### Why Heap Comes Before Advanced Graphs
 
 Dijkstra's algorithm (required for Network Delay Time, Cheapest Flights, Swim in Rising Water) uses `heapq` as its core data structure. Attempting those problems without heapq fluency means learning two things simultaneously. Complete Heap/PQ first so Advanced Graphs is purely about the graph logic.
