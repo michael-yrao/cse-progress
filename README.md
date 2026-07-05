@@ -63,6 +63,6 @@ This is currently a personal system; the goal is to make it a **reusable templat
 ## External resources
 
 - [NeetCode](https://neetcode.io/) — start with Blind 75, then NeetCode 150.
-- [LeetCode questions by company frequency](https://github.com/xizhengszhang/Leetcode_company_frequency) — a **reference pool** to *pull* application problems from once NC150 is solid, gated by patterns you've already learned. Not a checklist to follow. See "Post-NC150 — The Steady State" in the DSA study guide.
+- [LeetCode company-wise questions (snehasishroy)](https://github.com/snehasishroy/leetcode-companywise-interview-questions) — actively maintained (snapshots through May 2026), with recency buckets (last 30 days → all-time) and frequency data. Use it as a **reference pool** to *pull* application problems from once NC150 is solid, gated by patterns you've already learned — not a checklist to follow. See "Post-NC150 — The Steady State" in the DSA study guide.
 
 *Happy coding!*
