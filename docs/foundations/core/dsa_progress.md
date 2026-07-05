@@ -159,3 +159,23 @@ Problems added for algorithmic depth — not part of the spaced repetition track
 | Hard | Bitmask DP (technique) — e.g. TSP / [847. Shortest Path Visiting All Nodes](https://leetcode.com/problems/shortest-path-visiting-all-nodes/) | DP enrichment: state = bitmask of visited set. Not in NC150; common in harder interviews. Learn after 2D DP block. |
 | Hard | [85. Maximal Rectangle](https://leetcode.com/problems/maximal-rectangle/) | Matrix→row-histogram reduction (monotonic stack): per row, treat column heights as a histogram → run 84. Built on `84. Largest Rectangle in Histogram` (NC150 Stack). NOT DP space-compression. Not in NC150. |
 | Medium | [1504. Count Submatrices With All Ones](https://leetcode.com/problems/count-submatrices-with-all-ones/) | Same row-histogram reduction as 85, different aggregation. Anchored on 84 (NC150 Stack). Not in NC150. |
+
+### Post-NC150 Advanced Techniques
+
+Tackle **after** NC150 is comfortable. These are genuinely advanced but still surface in *hard* interviews (Tier 1). Order within is roughly by ROI. None are needed for NC150 itself.
+
+| Technique | Representative problem(s) | Notes / when |
+|---|---|---|
+| **Segment Tree** | [307. Range Sum Query - Mutable](https://leetcode.com/problems/range-sum-query-mutable/), [315. Count of Smaller Numbers After Self](https://leetcode.com/problems/count-of-smaller-numbers-after-self/) | Range query + update in O(log n) — what prefix sums can't do (mutable). The highest-value advanced structure. |
+| **Fenwick / Binary Indexed Tree** | [307](https://leetcode.com/problems/range-sum-query-mutable/), [493. Reverse Pairs](https://leetcode.com/problems/reverse-pairs/) | Lighter segment tree for prefix-sum-with-updates. Learn alongside segment tree. |
+| **KMP (failure function)** | [28. Find the Index of the First Occurrence](https://leetcode.com/problems/find-the-index-of-the-first-occurrence-in-a-string/), [459. Repeated Substring Pattern](https://leetcode.com/problems/repeated-substring-pattern/) | O(n+m) substring search; the failure-function idea recurs across string problems. |
+| **Bitwise / XOR Trie** | [421. Maximum XOR of Two Numbers](https://leetcode.com/problems/maximum-xor-of-two-numbers-in-an-array/) | Max-XOR-pair by walking bits high→low through a binary trie. |
+| **Manacher's algorithm** | [5. Longest Palindromic Substring](https://leetcode.com/problems/longest-palindromic-substring/), [647](https://leetcode.com/problems/palindromic-substrings/) | O(n) palindrome — upgrade over the NC150 DP/expand approach. |
+| **Matrix exponentiation** | fast [509. Fibonacci](https://leetcode.com/problems/fibonacci-number/), 70-at-scale | Linear recurrences in O(log n) via matrix power. |
+| **Tarjan's (SCC / bridges / articulation)** | [1192. Critical Connections](https://leetcode.com/problems/critical-connections-in-a-network/) | Strongly-connected components, critical edges. |
+| **Meet in the middle** | [1755. Closest Subsequence Sum](https://leetcode.com/problems/closest-subsequence-sum/) | Halve an exponential search: 2^n → 2·2^(n/2). |
+| **Reservoir sampling** | [382. Linked List Random Node](https://leetcode.com/problems/linked-list-random-node/), [398](https://leetcode.com/problems/random-pick-index/) | Uniform random pick from a stream of unknown length. |
+| **Difference array** | [1109. Corporate Flight Bookings](https://leetcode.com/problems/corporate-flight-bookings/) | O(1) range *updates*, materialize at end. Prefix-sum's complement. |
+| **Number theory kit** | [204. Count Primes](https://leetcode.com/problems/count-primes/), [50. Pow(x,n)](https://leetcode.com/problems/powx-n/) | Sieve, modular inverse, binary exponentiation, nCr mod p. |
+
+**Tier 2 — further horizon (competitive / rare in interviews; named for awareness only, low ROI):** sweep line & convex hull (587, 218), max-flow / min-cut & bipartite matching, LCA (binary lifting / Euler tour + sparse table), Mo's algorithm & sqrt decomposition, SOS DP, convex-hull-trick & Knuth DP optimizations, suffix array / suffix automaton, Aho-Corasick, Z-algorithm, persistent data structures / treaps. Only pursue if going deep into competitive programming or systems-depth curiosity — not needed for interviews.
