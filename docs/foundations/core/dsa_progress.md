@@ -178,7 +178,7 @@ Tackle **after** NC150 is comfortable. These are genuinely advanced but still su
 | **Difference array** | [1109. Corporate Flight Bookings](https://leetcode.com/problems/corporate-flight-bookings/) | O(1) range *updates*, materialize at end. Prefix-sum's complement. |
 | **Number theory kit** | [204. Count Primes](https://leetcode.com/problems/count-primes/), [50. Pow(x,n)](https://leetcode.com/problems/powx-n/) | Sieve, modular inverse, binary exponentiation, nCr mod p. |
 
-**═══════════ INTERVIEW-ROI LINE ═══════════**
+**=========== INTERVIEW-ROI LINE ===========**
 *(Everything above serves both interviews and competitive depth. Everything below is competitive-programming growth with near-zero interview payoff — see the Mission section in `study_guide.md`. Finish NC150 + Tier 1 before crossing.)*
 
 **Tier 2 — further horizon (competitive / rare in interviews; named for awareness only, low ROI):** sweep line & convex hull (587, 218), max-flow / min-cut & bipartite matching, LCA (binary lifting / Euler tour + sparse table), Mo's algorithm & sqrt decomposition, SOS DP, convex-hull-trick & Knuth DP optimizations, suffix array / suffix automaton, Aho-Corasick, Z-algorithm, persistent data structures / treaps. Only pursue if going deep into competitive programming or systems-depth curiosity — not needed for interviews.

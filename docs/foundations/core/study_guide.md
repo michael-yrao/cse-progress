@@ -14,7 +14,7 @@ But depth has diminishing returns *for interviews specifically*. So everything i
 3. **Pattern docs** (`docs/patterns/`) — cross-cutting techniques (sliding window, monotonic stack/deque, prefix sum, fast/slow, union-find, topo sort, binary-search boundaries, backtracking, …).
 4. **Tier 1 advanced** (Knowledge Expansion Queue) — segment tree, Fenwick, KMP, XOR trie, Manacher's, matrix expo, Tarjan's, meet-in-the-middle, reservoir sampling, difference array, number theory. Advanced, but still shows up in *hard* interviews. This is the top of the ROI curve.
 
-**═══ INTERVIEW-ROI LINE ═══**
+**=== INTERVIEW-ROI LINE ===**
 
 **Below the line (competitive-programming growth; NOT for interview ROI):**
 5. **Tier 2 "further horizon"** (Knowledge Expansion Queue) — sweep line, max-flow, LCA, Mo's algorithm, SOS DP, suffix automaton, Aho-Corasick, persistent structures, etc. Pursue **only** after interview-readiness is solid, and **only** for competitive-programming ambition — near-zero interview payoff.
