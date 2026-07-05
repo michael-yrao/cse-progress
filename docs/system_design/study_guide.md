@@ -53,7 +53,7 @@ Specific systems to design end-to-end (drive the full framework on each). Above 
 | System | Tier | Notes |
 |--------|------|-------|
 | **Design YouTube** | 1 (interview core) | Video upload/transcoding pipeline, CDN delivery, metadata + view counts, recommendations. Already named in the canonical list — make it an explicit mock. |
-| **Design an LLM chat assistant (Claude/ChatGPT-style)** | 1–2 | *Pending your confirmation of "Claude Mythos."* AI-serving: token streaming, context-window management, request batching / GPU scheduling, rate limiting & quotas, conversation storage, optional RAG. Ties into the planned AI-Engineering phase. |
+| **Design an LLM chat assistant (Claude/ChatGPT-style)** | 1–2 | AI-serving: token streaming (SSE/WebSocket), context-window management, request batching / GPU scheduling, rate limiting & quotas, conversation storage, optional RAG. Ties into the planned AI-Engineering phase. |
 
 ## Where things live
 
