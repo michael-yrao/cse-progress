@@ -61,12 +61,5 @@ By requesting exactly 4096 bytes, you ensure that one physical hardware pull fro
 ---
 
 ## 🌐 Section 2: The Multi-Node Scalability Expansion
-*Scale is about architectural adaptation—what happens when a single node, no matter how perfectly optimized or efficient, physically runs out of processing limits. This section tracks how we spread workloads across computing clusters.*
 
-### 🛠️ Horizontal vs. Vertical Boundaries
-*   *Vertical (Scaling Up)*: [To be populated in Phase 2: Block 5]
-*   *Horizontal (Scaling Out)*: [To be populated in Phase 2: Block 5]
-
-### 📦 Distributed Data & Performance Management
-*   *Database Sharding & Replication*: [To be populated in Phase 2: Block 6]
-*   *Asynchronous Event Streaming (Queues)*: [To be populated in Phase 2: Block 7]
+> **Not yet written.** Multi-node scaling (vertical vs horizontal, sharding/replication, async queues) is covered as **Tier 1 building blocks** in `study_guide.md` — this section will be fleshed out only if a low-level, hardware-flavored treatment adds something the building-block notes don't. For now, single-node efficiency (Section 1) is the content here; scaling lives in the study guide's Tier 1 list.
