@@ -1,4 +1,6 @@
-# 🖥️ Low-Level Systems: Scale vs. Efficiency
+# Single-Node I/O Efficiency
+
+*Low-level systems: how data bridges physical hardware and your code, and why buffer size matters. This is depth material (why systems slow under load), not interview-core.*
 
 ### 🎯 Why Learning This Is Important
 As software engineers, we rarely write code that talks directly to physical computer chips. We rely on high-level languages like Python to abstract the hardware away. However, writing code without understanding the underlying hardware creates a dangerous blind spot. 
