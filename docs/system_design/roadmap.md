@@ -1,3 +1,5 @@
+> **Start here:** [`study_guide.md`](study_guide.md) — mission, the Interview-ROI Line, and the Tier 1 (interview core) → Tier 2/3 (architect depth) breakdown. This file is just the folder map.
+
 ```text
 system_design/
 │
