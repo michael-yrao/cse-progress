@@ -19,6 +19,32 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🔴 496. Next Greater Element I — Jul 4, 2026
+**Topic**: Stack / monotonic stack (new — first monotonic stack ever)
+
+### Where did I get stuck?
+Didn't understand the problem *or* the technique on first read. Needed the whole thing explained plain-English.
+
+### Core Realization
+Two ideas. (1) Precompute the next-greater for **every** element of `nums2` into a map in one pass, then answer each `nums1` element with an O(1) lookup. (2) The one-pass is a **monotonic stack**: the stack holds indices of elements still *waiting* for a bigger number to their right, kept in decreasing value order. When a new value `x` arrives, it resolves everyone on the stack shorter than it (they've found their next-greater = `x`) — pop them and record; then push `x`. Anything left at the end has no next-greater → -1. "Line of people waiting for a taller person to walk by."
+
+### Code Snippet
+```python
+def nextGreaterElement(self, nums1, nums2):
+    nge = {}
+    stack = []                       # values still waiting (indices not needed here)
+    for x in nums2:
+        while stack and stack[-1] < x:
+            nge[stack.pop()] = x     # x is the popped value's next-greater
+        stack.append(x)
+    for leftover in stack:
+        nge[leftover] = -1
+    return [nge[v] for v in nums1]
+```
+(Values can be stored directly here since nums2 has distinct values and we don't need distances; the index/distance form is for problems like Daily Temperatures.)
+
+---
+
 ## 🟡 206. Reverse Linked List (Recursion) — Jul 3, 2026
 **Sticking point**: The returned `newHead` felt pointless because no frame *uses* it. Key reframe: return value and work are separate jobs. The rewiring (`head.next.next = head; head.next = None`) is a side effect each frame does with its own `head`/`head.next`; `newHead` is just the answer (original tail = new head), found once at the base case and *relayed* up the stack unchanged so the top-level caller gets it. It's a pass-through payload, not logic.
 
