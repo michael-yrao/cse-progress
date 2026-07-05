@@ -36,6 +36,6 @@ After logging any problem result, check its computed next review date and add it
 ## Study Guide Files
 
 - `docs/foundations/dsa/core/dsa_progress.md` — spaced repetition tracker (auto-updated by pre-commit hook)
-- `docs/foundations/dsa/core/study_guide.md` — master plan with backlog recovery protocol
+- `docs/foundations/dsa/study_guide.md` — master plan with backlog recovery protocol
 - `docs/foundations/dsa/schedules/<YYYYMMDD>_schedule.md` — current week's day-by-day schedule (e.g. `20260615_schedule.md`); archive the current week's schedule and generate the next week's schedule together at the end of the last session of the week — move the current file to `docs/foundations/dsa/schedules/archive/`
 - `docs/foundations/dsa/core/stuck_log.md` — log for every non-Clean result: 🔴 Blank gets a full entry (where stuck, core realization, code snippet); 🟡 Shaky gets a one-liner (sticking point only)
