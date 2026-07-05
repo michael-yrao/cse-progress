@@ -30,16 +30,17 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/dsa/mastery/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **86** problems &nbsp;·&nbsp; **97** solutions &nbsp;·&nbsp; **262** attempts
+> **87** problems &nbsp;·&nbsp; **98** solutions &nbsp;·&nbsp; **263** attempts
 
 | | 🏆 Retired | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|
-| **Solutions** | 0 | 69 | 22 | 6 |
+| **Solutions** | 0 | 70 | 22 | 6 |
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|---|
 | Easy | [27. Remove Element](https://leetcode.com/problems/remove-element/) | 🟢 | 1 | 2026-08-04 | 2026-07-05 | 2026-01-05, 2026-03-28, 2026-05-27, 2026-06-26, 2026-07-05 |
 | Medium | [138. Copy List with Random Pointer](https://leetcode.com/problems/copy-list-with-random-pointer/) | 🟢 | 1 | 2026-08-04 | 2026-07-05 | 2026-07-03, 2026-07-05 |
+| Medium | [2. Add Two Numbers](https://leetcode.com/problems/add-two-numbers/) | 🟢 | 1 | 2026-08-04 | 2026-07-05 | 2026-07-05 |
 | Medium | [146. LRU Cache](https://leetcode.com/problems/lru-cache/) | 🔴 | 0 | 2026-07-06 | 2026-07-04 | 2026-07-04 |
 | Easy | [496. Next Greater Element I](https://leetcode.com/problems/next-greater-element-i/) | 🔴 | 0 | 2026-07-06 | 2026-07-04 | 2026-07-04 |
 | Medium | [33. Search in Rotated Sorted Array](https://leetcode.com/problems/search-in-rotated-sorted-array/) | 🟢 | 1 | 2026-08-03 | 2026-07-04 | 2026-04-13, 2026-05-29, 2026-06-15, 2026-06-25, 2026-07-04 |
