@@ -19,16 +19,16 @@ Notes for future agents:
 - If a method is mentioned and the table already contains the same LeetCode number with a different method, a new row should be added rather than overwriting the existing entry.
 - When run from git commit, the helper only scans staged source files to discover newly added or changed problems.
 - The helper also auto-fills the current date for staged review rows that are missing `Latest Attempt Date`.
-- The pre-commit hook now triggers when `docs/foundations/dsa/core/dsa_progress.md` or any `dsa/leetcode/*.py` file is staged.
+- The pre-commit hook now triggers when `docs/foundations/dsa/mastery/dsa_progress.md` or any `dsa/leetcode/*.py` file is staged.
 - The review table is sorted by Latest Attempt Date descending whenever the script runs.
-- A local git pre-commit hook has been installed to auto-run the script when `docs/foundations/dsa/core/dsa_progress.md` is staged.
+- A local git pre-commit hook has been installed to auto-run the script when `docs/foundations/dsa/mastery/dsa_progress.md` is staged.
 - When a LeetCode problem is added here or a review row is updated, the file should be refreshed automatically and should not require an explicit ask.
 - Run `python scripts/update_review_dates.py` or `npm run update-review-progression` if you edit the file outside of a commit flow.
 - When we are doing LeetCode review, any problems mentioned should be logged in this file.
  - If any LeetCode problem is mentioned anywhere in the repo or during a review session, it should be added to this file.
 -->
 
-> **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/dsa/core/dsa_progress.md` is staged for commit or when the helper script is run.
+> **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/dsa/mastery/dsa_progress.md` is staged for commit or when the helper script is run.
 
 > **86** problems &nbsp;·&nbsp; **97** solutions &nbsp;·&nbsp; **260** attempts
 

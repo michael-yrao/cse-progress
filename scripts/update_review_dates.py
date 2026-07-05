@@ -6,7 +6,7 @@ import subprocess
 from datetime import datetime, timedelta
 from pathlib import Path
 
-MARKDOWN_PATH = Path("docs/foundations/dsa/core/dsa_progress.md")
+MARKDOWN_PATH = Path("docs/foundations/dsa/mastery/dsa_progress.md")
 SOURCE_ROOT = Path("dsa/leetcode")
 TABLE_HEADER = "| Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Attempt Date | Attempt Dates |"
 TABLE_HEADER_LEGACY = "| Difficulty | Problem | Comfort | Next Review Date | Latest Attempt Date | Attempt Dates |"

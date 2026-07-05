@@ -135,7 +135,7 @@ Create a running notebook using this format. Review this document every Saturday
 | Task | Location |
 |------|----------|
 | Find problems by algorithm type | `dsa/leetcode/{type}/` |
-| Spaced-repetition tracker | `docs/foundations/dsa/core/dsa_progress.md` |
+| Spaced-repetition tracker | `docs/foundations/dsa/mastery/dsa_progress.md` |
 | Algorithm pattern cheatsheets | `docs/patterns/` |
 | Study schedule / stuck log | `docs/foundations/` |
 | Legacy solutions (Java, 2022 Python) | `dsa/archive/` |
@@ -161,7 +161,7 @@ When asking for help with this repository:
 - **Reference concepts**: "This is a Two Pointers problem" or "This uses Monotonic Stack"
 - **Ask for patterns**: Help understanding when to apply specific techniques
 - **Request mental models**: Explanation of problem-solving approach before jumping to code
-- **If any LeetCode problem is mentioned, ensure it is logged in `docs/foundations/dsa/core/dsa_progress.md`.**
+- **If any LeetCode problem is mentioned, ensure it is logged in `docs/foundations/dsa/mastery/dsa_progress.md`.**
 - Problem titles should include the solution method used, e.g. `(BFS)` or `(DFS)`.
 - If a method is mentioned and the same problem number already exists with a different method, add a new row for the new method instead of editing the old row.
 - When a review row is created or staged for commit with a missing latest date, the helper should auto-populate the current date.

@@ -25,7 +25,7 @@ But depth has diminishing returns *for interviews specifically*. So everything i
 
 ## Weekly Review Priority
 
-Every Sunday, open `docs/foundations/dsa/core/dsa_progress.md` and sweep for all problems whose `Next Review Date ≤ end of the coming week`. Slot them into the upcoming schedule before filling active blocks or new content. Use this priority order for warmup slots:
+Every Sunday, open `docs/foundations/dsa/mastery/dsa_progress.md` and sweep for all problems whose `Next Review Date ≤ end of the coming week`. Slot them into the upcoming schedule before filling active blocks or new content. Use this priority order for warmup slots:
 
 1. **Priority 1 (High Risk)**: 🔴 Blank — oldest Latest Attempt Date first.
 2. **Priority 2 (Medium Risk)**: 🟡 Shaky — oldest Latest Attempt Date first.
@@ -55,7 +55,7 @@ Because 15 minutes passes incredibly fast, **never write code during a backlog w
 * **00:12–00:15 | The Verification**: Open your past successful code or your "Why I Got Stuck" log entry to verify if your mental blueprint was 100% accurate.
 
 ### 📋 Post-Warmup Updates:
-Log the result in `docs/foundations/dsa/core/dsa_progress.md` using the comfort system:
+Log the result in `docs/foundations/dsa/mastery/dsa_progress.md` using the comfort system:
 * **Blueprint was flawless** → 🟢 Clean. Streak increments; next review in +30/60/180 days depending on streak.
 * **Needed a nudge or wasn't fully confident** → 🟡 Shaky. Streak resets to 0; next review in +10 days.
 * **Completely forgot the approach** → 🔴 Blank. Streak resets to 0; next review in +2 days.

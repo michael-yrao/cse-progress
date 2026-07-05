@@ -12,7 +12,7 @@ The specific feedback memories in this repo are instances of **two overarching p
 The user's job is to solve problems and report comfort. **Everything else — keeping the systems of record complete, consistent, current, and pushed — is yours.** A single study action must fan out across all four systems of record, every time, without being asked:
 
 1. the solution `.py` under `dsa/leetcode/<type>/`
-2. `docs/foundations/dsa/core/dsa_progress.md` (tracker: comfort, streak, dates)
+2. `docs/foundations/dsa/mastery/dsa_progress.md` (tracker: comfort, streak, dates)
 3. the weekly schedule (strike through what's done; slot future due dates)
 4. git remote (commit **and** push)
 
