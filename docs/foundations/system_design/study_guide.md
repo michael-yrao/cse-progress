@@ -69,7 +69,8 @@ This guide is the single source of truth (map + ROI line). Current file state �
 - `fundamentals/` ✅ — [`single_node_io_efficiency.md`](fundamentals/single_node_io_efficiency.md) (the 4096-byte buffer / sectors / pages / syscalls). *Depth material, not interview-core.*
 - `templates/` ✅ — the two scaffolds you fill during practice (see Cadence above).
 
+- `components/` 🌱 — per-block deep-dives, started: [`rate_limiter.md`](components/rate_limiter.md) (Bootstrap note). Grows as you cover each block.
+
 **Planned (not yet created — build as you reach each phase, no number prefixes):**
-- `components/` — per-block deep-dives (load balancer, cache, queues, rate limiter)
 - `databases/` — SQL vs NoSQL, replication, sharding
 - `case_studies/` — worked canonical designs (start from the templates)
