@@ -46,6 +46,12 @@ System design runs on the **Sunday sprint** (see the weekly schedule). Interview
 
 Below-the-line (Tier 2+) work is **not** a Sunday-sprint activity — it's long-form reading (DDIA, papers) pursued deliberately *after* interview-core is solid, on its own track.
 
+**Drive every practice session through the templates** in [`05_architectural_templates/`](05_architectural_templates/):
+- Designing a whole system (Transition/Mastery on a Design Practice Backlog item) → copy [`case_study_template.md`](05_architectural_templates/case_study_template.md) and fill it end-to-end (requirements → estimation → data model → high-level → diagram).
+- Learning one building block (a Bootstrap topic like caching or rate limiting) → copy [`component_template.md`](05_architectural_templates/component_template.md) (metaphor → DSA connection → strategies → failure modes → diagram).
+
+Filling a template *is* the rep — don't just read about a system, fill the scaffold for it.
+
 ## Design Practice Backlog
 
 Specific systems to design end-to-end (drive the full framework on each). Above the ROI line unless noted.
@@ -57,7 +63,13 @@ Specific systems to design end-to-end (drive the full framework on each). Above 
 
 ## Where things live
 
-- `01_fundamentals/`, `02_components/`, `03_databases/` — Tier 1 concept notes
-- `04_case_studies/` — worked canonical designs
-- `05_architectural_templates/` — blank templates to drive the framework during practice
-- This guide — the map and the ROI line
+This guide is the single source of truth (map + ROI line). Current file state — **built** vs **planned**:
+
+**Built:**
+- `01_fundamentals/` ✅ — `scale_vs_efficiency.md` (single-node efficiency: the 4096-byte buffer / sectors / pages / syscalls). *Depth material, not interview-core.* Multi-node section is a stub, filled as the relevant topics arrive.
+- `05_architectural_templates/` ✅ — the two scaffolds you fill during practice (see Cadence above).
+
+**Planned (not yet created — build as you reach each phase):**
+- `02_components/` — per-block deep-dives (load balancer, cache, queues, rate limiter)
+- `03_databases/` — SQL vs NoSQL, replication, sharding
+- `04_case_studies/` — worked canonical designs (start from the templates)
