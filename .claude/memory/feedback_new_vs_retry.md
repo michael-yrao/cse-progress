@@ -5,7 +5,7 @@ metadata:
   type: feedback
 ---
 
-A weekly schedule's "New Problems This Week" table must contain only genuinely new problems. The source of new problems is the **Study Roadmap phase table** in `docs/foundations/core/study_guide.md` (the `New Problems` column for the phase covering the current dates). Everything else in a schedule — warmups and active blocks alike — is a retry/review pulled from `dsa_progress.md` by next-review due date.
+A weekly schedule's "New Problems This Week" table must contain only genuinely new problems. The source of new problems is the **Study Roadmap phase table** in `docs/foundations/dsa/core/study_guide.md` (the `New Problems` column for the phase covering the current dates). Everything else in a schedule — warmups and active blocks alike — is a retry/review pulled from `dsa_progress.md` by next-review due date.
 
 **Litmus test before listing anything as "new":** if the problem already has a row in `dsa_progress.md` with past attempt dates, it is a retry, not new — it belongs in a backlog/vintage table, never in "New Problems."
 
