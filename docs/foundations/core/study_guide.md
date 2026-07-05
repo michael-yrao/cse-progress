@@ -1,4 +1,27 @@
-# Technical Interview Study Guide
+# DSA Study Guide — Interview Foundation → Competitive Depth
+
+## Mission & the Interview-ROI Line
+
+**End goal:** become a *competent competitive programmer* — not merely pass technical interviews. Interview readiness is a **milestone on that path, not the finish line.**
+
+But depth has diminishing returns *for interviews specifically*. So everything in this repo is sorted relative to one marker:
+
+> **The Interview-ROI Line** — the point past which added technique depth stops paying interview dividends and becomes purely competitive-programming growth.
+
+**Above the line (serves BOTH goals — do this first, in order):**
+1. **NC150 core** — the scheduled roadmap. Non-negotiable interview foundation.
+2. **Framework lenses** — knapsack / interval / LIS / space-compression (folded into the DP blocks), taught as unifying patterns.
+3. **Pattern docs** (`docs/patterns/`) — cross-cutting techniques (sliding window, monotonic stack/deque, prefix sum, fast/slow, union-find, topo sort, binary-search boundaries, backtracking, …).
+4. **Tier 1 advanced** (Knowledge Expansion Queue) — segment tree, Fenwick, KMP, XOR trie, Manacher's, matrix expo, Tarjan's, meet-in-the-middle, reservoir sampling, difference array, number theory. Advanced, but still shows up in *hard* interviews. This is the top of the ROI curve.
+
+**═══ INTERVIEW-ROI LINE ═══**
+
+**Below the line (competitive-programming growth; NOT for interview ROI):**
+5. **Tier 2 "further horizon"** (Knowledge Expansion Queue) — sweep line, max-flow, LCA, Mo's algorithm, SOS DP, suffix automaton, Aho-Corasick, persistent structures, etc. Pursue **only** after interview-readiness is solid, and **only** for competitive-programming ambition — near-zero interview payoff.
+
+**How to use the line:** when deciding whether to learn something, ask *"which side of the line is it, and am I currently optimizing for interviews or competitive depth?"* Don't spend interview-prep time below the line; don't mistake below-the-line mastery for interview readiness. Finish NC150 + Tier 1 before crossing.
+
+---
 
 ## Weekly Review Priority
 
