@@ -136,7 +136,7 @@ Create a running notebook using this format. Review this document every Saturday
 |------|----------|
 | Find problems by algorithm type | `dsa/leetcode/{type}/` |
 | Spaced-repetition tracker | `docs/foundations/dsa/mastery/dsa_progress.md` |
-| Algorithm pattern cheatsheets | `docs/patterns/` |
+| Algorithm pattern cheatsheets | `docs/foundations/dsa/patterns/` |
 | Study schedule / stuck log | `docs/foundations/` |
 | Legacy solutions (Java, 2022 Python) | `dsa/archive/` |
 | Find Big O reference | `image/data_structure_big_o.png` |

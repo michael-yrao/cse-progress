@@ -11,7 +11,7 @@ But depth has diminishing returns *for interviews specifically*. So everything i
 **Above the line (serves BOTH goals — do this first, in order):**
 1. **NC150 core** — the scheduled roadmap. Non-negotiable interview foundation.
 2. **Framework lenses** — knapsack / interval / LIS / space-compression (folded into the DP blocks), taught as unifying patterns.
-3. **Pattern docs** (`docs/patterns/`) — cross-cutting techniques (sliding window, monotonic stack/deque, prefix sum, fast/slow, union-find, topo sort, binary-search boundaries, backtracking, …).
+3. **Pattern docs** (`docs/foundations/dsa/patterns/`) — cross-cutting techniques (sliding window, monotonic stack/deque, prefix sum, fast/slow, union-find, topo sort, binary-search boundaries, backtracking, …).
 4. **Tier 1 advanced** (Knowledge Expansion Queue) — segment tree, Fenwick, KMP, XOR trie, Manacher's, matrix expo, Tarjan's, meet-in-the-middle, reservoir sampling, difference array, number theory. Advanced, but still shows up in *hard* interviews. This is the top of the ROI curve.
 
 **=== INTERVIEW-ROI LINE ===**
