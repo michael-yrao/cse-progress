@@ -105,3 +105,16 @@ class Solution:
                 l+=1
             r+=1
         return l
+    def removeElement_20260705(self, nums: List[int], val: int) -> int:
+        # two pointer, left to keep track of where to put the next non-val
+        # right to read
+
+        l = r = 0
+
+        while r < len(nums):
+            # l is at index to replace
+            if nums[r] != val:
+                nums[l] = nums[r]
+                l+=1
+            r+=1
+        return l
