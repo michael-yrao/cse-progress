@@ -19,6 +19,55 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🔴 146. LRU Cache — Jul 4, 2026
+**Topic**: Design / hashmap + doubly linked list (new)
+
+### Where did I get stuck?
+Knew "move to most-recently-used on access, evict least-recently-used," but reached for a `deque` — whose `remove`/`in` are O(n), breaking the O(1) requirement. Needed the whole design walked through: why a doubly linked list, why two sentinels, and the get-must-promote subtlety.
+
+### Core Realization
+Two structures working together: **`cache: key -> Node`** for O(1) *find*, and a **doubly linked list with head+tail sentinels** for O(1) *move/evict*. The DLL exists purely so you can unlink a node from the middle in O(1) via its `prev`/`next` (a deque can't). Two dummy nodes turn every boundary into an interior case (no None checks). "Move to MRU" = `remove(node)` + `insert(node)`. **`get` must also promote** (read = use), else it's evict-least-recently-*inserted*, not *used*. On eviction, purge BOTH: `remove(tail.prev)` and `del cache[node.key]` — which is why `Node` stores `key`.
+
+### Code Snippet
+```python
+class Node:
+    def __init__(self, key, val):
+        self.key, self.val = key, val
+        self.prev = self.next = None
+
+class LRUCache:
+    def __init__(self, capacity):
+        self.capacity = capacity
+        self.cache = {}                      # key -> Node
+        self.head, self.tail = Node(-1,-1), Node(-1,-1)   # MRU, LRU sentinels
+        self.head.next, self.tail.prev = self.tail, self.head
+
+    def remove(self, node):                  # unlink (O(1), never None thanks to sentinels)
+        node.prev.next, node.next.prev = node.next, node.prev
+
+    def insert(self, node):                  # splice right after head (MRU)
+        nxt = self.head.next
+        self.head.next = node; node.prev = self.head
+        node.next = nxt; nxt.prev = node
+
+    def get(self, key):
+        if key not in self.cache: return -1
+        node = self.cache[key]
+        self.remove(node); self.insert(node)   # promote
+        return node.val
+
+    def put(self, key, value):
+        if key in self.cache:
+            self.remove(self.cache[key])
+        node = Node(key, value)
+        self.insert(node); self.cache[key] = node
+        if len(self.cache) > self.capacity:
+            lru = self.tail.prev
+            self.remove(lru); del self.cache[lru.key]
+```
+
+---
+
 ## 🔴 496. Next Greater Element I — Jul 4, 2026
 **Topic**: Stack / monotonic stack (new — first monotonic stack ever)
 
