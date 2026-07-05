@@ -66,6 +66,33 @@ Each step adds exactly one wrinkle. Do 496 → 739 first; they teach the core.
 - **Forgetting leftovers** — elements still on the stack at the end have no next-greater/smaller; handle them (often `-1` or the array boundary).
 - **Wrong direction** — "previous" queries iterate right→left (or check the stack *before* popping for the element that remains below).
 
+## Related technique: monotonic deque (moving-window max/min)
+
+Same family, one crucial difference. When you need the **max or min over a sliding window** (not "nearest greater to one side"), use a **monotonic deque** — a double-ended queue that pops from *both* ends:
+
+- **back** — pop while it breaks monotonic order, exactly like the stack (keeps the deque decreasing for a max-query)
+- **front** — pop indices that have **slid out of the window** (`front <= i - k`)
+
+The front-eviction is what a plain stack can't do, and it's the whole reason a deque handles a *moving* range. The front of the deque is always the window's answer.
+
+```python
+from collections import deque
+dq = deque()                       # indices, values decreasing front→back
+res = []
+for i, x in enumerate(arr):
+    while dq and arr[dq[-1]] < x:   # back: maintain monotonic order
+        dq.pop()
+    dq.append(i)
+    if dq[0] <= i - k:              # front: evict out-of-window index
+        dq.popleft()
+    if i >= k - 1:
+        res.append(arr[dq[0]])      # front = max of current window
+```
+
+- **239. Sliding Window Maximum** (Hard) — **in NC150 (Sliding Window block)**. The canonical monotonic-deque problem.
+
+Recognition: "nearest greater/smaller to one side" → **stack**; "max/min over a moving window" → **deque**. Same monotonic-invariant idea, different eviction rules.
+
 ## Where this fits the plan
 
 NC150's Stack block (Aug 3–23) contains 739, 853, and 84. The non-NC150 ladder problems (496, 503, 901) are warmup ramps to build fluency *before* the Stack block, so 84 lands as "next-smaller both sides" rather than a cold hard problem.
