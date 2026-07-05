@@ -1,5 +1,15 @@
 # cse-review
 
+## Repo Setup (one-time per machine/clone)
+
+The pre-commit hook that auto-updates the spaced-repetition tracker is **version-controlled** in `.githooks/`. To activate it on a machine, run once:
+
+```sh
+git config core.hooksPath .githooks
+```
+
+This replaces the old per-machine `.git/hooks/pre-commit` (which was never synced). After this, the hook stays in sync via git across all machines.
+
 ## Agent Memory
 
 Persistent behavioral preferences are stored in `.claude/memory/`. At the start of each session, read `.claude/memory/MEMORY.md` for the index, then load any files relevant to the current task.

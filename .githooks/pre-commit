@@ -1,0 +1,20 @@
+#!/bin/sh
+# Version-controlled pre-commit hook (tracked in .githooks/, used via core.hooksPath).
+# One-time setup per machine/clone:   git config core.hooksPath .githooks
+#
+# Auto-updates the spaced-repetition tracker before commit when it (or any
+# solution file) is staged: recomputes review dates and re-sorts the table.
+FILE="docs/foundations/dsa/mastery/dsa_progress.md"
+if git diff --cached --name-only --diff-filter=ACM | grep -qE "^$FILE$|^dsa/leetcode/.*\.py$"; then
+  echo "Auto-updating $FILE..."
+  if command -v py >/dev/null 2>&1; then
+    py scripts/update_review_dates.py --staged-only
+  elif command -v python >/dev/null 2>&1; then
+    python scripts/update_review_dates.py --staged-only
+  else
+    echo "Error: Python not found. Install Python or use npm run update-review-progression." >&2
+    exit 1
+  fi
+  git add "$FILE"
+fi
+exit 0

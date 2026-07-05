@@ -5,6 +5,7 @@ Two ways in, one source of truth:
 - **`techniques/`** — the actual content. Each file is **one atomic technique**: recognition signal → template → key facts → practice ladder (NC150 flagged) → pitfalls. This is where you learn the move.
 - **`data-structures/`** — **hub pages**, not content. Each says "for this kind of data, here are the techniques you reach for," linking into `techniques/`. Use these when you know the *shape* of the data but not the move.
 - **`intuition_cheatsheet.md`** — recognition tables + single-trick techniques (Boyer-Moore, cyclic sort, two heaps, quickselect). Start here when you don't know what a problem wants.
+- **[`../fundamentals/big_o.md`](../fundamentals/big_o.md)** — time/space complexity of every technique + data structure here, in one table.
 
 Rule of thumb: **know the move → open a technique. Know the shape → open a hub. Know neither → cheatsheet.** Techniques are never duplicated; hubs only link.
 
