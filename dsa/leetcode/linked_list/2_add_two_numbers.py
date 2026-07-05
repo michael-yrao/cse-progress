@@ -94,4 +94,31 @@ class Solution:
         return resultList.next
     
     def addTwoNumbers_20260705_elegant(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
-        #
+        # slightly cleaner version of linked list arithmetic
+        # since the above literally just does 3 loops with the same code
+        l1t = l1
+        l2t = l2
+        carryover = 0
+        dummyResultNode = ListNode(-1)
+        dummyTraversal = dummyResultNode
+
+        while l1t or l2t or carryover:
+            l1tVal = l2tVal = 0
+            if l1t:
+                l1tVal = l1t.val
+            if l2t:
+                l2tVal = l2t.val
+            digitSum = l1tVal + l2tVal + carryover
+            if digitSum >= 10:
+                carryover = 1
+            else:
+                carryover = 0
+            resultNode = ListNode(digitSum%10)
+            dummyTraversal.next = resultNode
+            dummyTraversal = dummyTraversal.next
+            if l1t:
+                l1t = l1t.next
+            if l2t:
+                l2t = l2t.next
+        
+        return dummyResultNode.next
