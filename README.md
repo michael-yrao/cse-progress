@@ -56,6 +56,10 @@ Activate the version-controlled git hook so the tracker auto-updates on commit:
 git config core.hooksPath .githooks
 ```
 
+## Roadmap
+
+This is currently a personal system; the goal is to make it a **reusable template** other developers can fork. Progress toward that is tracked in [`ROADMAP.md`](ROADMAP.md).
+
 ## External resources
 
 - [NeetCode](https://neetcode.io/) — start with Blind 75, then NeetCode 150.
