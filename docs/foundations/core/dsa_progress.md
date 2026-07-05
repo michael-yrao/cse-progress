@@ -30,14 +30,15 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/core/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **85** problems &nbsp;·&nbsp; **96** solutions &nbsp;·&nbsp; **259** attempts
+> **86** problems &nbsp;·&nbsp; **97** solutions &nbsp;·&nbsp; **260** attempts
 
 | | 🏆 Retired | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|
-| **Solutions** | 0 | 67 | 23 | 6 |
+| **Solutions** | 0 | 67 | 23 | 7 |
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|---|
+| Medium | [146. LRU Cache](https://leetcode.com/problems/lru-cache/) | 🔴 | 0 | 2026-07-06 | 2026-07-04 | 2026-07-04 |
 | Easy | [496. Next Greater Element I](https://leetcode.com/problems/next-greater-element-i/) | 🔴 | 0 | 2026-07-06 | 2026-07-04 | 2026-07-04 |
 | Medium | [33. Search in Rotated Sorted Array](https://leetcode.com/problems/search-in-rotated-sorted-array/) | 🟢 | 1 | 2026-08-03 | 2026-07-04 | 2026-04-13, 2026-05-29, 2026-06-15, 2026-06-25, 2026-07-04 |
 | Easy | [219. Contains Duplicate II](https://leetcode.com/problems/contains-duplicate-ii/) | 🟢 | 1 | 2026-08-03 | 2026-07-04 | 2026-03-22, 2026-04-14, 2026-06-25, 2026-07-04 |
