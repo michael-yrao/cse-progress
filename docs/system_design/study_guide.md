@@ -46,6 +46,15 @@ System design runs on the **Sunday sprint** (see the weekly schedule). Interview
 
 Below-the-line (Tier 2+) work is **not** a Sunday-sprint activity — it's long-form reading (DDIA, papers) pursued deliberately *after* interview-core is solid, on its own track.
 
+## Design Practice Backlog
+
+Specific systems to design end-to-end (drive the full framework on each). Above the ROI line unless noted.
+
+| System | Tier | Notes |
+|--------|------|-------|
+| **Design YouTube** | 1 (interview core) | Video upload/transcoding pipeline, CDN delivery, metadata + view counts, recommendations. Already named in the canonical list — make it an explicit mock. |
+| **Design an LLM chat assistant (Claude/ChatGPT-style)** | 1–2 | *Pending your confirmation of "Claude Mythos."* AI-serving: token streaming, context-window management, request batching / GPU scheduling, rate limiting & quotas, conversation storage, optional RAG. Ties into the planned AI-Engineering phase. |
+
 ## Where things live
 
 - `01_fundamentals/`, `02_components/`, `03_databases/` — Tier 1 concept notes
