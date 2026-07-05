@@ -63,6 +63,12 @@ This is currently a personal system; the goal is to make it a **reusable templat
 ## External resources
 
 - [NeetCode](https://neetcode.io/) — start with Blind 75, then NeetCode 150.
-- [LeetCode company-wise questions (snehasishroy)](https://github.com/snehasishroy/leetcode-companywise-interview-questions) — actively maintained (snapshots through May 2026), with recency buckets (last 30 days → all-time) and frequency data. Use it as a **reference pool** to *pull* application problems from once NC150 is solid, gated by patterns you've already learned — not a checklist to follow. See "Post-NC150 — The Steady State" in the DSA study guide.
+- **LeetCode company-wise questions** — a **reference pool** to *pull* application problems from once NC150 is solid, gated by patterns you've already learned. Not a checklist to follow. See "Post-NC150 — The Steady State" in the DSA study guide. Repos go stale, so a few options (freshest first, as of July 2026):
+  - [snehasishroy/leetcode-companywise-interview-questions](https://github.com/snehasishroy/leetcode-companywise-interview-questions) — **primary**; snapshots through May 2026, recency buckets (last 30 days → all-time) + frequency data.
+  - [krishnadey30/LeetCode-Questions-CompanyWise](https://github.com/krishnadey30/LeetCode-Questions-CompanyWise) — fallback; sorted by frequency and all-time.
+  - [jobream/Leetcode-Company-Wise-Problems](https://github.com/jobream/Leetcode-Company-Wise-Problems) — fallback; PDF-per-company from LeetCode premium tags.
+  - [MysteryVaibhav/leetcode_company_wise_questions](https://github.com/MysteryVaibhav/leetcode_company_wise_questions) — fallback.
+
+  If all are stale when you reach the application phase, search GitHub for "leetcode company wise questions" sorted by recently-updated and pick the freshest.
 
 *Happy coding!*
