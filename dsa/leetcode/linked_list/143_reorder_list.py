@@ -91,4 +91,58 @@ class Solution:
             secondHalf.next = tmp1
             firstHalf = tmp1
             secondHalf = tmp2
+    def reorderList_20260706(self, head: Optional[ListNode]) -> None:
+        """
+        Do not return anything, modify head in-place instead.
+        """
+        # we can create two lists from this list
+        # one going forward (L0 -> L1 -> l2), one going backwards (Ln -> Ln-1 -> Ln-2)
+        # 1 -> 2
+        # 4 -> 3
+        # we also need length of the list
+        # 1 -> 2 -> 3
+        # 5 -> 4
+        # what we notice is that we are effectively reversing right past midway
+        # so we can use floyd algorithm to find middle node
+        # then reverse rest of the linked list
+        # then from there, we can have two pointers, one from beginning, one from middle
+        # point alternatively
+        slow = head
+        fast = head
+
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+
+        # now slow is right before the nodes we need to reverse
+        # now we reverse all nodes after slow
+        # we do need slow pointer still so we will use another pointer to help reverse
+        secondHalf = slow.next
         
+        # sever the connection to the first half
+        slow.next = None
+
+        def reverse(node):
+            prev = None
+            # 1->2->3->None
+            while node:
+                nxt = node.next
+                # 2-> None 1->None
+                node.next = prev
+                prev = node
+                node = nxt
+            return prev
+
+        secondHalfHead = reverse(secondHalf)
+        firstHalf = head
+        secondHalf = secondHalfHead
+
+        # second half is always shorter
+        # so we use that as our end case
+        while secondHalf:
+            tmp1Next = firstHalf.next
+            tmp2Next = secondHalf.next
+            firstHalf.next = secondHalf
+            secondHalf.next = tmp1Next
+            firstHalf = tmp1Next
+            secondHalf = tmp2Next

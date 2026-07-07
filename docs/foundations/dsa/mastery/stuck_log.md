@@ -19,6 +19,9 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🟡 143. Reorder List — Jul 6, 2026
+**Sticking point**: Concept solid (Floyd → reverse → merge), but factoring reverse into a helper lost the new-head return, and forgot to sever `slow.next = None` before reversing — leaving the middle node pointing into the reversed half, which closes a cycle after the merge.
+
 ## 🔴 146. LRU Cache — Jul 4, 2026
 **Topic**: Design / hashmap + doubly linked list (new)
 
