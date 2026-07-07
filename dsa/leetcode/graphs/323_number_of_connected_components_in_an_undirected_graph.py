@@ -216,3 +216,38 @@ class Solution:
                 counter+=dfs(i)
 
         return counter
+
+    def countComponents_20260706(self, n: int, edges: List[List[int]]) -> int:
+        # BFS method
+        # we want to basically mark visited through each node's adjmap
+        # each time we finish a BFS, we increment # of components
+
+        adjMap = collections.defaultdict(list)
+
+        for node1, node2 in edges:
+            adjMap[node1].append(node2)
+            adjMap[node2].append(node1)
+
+        visited = set()
+        numOfComponents = 0
+
+        queue = collections.deque()
+
+        # since not all are connected, we actually want to do loop on n
+        for i in range(n):
+            if i not in visited:
+                # if not visited, new component
+                numOfComponents+=1
+                # add to queue so we can go through all of its neighbors
+                queue.append(i)
+                # mark node as visited
+                visited.add(i)
+                # mark each one of its neighbors as visited
+                while queue:
+                    node = queue.popleft()
+                    for nb in adjMap[node]:
+                        if nb not in visited:
+                            visited.add(nb)
+                            queue.append(nb)
+        
+        return numOfComponents
