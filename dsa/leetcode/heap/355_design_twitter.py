@@ -126,7 +126,7 @@ class Twitter_20260626:
         while maxHeap and len(result) < 10:        
             tweet = heapq.heappop(maxHeap)[1]
             result.append(tweet)
-        return result
+        return result[::-1]
 
     def follow(self, followerId: int, followeeId: int) -> None:
         # follow means follower gained a followee
@@ -136,6 +136,56 @@ class Twitter_20260626:
         if followeeId in self.followingMap[followerId]:
             self.followingMap[followerId].remove(followeeId)
         
+
+
+# Your Twitter object will be instantiated and called as such:
+# obj = Twitter()
+# obj.postTweet(userId,tweetId)
+# param_2 = obj.getNewsFeed(userId)
+# obj.follow(followerId,followeeId)
+# obj.unfollow(followerId,followeeId)
+
+class Twitter_20260706:
+    def __init__(self):
+        # so we are starting up twitter
+        # so we need to keep track of who each user follows (user -> followees)
+        # we also need to keep track of the posts for each user so user -> posts
+        # we need a way to keep track of 10 most recent, so we can use time
+        # for simplicity, we will use a global integer time and we will use a heap for 10 highest time
+        self.followeeMap = collections.defaultdict(list)
+        self.tweetMap = collections.defaultdict(list)     
+        self.time = 0   
+
+    def postTweet(self, userId: int, tweetId: int) -> None:
+        self.tweetMap[userId].append((self.time, tweetId))
+        self.time+=1
+
+    def getNewsFeed(self, userId: int) -> List[int]:
+        # add self as followee if not already in there
+        if userId not in self.followeeMap[userId]:
+            self.followeeMap[userId].append(userId)
+        # now we go through top 10 posts by followees
+        # how should we do this though, just go through tweetMap I guess
+        # we also wanna use a min heap instead of max heap so we get rid of smallest
+        heap = []
+        for followee in self.tweetMap:
+            if followee in self.followeeMap[userId]:
+                for time, tweetId in self.tweetMap[followee]:
+                    heapq.heappush(heap,(time, tweetId))
+                    if len(heap) > 10:
+                        heapq.heappop(heap)
+        result = []
+        while heap:
+            time,tweetId = heapq.heappop(heap)
+            result.append(tweetId)
+        return result
+
+    def follow(self, followerId: int, followeeId: int) -> None:
+        self.followeeMap[followerId].append(followeeId)
+
+    def unfollow(self, followerId: int, followeeId: int) -> None:
+        if followeeId in self.followeeMap[followerId]:
+            self.followeeMap[followerId].remove(followeeId)
 
 
 # Your Twitter object will be instantiated and called as such:
