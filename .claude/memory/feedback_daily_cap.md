@@ -14,3 +14,4 @@ Never schedule more than 5 problems in a single day. If a day would exceed 5, pu
 - Priority for cutting from warmups: 🟢 Clean no-code reviews and blind sprints first; keep 🔴 Blank retries and April vintage backlog
 - Always add pushed items explicitly to the preview section of the current week's schedule so they get picked up when building the next week
 - When the user finishes their warmups + active block (5 total), do not prompt for more — just note what's available if they want to continue
+- **Sunday is the release valve for overflow.** Its active block is the system-design sprint (not a DSA problem), and it typically carries only one warmup, so it has spare warmup capacity. When another day exceeds 5, prefer shifting a low-priority 🟡/🟢 there before deferring further out — accept the small spaced-rep delay in exchange for balance. Never shift a 🔴 retry off its +2 due date to balance.
