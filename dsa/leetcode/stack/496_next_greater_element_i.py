@@ -33,6 +33,7 @@ Constraints:
 
 Follow up: Could you find an O(nums1.length + nums2.length) solution?
 """
+import collections
 from typing import List
 
 class Solution:
@@ -58,4 +59,29 @@ class Solution:
         for i in range(len(nums1)):
             nextGreater = increasingMap.get(nums1[i],-1)
             result.append(nextGreater)
+        return result
+    def nextGreaterElement_20260706(self, nums1: List[int], nums2: List[int]) -> List[int]:
+        # monotonic stack practice
+        # naive solution is to loop through both nums1 and nums2 and look for next greater giving us O(n^2)
+        # what we can do instead of find all next greater elements first for nums2
+        # we can do this with monotonic decreasing stack and then store as a map {num -> next greater}
+        # then just go through nums1 and look for mapped value
+        nextGreaterMap = {}
+        stack = collections.deque()
+        for i in range(len(nums2)):
+            # if nums2[i] breaks stack's order
+            # it is the next greater element
+            while stack and nums2[i] > stack[-1]:
+                value = stack.pop()
+                nextGreaterMap[value] = nums2[i]
+            stack.append(nums2[i])
+
+        result = []
+
+        for n in nums1:
+            if n not in nextGreaterMap:
+                result.append(-1)
+            else:
+                result.append(nextGreaterMap[n])
+        
         return result
