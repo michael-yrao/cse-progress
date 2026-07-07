@@ -19,6 +19,9 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🟡 355. Design Twitter — Jul 6, 2026
+**Sticking point**: Heap design and self-dedup fully recalled, but returned the size-10 min-heap drained ascending (oldest-first) — forgot the news feed wants newest-first, so needed the `result[::-1]` fix pointed out. Spec-detail miss, not an approach gap.
+
 ## 🟡 143. Reorder List — Jul 6, 2026
 **Sticking point**: Concept solid (Floyd → reverse → merge), but factoring reverse into a helper lost the new-head return, and forgot to sever `slow.next = None` before reversing — leaving the middle node pointing into the reversed half, which closes a cycle after the merge.
 
