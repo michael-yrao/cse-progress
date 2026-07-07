@@ -19,6 +19,58 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🔴 208. Implement Trie (Prefix Tree) — Jul 6, 2026
+**Topic**: Trie / prefix tree (first exposure — new)
+
+### Where did I get stuck?
+Couldn't start from a blank page. Had the right high-level model ("trie is a tree with an empty root sentinel") but the **node design was wrong**: reached for `TrieNode(val, children=[])` — a node that stores its own character plus a *list* of children. That framing made insert/search feel impossible to write.
+
+### Core Realization
+**The character lives in the path, not the node.** A node stores no `val` — the parent knows each child *by its character*, so `children` is a **dict keyed by char** (`char -> TrieNode`), giving O(1) "does this node have child `c`?" via `c in node.children`. A node needs exactly two fields: `children = {}` and `isEnd = False`. `isEnd` marks a **word boundary** — it's what lets `"app"` be a real word while `"ap"` (a mere waypoint on the path to `"apple"`) is not.
+
+All three operations are the **same walk** from the root, char by char; only the ending differs:
+- **insert**: create missing child nodes as you go, then set `cur.isEnd = True` at the end.
+- **search**: return `False` on the first missing char; at the end return `cur.isEnd` (must be a complete inserted word).
+- **startsWith**: identical walk, but at the end return `True` (path exists = prefix exists; `isEnd` irrelevant).
+
+The `search` vs `startsWith` distinction (`return cur.isEnd` vs `return True`) is the whole reason both methods exist.
+
+### Code Snippet
+```python
+class TrieNode:
+    def __init__(self):
+        self.children = {}      # char -> TrieNode  (char is implicit in the key)
+        self.isEnd = False      # word boundary marker
+
+class Trie:
+    def __init__(self):
+        self.root = TrieNode()
+
+    def insert(self, word):
+        cur = self.root
+        for c in word:
+            if c not in cur.children:
+                cur.children[c] = TrieNode()
+            cur = cur.children[c]
+        cur.isEnd = True
+
+    def search(self, word):
+        cur = self.root
+        for c in word:
+            if c not in cur.children:
+                return False
+            cur = cur.children[c]
+        return cur.isEnd        # exact word
+
+    def startsWith(self, prefix):
+        cur = self.root
+        for c in prefix:
+            if c not in cur.children:
+                return False
+            cur = cur.children[c]
+        return True             # prefix only
+```
+
 ## 🟡 355. Design Twitter — Jul 6, 2026
 **Sticking point**: Heap design and self-dedup fully recalled, but returned the size-10 min-heap drained ascending (oldest-first) — forgot the news feed wants newest-first, so needed the `result[::-1]` fix pointed out. Spec-detail miss, not an approach gap.
 
