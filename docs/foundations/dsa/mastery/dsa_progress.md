@@ -30,14 +30,15 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/dsa/mastery/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **88** problems &nbsp;·&nbsp; **99** solutions &nbsp;·&nbsp; **268** attempts
+> **88** problems &nbsp;·&nbsp; **99** solutions &nbsp;·&nbsp; **269** attempts
 
 | | 🏆 Retired | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|
-| **Solutions** | 0 | 72 | 22 | 5 |
+| **Solutions** | 0 | 72 | 23 | 4 |
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|---|
+| Medium | [146. LRU Cache](https://leetcode.com/problems/lru-cache/) | 🟡 | 0 | 2026-07-17 | 2026-07-07 | 2026-07-04, 2026-07-07 |
 | Medium | [208. Implement Trie (Prefix Tree)](https://leetcode.com/problems/implement-trie-prefix-tree/) | 🔴 | 0 | 2026-07-08 | 2026-07-06 | 2026-07-06 |
 | Medium | [143. Reorder List](https://leetcode.com/problems/reorder-list/) | 🟡 | 0 | 2026-07-16 | 2026-07-06 | 2026-04-26, 2026-07-06 |
 | Medium | [355. Design Twitter](https://leetcode.com/problems/design-twitter/) | 🟡 | 0 | 2026-07-16 | 2026-07-06 | 2026-06-24, 2026-06-26, 2026-07-06 |
@@ -46,7 +47,6 @@ Notes for future agents:
 | Easy | [27. Remove Element](https://leetcode.com/problems/remove-element/) | 🟢 | 1 | 2026-08-04 | 2026-07-05 | 2026-01-05, 2026-03-28, 2026-05-27, 2026-06-26, 2026-07-05 |
 | Medium | [138. Copy List with Random Pointer](https://leetcode.com/problems/copy-list-with-random-pointer/) | 🟢 | 1 | 2026-08-04 | 2026-07-05 | 2026-07-03, 2026-07-05 |
 | Medium | [2. Add Two Numbers](https://leetcode.com/problems/add-two-numbers/) | 🟢 | 1 | 2026-08-04 | 2026-07-05 | 2026-07-05 |
-| Medium | [146. LRU Cache](https://leetcode.com/problems/lru-cache/) | 🔴 | 0 | 2026-07-06 | 2026-07-04 | 2026-07-04 |
 | Medium | [33. Search in Rotated Sorted Array](https://leetcode.com/problems/search-in-rotated-sorted-array/) | 🟢 | 1 | 2026-08-03 | 2026-07-04 | 2026-04-13, 2026-05-29, 2026-06-15, 2026-06-25, 2026-07-04 |
 | Easy | [219. Contains Duplicate II](https://leetcode.com/problems/contains-duplicate-ii/) | 🟢 | 1 | 2026-08-03 | 2026-07-04 | 2026-03-22, 2026-04-14, 2026-06-25, 2026-07-04 |
 | Medium | [994. Rotting Oranges](https://leetcode.com/problems/rotting-oranges/) | 🟢 | 1 | 2026-08-03 | 2026-07-04 | 2026-06-06, 2026-06-15, 2026-06-25, 2026-07-04 |

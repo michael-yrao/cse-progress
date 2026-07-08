@@ -36,6 +36,9 @@ Constraints:
     0 <= value <= 105
     At most 2 * 105 calls will be made to get and put.
 """
+from typing import Optional
+
+
 class Node_20260704:
     def __init__(self, key,val,prev=None,next=None):
         self.key = key
@@ -99,6 +102,72 @@ class LRUCache:
             self.remove(lru)
             del self.cache[lru.key]
 
+
+# Your LRUCache object will be instantiated and called as such:
+# obj = LRUCache(capacity)
+# param_1 = obj.get(key)
+# obj.put(key,value)
+
+# whole point of LRU is that we need to be able to access LRU and MRU at O(1) time
+# so this means we should have a doubly linked list with two dummy nodes
+# one at the head to be able to access MRU
+# one at the tail to be able to access LRU
+
+class ListNode_20260707:
+    def __init__(self, key: int, value: int, prev: Optional[ListNode_20260707] = None, next: Optional[ListNode_20260707] = None):
+        self.key = key
+        self.value = value
+        self.prev = prev
+        self.next = next
+
+class LRUCache_20260707:
+
+    def __init__(self, capacity: int):
+        self.capacity = capacity
+        # key -> ListNode
+        self.map = {}
+        self.head = ListNode_20260707(-1,-1)
+        self.tail = ListNode_20260707(-1,-1)
+        self.head.next = self.tail
+        self.head.prev = None
+        self.tail.next = None
+        self.tail.prev = self.head
+
+    def delete(self, node) -> None:
+        nextNode = node.next
+        prevNode = node.prev
+        prevNode.next = node.next
+        nextNode.prev = prevNode
+
+    def insert(self, node) -> None:
+        nextNode = self.head.next
+        self.head.next = node
+        node.next = nextNode
+        node.prev = self.head
+        nextNode.prev = node
+
+    def get(self, key: int) -> int:
+        # go through the list to get the value and then also put it to MRU
+        # so we need a way to insert/delete a node here
+        if key in self.map:
+            node = self.map[key]
+            self.delete(node)
+            self.insert(node)
+            return node.value
+        return -1
+
+    def put(self, key: int, value: int) -> None:
+        if key in self.map:
+            self.delete(self.map[key])
+        node = ListNode_20260707(key,value)
+        self.insert(node)
+        self.map[key] = node
+        # we did have a capacity, so check capacity and remove nodes from LRU as needed
+
+        while len(self.map) > self.capacity:
+            lru = self.tail.prev
+            self.delete(lru)
+            del self.map[lru.key]
 
 # Your LRUCache object will be instantiated and called as such:
 # obj = LRUCache(capacity)

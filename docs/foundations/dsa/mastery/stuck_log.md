@@ -19,6 +19,9 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🟡 146. LRU Cache — Jul 7, 2026
+**Sticking point**: Recalled the whole design cold (hashmap + DLL with two sentinels, get-promotes, evict `tail.prev` + `del map[node.key]`) — big jump from the Jul 4 🔴. Friction was peripheral: needed the type-checker error explained (untyped param = `Any` = silent; annotating `delete(node: ListNode)` surfaced the unprovable `.prev is not None` invariant → resolve with `assert`).
+
 ## 🔴 208. Implement Trie (Prefix Tree) — Jul 6, 2026
 **Topic**: Trie / prefix tree (first exposure — new)
 
