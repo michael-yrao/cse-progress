@@ -13,4 +13,5 @@
 - [End of session push](feedback_end_of_session_push.md) — commit unstaged solutions and push all commits when closing out the day
 - [End of week schedule](feedback_end_of_week_schedule.md) — generate next week's schedule file before closing out the last session of the week
 - [New vs retry problems](feedback_new_vs_retry.md) — only list a problem as "new" if it's from the study_guide roadmap phase AND has no existing tracker row
+- [Method-variant promotion](feedback_method_variant_promotion.md) — pull an alternate-method variant (e.g. 42 Two-Pointer) into rotation only when the base method retires (🏆), not while it's still churning 🟡/🟢
 - [Schedule markdown escaping](feedback_schedule_markdown.md) — escape the period on bullets starting with a bare problem number (`- 143\.`) to avoid roman-numeral list markers
