@@ -127,3 +127,27 @@ class Solution:
                 totalWater+=water
 
         return totalWater
+    def trap_20260708(self, height: List[int]) -> int:
+        # water potential at each node is min(left,right)
+        # actual water = water potential - height[i]
+        # left   = [0,0,1,1,2,2,2,2,3,3,3,3]
+        # right  = [3,3,3,3,3,3,3,2,2,2,1,0]
+        # height = [0,1,0,2,1,0,1,3,2,1,2,1]
+        # result = [0,0,1,0,1,2,1,0,0,1,0,0]
+
+        left = [0] * len(height)
+        right = [0] * len(height)
+
+        for i in range(1,len(height)):
+            left[i] = max(left[i-1],height[i-1])
+        
+        for i in range(len(height)-2,-1,-1):
+            right[i] = max(right[i+1],height[i+1])
+        
+        result = 0
+
+        for i in range(len(height)):
+            if min(left[i],right[i]) - height[i] > 0:
+                waterGathered = min(left[i],right[i]) - height[i]
+                result+=waterGathered
+        return result
