@@ -172,6 +172,7 @@ def get_staged_paths() -> tuple[list[Path], bool]:
         output = subprocess.check_output(
             ["git", "diff", "--cached", "--name-only", "--diff-filter=ACM"],
             text=True,
+            encoding="utf-8",
             cwd=Path.cwd(),
         )
     except (subprocess.CalledProcessError, FileNotFoundError):
@@ -206,6 +207,7 @@ def get_staged_rows_with_changed_attempts() -> set[str]:
         output = subprocess.check_output(
             ["git", "diff", "--cached", "--unified=0", "--", str(MARKDOWN_PATH)],
             text=True,
+            encoding="utf-8",
             cwd=Path.cwd(),
         )
     except (subprocess.CalledProcessError, FileNotFoundError):
