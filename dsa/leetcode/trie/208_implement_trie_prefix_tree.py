@@ -77,3 +77,48 @@ class Trie:
 # obj.insert(word)
 # param_2 = obj.search(word)
 # param_3 = obj.startsWith(prefix)
+
+class TrieNode_20260708:
+    
+    def __init__(self):
+        # string -> Node mapping
+        self.children = {}
+        self.isWord = False
+
+class Trie_20260708:
+    def __init__(self):
+        self.root = TrieNode_20260708()
+
+    def insert(self, word: str) -> None:
+        traversal = self.root
+        for char in word:
+            # the way tries work is that the value technically lives on the edge not the node
+            # so when we set the children[char] to new TrieNode, we are saying from this node
+            # the value to the new node is char
+            if char not in traversal.children:
+                traversal.children[char] = TrieNode_20260708()
+            traversal = traversal.children[char]
+        traversal.isWord = True
+
+    def search(self, word: str) -> bool:
+        traversal = self.root
+        for char in word:
+            if char not in traversal.children:
+                return False
+            traversal = traversal.children[char]
+        return traversal.isWord
+
+    def startsWith(self, prefix: str) -> bool:
+        traversal = self.root
+        for char in prefix:
+            if char not in traversal.children:
+                return False
+            traversal = traversal.children[char]
+        return True
+
+
+# Your Trie object will be instantiated and called as such:
+# obj = Trie()
+# obj.insert(word)
+# param_2 = obj.search(word)
+# param_3 = obj.startsWith(prefix)
