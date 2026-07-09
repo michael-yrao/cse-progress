@@ -22,6 +22,9 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 ## 🟡 146. LRU Cache — Jul 7, 2026
 **Sticking point**: Recalled the whole design cold (hashmap + DLL with two sentinels, get-promotes, evict `tail.prev` + `del map[node.key]`) — big jump from the Jul 4 🔴. Friction was peripheral: needed the type-checker error explained (untyped param = `Any` = silent; annotating `delete(node: ListNode)` surfaced the unprovable `.prev is not None` invariant → resolve with `assert`).
 
+## 🟡 75. Sort Colors (Dutch Flag) — Jul 8, 2026
+**Sticking point**: Three-way partition logic correct, but loop bound was `traversal < right` instead of `<= right` — the element sitting at `right` (where the next 2 lands) never gets processed, leaving the last position unsorted (e.g. `[2,0,1]` → `[1,0,2]`).
+
 ## 🟡 208. Implement Trie (Prefix Tree) — Jul 8, 2026
 **Sticking point**: Recalled the two-field node (`map` + `isWord`) and all three walks, but the "node stores no char" model was still shaky — took in a vestigial `char` param out of old reflex, and needed the node-vs-edge visualization ("the char is the *edge label* = the dict key; a node's identity is its path, not a stored letter") to fully settle why the root can be "empty" yet have a `'c'` child.
 

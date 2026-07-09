@@ -113,3 +113,29 @@ class Solution:
                 i-=1
             i+=1
         
+    def sortColors_20260708(self, nums: List[int]) -> None:
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+        # Dutch flag algorithm
+        # left pointer to validate 0s
+        # right pointer to validates 2s
+        # traversal pointer to traverse and swap and re-check if values coming from 2 need to be re-evaluated
+
+        traversal = left = 0
+        right = len(nums) - 1
+        
+        def swap(l,r):
+            tmp = nums[r]
+            nums[r] = nums[l]
+            nums[l] = tmp
+
+        while traversal <= right:
+            if nums[traversal] == 0:
+                swap(left, traversal)
+                left+=1
+            elif nums[traversal] == 2:
+                swap(traversal, right)
+                right-=1
+                traversal-=1
+            traversal+=1
