@@ -302,3 +302,43 @@ class Solution:
                 return False
         
         return True
+    def validTree_20260709(self, n: int, edges: List[List[int]]) -> bool:
+        # in graph theory, if a graph is a tree, # of edges = # of nodes - 1
+        # thus we can do a nice simple check immediately
+        if len(edges) + 1 != n:
+            return False
+        
+        rankMap = {}
+        parentMap = {}
+
+        for i in range(n):
+            rankMap[i] = 0
+            parentMap[i] = i
+
+        # find root parent of node
+        def find(node):
+            if node == parentMap[node]:
+                return parentMap[node]
+            parentMap[node] = find(parentMap[node])
+            return parentMap[node]
+        
+        # see if we can union nodes without creating a cycle
+        def union(n1,n2):
+            n1r = find(n1)
+            n2r = find(n2)
+            if n1r == n2r:
+                return False
+            if rankMap[n1r] > rankMap[n2r]:
+                parentMap[n2r] = n1r
+            elif rankMap[n1r] < rankMap[n2r]:
+                parentMap[n1r] = n2r
+            else:
+                parentMap[n2r] = n1r
+                rankMap[n1r]+=1
+            return True
+        
+        for n1, n2 in edges:
+            if not union(n1,n2):
+                return False
+        
+        return True

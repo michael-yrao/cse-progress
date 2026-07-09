@@ -22,6 +22,9 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 ## 🟡 146. LRU Cache — Jul 7, 2026
 **Sticking point**: Recalled the whole design cold (hashmap + DLL with two sentinels, get-promotes, evict `tail.prev` + `del map[node.key]`) — big jump from the Jul 4 🔴. Friction was peripheral: needed the type-checker error explained (untyped param = `Any` = silent; annotating `delete(node: ListNode)` surfaced the unprovable `.prev is not None` invariant → resolve with `assert`).
 
+## 🟡 261. Graph Valid Tree (Union-Find) — Jul 9, 2026
+**Sticking point**: Core UF (edges == n-1 guard + cycle check) was solid, but bolted on a node-coverage check (à la DFS's `len(visited) == n`) that UF doesn't need — the `n-1` guard + global cycle scan already prove connectivity, so the extra check caused issues. Coverage-verify belongs to single-source DFS, not UF.
+
 ## 🔴 105. Construct Binary Tree from Preorder and Inorder — Jul 8, 2026
 **Topic**: Trees / divide & conquer (new)
 
