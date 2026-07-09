@@ -22,6 +22,9 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 ## 🟡 146. LRU Cache — Jul 7, 2026
 **Sticking point**: Recalled the whole design cold (hashmap + DLL with two sentinels, get-promotes, evict `tail.prev` + `del map[node.key]`) — big jump from the Jul 4 🔴. Friction was peripheral: needed the type-checker error explained (untyped param = `Any` = silent; annotating `delete(node: ListNode)` surfaced the unprovable `.prev is not None` invariant → resolve with `assert`).
 
+## 🟡 19. Remove Nth Node From End (Recursion) — Jul 8, 2026
+**Sticking point**: Postorder count-from-end logic was right, but removal-by-predecessor can't touch the head (head has no predecessor, and returning `postorder(head)` always hands back the same node) → `n == length` fails. Fix: sentinel `dummy = ListNode(0, head)`; recurse on dummy for its rewiring side-effects; `return dummy.next`. Rule: any "remove a node" problem where the head can go → use a dummy.
+
 ## 🟡 75. Sort Colors (Dutch Flag) — Jul 8, 2026
 **Sticking point**: Three-way partition logic correct, but loop bound was `traversal < right` instead of `<= right` — the element sitting at `right` (where the next 2 lands) never gets processed, leaving the last position unsorted (e.g. `[2,0,1]` → `[1,0,2]`).
 

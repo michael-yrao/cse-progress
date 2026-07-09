@@ -217,3 +217,27 @@ class Solution:
             node = node.next
             counter+=1
         return dummy.next
+    def removeNthFromEnd_20260708(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
+        # we can do preorder or postorder here
+        # we will try postorder today
+        # basically if the node returned is the node we are looking to replace
+        # set its caller's next to return node's next
+        nodeCountFromEnd = 0
+
+        def postorder(node):
+            nonlocal nodeCountFromEnd
+            if not node or not node.next:
+                return node
+            
+            returnNode = postorder(node.next)
+            nodeCountFromEnd+=1
+            if nodeCountFromEnd == n:
+                node.next = node.next.next
+            else:
+                node.next = node.next
+            return node
+        
+        dummy = ListNode(-1)
+        dummy.next = head
+        postorder(dummy)
+        return dummy.next
