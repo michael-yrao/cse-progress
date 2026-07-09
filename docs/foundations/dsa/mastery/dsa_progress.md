@@ -30,14 +30,15 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/dsa/mastery/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **88** problems &nbsp;·&nbsp; **99** solutions &nbsp;·&nbsp; **273** attempts
+> **89** problems &nbsp;·&nbsp; **100** solutions &nbsp;·&nbsp; **274** attempts
 
 | | 🏆 Retired | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|
-| **Solutions** | 0 | 73 | 23 | 3 |
+| **Solutions** | 0 | 73 | 23 | 4 |
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|---|
+| Medium | [105. Construct Binary Tree from Preorder and Inorder Traversal](https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/) | 🔴 | 0 | 2026-07-10 | 2026-07-08 | 2026-07-08 |
 | Medium | [208. Implement Trie (Prefix Tree)](https://leetcode.com/problems/implement-trie-prefix-tree/) | 🟡 | 0 | 2026-07-18 | 2026-07-08 | 2026-07-06, 2026-07-08 |
 | Medium | [75. Sort Colors (Dutch Flag)](https://leetcode.com/problems/sort-colors/) | 🟡 | 0 | 2026-07-18 | 2026-07-08 | 2026-01-08, 2026-04-01, 2026-05-26, 2026-05-28, 2026-06-28, 2026-07-08 |
 | Medium | [19. Remove Nth Node From End of List (Recursion)](https://leetcode.com/problems/remove-nth-node-from-end-of-list/) | 🟡 | 0 | 2026-07-18 | 2026-07-08 | 2026-05-18, 2026-05-21, 2026-06-18, 2026-06-28, 2026-07-08 |

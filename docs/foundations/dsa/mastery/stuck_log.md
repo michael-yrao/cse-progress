@@ -22,6 +22,34 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 ## 🟡 146. LRU Cache — Jul 7, 2026
 **Sticking point**: Recalled the whole design cold (hashmap + DLL with two sentinels, get-promotes, evict `tail.prev` + `del map[node.key]`) — big jump from the Jul 4 🔴. Friction was peripheral: needed the type-checker error explained (untyped param = `Any` = silent; annotating `delete(node: ListNode)` surfaced the unprovable `.prev is not None` invariant → resolve with `assert`).
 
+## 🔴 105. Construct Binary Tree from Preorder and Inorder — Jul 8, 2026
+**Topic**: Trees / divide & conquer (new)
+
+### Where did I get stuck?
+Blanked on how to reconstruct the tree. Two misconceptions blocked it: (1) reached for heap array-indexing (`left = 2n+1`, `right = 2n+2`) — irrelevant here; this builds a *pointer-based* tree of arbitrary shape, not a flat array. (2) Understood inorder's split but couldn't see how the `mid` from inorder maps onto slicing **preorder**.
+
+### Core Realization
+Two facts drive the whole thing:
+- **Preorder gives the root:** layout is `[root, (whole left subtree), (whole right subtree)]` → `preorder[0]` is always the current root.
+- **Inorder gives the split:** layout is `[(left subtree), root, (right subtree)]` → find the root's value in inorder at index `mid`; everything left of it is the left subtree, everything right is the right subtree.
+
+`mid` = **count of left-subtree nodes**. That count is the bridge: an entire subtree is **contiguous** in preorder, so knowing the left subtree has `mid` nodes lets you carve preorder without knowing its internal shape. Skip 1 for the root, take the next `mid` for the left block, the rest is the right block. Same nodes, two orderings — inorder *counts* them, preorder *stores them contiguously*.
+
+Slicing: inorder split skips the root (`[:mid]` / `[mid+1:]`); preorder split skips index 0 (`[1:1+mid]` / `[1+mid:]`). `1+mid` is the single boundary between left and right blocks.
+
+### Code Snippet
+```python
+def build(preorder, inorder):
+    if not preorder:
+        return None
+    root = TreeNode(preorder[0])
+    mid = inorder.index(preorder[0])          # count of left-subtree nodes
+    root.left  = build(preorder[1:1+mid], inorder[:mid])
+    root.right = build(preorder[1+mid:],  inorder[mid+1:])
+    return root
+```
+Optimization for later (not needed first pass): value→index dict for inorder + integer bounds instead of slicing → O(n) instead of O(n²).
+
 ## 🟡 19. Remove Nth Node From End (Recursion) — Jul 8, 2026
 **Sticking point**: Postorder count-from-end logic was right, but removal-by-predecessor can't touch the head (head has no predecessor, and returning `postorder(head)` always hands back the same node) → `n == length` fails. Fix: sentinel `dummy = ListNode(0, head)`; recurse on dummy for its rewiring side-effects; `return dummy.next`. Rule: any "remove a node" problem where the head can go → use a dummy.
 
