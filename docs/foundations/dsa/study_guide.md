@@ -218,7 +218,7 @@ Every design session must be narrated out loud — not written silently. Intervi
 Once the roadmap completes and NC150 is Clean/retired, the mode shifts from **acquiring patterns** to three ongoing threads that run in parallel — this is the permanent steady state and the on-ramp to the competitive-programmer goal:
 
 1. **Maintenance** — spaced repetition keeps NC150 alive: 🏆 retired problems spot-check every 180 days; anything that slips to 🟡/🔴 returns to rotation. Never stops.
-2. **Application — *pull, not push*.** Company frequency lists are a **reference pool, not a checklist.** *Pull* problems from them **gated by patterns/techniques already learned** (NC150 + expansion queue), to build **speed and transfer** on your existing foundation. Never march a company list top-to-bottom — your knowledge drives the selection, not the company's list. Log each pull in the tracker: 🟢 confirms transfer works; 🟡/🔴 is a **diagnostic** pointing at a pattern to refresh (not a cue to learn something ad-hoc).
+2. **Application — *pull, not push*.** Company frequency lists are a **reference pool, not a checklist.** *Pull* problems from them **gated by patterns/techniques already learned** (NC150 + expansion queue), to build **speed and transfer** on your existing foundation. Never march a company list top-to-bottom — your knowledge drives the selection, not the company's list. Log each pull in the tracker: 🟢 confirms transfer works; 🟡/🔴 is a **diagnostic** pointing at a pattern to refresh (not a cue to learn something ad-hoc). The two curated **pull pools** — interview-sourced (during Tier 1) and competitive-style (after, for Tier 2) — live in [`backlog/`](backlog/README.md).
 3. **Expansion — keep learning, deliberately.** Continue working the **Knowledge Expansion Queue** (bottom of `dsa_progress.md`): finish Tier 1 advanced (segment tree, KMP, XOR trie, …), then cross the Interview-ROI line into Tier 2 competitive material toward the competitive-programmer goal. New concepts enter **here, in order, deliberately** — never reactively off a company problem.
 
 **The direction of causation always runs from your knowledge outward.** NC150 + expansion queue = what you know → pull application problems that exercise it, and grow the queue on purpose. Nothing external (a company list, a random hard problem) is allowed to *dictate* the curriculum.
@@ -285,6 +285,7 @@ The NC150 1-D DP (12 problems) and 2-D DP (11 problems) blocks already contain e
     *   *Core Concepts*: HTTP vs WebSockets, Message Queues (Kafka), API Rate Limiting.
 
 ### Phase 3: AI System Engineering & Infrastructure (Weeks 26–29)
+> Full pillar guide (ROI-line tiers, cadence, practice backlog, templates): [`../ai_engineering/study_guide.md`](../ai_engineering/study_guide.md). Prerequisite: System Design Tier 1 largely retired.
 *   **Block 8: AI Infrastructure & Retrieval (Weeks 26–29)**
     *   *Core Concepts*: 
         *   **Vector Search Foundations**: Text chunking strategies, embeddings pipelines, and index methods (HNSW/IVF) in vector databases like Pinecone.
