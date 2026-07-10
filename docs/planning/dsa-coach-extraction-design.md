@@ -173,6 +173,7 @@ The pedagogy is *why the system works*; loosening it produces a weaker product w
 - **Coding is required for Clean (DSA).** A 🟢 Clean is only earned by *coding the solution* from a blank page. A no-code blueprint/verbal walk-through **can never land Clean** — it caps at 🟡 Shaky no matter how flawless. This is a **deliberate divergence from cse-review**, which lets a flawless no-code warmup log Clean; the owner prefers coding to be the default rep and the sole path to Clean. (See §4b for the no-code opt-in.)
 - No spoilers / no approach hints unless the learner is stuck or explicitly asks; never recap approach on a retry
 - No code edits by the agent — the learner writes every line
+- **Whiteboard fidelity** — no shared boilerplate/`datamodel` library; the learner writes the *full* solution from scratch every time, including `ListNode`/`TreeNode` definitions, as on an interview whiteboard (§6b)
 - Phase-completion = every associated problem 🏆 Retired (§5)
 - Reach-beyond posture — the curriculum always overshoots the target (§5)
 
@@ -250,7 +251,7 @@ This is where cse-review's soul lives. It encodes, from §2b:
 - **Operating principles first:** close the loop completely & proactively; the learner owns thinking and writes all code — the agent coaches, reads, explains, never edits solution source.
 - **The review workflow:** on any problem mention → mark schedule → ask "Clean, Shaky, or Blank?" (with your exact definitions) → update `dsa_progress.md` → run the script (or let the hook) → proactively slot the computed next-review date into the right week's schedule.
 - **Coding-for-Clean rule (DSA):** the default rep is coding; no-code is an explicit opt-in and is hard-capped at 🟡 Shaky. If a learner reports "Clean" on a session they didn't code, record 🟡 Shaky and say why. (§4b)
-- **Scaffold-first rule (DSA):** when a problem is started, generate the empty dated skeleton from `solution_template.py` (path, difficulty token, URL, `Attempt N · <today>` banner, `pass` stub) *before* the learner codes — but never write solution logic (§6b, respects the §4a lock).
+- **Scaffold-first rule (DSA):** when a problem is started, generate the empty dated skeleton from `solution_template.py` (path, URL, pattern, `Attempt N · <today>` banner, `pass` stub) *before* the learner codes — but never write solution logic or data-structure definitions (§6b, respects the §4a lock).
 - **Guardrails:** no spoilers/approaches unless stuck or asked; never recap approach on a retry; strict comfort bar; daily cap from config; schedule-integrity rule (never drop a problem without re-slotting it); new-vs-retry distinction; method-variant promotion rule.
 - **Phase-completion rule:** a phase is complete only when *every* associated problem (learning + pulled backlog) is 🏆 Retired. Report "N of M retired"; never advance the headline phase early. (§5)
 - **Application pull rule:** during a tier, pull backlog problems from that tier's pool gated by learned patterns — never march a list top-to-bottom; a 🟡/🔴 pull is a diagnostic, not a cue to learn something ad-hoc.
@@ -291,21 +292,20 @@ System design reuses **the same engine and philosophy** as DSA, with three delib
 Observed convention in cse-review (to standardize, not reinvent):
 
 - Path: `dsa/leetcode/<category>/<number>_<snake_name>.py` — matches the engine's `{number}_{name}` discovery + `filename_pattern`.
-- **Difficulty lives as a token line in the top docstring** (`EASY` / `MEDIUM` / `HARD`). The engine's `extract_difficulty_from_source()` parses it; if absent the tracker shows `Unknown`. Newer files do this, older ones don't — the template makes it non-optional.
 - One `class Solution` holds **dated method variants** (e.g. `removeNthFromEnd`, `removeNthFromEndRecursion`). Dating isn't consistent today — **this template is where the "date my classes/methods" convention gets standardized going forward.**
+- **No difficulty token line.** (An early cse-review experiment; the owner has dropped it.) Difficulty is set on the tracker row at log time by the coach, not parsed from the source file. The engine's `extract_difficulty_from_source()` stays as a harmless no-op fallback but the template does **not** carry a difficulty line.
+- **No shared data-model imports.** Each solution declares its own `ListNode` / `TreeNode` / etc. from scratch — see the whiteboard-fidelity rule below.
 
 **The shipped template** (`docs/foundations/dsa/templates/solution_template.py`), placeholders filled at scaffold time:
 
 ```python
 """
 {number}. {Title}   ·   https://leetcode.com/problems/{slug}/
-{DIFFICULTY}                      # EASY | MEDIUM | HARD  — parsed into the tracker; keep on its own line
 Pattern: {category}              # e.g. linked_list, arrays_and_hash
 
 <paste the LeetCode problem statement here>
 """
 from typing import Optional, List
-# from dsa.datamodel import ListNode, TreeNode   # shared models — uncomment as needed
 
 
 class Solution:
@@ -315,13 +315,15 @@ class Solution:
         pass
 ```
 
+Any data structures a problem needs (`ListNode`, `TreeNode`, `TrieNode`, `Node`, …) are **written by the learner inside the file**, not imported — that's deliberate (below).
+
+**Whiteboard fidelity — write the full code from scratch (LOCKED pedagogy, §4a).** No shared `datamodel.py`, no boilerplate library. The learner writes *everything* — including the `ListNode`/`TreeNode` class definitions — every time, exactly as they would on a whiteboard in an interview. Re-deriving the scaffolding is part of the rep, not friction to optimize away. This is why the template ships lean and imports nothing beyond `typing`.
+
 **The dating convention (baked in).** Every attempt is a **dated banner** inside `class Solution`. On a spaced-repetition revisit, the learner **adds a new dated attempt below** rather than overwriting — preserving the history that mirrors the tracker's `Attempt Dates` column and enabling the method-variant promotion rule (§2b). Retirement means several dated, coded Cleans stacked in one file.
 
-**Scaffolding flow — "set up before I start."** When a learner begins a problem, the coach (via the `dsa-init` skill / a `new-problem` action) **generates the empty skeleton first**: correct path + filename, difficulty token, URL/slug, pattern, and the `Attempt 1 · <today>` banner with an empty `pass` stub. The learner then writes the body.
+**Scaffolding flow — "set up before I start."** When a learner begins a problem, the coach (via the `dsa-init` skill / a `new-problem` action) **generates the empty skeleton first**: correct path + filename, URL/slug, pattern, and the `Attempt 1 · <today>` banner with an empty `pass` stub. The learner then writes the body *and* any data-structure definitions it needs.
 
-**Reconciliation with the "no code edits by the agent" lock (§4a).** Scaffolding an **empty, algorithm-free skeleton** (docstring, imports, dated banner, stub signature ending in `pass`) is *not* writing the solution — it's setting the table. The lock still holds: **the agent never writes solution logic; the learner writes every line inside the method body.** The design doc states this boundary explicitly so scaffolding and the lock don't appear to conflict.
-
-**Shared data models.** Ship a small `dsa/datamodel.py` (`ListNode`, `TreeNode`, `Node`, `TrieNode`) so solutions import them instead of re-declaring `ListNode` in every file (as happens today). Mirrors the archived Java `DataModel/` package. Optional import, not forced.
+**Reconciliation with the "no code edits by the agent" lock (§4a).** Scaffolding an **empty, algorithm-free skeleton** (docstring, `typing` import, dated banner, stub signature ending in `pass`) is *not* writing the solution — it's setting the table. The lock still holds: **the agent never writes solution logic or data-structure definitions; the learner writes every line inside the method body and every helper class.**
 
 ---
 
@@ -329,7 +331,7 @@ class Solution:
 
 1. **Scaffold repo** — new repo, directory skeleton (both pillars), licenses, README stub.
 2. **Port engine (multi-pillar)** — copy `update_review_dates.py` + hook; add config loading; generalize from one hardcoded tracker to a list of pillar configs (DSA = pillar #1, behavior-preserving); keep defaults = current behavior; add golden-file test.
-3. **Port DSA scaffold** — patterns/fundamentals as-is; blank templated tracker/logs/schedules; **ship `solution_template.py` + `dsa/datamodel.py` and the `new-problem` scaffolder** (§6b) that stamps path/difficulty/URL/dated banner before coding.
+3. **Port DSA scaffold** — patterns/fundamentals as-is; blank templated tracker/logs/schedules; **ship the lean `solution_template.py` (no difficulty token, no datamodel import) and the `new-problem` scaffolder** (§6b) that stamps path/URL/pattern/dated banner before coding.
 4. **Port System Design pillar** — SD `study_guide.md` (ROI-line tiers + cadence), `templates/` and `components`/`fundamentals` seeds as-is; new blank `design_progress.md`; Design Practice Backlog.
 5. **Author the layered curriculum + backlog pools** — DSA `milestone`/`expansion_tier1`/`expansion_tier2` + backlog pools (interview-sourced, competitive-style); SD `tier1_interview_core`/`tier2_architect_depth` + Design Practice Backlog. All ROI-line-tagged.
 6. **Write bootstrap** — interactive setup + date projection across both pillars (weekday DSA + Sunday SD sprint).
