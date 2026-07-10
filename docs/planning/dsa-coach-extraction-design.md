@@ -169,6 +169,7 @@ The pedagogy is *why the system works*; loosening it produces a weaker product w
 **🔒 Locked — non-negotiable, not exposed as config; enforced by the coaching skill:**
 
 - Strict comfort bar (🟢 Clean only from a blank page, correct complexity, zero hints; "mostly remembered" = 🟡 Shaky)
+- **Coding is required for Clean (DSA).** A 🟢 Clean is only earned by *coding the solution* from a blank page. A no-code blueprint/verbal walk-through **can never land Clean** — it caps at 🟡 Shaky no matter how flawless. This is a **deliberate divergence from cse-review**, which lets a flawless no-code warmup log Clean; the owner prefers coding to be the default rep and the sole path to Clean. (See §4b for the no-code opt-in.)
 - No spoilers / no approach hints unless the learner is stuck or explicitly asks; never recap approach on a retry
 - No code edits by the agent — the learner writes every line
 - Phase-completion = every associated problem 🏆 Retired (§5)
@@ -179,8 +180,18 @@ The pedagogy is *why the system works*; loosening it produces a weaker product w
 - `daily_cap`, time cap (45-min default), `intervals` (Clean/Shaky/Blank days), `retire_at_streak`
 - `target` + `reach_beyond` (which tiers are in scope)
 - `solutions` globs/roots (language)
+- **`rep_mode` per session: `code` (default) or `no_code` opt-in** — see §4b
 
 Adopters tune *when and how much* they study; they cannot dilute *the standard*. A future `--strict=false` escape hatch is explicitly rejected here — if someone wants a lenient tracker, this isn't it.
+
+### 4b. DSA rep mode — code by default, no-code is an opt-in that can't reach Clean
+
+cse-review leans on a **no-code blueprint** format for its 15-min warmup/maintenance slots (state the complexity + core trick out loud, verify against past code). The owner is **not a fan of that as the DSA default** — most DSA reps should be *actually coded*. So `dsa-coach` inverts the emphasis:
+
+- **Default rep = code it.** New problems and reviews alike default to writing the solution from a blank page. This is the normal path and the only one that can earn 🟢 Clean.
+- **No-code is opt-in, per session.** A learner *may* choose a no-code blueprint rep (useful when time-boxed, or for a light maintenance touch), but it's an explicit choice, not the default.
+- **Hard ceiling on no-code.** A no-code rep is capped at 🟡 Shaky — it keeps the problem warm and updates the review clock, but it **cannot advance a streak toward retirement**, because retirement (§5) requires repeated *coded* Cleans. The coaching skill enforces this: if the learner reports "Clean" on a session they didn't code, the coach records 🟡 Shaky and says why.
+- **System Design is unaffected** — its rep is template-fill + blind sprint (§6a); "coding" doesn't apply there. This rule is DSA-pillar-specific.
 
 ---
 
@@ -237,6 +248,7 @@ This is where cse-review's soul lives. It encodes, from §2b:
 
 - **Operating principles first:** close the loop completely & proactively; the learner owns thinking and writes all code — the agent coaches, reads, explains, never edits solution source.
 - **The review workflow:** on any problem mention → mark schedule → ask "Clean, Shaky, or Blank?" (with your exact definitions) → update `dsa_progress.md` → run the script (or let the hook) → proactively slot the computed next-review date into the right week's schedule.
+- **Coding-for-Clean rule (DSA):** the default rep is coding; no-code is an explicit opt-in and is hard-capped at 🟡 Shaky. If a learner reports "Clean" on a session they didn't code, record 🟡 Shaky and say why. (§4b)
 - **Guardrails:** no spoilers/approaches unless stuck or asked; never recap approach on a retry; strict comfort bar; daily cap from config; schedule-integrity rule (never drop a problem without re-slotting it); new-vs-retry distinction; method-variant promotion rule.
 - **Phase-completion rule:** a phase is complete only when *every* associated problem (learning + pulled backlog) is 🏆 Retired. Report "N of M retired"; never advance the headline phase early. (§5)
 - **Application pull rule:** during a tier, pull backlog problems from that tier's pool gated by learned patterns — never march a list top-to-bottom; a 🟡/🔴 pull is a diagnostic, not a cue to learn something ad-hoc.
