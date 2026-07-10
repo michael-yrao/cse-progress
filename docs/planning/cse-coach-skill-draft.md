@@ -72,12 +72,19 @@ intent, not exact words) — run the daily kickoff:
 
 **What gets written (do NOT over-scaffold — memory reps get nothing):**
 
+> **"Dated" means the in-file banner, never the filename.** The filename is
+> always `<number>_<name>.py` (e.g. `1_two_sum.py`) — no date, because the engine
+> discovers files by that name. The date lives *inside* the file as the
+> `# ── Attempt N · <YYYY-MM-DD> ──` banner. So "new file" = create
+> `1_two_sum.py` with an `Attempt 1 · <today>` banner; "append banner" = add an
+> `Attempt N · <today>` banner inside the file that already exists.
+
 | Today's item | Rep mode | Write |
 |--------------|----------|-------|
-| Active-block DSA — **new** | code | New dated solution skeleton file (§3 step 2) |
-| Active-block DSA — **retry** | code | **Append** a new `Attempt N · <today>` banner to the *existing* file — never a second file |
+| Active-block DSA — **new** (no file yet) | code | Create the solution file `<number>_<name>.py` with an `Attempt 1 · <today>` banner + `pass` stub (§3 step 2) |
+| Active-block DSA — **retry** (file exists) | code | **Append** an `Attempt N · <today>` banner inside the existing file — never a second file |
 | Warmup — non-Easy due review | no-code blueprint (default) | **Nothing** — verbal blueprint (caps at 🟡) |
-| Warmup — **Easy** | code (Easy exception) | Skeleton(s), up to 2 per slot |
+| Warmup — **Easy** | code (Easy exception) | Same as new/retry above, up to 2 per slot |
 | Sunday **System Design** sprint | template fill | Copy `component_template.md` or `case_study_template.md`, named for the target |
 | **AI** session | template fill | Copy the AI build template |
 | **Blind sprint** (DSA/SD review) | from memory | **Nothing / blank scratch** — recall is the point |
@@ -93,11 +100,17 @@ and don't duplicate — just re-present the plan.
 
 1. **Mark the schedule** — find the current week's `schedules/<YYYYMMDD>_schedule.md`
    and mark the problem in the table.
-2. **Scaffold first (before they code)** — generate the empty dated skeleton from
-   `solution_template.py` at `dsa/leetcode/<category>/<number>_<snake_name>.py`:
-   header (title · URL · pattern), `from typing import ...`, `class Solution`, and
-   an `# ── Attempt N · <today> ──` banner over a `pass` stub. **Write no logic and
-   no data-structure classes** — the learner writes those.
+2. **Scaffold first (before they code).** The filename is always
+   `dsa/leetcode/<category>/<number>_<snake_name>.py` (e.g. `1_two_sum.py`) — no
+   date in the name; the date lives *inside* as an attempt banner.
+   - **New problem (no file yet):** create the file from `solution_template.py` —
+     header (title · URL · pattern), `from typing import ...`, `class Solution`,
+     and an `# ── Attempt 1 · <today> ──` banner over a `pass` stub.
+   - **Retry (file exists):** leave the file; **append** a new
+     `# ── Attempt N · <today> ──` banner (next N) below the prior attempts.
+   Either way, **write no logic and no data-structure classes** — the learner
+   writes those. All attempts for a problem accumulate in the one file, giving a
+   dated history that feeds the streak/retirement tracking.
 3. **Coach without spoiling** — answer clarifying questions freely; withhold the
    approach unless they're stuck or ask. Never recap the approach (or stuck-log
    content) at the start of a retry.
