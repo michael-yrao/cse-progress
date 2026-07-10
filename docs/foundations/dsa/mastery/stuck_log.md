@@ -22,6 +22,40 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 ## 🟡 146. LRU Cache — Jul 7, 2026
 **Sticking point**: Recalled the whole design cold (hashmap + DLL with two sentinels, get-promotes, evict `tail.prev` + `del map[node.key]`) — big jump from the Jul 4 🔴. Friction was peripheral: needed the type-checker error explained (untyped param = `Any` = silent; annotating `delete(node: ListNode)` surfaced the unprovable `.prev is not None` invariant → resolve with `assert`).
 
+## 🔴 211. Design Add and Search Words — Jul 9, 2026
+**Topic**: Trie + DFS backtracking (new; builds on 208)
+
+### Where did I get stuck?
+`addWord` was trivial (identical to 208 insert). `search` with the `.` wildcard blanked me — thought it needed "regex" and couldn't see how to structure the wildcard branch. Also had an index bug: recursed with `dfs(i+1, child)` (i = frame's start index, constant) instead of `dfs(j+1, child)` (j = live cursor) — re-consumed the wildcard position instead of advancing past it.
+
+### Core Realization
+It's not regex — it's a tree walk with a **fork at the wildcard**, and it's *both* iterative and recursive:
+- **Loop = the forced path.** A concrete char has exactly one child to follow → plain loop, one node per char (just like 208 `search`).
+- **Recursion = the fork.** A `.` could be *any* letter → try **every child**, each resuming the walk on the rest of the word (`j+1`). DFS: dive down child #1; if that whole branch fails, back out and try child #2. Succeed if *any* branch reaches a real word (`isWord`).
+- One-liner: **the loop handles the letters you know; recursion handles the letters you have to guess.**
+
+Index discipline: at a wildcard at position `j`, recurse on `j+1` (past the current char), NOT `i+1` (i is the frame's origin and only equals j when the wildcard is the frame's first char).
+
+### Code Snippet
+```python
+def search(self, word):
+    def dfs(j, node):
+        cur = node
+        for i in range(j, len(word)):
+            c = word[i]
+            if c == '.':
+                for child in cur.children.values():
+                    if dfs(i + 1, child):    # i is the live cursor here
+                        return True
+                return False
+            if c not in cur.children:
+                return False
+            cur = cur.children[c]
+        return cur.isWord
+    return dfs(0, self.root)
+```
+(Note: in this skeleton the loop var is `i` and start is `j` — the recurse must pass `i+1`, the live cursor. Whatever you name them, recurse on the *cursor*+1, not the *frame-start*+1.)
+
 ## 🟡 261. Graph Valid Tree (Union-Find) — Jul 9, 2026
 **Sticking point**: Core UF (edges == n-1 guard + cycle check) was solid, but bolted on a node-coverage check (à la DFS's `len(visited) == n`) that UF doesn't need — the `n-1` guard + global cycle scan already prove connectivity, so the extra check caused issues. Coverage-verify belongs to single-source DFS, not UF.
 
