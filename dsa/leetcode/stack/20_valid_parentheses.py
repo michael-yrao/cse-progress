@@ -113,3 +113,21 @@ class Solution:
                 stack.pop()
         
         return len(stack) == 0
+
+    def isValid_20260709(self, s: str) -> bool:
+        # map of open to close
+        bracketMap = {'{':'}', '(':')', '[':']'}
+
+        # insert when we see key, pop when we see value
+
+        stack = []
+
+        for char in s:
+            if char in bracketMap:
+                stack.append(char)
+            else:
+                if not stack or bracketMap[stack[-1]] != char:
+                    return False
+                stack.pop()
+        
+        return len(stack) == 0
