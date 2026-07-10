@@ -1,0 +1,15 @@
+# NOTE: cse.config.yml is intentionally NOT ignored — commit it to your own fork
+# so your settings sync across machines (same model as the trackers).
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
