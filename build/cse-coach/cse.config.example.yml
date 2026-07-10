@@ -1,0 +1,31 @@
+# cse-coach configuration — copy to cse.config.yml and edit (bootstrap writes this for you).
+# See docs/planning/cse-coach-extraction-design.md §4 in the design repo for rationale.
+
+learner: "Your Name"
+start_date: 2026-07-13
+target: competitive      # DEFAULT, mission-level goal. fintech_interview | faang_interview | competitive
+reach_beyond: 1          # tiers PAST the target so it's hit with margin. MIN 1, enforced — 0 is rejected.
+daily_cap: 5
+
+pillars:                 # which pillars to run and how to weight focus
+  priority: [dsa, system_design, ai_engineering]   # ordered emphasis; your choice
+  # Readiness gates are RECOMMENDED, not hard locks — the coach warns on
+  # front-running; a fluent senior can override. Defaults (mastery-based):
+  gates:
+    system_design_primary:            # earliest to make SD the main 45-min block
+      recommend_after: "dsa.milestone >= 60% retired AND {hashing, heap, trees, graphs} comfortable"
+      # (SD's light Sunday on-ramp has NO gate — encouraged from week 1)
+    ai_engineering:                   # earliest to start the AI pillar
+      recommend_after: "system_design.tier1 majority retired"
+
+intervals:               # days until next review, by Comfort + streak
+  clean:  { streak1: 30, streak2: 60, retired: 180 }
+  shaky:  10
+  blank:  2
+retire_at_streak: 3
+
+solutions:
+  # DEFAULT is Python-only; engine stays language-agnostic so you can widen this.
+  roots: ["dsa/leetcode"]
+  globs: ["*.py"]                       # widen to *.java, *.ts, … if you like
+  filename_pattern: "{number}_{name}"   # 19_remove_nth_node.py
