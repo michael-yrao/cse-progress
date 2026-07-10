@@ -251,14 +251,16 @@ So `cse-coach` must NOT model curriculum as swappable problem lists (NC150 vs Bl
 **Curriculum vs. schedule split (still needed for date-independence):** the NC150 Jun–Dec 2026 table is a *dated* artifact — the hardest thing to generalize. Separate the **curriculum** (ordered phases + problem lists + backlog pools + pacing, undated, in `curriculum/*.yml`) from the **schedule** (real dates), and generate the dated view per adopter.
 
 - `curriculum/milestone.yml`, `expansion_tier1.yml`, `expansion_tier2.yml`: faithful port of your roadmap's *content and ordering*, minus the calendar, tagged by ROI-line tier and pacing (e.g. DP phases drop to 3/week). Each carries its associated `backlog_pool` (interview-sourced for Tier 1, competitive-style for Tier 2).
-- `scripts/bootstrap.py` (also invocable via the `cse-init` skill) asks:
-  1. Name, start date, **target** milestone, **reach_beyond** margin, daily cap, solution language(s), **pillar priority** (which pillar leads).
-  1b. If the chosen priority leads with SD/AI, show the §5a readiness gate + why, offer the light on-ramp, and record any override.
+- `scripts/bootstrap.py` (also invocable via the `cse-init` skill) runs a short **conversational** intake — a coach talking to you, one question at a time, not a form. **Tone matters: warm, brief, a sentence of *why* per question, plain language.** It gathers:
+  1. Name; start date; **target** milestone; **reach_beyond** (mostly handled *for* the learner — mention it's ≥1 and non-negotiable rather than asking a "margin" number); daily cap; solution language; **pillar priority** (which pillar leads).
+  1b. If the priority leads with SD/AI, the gate is delivered as gentle push-back, not a block: name the prerequisite in human terms ("heaps/graphs are the same ideas as priority queues and replication, just wearing a suit"), offer the light on-ramp, proceed only on explicit override.
   2. Writes `cse.config.yml`.
   3. Assembles the curriculum = milestone → target → `+reach_beyond` tiers, projects its phases onto real dates from `start_date` using each phase's pacing rules → writes a personalized `study_guide.md` roadmap table + the **week-1 schedule file** (`docs/.../schedules/<YYYYMMDD>_schedule.md`), with the ROI line and the reach-beyond section preserved.
   4. Resets `dsa_progress.md` to header + seed row; empties logs.
   5. Runs `git config core.hooksPath .githooks`.
-  6. Prints the daily loop, the overshoot philosophy, and the "how to log a result" cheat sheet.
+  6. Signs off in the same voice: names tomorrow's first problem, and reminds the learner the *only* reporting ever asked is "Clean, Shaky, or Blank?"
+
+**Voice guideline (applies to the whole coach, not just bootstrap):** the coach speaks like a supportive human mentor — encouraging, concise, honest. It explains the *why* behind a rule in a sentence, pushes back kindly when a learner front-runs, and never reads like a CLI prompt or a compliance checklist. A reference sample of the intake dialogue lives in the README/`docs/PHILOSOPHY.md` so the tone is pinned, not left to chance.
 
 After bootstrap the adopter's repo is behaviorally identical to cse-review on day 1 — including the reach-beyond posture, not just an interview checklist.
 
@@ -288,6 +290,7 @@ Adopters **choose which pillar to prioritize** (`pillars.priority` in the config
 This is where cse-review's soul lives. It encodes, from §2b:
 
 - **Operating principles first:** close the loop completely & proactively; the learner owns thinking and writes all code — the agent coaches, reads, explains, never edits solution source.
+- **Voice:** speak like a supportive human mentor — warm, concise, honest; a sentence of *why* behind each rule; kind push-back, never a CLI prompt or compliance checklist (see §5 voice guideline + the pinned intake sample).
 - **The review workflow:** on any problem mention → mark schedule → ask "Clean, Shaky, or Blank?" (with your exact definitions) → update `dsa_progress.md` → run the script (or let the hook) → proactively slot the computed next-review date into the right week's schedule.
 - **Coding-for-Clean rule (DSA):** the default rep is coding; no-code is an explicit opt-in and is hard-capped at 🟡 Shaky. If a learner reports "Clean" on a session they didn't code, record 🟡 Shaky and say why. (§4b)
 - **Scaffold-first rule (DSA):** when a problem is started, generate the empty dated skeleton from `solution_template.py` (path, URL, pattern, `Attempt N · <today>` banner, `pass` stub) *before* the learner codes — but never write solution logic or data-structure definitions (§6b, respects the §4a lock).
