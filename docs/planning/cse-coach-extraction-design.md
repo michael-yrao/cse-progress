@@ -251,9 +251,9 @@ So `cse-coach` must NOT model curriculum as swappable problem lists (NC150 vs Bl
 **Curriculum vs. schedule split (still needed for date-independence):** the NC150 Jun–Dec 2026 table is a *dated* artifact — the hardest thing to generalize. Separate the **curriculum** (ordered phases + problem lists + backlog pools + pacing, undated, in `curriculum/*.yml`) from the **schedule** (real dates), and generate the dated view per adopter.
 
 - `curriculum/milestone.yml`, `expansion_tier1.yml`, `expansion_tier2.yml`: faithful port of your roadmap's *content and ordering*, minus the calendar, tagged by ROI-line tier and pacing (e.g. DP phases drop to 3/week). Each carries its associated `backlog_pool` (interview-sourced for Tier 1, competitive-style for Tier 2).
-- `scripts/bootstrap.py` (also invocable via the `cse-init` skill) runs a short **conversational** intake — a coach talking to you, one question at a time, not a form. **Tone matters: warm, brief, a sentence of *why* per question, plain language.** It gathers:
-  1. Name; start date; **target** milestone; **reach_beyond** (mostly handled *for* the learner — mention it's ≥1 and non-negotiable rather than asking a "margin" number); daily cap; solution language; **pillar priority** (which pillar leads).
-  1b. If the priority leads with SD/AI, the gate is delivered as gentle push-back, not a block: name the prerequisite in human terms ("heaps/graphs are the same ideas as priority queues and replication, just wearing a suit"), offer the light on-ramp, proceed only on explicit override.
+- `scripts/bootstrap.py` (also invocable via the `cse-init` skill) runs a short intake. **Present ALL questions at once** — a single warm, well-framed block the learner answers in one pass, not a slow one-at-a-time interrogation. **Tone matters: warm, brief, a sentence of *why* where it helps, plain language.** It gathers, in one shot:
+  1. Name; start date; **target** milestone; **reach_beyond** (mostly handled *for* the learner — note it's ≥1 and non-negotiable rather than asking a "margin" number); daily cap; solution language; **pillar priority** (which pillar leads).
+  1b. *After* the learner submits, if the chosen priority leads with SD/AI, deliver the readiness gate as gentle push-back (not a block): name the prerequisite in human terms ("heaps/graphs are the same ideas as priority queues and replication, just wearing a suit"), offer the light on-ramp, proceed only on explicit override.
   2. Writes `cse.config.yml`.
   3. Assembles the curriculum = milestone → target → `+reach_beyond` tiers, projects its phases onto real dates from `start_date` using each phase's pacing rules → writes a personalized `study_guide.md` roadmap table + the **week-1 schedule file** (`docs/.../schedules/<YYYYMMDD>_schedule.md`), with the ROI line and the reach-beyond section preserved.
   4. Resets `dsa_progress.md` to header + seed row; empties logs.
@@ -286,6 +286,8 @@ Adopters **choose which pillar to prioritize** (`pillars.priority` in the config
 ---
 
 ## 6. The coaching skill (`.claude/skills/cse-coach/SKILL.md`)
+
+> **A full draft of this skill exists: [`cse-coach-skill-draft.md`](cse-coach-skill-draft.md).** It moves to `.claude/skills/cse-coach/SKILL.md` in the new repo at build time (§7 step 8). The bullets below are the outline; the draft is the operative text.
 
 This is where cse-review's soul lives. It encodes, from §2b:
 
