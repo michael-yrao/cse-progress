@@ -147,6 +147,17 @@ target: competitive      # DEFAULT. the mission-level goal. fintech_interview | 
 reach_beyond: 1          # tiers PAST the target so it's hit with margin. MIN 1, enforced — 0 is rejected (see §5)
 daily_cap: 5
 
+pillars:                 # which pillars to run and how to weight focus (§5a)
+  priority: [dsa, system_design, ai_engineering]   # ordered emphasis; adopter's choice
+  # readiness gates are RECOMMENDED, not hard locks — the coach warns on front-running,
+  # a fluent senior can override. Defaults below (mastery-based, not week-based):
+  gates:
+    system_design_primary:            # earliest to make SD the main 45-min block
+      recommend_after: "dsa.milestone >= 60% retired AND {hashing, heap, trees, graphs} comfortable"
+      # (SD's light Sunday on-ramp has NO gate — encouraged from week 1)
+    ai_engineering:                   # earliest to start the AI pillar
+      recommend_after: "system_design.tier1 majority retired"
+
 intervals:              # days until next review, by Comfort + streak
   clean:  { streak1: 30, streak2: 60, retired: 180 }
   shaky:  10
@@ -185,8 +196,9 @@ The pedagogy is *why the system works*; loosening it produces a weaker product w
 **⚙️ Configurable — situational logistics, exposed in `cse.config.yml`:**
 
 - `daily_cap`, time cap (45-min default), `intervals` (Clean/Shaky/Blank days), `retire_at_streak`
-- `target` + `reach_beyond` (which tiers are in scope)
+- `target` + `reach_beyond` (which tiers are in scope; `reach_beyond` floored at 1)
 - `solutions` globs/roots (language)
+- **`pillars.priority`** — which pillar leads (DSA / System Design / AI); the readiness gates are *recommendations* the coach warns on, not locks (§5a)
 - **`rep_mode` per session: `code` (default) or `no_code` opt-in** — see §4b
 
 Adopters tune *when and how much* they study; they cannot dilute *the standard*. A future `--strict=false` escape hatch is explicitly rejected here — if someone wants a lenient tracker, this isn't it.
@@ -240,7 +252,8 @@ So `cse-coach` must NOT model curriculum as swappable problem lists (NC150 vs Bl
 
 - `curriculum/milestone.yml`, `expansion_tier1.yml`, `expansion_tier2.yml`: faithful port of your roadmap's *content and ordering*, minus the calendar, tagged by ROI-line tier and pacing (e.g. DP phases drop to 3/week). Each carries its associated `backlog_pool` (interview-sourced for Tier 1, competitive-style for Tier 2).
 - `scripts/bootstrap.py` (also invocable via the `cse-init` skill) asks:
-  1. Name, start date, **target** milestone, **reach_beyond** margin, daily cap, solution language(s).
+  1. Name, start date, **target** milestone, **reach_beyond** margin, daily cap, solution language(s), **pillar priority** (which pillar leads).
+  1b. If the chosen priority leads with SD/AI, show the §5a readiness gate + why, offer the light on-ramp, and record any override.
   2. Writes `cse.config.yml`.
   3. Assembles the curriculum = milestone → target → `+reach_beyond` tiers, projects its phases onto real dates from `start_date` using each phase's pacing rules → writes a personalized `study_guide.md` roadmap table + the **week-1 schedule file** (`docs/.../schedules/<YYYYMMDD>_schedule.md`), with the ROI line and the reach-beyond section preserved.
   4. Resets `dsa_progress.md` to header + seed row; empties logs.
@@ -248,6 +261,25 @@ So `cse-coach` must NOT model curriculum as swappable problem lists (NC150 vs Bl
   6. Prints the daily loop, the overshoot philosophy, and the "how to log a result" cheat sheet.
 
 After bootstrap the adopter's repo is behaviorally identical to cse-review on day 1 — including the reach-beyond posture, not just an interview checklist.
+
+---
+
+## 5a. Pillar priority & readiness gates (adopter chooses; coach advises)
+
+Adopters **choose which pillar to prioritize** (`pillars.priority` in the config). Priority is *logistics* (configurable, per §4a) — but ordering is not free of consequences, because each later pillar reasons in the vocabulary of the earlier one. So the coach ships **recommended readiness gates**: it doesn't hard-block, it **warns when a learner front-runs a prerequisite** and lets a fluent senior override.
+
+**Recommended earliest uptake (mastery-based, not week-based — consistent with phase = retired):**
+
+| Pillar | Earliest to make it the *primary* focus | Why this gate |
+|--------|------------------------------------------|---------------|
+| **DSA** | Immediately — default first priority for anyone who can't yet code the fundamental patterns cold. | It's the base vocabulary everything else borrows. |
+| **System Design — light on-ramp** (Sunday sprint, Bootstrap stage) | **Week 1, no gate.** Encouraged from the start. | Zero-cost, builds vocabulary; the "trace a user journey" sketch needs no DSA. |
+| **System Design — primary** (Phase-2 mode-switch, the 45-min block) | **DSA milestone core ~60%+ 🏆 retired, and {hashing, heap, trees, graphs} comfortable cold.** | SD reasoning leans on exactly these: hashmaps → indexes/sharding keys, heaps → priority queues/scheduling, graphs/trees → dependency & replication topologies. Front-running dilutes both. |
+| **AI System Engineering** | **System Design Tier 1 (interview core) majority 🏆 retired** — building blocks (LB, caching, queues, CDN), data layer (SQL/NoSQL, sharding, replication, consistency), and the interview framework. | AI infra *is* system design specialized for ML/LLM serving. Vector DBs, token/context management, GPU batching, RAG, eval/guardrails all assume fluency in caching, queues, sharding, API design. Starting earlier = learning distributed-systems fundamentals and AI-specific concerns at once. |
+
+**Two speeds for System Design (important nuance):** the *light Sunday on-ramp* is ungated and encouraged immediately; only *SD-as-primary-focus* carries the DSA-retirement gate. This mirrors cse-review, which runs the Sunday sprint during Phase 1 while DSA is still the weekday main event.
+
+**Coach behavior at a gate:** if a learner sets `priority` to lead with SD or AI before the recommended mastery, the coach (a) states the recommended prerequisite and *why*, (b) offers to start the light on-ramp instead where one exists, and (c) proceeds anyway if the learner confirms — recording that they overrode. It never silently blocks, and never silently lets them skip the warning.
 
 ---
 
@@ -264,6 +296,7 @@ This is where cse-review's soul lives. It encodes, from §2b:
 - **Application pull rule:** during a tier, pull backlog problems from that tier's pool gated by learned patterns — never march a list top-to-bottom; a 🟡/🔴 pull is a diagnostic, not a cue to learn something ad-hoc.
 - **System-design review workflow (§6a):** on a design session → drive it through the right template → ask Clean/Shaky/Blank on the *blind sprint* → update `design_progress.md` → slot the next blind sprint. Same comfort scale, different unit and rep.
 - **Self-eval meta-loop (ships ON, Q5):** on any correction from the learner, append it to `self_eval_log.md`; run a weekly meta-review to promote recurring corrections into standing rules. This is a default coaching mechanism for every adopter, not an add-on.
+- **Readiness-gate advisory (§5a):** honor the adopter's `pillars.priority`, but when they lead with System Design or AI before the recommended DSA/SD retirement, state the prerequisite + why, offer the light on-ramp where one exists, and proceed only on explicit override (recording it). Warn, never silently block or silently skip.
 - **Cadence rules:** session dating, end-of-session push, end-of-week schedule generation; the **Sunday slot is the system-design sprint** and Phase 2 is a mode-switch (45-min block → design, DSA warm via 15-min flashcard).
 
 Because it's committed to the repo, `CLAUDE.md` just points at it — every adopter, on every machine, gets the behavior with zero personal-memory setup. This is the fix for the core "trapped in your memory" problem.
