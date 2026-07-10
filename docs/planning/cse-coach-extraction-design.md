@@ -395,8 +395,8 @@ Because it reuses SD's machinery wholesale, the marginal cost of shipping it in 
 5. **Build AI Engineering pillar (§6c)** — `ai_engineering/study_guide.md` (ROI-line tiers), `ai_progress.md`, seed templates/components. Reuses SD machinery — content authoring, not engine work.
 6. **Author the layered curriculum + backlog pools** — DSA `milestone`/`expansion_tier1`/`expansion_tier2` + backlog pools (interview-sourced, competitive-style); SD `tier1_interview_core`/`tier2_architect_depth` + Design Practice Backlog; AI `tier1_core`/`tier2_depth`. All ROI-line-tagged.
 7. **Write bootstrap** — interactive setup + date projection across all pillars (weekday DSA + Sunday SD sprint + AI mode-switch); enforce `reach_beyond ≥ 1`; seed empty `self_eval_log.md`.
-8. **Extract coaching skill** — consolidate the generalizable memory files into `SKILL.md`, incl. the SD/AI review workflows and the self-eval meta-loop (default ON); wire `CLAUDE.md` to it.
-9. **README + a `docs/PHILOSOPHY.md`** — the Interview-ROI line (all pillars), comfort system, daily loop, mode-switch to Phases 2–3, backlog recovery — all currently implicit.
+8. **Extract coaching skill** — move the drafted [`cse-coach-skill-draft.md`](cse-coach-skill-draft.md) to `.claude/skills/cse-coach/SKILL.md`, incl. the SD/AI review workflows and the self-eval meta-loop (default ON); wire `CLAUDE.md` to it.
+9. **README + a `docs/PHILOSOPHY.md`** — the README ([draft](cse-coach-readme-draft.md)) **must teach the interaction model first: this is a coach you talk to, not a tracker you edit.** Lead with "start a problem / ask questions / report Clean-Shaky-Blank," a sample conversation, and "your only job is the reps + honest grading." PHILOSOPHY holds the Interview-ROI line (all pillars), comfort system, daily loop, mode-switch to Phases 2–3, backlog recovery.
 10. **Dogfood** — run a mock adopter flow end-to-end for all pillars; verify a logged DSA result *and* a blind-sprint result each flow through hook → tracker → schedule exactly as in cse-review.
 11. **Publish** — keep the repo **private** through dogfooding; flip to a public GitHub template once the pillars are proven (Q4).
 
