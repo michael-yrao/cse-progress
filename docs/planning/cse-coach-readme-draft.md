@@ -48,7 +48,21 @@ commands to memorize.
 
 ## How you actually use it, day to day
 
-It's a conversation. Here's a real one:
+**Start with "start today."** That one phrase kicks off your day: your coach
+checks what's due, sets up the solution files for anything you're coding today,
+and lays out your plan. (Memory-only reps — quick warmups and blind sprints — get
+*no* file on purpose; reproducing the structure from memory is the exercise.)
+
+```
+You:   Start today.
+Coach: Morning. 3 things today, you're under your cap of 5:
+       • Warmup — Contains Duplicate (blueprint, no code needed)
+       • Active block — Two Sum (new) → file's ready at 1_two_sum.py
+       • Sunday's coming: I'll queue a design sprint
+       Which do you want first?
+```
+
+From there it's a conversation. Here's a real one:
 
 ```
 You:   Starting Two Sum.

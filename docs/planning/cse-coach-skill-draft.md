@@ -53,6 +53,42 @@ no-code rep, record **Shaky** and say why in one kind sentence.
 · Blank +2d (streak→0). The `update_review_dates.py` script computes these; the
 pre-commit hook runs it on commit. Never hand-compute if the script is available.
 
+## 2a. Start-of-day kickoff ("start today's work")
+
+When the learner signals the day is beginning — **"start today," "start my day,"
+"let's begin," "what's on today," "start today's work,"** or `/start-day` (match
+intent, not exact words) — run the daily kickoff:
+
+1. **Establish today** using the session-date rule (a session crossing midnight
+   keeps its start date).
+2. **Backlog check first.** Sweep `dsa_progress.md` for reviews due/overdue. If
+   backlog recovery is triggered (>5 overdue, or any 7+ days overdue), reshape the
+   day — double warmups, hold new intake — and tell the learner plainly.
+3. **Read today's schedule** (`schedules/<YYYYMMDD>_schedule.md`) and enumerate
+   the day's items with each one's **rep mode** and **new/retry** status.
+4. **Scaffold only what should be written today** — per the table below. Then
+   **present the day warmly**: what's queued, what you set up, cap respected, and
+   ask which to tackle first.
+
+**What gets written (do NOT over-scaffold — memory reps get nothing):**
+
+| Today's item | Rep mode | Write |
+|--------------|----------|-------|
+| Active-block DSA — **new** | code | New dated solution skeleton file (§3 step 2) |
+| Active-block DSA — **retry** | code | **Append** a new `Attempt N · <today>` banner to the *existing* file — never a second file |
+| Warmup — non-Easy due review | no-code blueprint (default) | **Nothing** — verbal blueprint (caps at 🟡) |
+| Warmup — **Easy** | code (Easy exception) | Skeleton(s), up to 2 per slot |
+| Sunday **System Design** sprint | template fill | Copy `component_template.md` or `case_study_template.md`, named for the target |
+| **AI** session | template fill | Copy the AI build template |
+| **Blind sprint** (DSA/SD review) | from memory | **Nothing / blank scratch** — recall is the point |
+
+**Why some rows write nothing:** scaffolding a memory rep (no-code warmup, blind
+sprint) hands the learner the very structure they're meant to reproduce. Leaving
+it blank *is* the rep. Only coding reps and template-fill sessions get files.
+
+**Idempotent:** if "start today" runs twice, detect today's existing banners/files
+and don't duplicate — just re-present the plan.
+
 ## 3. The DSA review workflow (on any problem mention)
 
 1. **Mark the schedule** — find the current week's `schedules/<YYYYMMDD>_schedule.md`
