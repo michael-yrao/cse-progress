@@ -3,7 +3,7 @@
 **Status:** Draft for review
 **Author:** Claude (with michael-yrao)
 **Date:** 2026-07-09
-**Decision baseline:** Ship a **new separate repo** (`dsa-coach`). `cse-review` stays 100% intact — no refactors, no data moved out. The new repo mirrors the cse-review workflow as closely as possible so an engineer who adopts it gets *your* system, not a diluted version.
+**Decision baseline:** Ship a **new separate repo** (`cse-coach`). `cse-review` stays 100% intact — no refactors, no data moved out. The new repo mirrors the cse-review workflow as closely as possible so an engineer who adopts it gets *your* system, not a diluted version.
 
 ---
 
@@ -18,15 +18,15 @@
 
 Today all of this is fused to one person: your NC150 Jun–Dec 2026 roadmap, your filled schedules, your progress rows, your career folder, and — critically — behavior that lives in **your personal `~/.claude` memory**, which no one else inherits.
 
-**Goal:** produce `dsa-coach`, a repo any engineer can adopt in <10 minutes and get the identical system seeded to their own start date and track, with the coaching behavior traveling *with the repo* rather than depending on a personal memory store.
+**Goal:** produce `cse-coach`, a repo any engineer can adopt in <10 minutes and get the identical system seeded to their own start date and track, with the coaching behavior traveling *with the repo* rather than depending on a personal memory store.
 
-**Scope is multi-pillar, not DSA-only.** cse-review already runs two parallel pillars off the same engine and philosophy — and a third planned:
+**Scope is multi-pillar, not DSA-only.** cse-review runs three pillars off the same engine and philosophy, **all shipping in v1** (Q6 DECIDED):
 
 - **Pillar 1 — DSA** (`docs/foundations/dsa/`): coded LeetCode problems, code-file-driven spaced repetition.
 - **Pillar 2 — System Design** (`docs/foundations/system_design/`): whole-system designs and building blocks, template-driven reps, blind-sprint review on the Sunday slot. Has its own ROI-line study guide, `templates/`, `components/`, `fundamentals/`, and a Design Practice Backlog.
-- **Pillar 3 — AI System Engineering** (study-guide Phase 3): vector search, context/token management, agentic orchestration, eval/guardrails. Extends Pillar 2's model.
+- **Pillar 3 — AI System Engineering** (study-guide Phase 3): vector search, context/token management, agentic orchestration, eval/guardrails. Extends Pillar 2's model (study guide + tracker + templates).
 
-Both existing pillars share **one spaced-repetition engine, one ROI-line curriculum model, one comfort scale, and one weekly schedule** — Phase 2 is a *mode switch* (the 45-min block shifts from DSA to design; DSA stays warm via the 15-min maintenance flashcard), not a separate system. `dsa-coach` must ship **all pillars**, unified by the shared engine. (Name caveat: "dsa-coach" now undersells the scope — see §8 Q4.)
+All three pillars share **one spaced-repetition engine, one ROI-line curriculum model, one comfort scale, and one weekly schedule** — Phase 2 is a *mode switch* (the 45-min block shifts from DSA to design; DSA stays warm via the 15-min maintenance flashcard), and Phase 3 (AI) extends the same model. `cse-coach` (name **DECIDED**, echoing `cse-review`) ships **all three pillars in v1**, unified by the shared engine.
 
 **Non-goals:** changing the algorithm, redesigning the doc structure, or "improving" the workflow. This is an **extraction + parameterization** effort, not a rewrite. Fidelity to cse-review is the success bar.
 
@@ -56,7 +56,7 @@ The single most important architectural act is drawing this line cleanly.
 
 These `.claude/memory/feedback_*.md` files **are the product**. They must be promoted into **committed, shippable form** so every adopter inherits them:
 
-| Memory file | Generalizable? | Destination in `dsa-coach` |
+| Memory file | Generalizable? | Destination in `cse-coach` |
 |-------------|----------------|-----------------------------|
 | `feedback_operating_principles.md` (close the loop; user owns thinking/code) | ✅ Core | Skill body |
 | `feedback_no_spoilers.md` | ✅ Core | Skill body |
@@ -71,9 +71,9 @@ These `.claude/memory/feedback_*.md` files **are the product**. They must be pro
 | `feedback_schedule_markdown.md` | ✅ Core (tooling quirk) | Skill body |
 | `feedback_session_dating.md` | ✅ Core | Skill body |
 | `feedback_git_commit.md` | ✅ Core | Skill body |
-| `feedback_self_evaluation.md` + `self_eval_log.md` | ⚠️ Personal mechanism | Ship the *mechanism* (empty log + rule), not your entries |
+| `feedback_self_evaluation.md` + `self_eval_log.md` | ✅ Core (Q5 DECIDED: default) | Skill body + empty `self_eval_log.md`; ships ON for every adopter, not your entries |
 
-**Key decision:** these become a **committed skill** (`.claude/skills/dsa-coach/SKILL.md`) inside the template repo, so they load for anyone working in an adopter's repo — no dependency on personal `~/.claude/memory`. Adopters can still layer their own private memory on top; the baseline behavior is guaranteed.
+**Key decision:** these become a **committed skill** (`.claude/skills/cse-coach/SKILL.md`) inside the template repo, so they load for anyone working in an adopter's repo — no dependency on personal `~/.claude/memory`. Adopters can still layer their own private memory on top; the baseline behavior is guaranteed.
 
 ### 2c. Strictly personal (never ships)
 
@@ -86,26 +86,26 @@ These `.claude/memory/feedback_*.md` files **are the product**. They must be pro
 
 ## 3. Distribution shape
 
-`dsa-coach` is **both** a GitHub *template repository* and the carrier of a *portable skill* — the "Both" model, achieved with one repo:
+`cse-coach` is **both** a GitHub *template repository* and the carrier of a *portable skill* — the "Both" model, achieved with one repo:
 
 - **Turnkey path:** engineer clicks **Use this template** → runs bootstrap → has their own tracker.
-- **Drop-in path:** the same repo's `.claude/skills/dsa-coach/` + `scripts/` can be copied into an existing practice repo; a `dsa-init` skill scaffolds the docs/hook there.
+- **Drop-in path:** the same repo's `.claude/skills/cse-coach/` + `scripts/` can be copied into an existing practice repo; a `cse-init` skill scaffolds the docs/hook there.
 
 One repo, one source of truth for the script, two adoption routes. No second codebase to keep in sync.
 
 ```
-dsa-coach/
+cse-coach/
 ├── README.md                       ← engineer-facing onboarding + philosophy
 ├── CLAUDE.md                       ← generalized workflow (paths/dates parameterized)
-├── dsa.config.yml                  ← THE personalization surface (§4)
+├── cse.config.yml                  ← THE personalization surface (§4)
 ├── .githooks/pre-commit            ← generalized copy of yours
 ├── scripts/
 │   ├── update_review_dates.py      ← config-driven (§4)
 │   └── bootstrap.py                ← interactive setup (§5)
 ├── .claude/
 │   └── skills/
-│       ├── dsa-coach/SKILL.md      ← the coaching behavior (from §2b), all pillars
-│       └── dsa-init/SKILL.md       ← scaffold-into-existing-repo command
+│       ├── cse-coach/SKILL.md      ← the coaching behavior (from §2b), all pillars
+│       └── cse-init/SKILL.md       ← scaffold-into-existing-repo command
 ├── docs/foundations/
 │   ├── dsa/                        ← PILLAR 1
 │   │   ├── study_guide.md          ← roadmap templated, not hardcoded
@@ -116,16 +116,21 @@ dsa-coach/
 │   │   ├── templates/solution_template.py ← dated skeleton, scaffolded before coding (§6b)
 │   │   ├── schedules/              ← empty; week 1 generated by bootstrap (SHARED across pillars)
 │   │   └── patterns/**, fundamentals/** ← shipped as-is (generic reference)
-│   └── system_design/              ← PILLAR 2 (§6a)
-│       ├── study_guide.md          ← ROI-line tiers + Bootstrap/Transition/Mastery cadence
-│       ├── mastery/design_progress.md ← comfort tracker; unit=system, review=blind sprint
-│       ├── templates/{case_study,component}_template.md ← the scaffold IS the rep
-│       ├── components/**, fundamentals/** ← reference seeds (rate_limiter, …)
-│       └── case_studies/           ← filled from templates as adopter progresses
+│   ├── system_design/              ← PILLAR 2 (§6a)
+│   │   ├── study_guide.md          ← ROI-line tiers + Bootstrap/Transition/Mastery cadence
+│   │   ├── mastery/design_progress.md ← comfort tracker; unit=system, review=blind sprint
+│   │   ├── templates/{case_study,component}_template.md ← the scaffold IS the rep
+│   │   ├── components/**, fundamentals/** ← reference seeds (rate_limiter, …)
+│   │   └── case_studies/           ← filled from templates as adopter progresses
+│   └── ai_engineering/             ← PILLAR 3 (§6c) — ships in v1
+│       ├── study_guide.md          ← ROI-line tiers: RAG/vector search → serving → agents → eval
+│       ├── mastery/ai_progress.md  ← comfort tracker; unit=capability/build, review=blind rebuild
+│       └── templates/**, components/** ← template-driven, mirrors the SD pillar
 └── curriculum/                     ← ONE layered progression per pillar, not swappable lists (§5)
     ├── dsa/{milestone,expansion_tier1,expansion_tier2}.yml
     ├── dsa/backlog/{interview_sourced,competitive_style}.yml
-    └── system_design/{tier1_interview_core,tier2_architect_depth}.yml  ← + Design Practice Backlog
+    ├── system_design/{tier1_interview_core,tier2_architect_depth}.yml  ← + Design Practice Backlog
+    └── ai_engineering/{tier1_core,tier2_depth}.yml
 ```
 
 ---
@@ -135,11 +140,11 @@ dsa-coach/
 Today the engine hardcodes intervals, paths, and a Python-only solution glob. Introduce **one** config file the script and skill both read.
 
 ```yaml
-# dsa.config.yml
+# cse.config.yml
 learner: "Your Name"
 start_date: 2026-07-13
 target: competitive      # DEFAULT. the mission-level goal. fintech_interview | faang_interview | competitive
-reach_beyond: 1          # tiers to pursue PAST the target so it's hit with margin (see §5)
+reach_beyond: 1          # tiers PAST the target so it's hit with margin. MIN 1, enforced — 0 is rejected (see §5)
 daily_cap: 5
 
 intervals:              # days until next review, by Comfort + streak
@@ -157,7 +162,7 @@ solutions:
 
 **Script changes (surgical, behavior-preserving):**
 
-- Replace module constants `MARKDOWN_PATH`, `SOURCE_ROOT`, and the interval numbers in `compute_next_review_date()` with values loaded from `dsa.config.yml` (fallback to current defaults so cse-review-style behavior is the default).
+- Replace module constants `MARKDOWN_PATH`, `SOURCE_ROOT`, and the interval numbers in `compute_next_review_date()` with values loaded from `cse.config.yml` (fallback to current defaults so cse-review-style behavior is the default).
 - Generalize `SOURCE_FILE_RE` and `discover_source_problems()` from `.py`-only to the configured `globs`. The regex `(?P<number>\d+)_(?P<name>.+)\.py$` becomes extension-agnostic.
 - Everything else — diff parsing, staged-only mode, summary table, sort-by-latest, legacy migration — stays untouched.
 
@@ -177,7 +182,7 @@ The pedagogy is *why the system works*; loosening it produces a weaker product w
 - Phase-completion = every associated problem 🏆 Retired (§5)
 - Reach-beyond posture — the curriculum always overshoots the target (§5)
 
-**⚙️ Configurable — situational logistics, exposed in `dsa.config.yml`:**
+**⚙️ Configurable — situational logistics, exposed in `cse.config.yml`:**
 
 - `daily_cap`, time cap (45-min default), `intervals` (Clean/Shaky/Blank days), `retire_at_streak`
 - `target` + `reach_beyond` (which tiers are in scope)
@@ -188,7 +193,7 @@ Adopters tune *when and how much* they study; they cannot dilute *the standard*.
 
 ### 4b. DSA rep mode — code by default, no-code is an opt-in that can't reach Clean
 
-cse-review leans on a **no-code blueprint** format for its 15-min warmup/maintenance slots (state the complexity + core trick out loud, verify against past code). The owner is **not a fan of that as the DSA default** — most DSA reps should be *actually coded*. So `dsa-coach` inverts the emphasis:
+cse-review leans on a **no-code blueprint** format for its 15-min warmup/maintenance slots (state the complexity + core trick out loud, verify against past code). The owner is **not a fan of that as the DSA default** — most DSA reps should be *actually coded*. So `cse-coach` inverts the emphasis:
 
 - **Default rep = code it.** New problems and reviews alike default to writing the solution from a blank page. This is the normal path and the only one that can earn 🟢 Clean.
 - **No-code is opt-in, per session.** A learner *may* choose a no-code blueprint rep (useful when time-boxed, or for a light maintenance touch), but it's an explicit choice, not the default.
@@ -201,7 +206,7 @@ cse-review leans on a **no-code blueprint** format for its 15-min warmup/mainten
 
 **This is the heart of cse-review and the part I got wrong the first time.** The mission is *not* "finish NC150." Per `study_guide.md`, the mission is to become a **competent competitive programmer**, and **interview readiness is a milestone on that path, not the finish line.** The whole plan is organized around the **Interview-ROI Line**, and it deliberately trains *past* the interview target so the target itself is cleared with margin. Aim beyond → reliably hit.
 
-So `dsa-coach` must NOT model curriculum as swappable problem lists (NC150 vs Blind75 — that was the mistake; Blind75 is a *subset*, not a reach-beyond). It models **one layered progression** with the ROI line as its spine:
+So `cse-coach` must NOT model curriculum as swappable problem lists (NC150 vs Blind75 — that was the mistake; Blind75 is a *subset*, not a reach-beyond). It models **one layered progression** with the ROI line as its spine:
 
 ```
   milestone            interview foundation (NC150 content) + framework lenses
@@ -217,7 +222,9 @@ So `dsa-coach` must NOT model curriculum as swappable problem lists (NC150 vs Bl
                        horizon; near-zero interview payoff, pursued for mastery
 ```
 
-**The overshoot rule (config-driven):** the adopter declares a `target` (the milestone they must hit) and a `reach_beyond` margin. **Default target is `competitive`** — the mission-level goal, not an interview checkpoint — because reaching for competitive depth is *how* the interview target is cleared with margin in the first place. The curriculum they receive is *everything up to their target, plus `reach_beyond` tiers past it* — so even a "faang_interview" target with `reach_beyond: 1` still pulls Tier-1 advanced into rotation. This is exactly your Post-NC150 steady state (Maintenance · Application-*pull-not-push* · deliberate Expansion) generalized: knowledge always reaches one layer beyond the immediate goal.
+**The overshoot rule (config-driven, floor enforced):** the adopter declares a `target` (the milestone they must hit) and a `reach_beyond` margin. **Default target is `competitive`** — the mission-level goal, not an interview checkpoint — because reaching for competitive depth is *how* the interview target is cleared with margin in the first place. The curriculum they receive is *everything up to their target, plus `reach_beyond` tiers past it* — so even a "faang_interview" target with `reach_beyond: 1` still pulls Tier-1 advanced into rotation. This is exactly your Post-NC150 steady state (Maintenance · Application-*pull-not-push* · deliberate Expansion) generalized: knowledge always reaches one layer beyond the immediate goal.
+
+**`reach_beyond: 0` is rejected (DECIDED).** Reaching for the end is non-negotiable — the same spirit as the locked pedagogy (§4a). The minimum margin is **1**; bootstrap and the engine refuse `0` and clamp to 1 with a note. There is no interview-only, no-overshoot mode; "always reach for the end goal" is the whole point of the tool.
 
 **Application backlog pools (the "pull, not push" thread).** Learning problems are only half the curriculum. Each phase has an associated **curated backlog pool** of application problems — sourced from real interviews and gated by the patterns already learned — that you *pull* from to build speed and transfer. cse-review already curated a large **interview-sourced backlog** used *during* the knowledge-expansion phase (post-NC150). The generalized model extends this symmetrically: a second, **competitive-style backlog pool** for the phase *after* knowledge expansion (Tier 2 / competitive), so the pull-not-push mechanic keeps running past the ROI line. Pools are curriculum data, not schedule data — the coach pulls from the pool that matches the learner's current tier, never marching a list top-to-bottom.
 
@@ -232,9 +239,9 @@ So `dsa-coach` must NOT model curriculum as swappable problem lists (NC150 vs Bl
 **Curriculum vs. schedule split (still needed for date-independence):** the NC150 Jun–Dec 2026 table is a *dated* artifact — the hardest thing to generalize. Separate the **curriculum** (ordered phases + problem lists + backlog pools + pacing, undated, in `curriculum/*.yml`) from the **schedule** (real dates), and generate the dated view per adopter.
 
 - `curriculum/milestone.yml`, `expansion_tier1.yml`, `expansion_tier2.yml`: faithful port of your roadmap's *content and ordering*, minus the calendar, tagged by ROI-line tier and pacing (e.g. DP phases drop to 3/week). Each carries its associated `backlog_pool` (interview-sourced for Tier 1, competitive-style for Tier 2).
-- `scripts/bootstrap.py` (also invocable via the `dsa-init` skill) asks:
+- `scripts/bootstrap.py` (also invocable via the `cse-init` skill) asks:
   1. Name, start date, **target** milestone, **reach_beyond** margin, daily cap, solution language(s).
-  2. Writes `dsa.config.yml`.
+  2. Writes `cse.config.yml`.
   3. Assembles the curriculum = milestone → target → `+reach_beyond` tiers, projects its phases onto real dates from `start_date` using each phase's pacing rules → writes a personalized `study_guide.md` roadmap table + the **week-1 schedule file** (`docs/.../schedules/<YYYYMMDD>_schedule.md`), with the ROI line and the reach-beyond section preserved.
   4. Resets `dsa_progress.md` to header + seed row; empties logs.
   5. Runs `git config core.hooksPath .githooks`.
@@ -244,7 +251,7 @@ After bootstrap the adopter's repo is behaviorally identical to cse-review on da
 
 ---
 
-## 6. The coaching skill (`.claude/skills/dsa-coach/SKILL.md`)
+## 6. The coaching skill (`.claude/skills/cse-coach/SKILL.md`)
 
 This is where cse-review's soul lives. It encodes, from §2b:
 
@@ -256,6 +263,7 @@ This is where cse-review's soul lives. It encodes, from §2b:
 - **Phase-completion rule:** a phase is complete only when *every* associated problem (learning + pulled backlog) is 🏆 Retired. Report "N of M retired"; never advance the headline phase early. (§5)
 - **Application pull rule:** during a tier, pull backlog problems from that tier's pool gated by learned patterns — never march a list top-to-bottom; a 🟡/🔴 pull is a diagnostic, not a cue to learn something ad-hoc.
 - **System-design review workflow (§6a):** on a design session → drive it through the right template → ask Clean/Shaky/Blank on the *blind sprint* → update `design_progress.md` → slot the next blind sprint. Same comfort scale, different unit and rep.
+- **Self-eval meta-loop (ships ON, Q5):** on any correction from the learner, append it to `self_eval_log.md`; run a weekly meta-review to promote recurring corrections into standing rules. This is a default coaching mechanism for every adopter, not an add-on.
 - **Cadence rules:** session dating, end-of-session push, end-of-week schedule generation; the **Sunday slot is the system-design sprint** and Phase 2 is a mode-switch (45-min block → design, DSA warm via 15-min flashcard).
 
 Because it's committed to the repo, `CLAUDE.md` just points at it — every adopter, on every machine, gets the behavior with zero personal-memory setup. This is the fix for the core "trapped in your memory" problem.
@@ -281,7 +289,7 @@ System design reuses **the same engine and philosophy** as DSA, with three delib
 - **Same phase-completion rule.** An SD phase is done only when its systems are 🏆 Retired (repeatedly designed cold and clean), not merely read about once.
 - **Same staged cadence** already in the guide: **Bootstrap** (watch → recall → check gaps) → **Transition** (sketch cold → compare) → **Mastery** (~45-min timed mock, self-scored against the framework). These map onto the comfort progression naturally.
 
-**Engine implication:** generalize the script from one hardcoded tracker to a small list of **pillar configs**, each with its own `tracker_path`, `discovery` rule (source-file glob for DSA; template/backlog for SD), and shared intervals. Behavior-preserving for DSA (it's just pillar #1). This is the only non-trivial code change the multi-pillar scope adds.
+**Engine implication:** generalize the script from one hardcoded tracker to a small list of **pillar configs** (DSA, System Design, AI — §6c), each with its own `tracker_path`, `discovery` rule (source-file glob for DSA; template/backlog for SD & AI), and shared intervals. Behavior-preserving for DSA (it's just pillar #1). This is the only non-trivial code change the multi-pillar scope adds — and it's written once for all three pillars.
 
 **Templates are first-class.** Ship `case_study_template.md` and `component_template.md` as-is — the coaching skill enforces "drive every practice session through the template; filling the scaffold *is* the rep, don't just read."
 
@@ -321,36 +329,53 @@ Any data structures a problem needs (`ListNode`, `TreeNode`, `TrieNode`, `Node`,
 
 **The dating convention (baked in).** Every attempt is a **dated banner** inside `class Solution`. On a spaced-repetition revisit, the learner **adds a new dated attempt below** rather than overwriting — preserving the history that mirrors the tracker's `Attempt Dates` column and enabling the method-variant promotion rule (§2b). Retirement means several dated, coded Cleans stacked in one file.
 
-**Scaffolding flow — "set up before I start."** When a learner begins a problem, the coach (via the `dsa-init` skill / a `new-problem` action) **generates the empty skeleton first**: correct path + filename, URL/slug, pattern, and the `Attempt 1 · <today>` banner with an empty `pass` stub. The learner then writes the body *and* any data-structure definitions it needs.
+**Scaffolding flow — "set up before I start."** When a learner begins a problem, the coach (via the `cse-init` skill / a `new-problem` action) **generates the empty skeleton first**: correct path + filename, URL/slug, pattern, and the `Attempt 1 · <today>` banner with an empty `pass` stub. The learner then writes the body *and* any data-structure definitions it needs.
 
 **Reconciliation with the "no code edits by the agent" lock (§4a).** Scaffolding an **empty, algorithm-free skeleton** (docstring, `typing` import, dated banner, stub signature ending in `pass`) is *not* writing the solution — it's setting the table. The lock still holds: **the agent never writes solution logic or data-structure definitions; the learner writes every line inside the method body and every helper class.**
 
 ---
 
+## 6c. The AI System Engineering pillar (ships in v1)
+
+Phase 3 of the study guide becomes the third pillar, built on the **same engine + template model as System Design** (§6a) — it is *not* a new mechanism, just a new subject:
+
+- **ROI-line tiers.** Tier 1 (interview/practitioner core): retrieval & vector search (chunking, embeddings, HNSW/IVF), context-window & token management (ranking, compression, semantic caching), agentic orchestration & tool use (deterministic function calling, structured JSON, state), evaluation & guardrails (programmatic evals, hallucination checks, safety proxies). Tier 2 (depth): serving internals, GPU scheduling/batching, retrieval-quality research, eval frameworks. Same "reach beyond" overshoot.
+- **Unit = a capability/build; rep = fill a template + a blind rebuild.** Mirrors SD exactly: `ai_progress.md` is a parallel comfort tracker; the review is designing/rebuilding the capability cold and comparing. Same 🟢/🟡/🔴 scale, same interval engine, same phase = retired rule.
+- **Cadence.** Slots into the existing Phase-3 study-guide structure; runs on the same weekly schedule as a mode-switch subject, not a separate calendar.
+- **Templates + curriculum.** Ship `ai_engineering/templates/` and `components/` seeds plus `curriculum/ai_engineering/{tier1_core,tier2_depth}.yml`, tier-tagged.
+
+Because it reuses SD's machinery wholesale, the marginal cost of shipping it in v1 is authoring content (study guide + curriculum + a couple of seed templates), not new engine work.
+
+---
+
 ## 7. Migration / build plan (phased)
 
-1. **Scaffold repo** — new repo, directory skeleton (both pillars), licenses, README stub.
+1. **Scaffold repo** — new **private** `cse-coach` repo, directory skeleton (all three pillars), licenses, README stub.
 2. **Port engine (multi-pillar)** — copy `update_review_dates.py` + hook; add config loading; generalize from one hardcoded tracker to a list of pillar configs (DSA = pillar #1, behavior-preserving); keep defaults = current behavior; add golden-file test.
 3. **Port DSA scaffold** — patterns/fundamentals as-is; blank templated tracker/logs/schedules; **ship the lean `solution_template.py` (no difficulty token, no datamodel import) and the `new-problem` scaffolder** (§6b) that stamps path/URL/pattern/dated banner before coding.
 4. **Port System Design pillar** — SD `study_guide.md` (ROI-line tiers + cadence), `templates/` and `components`/`fundamentals` seeds as-is; new blank `design_progress.md`; Design Practice Backlog.
-5. **Author the layered curriculum + backlog pools** — DSA `milestone`/`expansion_tier1`/`expansion_tier2` + backlog pools (interview-sourced, competitive-style); SD `tier1_interview_core`/`tier2_architect_depth` + Design Practice Backlog. All ROI-line-tagged.
-6. **Write bootstrap** — interactive setup + date projection across both pillars (weekday DSA + Sunday SD sprint).
-7. **Extract coaching skill** — consolidate the generalizable memory files into `SKILL.md`, incl. the SD review workflow; wire `CLAUDE.md` to it.
-8. **README + a `docs/PHILOSOPHY.md`** — the Interview-ROI line (both pillars), comfort system, daily loop, mode-switch to Phase 2, backlog recovery — all currently implicit.
-9. **Dogfood** — run a mock adopter flow end-to-end for BOTH pillars; verify a logged DSA result *and* a blind-sprint result each flow through hook → tracker → schedule exactly as in cse-review.
+5. **Build AI Engineering pillar (§6c)** — `ai_engineering/study_guide.md` (ROI-line tiers), `ai_progress.md`, seed templates/components. Reuses SD machinery — content authoring, not engine work.
+6. **Author the layered curriculum + backlog pools** — DSA `milestone`/`expansion_tier1`/`expansion_tier2` + backlog pools (interview-sourced, competitive-style); SD `tier1_interview_core`/`tier2_architect_depth` + Design Practice Backlog; AI `tier1_core`/`tier2_depth`. All ROI-line-tagged.
+7. **Write bootstrap** — interactive setup + date projection across all pillars (weekday DSA + Sunday SD sprint + AI mode-switch); enforce `reach_beyond ≥ 1`; seed empty `self_eval_log.md`.
+8. **Extract coaching skill** — consolidate the generalizable memory files into `SKILL.md`, incl. the SD/AI review workflows and the self-eval meta-loop (default ON); wire `CLAUDE.md` to it.
+9. **README + a `docs/PHILOSOPHY.md`** — the Interview-ROI line (all pillars), comfort system, daily loop, mode-switch to Phases 2–3, backlog recovery — all currently implicit.
+10. **Dogfood** — run a mock adopter flow end-to-end for all pillars; verify a logged DSA result *and* a blind-sprint result each flow through hook → tracker → schedule exactly as in cse-review.
+11. **Publish** — keep the repo **private** through dogfooding; flip to a public GitHub template once the pillars are proven (Q4).
 
 Each phase is independently reviewable. `cse-review` is never touched.
 
 ---
 
-## 8. Open questions for you
+## 8. Open questions for you — ALL DECIDED
 
-1. **Overshoot defaults:** what `target` options ship at launch (fintech / faang / competitive), and what default `reach_beyond` margin? Do we ever allow `reach_beyond: 0`, or is reaching-past-the-target a non-negotiable that we refuse to let an adopter disable?
+1. ~~**Overshoot defaults**~~ — **DECIDED: default `target: competitive`; `reach_beyond` minimum 1, `0` rejected/clamped. Reaching for the end goal is non-negotiable (§5).**
 2. ~~**Solution languages in the default preset**~~ — **DECIDED: default Python-only (`globs: ["*.py"]`); engine stays language-agnostic so adopters can widen at bootstrap.**
 3. ~~**How opinionated should the shipped skill be?**~~ — **DECIDED: pedagogy locked, logistics configurable (see §4a Configurability contract).**
-4. **Repo home, visibility & name:** public GitHub template under your account, or private first? **Naming now matters more — the scope is DSA + System Design + (AI), so "dsa-coach" undersells it.** Candidates: `interview-mastery-coach`, `swe-mastery`, `roi-coach`, `cse-coach` (echoing cse-review), something else?
-5. **The `self_eval_log` meta-review loop:** ship it as a default coaching mechanism, or treat it as an advanced/optional add-on?
-6. **AI System Engineering pillar (Phase 3):** ship it now as a third pillar (study guide + tracker), or stub it and add after the two core pillars are dogfooded?
+4. ~~**Repo name, visibility**~~ — **DECIDED: name `cse-coach` (echoes `cse-review`); ship **private first**, flip to a public GitHub template once the pillars are dogfooded.**
+5. ~~**The `self_eval_log` meta-review loop**~~ — **DECIDED: ships **ON by default** as a built-in coaching mechanism (§6), empty log seeded for every adopter.**
+6. ~~**AI System Engineering pillar (Phase 3)**~~ — **DECIDED: ships in **v1** as the third pillar (study guide + tracker + templates), same shared engine.**
+
+*(No open questions remain — this section is the decision log. Next step is the phased build in §7.)*
 
 ---
 
