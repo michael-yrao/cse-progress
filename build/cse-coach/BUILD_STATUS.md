@@ -9,8 +9,8 @@ Tracking the §7 phased build plan:
 | # | Step | Status |
 |---|------|--------|
 | 1 | Scaffold repo — skeleton (3 pillars), license, README, CLAUDE.md, config example, hook, skill in place | ✅ done |
-| 2 | Port engine (multi-pillar) — config-driven `update_review_dates.py` + golden test | ⏳ next |
-| 3 | Port DSA scaffold — patterns/fundamentals, blank trackers/logs/schedules, `solution_template.py` + `new-problem` scaffolder | ☐ |
+| 2 | Port engine — config-driven `update_review_dates.py` (intervals/root/globs from `cse.config.yml`, stdlib-only) + tests | ✅ done |
+| 3 | Port DSA scaffold — patterns/fundamentals, blank trackers/logs/schedules, `solution_template.py` + `new-problem` scaffolder | ⏳ next |
 | 4 | Port System Design pillar — study guide, templates, component/fundamentals seeds, blank `design_progress.md`, backlog | ☐ |
 | 5 | Build AI Engineering pillar — study guide, `ai_progress.md`, seed templates/components | ☐ |
 | 6 | Author curriculum + backlog pools — DSA/SD/AI tiers, ROI-line-tagged | ☐ |
@@ -25,3 +25,10 @@ Tracking the §7 phased build plan:
   SD study guide/templates, AI pillar, competitive backlog) with personal data stripped.
 - The skill (`.claude/skills/cse-coach/SKILL.md`) and README are already the real
   drafted versions, moved in during step 1.
+- **Engine (step 2):** zero external deps (stdlib only; no PyYAML). Config parsed
+  with targeted regex over the documented `cse.config.yml` subset. Defaults exactly
+  reproduce cse-review behavior. `DISCOVERY_SKIP_NUMBERS` emptied (the `{76}` was
+  cse-review-personal). Run tests: `python tests/test_engine.py`.
+- **Multi-pillar tracker iteration** (running the same recompute/re-sort over the
+  SD/AI trackers) folds in during steps 4–5, when `design_progress.md` /
+  `ai_progress.md` exist — same table format, same `compute_next_review_date`.
