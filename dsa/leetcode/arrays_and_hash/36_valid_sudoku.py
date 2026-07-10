@@ -38,6 +38,7 @@ Output: false
 Explanation: Same as Example 1, except with the 5 in the top left corner being modified to 8. Since there are two 8's in the top left 3x3 sub-box, it is invalid.
 """
 from collections import defaultdict
+import collections
 from typing import List
 
 class Solution:
@@ -106,4 +107,40 @@ class Solution:
                     rowMap[row].add(board[row][column])
                     columnMap[column].add(board[row][column])
                     squareMap[(row//3),(column//3)].add(board[row][column])
+        return True
+    
+    def isValidSudoku_20260709(self, board: List[List[str]]) -> bool:
+        # row check on board[i][0]
+        # column check on board[0][i]
+        # 3x3, loop on whole thing and check on map of board[i//3][j//3] -> list
+
+        rows = len(board)
+        cols = len(board[0])
+
+        boxMap = collections.defaultdict(list)
+
+        for i in range(rows):
+            rowSet = set()
+            for j in range(cols):
+                if board[i][j] != '.' and board[i][j] in rowSet:
+                    return False
+                if board[i][j] != '.':
+                    rowSet.add(board[i][j])
+
+        for i in range(rows):
+            colSet = set()
+            for j in range(cols):
+                if board[j][i] != '.' and board[j][i] in colSet:
+                    return False
+                if board[j][i] != '.':
+                    colSet.add(board[j][i])
+        
+        for i in range(rows):
+            for j in range(cols):
+                key = (i//3, j//3)
+                if board[i][j] != '.' and board[i][j] in boxMap[key]:
+                    return False
+                if board[i][j] != '.':
+                    boxMap[key].append(board[i][j])
+
         return True
