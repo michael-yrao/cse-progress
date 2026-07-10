@@ -105,7 +105,10 @@ dsa-coach/
 └── curriculum/                     ← ONE layered progression, not swappable lists (§5)
     ├── milestone.yml               ← interview foundation (NC150 content) + framework lenses
     ├── expansion_tier1.yml         ← above the ROI line: segment tree, KMP, XOR trie, …
-    └── expansion_tier2.yml         ← below the ROI line: competitive-programming horizon
+    ├── expansion_tier2.yml         ← below the ROI line: competitive-programming horizon
+    └── backlog/                    ← curated application "pull" pools (§5)
+        ├── interview_sourced.yml   ← pulled during Tier 1 (post-NC150)
+        └── competitive_style.yml   ← pulled during Tier 2
 ```
 
 ---
@@ -118,7 +121,7 @@ Today the engine hardcodes intervals, paths, and a Python-only solution glob. In
 # dsa.config.yml
 learner: "Your Name"
 start_date: 2026-07-13
-target: faang_interview  # the milestone you must hit: fintech_interview | faang_interview | competitive
+target: competitive      # DEFAULT. the mission-level goal. fintech_interview | faang_interview | competitive
 reach_beyond: 1          # tiers to pursue PAST the target so it's hit with margin (see §5)
 daily_cap: 5
 
@@ -165,11 +168,21 @@ So `dsa-coach` must NOT model curriculum as swappable problem lists (NC150 vs Bl
                        horizon; near-zero interview payoff, pursued for mastery
 ```
 
-**The overshoot rule (config-driven):** the adopter declares a `target` (the milestone they must hit) and a `reach_beyond` margin. The curriculum they receive is *everything up to their target, plus `reach_beyond` tiers past it* — so a "faang_interview" target with `reach_beyond: 1` still pulls Tier-1 advanced into rotation, because that margin is what makes the interview target reliable rather than aspirational. This is exactly your Post-NC150 steady state (Maintenance · Application-*pull-not-push* · deliberate Expansion) generalized: knowledge always reaches one layer beyond the immediate goal.
+**The overshoot rule (config-driven):** the adopter declares a `target` (the milestone they must hit) and a `reach_beyond` margin. **Default target is `competitive`** — the mission-level goal, not an interview checkpoint — because reaching for competitive depth is *how* the interview target is cleared with margin in the first place. The curriculum they receive is *everything up to their target, plus `reach_beyond` tiers past it* — so even a "faang_interview" target with `reach_beyond: 1` still pulls Tier-1 advanced into rotation. This is exactly your Post-NC150 steady state (Maintenance · Application-*pull-not-push* · deliberate Expansion) generalized: knowledge always reaches one layer beyond the immediate goal.
 
-**Curriculum vs. schedule split (still needed for date-independence):** the NC150 Jun–Dec 2026 table is a *dated* artifact — the hardest thing to generalize. Separate the **curriculum** (ordered phases + problem lists + pacing, undated, in `curriculum/*.yml`) from the **schedule** (real dates), and generate the dated view per adopter.
+**Application backlog pools (the "pull, not push" thread).** Learning problems are only half the curriculum. Each phase has an associated **curated backlog pool** of application problems — sourced from real interviews and gated by the patterns already learned — that you *pull* from to build speed and transfer. cse-review already curated a large **interview-sourced backlog** used *during* the knowledge-expansion phase (post-NC150). The generalized model extends this symmetrically: a second, **competitive-style backlog pool** for the phase *after* knowledge expansion (Tier 2 / competitive), so the pull-not-push mechanic keeps running past the ROI line. Pools are curriculum data, not schedule data — the coach pulls from the pool that matches the learner's current tier, never marching a list top-to-bottom.
 
-- `curriculum/milestone.yml`, `expansion_tier1.yml`, `expansion_tier2.yml`: faithful port of your roadmap's *content and ordering*, minus the calendar, tagged by ROI-line tier and pacing (e.g. DP phases drop to 3/week).
+| Phase | Learning content | Application backlog pool |
+|-------|------------------|--------------------------|
+| Milestone (NC150) | roadmap phases | (light; roadmap is the work) |
+| Expansion Tier 1 (post-NC150, above ROI line) | segment tree, KMP, XOR trie, … | **interview-sourced backlog** (curated) |
+| Expansion Tier 2 (below ROI line) | max-flow, Mo's, suffix automaton, … | **competitive-style backlog** (curated) |
+
+**Phase-completion definition (concrete, tied to retirement).** A phase is **fully complete only when every problem associated with that phase is 🏆 Retired** (Streak 3+ Clean) — *not* when each has been attempted or solved once. This binds curriculum progress directly to the spaced-repetition state already tracked in `dsa_progress.md`: a phase's learning problems *and* its pulled backlog problems must all reach retirement before the phase counts as done. The coach reports phase progress as "N of M problems retired" and does not advance the learner's headline phase until the count is complete. This becomes an explicit rule in the coaching skill (§6).
+
+**Curriculum vs. schedule split (still needed for date-independence):** the NC150 Jun–Dec 2026 table is a *dated* artifact — the hardest thing to generalize. Separate the **curriculum** (ordered phases + problem lists + backlog pools + pacing, undated, in `curriculum/*.yml`) from the **schedule** (real dates), and generate the dated view per adopter.
+
+- `curriculum/milestone.yml`, `expansion_tier1.yml`, `expansion_tier2.yml`: faithful port of your roadmap's *content and ordering*, minus the calendar, tagged by ROI-line tier and pacing (e.g. DP phases drop to 3/week). Each carries its associated `backlog_pool` (interview-sourced for Tier 1, competitive-style for Tier 2).
 - `scripts/bootstrap.py` (also invocable via the `dsa-init` skill) asks:
   1. Name, start date, **target** milestone, **reach_beyond** margin, daily cap, solution language(s).
   2. Writes `dsa.config.yml`.
@@ -189,6 +202,8 @@ This is where cse-review's soul lives. It encodes, from §2b:
 - **Operating principles first:** close the loop completely & proactively; the learner owns thinking and writes all code — the agent coaches, reads, explains, never edits solution source.
 - **The review workflow:** on any problem mention → mark schedule → ask "Clean, Shaky, or Blank?" (with your exact definitions) → update `dsa_progress.md` → run the script (or let the hook) → proactively slot the computed next-review date into the right week's schedule.
 - **Guardrails:** no spoilers/approaches unless stuck or asked; never recap approach on a retry; strict comfort bar; daily cap from config; schedule-integrity rule (never drop a problem without re-slotting it); new-vs-retry distinction; method-variant promotion rule.
+- **Phase-completion rule:** a phase is complete only when *every* associated problem (learning + pulled backlog) is 🏆 Retired. Report "N of M retired"; never advance the headline phase early. (§5)
+- **Application pull rule:** during a tier, pull backlog problems from that tier's pool gated by learned patterns — never march a list top-to-bottom; a 🟡/🔴 pull is a diagnostic, not a cue to learn something ad-hoc.
 - **Cadence rules:** session dating, end-of-session push, end-of-week schedule generation.
 
 Because it's committed to the repo, `CLAUDE.md` just points at it — every adopter, on every machine, gets the behavior with zero personal-memory setup. This is the fix for the core "trapped in your memory" problem.
@@ -200,7 +215,7 @@ Because it's committed to the repo, `CLAUDE.md` just points at it — every adop
 1. **Scaffold repo** — new `dsa-coach` repo, directory skeleton, licenses, README stub.
 2. **Port engine** — copy `update_review_dates.py` + hook; add config loading; keep defaults = current behavior; add golden-file test.
 3. **Port docs scaffold** — patterns/fundamentals as-is; blank templated tracker/logs/schedules.
-4. **Author the layered curriculum** — `milestone.yml` + `expansion_tier1.yml` + `expansion_tier2.yml`, ROI-line-tagged, faithful content port of your roadmap incl. the reach-beyond queue.
+4. **Author the layered curriculum + backlog pools** — `milestone.yml` + `expansion_tier1.yml` + `expansion_tier2.yml`, ROI-line-tagged; port the curated interview-sourced backlog (`backlog/interview_sourced.yml`) and build the competitive-style backlog (`backlog/competitive_style.yml`).
 5. **Write bootstrap** — interactive setup + date projection.
 6. **Extract coaching skill** — consolidate the generalizable memory files into `SKILL.md`; wire `CLAUDE.md` to it.
 7. **README + a `docs/PHILOSOPHY.md`** — the Interview-ROI line, comfort system, daily loop, backlog recovery, all currently implicit.
