@@ -43,7 +43,7 @@ Notes for future agents:
 | Medium | [105. Construct Binary Tree from Preorder and Inorder Traversal](https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/) | 🔴 | 0 | 2026-07-10 | 2026-07-08 | 2026-07-08 |
 | Medium | [208. Implement Trie (Prefix Tree)](https://leetcode.com/problems/implement-trie-prefix-tree/) | 🟡 | 0 | 2026-07-18 | 2026-07-08 | 2026-07-06, 2026-07-08 |
 | Medium | [75. Sort Colors (Dutch Flag)](https://leetcode.com/problems/sort-colors/) | 🟡 | 0 | 2026-07-18 | 2026-07-08 | 2026-01-08, 2026-04-01, 2026-05-26, 2026-05-28, 2026-06-28, 2026-07-08 |
-| Medium | [19. Remove Nth Node From End of List (Recursion)](https://leetcode.com/problems/remove-nth-node-from-end-of-list/) | 🟡 | 0 | 2026-07-18 | 2026-07-08 | 2026-05-18, 2026-05-21, 2026-06-18, 2026-06-28, 2026-07-08 |
+| Medium | [19. Remove Nth Node From End of List (Postorder Recursion)](https://leetcode.com/problems/remove-nth-node-from-end-of-list/) | 🟡 | 0 | 2026-07-18 | 2026-07-08 | 2026-05-18, 2026-05-21, 2026-06-18, 2026-06-28, 2026-07-08 |
 | Hard | [42. Trapping Rain Water (Array)](https://leetcode.com/problems/trapping-rain-water/) | 🟢 | 1 | 2026-08-07 | 2026-07-08 | 2026-04-15, 2026-06-29, 2026-07-08 |
 | Medium | [146. LRU Cache](https://leetcode.com/problems/lru-cache/) | 🟡 | 0 | 2026-07-17 | 2026-07-07 | 2026-07-04, 2026-07-07 |
 | Medium | [143. Reorder List](https://leetcode.com/problems/reorder-list/) | 🟡 | 0 | 2026-07-16 | 2026-07-06 | 2026-04-26, 2026-07-06 |
@@ -152,6 +152,7 @@ Problems added for algorithmic depth — not part of the spaced repetition track
 | Medium | [912. Sort an Array (Counting Sort)](https://leetcode.com/problems/sort-an-array/) | Sorting algorithms deep-dive |
 | Medium | [912. Sort an Array (Timsort)](https://leetcode.com/problems/sort-an-array/) | Sorting algorithms deep-dive |
 | Medium | [53. Maximum Subarray (Divide and Conquer)](https://leetcode.com/problems/maximum-subarray/) | D&C pattern — active block week of Jul 6 |
+| Medium | [19. Remove Nth Node From End of List (Preorder Recursion)](https://leetcode.com/problems/remove-nth-node-from-end-of-list/) | Parked Jul 9 — was rotating 3 variants (iterative + postorder + preorder); kept iterative + postorder in active rotation. Preorder (count length forward, then remove on the way down) is the most contrived direction for remove-from-end; revisit for enrichment. |
 | Hard | [42. Trapping Rain Water (Two Pointer)](https://leetcode.com/problems/trapping-rain-water/) | O(1) space optimization. **Trigger: pull into rotation when 42 Array retires (🏆, streak 3).** Array method 🟢 streak 1 as of Jul 8. |
 | Medium | [138. Copy List with Random Pointer (one-pass O(1))](https://leetcode.com/problems/copy-list-with-random-pointer/) | Space optimization: interweave copies between originals (A→A'→B→B'…), set `.random`, then unweave — no map. Solved with two-pass hashmap Jul 5; low priority, revisit the interweaving trick later. |
 | Medium | [94. Binary Tree Inorder Traversal (Morris)](https://leetcode.com/problems/binary-tree-inorder-traversal/) | Technique: Morris traversal — O(1)-space inorder via threaded trees. Niche interview follow-up; not needed for any NC150 problem. Learn after NC150. |
