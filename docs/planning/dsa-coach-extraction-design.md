@@ -132,9 +132,9 @@ intervals:              # days until next review, by Comfort + streak
 retire_at_streak: 3
 
 solutions:
-  # language-agnostic discovery; you practice Java + Python
+  # DEFAULT is Python-only; engine stays language-agnostic so adopters can widen this
   roots: ["dsa/leetcode"]
-  globs: ["*.py", "*.java", "*.js", "*.ts", "*.cpp"]
+  globs: ["*.py"]                        # widen to *.java, *.ts, … at bootstrap if desired
   filename_pattern: "{number}_{name}"   # 19_remove_nth_node.py
 ```
 
@@ -145,6 +145,26 @@ solutions:
 - Everything else — diff parsing, staged-only mode, summary table, sort-by-latest, legacy migration — stays untouched.
 
 **Test hook:** add a tiny `tests/` with a fixture `dsa_progress.md` + a golden output, so adopters (and CI) can verify the engine after edits. cse-review has none today; the template should, since strangers will modify it.
+
+### 4a. Configurability contract (DECIDED: pedagogy locked, logistics configurable)
+
+The pedagogy is *why the system works*; loosening it produces a weaker product wearing the same name. So the line is drawn once, explicitly:
+
+**🔒 Locked — non-negotiable, not exposed as config; enforced by the coaching skill:**
+
+- Strict comfort bar (🟢 Clean only from a blank page, correct complexity, zero hints; "mostly remembered" = 🟡 Shaky)
+- No spoilers / no approach hints unless the learner is stuck or explicitly asks; never recap approach on a retry
+- No code edits by the agent — the learner writes every line
+- Phase-completion = every associated problem 🏆 Retired (§5)
+- Reach-beyond posture — the curriculum always overshoots the target (§5)
+
+**⚙️ Configurable — situational logistics, exposed in `dsa.config.yml`:**
+
+- `daily_cap`, time cap (45-min default), `intervals` (Clean/Shaky/Blank days), `retire_at_streak`
+- `target` + `reach_beyond` (which tiers are in scope)
+- `solutions` globs/roots (language)
+
+Adopters tune *when and how much* they study; they cannot dilute *the standard*. A future `--strict=false` escape hatch is explicitly rejected here — if someone wants a lenient tracker, this isn't it.
 
 ---
 
@@ -228,8 +248,8 @@ Each phase is independently reviewable. `cse-review` is never touched.
 ## 8. Open questions for you
 
 1. **Overshoot defaults:** what `target` options ship at launch (fintech / faang / competitive), and what default `reach_beyond` margin? Do we ever allow `reach_beyond: 0`, or is reaching-past-the-target a non-negotiable that we refuse to let an adopter disable?
-2. **Solution languages in the default preset:** you practice Java + Python. Ship the default glob as both, or language-pick at bootstrap only?
-3. **How opinionated should the shipped skill be?** Full cse-review rigor (strict comfort bar, no-spoilers, daily cap) as non-negotiable defaults, or expose a few of these as config toggles for adopters with different philosophies?
+2. ~~**Solution languages in the default preset**~~ — **DECIDED: default Python-only (`globs: ["*.py"]`); engine stays language-agnostic so adopters can widen at bootstrap.**
+3. ~~**How opinionated should the shipped skill be?**~~ — **DECIDED: pedagogy locked, logistics configurable (see §4a Configurability contract).**
 4. **Repo home & visibility:** public GitHub template under your account, or private first? Name — `dsa-coach`, `leetcode-spaced-rep`, something else?
 5. **The `self_eval_log` meta-review loop:** ship it as a default coaching mechanism, or treat it as an advanced/optional add-on?
 
