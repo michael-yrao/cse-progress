@@ -241,3 +241,33 @@ class Solution:
         dummy.next = head
         postorder(dummy)
         return dummy.next
+    
+    def removeNthFromEnd_20260709_Iterative(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
+        # iterative
+        
+        dummy = ListNode(-1)
+        dummy.next = head
+
+        traversal = head
+        lenList = 0
+
+        while traversal:
+            lenList+=1
+            traversal = traversal.next
+
+        # we are removing nth from the end, so from the front, it is len - n - 1 that we need to re-point
+        traversal = dummy
+        currentIndex = -1
+
+        while traversal:
+            # print(lenList - n - 1)
+            if currentIndex == lenList - n - 1:
+                if traversal.next:
+                    traversal.next = traversal.next.next
+                else:
+                    traversal.next = None
+                break
+            traversal = traversal.next
+            currentIndex+=1
+        
+        return dummy.next
