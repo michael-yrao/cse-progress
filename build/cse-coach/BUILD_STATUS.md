@@ -12,8 +12,8 @@ Tracking the §7 phased build plan:
 | 2 | Port engine — config-driven `update_review_dates.py` (intervals/root/globs from `cse.config.yml`, stdlib-only) + tests | ✅ done |
 | 3 | Port DSA scaffold — patterns/fundamentals (copied clean), blank tracker/logs, `solution_template.py` + `new_problem.py` scaffolder (tested: create/retry/discovery) | ✅ done |
 | 4 | Port System Design pillar — study guide, both templates, rate_limiter + io/stream seeds, blank `design_progress.md`; engine now multi-tracker (`--tracker`, no discovery) + hook wired; tests pass | ✅ done |
-| 5 | Build AI Engineering pillar — study guide, `ai_progress.md`, seed templates/components | ⏳ next |
-| 6 | Author curriculum + backlog pools — DSA/SD/AI tiers, ROI-line-tagged | ☐ |
+| 5 | Build AI Engineering pillar — study guide, build template, `vector_search` component seed, blank `ai_progress.md`; all 3 trackers idempotent | ✅ done |
+| 6 | Author curriculum + backlog pools — DSA/SD/AI tiers, ROI-line-tagged | ⏳ next |
 | 7 | Write bootstrap — intake (all-at-once) + date projection; enforce `reach_beyond ≥ 1`; seed logs | ☐ |
 | 8 | Extract coaching skill — SKILL.md in place (done), wire CLAUDE.md (done) | ◑ partial |
 | 9 | README (done) + `docs/PHILOSOPHY.md` | ◑ partial |
