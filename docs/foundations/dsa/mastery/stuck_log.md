@@ -22,6 +22,9 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 ## 🟡 146. LRU Cache — Jul 7, 2026
 **Sticking point**: Recalled the whole design cold (hashmap + DLL with two sentinels, get-promotes, evict `tail.prev` + `del map[node.key]`) — big jump from the Jul 4 🔴. Friction was peripheral: needed the type-checker error explained (untyped param = `Any` = silent; annotating `delete(node: ListNode)` surfaced the unprovable `.prev is not None` invariant → resolve with `assert`).
 
+## 🟡 424. Longest Repeating Character Replacement — Jul 10, 2026
+**Sticking point**: Had the sliding-window idea + the incremental `maxFreq` optimization, but botched three details: (1) shrink condition inverted — `maxFreq + k > r - l + 1` instead of `(r - l + 1) - maxFreq > k`, so `l` ran off the end (index error); (2) forgot `r += 1` on the outer loop; (3) answer used `maxFreq + k` instead of the window size `r - l + 1`. Window is *invalid* when `windowLen - maxFreq > k`; shrink then; answer is the max valid window length.
+
 ## 🔴 211. Design Add and Search Words — Jul 9, 2026
 **Topic**: Trie + DFS backtracking (new; builds on 208)
 

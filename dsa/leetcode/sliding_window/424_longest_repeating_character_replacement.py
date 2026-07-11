@@ -26,6 +26,7 @@ Constraints:
 """
 
 from collections import defaultdict
+import collections
 
 
 class Solution:
@@ -110,5 +111,27 @@ class Solution:
             else:
                 freqMap[s[l]]-=1
                 l+=1
+            r+=1
+        return maxLength
+    def characterReplacement_20260710(self, s: str, k: int) -> int:
+        # key thing to note here is that we want length only as return
+        # so sliding window, we need to know most freq char in our current window
+        # freq(longest) + k <= r - l + 1
+        # above is our criteria to move l
+        # read char with r and add freq to freqMap
+
+        l = r = 0
+        freqMap = collections.defaultdict(int)
+        maxFreq = 0
+        maxLength = 0
+        while r < len(s):
+            freqMap[s[r]]+=1
+            # max on freqMap value basically makes this o(n^2), so we need to find an alternative
+            maxFreq = max(maxFreq,freqMap[s[r]])
+            while r - l + 1 > maxFreq + k:
+                freqMap[s[l]]-=1
+                l+=1
+            # now that we are super this is valid, compare length
+            maxLength = max(maxLength, r - l + 1)
             r+=1
         return maxLength
