@@ -92,3 +92,24 @@ class Solution:
         dfs(root, largestValue)
 
         return goodNodeCounter
+    def goodNodes_20260710(self, root: TreeNode) -> int:
+        # so we need to keep track at the currentnode, what is the biggest node since
+        # since root can be anything, we start currentMax as -math.inf
+        currentMax = -math.inf
+        # now we can just go down both sides with DFS and increment if current node bigger than currentMax
+        def dfs(node, currentMax):
+            # base case, if next node is empty, return 0
+            # we don't put node.val < currentMax here since that does not stop our traversal
+            if not node:
+                return 0
+            
+            counter = 0
+
+            if node.val >= currentMax:
+                counter+=1
+
+            currentMax = max(currentMax, node.val)
+            leftSideCounter = dfs(node.left, currentMax)
+            rightSideCounter = dfs(node.right, currentMax)
+            return counter + leftSideCounter + rightSideCounter
+        return dfs(root, currentMax)
