@@ -1,0 +1,34 @@
+# System Design — Tier 1 (Interview Core, above the ROI line).
+# The whole SD-interview surface. Driving the framework fluently is ~half the score.
+# Reviewed by blind sprint on the Sunday slot; staged Bootstrap → Transition → Mastery.
+pillar: system_design
+tier: tier1_interview_core
+roi: above_line
+
+topics:
+  - name: Fundamentals & estimation
+    items: ["latency numbers", "back-of-envelope (QPS, storage, bandwidth)", "vertical vs horizontal scaling"]
+  - name: Building blocks
+    items: ["load balancing", "caching (patterns, eviction, invalidation)", "CDN", "reverse proxy / API gateway", "message queues & async", "rate limiting", "consistent hashing", "bloom filters"]
+  - name: Data layer
+    items: ["SQL vs NoSQL", "indexing", "replication (leader/follower, multi-leader)", "sharding / partitioning", "CAP & PACELC", "consistency levels", "idempotency"]
+  - name: The interview framework
+    items: ["requirements (functional + non-functional)", "estimation", "API design", "data model", "high-level diagram", "deep dives", "bottlenecks & tradeoffs"]
+
+# Canonical designs (the "grokking" set) — the Design Practice Backlog. Each is a
+# blind-sprint unit logged in design_progress.md.
+canonical_designs:
+  - "URL shortener"
+  - "Rate limiter"
+  - "Chat / Messenger"
+  - "News feed"
+  - "Notification service"
+  - "Typeahead / autocomplete"
+  - "Web crawler"
+  - "Video streaming (YouTube / Netflix)"
+  - "Ride-share (Uber)"
+  - "File storage (Dropbox / Drive)"
+  - "Ticketmaster"
+  - "Distributed KV store / cache"
+  - "Payment / ledger"
+  - "Top-K / trending"

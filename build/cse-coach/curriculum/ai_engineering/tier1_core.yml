@@ -1,0 +1,24 @@
+# AI System Engineering — Tier 1 (Practitioner Core, above the ROI line).
+# The whole AI-infra interview surface. Prerequisite: System Design Tier 1 largely
+# retired. Reviewed by blind rebuild; staged Bootstrap → Transition → Mastery.
+pillar: ai_engineering
+tier: tier1_core
+roi: above_line
+
+topics:
+  - name: Retrieval & vector search
+    items: ["chunking strategies", "embedding pipelines", "HNSW / IVF / IVF-PQ", "similarity metrics", "hybrid (BM25 + vector)", "reranking", "RAG end-to-end"]
+  - name: Context-window & token management
+    items: ["context ranking / selection", "prompt compression", "semantic caching", "token budgeting & cost control", "token streaming (SSE / WebSocket)"]
+  - name: Agentic orchestration & tool use
+    items: ["deterministic function/tool calling", "structured (JSON-schema) outputs", "state tracking across turns", "multi-step planning", "retries & idempotency", "human-in-the-loop checkpoints"]
+  - name: Serving fundamentals
+    items: ["request batching", "KV-cache", "GPU scheduling & utilization", "autoscaling for spiky load", "per-tenant quotas & rate limiting", "latency vs throughput"]
+  - name: Evaluation & guardrails
+    items: ["offline + online eval harnesses", "golden sets", "LLM-as-judge & its pitfalls", "hallucination / grounding checks", "safety proxies", "canary + rollback for prompt/model changes"]
+
+practice_backlog:
+  - "RAG chat over a private corpus"
+  - "LLM chat assistant (streaming, context, batching, quotas)"
+  - "Agent with tools (structured outputs, state, retries, checkpoint)"
+  - "Eval + guardrail harness"

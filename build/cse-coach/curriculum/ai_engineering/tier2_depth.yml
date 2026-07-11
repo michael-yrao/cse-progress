@@ -1,0 +1,21 @@
+# AI System Engineering — Tier 2 (Infra Depth, below the ROI line).
+# High real-world ROI, low interview ROI. Pursue after Tier 1 is solid.
+pillar: ai_engineering
+tier: tier2_depth
+roi: below_line
+
+topics:
+  - name: Serving internals
+    note: "Continuous / in-flight batching (vLLM, TGI), paged attention, speculative decoding, tensor/pipeline parallelism, quantization (GPTQ/AWQ/FP8)."
+  - name: Retrieval quality at scale
+    note: "Chunking/embedding ablations, retriever eval (recall@k, nDCG), query rewriting, multi-vector / late-interaction (ColBERT), freshness & incremental indexing."
+  - name: Distributed training & fine-tuning
+    note: "Data/model/pipeline parallelism, LoRA/QLoRA, RLHF/DPO pipelines, checkpoint & data management."
+  - name: Cost & reliability engineering
+    note: "Multi-model routing, caching layers, fallback/degradation, observability for non-deterministic systems, drift & regression detection."
+
+tier3_horizon:
+  note: >
+    Research / specialization only: novel attention/architecture work, training-infra
+    research (MoE routing, long-context methods), inference-kernel engineering,
+    agent-planning research, formal safety / alignment evaluation.
