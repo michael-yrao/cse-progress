@@ -106,6 +106,8 @@ and don't duplicate — just re-present the plan.
      and an `# ── Attempt 1 · <today> ──` banner over a `pass` stub.
    - **Retry (file exists):** leave the file; **append** a new
      `# ── Attempt N · <today> ──` banner (next N) below the prior attempts.
+   - Helper: `python scripts/new_problem.py --number N --title "..." --pattern <category>`
+     does both cases correctly (create vs append) — prefer it over hand-writing the scaffold.
    Either way, **write no logic and no data-structure classes** — the learner
    writes those. All attempts for a problem accumulate in the one file, giving a
    dated history that feeds the streak/retirement tracking.
