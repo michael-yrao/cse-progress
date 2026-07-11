@@ -103,6 +103,30 @@ def test_end_to_end_reorder_and_recompute(tmp_path: Path):
     assert "2026-02-03" in rows[0]
 
 
+SD_FIXTURE = """# System Design Progress
+
+| Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Attempt Date | Attempt Dates |
+|---|---|---|---|---|---|---|
+| Tier 1 | [URL Shortener](../case_studies/url_shortener.md) | \U0001f7e2 | 1 | | 2026-01-10 | 2026-01-10 |
+| Tier 1 | [Rate Limiter](../components/rate_limiter.md) | \U0001f534 | 0 | | 2026-02-01 | 2026-02-01 |
+"""
+
+
+def test_recompute_simple_no_discovery(tmp_path: Path):
+    m = _load_module()
+    tracker = tmp_path / "design_progress.md"
+    tracker.write_text(SD_FIXTURE, encoding="utf-8")
+    m.recompute_simple(tracker)
+    out = tracker.read_text(encoding="utf-8")
+    rows = [ln for ln in out.splitlines() if ln.startswith("| ") and "](" in ln and "Comfort" not in ln]
+    # Sorted by latest date desc → Rate Limiter (Feb) before URL Shortener (Jan)
+    assert "Rate Limiter" in rows[0] and "URL Shortener" in rows[1]
+    assert "2026-02-09" in rows[1]  # Clean streak-1 URL Shortener: +30
+    assert "2026-02-03" in rows[0]  # Blank Rate Limiter: +2
+    # No source discovery: exactly the two systems, nothing injected
+    assert len(rows) == 2
+
+
 def _run_all():
     import tempfile
 
@@ -112,6 +136,8 @@ def _run_all():
         test_load_config_overrides(Path(d))
     with tempfile.TemporaryDirectory() as d:
         test_end_to_end_reorder_and_recompute(Path(d))
+    with tempfile.TemporaryDirectory() as d:
+        test_recompute_simple_no_discovery(Path(d))
     print("All engine tests passed.")
 
 

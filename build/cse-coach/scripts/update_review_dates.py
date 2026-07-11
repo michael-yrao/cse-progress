@@ -441,6 +441,70 @@ def discover_source_problems(existing_titles: set[str], staged_files: list[Path]
     return missing_rows
 
 
+def recompute_simple(tracker_path: Path) -> None:
+    """Recompute next-review dates and re-sort a same-format tracker WITHOUT
+    source discovery. Used for the System Design / AI trackers, whose units are
+    systems/capabilities (reviewed by blind sprint), not source files. Same
+    7-column table and same interval math as the DSA tracker; the DSA main() is
+    left untouched. Prefix (incl. header/separator) and suffix are preserved."""
+    if not tracker_path.exists():
+        return
+    lines = tracker_path.read_text(encoding="utf-8").splitlines()
+    prefix_lines: list[str] = []
+    table_rows: list[dict] = []
+    suffix_lines: list[str] = []
+    in_table = header_seen = separator_seen = False
+
+    for line in lines:
+        if not in_table:
+            prefix_lines.append(line)
+            if line.strip() in (TABLE_HEADER, TABLE_HEADER_LEGACY):
+                in_table = header_seen = True
+            continue
+        if not separator_seen:
+            if line.strip() in (ROW_SEPARATOR, ROW_SEPARATOR_LEGACY):
+                separator_seen = True
+            prefix_lines.append(line)
+            continue
+        m = ROW_RE.match(line) if line.startswith("|") else None
+        lm = ROW_RE_LEGACY.match(line) if (line.startswith("|") and not m) else None
+        match = m or lm
+        if not match:
+            suffix_lines.append(line)
+            continue
+        comfort = match.group("comfort").strip()
+        streak = int(match.group("streak")) if m else (1 if comfort == COMFORT_CLEAN else 0)
+        latest = parse_date(match.group("latest"))
+        attempts = match.group("attempts").strip()
+        attempts_latest = parse_latest_attempt_date_from_attempts(attempts)
+        if latest is None or (attempts_latest is not None and attempts_latest > latest):
+            latest = attempts_latest
+        table_rows.append({
+            "difficulty": match.group("difficulty").strip(),
+            "problem": match.group("problem").strip(),
+            "url": match.group("url").strip(),
+            "comfort": comfort,
+            "streak": streak,
+            "latest": latest,
+            "latest_attempt_date": format_date(latest),
+            "attempts": attempts,
+            "next_review": format_date(compute_next_review_date(comfort, latest, streak)),
+        })
+
+    if not (header_seen and separator_seen):
+        raise RuntimeError(f"Could not find review table header and separator in {tracker_path}.")
+
+    sorted_rows = sorted(
+        table_rows, key=lambda e: (e["latest"] is not None, e["latest"]), reverse=True
+    )
+    new_lines = prefix_lines + [build_row(r) for r in sorted_rows] + suffix_lines
+    if new_lines != lines:
+        tracker_path.write_text("\n".join(new_lines) + "\n", encoding="utf-8")
+        print(f"Reordered {len(sorted_rows)} rows by latest attempt date in {tracker_path}")
+    else:
+        print(f"No reorder needed in {tracker_path}")
+
+
 def main() -> None:
     text = MARKDOWN_PATH.read_text(encoding="utf-8")
     lines = text.splitlines()
@@ -536,6 +600,13 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Update review progression markdown from source problem files.")
     parser.add_argument("--staged-only", action="store_true")
     parser.add_argument("--all-source", action="store_true")
+    parser.add_argument(
+        "--tracker",
+        action="append",
+        default=[],
+        help="Extra same-format tracker(s) to recompute + re-sort without source "
+        "discovery (e.g. the System Design / AI progress files). Repeatable.",
+    )
     args = parser.parse_args()
 
     staged_files = None
@@ -637,6 +708,10 @@ def main() -> None:
         print(f"{action} {len(sorted_rows)} rows by latest attempt date in {MARKDOWN_PATH}")
     else:
         print(f"No reorder needed in {MARKDOWN_PATH}")
+
+    # Non-DSA trackers (System Design / AI): recompute + re-sort only, no discovery.
+    for extra in args.tracker:
+        recompute_simple(Path(extra))
 
 
 if __name__ == "__main__":

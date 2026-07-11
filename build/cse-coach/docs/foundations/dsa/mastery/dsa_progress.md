@@ -18,9 +18,15 @@ Notes for the coach / future agents:
 - Replace the example row below with your own once you log your first problem.
 -->
 
+> **0** problems &nbsp;·&nbsp; **0** solutions &nbsp;·&nbsp; **0** attempts
+
+| | 🏆 Retired | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
+|:---|:---:|:---:|:---:|:---:|
+| **Solutions** | 0 | 0 | 0 | 0 |
+
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|---|
-| Easy | [1. Two Sum](https://leetcode.com/problems/two-sum/) | 🔴 | 0 | | Not Attempted | |
+| Easy | [1. Two Sum](https://leetcode.com/problems/two-sum/) | 🔴 | 0 |  |  |  |
 
 ## Knowledge Expansion Queue
 

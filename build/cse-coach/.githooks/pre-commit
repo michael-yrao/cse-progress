@@ -8,10 +8,15 @@
 STAGED=$(git diff --cached --name-only --diff-filter=ACM)
 if echo "$STAGED" | grep -qE "(dsa_progress|design_progress|ai_progress)\.md$|^dsa/leetcode/.*\.(py|java|ts|js|cpp)$"; then
   echo "Auto-updating spaced-repetition tracker(s)..."
+  # DSA runs the full engine (--staged-only, source discovery); the System Design
+  # and AI trackers are recomputed + re-sorted via --tracker (no discovery).
+  # recompute_simple() no-ops if a tracker file doesn't exist yet.
+  SD="docs/foundations/system_design/mastery/design_progress.md"
+  AI="docs/foundations/ai_engineering/mastery/ai_progress.md"
   if command -v py >/dev/null 2>&1; then
-    py scripts/update_review_dates.py --staged-only
+    py scripts/update_review_dates.py --staged-only --tracker "$SD" --tracker "$AI"
   elif command -v python >/dev/null 2>&1; then
-    python scripts/update_review_dates.py --staged-only
+    python scripts/update_review_dates.py --staged-only --tracker "$SD" --tracker "$AI"
   else
     echo "Error: Python not found. Install Python to enable the auto-updater." >&2
     exit 1
