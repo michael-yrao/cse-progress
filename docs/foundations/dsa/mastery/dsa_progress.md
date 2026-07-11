@@ -30,17 +30,18 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/dsa/mastery/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **91** problems &nbsp;·&nbsp; **102** solutions &nbsp;·&nbsp; **287** attempts
+> **91** problems &nbsp;·&nbsp; **102** solutions &nbsp;·&nbsp; **288** attempts
 
 | | 🏆 Retired | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|
-| **Solutions** | 0 | 79 | 20 | 3 |
+| **Solutions** | 0 | 80 | 19 | 3 |
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|---|
 | Medium | [503. Next Greater Element II](https://leetcode.com/problems/next-greater-element-ii/) | 🟡 | 0 | 2026-07-21 | 2026-07-11 | 2026-07-11 |
 | Medium | [98. Validate Binary Search Tree](https://leetcode.com/problems/validate-binary-search-tree/) | 🟢 | 1 | 2026-08-10 | 2026-07-11 | 2026-05-16, 2026-05-20, 2026-06-30, 2026-07-02, 2026-07-11 |
 | Medium | [211. Design Add and Search Words Data Structure](https://leetcode.com/problems/design-add-and-search-words-data-structure/) | 🟡 | 0 | 2026-07-21 | 2026-07-11 | 2026-07-09, 2026-07-11 |
+| Medium | [80. Remove Duplicates from Sorted Array II](https://leetcode.com/problems/remove-duplicates-from-sorted-array-ii/) | 🟢 | 1 | 2026-08-10 | 2026-07-11 | 2026-01-13, 2026-04-13, 2026-06-25, 2026-06-27, 2026-07-11 |
 | Easy | [141. Linked List Cycle](https://leetcode.com/problems/linked-list-cycle/) | 🟢 | 1 | 2026-08-09 | 2026-07-10 | 2026-04-26, 2026-07-01, 2026-07-10 |
 | Medium | [621. Task Scheduler](https://leetcode.com/problems/task-scheduler/) | 🟢 | 1 | 2026-08-09 | 2026-07-10 | 2026-06-30, 2026-07-01, 2026-07-10 |
 | Medium | [424. Longest Repeating Character Replacement](https://leetcode.com/problems/longest-repeating-character-replacement/) | 🟡 | 0 | 2026-07-20 | 2026-07-10 | 2026-04-19, 2026-07-02, 2026-07-10 |
@@ -85,7 +86,6 @@ Notes for future agents:
 | Medium | [560. Subarray Sum Equals K](https://leetcode.com/problems/subarray-sum-equals-k/) | 🟢 | 1 | 2026-07-28 | 2026-06-28 | 2026-04-05, 2026-06-26, 2026-06-28 |
 | Medium | [49. Group Anagrams](https://leetcode.com/problems/group-anagrams/) | 🟢 | 2 | 2026-08-27 | 2026-06-28 | 2026-01-04, 2026-03-27, 2026-05-29, 2026-06-28 |
 | Easy | [733. Flood Fill](https://leetcode.com/problems/flood-fill/) | 🟢 | 1 | 2026-07-28 | 2026-06-28 | 2026-06-12, 2026-06-19, 2026-06-28 |
-| Medium | [80. Remove Duplicates from Sorted Array II](https://leetcode.com/problems/remove-duplicates-from-sorted-array-ii/) | 🟡 | 0 | 2026-07-07 | 2026-06-27 | 2026-01-13, 2026-04-13, 2026-06-25, 2026-06-27 |
 | Easy | [169. Majority Element](https://leetcode.com/problems/majority-element/) | 🟢 | 1 | 2026-07-27 | 2026-06-27 | 2026-01-05, 2026-04-01, 2026-05-28, 2026-06-27 |
 | Medium | [53. Maximum Subarray (Prefix Sum)](https://leetcode.com/problems/maximum-subarray/) | 🟢 | 1 | 2026-07-27 | 2026-06-27 | 2026-01-08, 2026-04-01, 2026-06-27 |
 | Easy | [104. Maximum Depth of Binary Tree](https://leetcode.com/problems/maximum-depth-of-binary-tree/) | 🟢 | 1 | 2026-07-27 | 2026-06-27 | 2026-04-30, 2026-05-27, 2026-06-27 |
