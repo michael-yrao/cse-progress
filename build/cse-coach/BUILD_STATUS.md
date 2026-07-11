@@ -10,8 +10,8 @@ Tracking the §7 phased build plan:
 |---|------|--------|
 | 1 | Scaffold repo — skeleton (3 pillars), license, README, CLAUDE.md, config example, hook, skill in place | ✅ done |
 | 2 | Port engine — config-driven `update_review_dates.py` (intervals/root/globs from `cse.config.yml`, stdlib-only) + tests | ✅ done |
-| 3 | Port DSA scaffold — patterns/fundamentals, blank trackers/logs/schedules, `solution_template.py` + `new-problem` scaffolder | ⏳ next |
-| 4 | Port System Design pillar — study guide, templates, component/fundamentals seeds, blank `design_progress.md`, backlog | ☐ |
+| 3 | Port DSA scaffold — patterns/fundamentals (copied clean), blank tracker/logs, `solution_template.py` + `new_problem.py` scaffolder (tested: create/retry/discovery) | ✅ done |
+| 4 | Port System Design pillar — study guide, templates, component/fundamentals seeds, blank `design_progress.md`, backlog | ⏳ next |
 | 5 | Build AI Engineering pillar — study guide, `ai_progress.md`, seed templates/components | ☐ |
 | 6 | Author curriculum + backlog pools — DSA/SD/AI tiers, ROI-line-tagged | ☐ |
 | 7 | Write bootstrap — intake (all-at-once) + date projection; enforce `reach_beyond ≥ 1`; seed logs | ☐ |
