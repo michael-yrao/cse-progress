@@ -28,6 +28,9 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 ## 🟡 424. Longest Repeating Character Replacement — Jul 10, 2026
 **Sticking point**: Had the sliding-window idea + the incremental `maxFreq` optimization, but botched three details: (1) shrink condition inverted — `maxFreq + k > r - l + 1` instead of `(r - l + 1) - maxFreq > k`, so `l` ran off the end (index error); (2) forgot `r += 1` on the outer loop; (3) answer used `maxFreq + k` instead of the window size `r - l + 1`. Window is *invalid* when `windowLen - maxFreq > k`; shrink then; answer is the max valid window length.
 
+## 🟡 211. Design Add and Search Words (retry) — Jul 11, 2026
+**Sticking point**: Structure recalled (loop for concrete chars, recurse+fork at `.`), but two slips resurfaced: (1) `search` didn't `return dfs(...)` — threw away the answer, returns `None`; (2) first pass had the wildcard quantifier inverted (`if not dfs(): return False` = `all()`) before fixing to `if dfs(): return True` + trailing `return False` = `any()`. The `any` semantics (succeed if any child branch reaches an `isWord` end) took a beat to re-derive.
+
 ## 🔴 211. Design Add and Search Words — Jul 9, 2026
 **Topic**: Trie + DFS backtracking (new; builds on 208)
 
