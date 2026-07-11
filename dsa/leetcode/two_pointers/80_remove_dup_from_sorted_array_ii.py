@@ -121,3 +121,24 @@ class Solution:
                 l+=1
             r+=1
         return l
+    def removeDuplicates_20260711(self, nums: List[int]) -> int:
+        # we are removing duplicates and not searching, thus not binary search
+        # this seems like a two pointer problem where we have a left pointer that tells us where to place the next number and right pointer to traverse
+        # we never replace the first two characters since a char can appear 2x
+        # so we just start at index 2
+        # so we know nums[l-2] and nums[l-1] are always correct
+        # a number is invalid if it is equal to nums[l-2] since that means it is appearing 3x
+        # so when a number is valid, aka nums[r] != nums[l-2], we should place nums[r] at l and move l forward
+
+        if len(nums) < 3:
+            return len(nums)
+        
+        l = r = 2
+
+        while r < len(nums):
+            if nums[r] != nums[l-2]:
+                nums[l] = nums[r]
+                l+=1
+            r+=1
+        
+        return l
