@@ -151,3 +151,29 @@ class Solution:
                 return False
             return True
         return inorderDFS(root)
+    def isValidBST_20260711(self, root: Optional[TreeNode]) -> bool:
+        # so at any point, we cannot just look at prior node's values
+        # so we have to look to the root
+        # so at root, the value can be anything, so min and max boundaries of -inf to inf
+        # when we go left, upper boundary is changed to min(root.val, priorMin)
+        # when we go right, lower boundary is changed to max(root.val, priorMax)
+        # so we pass max and min boundary at each node
+        currentMin = -math.inf
+        currentMax = math.inf
+
+        def dfs(node, currentMin, currentMax):
+            # base case will be true, this tells us to stop traversing
+            # when we see false, we will immediately return
+            if not node:
+                return True
+            
+            if node.val <= currentMin or node.val >= currentMax:
+                return False
+
+            if not dfs(node.left, currentMin, node.val):
+                return False
+            if not dfs(node.right, node.val, currentMax):
+                return False
+            return True 
+
+        return dfs(root, currentMin, currentMax)
