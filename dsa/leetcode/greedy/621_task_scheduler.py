@@ -173,3 +173,46 @@ class Solution:
                 interval+=todoTasks
         
         return interval
+    def leastInterval_20260710(self, tasks: List[str], n: int) -> int:
+        # we know from common sense that if we can't repeat
+        # the most frequent element will be the blocker
+        # so we will try to do that one as priority
+        # so we need frequency map
+        # since we want to prioritize highest frequency, we should use a heap
+        # knowing we do highest freq one first, the earliest we do it next is:
+        # A . . A ; n = 2
+        # 1 2 3 4 ; i + n + 1
+        # so we are doing n + 1 tasks before the next time we see it again
+        # we also need to decrement the value each time after we do them
+        # if it hits 0, we remove it completely, otherwise add it back in heap
+        
+        freqMap = Counter(tasks)
+        maxHeap = []
+
+        for key, value in freqMap.items():
+            heapq.heappush(maxHeap,(-value, key))
+        
+        interval = 0
+        maxTaskToDo = n + 1
+
+        # while there are tasks to do
+        while maxHeap:
+            sizeOfHeap = len(maxHeap)
+            tasksToQueue = min(maxTaskToDo,sizeOfHeap)
+            tasksToAddBack = set()
+            for _ in range(tasksToQueue):
+                currentCounter, currentTask = heapq.heappop(maxHeap)
+                # do the task ; adding since we are negated here
+                currentCounter+=1
+                if currentCounter < 0:
+                    tasksToAddBack.add((currentCounter,currentTask))
+            # if any tasks remaining
+            for currentCounter, currentTask in tasksToAddBack:
+                heapq.heappush(maxHeap,(currentCounter, currentTask))
+            # if we still have tasks to do, it means we needed the full n + 1 time
+            if len(maxHeap) > 0:
+                interval+=maxTaskToDo
+            # if no more tasks, then we take tasksToQueue
+            else:
+                interval+=tasksToQueue
+        return interval
