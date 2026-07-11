@@ -47,3 +47,20 @@ class Solution:
         root.right = self.buildTree(preorder[1+mid:], inorder[1+mid:])
 
         return root
+    def buildTree_20260710(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
+        # preorder -> root, left side, right side
+        # inorder -> left side, root, right side
+        if not preorder or not inorder:
+            return None
+        root = TreeNode(preorder[0])
+        rootIndex = inorder.index(root.val)
+        # so we know size of left is rootIndex
+        # so we go 1->rootIndex+1 on preorder inclusive of rootIndex and 0 to rootIndex on inorder exclusive of rootIndex
+
+        leftSide = self.buildTree(preorder[1:rootIndex+1],inorder[:rootIndex])
+        # right side would be preorder rootIndex+1 to end
+        rightSide = self.buildTree(preorder[rootIndex+1:],inorder[rootIndex+1:])
+        root.left = leftSide
+        root.right = rightSide
+
+        return root
