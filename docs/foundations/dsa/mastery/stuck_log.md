@@ -22,6 +22,9 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 ## 🟡 146. LRU Cache — Jul 7, 2026
 **Sticking point**: Recalled the whole design cold (hashmap + DLL with two sentinels, get-promotes, evict `tail.prev` + `del map[node.key]`) — big jump from the Jul 4 🔴. Friction was peripheral: needed the type-checker error explained (untyped param = `Any` = silent; annotating `delete(node: ListNode)` surfaced the unprovable `.prev is not None` invariant → resolve with `assert`).
 
+## 🟡 1448. Count Good Nodes in Binary Tree — Jul 10, 2026
+**Sticking point**: Conflated "not a good node" with "dead end" — combined base case `if not node or node.val < currentMax: return 0` pruned the whole subtree under any non-good node, missing good descendants below it (e.g. `3→1→5`: 5 is good but 1 isn't, so 1's `return 0` skipped 5). Fix: only null stops recursion; a non-good node counts 0 but still recurses. Goodness is per-node, not a traversal gate.
+
 ## 🟡 424. Longest Repeating Character Replacement — Jul 10, 2026
 **Sticking point**: Had the sliding-window idea + the incremental `maxFreq` optimization, but botched three details: (1) shrink condition inverted — `maxFreq + k > r - l + 1` instead of `(r - l + 1) - maxFreq > k`, so `l` ran off the end (index error); (2) forgot `r += 1` on the outer loop; (3) answer used `maxFreq + k` instead of the window size `r - l + 1`. Window is *invalid* when `windowLen - maxFreq > k`; shrink then; answer is the max valid window length.
 
