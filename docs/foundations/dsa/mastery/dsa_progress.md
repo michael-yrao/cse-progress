@@ -30,14 +30,15 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/dsa/mastery/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **90** problems &nbsp;·&nbsp; **101** solutions &nbsp;·&nbsp; **284** attempts
+> **90** problems &nbsp;·&nbsp; **101** solutions &nbsp;·&nbsp; **285** attempts
 
 | | 🏆 Retired | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|
-| **Solutions** | 0 | 78 | 19 | 4 |
+| **Solutions** | 0 | 79 | 18 | 4 |
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|---|
+| Medium | [98. Validate Binary Search Tree](https://leetcode.com/problems/validate-binary-search-tree/) | 🟢 | 1 | 2026-08-10 | 2026-07-11 | 2026-05-16, 2026-05-20, 2026-06-30, 2026-07-02, 2026-07-11 |
 | Easy | [141. Linked List Cycle](https://leetcode.com/problems/linked-list-cycle/) | 🟢 | 1 | 2026-08-09 | 2026-07-10 | 2026-04-26, 2026-07-01, 2026-07-10 |
 | Medium | [621. Task Scheduler](https://leetcode.com/problems/task-scheduler/) | 🟢 | 1 | 2026-08-09 | 2026-07-10 | 2026-06-30, 2026-07-01, 2026-07-10 |
 | Medium | [424. Longest Repeating Character Replacement](https://leetcode.com/problems/longest-repeating-character-replacement/) | 🟡 | 0 | 2026-07-20 | 2026-07-10 | 2026-04-19, 2026-07-02, 2026-07-10 |
@@ -72,7 +73,6 @@ Notes for future agents:
 | Easy | [206. Reverse Linked List (Recursion)](https://leetcode.com/problems/reverse-linked-list/) | 🟡 | 0 | 2026-07-13 | 2026-07-03 | 2026-04-24, 2026-07-03 |
 | Easy | [110. Balanced Binary Tree](https://leetcode.com/problems/balanced-binary-tree/) | 🟢 | 1 | 2026-08-02 | 2026-07-03 | 2026-05-01, 2026-06-04, 2026-06-14, 2026-06-24, 2026-07-03 |
 | Easy | [703. Kth Largest Element in a Stream](https://leetcode.com/problems/kth-largest-element-in-a-stream/) | 🟢 | 1 | 2026-08-01 | 2026-07-02 | 2026-06-22, 2026-07-02 |
-| Medium | [98. Validate Binary Search Tree](https://leetcode.com/problems/validate-binary-search-tree/) | 🟡 | 0 | 2026-07-12 | 2026-07-02 | 2026-05-16, 2026-05-20, 2026-06-30, 2026-07-02 |
 | Medium | [323. Number of Connected Components (DFS)](https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/) | 🟡 | 0 | 2026-07-12 | 2026-07-02 | 2026-07-02 |
 | Medium | [567. Permutation in String](https://leetcode.com/problems/permutation-in-string/) | 🟡 | 0 | 2026-07-12 | 2026-07-02 | 2026-04-20, 2026-07-02 |
 | Easy | [66. Plus One](https://leetcode.com/problems/plus-one/) | 🟢 | 1 | 2026-07-31 | 2026-07-01 | 2026-01-02, 2026-03-25, 2026-06-22, 2026-07-01 |
