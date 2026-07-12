@@ -28,6 +28,35 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 ## 🟡 424. Longest Repeating Character Replacement — Jul 10, 2026
 **Sticking point**: Had the sliding-window idea + the incremental `maxFreq` optimization, but botched three details: (1) shrink condition inverted — `maxFreq + k > r - l + 1` instead of `(r - l + 1) - maxFreq > k`, so `l` ran off the end (index error); (2) forgot `r += 1` on the outer loop; (3) answer used `maxFreq + k` instead of the window size `r - l + 1`. Window is *invalid* when `windowLen - maxFreq > k`; shrink then; answer is the max valid window length.
 
+## 🔴 901. Online Stock Span — Jul 12, 2026
+**Topic**: Monotonic stack — stack entries carry accumulated state (new)
+
+### Where did I get stuck?
+Had the monotonic-decreasing-stack intuition ("pop while current price beats the top, accumulate") but **could not see how to persist the count across calls** — knew a result had to be stored, but the idea of putting it *on the stack* as a tuple never surfaced. Needed the `(price, span)` pair handed over. Also had the boundary strict (`>` instead of `>=`).
+
+### Core Realization
+**The stack entry is a compressed receipt, not just a value.** Push `(price, span)` — each entry carries the count of everything it already absorbed. On a new price: start `span = 1`, then while `price >= stack[-1][0]`, pop and `span += poppedSpan`, then push `(price, span)` and return it.
+
+Why absorbing the popped span is valid: the popped entry already swallowed days that were all ≤ *its* price; since its price ≤ today's, transitivity makes them all ≤ today's too. So you inherit its entire count in **one O(1) pop** instead of re-walking those days. That's the whole trick — and it's the general lesson: **when a monotonic stack needs to answer "how many," store the running count alongside the value rather than recomputing it.**
+
+Boundary: `>=`, not `>`. Equal prices count toward the span (a day priced the same as today is still ≤ today).
+
+### Code Snippet
+```python
+class StockSpanner:
+    def __init__(self):
+        self.stack = []                    # (price, span)
+
+    def next(self, price: int) -> int:
+        span = 1                           # today always counts
+        while self.stack and price >= self.stack[-1][0]:   # >= not >
+            _, priorSpan = self.stack.pop()
+            span += priorSpan              # inherit the receipt
+        self.stack.append((price, span))
+        return span
+```
+Trace `[7,2,1,2,4]` → `[1,1,1,3,4]`. At `next(4)`, one pop of `(2,3)` picks up 3 days at once — the days `2,1,2` are never re-walked.
+
 ## 🔴 124. Binary Tree Maximum Path Sum — Jul 11, 2026
 **Topic**: Trees / postorder DFS with a side-channel accumulator (new, Hard)
 
