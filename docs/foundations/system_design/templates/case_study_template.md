@@ -32,6 +32,20 @@ Table: URL_Mapping
 3. **Key Generation Service (KGS)**: An independent service that pre-computes unique hash strings in the background. This avoids runtime hashing string collision bottlenecks during writes.
 4. **Cache Stratum**: A distributed cluster storing the top 20% most popular mappings to bypass physical database lookups entirely during peak traffic periods.
 
+## ⚖️ Key Design Decisions & Tradeoffs (defend every fork)
+For each major fork, log *trigger → what you chose → one-line why → where it breaks at 10×*.
+| Fork | Chosen | Why (the deciding question) | Where it breaks at scale |
+|------|--------|-----------------------------|--------------------------|
+| e.g. SQL vs NoSQL | NoSQL KV | No joins; need O(1) key lookups at scale | Hot-key skew; add consistent hashing |
+| e.g. Consistency | Eventual | Stale redirect for 2s is harmless | — |
+| | | | |
+
+## ❓ Anticipated Follow-up Questions (rehearse the defense)
+* **Failure:** What happens when [component] dies? →
+* **10× scale:** Which piece saturates first, and the fix? →
+* **Race:** Two writers hit [resource] at once? → (idempotency / locking)
+* **Why this, not the alternative?** →
+
 ## 🗺️ Macro System Visual Map
 ```mermaid
 graph TD
