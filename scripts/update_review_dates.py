@@ -6,8 +6,61 @@ import subprocess
 from datetime import datetime, timedelta
 from pathlib import Path
 
+# --- Configuration -----------------------------------------------------------
+# Defaults reproduce cse-review's original behavior exactly. cse.config.yml (if
+# present at the repo root) overrides intervals, source root, and solution globs.
+# Parsed with stdlib only (no PyYAML dependency) for the small subset we need.
+
+DEFAULT_CONFIG = {
+    "source_root": "dsa/leetcode",
+    "source_globs": ["*.py"],
+    "clean_streak1": 30,
+    "clean_streak2": 60,
+    "retired": 180,
+    "shaky": 10,
+    "blank": 2,
+    "retire_at_streak": 3,
+}
+
+
+def load_config(path: Path = Path("cse.config.yml")) -> dict:
+    cfg = dict(DEFAULT_CONFIG)
+    if not path.exists():
+        return cfg
+    text = path.read_text(encoding="utf-8")
+
+    def _int(pattern: str, key: str) -> None:
+        m = re.search(pattern, text)
+        if m:
+            cfg[key] = int(m.group(1))
+
+    def _list(pattern: str) -> list[str] | None:
+        m = re.search(pattern, text)
+        if not m:
+            return None
+        items = [x.strip().strip("'\"") for x in m.group(1).split(",")]
+        return [x for x in items if x]
+
+    _int(r"streak1:\s*(\d+)", "clean_streak1")
+    _int(r"streak2:\s*(\d+)", "clean_streak2")
+    _int(r"retired:\s*(\d+)", "retired")
+    _int(r"\bshaky:\s*(\d+)", "shaky")
+    _int(r"\bblank:\s*(\d+)", "blank")
+    _int(r"retire_at_streak:\s*(\d+)", "retire_at_streak")
+
+    globs = _list(r"globs:\s*\[([^\]]*)\]")
+    if globs:
+        cfg["source_globs"] = globs
+    roots = _list(r"roots:\s*\[([^\]]*)\]")
+    if roots:
+        cfg["source_root"] = roots[0]
+    return cfg
+
+
+CONFIG = load_config()
+
 MARKDOWN_PATH = Path("docs/foundations/dsa/mastery/dsa_progress.md")
-SOURCE_ROOT = Path("dsa/leetcode")
+SOURCE_ROOT = Path(CONFIG["source_root"])
 TABLE_HEADER = "| Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Attempt Date | Attempt Dates |"
 TABLE_HEADER_LEGACY = "| Difficulty | Problem | Comfort | Next Review Date | Latest Attempt Date | Attempt Dates |"
 ROW_SEPARATOR = "|---|---|---|---|---|---|---|"
@@ -29,10 +82,26 @@ ROW_RE_LEGACY = re.compile(
 DIFF_ROW_RE = re.compile(
     r"^\| (?P<difficulty>[^|]+) \| \[(?P<problem>[^\]]+)\]\((?P<url>[^)]+)\) \| (?P<comfort>[^|]+) \| (?:(?P<streak>\d+) \| )?(?P<next>[^|]*) \| (?P<latest>[^|]*) \| (?P<attempts>.*) \|$"
 )
-SOURCE_FILE_RE = re.compile(r"^(?P<number>\d+)_(?P<name>.+)\.py$")
-# Problems with source files that should NOT be auto-discovered (NC150/250 curriculum items
+# Extensions come from CONFIG["source_globs"] (e.g. ["*.py", "*.java"]) so the
+# engine is language-agnostic; defaults to Python only.
+_EXTENSIONS = sorted({g.rsplit(".", 1)[-1] for g in CONFIG["source_globs"] if "." in g})
+_EXT_ALT = "|".join(re.escape(e) for e in _EXTENSIONS) or "py"
+SOURCE_FILE_RE = re.compile(r"^(?P<number>\d+)_(?P<name>.+)\.(?:" + _EXT_ALT + r")$")
+SOURCE_GLOBS = CONFIG["source_globs"]
+
+
+def all_source_files() -> list[Path]:
+    """All solution files under SOURCE_ROOT matching the configured globs."""
+    seen: dict[str, Path] = {}
+    for glob in SOURCE_GLOBS:
+        for path in SOURCE_ROOT.rglob(glob):
+            seen[path.as_posix()] = path
+    return list(seen.values())
+
+
+# Problems with source files that should NOT be auto-discovered (curriculum items
 # that will re-enter the tracker naturally when the user solves and logs them).
-DISCOVERY_SKIP_NUMBERS = {76}
+DISCOVERY_SKIP_NUMBERS: set[int] = {76}
 ROMAN_NUMERALS = {
     "i", "ii", "iii", "iv", "v", "vi", "vii", "viii", "ix", "x",
     "xi", "xii", "xiii", "xiv", "xv", "xvi", "xvii", "xviii", "xix", "xx",
@@ -72,16 +141,16 @@ def compute_next_review_date(comfort: str, latest_attempt_date: datetime | None,
     if not latest_attempt_date:
         return None
     if comfort in (COMFORT_CLEAN, COMFORT_RETIRED):
-        if streak >= 3:
-            days = 180  # spot check for retired problems
+        if streak >= CONFIG["retire_at_streak"]:
+            days = CONFIG["retired"]  # spot check for retired problems
         elif streak == 2:
-            days = 60
+            days = CONFIG["clean_streak2"]
         else:
-            days = 30
+            days = CONFIG["clean_streak1"]
     elif comfort == COMFORT_SHAKY:
-        days = 10
+        days = CONFIG["shaky"]
     else:  # BLANK
-        days = 2
+        days = CONFIG["blank"]
     return latest_attempt_date + timedelta(days=days)
 
 
@@ -190,7 +259,7 @@ def get_staged_paths() -> tuple[list[Path], bool]:
         if normalized == MARKDOWN_PATH.as_posix():
             markdown_staged = True
             continue
-        if not normalized.endswith(".py"):
+        if not any(normalized.endswith("." + e) for e in _EXTENSIONS):
             continue
         path = Path(normalized)
         try:
@@ -301,7 +370,7 @@ def update_existing_row_difficulties(table_rows: list[dict], staged_files: list[
     if not row_number_to_indices:
         return 0
 
-    paths = list(SOURCE_ROOT.rglob("*.py")) if staged_files is None else staged_files
+    paths = all_source_files() if staged_files is None else staged_files
     updated_count = 0
     for path in paths:
         match = SOURCE_FILE_RE.match(path.name)
@@ -327,7 +396,7 @@ def update_existing_row_difficulties(table_rows: list[dict], staged_files: list[
 def discover_source_problems(existing_titles: set[str], staged_files: list[Path] | None = None) -> list[dict]:
     missing_rows: list[dict] = []
     if staged_files is None:
-        paths = list(SOURCE_ROOT.rglob("*.py"))
+        paths = all_source_files()
     else:
         paths = staged_files
 
@@ -370,6 +439,70 @@ def discover_source_problems(existing_titles: set[str], staged_files: list[Path]
         existing_titles.add(problem_title.lower())
         existing_numbers.add(number)
     return missing_rows
+
+
+def recompute_simple(tracker_path: Path) -> None:
+    """Recompute next-review dates and re-sort a same-format tracker WITHOUT
+    source discovery. Used for the System Design / AI trackers, whose units are
+    systems/capabilities (reviewed by blind sprint), not source files. Same
+    7-column table and same interval math as the DSA tracker; the DSA main() is
+    left untouched. Prefix (incl. header/separator) and suffix are preserved."""
+    if not tracker_path.exists():
+        return
+    lines = tracker_path.read_text(encoding="utf-8").splitlines()
+    prefix_lines: list[str] = []
+    table_rows: list[dict] = []
+    suffix_lines: list[str] = []
+    in_table = header_seen = separator_seen = False
+
+    for line in lines:
+        if not in_table:
+            prefix_lines.append(line)
+            if line.strip() in (TABLE_HEADER, TABLE_HEADER_LEGACY):
+                in_table = header_seen = True
+            continue
+        if not separator_seen:
+            if line.strip() in (ROW_SEPARATOR, ROW_SEPARATOR_LEGACY):
+                separator_seen = True
+            prefix_lines.append(line)
+            continue
+        m = ROW_RE.match(line) if line.startswith("|") else None
+        lm = ROW_RE_LEGACY.match(line) if (line.startswith("|") and not m) else None
+        match = m or lm
+        if not match:
+            suffix_lines.append(line)
+            continue
+        comfort = match.group("comfort").strip()
+        streak = int(match.group("streak")) if m else (1 if comfort == COMFORT_CLEAN else 0)
+        latest = parse_date(match.group("latest"))
+        attempts = match.group("attempts").strip()
+        attempts_latest = parse_latest_attempt_date_from_attempts(attempts)
+        if latest is None or (attempts_latest is not None and attempts_latest > latest):
+            latest = attempts_latest
+        table_rows.append({
+            "difficulty": match.group("difficulty").strip(),
+            "problem": match.group("problem").strip(),
+            "url": match.group("url").strip(),
+            "comfort": comfort,
+            "streak": streak,
+            "latest": latest,
+            "latest_attempt_date": format_date(latest),
+            "attempts": attempts,
+            "next_review": format_date(compute_next_review_date(comfort, latest, streak)),
+        })
+
+    if not (header_seen and separator_seen):
+        raise RuntimeError(f"Could not find review table header and separator in {tracker_path}.")
+
+    sorted_rows = sorted(
+        table_rows, key=lambda e: (e["latest"] is not None, e["latest"]), reverse=True
+    )
+    new_lines = prefix_lines + [build_row(r) for r in sorted_rows] + suffix_lines
+    if new_lines != lines:
+        tracker_path.write_text("\n".join(new_lines) + "\n", encoding="utf-8")
+        print(f"Reordered {len(sorted_rows)} rows by latest attempt date in {tracker_path}")
+    else:
+        print(f"No reorder needed in {tracker_path}")
 
 
 def main() -> None:
@@ -467,6 +600,13 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Update review progression markdown from source problem files.")
     parser.add_argument("--staged-only", action="store_true")
     parser.add_argument("--all-source", action="store_true")
+    parser.add_argument(
+        "--tracker",
+        action="append",
+        default=[],
+        help="Extra same-format tracker(s) to recompute + re-sort without source "
+        "discovery (e.g. the System Design / AI progress files). Repeatable.",
+    )
     args = parser.parse_args()
 
     staged_files = None
@@ -568,6 +708,10 @@ def main() -> None:
         print(f"{action} {len(sorted_rows)} rows by latest attempt date in {MARKDOWN_PATH}")
     else:
         print(f"No reorder needed in {MARKDOWN_PATH}")
+
+    # Non-DSA trackers (System Design / AI): recompute + re-sort only, no discovery.
+    for extra in args.tracker:
+        recompute_simple(Path(extra))
 
 
 if __name__ == "__main__":
