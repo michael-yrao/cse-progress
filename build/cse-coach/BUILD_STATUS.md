@@ -14,9 +14,9 @@ Tracking the §7 phased build plan:
 | 4 | Port System Design pillar — study guide, both templates, rate_limiter + io/stream seeds, blank `design_progress.md`; engine now multi-tracker (`--tracker`, no discovery) + hook wired; tests pass | ✅ done |
 | 5 | Build AI Engineering pillar — study guide, build template, `vector_search` component seed, blank `ai_progress.md`; all 3 trackers idempotent | ✅ done |
 | 6 | Author curriculum + backlog pools — DSA milestone (18 phases / 150 problems), Tier 1/2 expansion, interview + competitive backlog; SD & AI tiers. All YAML valid | ✅ done |
-| 7 | Write bootstrap — intake (all-at-once) + date projection; enforce `reach_beyond ≥ 1`; seed logs | ⏳ next |
-| 8 | Extract coaching skill — SKILL.md in place (done), wire CLAUDE.md (done) | ◑ partial |
-| 9 | README (done) + `docs/PHILOSOPHY.md` | ◑ partial |
+| 7 | Write bootstrap — args/interactive intake, `reach_beyond ≥ 1` floor, projects NC150 → dated roadmap + week-1 schedule, installs hook. Tested end-to-end | ✅ done |
+| 8 | Extract coaching skill — SKILL.md in place + CLAUDE.md wired | ✅ done |
+| 9 | README (done) + `docs/PHILOSOPHY.md` | ⏳ next |
 | 10 | Dogfood — mock adopter flow for all pillars end-to-end | ☐ |
 | 11 | Publish — create private GitHub repo, push | ☐ |
 
