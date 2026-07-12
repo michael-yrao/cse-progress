@@ -22,9 +22,9 @@ After any problem discussion (solving, reviewing, or mentioning a problem by num
 
 1. Check the current week's schedule file (`docs/foundations/dsa/schedules/<YYYYMMDD>_schedule.md`) and mark the problem as completed in the table.
 2. **Infer the Comfort rating from the session, then propose it for confirmation** — don't ask an open "how did that feel?" when the transcript already answers it. You watched the attempt: how many hints you gave, whether they self-caught their bugs, whether they could derive the approach. Propose it plainly ("That reads as 🟡 Shaky — you had the sliding window but I flagged the inverted shrink condition. Confirm?"), then log on their yes/override — never log silently. Comfort is self-reported, so their call is final, but honesty over agreeableness: if they claim 🟢 but you supplied a real fix they missed (or it was a no-code rep), say so, then defer to their call.
-   - **Clean**: **Coded** from a blank page, correct complexity, no hints needed. If you had to second-guess the data structure or peek at anything — that's Shaky, not Clean. A no-code blueprint can never be Clean (caps at Shaky); coding is required — the only exception is a flawless spot check confirming an already-🏆 Retired problem.
-   - **Shaky**: Got the solution but needed a nudge, peeked at a hint, or weren't fully confident in the approach mid-way through.
-   - **Blank**: Couldn't recall the approach, had to look it up.
+   - **Clean**: coded from a blank page, correct complexity, no hints. Second-guessing the data structure or peeking → Shaky. A no-code blueprint caps at Shaky (coding required); the sole exception is a flawless spot check confirming an already-🏆 Retired problem.
+   - **Shaky**: got there but needed a nudge, peeked, or wasn't fully confident mid-approach.
+   - **Blank**: couldn't recall the approach; had to look it up.
 3. Update `docs/foundations/dsa/mastery/dsa_progress.md` with the reported Comfort level and run the review script.
 
 ## Comfort-Based Spaced Repetition

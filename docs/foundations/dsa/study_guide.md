@@ -236,22 +236,17 @@ Dijkstra's algorithm (required for Network Delay Time, Cheapest Flights, Swim in
 
 Tries are 3 problems and complete in roughly one week. Grouping them here keeps the heavy graph block contiguous (Standard Graphs → Tries → Advanced Graphs) rather than fragmenting it later.
 
-### Sort Algorithm Variants — Knowledge Expansion Only
+### Sorting & DP — the Course Covers It; Extras Live in the KEQ
 
-`912. Sort an Array` variants (Quick Sort, Radix, Counting, Timsort) and `53. Maximum Subarray (Divide and Conquer)` are in the **Knowledge Expansion Queue** at the bottom of `dsa_progress.md`. They are not part of spaced repetition and don't count toward stats. They enter the schedule when a sorting deep-dive week is planned.
+NC150's 1-D DP (12) and 2-D DP (11) blocks already contain **every DP pattern that matters for interviews** — so **no extra DP weeks**. Teach them through unifying **framework lenses** folded into the existing blocks (zero added scheduling):
+- **Knapsack** — 0/1 (`416`, `494`) + unbounded (`322`, `518`) share one "capacity × item" table.
+- **Space compression** — the 2D→1D rolling-array pass, taught as an optimization over solved 2-D problems.
+- **Interval DP** — `312. Burst Balloons` ("solve inner intervals first, combine outward").
+- **LIS core** — `300` is the base; its O(n log n) and multi-dimensional forms are enrichment.
 
-### Dynamic Programming — Teach Through Framework Lenses (do NOT add DP weeks)
+Everything past the course is **not spaced repetition and adds no weeks** — it lives, with full notes, in the **Knowledge Expansion Queue** in `mastery/dsa_progress.md`: the `912` sort variants (Quick/Radix/Counting/Timsort) and `53` D&C, plus DP enrichment (Digit DP, Bitmask DP, LIS O(n log n), the multi-dim LIS cluster `354`/`646`/Building Bridges, broader interval DP like Matrix Chain Multiplication). Pull from it only during a planned deep-dive.
 
-The NC150 1-D DP (12 problems) and 2-D DP (11 problems) blocks already contain every DP pattern that matters for interviews. The goal is to teach them **through unifying frameworks**, not as 23 isolated problems. Fold these lenses into the existing DP blocks — they add zero scheduling but multiply transfer:
-
-- **Knapsack framework (highest leverage).** 0/1 knapsack = `416. Partition Equal Subset Sum`, `494. Target Sum`. Unbounded knapsack = `322. Coin Change`, `518. Coin Change II`. Teach the shared "capacity × item" table so these read as one pattern, not four.
-- **Space compression (2D → 1D rolling array).** Once 2-D DP (LCS, Coin Change II, knapsack) is comfortable, show the rolling-array optimization. Interview-relevant polish; teach it as an *optimization pass* over already-solved 2-D problems.
-- **Interval DP template.** `312. Burst Balloons` is the NC150 representative — teach the "solve inner intervals first, combine outward" template there.
-- **LIS as a reusable core.** `300. Longest Increasing Subsequence` is the base. Its O(n log n) patience-sort form and its multi-dimensional variants (sort on one dimension, LIS on the other) are enrichment — see the Knowledge Expansion Queue.
-
-**Not in NC150 → Knowledge Expansion Queue** (learn only if pursuing harder interviews / competitive): Digit DP, Bitmask DP (TSP-style), broader Interval DP (Matrix Chain Multiplication), LIS O(n log n), and the multi-dimensional LIS cluster — `354. Russian Doll Envelopes`, `646. Maximum Length of Pair Chain`, Building Bridges (all are "sort + LIS", extensions of 300, **not** grid DP).
-
-**Sliding window is not DP.** Min Window Substring, Permutation in String, Find All Anagrams are two-pointer + frequency-map problems and stay in the Sliding Window block. Do not file them under DP.
+**Sliding window is not DP** — Min Window Substring, Permutation in String, Find All Anagrams are two-pointer + frequency-map; keep them in the Sliding Window block.
 
 ### Pace Targets
 
