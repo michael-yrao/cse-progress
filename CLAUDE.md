@@ -10,6 +10,22 @@ git config core.hooksPath .githooks
 
 This replaces the old per-machine `.git/hooks/pre-commit` (which was never synced). After this, the hook stays in sync via git across all machines.
 
+## Token Compression (caveman)
+
+This repo defaults to [caveman](https://github.com/juliusbrussee/caveman) at the **`lite`** level to trim routine verbosity. At session start, run **`/caveman lite`**.
+
+**Why `lite`, and never `full` / `ultra` / `wenyan` here:** coaching and studying live in the *explanation* — the "why" behind a comfort rating, concept walk-throughs when stuck, the mentor voice, stuck-log reasoning. Aggressive levels strip exactly that context. `lite` cuts filler without gutting the teaching.
+
+**Keep FULL even under caveman (do not compress):**
+- the comfort-rating rationale (propose + why) and any Clean/Shaky/Blank reasoning
+- concept explanations when the learner is stuck or explicitly asks (respecting no-spoilers)
+- the "why" behind a coaching/scheduling decision
+- `stuck_log.md` entries
+
+**Fine to compress:** mechanical output — schedule edits, git steps, status summaries, confirmations.
+
+Install once per machine (Node ≥ 18): `curl -fsSL https://raw.githubusercontent.com/JuliusBrussee/caveman/main/install.sh | bash` — Windows PowerShell: `irm https://raw.githubusercontent.com/JuliusBrussee/caveman/main/install.ps1 | iex`.
+
 ## Agent Memory
 
 Persistent behavioral preferences are stored in `.claude/memory/`. At the start of each session, read `.claude/memory/MEMORY.md` for the index, then load any files relevant to the current task.
