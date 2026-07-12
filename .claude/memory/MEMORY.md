@@ -6,6 +6,7 @@
 - [Session dating](feedback_session_dating.md) — date logs by study session not wall clock; a session crossing midnight keeps its start date; verify against the schedule day
 - [No code edits in cse-review](feedback_no_code_edits.md) — never edit source files; user writes all code, assistant reads/explains only
 - [No spoilers](feedback_no_spoilers.md) — zero hints/approaches unless explicitly asked or stuck; NEVER recap the approach (or stuck_log content) when a problem/retry begins
+- [Infer comfort rating](feedback_infer_comfort.md) — read Clean/Shaky/Blank from the conversation against the rubric and propose it for confirmation; don't ask the user cold
 - [Git commit checklist](feedback_git_commit.md) — always run git status before committing to catch unstaged solution files
 - [Proactive scheduling](feedback_proactive_scheduling.md) — after logging any result, scan tracker for problems due within 7 days and slot them immediately
 - [Schedule mistake handling](feedback_schedule_mistakes.md) — when user does a problem out of order, detect the swap and fix both sides without waiting for user to catch it
