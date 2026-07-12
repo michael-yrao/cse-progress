@@ -206,3 +206,51 @@ Tackle **after** NC150 is comfortable. These are genuinely advanced but still su
 | **Persistent data structures / treaps** | *(few clean LeetCode instances — practice on Codeforces)* | Versioned segment trees / balanced BSTs for historical queries and rollback. |
 
 **String-algorithm path** (learn in this order if you cross the line for strings — each builds on the prior): **Trie** (NC150) + **KMP** (Tier 1, failure function) → **Z-algorithm** → **Aho-Corasick** (multi-pattern matching = KMP failure links layered on a trie; the deep end of Tier 2 — real-world use in multi-keyword search / IDS / `grep -F`, but you'd use a library) → **suffix array / suffix automaton**. Do not attempt Aho-Corasick before KMP is solid.
+
+**=========== TIER 3 — competitive / research horizon ===========**
+
+*(The deepest layer — ICPC / Codeforces territory. Essentially zero interview payoff; pursue only for serious competitive-programming or systems-research depth. Almost none have clean LeetCode instances — practice on Codeforces / AtCoder. Grouped by area; learn a group only after its Tier-1/2 prerequisites are solid. This is a menu pursued deliberately over months, not a checklist.)*
+
+**Trees (advanced):**
+- **Heavy-Light Decomposition (HLD)** — path & subtree queries by layering segment trees over chains. Prereq: segment tree + LCA.
+- **Centroid Decomposition** — divide-and-conquer on trees for path-counting / distance problems.
+- **DSU on tree (small-to-large)** — offline subtree queries by merging small sets into large.
+- **Link-Cut Trees / Euler-Tour Trees** — online dynamic tree connectivity & path aggregates.
+- **Virtual (auxiliary) trees** — compress a tree to the relevant k nodes for multi-query DP.
+
+**Strings (deepest):**
+- **Suffix Automaton (full) / Suffix Tree (Ukkonen)** — linear-time full-text index; distinct substrings, multi-string LCS.
+- **Palindromic Tree (Eertree)** — all distinct palindromic substrings in O(n).
+- **Suffix array + LCP (Kasai) applications** — kth substring, longest repeated, etc.
+
+**Math / number theory (advanced):**
+- **FFT / NTT** — polynomial multiplication & convolutions; **FWHT** for xor/and/or convolutions.
+- **CRT, Lucas' theorem, Möbius function & inversion, totient sieve** — counting under modular / divisor constraints.
+- **Discrete log (baby-step giant-step), primitive roots, Tonelli–Shanks (modular sqrt)**.
+- **Combinatorics** — inclusion–exclusion, **Burnside / Pólya** counting, Catalan / Stirling numbers, generating functions.
+
+**Flows & matching (advanced):**
+- **Min-Cost Max-Flow (MCMF)** — weighted flow via SPFA / Johnson potentials.
+- **Min-cut modeling** — project selection / max-weight closure; **Gomory–Hu tree** for all-pairs min-cut.
+- **General matching (Blossom)**; Hungarian for assignment.
+
+**DP optimizations (beyond CHT / Knuth):**
+- **Divide & Conquer DP optimization**; **Aliens trick** (Lagrangian relaxation).
+- **Broken-profile / connected-component DP**; advanced **digit DP** and **bitmask DP over subsets**.
+
+**Advanced data structures:**
+- **Segment Tree Beats** — range chmin/chmax with sum, via historic-max.
+- **Li Chao tree** — CHT for arbitrary line queries; **wavelet tree** — kth element in a range.
+- **Persistent segment tree** (deep); **sqrt tree**.
+
+**Graphs (advanced):**
+- **2-SAT** — implication graph + SCC (builds on Tarjan, Tier 1).
+- **Dominator trees**; **offline dynamic connectivity** (DSU rollback + divide-and-conquer over time).
+
+**Geometry (advanced):**
+- **Half-plane intersection**, **rotating calipers**, **Delaunay / Voronoi**, KD-trees.
+
+**Game theory:**
+- **Sprague–Grundy / Nim** — grundy numbers for impartial games.
+
+**Prerequisite chains within Tier 3:** segment tree → HLD / segment-tree-beats / Li Chao; LCA → HLD / virtual trees; SCC (Tarjan) → 2-SAT; modular arithmetic → NTT / discrete log; max-flow (Tier 2) → MCMF / min-cut modeling.
