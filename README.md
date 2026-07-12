@@ -2,7 +2,7 @@
 
 A personal, spaced-repetition study system for technical-interview prep — spanning **DSA/algorithms** and **system design**, from NeetCode-150 interview readiness toward competitive-programming and architect-level depth.
 
-Solutions are written by hand; progress is tracked with a comfort-based spaced-repetition schedule that decides *what to review when*.
+Solutions are written by hand; progress is tracked with a comfort-based spaced-repetition schedule that decides *what to review when*. Drive it conversationally from [Claude Code](https://claude.com/claude-code) (recommended) — or another agent (Copilot, caveman) via [`AGENTS.md`](AGENTS.md) for a lower-credit option.
 
 ## Repository layout
 
@@ -23,12 +23,13 @@ cse-review/
 │           └── templates/          # blank scaffolds to fill during practice
 ├── scripts/update_review_dates.py  # recomputes review dates + sorts the tracker
 ├── .githooks/pre-commit            # auto-runs the script on commit (version-controlled)
-└── CLAUDE.md                       # working conventions for the AI pair-partner
+├── CLAUDE.md                       # working conventions for the AI pair-partner (Claude Code)
+└── AGENTS.md                       # agent-agnostic entry point (Copilot, caveman, …)
 ```
 
 ## How the spaced repetition works
 
-Every problem is logged in `docs/foundations/dsa/mastery/dsa_progress.md` with a **comfort** rating that sets its next review:
+Every problem is logged in `docs/foundations/dsa/mastery/dsa_progress.md` with a **comfort** rating — inferred from the session and proposed for you to confirm — that sets its next review:
 
 | Comfort | Meaning | Next review |
 |---------|---------|-------------|
