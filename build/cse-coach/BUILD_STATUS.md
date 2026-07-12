@@ -18,7 +18,11 @@ Tracking the §7 phased build plan:
 | 8 | Extract coaching skill — SKILL.md in place + CLAUDE.md wired | ✅ done |
 | 9 | README (coach voice, interaction model) + `docs/PHILOSOPHY.md` | ✅ done |
 | 10 | Dogfood — full mock adopter flow verified (bootstrap → scaffold → log DSA Clean +30 → log SD blind-sprint Shaky +10, all via the git hook) | ✅ done |
-| 11 | Publish — create private GitHub repo, push | ⏸ awaiting go-ahead (outward-facing; staged & testable from build/cse-coach on the branch) |
+| 11 | Publish — **private repo live at https://github.com/michael-yrao/cse-coach** (main, 66 files) | ✅ done |
+
+**BUILD COMPLETE — all 11 steps done.** The staged copy under `build/cse-coach/`
+is the source of the initial commit; future work should happen in the standalone
+repo. This staging tree can be removed from the design branch once you're settled in.
 
 ## How to test the staged build
 
