@@ -23,6 +23,16 @@
 * **Failure Mode 2 (Cache Penetration)**: Requests look for keys that do not exist in either the cache or the database, forcing a constant database lookup loop.
   * *Mitigation*: Use a **Bloom Filter** data structure at the gate to instantly reject non-existent keys.
 
+## ⚖️ Decision Rationale (when to reach for this — and when not)
+* **Choose this when**: [the trigger — the requirement that makes this the right tool]
+* **Prefer the alternative when**: [the fork where a different component wins, and why]
+* **Key tradeoff accepted**: [what you give up by picking this — e.g. freshness for latency]
+
+## ❓ Likely Questions (rehearse the defense)
+* "Why [this component] and not [alternative]?" →
+* "What happens when it fills up / a node dies?" →
+* "How does it behave under a traffic spike?" →
+
 ## 🗺️ Visual Architecture Flow
 ```mermaid
 sequenceDiagram

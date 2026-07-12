@@ -52,6 +52,42 @@ Below-the-line (Tier 2+) work is **not** a Sunday-sprint activity — it's long-
 
 Filling a template *is* the rep — don't just read about a system, fill the scaffold for it.
 
+## Arriving at design decisions (the drill)
+
+The interview isn't scored on *drawing* a system — it's scored on **defending the
+choices**. A diagram anyone can memorize; the signal is *why* you picked this over
+that, and knowing where it breaks. Every design is a chain of forks; for each fork,
+practice naming the **trigger** (the requirement that forces the choice), the
+**options**, and the **deciding question** that picks one.
+
+**The recurring forks (memorize the deciding question, not the answer):**
+
+| Fork | Deciding question | Picks A ⟶ / ⟵ Picks B |
+|------|-------------------|------------------------|
+| SQL ⟷ NoSQL | Do I need multi-row transactions / joins, or scale-out + flexible schema? | ACID & relations ⟶ SQL / massive scale, simple access ⟶ NoSQL |
+| Strong ⟷ eventual consistency | Is a stale read *incorrect*, or just slightly old? | money/inventory ⟶ strong / feeds, counts ⟶ eventual |
+| Sync ⟷ async (queue) | Must the caller wait for the result, or can work be deferred? | needs the answer now ⟶ sync / fire-and-forget, spikes ⟶ async |
+| Cache-aside ⟷ write-through | Is read latency or write freshness the priority? | read-heavy ⟶ aside / can't serve stale ⟶ write-through |
+| Replication ⟷ sharding | Am I read-bound (scale reads) or write/storage-bound (scale capacity)? | too many reads ⟶ replicas / too much data/writes ⟶ shards |
+| Push ⟷ pull (fan-out) | Few writers→many readers, or many writers→few readers? | celebrity read fan-out ⟶ pull / normal ⟶ push-on-write |
+
+**Practice the decision, not just the design.** On every backlog item below, force a
+short **decision log**: for the 3–4 biggest forks, write *trigger → option chosen →
+one-line why → where it breaks at 10× scale*. That last clause is the differentiator —
+naming your own design's failure mode before they ask is the senior signal.
+
+**Questions they'll ask (rehearse the probe, out loud):**
+- "What happens when this component dies / the DB falls over?" (single points of failure)
+- "How does this behave at 10×? 100×?" (which piece saturates first, and your fix)
+- "Two users do X at the same instant — what happens?" (race conditions, idempotency)
+- "Why *this* database / queue / cache and not the alternative?" (defend the fork)
+- "Where's the bottleneck, and how would you shard/cache/replicate around it?"
+- "How do you keep these two copies in sync? What if they diverge?" (consistency)
+- "How would you roll this out / migrate with zero downtime?" (real-world ops)
+
+Treat each as a rep: pick a system you've designed, have the coach fire these, and
+defend cold. A shaky answer points at a fork you memorized instead of understood.
+
 ## Design Practice Backlog
 
 Specific systems to design end-to-end (drive the full framework on each). Above the ROI line unless noted.
