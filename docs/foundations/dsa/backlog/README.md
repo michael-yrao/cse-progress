@@ -23,6 +23,23 @@ This is the symmetric second pool — it keeps the pull-not-push mechanic runnin
 *past* the Interview-ROI line, once you've crossed into Tier 2 for competitive
 depth.
 
+## The interview-pull tool (fetch on demand, gated by what you've learned)
+
+`scripts/pull_interview.py` makes the interview-sourced pool concrete without
+freezing a list. It fetches a company's problems from a public company-wise GitHub
+repo (`liquidslr/leetcode-company-wise-problems`, ~470 companies, with topic tags)
+and shows only the ones whose LeetCode topics match patterns **you've already
+retired/cleaned** (detected from your solution folders), excluding solved problems,
+ranked by interview frequency.
+
+```sh
+python scripts/pull_interview.py --company Google
+python scripts/pull_interview.py --company Stripe --window 6mo --difficulty MEDIUM
+```
+
+This *is* "pull, not push, gated by what's been learned" — your progress drives the
+pool. Pull one, solve it, log it below.
+
 ## How to log a pull
 
 A pulled problem enters `dsa_progress.md` exactly like any other — 🟢/🟡/🔴,
