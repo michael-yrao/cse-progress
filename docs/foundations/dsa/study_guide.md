@@ -29,8 +29,8 @@ Every Sunday, open `docs/foundations/dsa/mastery/dsa_progress.md` and sweep for 
 
 1. **Priority 1 (High Risk)**: 🔴 Blank — oldest Latest Attempt Date first.
 2. **Priority 2 (Medium Risk)**: 🟡 Shaky — oldest Latest Attempt Date first.
-3. **Priority 3 (Maintenance)**: 🟢 Clean — due this week; no-code format is fine.
-4. **Priority 4 (Spot Check)**: 🏆 Retired — due every 180 days; treat same as Clean no-code.
+3. **Priority 3 (Maintenance)**: 🟢 Clean — due this week. No-code review is allowed, but it **caps at 🟡 Shaky** — to hold or advance 🟢 Clean toward retirement you must code it. Coding your way to 🏆 Retired is what buys cheap no-code maintenance later.
+4. **Priority 4 (Spot Check)**: 🏆 Retired — due every 180 days; a flawless no-code blueprint *confirms* retention (stays 🏆). This is the one place a blueprint holds a status.
 
 Daily cap is **5 problems**. The active block is never cut — trim from warmup slots first (max 4 warmup problems across morning + evening combined). When a problem is bumped, slot it to a specific future day in the same edit.
 
@@ -55,10 +55,14 @@ Because 15 minutes passes incredibly fast, **never write code during a backlog w
 * **00:12–00:15 | The Verification**: Open your past successful code or your "Why I Got Stuck" log entry to verify if your mental blueprint was 100% accurate.
 
 ### 📋 Post-Warmup Updates:
-Log the result in `docs/foundations/dsa/mastery/dsa_progress.md` using the comfort system:
-* **Blueprint was flawless** → 🟢 Clean. Streak increments; next review in +30/60/180 days depending on streak.
+Log the result in `docs/foundations/dsa/mastery/dsa_progress.md` using the comfort system.
+
+> **Coding is required for 🟢 Clean.** A no-code blueprint **cannot** log Clean — the best a no-code rep earns is 🟡 Shaky, no matter how flawless. To *reach* or *advance* Clean (increment the streak toward retirement), you must **code it** — in the 45-min active block, or as an Easy problem coded in-warmup. "Mostly remembered it out loud" is not mastery. The one carve-out is below (🏆 Retired spot checks).
+
+* **Blueprint flawless but not coded** → 🟡 Shaky. Keeps the problem warm (+10 days); code it to restore/advance 🟢.
 * **Needed a nudge or wasn't fully confident** → 🟡 Shaky. Streak resets to 0; next review in +10 days.
 * **Completely forgot the approach** → 🔴 Blank. Streak resets to 0; next review in +2 days.
+* **🏆 Retired spot check (the carve-out)** → a flawless no-code blueprint on an already-Retired problem *confirms* it (stays 🏆, +180 days). Retirement — earned by repeated **coded** Cleans — is the one status a blueprint can hold; everything below it needs code to reach or keep 🟢.
 
 ### ⚡ Easy Problem Exception
 
@@ -400,4 +404,6 @@ See [stuck_log.md](stuck_log.md) for the live log. Template for reference:
 ## Core Rules
 1.  **Strict 45-Minute Cap**: If a new problem isn't solved in 45 minutes, stop, look up the solution, and log it 🔴 Blank. It re-appears in 2 days.
 2.  **Quality > Quantity — Hard Comfort Bar**: Aim for 3–4 deeply understood problems per week. A problem is 🟢 Clean only when you can write the complete solution on a blank page with no hints and state the correct time/space complexity unprompted. "Mostly remembered it" = 🟡 Shaky. Every non-Clean result gets logged in `stuck_log.md`: 🔴 Blank gets a full entry naming the conceptual gap; 🟡 Shaky gets a one-liner naming the specific friction point.
-3.  **5-Problem Daily Cap**: Never exceed 5 problems in a day. Active block is always protected — trim warmup slots first. When a problem is bumped, assign it a specific future slot in the same edit.
+3.  **Coding Required for Clean**: 🟢 Clean is earned only by **coding** the solution from a blank page. A no-code blueprint caps at 🟡 Shaky and cannot advance the streak toward retirement; the sole carve-out is a flawless spot check *confirming* an already-🏆 Retired problem.
+4.  **Whiteboard Fidelity**: Write the *full* solution from scratch every time — including any `ListNode` / `TreeNode` / `TrieNode` definitions. No shared boilerplate/data-model module to import; re-deriving the scaffolding is part of the rep, exactly as on an interview whiteboard.
+5.  **5-Problem Daily Cap**: Never exceed 5 problems in a day. Active block is always protected — trim warmup slots first. When a problem is bumped, assign it a specific future slot in the same edit.

@@ -22,7 +22,7 @@ After any problem discussion (solving, reviewing, or mentioning a problem by num
 
 1. Check the current week's schedule file (`docs/foundations/dsa/schedules/<YYYYMMDD>_schedule.md`) and mark the problem as completed in the table.
 2. If the user hasn't mentioned how they felt, ask: "How did that feel — Clean, Shaky, or Blank?"
-   - **Clean**: Solved from blank page, correct complexity, no hints needed. If you had to second-guess the data structure or peek at anything — that's Shaky, not Clean.
+   - **Clean**: **Coded** from a blank page, correct complexity, no hints needed. If you had to second-guess the data structure or peek at anything — that's Shaky, not Clean. A no-code blueprint can never be Clean (caps at Shaky); coding is required — the only exception is a flawless spot check confirming an already-🏆 Retired problem.
    - **Shaky**: Got the solution but needed a nudge, peeked at a hint, or weren't fully confident in the approach mid-way through.
    - **Blank**: Couldn't recall the approach, had to look it up.
 3. Update `docs/foundations/dsa/mastery/dsa_progress.md` with the reported Comfort level and run the review script.
