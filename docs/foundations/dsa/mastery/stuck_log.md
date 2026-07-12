@@ -28,6 +28,9 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 ## 🟡 424. Longest Repeating Character Replacement — Jul 10, 2026
 **Sticking point**: Had the sliding-window idea + the incremental `maxFreq` optimization, but botched three details: (1) shrink condition inverted — `maxFreq + k > r - l + 1` instead of `(r - l + 1) - maxFreq > k`, so `l` ran off the end (index error); (2) forgot `r += 1` on the outer loop; (3) answer used `maxFreq + k` instead of the window size `r - l + 1`. Window is *invalid* when `windowLen - maxFreq > k`; shrink then; answer is the max valid window length.
 
+## 🟡 229. Majority Element II — Jul 12, 2026
+**Sticking point**: Reached for a heap first instead of a count map — needed a hint to land the right structure. (Majority-II is a counting problem: hashmap of counts, or Boyer-Moore with two candidates; a heap solves the wrong question.)
+
 ## 🔴 901. Online Stock Span — Jul 12, 2026
 **Topic**: Monotonic stack — stack entries carry accumulated state (new)
 

@@ -22,6 +22,7 @@ Constraints:
 Follow up: Could you solve the problem in linear time and in O(1) space?
 """
 from collections import defaultdict
+import collections
 from typing import List
 import unittest
 
@@ -149,7 +150,36 @@ class Solution:
                 result.append(key)
         return result
 
-    
+    def majorityElement_20260712(self, nums: List[int]) -> List[int]:
+        # key point: there can at most 2 elements that appear more than n/3 times
+        # so we can keep a map and keep it at max of size 2 (initial thought was minHeap)
+        # when we see an element that is already in the map, increment its freq
+        # when we see an element that is not already in map, add it to the map
+        # and if the size is greater than 2, decrement everything's frequency by 1 until there are only two elements left in the map
+
+        freqMap = collections.defaultdict(int)
+
+        for n in nums:
+            freqMap[n]+=1
+            if len(freqMap) > 2:
+                # we can't remove a key from map while traversing over it
+                # therefore we will just decrement for now
+                for key,value in freqMap.items():
+                    value-=1
+                # use a list or set so we can pop out of the map
+                for key in set(freqMap):
+                    if freqMap[key] <= 0:
+                        freqMap.pop(key)
+        
+        # now we have the elements, let's make sure these elements are actually valid
+        minSize = n/3
+        result = []
+        for key in freqMap:
+            keyCount = nums.count(key)
+            if keyCount > minSize:
+                result.append(key)
+        return result
+
 class UnitTest(unittest.TestCase):
     input = [1,1,2,2,3,3,1,2]
     output = [1,2]

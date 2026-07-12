@@ -60,6 +60,32 @@ def next_attempt_n(text: str) -> int:
     return (max(ns) + 1) if ns else 1
 
 
+def solution_class_end(lines: list[str]) -> int:
+    """Index just past the last line belonging to `class Solution`.
+
+    Appending at EOF corrupts files that carry trailing module-level code (e.g. a
+    `unittest.TestCase` block + `unittest.main()`): the indented stub lands outside
+    the class -> IndentationError. So insert at the end of the Solution class body,
+    not the end of the file.
+    """
+    start = next(
+        (i for i, ln in enumerate(lines) if re.match(r"^class\s+Solution\b", ln)),
+        None,
+    )
+    if start is None:
+        return len(lines)  # no Solution class -> fall back to EOF
+    end = start + 1
+    for i in range(start + 1, len(lines)):
+        stripped = lines[i].strip()
+        if not stripped:
+            continue
+        # A non-indented, non-comment line means we've left the class body.
+        if not lines[i].startswith((" ", "\t")):
+            break
+        end = i + 1
+    return end
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description="Scaffold a solution file (empty dated skeleton).")
     ap.add_argument("--number", required=True)
@@ -100,13 +126,17 @@ def main() -> None:
     else:
         text = path.read_text(encoding="utf-8")
         n = next_attempt_n(text)
-        banner = (
-            f"\n    # ── Attempt {n} · {today} "
-            f"──────────────\n"
-            f"    def {method}_v{n}(self):\n        pass\n"
-        )
-        path.write_text(text.rstrip() + "\n" + banner, encoding="utf-8")
-        print(f"Appended Attempt {n} · {today} to existing {path}.")
+        banner = [
+            "",
+            f"    # ── Attempt {n} · {today} ──────────────",
+            f"    def {method}_v{n}(self):",
+            "        pass",
+        ]
+        lines = text.splitlines()
+        at = solution_class_end(lines)
+        lines[at:at] = banner
+        path.write_text("\n".join(lines).rstrip() + "\n", encoding="utf-8")
+        print(f"Appended Attempt {n} · {today} to existing {path} (line {at + 1}).")
 
 
 if __name__ == "__main__":

@@ -200,7 +200,7 @@ class Solution:
             adjMap[n2].append(n1)
         
         def dfs(node):
-            # return if null or visited
+            # return if visited
             if node in visited:
                 return 0
             # not empty, so we want to mark as visited
@@ -251,3 +251,33 @@ class Solution:
                             queue.append(nb)
         
         return numOfComponents
+    
+    def countComponents_20260712(self, n: int, edges: List[List[int]]) -> int:
+        # dfs method is adjacency map
+        # we want to mark each of these nodes as visited as we go through them
+
+        adjMap = collections.defaultdict(list)
+        visited = set()
+        numComponents = 0
+        for n1, n2 in edges:
+            adjMap[n1].append(n2)
+            adjMap[n2].append(n1)
+
+        def dfs(node):
+            if node in visited:
+                return 0
+            
+            visited.add(node)
+
+            for neighbor in adjMap[node]:
+                if neighbor not in visited:
+                    dfs(neighbor)
+            
+            return 1
+
+        for i in range(n):
+            # if not visited, mark as visited and count the component
+            if i not in visited:
+                numComponents+=dfs(i)
+
+        return numComponents
