@@ -103,3 +103,7 @@ class Solution:
                 return True
             r+=1
         return False
+
+    # ── Attempt · 2026-07-12 ──────────────
+    def checkInclusion_20260712(self):
+        pass

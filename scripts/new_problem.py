@@ -55,11 +55,6 @@ def camel(title: str) -> str:
     return parts[0].lower() + "".join(p.capitalize() for p in parts[1:])
 
 
-def next_attempt_n(text: str) -> int:
-    ns = [int(n) for n in re.findall(r"Attempt\s+(\d+)\s+·", text)]
-    return (max(ns) + 1) if ns else 1
-
-
 def solution_class_end(lines: list[str]) -> int:
     """Index just past the last line belonging to `class Solution`.
 
@@ -98,6 +93,7 @@ def main() -> None:
     args = ap.parse_args()
 
     today = datetime.now().strftime("%Y-%m-%d")
+    stamp = datetime.now().strftime("%Y%m%d")  # method suffix, matches existing convention
     name = snake(args.title)
     method = args.method or camel(args.title)
     slug = name.replace("_", "-")
@@ -125,18 +121,19 @@ def main() -> None:
         print(f"Created {path} (Attempt 1 · {today}).")
     else:
         text = path.read_text(encoding="utf-8")
-        n = next_attempt_n(text)
+        # Date suffix, not an attempt counter: it can't be wrong on legacy files
+        # (which carry no banners to count) and matches the existing convention.
         banner = [
             "",
-            f"    # ── Attempt {n} · {today} ──────────────",
-            f"    def {method}_v{n}(self):",
+            f"    # ── Attempt · {today} ──────────────",
+            f"    def {method}_{stamp}(self):",
             "        pass",
         ]
         lines = text.splitlines()
         at = solution_class_end(lines)
         lines[at:at] = banner
         path.write_text("\n".join(lines).rstrip() + "\n", encoding="utf-8")
-        print(f"Appended Attempt {n} · {today} to existing {path} (line {at + 1}).")
+        print(f"Appended attempt {today} -> {method}_{stamp}() in {path} (line {at + 2}).")
 
 
 if __name__ == "__main__":
