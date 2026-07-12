@@ -16,9 +16,25 @@ Tracking the §7 phased build plan:
 | 6 | Author curriculum + backlog pools — DSA milestone (18 phases / 150 problems), Tier 1/2 expansion, interview + competitive backlog; SD & AI tiers. All YAML valid | ✅ done |
 | 7 | Write bootstrap — args/interactive intake, `reach_beyond ≥ 1` floor, projects NC150 → dated roadmap + week-1 schedule, installs hook. Tested end-to-end | ✅ done |
 | 8 | Extract coaching skill — SKILL.md in place + CLAUDE.md wired | ✅ done |
-| 9 | README (done) + `docs/PHILOSOPHY.md` | ⏳ next |
-| 10 | Dogfood — mock adopter flow for all pillars end-to-end | ☐ |
-| 11 | Publish — create private GitHub repo, push | ☐ |
+| 9 | README (coach voice, interaction model) + `docs/PHILOSOPHY.md` | ✅ done |
+| 10 | Dogfood — full mock adopter flow verified (bootstrap → scaffold → log DSA Clean +30 → log SD blind-sprint Shaky +10, all via the git hook) | ✅ done |
+| 11 | Publish — create private GitHub repo, push | ⏸ awaiting go-ahead (outward-facing; staged & testable from build/cse-coach on the branch) |
+
+## How to test the staged build
+
+Copy it out of the design branch and drive it (don't run bootstrap in-place — it
+writes personal files):
+
+```sh
+cp -r build/cse-coach /tmp/cse-coach && cd /tmp/cse-coach && git init -q
+python scripts/bootstrap.py --name You --start 2026-07-13 --non-interactive
+python scripts/new_problem.py --number 1 --title "Two Sum" --pattern arrays_and_hash
+python tests/test_engine.py            # 5 engine tests
+git add -A && git commit -m wip        # pre-commit hook recomputes trackers
+```
+
+Then open it in Claude Code and just talk to the coach ("start today", solve,
+report Clean/Shaky/Blank). Bootstrap prompts interactively if you omit the flags.
 
 ## Notes
 - Much study content can be **ported from `cse-review`** (patterns, fundamentals,
