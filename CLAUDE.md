@@ -16,6 +16,31 @@ Persistent behavioral preferences are stored in `.claude/memory/`. At the start 
 
 When saving new memories or updating existing ones, always write to `.claude/memory/` in this repo — not to the local `~/.claude/projects/` path. Update `.claude/memory/MEMORY.md` to index any new files. This keeps memory in sync across machines via git.
 
+## Scaffolding a Problem (before the learner codes)
+
+Set the file up **before** they start — never make them create it or paste the statement.
+
+```sh
+python scripts/new_problem.py --number 124 --title "Binary Tree Maximum Path Sum" \
+    --pattern trees [--method maxPathSum] [--url ...] [--premium]
+```
+
+- **New problem** → creates `dsa/leetcode/<pattern>/<number>_<snake>.py` from
+  [`docs/foundations/dsa/templates/solution_template.py`](docs/foundations/dsa/templates/solution_template.py) with an `Attempt 1 · <date>` banner.
+- **Retry** (file exists) → appends an `Attempt N · <date>` banner + stub to the *same* file. Never a second file.
+- `--premium` links the free NeetCode mirror instead of the paywalled LC page.
+
+**Fill the problem statement for them** — the learner never pastes it. Fetch it from the problem
+source and write it into the `{statement}` slot. In low-token / caveman mode, write a compressed
+*caveman version* instead of the full text.
+
+The script writes **no solution logic and no data-structure classes** — only the scaffold. The learner
+writes everything themselves, including any `ListNode`/`TreeNode` defs (whiteboard fidelity: no shared
+data-model imports).
+
+> Note: legacy solution files predate the `Attempt N` banners, so the first append to one of them will
+> read `Attempt 1` regardless of real history. `dsa_progress.md` is the source of truth for attempt counts.
+
 ## LeetCode Review Workflow
 
 After any problem discussion (solving, reviewing, or mentioning a problem by number or name):
@@ -49,6 +74,7 @@ After logging any problem result, check its computed next review date and add it
 - `docs/foundations/dsa/study_guide.md` — master plan with backlog recovery protocol
 - `docs/foundations/dsa/schedules/<YYYYMMDD>_schedule.md` — current week's day-by-day schedule (e.g. `20260615_schedule.md`); archive the current week's schedule and generate the next week's schedule together at the end of the last session of the week — move the current file to `docs/foundations/dsa/schedules/archive/`
 - `docs/foundations/dsa/mastery/stuck_log.md` — log for every non-Clean result: 🔴 Blank gets a full entry (where stuck, core realization, code snippet); 🟡 Shaky gets a one-liner (sticking point only)
+- `docs/foundations/dsa/templates/solution_template.py` — solution-file scaffold, filled by `scripts/new_problem.py`
 
 ## Token discipline (efficiency by default)
 
