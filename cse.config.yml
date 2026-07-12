@@ -1,0 +1,10 @@
+# Engine config, read by scripts/update_review_dates.py.
+# Intervals and source root default to the standard values; the one non-default
+# here is discovery_skip.
+solutions:
+  roots: ["dsa/leetcode"]
+  globs: ["*.py"]
+
+# Problem numbers whose source file exists but should NOT be auto-added to the
+# tracker (they re-enter when properly solved and logged).
+discovery_skip: [76]   # 76 Minimum Window Substring — parked

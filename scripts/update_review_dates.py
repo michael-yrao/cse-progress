@@ -20,6 +20,7 @@ DEFAULT_CONFIG = {
     "shaky": 10,
     "blank": 2,
     "retire_at_streak": 3,
+    "discovery_skip": [],  # problem numbers whose source files should NOT be auto-added
 }
 
 
@@ -54,6 +55,9 @@ def load_config(path: Path = Path("cse.config.yml")) -> dict:
     roots = _list(r"roots:\s*\[([^\]]*)\]")
     if roots:
         cfg["source_root"] = roots[0]
+    skip = _list(r"discovery_skip:\s*\[([^\]]*)\]")
+    if skip is not None:
+        cfg["discovery_skip"] = [int(x) for x in skip if x.isdigit()]
     return cfg
 
 
@@ -101,7 +105,7 @@ def all_source_files() -> list[Path]:
 
 # Problems with source files that should NOT be auto-discovered (curriculum items
 # that will re-enter the tracker naturally when the user solves and logs them).
-DISCOVERY_SKIP_NUMBERS: set[int] = {76}
+DISCOVERY_SKIP_NUMBERS: set[int] = set(CONFIG["discovery_skip"])
 ROMAN_NUMERALS = {
     "i", "ii", "iii", "iv", "v", "vi", "vii", "viii", "ix", "x",
     "xi", "xii", "xiii", "xiv", "xv", "xvi", "xvii", "xviii", "xix", "xx",
