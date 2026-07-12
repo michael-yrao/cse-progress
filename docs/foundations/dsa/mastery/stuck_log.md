@@ -28,6 +28,39 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 ## 🟡 424. Longest Repeating Character Replacement — Jul 10, 2026
 **Sticking point**: Had the sliding-window idea + the incremental `maxFreq` optimization, but botched three details: (1) shrink condition inverted — `maxFreq + k > r - l + 1` instead of `(r - l + 1) - maxFreq > k`, so `l` ran off the end (index error); (2) forgot `r += 1` on the outer loop; (3) answer used `maxFreq + k` instead of the window size `r - l + 1`. Window is *invalid* when `windowLen - maxFreq > k`; shrink then; answer is the max valid window length.
 
+## 🔴 124. Binary Tree Maximum Path Sum — Jul 11, 2026
+**Topic**: Trees / postorder DFS with a side-channel accumulator (new, Hard)
+
+### Where did I get stuck?
+Got the postorder DFS shape and correctly returned "one child" upward — but needed three separate fixes, all flagged: (1) the global max never considered the path that *peaks* at a node using **both** children; (2) negative child contributions weren't clamped to 0; (3) `maxPath` initialized to `0` instead of `-inf`, breaking all-negative trees.
+
+### Core Realization
+**The recursion returns something different from what you're computing.** Unlike every other tree DFS so far (104, 110, 1448 — where `return dfs(root)` *is* the answer), here `dfs` returns the best path it can **hand upward** (node + at most ONE child, because a path continuing to the parent can't also branch), while the **answer** is the best path that **peaks** at some node (node + BOTH children, closed off — it can't extend up). Two different quantities in one function: one flows up the call stack, the other accumulates in a `nonlocal` side variable. That's why you can't write it as a pure return-the-answer recursion.
+
+Both quantities trace back to the no-branching path rule: a node touches ≤ 3 edges (parent, left, right) and a path can use at most 2 of them.
+
+Two sign traps:
+- **A branch is optional** — clamp each child's gain with `max(gain, 0)` ("take this branch only if it helps").
+- **All-negative trees are legal** — init the global max to `-inf`, not `0`, or a lone `-3` node wrongly answers `0`.
+
+### Code Snippet
+```python
+def maxPathSum(self, root):
+    maxPath = float('-inf')          # NOT 0 — all-negative trees are valid
+
+    def dfs(node):
+        nonlocal maxPath
+        if not node:
+            return 0
+        left  = max(dfs(node.left), 0)    # decline a branch that hurts
+        right = max(dfs(node.right), 0)
+        maxPath = max(maxPath, node.val + left + right)   # PEAK here: both children
+        return node.val + max(left, right)                # HAND UP: one child only
+
+    dfs(root)
+    return maxPath
+```
+
 ## 🟡 503. Next Greater Element II — Jul 11, 2026
 **Sticking point**: Had the 496 monotonic-stack pattern cold; stuck only on the circular wrap. Hint unblocked it — simulate the wrap by iterating `2*n` with `i % n` (don't physically double the array), and only push indices during the first lap (`i < n`); the second lap just resolves leftovers.
 
