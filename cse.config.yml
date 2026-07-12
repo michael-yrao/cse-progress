@@ -1,6 +1,9 @@
 # Engine config, read by scripts/update_review_dates.py.
 # Intervals and source root default to the standard values; the one non-default
 # here is discovery_skip.
+system_design:
+  cadence: twice_weekly   # Sunday sprint + one midweek SD slot — once-a-week is too weak
+
 solutions:
   roots: ["dsa/leetcode"]
   globs: ["*.py"]

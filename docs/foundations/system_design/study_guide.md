@@ -38,7 +38,11 @@ Being fluent across (1)–(5) is the ceiling of *interview* ROI. Everything belo
 
 ## Cadence
 
-System design runs on the **Sunday sprint** (see the weekly schedule). Interview-core work (Tier 1) happens there in staged form:
+System design runs **twice a week** (`cse.config.yml` `system_design.cadence:
+twice_weekly`): the deep **Sunday sprint** plus **one midweek SD slot** — a
+once-a-week touch is too weak to build a real sticking point. The midweek slot is a
+warmup swap on a lighter DSA day and never cuts the 45-min DSA active block.
+Interview-core work (Tier 1) happens in staged form:
 
 - **Bootstrap** — first exposure to a topic: watch a good explainer, recall from memory, check gaps. No cold whiteboarding yet.
 - **Transition** — sketch the design cold on paper, then compare against reference.
