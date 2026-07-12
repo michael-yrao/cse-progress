@@ -18,6 +18,7 @@ But depth has diminishing returns *for interviews specifically*. So everything i
 
 **Below the line (competitive-programming growth; NOT for interview ROI):**
 5. **Tier 2 "further horizon"** (Knowledge Expansion Queue) — sweep line, max-flow, LCA, Mo's algorithm, SOS DP, suffix automaton, Aho-Corasick, persistent structures, etc. Pursue **only** after interview-readiness is solid, and **only** for competitive-programming ambition — near-zero interview payoff.
+6. **Tier 3 "competitive / research horizon"** (Knowledge Expansion Queue) — the deepest layer: HLD, centroid decomposition, link-cut trees, suffix automaton/Eertree, FFT/NTT, MCMF & min-cut modeling, D&C DP / Aliens trick, segment tree beats, 2-SAT, advanced geometry, Sprague–Grundy. ICPC/Codeforces territory — pursued deliberately over months for true competitive-programmer depth. See the Tier 3 section in `mastery/dsa_progress.md`.
 
 **How to use the line:** when deciding whether to learn something, ask *"which side of the line is it, and am I currently optimizing for interviews or competitive depth?"* Don't spend interview-prep time below the line; don't mistake below-the-line mastery for interview readiness. Finish NC150 + Tier 1 before crossing.
 
