@@ -105,5 +105,38 @@ class Solution:
         return False
 
     # ── Attempt · 2026-07-12 ──────────────
-    def checkInclusion_20260712(self):
-        pass
+    def checkInclusion_20260712(self, s1: str, s2: str) -> bool:
+        # sliding window maybe?
+        # our window will be size of s1
+        # permutation means we should use freqMap
+        # r to read and write
+        # l to remove if window becomes bigger than len of s1
+        
+        s1Map = [0] * 26
+        s2Map = [0] * 26
+
+        for i in range(len(s1)):
+            charIndex = ord(s1[i]) - ord('a')
+            s1Map[charIndex]+=1
+        
+
+        def s1Matchs2():
+            for i in range(26):
+                if s1Map[i] != s2Map[i]:
+                    return False
+            return True
+
+        l = r = 0
+
+        while r < len(s2):
+            charIndex = ord(s2[r]) - ord('a')
+            s2Map[charIndex]+=1
+            while r - l + 1 > len(s1):
+                lIndex = ord(s2[l]) - ord('a')
+                s2Map[lIndex]-=1
+                l+=1
+            # now that we know length is good, check if we are good to go
+            if s1Matchs2():
+                return True
+            r+=1
+        return False

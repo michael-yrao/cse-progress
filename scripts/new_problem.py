@@ -55,6 +55,23 @@ def camel(title: str) -> str:
     return parts[0].lower() + "".join(p.capitalize() for p in parts[1:])
 
 
+def existing_signature(text: str, method: str) -> tuple[str, str] | None:
+    """(params, return_annotation) of the problem's existing method, if present.
+
+    A retry stub must carry the real signature (`self, s1: str, s2: str) -> bool`),
+    not a bare `(self)` — otherwise the learner retypes it every attempt. Prefer the
+    unsuffixed original; fall back to any dated variant.
+    """
+    for pattern in (
+        rf"^\s*def\s+{re.escape(method)}\s*\((?P<params>[^)]*)\)\s*(?P<ret>->[^:]*)?:",
+        rf"^\s*def\s+{re.escape(method)}_\w+\s*\((?P<params>[^)]*)\)\s*(?P<ret>->[^:]*)?:",
+    ):
+        m = re.search(pattern, text, re.M)
+        if m:
+            return m.group("params").strip(), (m.group("ret") or "").strip()
+    return None
+
+
 def solution_class_end(lines: list[str]) -> int:
     """Index just past the last line belonging to `class Solution`.
 
@@ -121,12 +138,20 @@ def main() -> None:
         print(f"Created {path} (Attempt 1 · {today}).")
     else:
         text = path.read_text(encoding="utf-8")
+        # Carry the real signature over from the existing method — a bare `(self)`
+        # stub would make the learner retype the params on every retry.
+        sig = existing_signature(text, method)
+        if sig:
+            params, ret = sig
+            head = f"    def {method}_{stamp}({params})" + (f" {ret}" if ret else "") + ":"
+        else:
+            head = f"    def {method}_{stamp}(self):"
         # Date suffix, not an attempt counter: it can't be wrong on legacy files
         # (which carry no banners to count) and matches the existing convention.
         banner = [
             "",
             f"    # ── Attempt · {today} ──────────────",
-            f"    def {method}_{stamp}(self):",
+            head,
             "        pass",
         ]
         lines = text.splitlines()
