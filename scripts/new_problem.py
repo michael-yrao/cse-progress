@@ -68,6 +68,33 @@ def camel(title: str) -> str:
     return parts[0].lower() + "".join(p.capitalize() for p in parts[1:])
 
 
+def parse_signature(spec: str) -> tuple[str, str]:
+    """`--signature` spec → (params, return_annotation), both ready to interpolate.
+
+    A NEW problem has no prior method to read a signature from, so without this the
+    stub is a bare `(self)` and the learner retypes the signature every attempt —
+    transcription, not recall. Write it the way it reads on the problem page:
+
+        --signature "times: List[List[int]], n: int, k: int -> int"
+        → ("self, times: List[List[int]], n: int, k: int", "-> int")
+
+    `self` is prepended unless you wrote it yourself; the return annotation is
+    optional. `->` inside the params (a callable annotation) would break the split,
+    so pass such a signature with an explicit leading `self` and split it yourself.
+    """
+    spec = spec.strip()
+    if not spec:
+        return "self", ""
+    params, _, ret = spec.partition("->")
+    params = params.strip().rstrip(",")
+    ret = ret.strip()
+    if not params:
+        params = "self"
+    elif params != "self" and not re.match(r"^self\b", params):
+        params = f"self, {params}"
+    return params, (f"-> {ret}" if ret else "")
+
+
 def existing_signature(text: str, method: str) -> tuple[str, str] | None:
     """(params, return_annotation) of the problem's existing method, if present.
 
@@ -148,6 +175,12 @@ def main() -> None:
                     help="method name; comma-separate for a multi-method problem "
                          "(e.g. --method encode,decode), which scaffolds a dated "
                          "`class Solution_<stamp>` instead of dated methods")
+    ap.add_argument("--signature", action="append", default=[],
+                    help="the method's real signature, e.g. "
+                         "--signature \"times: List[List[int]], n: int, k: int -> int\". "
+                         "`self` is implied. Repeat once per --method, in the same order. "
+                         "Only used for a NEW problem — on a retry the signature is read "
+                         "from the existing method, which always wins")
     ap.add_argument("--premium", action="store_true",
                     help="LC-premium problem → link the free NeetCode mirror instead")
     ap.add_argument("--force-new", action="store_true",
@@ -161,6 +194,9 @@ def main() -> None:
     name = snake(args.title)
     methods = [m.strip() for m in args.method.split(",") if m.strip()] or [camel(args.title)]
     method = methods[0]
+    # Aligned with `methods` by position; a method with no --signature falls back to (self).
+    signatures = [parse_signature(s) for s in args.signature]
+    signatures += [("self", "")] * (len(methods) - len(signatures))
     slug = name.replace("_", "-")
     if args.url:
         url = args.url
@@ -199,6 +235,8 @@ def main() -> None:
             .replace("{pattern}", args.pattern)
             .replace("{date}", today)
             .replace("{method}", method)
+            .replace("{params}", signatures[0][0])
+            .replace("{ret}", f" {signatures[0][1]}" if signatures[0][1] else "")
             .replace("{statement}", STATEMENT_STUB)
         )
         path.write_text(body, encoding="utf-8")
@@ -211,13 +249,17 @@ def main() -> None:
 
             Retyping `(self, s1: str, s2: str) -> bool` on every retry is transcription,
             not recall — it isn't the rep, so the scaffolder does it.
+
+            The file's own method wins over --signature: it's the signature the learner
+            has actually been solving against, and it can't drift from what's on disk.
+            --signature is the fallback for a legacy file whose method can't be parsed.
             """
             sig = existing_signature(text, name_)
-            if sig:
-                params, ret = sig
-                head = f"{indent}def {name_}{suffix}({params})" + (f" {ret}" if ret else "") + ":"
-            else:
-                head = f"{indent}def {name_}{suffix}(self):"
+            if not sig and name_ in methods:
+                given = signatures[methods.index(name_)]
+                sig = given if given != ("self", "") else None
+            params, ret = sig if sig else ("self", "")
+            head = f"{indent}def {name_}{suffix}({params})" + (f" {ret}" if ret else "") + ":"
             return [head, f"{indent}    pass"]
 
         lines = strip_spoiler_region(text.splitlines())

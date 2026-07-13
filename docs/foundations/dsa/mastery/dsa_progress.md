@@ -30,19 +30,20 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/dsa/mastery/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **92** problems &nbsp;·&nbsp; **102** solutions &nbsp;·&nbsp; **291** attempts
+> **92** problems &nbsp;·&nbsp; **102** solutions &nbsp;·&nbsp; **292** attempts
 
 | | 🏆 Retired | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|
-| **Solutions** | 0 | 81 | 18 | 3 |
+| **Solutions** | 0 | 81 | 19 | 2 |
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|---|
+| Medium | [743. Network Delay Time (Dijkstra)](https://leetcode.com/problems/network-delay-time/) | 🔴 | 0 | 2026-07-15 | 2026-07-13 | 2026-07-13 |
+| Hard | [124. Binary Tree Maximum Path Sum](https://leetcode.com/problems/binary-tree-maximum-path-sum/) | 🟡 | 0 | 2026-07-23 | 2026-07-13 | 2026-07-11, 2026-07-13 |
 | Medium | [901. Online Stock Span](https://leetcode.com/problems/online-stock-span/) | 🔴 | 0 | 2026-07-14 | 2026-07-12 | 2026-07-12 |
 | Medium | [323. Number of Connected Components (DFS)](https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/) | 🟢 | 1 | 2026-08-11 | 2026-07-12 | 2026-07-02, 2026-07-12 |
 | Medium | [229. Majority Element II](https://leetcode.com/problems/majority-element-ii/) | 🟡 | 0 | 2026-07-22 | 2026-07-12 | 2026-01-30, 2026-04-14, 2026-06-27, 2026-06-29, 2026-07-12 |
 | Medium | [567. Permutation in String](https://leetcode.com/problems/permutation-in-string/) | 🟡 | 0 | 2026-07-22 | 2026-07-12 | 2026-04-20, 2026-07-02, 2026-07-12 |
-| Hard | [124. Binary Tree Maximum Path Sum](https://leetcode.com/problems/binary-tree-maximum-path-sum/) | 🔴 | 0 | 2026-07-13 | 2026-07-11 | 2026-07-11 |
 | Medium | [503. Next Greater Element II](https://leetcode.com/problems/next-greater-element-ii/) | 🟡 | 0 | 2026-07-21 | 2026-07-11 | 2026-07-11 |
 | Medium | [98. Validate Binary Search Tree](https://leetcode.com/problems/validate-binary-search-tree/) | 🟢 | 1 | 2026-08-10 | 2026-07-11 | 2026-05-16, 2026-05-20, 2026-06-30, 2026-07-02, 2026-07-11 |
 | Medium | [211. Design Add and Search Words Data Structure](https://leetcode.com/problems/design-add-and-search-words-data-structure/) | 🟡 | 0 | 2026-07-21 | 2026-07-11 | 2026-07-09, 2026-07-11 |
@@ -71,11 +72,11 @@ Notes for future agents:
 | Medium | [33. Search in Rotated Sorted Array](https://leetcode.com/problems/search-in-rotated-sorted-array/) | 🟢 | 1 | 2026-08-03 | 2026-07-04 | 2026-04-13, 2026-05-29, 2026-06-15, 2026-06-25, 2026-07-04 |
 | Easy | [219. Contains Duplicate II](https://leetcode.com/problems/contains-duplicate-ii/) | 🟢 | 1 | 2026-08-03 | 2026-07-04 | 2026-03-22, 2026-04-14, 2026-06-25, 2026-07-04 |
 | Medium | [994. Rotting Oranges](https://leetcode.com/problems/rotting-oranges/) | 🟢 | 1 | 2026-08-03 | 2026-07-04 | 2026-06-06, 2026-06-15, 2026-06-25, 2026-07-04 |
-| Medium | [271. Encode and Decode Strings](https://leetcode.com/problems/encode-and-decode-strings/) | 🟡 | 0 | 2026-07-13 | 2026-07-03 | 2026-07-01, 2026-07-03 |
+| Medium | [271. Encode and Decode Strings](https://leetcode.com/problems/encode-and-decode-strings/) | 🟡 | 0 | 2026-07-23 | 2026-07-13 | 2026-07-01, 2026-07-03, 2026-07-13 |
 | Medium | [973. K Closest Points to Origin](https://leetcode.com/problems/k-closest-points-to-origin/) | 🟢 | 1 | 2026-08-02 | 2026-07-03 | 2026-06-23, 2026-07-03 |
 | Medium | [130. Surrounded Regions (Union-Find)](https://leetcode.com/problems/surrounded-regions/) | 🟢 | 1 | 2026-08-02 | 2026-07-03 | 2026-06-21, 2026-06-23, 2026-07-03 |
-| Medium | [875. Koko Eating Bananas](https://leetcode.com/problems/koko-eating-bananas/) | 🟡 | 0 | 2026-07-13 | 2026-07-03 | 2026-04-22, 2026-07-03 |
-| Medium | [74. Search a 2D Matrix](https://leetcode.com/problems/search-a-2d-matrix/) | 🟡 | 0 | 2026-07-13 | 2026-07-03 | 2026-04-22, 2026-07-03 |
+| Medium | [875. Koko Eating Bananas](https://leetcode.com/problems/koko-eating-bananas/) | 🟡 | 0 | 2026-07-23 | 2026-07-13 | 2026-04-22, 2026-07-03, 2026-07-13 |
+| Medium | [74. Search a 2D Matrix](https://leetcode.com/problems/search-a-2d-matrix/) | 🟡 | 0 | 2026-07-23 | 2026-07-13 | 2026-04-22, 2026-07-03, 2026-07-13 |
 | Easy | [121. Best Time to Buy and Sell Stock](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/) | 🟡 | 0 | 2026-07-13 | 2026-07-03 | 2026-03-22, 2026-04-15, 2026-06-25, 2026-07-03 |
 | Easy | [206. Reverse Linked List (Recursion)](https://leetcode.com/problems/reverse-linked-list/) | 🟡 | 0 | 2026-07-13 | 2026-07-03 | 2026-04-24, 2026-07-03 |
 | Easy | [110. Balanced Binary Tree](https://leetcode.com/problems/balanced-binary-tree/) | 🟢 | 1 | 2026-08-02 | 2026-07-03 | 2026-05-01, 2026-06-04, 2026-06-14, 2026-06-24, 2026-07-03 |

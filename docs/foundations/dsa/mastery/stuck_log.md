@@ -19,6 +19,59 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🔴 743. Network Delay Time (Dijkstra) — Jul 13, 2026
+**Topic**: Advanced Graphs — Dijkstra, single-source shortest path on non-negative weights (first exposure)
+
+### Where did I get stuck?
+Read it as BFS and reached for a **FIFO queue**. The whole algorithm was taught, not recalled: why the queue becomes a min-heap, what "settled" means, and why a node is marked settled **on pop, not on push**. Self-derived only the 743-specific half — that the answer is the *max* over the shortest distances, and that `len(settled) == n` is the reachability test.
+
+### Core Realization
+**Dijkstra is BFS with two substitutions: the FIFO queue becomes a min-heap keyed on distance, and `+1 per hop` becomes `+w per edge`.**
+
+BFS is correct on unweighted graphs only because "fewest edges" and "shortest distance" are the same thing there. Weights break that: one edge of weight 100 is longer than five of weight 1. A FIFO pops in *insertion* order, which says nothing about distance — so you need a structure that returns the smallest accumulated distance on demand. That's the heap.
+
+**A push is a claim; a pop is a verdict.** Marking visited on push (which BFS gets away with) locks in a distance that may not be final:
+> `A→B` = 100, `A→C` = 1, `C→B` = 1. Relaxing `A` pushes `(100, B)` and `(1, C)`. Mark-on-push freezes B at 100; the real answer, `A→C→B` = 2, is then discarded. Mark on **pop** and B settles at 2.
+
+**Why the last pop is the maximum** (what makes `minTime = dist` on every iteration a free `max()`): every future heap entry has the form `dist[settled] + w`, where `dist[settled] ≥` the value just popped and `w ≥ 0`. So nothing smaller than the current pop can *ever enter the heap* — pops come out in non-decreasing order. **This is exactly where non-negative weights are load-bearing**: allow `w < 0` and a future push could undercut a finalized distance, which kills settle-on-pop. That crack is why Bellman-Ford exists (787, Jul 14).
+
+### Code Snippet
+```python
+adjMap = collections.defaultdict(list)          # static lookup: node → [(neighbor, weight)]
+for source, target, weight in times:
+    adjMap[source].append((target, weight))
+
+hasShortest = set()                             # settled = answer locked in
+minHeap = [(0, k)]                              # dynamic frontier: (distance, node)
+minTime = 0
+
+while minHeap:
+    cumulativeWeightToNode, node = heapq.heappop(minHeap)
+    if node in hasShortest:                     # stale duplicate — a better route already settled it
+        continue
+    hasShortest.add(node)                       # settle on POP, never on push
+    minTime = cumulativeWeightToNode            # pops are non-decreasing → this is a running max
+
+    for neighborNode, neighborWeight in adjMap[node]:
+        if neighborNode not in hasShortest:
+            heapq.heappush(minHeap, (neighborWeight + cumulativeWeightToNode, neighborNode))
+
+return minTime if len(hasShortest) == n else -1  # unreachable node never settles
+```
+`O(E log V)`. An unreachable node is never pushed, so it never settles — which is the whole `-1` check.
+
+## 🟡 74. Search a 2D Matrix — Jul 13, 2026
+**Sticking point**: Both binary searches initialized `r` as **exclusive** (`len(...)`) while the loop bodies treated it as **inclusive** (`l = m` in the row search, `l <= r` in the value search), so `m` could reach `len(...)` → IndexError on a 1-row matrix and on any miss. **5th boundary-arithmetic failure** (after 424, 75, 567, 901) — approach right, boundary expression wrong. Invariant to state before writing the loop: `r` inclusive ⇒ start at `len - 1`; `r` a never-dereferenced sentinel ⇒ start at `len` (the `while l < r` / `r = m` shape, which he used correctly in 875 the same day).
+
+## 🟡 875. Koko Eating Bananas — Jul 13, 2026
+**Sticking point**: Binary search was right (search space `[1, max(piles)+1)`, lower-bound shrink `r = m`, return `l`) — the feasibility check wasn't: `ceil(pile // speed)` floors *first*, so `ceil` rounds an already-integer value and does nothing (`3 // 4 == 0`, not 1). Partial hours vanish, `canFinish` approves speeds that are too slow. Needs true division so there's a fraction left for `ceil` to round up; Koko can't span two piles in one hour, so every leftover costs a full hour.
+
+## 🟡 271. Encode and Decode Strings — Jul 13, 2026
+**Sticking point**: `decode` had the right chunk-parsing (scan to `#`, read the length prefix, slice `lenStr` chars) but drove it with `for i in range(len(s))` — which steps `i` by 1, so after the first word it restarted mid-chunk and `int()` choked on non-digits. Chunk walking needs a `while` so you can set `i = j + 1 + lenStr` yourself. Also returned `string` (the last chunk) instead of `result`.
+
+## 🟡 124. Binary Tree Maximum Path Sum — Jul 13, 2026
+**Sticking point**: Postorder skeleton came out clean from a blank page (`nonlocal` accumulator, return one branch upward), but both correctness details were missed and neither was self-caught: the peak candidate omitted `node.val` (`max(maxPath, leftSum + rightSum)` — `[1,2,3]` → 5, not 6), and negative child sums weren't clamped with `max(..., 0)`, so a losing branch drags the parent down (`[2,-1]` → 1, not 2).
+
 ## 🟡 146. LRU Cache — Jul 7, 2026
 **Sticking point**: Recalled the whole design cold (hashmap + DLL with two sentinels, get-promotes, evict `tail.prev` + `del map[node.key]`) — big jump from the Jul 4 🔴. Friction was peripheral: needed the type-checker error explained (untyped param = `Any` = silent; annotating `delete(node: ListNode)` surfaced the unprovable `.prev is not None` invariant → resolve with `assert`).
 

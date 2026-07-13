@@ -33,6 +33,30 @@ from typing import Optional
 
 
 class Solution:
+
+    # ── Attempt · 2026-07-13 ──────────────
+    def maxPathSum_20260713(self, root: Optional[TreeNode]) -> int:
+        maxPath = -math.inf
+
+        def postorderDFS(node):
+            nonlocal maxPath
+            # DFS problem
+            # need to keep track of max I believe so we can just pass that through the recursion
+
+            if not node:
+                return 0
+            
+            leftSum = max(postorderDFS(node.left),0)
+            rightSum = max(postorderDFS(node.right),0)
+
+            maxPath = max(maxPath, node.val + leftSum + rightSum)
+
+            return node.val + max(leftSum, rightSum)
+        
+        postorderDFS(root)
+        return maxPath # type: ignore
+
+    # region ⚠ PRIOR ATTEMPTS — SPOILERS · fold before you start
     def maxPathSum(self, root: Optional[TreeNode]) -> int:
         # so this is definitely DFS since we can only go down a path and not repeat
         # and we basically wanna do max(leftPath, rightPath) to pass to the root
@@ -55,3 +79,4 @@ class Solution:
         
         dfs(root)
         return maxPath # type: ignore
+# endregion

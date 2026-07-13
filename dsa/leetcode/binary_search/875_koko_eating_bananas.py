@@ -33,6 +33,36 @@ import math
 from typing import List
 
 class Solution:
+
+    # ── Attempt · 2026-07-13 ──────────────
+    def minEatingSpeed_20260713(self, piles: List[int], h: int) -> int:
+        # maximum eating speed is max(piles)
+        # so we want to find something a bit smaller
+        # so we can do 1 -> maxEatingSpeed (inclusive), binary search on this result set
+        # we are finding the minimum, so min boundary binary search
+        maxEatingSpeed = max(piles)
+
+        l, r = 1, maxEatingSpeed+1
+
+        def canFinish(speed):
+            numberOfHoursTaken = 0
+            for pile in piles:
+                # 3//4 -> 1, 6//4 -> 2
+                numberOfHoursTaken+=math.ceil(pile/speed)
+            return numberOfHoursTaken <= h
+
+        while l < r:
+            m = (l+r)//2
+            # if we can finish with m bananas, we can assume this is a viable answer
+            # but we want to try to see if we can do better
+            if canFinish(m):
+                r = m
+            else:
+                l = m + 1
+
+        return l
+
+    # region ⚠ PRIOR ATTEMPTS — SPOILERS · fold before you start
     def minEatingSpeed(self, piles: List[int], h: int) -> int:
         # we are looking for the value k
         # using a bit of math, we can tell we are looking for where math.ceil(piles[i] / k) = h
@@ -86,3 +116,4 @@ class Solution:
             return l
         
         return minBoundaryBinarySearch(1,max(piles))
+# endregion

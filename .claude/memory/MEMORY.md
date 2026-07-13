@@ -8,6 +8,7 @@
 - [Coding required for Clean](feedback_coding_for_clean.md) — 🟢 Clean requires coding; no-code blueprint caps at 🟡 Shaky (except flawless spot check confirms 🏆 Retired)
 - [Whiteboard fidelity](feedback_whiteboard_fidelity.md) — write full solution incl. data-structure defs from scratch; no shared datamodel module
 - [No spoilers](feedback_no_spoilers.md) — zero hints/approaches unless explicitly asked or stuck; NEVER recap the approach (or stuck_log content) when a problem/retry begins
+- [No prior-attempt comparison](feedback_no_prior_attempt_comparison.md) — judge today's code on its own; never read or cite the folded PRIOR ATTEMPTS region when giving feedback or rating
 - [Infer comfort rating](feedback_infer_comfort.md) — read Clean/Shaky/Blank from the conversation against the rubric and propose it for confirmation; don't ask the user cold
 - [Git commit checklist](feedback_git_commit.md) — always run git status before committing to catch unstaged solution files
 - [Batch commits](feedback_batch_commits.md) — don't commit per problem; accumulate and commit once at session end (each commit re-injects ~70 lines of the tracker into context)

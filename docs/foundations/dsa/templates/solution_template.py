@@ -11,5 +11,5 @@ from typing import List, Optional
 
 class Solution:
     # ── Attempt 1 · {date} ────────────────────────────────────────────
-    def {method}(self):
+    def {method}({params}){ret}:
         pass

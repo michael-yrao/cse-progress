@@ -10,4 +10,9 @@ solutions:
 
 # Problem numbers whose source file exists but should NOT be auto-added to the
 # tracker (they re-enter when properly solved and logged).
-discovery_skip: [76]   # 76 Minimum Window Substring — parked
+discovery_skip: [76, 1216]   # 76 Minimum Window Substring — parked
+                             # 1216 Valid Palindrome III — phase-gated; the Knowledge
+                             #      Expansion Queue owns it. Without this, discovery
+                             #      re-injects it into the review table as a 🔴 with no
+                             #      attempt dates, restarting the +2-day churn that
+                             #      phase-gating exists to stop.

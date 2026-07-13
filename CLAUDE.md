@@ -32,9 +32,16 @@ blueprint one verbally, the file just goes unused that day; nothing is lost. Bli
 recall reps) remain the one exception: those get **nothing**, because leaving it blank *is* the rep.
 
 ```sh
-python scripts/new_problem.py --number 124 --title "Binary Tree Maximum Path Sum" \
-    --pattern trees [--method maxPathSum] [--url ...] [--premium]
+python scripts/new_problem.py --number 743 --title "Network Delay Time" --pattern graphs \
+    --signature "times: List[List[int]], n: int, k: int -> int" \
+    [--method networkDelayTime] [--url ...] [--premium]
 ```
+
+**Always pass `--signature` on a new problem.** `self` is implied and the return annotation is
+optional. Without it the stub is a bare `(self)` and the learner retypes the signature every
+attempt — transcription, not recall. Repeat the flag once per `--method`, in order, for a
+multi-method problem. On a **retry** it's only a fallback: the signature is read from the method
+already in the file, which always wins (it can't drift from what's on disk).
 
 - **New problem** → creates `dsa/leetcode/<pattern>/<number>_<snake>.py` from
   [`docs/foundations/dsa/templates/solution_template.py`](docs/foundations/dsa/templates/solution_template.py).
@@ -85,7 +92,9 @@ Notes for whoever maintains this:
   `class Solution` → a dated `class Solution_<stamp>` above the prior code, matching the convention
   [271](dsa/leetcode/arrays_and_hash/271_encode_and_decode_string.py) already used.
 - The stub carries the problem's **real signature**, pulled from the existing method — retyping
-  `(self, strs: List[str]) -> str` every attempt is transcription, not recall.
+  `(self, strs: List[str]) -> str` every attempt is transcription, not recall. A **new** problem has
+  no prior method to read, which is what `--signature` is for; supply it or the stub is a bare
+  `(self)`.
 - `new_problem.py` strips the previous run's markers and re-wraps, so it's idempotent: on the next
   retry, today's attempt gets folded away too.
 - The target path is derived from `--title`/`--pattern`, so a title that differs from what's on disk

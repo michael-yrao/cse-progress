@@ -23,4 +23,10 @@ Then **propose, don't interrogate**: "That reads as 🟡 Shaky — you had the s
 
 **Still confirm every time** — propose, wait for the yes/override, then log. Never log a rating silently.
 
-Honesty matters more than agreeableness here: if they claim 🟢 but I supplied a real fix they missed, say so plainly (see the 355 and 36 exchanges) — then defer to their call. Related: [[feedback_no_spoilers]].
+**Rate the hint volume, not the excuse for it.** If I explained the algorithm — the data structure, the invariant, the "why this and not that" — then the approach was *supplied*, and that is 🔴 Blank by definition, no matter how reasonable it was that they didn't have it. A **first exposure to a new technique is still 🔴**: "there was nothing to recall yet" explains *why* it's Blank, it doesn't upgrade it. Deriving the problem-specific wrapper around a handed-over algorithm (e.g. on 743: "answer = max of the shortest distances", "`len(settled) == n` is the reachability test") is **not** deriving the approach — it's the easy half, and it doesn't lift 🔴 to 🟡.
+
+The tell that I'm rationalizing: I list the substantive things I taught, and *then* argue for the higher rating anyway. If the list is non-empty, the rating follows the list. On 743 (Jul 13) I did exactly this — proposed 🟡 right after writing "I taught you Dijkstra" — and the user overruled to 🔴. That correction should never have been theirs to make.
+
+Under-rating a fresh 🔴 as 🟡 isn't a harmless rounding: it sets the next review at +10 days instead of +2, so a technique that hasn't stuck at all gets two weeks to evaporate. The interval **is** the consequence of the rating.
+
+Honesty matters more than agreeableness here: if they claim 🟢 but I supplied a real fix they missed, say so plainly (see the 355 and 36 exchanges) — then defer to their call. Related: [[feedback_no_spoilers]], [[feedback_phase_gated_blanks]] (which is the *one* case where a 🔴 doesn't get the +2 loop — an un-taught technique, not a just-taught one).

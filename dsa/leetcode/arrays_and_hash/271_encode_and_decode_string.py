@@ -60,6 +60,37 @@ Follow up: Could you write a generalized algorithm to work on any possible set o
 """
 from typing import List
 
+
+# ── Attempt · 2026-07-13 ──────────────
+class Solution_20260713:
+    # This problem is about Length Prefix Framing
+    def encode(self, strs: List[str]) -> str:
+        resultStr = ""
+        for string in strs:
+            lenString = len(string)
+            stringToAppend = str(lenString) + "#" + string
+            resultStr+=stringToAppend
+        return resultStr
+
+    def decode(self, s: str) -> List[str]:
+        # we will use two pointers to help us navigate the string
+        result = []
+        i = 0
+        while i < len(s):
+            j = i
+            while s[j] != '#':
+                j+=1
+            # now i->j is len of the string
+            lenStr = int(s[i:j])
+            # and j+1 -> j+1+lenStr is the string
+            string = s[j+1:j+1+lenStr]
+            result.append(string)
+            i = j+1+lenStr
+        return result
+
+
+# region ⚠ PRIOR ATTEMPTS — SPOILERS · fold before you start
+
 class Solution:
 
     def encode(self, strs: List[str]) -> str:
@@ -154,3 +185,4 @@ class Solution_20260703:
             result.append(word)
             i=j+1+lenStr
         return result
+# endregion

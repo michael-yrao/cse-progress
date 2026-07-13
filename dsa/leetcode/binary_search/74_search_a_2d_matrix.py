@@ -27,6 +27,40 @@ Constraints:
 """
 from typing import List
 class Solution:
+
+    # ── Attempt · 2026-07-13 ──────────────
+    def searchMatrix_20260713(self, matrix: List[List[int]], target: int) -> bool:
+        # we can find in the first column the element that is larger than target
+        # that way we know the prior row is the correct row
+        # then we do basic exact value binary search to get the result
+        # so max boundary binary search -> exact value binary search
+
+        l = 0
+        r = len(matrix) - 1
+
+        while l < r:
+            m = (l + r + 1) // 2
+            if matrix[m][0] > target:
+                r = m - 1
+            else:
+                l = m
+        
+        # now l is the row
+        row = l
+        l = 0
+        r = len(matrix[0]) - 1
+
+        while l <= r:
+            m = (l+r)//2
+            if matrix[row][m] == target:
+                return True
+            if matrix[row][m] > target:
+                r = m - 1
+            else:
+                l = m + 1
+        return False
+
+    # region ⚠ PRIOR ATTEMPTS — SPOILERS · fold before you start
     def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
         # we can actually just do this one dimension at a time
         # if we go down the matrix
@@ -101,3 +135,4 @@ class Solution:
             else:
                 l = m + 1
         return False
+# endregion
