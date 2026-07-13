@@ -30,11 +30,11 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/dsa/mastery/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **93** problems &nbsp;·&nbsp; **104** solutions &nbsp;·&nbsp; **293** attempts
+> **92** problems &nbsp;·&nbsp; **102** solutions &nbsp;·&nbsp; **291** attempts
 
 | | 🏆 Retired | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|
-| **Solutions** | 0 | 81 | 18 | 5 |
+| **Solutions** | 0 | 81 | 18 | 3 |
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|---|
