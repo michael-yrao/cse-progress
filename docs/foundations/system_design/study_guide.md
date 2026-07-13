@@ -45,10 +45,18 @@ warmup swap on a lighter DSA day and never cuts the 45-min DSA active block.
 Interview-core work (Tier 1) happens in staged form:
 
 - **Bootstrap** — first exposure to a topic: watch a good explainer, recall from memory, check gaps. No cold whiteboarding yet.
-- **Transition** — sketch the design cold on paper, then compare against reference.
-- **Mastery** — full mock-interview timing (~45 min), self-scored against the framework.
+- **Transition** — sketch the design cold from memory, then **diff against the reference note**. Record what came back and what didn't; the misses become the named drill targets for Mastery.
+- **Mastery** — full mock-interview timing (~45 min), self-scored against the framework, drilling the Transition misses.
 
-Below-the-line (Tier 2+) work is **not** a Sunday-sprint activity — it's long-form reading (DDIA, papers) pursued deliberately *after* interview-core is solid, on its own track.
+One stage per session, so a full Bootstrap → Transition → Mastery arc is ~3 sessions ≈ 1.5 weeks at twice-weekly.
+
+### Stage status
+
+| Topic | Bootstrap | Transition | Mastery |
+|-------|-----------|------------|---------|
+| [Rate limiter](components/rate_limiter.md) | ✅ Jul 5 | ✅ Jul 12 | ⏳ next up |
+
+Below-the-line (Tier 2+) work is **not** a sprint activity — it's long-form reading (DDIA, papers) pursued deliberately *after* interview-core is solid, on its own track.
 
 **Drive every practice session through the templates** in [`templates/`](templates/):
 - Designing a whole system (Transition/Mastery on a Design Practice Backlog item) → copy [`case_study_template.md`](templates/case_study_template.md) and fill it end-to-end (requirements → estimation → data model → high-level → diagram).
@@ -109,7 +117,7 @@ This guide is the single source of truth (map + ROI line). Current file state �
 - `fundamentals/` ✅ — [`single_node_io_efficiency.md`](fundamentals/single_node_io_efficiency.md) (the 4096-byte buffer / sectors / pages / syscalls). *Depth material, not interview-core.*
 - `templates/` ✅ — the two scaffolds you fill during practice (see Cadence above).
 
-- `components/` 🌱 — per-block deep-dives, started: [`rate_limiter.md`](components/rate_limiter.md) (Bootstrap note). Grows as you cover each block.
+- `components/` 🌱 — per-block deep-dives, started: [`rate_limiter.md`](components/rate_limiter.md) (Transition ✅ — carries the named drill targets for Mastery). Grows as you cover each block.
 
 **Planned (not yet created — build as you reach each phase, no number prefixes):**
 - `databases/` — SQL vs NoSQL, replication, sharding
