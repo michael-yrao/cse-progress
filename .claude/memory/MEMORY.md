@@ -10,6 +10,7 @@
 - [No spoilers](feedback_no_spoilers.md) — zero hints/approaches unless explicitly asked or stuck; NEVER recap the approach (or stuck_log content) when a problem/retry begins
 - [Infer comfort rating](feedback_infer_comfort.md) — read Clean/Shaky/Blank from the conversation against the rubric and propose it for confirmation; don't ask the user cold
 - [Git commit checklist](feedback_git_commit.md) — always run git status before committing to catch unstaged solution files
+- [Batch commits](feedback_batch_commits.md) — don't commit per problem; accumulate and commit once at session end (each commit re-injects ~70 lines of the tracker into context)
 - [Proactive scheduling](feedback_proactive_scheduling.md) — after logging any result, scan tracker for problems due within 7 days and slot them immediately
 - [Schedule mistake handling](feedback_schedule_mistakes.md) — when user does a problem out of order, detect the swap and fix both sides without waiting for user to catch it
 - [Daily problem cap](feedback_daily_cap.md) — max 5 problems per day; push extras (lowest priority first) to next available slot and note in preview
