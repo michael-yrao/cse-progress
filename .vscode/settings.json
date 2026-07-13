@@ -1,5 +1,68 @@
 {
   "python.analysis.diagnosticSeverityOverrides": {
     "reportOptionalMemberAccess": "none"
+  },
+  "editor.showFoldingControls": "always",
+  "editor.foldingHighlight": true,
+  "editor.foldingStrategy": "auto",
+
+  // ⚠ READ THIS BEFORE EDITING THE FOLDING SETTINGS BELOW.
+  //
+  // To debug: set "explicitFolding.debug": true (in the .code-workspace, not here) and
+  // read the "Explicit Folding" output channel.
+  //
+  // This repo is normally opened as one folder of ../progressiveOverflow.code-workspace.
+  // In a multi-root workspace THIS FILE IS FOLDER SETTINGS, and Explicit Folding reads
+  // its config with NO resource (getConfiguration(key, null)) — which never resolves
+  // folder settings. So everything below is DEAD in that window; the live copy lives in
+  // the .code-workspace "settings" block, and the two must be kept in sync. They are
+  // duplicated here only so folding still works when cse-review is opened on its own.
+  //
+  // Symptom of getting this wrong: "[main] regex: /a^/" in the Explicit Folding output.
+
+  // Must be top-level, never "[python]"-scoped — the extension reads it unscoped. If it
+  // can't see it, it falls into proxy mode and races Pylance, and the auto-fold fires
+  // against Pylance's model, where the innermost region at the "# region" line is the
+  // whole class — which then collapses instead of the spoiler region.
+  "editor.defaultFoldingRangeProvider": "zokugun.explicit-folding",
+
+  // Contains the blast radius of the line above (it makes this extension the folding
+  // provider for every language): excluded languages get no provider and keep their
+  // native folding; the "*" rule keeps anything else from folding nothing at all.
+  "explicitFolding.wildcardExclusions": ["markdown", "json", "jsonc", "yaml"],
+
+  "explicitFolding.autoFold": "none",
+  "explicitFolding.rules": {
+    // Appended AFTER each language's own rules — a mismatched offSide here would
+    // silently override python's below.
+    "*": [{ "indentation": true, "offSide": true }],
+
+    "python": [
+      {
+        // Both markers are emitted by scripts/new_problem.py, so these patterns never
+        // have to match the shape of your old code — only the scaffolder's sentinels.
+        // autoFold is per-rule: ONLY this region collapses on open.
+        "beginRegex": "#\\s*region\\b.*PRIOR ATTEMPTS",
+        "endRegex": "#\\s*endregion\\b",
+        "autoFold": true,
+        // MUST stay false. true extends the region onto the "# endregion" line, which
+        // sits at indent 0 — past the end of the class body's indentation block. The
+        // region would start inside `class Solution` and end outside it, and VSCode
+        // discards crossing ranges.
+        "foldLastLine": false
+      },
+      {
+        // Fold the problem-statement docstring at the top of each solution file.
+        "beginRegex": "\"\"\"",
+        "endRegex": "\"\"\""
+      },
+      {
+        // Required. Naming this extension as Python's folding provider means the
+        // indentation folds (def / if / for) become ITS job — drop this and they stop
+        // working everywhere in the repo.
+        "indentation": true,
+        "offSide": true
+      }
+    ]
   }
 }

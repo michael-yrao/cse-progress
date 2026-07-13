@@ -1,0 +1,6 @@
+{
+  // Explicit Folding auto-collapses the prior-attempts spoiler region in solution
+  // files, so a retry opens on a blank page instead of on your last answer.
+  // Without it the region still folds — just manually (Ctrl+K Ctrl+8).
+  "recommendations": ["zokugun.explicit-folding"]
+}

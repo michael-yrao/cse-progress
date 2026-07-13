@@ -20,6 +20,17 @@ When saving new memories or updating existing ones, always write to `.claude/mem
 
 Set the file up **before** they start — never make them create it or paste the statement.
 
+**Scaffold ALL of today's items at start-of-day — this is the default.** This repo overrides the
+cse-coach default of writing files only for coding reps: at "start today" (or any session kickoff),
+scaffold **every** problem on the day's schedule — active block *and* both warmup slots, 🔴/🟡/🟢
+alike — in one batch, before the learner starts. New → new file; retry → appended dated attempt.
+Don't ask which ones to set up.
+
+Consequence, stated plainly: coding is the only path to 🟢, so scaffolding a 🟡/🟢 warmup **raises**
+its ceiling from the no-code cap (🟡) to a real 🟢. Warmups are still 15-min slots — if they'd rather
+blueprint one verbally, the file just goes unused that day; nothing is lost. Blind sprints (SD/AI
+recall reps) remain the one exception: those get **nothing**, because leaving it blank *is* the rep.
+
 ```sh
 python scripts/new_problem.py --number 124 --title "Binary Tree Maximum Path Sum" \
     --pattern trees [--method maxPathSum] [--url ...] [--premium]
@@ -43,9 +54,69 @@ The script writes **no solution logic and no data-structure classes** — only t
 writes everything themselves, including any `ListNode`/`TreeNode` defs (whiteboard fidelity: no shared
 data-model imports).
 
-> The stub is inserted at the end of the `Solution` **class body**, not at EOF — appending at EOF
-> corrupts files that carry trailing module-level code (e.g. a `unittest.TestCase` block +
-> `unittest.main()`), landing an indented stub outside the class → `IndentationError`.
+### Retries must not show prior attempts
+
+**The new stub goes at the TOP of the `Solution` class, and everything below it is wrapped in a
+`# region ⚠ PRIOR ATTEMPTS — SPOILERS` … `# endregion` fold.** Reading your own previous solution
+before a retry destroys the rep — the whole point is recall from a blank page. Bottom-appending made
+the *old solution* the first thing on screen when the file opened, i.e. the spoiler was the default
+view. Now the blank stub is.
+
+The region **auto-collapses on open** via the [Explicit Folding](https://marketplace.visualstudio.com/items?itemName=zokugun.explicit-folding)
+extension (`zokugun.explicit-folding`, recommended in [`.vscode/extensions.json`](.vscode/extensions.json),
+rule in [`.vscode/settings.json`](.vscode/settings.json)). Auto-folding is set **per rule**, so only
+this region collapses — ordinary folds (`def`, `if`, `for`) behave normally. Without the extension
+the region still folds, just manually: `Ctrl+K Ctrl+8`.
+
+It's a speed bump, not a lock — the code is one keystroke away, and that's accepted. What it buys is
+that seeing it becomes a deliberate act instead of an accident.
+
+**The load-bearing invariant:** the generated scaffold block *always ends with the region head*, and
+the region *always closes at EOF*. Both markers are emitted by `new_problem.py` — neither is matched
+against your old code. So the fold spans exactly "everything below today's stub" without the script
+ever having to parse the shape of prior attempts, which vary a lot and are not ours to interpret.
+Keep it that way; anchoring the fold on anything inside a prior solution is how this breaks.
+
+Notes for whoever maintains this:
+- Region markers are **comments**, so they carry no indentation meaning in Python. That's what lets
+  one region open inside a class body and close at module level.
+- Two scaffold layouts, one invariant. Single method → a dated `def <method>_<stamp>` at the top of
+  `class Solution`. **Multi-method problem** (`--method encode,decode`) or a legacy file with no
+  `class Solution` → a dated `class Solution_<stamp>` above the prior code, matching the convention
+  [271](dsa/leetcode/arrays_and_hash/271_encode_and_decode_string.py) already used.
+- The stub carries the problem's **real signature**, pulled from the existing method — retyping
+  `(self, strs: List[str]) -> str` every attempt is transcription, not recall.
+- `new_problem.py` strips the previous run's markers and re-wraps, so it's idempotent: on the next
+  retry, today's attempt gets folded away too.
+- The target path is derived from `--title`/`--pattern`, so a title that differs from what's on disk
+  (LeetCode says "Encode and Decode String**s**"; the file is `..._string.py`) would fork the
+  attempt history into two files and quietly break streak tracking. The **problem number is the real
+  identity**, so the script now matches on that and **refuses** the write, naming the file it found.
+  `--force-new` overrides, for the rare genuinely-distinct problem sharing a number.
+- **The folding config lives in `../progressiveOverflow.code-workspace`, not in this repo.** This repo
+  is normally opened as one folder of that multi-root workspace, which makes
+  [`.vscode/settings.json`](.vscode/settings.json) *folder* settings — and Explicit Folding reads its
+  config with **no resource** (`getConfiguration('explicitFolding', null)`), which never resolves
+  folder settings. The repo keeps a synced copy of the rules for when it's opened as a lone folder;
+  the workspace file is the one that actually runs. The `.code-workspace` lives outside every repo, so
+  **this setup does not follow you to a new machine** — reproduce it there by hand.
+  Symptom of getting this wrong: `[main] regex: /a^/` in the Explicit Folding output channel.
+- **`editor.defaultFoldingRangeProvider` must be top-level, never inside `"[python]"`** — same reason:
+  the extension reads it unscoped. Scoped, it looks correct, applies cleanly, and does nothing; the
+  extension then falls into "proxy mode", registering a stub provider and the real one a second later
+  while Pylance is still live. The auto-fold fires against Pylance's stale model, where the innermost
+  region containing the `# region` line is `class Solution` — **so the whole class collapses instead
+  of the spoiler region.** The cost of top-level is that the extension claims every language, which is
+  why `explicitFolding.wildcardExclusions` (keeps native markdown/JSON/TS/Dart folding in the other
+  folders) and the `"*"` indentation rule (fallback for the rest) are both load-bearing.
+- **`foldLastLine` must stay `false` on the region rule.** `true` extends the fold onto the
+  `# endregion` line, which sits at indent 0 — one line past where the class body's indentation block
+  ends. The region would then start inside `class Solution` and end outside it, and VSCode silently
+  discards crossing ranges. The visible `# endregion` line is the price.
+- Naming the extension as Python's folding provider makes indentation folding **its** job, which is
+  why the `indentation` / `offSide` rule is load-bearing — delete it and every `def`/`if`/`for` fold in
+  the repo stops working. Note the `"*"` wildcard rule is appended *after* each language's own rules,
+  so its `offSide` must match Python's or it silently overrides it.
 
 ## LeetCode Review Workflow
 
