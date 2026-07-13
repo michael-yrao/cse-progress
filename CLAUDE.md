@@ -42,9 +42,14 @@ python scripts/new_problem.py --number 124 --title "Binary Tree Maximum Path Sum
 ```
 
 - **New problem** → creates `dsa/leetcode/<pattern>/<number>_<snake>.py` from
-  [`docs/foundations/dsa/templates/solution_template.py`](docs/foundations/dsa/templates/solution_template.py) with an `Attempt 1 · <date>` banner.
-- **Retry** (file exists) → appends an `Attempt N · <date>` banner + stub to the *same* file. Never a second file.
+  [`docs/foundations/dsa/templates/solution_template.py`](docs/foundations/dsa/templates/solution_template.py).
+- **Retry** (file exists) → inserts a dated stub `def <method>_<YYYYMMDD>(self)` at the end of the
+  `Solution` class body. Never a second file.
 - `--premium` links the free NeetCode mirror instead of the paywalled LC page.
+
+**Attempts are keyed by date, not by a counter** (`checkInclusion_20260712`) — matching the existing
+convention across the solution files. A counter can't be derived correctly on legacy files (they carry
+no banners to count); a datestamp is always right and keys straight to the attempt dates in the tracker.
 
 **Fill the problem statement for them** — the learner never pastes it. Fetch it from the problem
 source and write it into the `{statement}` slot. In low-token / caveman mode, write a compressed
@@ -54,8 +59,9 @@ The script writes **no solution logic and no data-structure classes** — only t
 writes everything themselves, including any `ListNode`/`TreeNode` defs (whiteboard fidelity: no shared
 data-model imports).
 
-> Note: legacy solution files predate the `Attempt N` banners, so the first append to one of them will
-> read `Attempt 1` regardless of real history. `dsa_progress.md` is the source of truth for attempt counts.
+> The stub is inserted at the end of the `Solution` **class body**, not at EOF — appending at EOF
+> corrupts files that carry trailing module-level code (e.g. a `unittest.TestCase` block +
+> `unittest.main()`), landing an indented stub outside the class → `IndentationError`.
 
 ## LeetCode Review Workflow
 

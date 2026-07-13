@@ -30,15 +30,17 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/dsa/mastery/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **93** problems &nbsp;·&nbsp; **104** solutions &nbsp;·&nbsp; **290** attempts
+> **93** problems &nbsp;·&nbsp; **104** solutions &nbsp;·&nbsp; **292** attempts
 
 | | 🏆 Retired | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|
-| **Solutions** | 0 | 80 | 19 | 5 |
+| **Solutions** | 0 | 81 | 18 | 5 |
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|---|
 | Medium | [901. Online Stock Span](https://leetcode.com/problems/online-stock-span/) | 🔴 | 0 | 2026-07-14 | 2026-07-12 | 2026-07-12 |
+| Medium | [323. Number of Connected Components (DFS)](https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/) | 🟢 | 1 | 2026-08-11 | 2026-07-12 | 2026-07-02, 2026-07-12 |
+| Medium | [229. Majority Element II](https://leetcode.com/problems/majority-element-ii/) | 🟡 | 0 | 2026-07-22 | 2026-07-12 | 2026-01-30, 2026-04-14, 2026-06-27, 2026-06-29, 2026-07-12 |
 | Hard | [124. Binary Tree Maximum Path Sum](https://leetcode.com/problems/binary-tree-maximum-path-sum/) | 🔴 | 0 | 2026-07-13 | 2026-07-11 | 2026-07-11 |
 | Medium | [503. Next Greater Element II](https://leetcode.com/problems/next-greater-element-ii/) | 🟡 | 0 | 2026-07-21 | 2026-07-11 | 2026-07-11 |
 | Medium | [98. Validate Binary Search Tree](https://leetcode.com/problems/validate-binary-search-tree/) | 🟢 | 1 | 2026-08-10 | 2026-07-11 | 2026-05-16, 2026-05-20, 2026-06-30, 2026-07-02, 2026-07-11 |
@@ -77,13 +79,11 @@ Notes for future agents:
 | Easy | [206. Reverse Linked List (Recursion)](https://leetcode.com/problems/reverse-linked-list/) | 🟡 | 0 | 2026-07-13 | 2026-07-03 | 2026-04-24, 2026-07-03 |
 | Easy | [110. Balanced Binary Tree](https://leetcode.com/problems/balanced-binary-tree/) | 🟢 | 1 | 2026-08-02 | 2026-07-03 | 2026-05-01, 2026-06-04, 2026-06-14, 2026-06-24, 2026-07-03 |
 | Easy | [703. Kth Largest Element in a Stream](https://leetcode.com/problems/kth-largest-element-in-a-stream/) | 🟢 | 1 | 2026-08-01 | 2026-07-02 | 2026-06-22, 2026-07-02 |
-| Medium | [323. Number of Connected Components (DFS)](https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/) | 🟢 | 1 | 2026-08-11 | 2026-07-12 | 2026-07-02, 2026-07-12 |
 | Medium | [567. Permutation in String](https://leetcode.com/problems/permutation-in-string/) | 🟡 | 0 | 2026-07-12 | 2026-07-02 | 2026-04-20, 2026-07-02 |
 | Easy | [66. Plus One](https://leetcode.com/problems/plus-one/) | 🟢 | 1 | 2026-07-31 | 2026-07-01 | 2026-01-02, 2026-03-25, 2026-06-22, 2026-07-01 |
 | Medium | [684. Redundant Connection (Union-Find)](https://leetcode.com/problems/redundant-connection/) | 🟢 | 1 | 2026-07-31 | 2026-07-01 | 2026-06-18, 2026-06-22, 2026-07-01 |
 | Medium | [153. Find Minimum in Rotated Sorted Array](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/) | 🟢 | 2 | 2026-08-30 | 2026-07-01 | 2026-04-21, 2026-07-01 |
 | Medium | [128. Longest Consecutive Sequence](https://leetcode.com/problems/longest-consecutive-sequence/) | 🟢 | 1 | 2026-07-29 | 2026-06-29 | 2026-01-26, 2026-04-14, 2026-06-27, 2026-06-29 |
-| Medium | [229. Majority Element II](https://leetcode.com/problems/majority-element-ii/) | 🟡 | 0 | 2026-07-22 | 2026-07-12 | 2026-01-30, 2026-04-14, 2026-06-27, 2026-06-29, 2026-07-12 |
 | Medium | [323. Number of Connected Components (Union-Find)](https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/) | 🟢 | 1 | 2026-07-29 | 2026-06-29 | 2026-06-19, 2026-06-29 |
 | Medium | [560. Subarray Sum Equals K](https://leetcode.com/problems/subarray-sum-equals-k/) | 🟢 | 1 | 2026-07-28 | 2026-06-28 | 2026-04-05, 2026-06-26, 2026-06-28 |
 | Medium | [49. Group Anagrams](https://leetcode.com/problems/group-anagrams/) | 🟢 | 2 | 2026-08-27 | 2026-06-28 | 2026-01-04, 2026-03-27, 2026-05-29, 2026-06-28 |
