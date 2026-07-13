@@ -57,6 +57,7 @@ After any problem discussion (solving, reviewing, or mentioning a problem by num
    - **Shaky**: got there but needed a nudge, peeked, or wasn't fully confident mid-approach.
    - **Blank**: couldn't recall the approach; had to look it up.
 3. Update `docs/foundations/dsa/mastery/dsa_progress.md` with the reported Comfort level and run the review script.
+4. **Do not commit per problem — batch.** Make the edits (tracker row, `stuck_log.md`, schedule strike) and move on; commit + push **once** at session end. Every commit fires the pre-commit hook, which rewrites the tracker and causes ~70 lines of it to be re-injected into context; at one commit per problem that is a large, avoidable token cost. Commit early only if the user is about to switch machines (unpushed work would strand them) or the session ends unexpectedly.
 
 ## Comfort-Based Spaced Repetition
 
