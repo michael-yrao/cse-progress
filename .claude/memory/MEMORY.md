@@ -19,4 +19,5 @@
 - [Pull-map expansion TODO](project_pull_map_expansion_todo.md) — extend pull_interview.py's pattern map to expansion techniques (segment tree, KMP, …) once the learner starts retiring them
 - [New vs retry problems](feedback_new_vs_retry.md) — only list a problem as "new" if it's from the study_guide roadmap phase AND has no existing tracker row
 - [Method-variant promotion](feedback_method_variant_promotion.md) — pull an alternate-method variant (e.g. 42 Two-Pointer) into rotation only when the base method retires (🏆), not while it's still churning 🟡/🟢
+- [Phase-gated Blanks](feedback_phase_gated_blanks.md) — a 🔴 on an un-taught technique is a premature attempt, not forgetting; park it in the Expansion Queue with a phase trigger instead of churning the +2 loop
 - [Schedule markdown escaping](feedback_schedule_markdown.md) — escape the period on bullets starting with a bare problem number (`- 143\.`) to avoid roman-numeral list markers
