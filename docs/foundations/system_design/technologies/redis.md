@@ -6,6 +6,22 @@
 ## 🎯 In one line
 Redis (**RE**mote **DI**ctionary **S**erver) is a **shared, in-RAM dictionary** running as its own server that every app instance talks to over the network. Single-threaded execution makes its operations **atomic**; every key can carry a **TTL**. That's exactly why it's the counter store for a [rate limiter](../components/rate_limiter.md).
 
+## 🎯 Recall log — blind sprints
+
+**Jul 13, 2026 — first blind sprint → 🔴 Blank** (3 of 8 prompts attempted).
+
+**Came back cold (the hard part — solid):** the *why-shared-state* argument — horizontally-scaled middleware each has its own memory, so a per-instance counter is bypassed; Redis holds the **global** count.
+
+**Drill targets — these did NOT come back.** Restudy focuses here:
+
+| # | Gap | The thing to be able to say |
+|---|-----|------------------------------|
+| 1 | **Atomicity** ⚠️ *biggest* | Never mentioned. Redis is **single-threaded** → `INCR` is one atomic read-modify-write, so two concurrent requests can't both read the same count and both pass. This is *the* follow-up the instant you say "Redis." |
+| 2 | **TTL vs token bucket** *(crossed wires)* | Asked how the window resets, reached for the *token-bucket refill*. Two different layers: **token bucket = the middleware's algorithm; `EXPIRE`/TTL = the Redis mechanism** that self-destructs the key so the next `INCR` starts fresh. Don't fuse them. |
+| 3 | **Failure modes** | Blank. Redis on the request path is a **single point of failure** → mitigate with **replication** (follower failover) + a **fail-open vs fail-closed** policy when it's unreachable. |
+
+**Precision fix (Q1):** "shared cache" undersells it — say **in-RAM dictionary on its own server**, and the name is **RE**mote **DI**ctionary **S**erver.
+
 ## 🧠 The core idea
 It's `{key: value}` — but instead of living inside one process (like a Python dict), it lives in a **separate server** every machine can reach.
 
