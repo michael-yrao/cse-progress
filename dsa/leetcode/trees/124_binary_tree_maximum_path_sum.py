@@ -56,7 +56,6 @@ class Solution:
         postorderDFS(root)
         return maxPath # type: ignore
 
-    # region ⚠ PRIOR ATTEMPTS — SPOILERS · fold before you start
     def maxPathSum(self, root: Optional[TreeNode]) -> int:
         # so this is definitely DFS since we can only go down a path and not repeat
         # and we basically wanna do max(leftPath, rightPath) to pass to the root
@@ -79,4 +78,3 @@ class Solution:
         
         dfs(root)
         return maxPath # type: ignore
-# endregion

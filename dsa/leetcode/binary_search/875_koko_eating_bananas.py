@@ -62,7 +62,6 @@ class Solution:
 
         return l
 
-    # region ⚠ PRIOR ATTEMPTS — SPOILERS · fold before you start
     def minEatingSpeed(self, piles: List[int], h: int) -> int:
         # we are looking for the value k
         # using a bit of math, we can tell we are looking for where math.ceil(piles[i] / k) = h
@@ -116,4 +115,3 @@ class Solution:
             return l
         
         return minBoundaryBinarySearch(1,max(piles))
-# endregion

@@ -60,7 +60,6 @@ class Solution:
                 l = m + 1
         return False
 
-    # region ⚠ PRIOR ATTEMPTS — SPOILERS · fold before you start
     def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
         # we can actually just do this one dimension at a time
         # if we go down the matrix
@@ -135,4 +134,3 @@ class Solution:
             else:
                 l = m + 1
         return False
-# endregion
