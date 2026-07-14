@@ -2,7 +2,17 @@
 # Intervals and source root default to the standard values; the one non-default
 # here is discovery_skip.
 system_design:
-  cadence: twice_weekly   # Sunday sprint + one midweek SD slot — once-a-week is too weak
+  # three_weekly from the Jul 20 week (raised from twice_weekly on Jul 14, 2026).
+  # Each lane owns a slot — never let two bid for the same one:
+  #   ① tech fluency    → light midweek (ONE 15-min warmup): blind sprint vs a Recall Card
+  #   ② blocks & probes → fuller midweek (BOTH warmups, ~30m): the note for whatever block
+  #                       the last design hit cold, then probe questions
+  #   ③ designs         → Sunday (45–60m): one staged session, full framework
+  # Lane ② is why this is three and not two: "designs pull the blocks" needs somewhere to
+  # PUT the cold-hit note, or it eats the tech-fluency rep and the pull model starves.
+  # Midweek slots are WARMUP swaps — never the 45-min DSA active block. Cost lands on the
+  # 🟢 Clean backlog. See docs/foundations/system_design/study_guide.md.
+  cadence: three_weekly
 
 solutions:
   roots: ["dsa/leetcode"]

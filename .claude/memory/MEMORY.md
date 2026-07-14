@@ -3,10 +3,14 @@
 - [Operating principles (READ FIRST)](feedback_operating_principles.md) — north star: (1) close the loop completely & proactively, never make the user catch a gap; (2) user owns thinking + code, you coach. All other feedbacks are instances of these.
 - [Self-evaluation loop](feedback_self_evaluation.md) — on any correction, append to self_eval_log.md; meta-review weekly to promote recurring mistakes into rules
 - [Self-eval log](self_eval_log.md) — append-only running log of corrections (data for the meta-review)
+- [Read before asserting](feedback_read_before_asserting.md) — never state a file's/tracker's contents from memory or a partial read; grep/tail answer "does X exist", not "what is the state of this"
 - [Session dating](feedback_session_dating.md) — date logs by study session not wall clock; a session crossing midnight keeps its start date; verify against the schedule day
 - [No code edits in cse-review](feedback_no_code_edits.md) — never edit source files; user writes all code, assistant reads/explains only
 - [Coding required for Clean](feedback_coding_for_clean.md) — 🟢 Clean requires coding; no-code blueprint caps at 🟡 Shaky (except flawless spot check confirms 🏆 Retired)
 - [Whiteboard fidelity](feedback_whiteboard_fidelity.md) — write full solution incl. data-structure defs from scratch; no shared datamodel module
+- [SD three-lane structure](project_sd_three_lane_structure.md) — SD is 3×/wk from Jul 20: light midweek = tech fluency, fuller midweek = blocks & probes, Sunday = designs; **designs PULL blocks in** rather than grinding all blocks first; both midweek slots come out of warmups (🟢 backlog absorbs it), never the active block
+- [Spine first](feedback_spine_first.md) — open every conceptual explanation with the 2–3 load-bearing facts, then STOP and check in; tactics/tables/edge cases only on request
+- [Interactive learning](feedback_interactive_learning.md) — heavy concepts get derive-the-design / failure-mode drills / Socratic pushback, not explanation dumps
 - [No spoilers](feedback_no_spoilers.md) — zero hints/approaches unless explicitly asked or stuck; NEVER recap the approach (or stuck_log content) when a problem/retry begins
 - [No prior-attempt comparison](feedback_no_prior_attempt_comparison.md) — judge today's code on its own; never read or cite the folded PRIOR ATTEMPTS region when giving feedback or rating
 - [Infer comfort rating](feedback_infer_comfort.md) — read Clean/Shaky/Blank from the conversation against the rubric and propose it for confirmation; don't ask the user cold

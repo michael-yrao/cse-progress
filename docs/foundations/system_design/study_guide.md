@@ -36,25 +36,85 @@ Being fluent across (1)–(5) is the ceiling of *interview* ROI. Everything belo
 
 ---
 
-## Cadence
+## Cadence — the three-lane rule
 
-System design runs **twice a week** (`cse.config.yml` `system_design.cadence:
-twice_weekly`): the deep **Sunday sprint** plus **one midweek SD slot** — a
-once-a-week touch is too weak to build a real sticking point. The midweek slot is a
-warmup swap on a lighter DSA day and never cuts the 45-min DSA active block.
-Interview-core work (Tier 1) happens in staged form:
+System design runs **three times a week** (raised from twice on **Jul 14, 2026**). Three lanes, three
+slots, **each lane owns one.** This is the arbiter — never let two lanes bid for the same slot.
 
-- **Bootstrap** — first exposure to a topic: watch a good explainer, recall from memory, check gaps. No cold whiteboarding yet.
-- **Transition** — sketch the design cold from memory, then **diff against the reference note**. Record what came back and what didn't; the misses become the named drill targets for Mastery.
+| Slot | Lane | Shape | Driven by |
+|------|------|-------|-----------|
+| **Light midweek** — swaps **one 15-min warmup** | **① Technology fluency** — one blind sprint vs a Recall Card (`technologies/*.md`) | short, ~15 min | **due dates** (spaced rep). Nothing due → build the next tech's note. Order: Redis ✅ → **PostgreSQL** → Cassandra → DynamoDB → Kafka … |
+| **Fuller midweek** — swaps **both warmups** (~30 min) | **② Building blocks & probes** — write the `components/` note for whatever block the last design **hit cold**; then fire framework probe questions at a system already designed | ~30 min | **the pull queue** (see below) |
+| **Sunday** — the deep sprint | **③ Designs** — one staged session on a canonical system, full framework | 45–60 min | **sequence** |
+
+**Neither midweek slot cuts a 45-min DSA active block.** Both come out of **warmup** capacity: −4 DSA
+warmup reps/week, absorbed by the **🟢 Clean backlog**. New-problem intake stays at 5/week.
+*(Accepted Jul 14: the 🟢 pile is 2–5 months stale and its interval math is already meaningless — it's
+the right place for the cost to land. It still owes a policy decision.)*
+
+**Why three, not two.** Lane ② was **homeless** under the two-lane rule. "Designs pull the blocks"
+says: hit a block cold mid-design → log it → *build its note in the next slot* — but with only two
+slots that note had to eat the tech-fluency rep, so **the pull model starved itself.** The third
+session isn't padding; it's what makes the model run.
+
+### The Sunday lane: designs pull the blocks ⭐
+
+**Decided Jul 14, 2026.** Do **not** grind every Tier-1 building block before attempting an
+end-to-end design. At one Sunday per stage, the 7 remaining blocks are a **~5-month** wall — and only
+*then* would you touch a canonical design, which is where the interview score actually lives
+(*"driving this framework fluently is 50% of the interview"* — see Tier 1 item 4).
+
+**Instead: start canonical designs now, and learn each block when a design demands it.**
+
+> **The design is the skeleton; the blocks hang off it.** A block learned in isolation is a fact.
+> A block learned because your chat design just hit a fan-out wall is a **tool.**
+
+```
+Sun: Rate Limiter — Mastery       ← close the open arc
+Sun: Caching — Bootstrap          ← the one block you're actually missing
+Sun: DESIGN — URL shortener       ← full framework, end-to-end
+Sun: DESIGN — Chat / messenger
+       ↳ hits message queues cold → next midweek builds the MQ note
+Sun: DESIGN — News feed
+       ↳ hits fan-out (push/pull), CDN → notes follow
+...
+```
+
+The accepted cost: **you will hit blocks cold, mid-design.** That is the point — the gap is the
+teaching signal, and it names its own drill target. Log the cold-hit block, then build its note in the
+**next fuller-midweek slot (lane ②)** — that slot exists precisely to catch these. Don't stop the
+design to go study.
+
+**Corollary — a 🔴 on a *concept* means teach it, don't re-sprint it.** A blind sprint *measures*; it
+doesn't teach. When a rep comes back 🔴 because the thing was never encoded (vs. decayed), the next
+session is a **derive-the-design** (see below), **unrated**, and the rated sprint moves out far enough
+to be a real test. Rating a sprint run right after teaching measures the conversation, not retention.
+
+### Session formats
+
+**Staged arc** (per building block / design) — one stage per Sunday:
+
+- **Bootstrap** — first exposure: watch a good explainer, recall from memory, check gaps. No cold whiteboarding yet.
+- **Transition** — sketch the design cold from memory, then **diff against the reference note**. The misses become the named drill targets for Mastery.
 - **Mastery** — full mock-interview timing (~45 min), self-scored against the framework, drilling the Transition misses.
 
-One stage per session, so a full Bootstrap → Transition → Mastery arc is ~3 sessions ≈ 1.5 weeks at twice-weekly.
+**Interactive formats** (for concepts that aren't landing — ranked by how much *the learner* produces):
+
+1. **Derive-the-design** ⭐ — coach gives the *constraint*, learner **invents the mechanism**, coach then names it. (*"3 app servers, each with its own counter. User hits all 3. What breaks? Fix it."* → learner invents shared state → **that's Redis.**) Best format for "why does this exist." Use it on any 🔴 concept.
+2. **Failure-mode drill** — *"Redis just died. Now what?"* Forces the tradeoff talk interviewers actually grade.
+3. **Socratic pushback** — learner explains it back; coach plays skeptical interviewer, asking "why" until it bottoms out. Exposes memorized-vs-understood instantly.
+4. **Blind sprint** (Recall Card) — **measures** retention; does not teach. Keep, but don't mistake it for instruction.
+
+**What does not work:** escalating explanation dumps. Correct detail without a skeleton is noise and
+actively *displaces* the core idea. **Lead with the spine** — the 2–3 load-bearing facts everything
+else derives from — then stop and check in. Depth on request only.
 
 ### Stage status
 
 | Topic | Bootstrap | Transition | Mastery |
 |-------|-----------|------------|---------|
-| [Rate limiter](components/rate_limiter.md) | ✅ Jul 5 | ✅ Jul 12 | ⏳ next up |
+| [Rate limiter](components/rate_limiter.md) | ✅ Jul 5 | ✅ Jul 12 | ⏳ **Sun Jul 19** |
+| Caching | ⏳ Jul 20 wk | — | — |
 
 Below-the-line (Tier 2+) work is **not** a sprint activity — it's long-form reading (DDIA, papers) pursued deliberately *after* interview-core is solid, on its own track.
 
@@ -64,7 +124,8 @@ Designs are argued in the vocabulary of concrete **technologies** ("I'd put Redi
 
 - **The unit:** one technology, with a note + **Recall Card** in [`technologies/`](technologies/).
 - **The rep (a "blind sprint"):** answer the card's prompts from memory → unfold to check → rate 🟢/🟡/🔴 → log + commit → next review auto-computes (+30/+10/+2).
-- **Backlog & order** (data-store trio is highest-leverage): Redis ✅ · PostgreSQL → Cassandra → DynamoDB · Kafka → Flink · Elasticsearch · API Gateway · ZooKeeper.
+- **Backlog & order** (data-store trio is highest-leverage): Redis ✅ · **PostgreSQL** (next) → Cassandra → DynamoDB · Kafka → Flink · Elasticsearch · API Gateway · ZooKeeper.
+- **This is lane ①** — the *light* midweek slot. One rep; nothing due → build the next tech's note.
 
 **Drive every practice session through the templates** in [`templates/`](templates/):
 - Designing a whole system (Transition/Mastery on a Design Practice Backlog item) → copy [`case_study_template.md`](templates/case_study_template.md) and fill it end-to-end (requirements → estimation → data model → high-level → diagram).
@@ -110,12 +171,31 @@ defend cold. A shaky answer points at a fork you memorized instead of understood
 
 ## Design Practice Backlog
 
-Specific systems to design end-to-end (drive the full framework on each). Above the ROI line unless noted.
+Specific systems to design end-to-end (drive the full framework on each). **This is the Sunday queue** — designs pull the blocks in behind them (see Cadence). Ordered easiest-framework-rep first, so the *framework* is what's being drilled early, not the exotica.
 
-| System | Tier | Notes |
-|--------|------|-------|
-| **Design YouTube** | 1 (interview core) | Video upload/transcoding pipeline, CDN delivery, metadata + view counts, recommendations. Already named in the canonical list — make it an explicit mock. |
-| **Design an LLM chat assistant (Claude/ChatGPT-style)** | 1–2 | AI-serving: token streaming (SSE/WebSocket), context-window management, request batching / GPU scheduling, rate limiting & quotas, conversation storage, optional RAG. Ties into the planned AI-Engineering phase. |
+| # | System | Tier | Blocks it will pull in |
+|---|--------|------|------------------------|
+| 1 | **URL shortener** | 1 | hashing/encoding, KV store, cache-aside, read-heavy scaling. *The canonical first design — small enough that the **framework** is the thing you're practicing.* |
+| 2 | **Chat / messenger** | 1 | WebSockets, **message queues**, fan-out, presence, delivery/read receipts |
+| 3 | **News feed** | 1 | **push vs pull fan-out** (the celebrity problem), CDN, ranking |
+| 4 | **Typeahead / autocomplete** | 1 | tries (← DSA 208!), **caching**, top-K |
+| 5 | **Design YouTube** | 1 | upload/transcoding pipeline, **CDN**, metadata + view counts, recommendations |
+| 6 | **Design an LLM chat assistant** (Claude/ChatGPT-style) | 1–2 | token streaming (SSE/WebSocket), context-window mgmt, request batching / GPU scheduling, **rate limiting** & quotas, conversation storage, optional RAG. Ties into the planned AI-Engineering phase. |
+
+Remaining canonical set to slot in later: notification service, web crawler, ride-share (Uber), file storage (Dropbox), Ticketmaster, distributed KV store, payment/ledger, top-K/trending.
+
+### Building blocks — pulled in on demand
+
+Not a queue to grind through. Each gets a `components/` note **when a design hits it**, or when it's the obvious next gap.
+
+| Block | Status |
+|-------|--------|
+| [Rate limiter](components/rate_limiter.md) | Mastery ⏳ Sun Jul 19 |
+| Caching (patterns, eviction, invalidation) | Bootstrap ⏳ Jul 20 wk — *the one block to do proactively; it's load-bearing everywhere* |
+| Message queues & async | pulled by **Chat** (#2) |
+| CDN / reverse proxy / API gateway | pulled by **News feed** (#3) / **YouTube** (#5) |
+| Load balancing | pulled by whichever design saturates first |
+| Consistent hashing · Bloom filters | small; fold into the design that needs them |
 
 ## Where things live
 
