@@ -58,6 +58,14 @@ One stage per session, so a full Bootstrap → Transition → Mastery arc is ~3 
 
 Below-the-line (Tier 2+) work is **not** a sprint activity — it's long-form reading (DDIA, papers) pursued deliberately *after* interview-core is solid, on its own track.
 
+### Technology fluency (spaced repetition)
+
+Designs are argued in the vocabulary of concrete **technologies** ("I'd put Redis here, Kafka there"). Those are drilled the same way as DSA — active recall, comfort rating, auto-scheduled review — tracked in [`mastery/design_progress.md`](mastery/design_progress.md), driven by the same `scripts/update_review_dates.py` and pre-commit hook.
+
+- **The unit:** one technology, with a note + **Recall Card** in [`technologies/`](technologies/).
+- **The rep (a "blind sprint"):** answer the card's prompts from memory → unfold to check → rate 🟢/🟡/🔴 → log + commit → next review auto-computes (+30/+10/+2).
+- **Backlog & order** (data-store trio is highest-leverage): Redis ✅ · PostgreSQL → Cassandra → DynamoDB · Kafka → Flink · Elasticsearch · API Gateway · ZooKeeper.
+
 **Drive every practice session through the templates** in [`templates/`](templates/):
 - Designing a whole system (Transition/Mastery on a Design Practice Backlog item) → copy [`case_study_template.md`](templates/case_study_template.md) and fill it end-to-end (requirements → estimation → data model → high-level → diagram).
 - Learning one building block (a Bootstrap topic like caching or rate limiting) → copy [`component_template.md`](templates/component_template.md) (metaphor → DSA connection → strategies → failure modes → diagram).
