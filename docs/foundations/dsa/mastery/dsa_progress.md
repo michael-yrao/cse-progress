@@ -30,7 +30,7 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/dsa/mastery/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **93** problems &nbsp;·&nbsp; **103** solutions &nbsp;·&nbsp; **296** attempts
+> **93** problems &nbsp;·&nbsp; **103** solutions &nbsp;·&nbsp; **297** attempts
 
 | | 🏆 Retired | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|
