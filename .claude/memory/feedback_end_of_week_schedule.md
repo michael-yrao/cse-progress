@@ -5,7 +5,7 @@ metadata:
   type: feedback
 ---
 
-At the end of the last session of the week (or whenever the user closes out a week), generate the next week's schedule file at `docs/foundations/dsa/schedules/<YYYYMMDD>_schedule.md` before pushing.
+At the end of the last session of the week (or whenever the user closes out a week), generate the next week's schedule file at `docs/foundations/schedules/<YYYYMMDD>_schedule.md` before pushing.
 
 **Why:** User noticed the Jun 29 week schedule was never created — the week started with no schedule file. The weekly schedule is the primary daily driver; it must exist before the week begins.
 
@@ -16,4 +16,4 @@ At the end of the last session of the week (or whenever the user closes out a we
 4. Daily cap: 4 warmup slots + 1 active block = 5 problems max per day
 5. Sunday = system design sprint (no active block)
 
-At the same time, archive the current week's schedule by moving it to `docs/foundations/dsa/schedules/archive/`. Both happen together — archive current, generate next — in a single commit before pushing.
+At the same time, archive the current week's schedule by moving it to `docs/foundations/schedules/archive/`. Both happen together — archive current, generate next — in a single commit before pushing.
