@@ -12,7 +12,7 @@ Input: head = [1,2]
 Output: [2,1]
 
 Example 3:
-
+P
 Input: head = []
 Output: []
 
@@ -88,3 +88,15 @@ class Solution:
         next.next = head
         head.next = None
         return node
+
+    def reverseList_20260714(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        # 1 -> 2 -> None
+        if not head or not head.next:
+            return head
+        
+        returnNode = self.reverseList_20260714(head.next)
+        
+        head.next.next = head
+        head.next = None
+
+        return returnNode

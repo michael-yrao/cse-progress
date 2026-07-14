@@ -17,6 +17,8 @@ if echo "$STAGED" | grep -qE "(dsa_progress|design_progress|ai_progress)\.md$|^d
     py scripts/update_review_dates.py --staged-only --tracker "$SD" --tracker "$AI"
   elif command -v python >/dev/null 2>&1; then
     python scripts/update_review_dates.py --staged-only --tracker "$SD" --tracker "$AI"
+  elif command -v python3 >/dev/null 2>&1; then
+    python3 scripts/update_review_dates.py --staged-only --tracker "$SD" --tracker "$AI"
   else
     echo "Error: Python not found. Install Python to enable the auto-updater." >&2
     exit 1

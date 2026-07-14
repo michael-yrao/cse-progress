@@ -34,6 +34,16 @@ Constraints:
     1 <= price <= 105
     At most 104 calls will be made to next.
 """
+
+
+# ── Attempt · 2026-07-14 ──────────────
+class Solution_20260714:
+
+    def onlineStockSpan(self):
+        pass
+
+
+# region ⚠ PRIOR ATTEMPTS — SPOILERS · fold before you start
 class StockSpanner_20260712:
 # we want until the previous day is greater
 # so [7,2,1,2,4]
@@ -56,3 +66,4 @@ class StockSpanner_20260712:
 # Your StockSpanner object will be instantiated and called as such:
 # obj = StockSpanner()
 # param_1 = obj.next(price)
+# endregion

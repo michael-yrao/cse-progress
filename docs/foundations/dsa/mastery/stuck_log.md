@@ -19,6 +19,9 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🟡 206. Reverse Linked List (Recursion) — Jul 14, 2026
+**Sticking point**: Reached for `returnNode.next = head` again — conflating the *returned head* (the original tail, pass-through cargo, same object at every level) with the node to attach to (the sublist's **tail**, which is still reachable as `head.next`). Fix that holds: bind `tail = head.next` as its own name before rewiring, so the two roles can't collide. Same fork as Jul 3.
+
 ## 🔴 743. Network Delay Time (Dijkstra) — Jul 13, 2026
 **Topic**: Advanced Graphs — Dijkstra, single-source shortest path on non-negative weights (first exposure)
 

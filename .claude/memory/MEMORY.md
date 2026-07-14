@@ -7,6 +7,7 @@
 - [Session dating](feedback_session_dating.md) — date logs by study session not wall clock; a session crossing midnight keeps its start date; verify against the schedule day
 - [No code edits in cse-review](feedback_no_code_edits.md) — never edit source files; user writes all code, assistant reads/explains only
 - [Coding required for Clean](feedback_coding_for_clean.md) — 🟢 Clean requires coding; no-code blueprint caps at 🟡 Shaky (except flawless spot check confirms 🏆 Retired)
+- [Code by default](feedback_code_by_default.md) — every rep is coded, warmups included; no-code blueprint is an opt-in exception, never the scheduled default
 - [Whiteboard fidelity](feedback_whiteboard_fidelity.md) — write full solution incl. data-structure defs from scratch; no shared datamodel module
 - [SD three-lane structure](project_sd_three_lane_structure.md) — SD is 3×/wk from Jul 20: light midweek = tech fluency, fuller midweek = blocks & probes, Sunday = designs; **designs PULL blocks in** rather than grinding all blocks first; both midweek slots come out of warmups (🟢 backlog absorbs it), never the active block
 - [Spine first](feedback_spine_first.md) — open every conceptual explanation with the 2–3 load-bearing facts, then STOP and check in; tactics/tables/edge cases only on request
