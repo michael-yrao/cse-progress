@@ -78,6 +78,22 @@ the region still folds, just manually: `Ctrl+K Ctrl+8`.
 It's a speed bump, not a lock — the code is one keystroke away, and that's accepted. What it buys is
 that seeing it becomes a deliberate act instead of an accident.
 
+### Unwrap the region once the day's reps are done
+
+The region is protection *before* the attempt. Once it's written, the fold is just clutter hiding the
+learner's own history — so **strip it at end of session, before the commit**:
+
+```sh
+python scripts/unwrap_spoilers.py            # today's completed attempts
+python scripts/unwrap_spoilers.py --dry-run  # report only
+```
+
+**It only unwraps a file whose dated attempt has a real body.** A retry that was scaffolded but never
+attempted still has `pass` under today's stub — unwrapping that one would expose the old solution
+before the rep ever happened, which is the exact failure the region exists to prevent. Those keep
+their fold and get reported as kept. `--all` overrides the check (for reconciling old files, never at
+session end).
+
 **The load-bearing invariant:** the generated scaffold block *always ends with the region head*, and
 the region *always closes at EOF*. Both markers are emitted by `new_problem.py` — neither is matched
 against your old code. So the fold spans exactly "everything below today's stub" without the script
@@ -137,7 +153,10 @@ After any problem discussion (solving, reviewing, or mentioning a problem by num
    - **Shaky**: got there but needed a nudge, peeked, or wasn't fully confident mid-approach.
    - **Blank**: couldn't recall the approach; had to look it up.
 3. Update `docs/foundations/dsa/mastery/dsa_progress.md` with the reported Comfort level and run the review script.
-4. **Do not commit per problem — batch.** Make the edits (tracker row, `stuck_log.md`, schedule strike) and move on; commit + push **once** at session end. Every commit fires the pre-commit hook, which rewrites the tracker and causes ~70 lines of it to be re-injected into context; at one commit per problem that is a large, avoidable token cost. Commit early only if the user is about to switch machines (unpushed work would strand them) or the session ends unexpectedly.
+4. **At session end, before committing:** run `python scripts/unwrap_spoilers.py` to strip the
+   spoiler regions from the problems that actually got done (see above — untouched scaffolds keep
+   theirs).
+5. **Do not commit per problem — batch.** Make the edits (tracker row, `stuck_log.md`, schedule strike) and move on; commit + push **once** at session end. Every commit fires the pre-commit hook, which rewrites the tracker and causes ~70 lines of it to be re-injected into context; at one commit per problem that is a large, avoidable token cost. Commit early only if the user is about to switch machines (unpushed work would strand them) or the session ends unexpectedly.
 
 ## Comfort-Based Spaced Repetition
 

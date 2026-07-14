@@ -182,7 +182,7 @@ def main() -> None:
                          "Only used for a NEW problem — on a retry the signature is read "
                          "from the existing method, which always wins")
     ap.add_argument("--premium", action="store_true",
-                    help="LC-premium problem → link the free NeetCode mirror instead")
+                    help="LC-premium problem -> link the free NeetCode mirror instead")
     ap.add_argument("--force-new", action="store_true",
                     help="create a new file even though this number already exists on "
                          "disk under a different filename (normally refused — it forks "

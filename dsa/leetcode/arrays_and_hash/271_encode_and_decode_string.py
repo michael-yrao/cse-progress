@@ -89,7 +89,6 @@ class Solution_20260713:
         return result
 
 
-# region ⚠ PRIOR ATTEMPTS — SPOILERS · fold before you start
 
 class Solution:
 
@@ -185,4 +184,3 @@ class Solution_20260703:
             result.append(word)
             i=j+1+lenStr
         return result
-# endregion
