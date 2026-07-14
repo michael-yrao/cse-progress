@@ -147,7 +147,7 @@ Notes for whoever maintains this:
 
 After any problem discussion (solving, reviewing, or mentioning a problem by number or name):
 
-1. Check the current week's schedule file (`docs/foundations/dsa/schedules/<YYYYMMDD>_schedule.md`) and mark the problem as completed in the table.
+1. Check the current week's schedule file (`docs/foundations/schedules/<YYYYMMDD>_schedule.md`) and mark the problem as completed in the table.
 2. **Infer the Comfort rating from the session, then propose it for confirmation** — don't ask an open "how did that feel?" when the transcript already answers it. You watched the attempt: how many hints you gave, whether they self-caught their bugs, whether they could derive the approach. Propose it plainly ("That reads as 🟡 Shaky — you had the sliding window but I flagged the inverted shrink condition. Confirm?"), then log on their yes/override — never log silently. Comfort is self-reported, so their call is final, but honesty over agreeableness: if they claim 🟢 but you supplied a real fix they missed (or it was a no-code rep), say so, then defer to their call.
    - **Clean**: coded from a blank page, correct complexity, no hints. Second-guessing the data structure or peeking → Shaky. A no-code blueprint caps at Shaky (coding required); the sole exception is a flawless spot check confirming an already-🏆 Retired problem.
    - **Shaky**: got there but needed a nudge, peeked, or wasn't fully confident mid-approach.
@@ -176,11 +176,28 @@ After logging any problem result, check its computed next review date and add it
 
 ## Study Guide Files
 
+Layout: each **track** owns a folder under `docs/foundations/` (`dsa/`, `system_design/`,
+`ai_engineering/`) with the same shape — `study_guide.md`, `mastery/` (its tracker), `templates/`,
+plus its own reference material. **`schedules/` is cross-track and sits beside them**, not inside
+`dsa/`: one weekly file plans the DSA warmups/active block *and* the SD slots *and* AI builds. Its
+per-track trackers stay in each track's `mastery/`.
+
+**Cross-track (shared)**
+
+- `docs/foundations/schedules/<YYYYMMDD>_schedule.md` — current week's day-by-day schedule (e.g. `20260615_schedule.md`); archive the current week's schedule and generate the next week's schedule together at the end of the last session of the week — move the current file to `docs/foundations/schedules/archive/`
+
+**DSA track**
+
 - `docs/foundations/dsa/mastery/dsa_progress.md` — spaced repetition tracker (auto-updated by pre-commit hook)
 - `docs/foundations/dsa/study_guide.md` — master plan with backlog recovery protocol
-- `docs/foundations/dsa/schedules/<YYYYMMDD>_schedule.md` — current week's day-by-day schedule (e.g. `20260615_schedule.md`); archive the current week's schedule and generate the next week's schedule together at the end of the last session of the week — move the current file to `docs/foundations/dsa/schedules/archive/`
 - `docs/foundations/dsa/mastery/stuck_log.md` — log for every non-Clean result: 🔴 Blank gets a full entry (where stuck, core realization, code snippet); 🟡 Shaky gets a one-liner (sticking point only)
 - `docs/foundations/dsa/templates/solution_template.py` — solution-file scaffold, filled by `scripts/new_problem.py`
+
+**System design track**
+
+- `docs/foundations/system_design/mastery/design_progress.md` — technology-fluency tracker; same 7-column table and same interval math as DSA, same script (`update_review_dates.py --tracker …`), rows added by hand
+- `docs/foundations/system_design/study_guide.md` — mission, Interview-ROI line, tiers
+- `docs/foundations/system_design/technologies/<tech>.md` — per-technology note + Recall Card (the blind-sprint rep)
 
 ## Token discipline (efficiency by default)
 
