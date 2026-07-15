@@ -19,6 +19,50 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🔴 787. Cheapest Flights Within K Stops (Bellman-Ford) — Jul 14, 2026
+**Topic**: Advanced Graphs — Bellman-Ford, shortest path under a hop limit (first exposure)
+
+### Where did I get stuck?
+Reached for the whole Dijkstra/BFS toolkit — adjacency map, min-heap, **visited set** — none of
+which Bellman-Ford uses. The approach was taught, not recalled: that you relax the flat `flights`
+edge list directly (no adjacency map, no traversal), that the number of rounds *is* the flight
+budget, and — the real trap — that each round must read from a **frozen snapshot** of the previous
+round. Hit the chaining bug and fixed it the wrong way *twice*: first left the relaxation reading
+the live copy, then "made it consistent" by pointing **both** reads at the live copy, which silently
+deletes the snapshot (a copy you also read from is just in-place mutation). The correct split —
+read `source` from frozen `prices`, write `target` to the working copy — only landed on the third try.
+
+### Core Realization
+**Bellman-Ford is Dijkstra with the cleverness removed: no heap, no visited, no adjacency — just
+"relax every edge, `k+1` times." Two mechanisms cooperate, and I conflated them:**
+- the **`k+1` loop bound** sets the flight budget (≤ `k+1` edges = `k` stops);
+- the **two-generation snapshot** makes each round spend *exactly one* hop, so "round count = flight
+  count" is actually true. Without the snapshot, one round chains multiple hops and the budget is a lie.
+
+The chaining is a **read/write timing** bug, not a fan-in bug: a node written as a *target* early in a
+round, then read as a *source* later in the same round, rides two fresh flights in one round. The fix
+is to read every source from last round's finalized board (`prices[source]`), so a relaxation always
+extends an `(i-1)`-hop value into an `i`-hop value — never `i+1`. A **visited set is poison here**
+(unlike Dijkstra): nodes *must* stay open to a cheaper, more-hops value in a later round.
+
+This is the exact crack 743's note predicted — Dijkstra's settle-on-pop dies when a future push can
+undercut a finalized distance; the hop limit is that undercut, which is *why* Bellman-Ford exists.
+
+### Code Snippet
+```python
+prices = [math.inf] * n
+prices[src] = 0
+for _ in range(k + 1):                       # rounds = flight budget
+    unsettledPrices = prices.copy()          # working copy = next generation
+    for source, target, price in flights:    # sweep the flat edge list, no adjacency map
+        if prices[source] == math.inf:
+            continue                          # unreachable source can't relax anything (optimization)
+        if unsettledPrices[target] > prices[source] + price:   # read source FROZEN, write target to copy
+            unsettledPrices[target] = prices[source] + price
+    prices = unsettledPrices                 # promote the generation
+return prices[dst] if prices[dst] != math.inf else -1
+```
+
 ## 🟡 206. Reverse Linked List (Recursion) — Jul 14, 2026
 **Sticking point**: Reached for `returnNode.next = head` again — conflating the *returned head* (the original tail, pass-through cargo, same object at every level) with the node to attach to (the sublist's **tail**, which is still reachable as `head.next`). Fix that holds: bind `tail = head.next` as its own name before rewiring, so the two roles can't collide. Same fork as Jul 3.
 

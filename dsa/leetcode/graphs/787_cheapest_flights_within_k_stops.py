@@ -26,12 +26,36 @@ Constraints:
 """
 # Write everything yourself from here — including any ListNode/TreeNode classes a
 # problem needs. No shared data-model imports (whiteboard fidelity).
+import math
 from typing import List, Optional
 
 
 class Solution:
     # ── Attempt 1 · 2026-07-14 ────────────────────────────────────────────
-    def findCheapestPrice(
-        self, n: int, flights: List[List[int]], src: int, dst: int, k: int
-    ) -> int:
-        pass
+    def findCheapestPrice(self, n: int, flights: List[List[int]], src: int, dst: int, k: int) -> int:
+        # weighted directed graph
+        # so like any other graph problem, we create an adj map which keeps track of immediate neighbors only
+        # we also need a visited set
+        # we can initialize an array of size n with all nodes with math.inf except src
+        # so with the adjMap, we can check if distance[target] > distance[source] + price, if it is set distance[target] to distance[source] + price
+
+        prices = [math.inf] * n
+        prices[src] = 0
+
+        # we are limiting at k + 1 edges, so we will do k + 1 traversals only
+        for _ in range(k+1):
+            unsettledPrices = prices.copy()
+            for source, target, price in flights:
+                # if source is not reachable, continue. not necessary but saves us useless operations
+                # since math.inf + anything = math.inf
+                if prices[source] == math.inf:
+                    continue
+                # prices[source] = price as of last round
+                # if we use unsettledPrices[source], it means current round's prices, which would introduce chaining and more than k + 1 edges
+                if unsettledPrices[target] > prices[source] + price:
+                    unsettledPrices[target] = prices[source] + price
+            prices = unsettledPrices
+        
+        if prices[dst] == math.inf:
+            return -1
+        return prices[dst]   # type: ignore
