@@ -38,7 +38,7 @@ Notes for future agents:
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|---|
-| Easy | [1. Two Sum](https://leetcode.com/problems/two-sum/) | 🟢 | 2 | 2026-09-13 | 2026-07-15 | 2026-01-02, 2026-03-25, 2026-07-15 |
+| Easy | [1. Two Sum](https://leetcode.com/problems/two-sum/) | 🟢 | 2 | 2026-09-12 | 2026-07-14 | 2026-01-02, 2026-03-25, 2026-07-14 |
 | Medium | [787. Cheapest Flights Within K Stops (Bellman-Ford)](https://leetcode.com/problems/cheapest-flights-within-k-stops/) | 🔴 | 0 | 2026-07-16 | 2026-07-14 | 2026-07-14 |
 | Easy | [206. Reverse Linked List (Recursion)](https://leetcode.com/problems/reverse-linked-list/) | 🟡 | 0 | 2026-07-24 | 2026-07-14 | 2026-04-24, 2026-07-03, 2026-07-14 |
 | Medium | [901. Online Stock Span](https://leetcode.com/problems/online-stock-span/) | 🟢 | 1 | 2026-08-13 | 2026-07-14 | 2026-07-12, 2026-07-14 |
