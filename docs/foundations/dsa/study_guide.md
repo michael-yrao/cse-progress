@@ -250,10 +250,12 @@ Everything past the course is **not spaced repetition and adds no weeks** — it
 
 ### Pace Targets
 
-- **New problems per week (phase-dependent)**:
-  - **Now through end of August 2026** (Graphs / Heap / Tries / Sliding Window / Stack — moderate difficulty): **4–5 per week.** Front-load the easier phases to bank a ~5-week lead. Fits the 5/day cap (steady-state reviews ~3.5/day + 5 new ≈ 4.1/day).
-  - **September onward, especially the DP phases (Oct–Dec)**: **drop back to 3 per week.** DP problems are individually much harder/slower and each new one spikes the Blank rate; keep intake low so it doesn't trip the overdue-backlog rule.
-  - Rationale: at 4–5/week through August then 3/week, NC150 still finishes ~late November 2026 with far less Blank-pileup risk than holding 5/week through DP.
+- **New problems per week (difficulty-tiered, not just phase-dependent)**:
+  - **Moderate categories** (Standard Graphs / Heap / Tries / Sliding Window / Stack / Intervals+Greedy / Bit-Math): **4–5 per week.** Front-load these easier phases to bank a lead. Fits the 5/day cap (steady-state reviews ~3.5/day + 5 new ≈ 4.1/day).
+  - **Hard, algorithm-dense categories** (**Advanced Graphs**, **Backtracking**): **4 per week — not 5.** These introduce a *new algorithm per problem* (Dijkstra, Bellman-Ford, MST, Eulerian…), so the first attempt almost always logs 🔴, and every 🔴 spawns a +2-day retry that eats a warmup slot. Hold intake at 4 so the blank cascade has room to settle before the next new problem lands.
+  - **DP phases (1D Oct / 2D Nov)**: **3 per week.** Hardest and slowest; each new one spikes the Blank rate. Keep intake low so it doesn't trip the overdue-backlog rule.
+  - **Rationale — the blank tax.** A new problem is not a 1-slot commitment. A 🔴 costs 1 active slot *plus* ~2–3 follow-up warmup slots over the next fortnight as its +2 retries settle to 🟡. At 5 hard-category new/week, that cascade consumes ~40% of the 28 weekly warmup slots servicing *recent* material, starving the backlog (which is why the 🟢 pile sits at 35 and won't drain). Dropping hard categories to 4 returns roughly one warmup slot/week to genuine review. **Evidence this tier was real:** Advanced Graphs was mis-bucketed as "moderate" (4–5) and produced back-to-back 🔴 on 743 (Dijkstra) and 787 (Bellman-Ford) in one week — reclassified to hard on Jul 14, 2026.
+  - **Net effect on the roadmap:** ~late-November NC150 completion holds, with far less Blank-pileup risk than 5/week through the hard blocks.
 - **Active-block guard**: only ~6 active-block slots exist per week (Sunday = system design). At 5 new/week, 5 slots are consumed by new problems — reserve at least 1 for re-coding Blanks. If Blank re-solves are stacking up, cut new intake that week.
 - **Max overdue backlog before pausing new intake**: 5 problems.
 - **DP phases (1D + 2D)**: Allow 4–5 weeks each. Do not compress below 4 weeks per phase.
