@@ -37,13 +37,24 @@ Constraints:
 
 
 # ── Attempt · 2026-07-14 ──────────────
-class Solution_20260714:
+class StockSpanner_20260714:
+# [7,2,1,2,4]
+# [1,1,1,3,4]
+# we increment if prior value is smaller
+# so while stack[-1] <= current: pop
+# since we are popping out of the stack, we need to keep track at each point
+# so (value, span) for the decreasing stack
+    def __init__(self):
+        self.decreasingStack = []
 
-    def onlineStockSpan(self):
-        pass
+    def next(self, price: int) -> int:
+        currentSpan = 1
+        while self.decreasingStack and price >= self.decreasingStack[-1][0]:
+            priorValue, priorSpan = self.decreasingStack.pop()
+            currentSpan+=priorSpan
+        self.decreasingStack.append((price,currentSpan))
+        return currentSpan
 
-
-# region ⚠ PRIOR ATTEMPTS — SPOILERS · fold before you start
 class StockSpanner_20260712:
 # we want until the previous day is greater
 # so [7,2,1,2,4]
@@ -66,4 +77,3 @@ class StockSpanner_20260712:
 # Your StockSpanner object will be instantiated and called as such:
 # obj = StockSpanner()
 # param_1 = obj.next(price)
-# endregion
