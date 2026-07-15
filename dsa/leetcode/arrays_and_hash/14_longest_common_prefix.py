@@ -1,5 +1,5 @@
 """
-Docstring for dataStructureAlgorithm.leetcode.2026_python.arrays_and_hash.14_longest_common_prefix
+Docstring for dsa.leetcode.arrays_and_hash.14_longest_common_prefix
 
 You are given an array of strings strs. Return the longest common prefix of all the strings.
 

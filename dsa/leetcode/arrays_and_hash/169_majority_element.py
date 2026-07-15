@@ -1,5 +1,5 @@
 """
-Docstring for dataStructureAlgorithm.leetcode.2026_python.arrays_and_hash.169_majority_element
+Docstring for dsa.leetcode.arrays_and_hash.169_majority_element
 
 Given an array nums of size n, return the majority element.
 

@@ -1,5 +1,5 @@
 """
-Docstring for dataStructureAlgorithm.leetcode.2026_python.arrays_and_hash.75_sort_colors
+Docstring for dsa.leetcode.arrays_and_hash.75_sort_colors
 
 Given an array nums with n objects colored red, white, or blue, sort them in-place so that objects of the same color are adjacent, with the colors in the order red, white, and blue.
 

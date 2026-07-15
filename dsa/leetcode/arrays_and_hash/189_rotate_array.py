@@ -1,5 +1,5 @@
 """
-Docstring for dataStructureAlgorithm.leetcode.2026_python.arrays_and_hash.189_rotate_array
+Docstring for dsa.leetcode.arrays_and_hash.189_rotate_array
 Given an integer array nums, rotate the array to the right by k steps, where k is non-negative.
 
  

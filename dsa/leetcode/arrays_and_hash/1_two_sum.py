@@ -1,5 +1,5 @@
 """
-Docstring for dataStructureAlgorithm.leetcode.2026_python.arrays_and_hash.1_two_sum
+Docstring for dsa.leetcode.arrays_and_hash.1_two_sum
 
 Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
 

@@ -1,5 +1,5 @@
 """
-Docstring for dataStructureAlgorithm.leetcode.2026_python.arrays_and_hash.217_contains_duplicate
+Docstring for dsa.leetcode.arrays_and_hash.217_contains_duplicate
 
 Given an integer array nums, return true if any value appears at least twice in the array, and return false if every element is distinct.
 

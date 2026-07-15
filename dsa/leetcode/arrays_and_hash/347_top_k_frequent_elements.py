@@ -1,5 +1,5 @@
 """
-Docstring for dataStructureAlgorithm.leetcode.2026_python.arrays_and_hash.347_top_k_frequent_elements
+Docstring for dsa.leetcode.arrays_and_hash.347_top_k_frequent_elements
 Given an integer array nums and an integer k, return the k most frequent elements. You may return the answer in any order.
 
  

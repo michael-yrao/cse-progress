@@ -1,5 +1,5 @@
 """
-Docstring for dataStructureAlgorithm.leetcode.2026_python.two_pointers.680_valid_palindrome_2
+Docstring for dsa.leetcode.two_pointers.680_valid_palindrome_2
 
 Given a string s, return true if the s can be palindrome after deleting at most one character from it.
 
