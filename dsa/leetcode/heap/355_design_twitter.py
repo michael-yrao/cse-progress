@@ -40,6 +40,50 @@ import heapq
 from typing import List
 
 
+# ── Attempt · 2026-07-15 ──────────────
+class Twitter_20260715:
+
+    def __init__(self):
+        self.globalTime = 0
+        self.tweetMap = collections.defaultdict(list)
+        self.followeeMap = collections.defaultdict(list)
+
+    def postTweet(self, userId: int, tweetId: int) -> None:
+        self.tweetMap[userId].append((self.globalTime, tweetId))
+        self.globalTime+=1
+
+    def getNewsFeed(self, userId: int) -> List[int]:
+        minHeap = []
+        if userId not in self.followeeMap[userId]:
+            self.follow(userId, userId)
+        # for each user this userId follows
+        # add their tweet to the heap
+        for followee in self.followeeMap[userId]:
+            for time, tweetId in self.tweetMap[followee]:
+                heapq.heappush(minHeap,(time,tweetId))
+                while len(minHeap) > 10:
+                    heapq.heappop(minHeap)
+        # now we have a heap in reverse order
+        returnList = []
+        while minHeap:
+            tweetId = heapq.heappop(minHeap)[1]
+            returnList.append(tweetId)
+        returnList.reverse()
+        return returnList
+        
+
+    def follow(self, followerId: int, followeeId: int) -> None:
+        # check if we follow ourselves, if not add self
+        if followerId not in self.followeeMap[followerId]:
+            self.followeeMap[followerId].append(followerId)
+        
+        if followeeId not in self.followeeMap[followerId]:
+            self.followeeMap[followerId].append(followeeId)
+
+    def unfollow(self, followerId: int, followeeId: int) -> None:
+        if followeeId in self.followeeMap[followerId]:
+            self.followeeMap[followerId].remove(followeeId)
+
 class Twitter:
 
     def __init__(self):

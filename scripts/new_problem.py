@@ -128,6 +128,30 @@ def solution_class_start(lines: list[str]) -> int | None:
     )
 
 
+def design_class_base(lines: list[str]) -> str | None:
+    """Base name of a multi-method problem's own class — `Twitter` from `class Twitter`
+    or `class Twitter_20260706` — so a retry's dated sibling class mirrors the real name
+    (`Twitter_<stamp>`) instead of a generic `Solution_<stamp>`. Returns None when the
+    file's classes are all `Solution` (e.g. 271 encode/decode), where the generic name
+    is correct. The non-greedy group + optional `_<8 digits>` strips any dated suffix.
+    """
+    for ln in lines:
+        m = re.match(r"^class\s+([A-Za-z_]\w*?)(?:_\d{8})?\s*[:(]", ln)
+        if m and m.group(1) != "Solution":
+            return m.group(1)
+    return None
+
+
+def class_defines_init(lines: list[str]) -> bool:
+    """True if the existing attempts declare an `__init__` — the signal that this
+    design problem's scaffold needs a constructor stub too (Twitter, LRUCache), versus
+    a stateless codec (271 encode/decode) that has none. LeetCode hands you the
+    `def __init__(self):` line, so it's an externally-fixed signature the scaffold owns,
+    not something to recall.
+    """
+    return any(re.match(r"^\s*def\s+__init__\s*\(", ln) for ln in lines)
+
+
 def strip_spoiler_region(lines: list[str]) -> list[str]:
     """Remove the previous run's fold markers so this run can re-wrap from scratch.
 
@@ -246,7 +270,8 @@ def main() -> None:
     ap.add_argument("--method", default="",
                     help="method name; comma-separate for a multi-method problem "
                          "(e.g. --method encode,decode), which scaffolds a dated "
-                         "`class Solution_<stamp>` instead of dated methods")
+                         "sibling class instead of dated methods — mirroring the "
+                         "existing class name and its __init__ on a retry")
     ap.add_argument("--signature", action="append", default=[],
                     help="the method's real signature, e.g. "
                          "--signature \"times: List[List[int]], n: int, k: int -> int\". "
@@ -353,13 +378,21 @@ def main() -> None:
             block += stub(method, "    ", f"_{stamp}")
             what = f"{method}_{stamp}()"
         else:
-            # Dated sibling class — for multi-method problems (271 encode/decode), and
-            # for legacy files with no `class Solution` to hang a method on.
+            # Dated sibling class — for multi-method problems (271 encode/decode, design
+            # problems like 355 Twitter), and for legacy files with no `class Solution`.
             at = module_level_insert_at(lines)
-            block = ["", "", f"# ── Attempt · {today} ──────────────", f"class Solution_{stamp}:"]
-            for m in methods:
+            base = design_class_base(lines) or "Solution"  # mirror the real class name
+            members = methods[:]
+            # A design problem's constructor is externally fixed too (LeetCode provides the
+            # `__init__` line) — mirror it as a blank stub, with its real signature, when the
+            # existing class declares one. `stub` reads that signature from disk, so
+            # `LRUCache(capacity)` scaffolds as `__init__(self, capacity: int)`, not `()`.
+            if class_defines_init(lines) and "__init__" not in members:
+                members.insert(0, "__init__")
+            block = ["", "", f"# ── Attempt · {today} ──────────────", f"class {base}_{stamp}:"]
+            for m in members:
                 block += [""] + stub(m, "    ", "")
-            what = f"class Solution_{stamp}: {', '.join(m + '()' for m in methods)}"
+            what = f"class {base}_{stamp}: {', '.join(m + '()' for m in members)}"
 
         lines[at:at] = block
         prior = lines[at + len(block):]          # everything below today's stub

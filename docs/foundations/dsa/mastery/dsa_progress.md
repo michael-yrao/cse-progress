@@ -72,7 +72,7 @@ Notes for future agents:
 | Hard | [42. Trapping Rain Water (Array)](https://leetcode.com/problems/trapping-rain-water/) | 🟢 | 1 | 2026-08-07 | 2026-07-08 | 2026-04-15, 2026-06-29, 2026-07-08 |
 | Medium | [146. LRU Cache](https://leetcode.com/problems/lru-cache/) | 🟡 | 0 | 2026-07-17 | 2026-07-07 | 2026-07-04, 2026-07-07 |
 | Medium | [143. Reorder List](https://leetcode.com/problems/reorder-list/) | 🟡 | 0 | 2026-07-16 | 2026-07-06 | 2026-04-26, 2026-07-06 |
-| Medium | [355. Design Twitter](https://leetcode.com/problems/design-twitter/) | 🟡 | 0 | 2026-07-16 | 2026-07-06 | 2026-06-24, 2026-06-26, 2026-07-06 |
+| Medium | [355. Design Twitter](https://leetcode.com/problems/design-twitter/) | 🟡 | 0 | 2026-07-25 | 2026-07-15 | 2026-06-24, 2026-06-26, 2026-07-06, 2026-07-15 |
 | Easy | [496. Next Greater Element I](https://leetcode.com/problems/next-greater-element-i/) | 🟢 | 1 | 2026-08-05 | 2026-07-06 | 2026-07-04, 2026-07-06 |
 | Medium | [323. Number of Connected Components (BFS)](https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/) | 🟢 | 1 | 2026-08-05 | 2026-07-06 | 2026-06-16, 2026-06-22, 2026-07-06 |
 | Easy | [27. Remove Element](https://leetcode.com/problems/remove-element/) | 🟢 | 1 | 2026-08-04 | 2026-07-05 | 2026-01-05, 2026-03-28, 2026-05-27, 2026-06-26, 2026-07-05 |

@@ -19,6 +19,9 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🟡 355. Design Twitter — Jul 15, 2026
+**Sticking point**: Data model was clean; `getNewsFeed` shipped a mixed heap model — pushed `(-time, tweetId)` (a max-heap key) but bolted on a bounded-heap cap *and* a final reverse (both belong to the `+time` design). With `-time`, the `len > 10` cap `heappop`s the *most recent* tweet, silently dropping the newest. Compounded by `return returnList.reverse()` returning `None` (in-place reverse), masked by a `# type: ignore`. Pick one lane: `-time` max-heap → no cap, no reverse; or `+time` bounded min-heap → cap + reverse. And never `# type: ignore` a return-type warning — it was flagging the real bug.
+
 ## 🟡 743. Network Delay Time (Dijkstra) — Jul 15, 2026
 **Sticking point**: Dropped the pop-time `if node in visited: continue` guard, relying only on the push-time `neighbor not in visited` filter. But `visited` is populated at pop, so two entries for the same node can both be pushed while it's un-popped; the stale larger copy then poisoned `minTime` via `max()`. First pop = settled; every later pop is stale and must be skipped — that guard is load-bearing, not the push-time filter.
 
