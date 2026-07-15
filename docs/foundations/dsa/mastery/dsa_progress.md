@@ -30,7 +30,7 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/dsa/mastery/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **94** problems &nbsp;·&nbsp; **104** solutions &nbsp;·&nbsp; **302** attempts
+> **94** problems &nbsp;·&nbsp; **104** solutions &nbsp;·&nbsp; **303** attempts
 
 | | 🏆 Retired | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|
@@ -38,6 +38,7 @@ Notes for future agents:
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|---|
+| Easy | [1. Two Sum](https://leetcode.com/problems/two-sum/) | 🟢 | 2 | 2026-09-13 | 2026-07-15 | 2026-01-02, 2026-03-25, 2026-07-15 |
 | Medium | [787. Cheapest Flights Within K Stops (Bellman-Ford)](https://leetcode.com/problems/cheapest-flights-within-k-stops/) | 🔴 | 0 | 2026-07-16 | 2026-07-14 | 2026-07-14 |
 | Easy | [206. Reverse Linked List (Recursion)](https://leetcode.com/problems/reverse-linked-list/) | 🟡 | 0 | 2026-07-24 | 2026-07-14 | 2026-04-24, 2026-07-03, 2026-07-14 |
 | Medium | [901. Online Stock Span](https://leetcode.com/problems/online-stock-span/) | 🟢 | 1 | 2026-08-13 | 2026-07-14 | 2026-07-12, 2026-07-14 |
@@ -138,7 +139,6 @@ Notes for future agents:
 | Easy | [344. Reverse String](https://leetcode.com/problems/reverse-string/) | 🟢 | 1 | 2026-05-04 | 2026-04-04 | 2026-01-15, 2026-04-04 |
 | Easy | [26. Remove Duplicates from Sorted Array](https://leetcode.com/problems/remove-duplicates-from-sorted-array/) | 🟢 | 1 | 2026-05-02 | 2026-04-02 | 2026-01-09, 2026-04-02 |
 | Medium | [912. Sort an Array (Merge Sort)](https://leetcode.com/problems/sort-an-array/) | 🔴 | 0 | 2026-03-28 | 2026-03-26 | 2026-01-06, 2026-03-26 |
-| Easy | [1. Two Sum](https://leetcode.com/problems/two-sum/) | 🟢 | 1 | 2026-04-24 | 2026-03-25 | 2026-01-02, 2026-03-25 |
 | Easy | [217. Contains Duplicate](https://leetcode.com/problems/contains-duplicate/) | 🟢 | 1 | 2026-04-24 | 2026-03-25 | 2026-01-01, 2026-03-25 |
 | Easy | [1929. Concatenation of Array](https://leetcode.com/problems/concatenation-of-array/) | 🟢 | 1 | 2026-04-24 | 2026-03-25 | 2026-01-01, 2026-03-25 |
 | Medium | [18. Four Sum](https://leetcode.com/problems/4sum/) | 🟢 | 1 | 2026-02-22 | 2026-01-23 | 2026-01-23 |
