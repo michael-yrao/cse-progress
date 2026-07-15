@@ -30,7 +30,7 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/dsa/mastery/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **94** problems &nbsp;·&nbsp; **104** solutions &nbsp;·&nbsp; **304** attempts
+> **94** problems &nbsp;·&nbsp; **104** solutions &nbsp;·&nbsp; **305** attempts
 
 | | 🏆 Retired | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|
@@ -39,6 +39,7 @@ Notes for future agents:
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|---|
 | Medium | [743. Network Delay Time (Dijkstra)](https://leetcode.com/problems/network-delay-time/) | 🟡 | 0 | 2026-07-25 | 2026-07-15 | 2026-07-13, 2026-07-15 |
+| Medium | [355. Design Twitter](https://leetcode.com/problems/design-twitter/) | 🟡 | 0 | 2026-07-25 | 2026-07-15 | 2026-06-24, 2026-06-26, 2026-07-06, 2026-07-15 |
 | Easy | [1. Two Sum](https://leetcode.com/problems/two-sum/) | 🟢 | 2 | 2026-09-12 | 2026-07-14 | 2026-01-02, 2026-03-25, 2026-07-14 |
 | Medium | [787. Cheapest Flights Within K Stops (Bellman-Ford)](https://leetcode.com/problems/cheapest-flights-within-k-stops/) | 🔴 | 0 | 2026-07-16 | 2026-07-14 | 2026-07-14 |
 | Easy | [206. Reverse Linked List (Recursion)](https://leetcode.com/problems/reverse-linked-list/) | 🟡 | 0 | 2026-07-24 | 2026-07-14 | 2026-04-24, 2026-07-03, 2026-07-14 |
@@ -72,7 +73,6 @@ Notes for future agents:
 | Hard | [42. Trapping Rain Water (Array)](https://leetcode.com/problems/trapping-rain-water/) | 🟢 | 1 | 2026-08-07 | 2026-07-08 | 2026-04-15, 2026-06-29, 2026-07-08 |
 | Medium | [146. LRU Cache](https://leetcode.com/problems/lru-cache/) | 🟡 | 0 | 2026-07-17 | 2026-07-07 | 2026-07-04, 2026-07-07 |
 | Medium | [143. Reorder List](https://leetcode.com/problems/reorder-list/) | 🟡 | 0 | 2026-07-16 | 2026-07-06 | 2026-04-26, 2026-07-06 |
-| Medium | [355. Design Twitter](https://leetcode.com/problems/design-twitter/) | 🟡 | 0 | 2026-07-25 | 2026-07-15 | 2026-06-24, 2026-06-26, 2026-07-06, 2026-07-15 |
 | Easy | [496. Next Greater Element I](https://leetcode.com/problems/next-greater-element-i/) | 🟢 | 1 | 2026-08-05 | 2026-07-06 | 2026-07-04, 2026-07-06 |
 | Medium | [323. Number of Connected Components (BFS)](https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/) | 🟢 | 1 | 2026-08-05 | 2026-07-06 | 2026-06-16, 2026-06-22, 2026-07-06 |
 | Easy | [27. Remove Element](https://leetcode.com/problems/remove-element/) | 🟢 | 1 | 2026-08-04 | 2026-07-05 | 2026-01-05, 2026-03-28, 2026-05-27, 2026-06-26, 2026-07-05 |
