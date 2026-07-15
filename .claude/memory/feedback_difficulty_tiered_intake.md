@@ -19,7 +19,10 @@ cascade eats ~40% of the 28 weekly warmup slots servicing *recent* material, sta
 which is why the 🟢 pile sat at 35 and wouldn't drain. Established Jul 14, 2026 after Advanced Graphs
 (mis-bucketed as "moderate") produced back-to-back 🔴 on 743 Dijkstra + 787 Bellman-Ford in one week.
 
-**How to apply:** when building a weekly schedule (see [[feedback_end_of_week_schedule]]) for a hard-cat
-or DP phase, cap new intake at the tier above and route the freed active-block slot to a coded backlog
-burn-down. Defer the lowest-interview-ROI new problem first, re-slotting it in the same edit
-([[feedback_daily_cap]] schedule-integrity). Source of truth: `study_guide.md` Pace Targets.
+**How to apply:** the **single source of truth is the "🎚️ Category Difficulty Tiers" table** in
+`study_guide.md` → Pace Targets — a per-category lookup of Tier → new/week. **Read it when building each
+week's schedule** ([[feedback_end_of_week_schedule]]) and cap that phase's new intake at its row's rate;
+route any freed active-block slot to a coded backlog burn-down. Defer the lowest-interview-ROI new
+problem first, re-slotting it in the same edit ([[feedback_daily_cap]] schedule-integrity). To re-pace a
+category, edit its Tier in that table — nothing else. A category earns a harder tier when its new
+problems consistently log 🔴 on first exposure.
