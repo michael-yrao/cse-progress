@@ -13,7 +13,7 @@
 - [Spine first](feedback_spine_first.md) — open every conceptual explanation with the 2–3 load-bearing facts, then STOP and check in; tactics/tables/edge cases only on request
 - [Interactive learning](feedback_interactive_learning.md) — heavy concepts get derive-the-design / failure-mode drills / Socratic pushback, not explanation dumps
 - [No spoilers](feedback_no_spoilers.md) — zero hints/approaches unless explicitly asked or stuck; NEVER recap the approach (or stuck_log content) when a problem/retry begins
-- [No prior-attempt comparison](feedback_no_prior_attempt_comparison.md) — judge today's code on its own; never read or cite the folded PRIOR ATTEMPTS region when giving feedback or rating
+- [No prior-attempt comparison](feedback_no_prior_attempt_comparison.md) — judge today's code on its own; never read or cite prior attempts (stashed in .history/ on a retry) when giving feedback or rating
 - [Infer comfort rating](feedback_infer_comfort.md) — read Clean/Shaky/Blank from the conversation against the rubric and propose it for confirmation; don't ask the user cold
 - [Git commit checklist](feedback_git_commit.md) — always run git status before committing to catch unstaged solution files
 - [Batch commits](feedback_batch_commits.md) — don't commit per problem; accumulate and commit once at session end (each commit re-injects ~70 lines of the tracker into context)

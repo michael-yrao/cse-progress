@@ -3,12 +3,16 @@
 Creates an empty, dated skeleton so the file is ready before the learner codes.
 NEW problem  -> create <root>/<pattern>/<number>_<snake>.py with an Attempt 1 banner.
 RETRY (file exists) -> insert an `Attempt · <today>` banner + stub at the TOP of the
-Solution class and fold everything below it into a spoiler region, never a 2nd file.
+Solution class and MOVE everything below it (the prior attempts) into a per-problem stash
+at <root>/.history/<number>_<snake>.txt, leaving a one-line pointer in the file.
 
 The retry stub goes first, not last, so opening the file lands on a blank page rather
 than on the previous solution — reading your own prior answer before a retry destroys
-the rep. Prior attempts stay in the same file (the dated history feeds streak/retirement
-tracking) but sit inside a `# region` the editor can collapse.
+the rep. The prior attempts are physically absent from the file while you work, so no
+editor/extension is needed to hide them (portable to any editor, GitHub, plain diff).
+scripts/restore_history.py pastes them back at session end, reconstructing the single
+file with full dated history — unless the attempt was never made, in which case the
+stash stays out so the file remains a blank page for next time.
 
 It writes NO solution logic and NO data-structure classes — only the scaffold
 (respects the whiteboard-fidelity + no-code-edits rules).
@@ -138,6 +142,74 @@ def strip_spoiler_region(lines: list[str]) -> list[str]:
     return out
 
 
+HISTORY_DIRNAME = ".history"
+# Footer breadcrumb left in the active file while its prior attempts are stashed. It's
+# how restore_history.py (and a human) knows history has been extracted, and it's stripped
+# on restore. Match on this prefix — the tail carries the stash path.
+POINTER_PREFIX = "# ⤵ prior attempts stashed"
+
+DEF_OR_CLASS = re.compile(r"^\s*(?:async\s+def|def|class)\s+\w")
+
+
+def history_dir() -> Path:
+    """`<source_root>/.history/` — the session-scoped stash for extracted attempts.
+
+    `.txt` files here never match the `*.py` source glob, so the tracker's discovery
+    (scripts/update_review_dates.py) ignores them and no phantom rows appear.
+    """
+    return source_root() / HISTORY_DIRNAME
+
+
+def stash_path(number: str, name: str) -> Path:
+    return history_dir() / f"{number}_{name}.txt"
+
+
+def make_pointer(stash: Path) -> str:
+    return (f"{POINTER_PREFIX} in {stash.as_posix()} — "
+            f"restored at session end (python scripts/restore_history.py)")
+
+
+def strip_pointer(lines: list[str]) -> list[str]:
+    """Drop the stash breadcrumb + any trailing blanks it left behind."""
+    out = [ln for ln in lines if not ln.strip().startswith(POINTER_PREFIX)]
+    while out and not out[-1].strip():
+        out.pop()
+    return out
+
+
+def _indent(line: str) -> int:
+    return len(line) - len(line.lstrip())
+
+
+def block_has_real_body(lines: list[str], start: int) -> bool:
+    """True if the def/class at `start` holds anything past pass / ... / comments / blanks.
+
+    A dedent to or past the header's indent (on a non-comment line) ends its block. Nested
+    def/class *headers* are skipped — structure, not solution content — but their bodies are
+    still scanned, so a real inner statement counts. This is what tells an un-attempted stub
+    (`def m(self): pass`) apart from a written solution.
+    """
+    base = _indent(lines[start])
+    for line in lines[start + 1:]:
+        if not line.strip():
+            continue
+        if _indent(line) <= base and not line.lstrip().startswith("#"):
+            break
+        s = line.strip()
+        if s in ("pass", "...") or s.startswith("#") or DEF_OR_CLASS.match(line):
+            continue
+        return True
+    return False
+
+
+def slice_has_real_attempt(lines: list[str]) -> bool:
+    """True if any def/class in `lines` carries a real body — i.e. worth stashing."""
+    return any(
+        DEF_OR_CLASS.match(ln) and block_has_real_body(lines, i)
+        for i, ln in enumerate(lines)
+    )
+
+
 def module_level_insert_at(lines: list[str]) -> int:
     """Index just past the module docstring and the import block.
 
@@ -262,20 +334,23 @@ def main() -> None:
             head = f"{indent}def {name_}{suffix}({params})" + (f" {ret}" if ret else "") + ":"
             return [head, f"{indent}    pass"]
 
-        lines = strip_spoiler_region(text.splitlines())
+        # Also strips a prior run's spoiler region (legacy folded files migrate cleanly:
+        # the markers are dropped, the code they wrapped becomes ordinary prior attempts)
+        # and any leftover stash pointer.
+        lines = strip_pointer(strip_spoiler_region(text.splitlines()))
         cls = solution_class_start(lines)
 
-        # One invariant, two layouts: the scaffold block ALWAYS ends with the region
-        # head, and the region ALWAYS closes at EOF. So the fold spans exactly
-        # "everything below today's stub" without the script ever having to understand
-        # the shape of the prior attempts — which vary (dated methods, dated sibling
-        # classes, trailing unittest blocks) and are not ours to parse.
+        # One invariant, two layouts: today's stub goes at the TOP (of `class Solution`,
+        # or as a dated sibling class), and EVERYTHING BELOW IT is "the prior attempts" —
+        # a verbatim line slice the script moves to the stash without ever parsing its
+        # shape (dated methods, dated sibling classes, trailing unittest blocks all vary
+        # and are not ours to interpret). restore_history.py pastes that same slice back
+        # after the completed attempt at session end, reconstructing the single file.
         if len(methods) == 1 and cls is not None:
             # Dated method on the existing `class Solution` — the common case.
             at = cls + 1
             block = ["", f"    # ── Attempt · {today} ──────────────"]
             block += stub(method, "    ", f"_{stamp}")
-            block += ["", f"    {REGION_HEAD}"]
             what = f"{method}_{stamp}()"
         else:
             # Dated sibling class — for multi-method problems (271 encode/decode), and
@@ -284,14 +359,40 @@ def main() -> None:
             block = ["", "", f"# ── Attempt · {today} ──────────────", f"class Solution_{stamp}:"]
             for m in methods:
                 block += [""] + stub(m, "    ", "")
-            block += ["", "", REGION_HEAD]
             what = f"class Solution_{stamp}: {', '.join(m + '()' for m in methods)}"
 
         lines[at:at] = block
-        lines.append(REGION_END)
-        path.write_text("\n".join(lines).rstrip() + "\n", encoding="utf-8")
-        print(f"Inserted attempt {today} -> {what} in {path} (line {at + 2}); "
-              f"prior attempts folded.")
+        prior = lines[at + len(block):]          # everything below today's stub
+        while prior and not prior[0].strip():    # trim framing blanks off the slice
+            prior.pop(0)
+        while prior and not prior[-1].strip():
+            prior.pop()
+
+        stash = stash_path(args.number, name)
+        active = lines[:at + len(block)]
+        stashed = True
+        if slice_has_real_attempt(prior):
+            # Real prior attempts → move them out. A pre-existing stash (a session cut
+            # short before restore) keeps its older attempts; today's prior goes on top.
+            history_dir().mkdir(parents=True, exist_ok=True)
+            body = "\n".join(prior)
+            if stash.exists():
+                body = body + "\n\n" + stash.read_text(encoding="utf-8").rstrip("\n")
+            stash.write_text(body + "\n", encoding="utf-8")
+        elif not stash.exists():
+            # Nothing real to hide and no stash — leave the file whole (no pointer).
+            active, stashed = lines, False
+        # else: prior is just an un-attempted stub; the real history is already stashed —
+        # drop the stub (active already excludes it) and keep the stash untouched.
+
+        if stashed:
+            while active and not active[-1].strip():
+                active.pop()
+            active += ["", make_pointer(stash)]
+
+        path.write_text("\n".join(active).rstrip() + "\n", encoding="utf-8")
+        where = f"stashed → {stash.as_posix()}" if stashed else "no prior attempts to stash"
+        print(f"Inserted attempt {today} -> {what} in {path} (line {at + 2}); {where}.")
 
 
 if __name__ == "__main__":
