@@ -5,7 +5,7 @@
 - [Self-eval log](self_eval_log.md) — append-only running log of corrections (data for the meta-review)
 - [Read before asserting](feedback_read_before_asserting.md) — never state a file's/tracker's contents from memory or a partial read; grep/tail answer "does X exist", not "what is the state of this"
 - [Session dating](feedback_session_dating.md) — date logs by study session not wall clock; a session crossing midnight keeps its start date; verify against the schedule day
-- [No code edits in cse-review](feedback_no_code_edits.md) — never edit source files; user writes all code, assistant reads/explains only
+- [No code edits in cse-progress](feedback_no_code_edits.md) — never edit source files; user writes all code, assistant reads/explains only
 - [Coding required for Clean](feedback_coding_for_clean.md) — 🟢 Clean requires coding; no-code blueprint caps at 🟡 Shaky (except flawless spot check confirms 🏆 Retired)
 - [Code by default](feedback_code_by_default.md) — every rep is coded, warmups included; no-code blueprint is an opt-in exception, never the scheduled default
 - [Whiteboard fidelity](feedback_whiteboard_fidelity.md) — write full solution incl. data-structure defs from scratch; no shared datamodel module

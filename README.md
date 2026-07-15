@@ -1,4 +1,4 @@
-# cse-review
+# cse-progress
 
 A personal, spaced-repetition study system for technical-interview prep — spanning **DSA/algorithms** and **system design**, from NeetCode-150 interview readiness toward competitive-programming and architect-level depth.
 
@@ -7,7 +7,7 @@ Solutions are written by hand; progress is tracked with a comfort-based spaced-r
 ## Repository layout
 
 ```
-cse-review/
+cse-progress/
 ├── dsa/leetcode/<type>/*.py        # solution files (arrays_and_hash, graphs, linked_list, …)
 ├── docs/
 │   └── foundations/

@@ -82,7 +82,7 @@ CATEGORY_TO_TOPICS = {
 
 
 # Solution-folder slug -> milestone category (so learned-pattern detection works
-# in a repo that stores solutions under category folders, e.g. cse-review).
+# in a repo that stores solutions under category folders, e.g. cse-progress).
 FOLDER_TO_CATEGORY = {
     "arrays_and_hash": "Arrays & Hashing", "two_pointers": "Two Pointers",
     "sliding_window": "Sliding Window", "stack": "Stack",
@@ -124,7 +124,7 @@ def parse_milestone_num_to_category() -> dict[int, str]:
 
 def scan_solution_categories() -> dict[int, str]:
     """Map problem number -> category from solution-file folders (ground truth of
-    what the learner actually solved). Works in cse-review; empty in a fresh repo."""
+    what the learner actually solved). Works in cse-progress; empty in a fresh repo."""
     root = source_root()
     num2cat: dict[int, str] = {}
     if not root.exists():

@@ -7,7 +7,7 @@ from datetime import datetime, timedelta
 from pathlib import Path
 
 # --- Configuration -----------------------------------------------------------
-# Defaults reproduce cse-review's original behavior exactly. cse.config.yml (if
+# Defaults reproduce cse-progress's original behavior exactly. cse.config.yml (if
 # present at the repo root) overrides intervals, source root, and solution globs.
 # Parsed with stdlib only (no PyYAML dependency) for the small subset we need.
 
