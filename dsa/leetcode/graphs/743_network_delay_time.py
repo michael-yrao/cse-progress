@@ -40,6 +40,51 @@ from typing import List, Optional
 
 
 class Solution:
+
+    def networkDelayTime_20260715(self, times: List[List[int]], n: int, k: int) -> int:
+        # Dijkstra's algorithm is a modified BFS
+        # BFS uses visited set, queue and adjacency map
+        # Dijkstra uses visited set, min heap and adjacency map
+        # queue is good when we know all edges are the same
+        # but min heap shines when we have edges of varying positive values
+        # our min heap will have (cumulative weight to get to node, node)
+        # adjacency map will tell us the immediate weight to get from src -> dst based on input times, it just helps us grab all children of src in O(1) time
+        # visited set tells us whether or not we already have the shortest way here
+        # since all edges are positive, cumulative distance will always be increasing
+
+        visited = set()
+        adjMap = collections.defaultdict(list)
+        
+        for source, target, time in times:
+            adjMap[source].append((target,time))
+        
+        minHeap = []
+        # takes 0 cumulative time to get to starting node so we add it to minHeap to start
+        heapq.heappush(minHeap,(0,k))
+        # since we know value is always increasing, we can keep track of largest value by just setting it each time. Problem says minimum but it will be the highest value in our heap
+        minTime = 0
+
+        while minHeap:
+            currentCumulativeTime, currentNode = heapq.heappop(minHeap)
+            # if already visited / calculated smallest, we can skip it
+            if currentNode in visited:
+                continue
+            visited.add(currentNode)
+            minTime = max(minTime, currentCumulativeTime)
+            # since we know currentCumulativeTime is the shortest possible
+            # since we are doing 'BFS' and edges are never negative
+            # we can add neighbor values to currentCumulativeTime
+            for neighborNode, neighborTime in adjMap[currentNode]:
+                # if we have not calculated shortest distance here yet
+                # calculate it
+                if neighborNode not in visited:
+                    neighborCumulativeTime = currentCumulativeTime + neighborTime
+                    heapq.heappush(minHeap, (neighborCumulativeTime, neighborNode))
+        
+        if len(visited) != n:
+            return -1
+        return minTime
+
     # ── Attempt 1 · 2026-07-13 ────────────────────────────────────────────
     def networkDelayTime(self, times: List[List[int]], n: int, k: int) -> int:
         # we can do an adjacency map using times
