@@ -1,6 +1,7 @@
 {
-  // Explicit Folding auto-collapses the prior-attempts spoiler region in solution
-  // files, so a retry opens on a blank page instead of on your last answer.
-  // Without it the region still folds — just manually (Ctrl+K Ctrl+8).
-  "recommendations": ["zokugun.explicit-folding"]
+  // No extensions are required. Prior-attempt spoilers used to be hidden by an
+  // auto-collapsing fold (zokugun.explicit-folding); they are now physically moved out
+  // of the file into <root>/.history/ on a retry and restored at session end
+  // (scripts/new_problem.py + scripts/restore_history.py), so nothing needs installing.
+  "recommendations": []
 }
