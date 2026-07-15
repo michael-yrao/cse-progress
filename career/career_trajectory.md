@@ -38,7 +38,7 @@
 | Title stuck at "Senior" since 2017 | At big tech, 9 YOE Senior can look like a plateau despite Staff-level work | Push for Staff/Principal at MS, or let the market calibrate you |
 | No big-tech pedigree | FAANG/big tech filters heavily for familiar logos at senior levels | Either move to a top-tier company or make your impact undeniable on paper |
 | Limited public technical signal | Staff Eng / CTO roles require external credibility | Write about the Snowflake migration or accounting architecture design |
-| LeetCode still in progress | Big tech interviews are algo-heavy | cse-review is the right habit — keep the pace |
+| LeetCode still in progress | Big tech interviews are algo-heavy | cse-progress is the right habit — keep the pace |
 | Resume 4 years out of date | Your best work is invisible to screeners | Fix this first — the 2022 PDF stops at March 2022 |
 
 ---
@@ -93,7 +93,7 @@ Best fit if you want to build a company or run engineering at scale.
 
 1. **Resume done** — `career/resume/MichaelRao_2026_Resume.docx` in this repo is the working copy; finalize when Word is available
 2. **Have a Staff/Principal level conversation at MS** — the Snowflake/Serenity modernization is your leverage; use it now
-3. **Finish NeetCode 150** — cse-review is your tracker; 5 problems/week gets you there by year-end
+3. **Finish NeetCode 150** — cse-progress is your tracker; 5 problems/week gets you there by year-end
 4. **Read Alex Xu every Sunday** — *System Design Interview* Vol 1, one chapter per week, passive reading only; no practice problems yet
 5. **Interview at 2–3 fintech-adjacent companies (late 2026)** — Stripe, Robinhood, Two Sigma, Citadel Securities; do this before FAANG, not after
 6. **Write one technical post** — the accounting architecture migration (Snowflake + Serenity) is a great topic; it converts private work into public credibility

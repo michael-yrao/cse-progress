@@ -1,6 +1,6 @@
-# AGENTS.md — running cse-review on any agent
+# AGENTS.md — running cse-progress on any agent
 
-cse-review is my personal spaced-repetition practice log + coaching workflow (DSA,
+cse-progress is my personal spaced-repetition practice log + coaching workflow (DSA,
 with a System Design pillar). This file is the **agent-agnostic entry point** so I can
 drive it from GitHub Copilot, the **caveman** skill, or any assistant — not just
 Claude Code.

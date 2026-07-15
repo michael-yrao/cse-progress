@@ -310,4 +310,4 @@ Include a final section highlighting:
 ## Related Files
 
 - `algorithm_cheatsheet/binary_search_patterns.md`: Example of this style guide in practice
-- Repository: `cse-review`
+- Repository: `cse-progress`
