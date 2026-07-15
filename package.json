@@ -1,7 +1,7 @@
 {
-  "name": "back2basics",
+  "name": "cse-progress",
   "version": "1.0.0",
-  "description": "<!-- Interview Preparation -->\r ## Questions Separated by Company\r https://github.com/xizhengszhang/Leetcode_company_frequency",
+  "description": "Personal spaced-repetition study system for technical-interview prep (DSA + System Design).",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

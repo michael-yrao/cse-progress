@@ -1,5 +1,5 @@
 """
-Docstring for dataStructureAlgorithm.leetcode.2026_python.two_pointers.344_reverse_string
+Docstring for dsa.leetcode.two_pointers.344_reverse_string
 344. Reverse String
 Solved
 N/A

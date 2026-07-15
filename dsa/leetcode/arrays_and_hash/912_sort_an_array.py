@@ -1,5 +1,5 @@
 """
-Docstring for dataStructureAlgorithm.leetcode.2026_python.arrays_and_hash.912_sort_an_array
+Docstring for dsa.leetcode.arrays_and_hash.912_sort_an_array
 
 Given an array of integers nums, sort the array in ascending order and return it.
 

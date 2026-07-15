@@ -1,5 +1,5 @@
 """
-Docstring for dataStructureAlgorithm.leetcode.2026_python.arrays_and_hash.229_majority_element_2
+Docstring for dsa.leetcode.arrays_and_hash.229_majority_element_2
 Given an integer array of size n, find all elements that appear more than ⌊ n/3 ⌋ times.
 
 Example 1:

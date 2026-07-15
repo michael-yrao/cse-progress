@@ -1,5 +1,5 @@
 """
-Docstring for dataStructureAlgorithm.leetcode.2026_python.arrays_and_hash.242_valid_anagram
+Docstring for dsa.leetcode.arrays_and_hash.242_valid_anagram
 
 Given two strings s and t, return true if t is an
 

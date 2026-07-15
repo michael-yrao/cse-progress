@@ -1,5 +1,5 @@
 """
-Docstring for dataStructureAlgorithm.leetcode.2026_python.arrays_and_hash.49_group_anagrams
+Docstring for dsa.leetcode.arrays_and_hash.49_group_anagrams
 
 Given an array of strings strs, group the
 

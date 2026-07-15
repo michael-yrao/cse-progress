@@ -1,5 +1,5 @@
 """
-Docstring for dataStructureAlgorithm.leetcode.2026_python.two_pointers.283_move_zeros
+Docstring for dsa.leetcode.two_pointers.283_move_zeros
 
 Given an integer array nums, move all 0's to the end of it while maintaining the relative order of the non-zero elements.
 
