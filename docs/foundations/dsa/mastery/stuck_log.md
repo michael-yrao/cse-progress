@@ -19,6 +19,9 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🟡 743. Network Delay Time (Dijkstra) — Jul 15, 2026
+**Sticking point**: Dropped the pop-time `if node in visited: continue` guard, relying only on the push-time `neighbor not in visited` filter. But `visited` is populated at pop, so two entries for the same node can both be pushed while it's un-popped; the stale larger copy then poisoned `minTime` via `max()`. First pop = settled; every later pop is stale and must be skipped — that guard is load-bearing, not the push-time filter.
+
 ## 🔴 787. Cheapest Flights Within K Stops (Bellman-Ford) — Jul 14, 2026
 **Topic**: Advanced Graphs — Bellman-Ford, shortest path under a hop limit (first exposure)
 
