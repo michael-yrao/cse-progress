@@ -48,6 +48,31 @@ class TreeNode:
         self.left = left
         self.right = right
 class Solution:
+
+    # ── Attempt · 2026-07-14 ──────────────
+    def rightSideView_20260714(self, root: Optional[TreeNode]) -> List[int]:
+        # basic BFS, insert last element per level to result
+        result = []
+
+        queue = collections.deque()
+
+        queue.append(root)
+
+        while queue:
+            levelSize = len(queue)
+            for i in range(levelSize):
+                currentNode = queue.popleft()
+                if currentNode:
+                    if i == levelSize - 1:
+                        result.append(currentNode.val)
+                    # append neighbors
+                    if currentNode.left:
+                        queue.append(currentNode.left)
+                    if currentNode.right:
+                        queue.append(currentNode.right)
+        
+        return result        
+
     def rightSideView(self, root: Optional[TreeNode]) -> List[int]:
         # if we do bfs, it's just the last element we see each time
         # so we'll just do that

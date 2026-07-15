@@ -5,8 +5,6 @@ You want to maximize your profit by choosing a single day to buy one stock and c
 
 Return the maximum profit you can achieve from this transaction. If you cannot achieve any profit, return 0.
 
- 
-
 Example 1:
 
 Input: prices = [7,1,5,3,6,4]
@@ -20,8 +18,6 @@ Input: prices = [7,6,4,3,1]
 Output: 0
 Explanation: In this case, no transactions are done and the max profit = 0.
 
- 
-
 Constraints:
 
     1 <= prices.length <= 105
@@ -31,6 +27,22 @@ Constraints:
 import math
 from typing import List
 class Solution:
+
+    # ── Attempt · 2026-07-14 ──────────────
+    def maxProfit_20260714(self, prices: List[int]) -> int:
+        # two pointer
+        
+        l = r = 0
+        profit = 0
+        while r < len(prices):
+            if l != r and prices[r] > prices[l]:
+                profit = max(profit, prices[r] - prices[l])
+            else:
+                # r is smaller than l, just move l to r
+                l = r
+            r+=1
+        return profit
+
     def maxProfit(self, prices: List[int]) -> int:
         # keep track of current max
         # currentMaxProfit = max(currentMaxProfit, prices[r] - prices[l])
