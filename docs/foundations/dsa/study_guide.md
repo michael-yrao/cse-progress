@@ -250,7 +250,32 @@ Everything past the course is **not spaced repetition and adds no weeks** — it
 
 ### Pace Targets
 
-- **New problems per week (difficulty-tiered, not just phase-dependent)**:
+#### 🎚️ Category Difficulty Tiers — the adjustable intake table
+
+**This table is the single source of truth for weekly new-problem intake. To re-pace a category,
+change its Tier here** — the agent reads this when building each week's schedule; nothing else needs
+editing. A category earns a harder tier when its new problems consistently log 🔴 on first exposure
+(the *blank tax*, below).
+
+| Roadmap category | Tier | New/week | Notes |
+|---|---|---|---|
+| Standard Graphs | Moderate | 4–5 | |
+| Heap / Priority Queue | Moderate | 4–5 | |
+| Tries | Moderate | 4–5 | 3 problems; ~1 week |
+| **Advanced Graphs** | **Hard** | **4** | Reclassified moderate→hard Jul 14, 2026 (743+787 back-to-back 🔴) |
+| Sliding Window | Moderate | 4–5 | |
+| Stack | Moderate | 4–5 | |
+| Intervals + Greedy | Moderate | 4–5 | |
+| **Backtracking** | **Hard** | **4** | New decision-tree pattern per problem |
+| **1D Dynamic Programming** | **DP (Hardest)** | **3** | Hardest + slowest; do not compress phase below 4 weeks |
+| **2D Dynamic Programming** | **DP (Hardest)** | **3** | Hardest + slowest; do not compress phase below 4 weeks |
+| Bit Manipulation + Math/Geometry | Moderate | 4–5 | Many are Easy-tier |
+
+**Tier definitions:** **Moderate** = pattern reused across problems, first attempt often 🟡 not 🔴 → **4–5/week**.
+**Hard** = a *new algorithm per problem*, first attempt almost always 🔴 → **4/week**.
+**DP (Hardest)** = hardest + slowest, highest blank rate → **3/week**.
+
+- **New problems per week (difficulty-tiered, not just phase-dependent)** — per the table above:
   - **Moderate categories** (Standard Graphs / Heap / Tries / Sliding Window / Stack / Intervals+Greedy / Bit-Math): **4–5 per week.** Front-load these easier phases to bank a lead. Fits the 5/day cap (steady-state reviews ~3.5/day + 5 new ≈ 4.1/day).
   - **Hard, algorithm-dense categories** (**Advanced Graphs**, **Backtracking**): **4 per week — not 5.** These introduce a *new algorithm per problem* (Dijkstra, Bellman-Ford, MST, Eulerian…), so the first attempt almost always logs 🔴, and every 🔴 spawns a +2-day retry that eats a warmup slot. Hold intake at 4 so the blank cascade has room to settle before the next new problem lands.
   - **DP phases (1D Oct / 2D Nov)**: **3 per week.** Hardest and slowest; each new one spikes the Blank rate. Keep intake low so it doesn't trip the overdue-backlog rule.
