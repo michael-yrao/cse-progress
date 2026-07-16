@@ -19,6 +19,12 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🟡 912. Sort an Array (Merge Sort) — Jul 15, 2026
+**Sticking point**: Concept was solid; the block was *writing* it. Switched from index-based in-place (Idiom A) to return-based slices (Idiom B) — merge step then came out clean and correct first try. One boundary slip: split as `nums[:middle]` / `nums[middle+1:]`, dropping `nums[middle]` — the `+1` is correct in A (right half is `[m+1, r]`) but wrong in B, where slices are right-exclusive so right must start at `middle`. Invariant: the two slices must tile the array gap-free — *left ends where right begins, at `middle`, no `+1`*. First time off 🔴 (Blank since Jan). Boundary-arithmetic weakness cluster (424, 75, 901).
+
+## 🟡 143. Reorder List — Jul 15, 2026
+**Sticking point**: Floyd + reverse + weave structure was sound; both bugs were the same pattern — a pointer set to *where it came from* instead of *where it's going*, creating a cycle. Self-caught the weave bug (`secondHalf.next = firstHalf` → `firstHalfTmp`). Missed the recursive-reverse bug: `node = node.next` rebinds a local and does nothing — must be `node.next = None` to sever the forward link (else the tail stays in a 2-cycle). Recurring recursive-linked-list-rewiring weakness — see 206 (🟡 Apr 24 → Jul 3 → Jul 14). Iterative-reverse motor drill scheduled Thu Jul 16 to make the fallback reflex.
+
 ## 🟡 355. Design Twitter — Jul 15, 2026
 **Sticking point**: Data model was clean; `getNewsFeed` shipped a mixed heap model — pushed `(-time, tweetId)` (a max-heap key) but bolted on a bounded-heap cap *and* a final reverse (both belong to the `+time` design). With `-time`, the `len > 10` cap `heappop`s the *most recent* tweet, silently dropping the newest. Compounded by `return returnList.reverse()` returning `None` (in-place reverse), masked by a `# type: ignore`. Pick one lane: `-time` max-heap → no cap, no reverse; or `+time` bounded min-heap → cap + reverse. And never `# type: ignore` a return-type warning — it was flagging the real bug.
 

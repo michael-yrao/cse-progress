@@ -35,6 +35,72 @@ class ListNode:
         self.next = next
         
 class Solution:
+
+    # ── Attempt · 2026-07-15 ──────────────
+    def reorderList_20260715(self, head: Optional[ListNode]) -> None:
+        """
+        Do not return anything, modify head in-place instead.
+        """
+        # 1 -> 2 -> 3 -> 4 -> 5
+        # 1 -> 2 -> 3(index 0 -> 1 -> 2)
+        # 5 -> 4 (index 4 -> 3)
+
+        # find middle of the linked list
+        # reverse second half of list
+        # alternatively re-link
+
+        slow = head
+        fast = head
+
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+        
+        # slow is now middle of the linked list
+        # for even, this is start of second half, but doesn't seem to matter
+        # since if we consider this end of first half, looking at example 1, 2 -> 3 is exactly how the rebuild would go regardless
+        # for odd, this is end of first half
+        
+        startOfSecondHalf = slow.next
+        # break off second half
+        slow.next = None
+
+        # reverse second half
+        def reverse(node):
+            if not node or not node.next:
+                return node
+            newHead = reverse(node.next)
+            node.next.next = node
+            node.next = None
+            return newHead
+
+        secondHalfHead = reverse(startOfSecondHalf)
+
+        # now we can go through both and just relink
+
+        def relink(firstHalf, secondHalf):
+            if not firstHalf and not secondHalf:
+                return None
+            if not firstHalf:
+                return secondHalf
+            if not secondHalf:
+                return firstHalf
+
+            # now if both exists, we intertwine them
+
+            firstHalfTmp = firstHalf.next
+            secondHalfTmp = secondHalf.next
+            firstHalf.next = secondHalf
+            secondHalf.next = firstHalfTmp
+            firstHalf = firstHalfTmp
+            secondHalf = secondHalfTmp
+            
+            relink(firstHalf, secondHalf)
+
+            return firstHalf
+
+        relink(head, secondHalfHead)
+
     def reorderList(self, head: Optional[ListNode]) -> None:
         """
         Do not return anything, modify head in-place instead.

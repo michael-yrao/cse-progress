@@ -12,6 +12,7 @@
 - [SD three-lane structure](project_sd_three_lane_structure.md) — SD is 3×/wk from Jul 20: light midweek = tech fluency, fuller midweek = blocks & probes, Sunday = designs; **designs PULL blocks in** rather than grinding all blocks first; both midweek slots come out of warmups (🟢 backlog absorbs it), never the active block
 - [Spine first](feedback_spine_first.md) — open every conceptual explanation with the 2–3 load-bearing facts, then STOP and check in; tactics/tables/edge cases only on request
 - [Interactive learning](feedback_interactive_learning.md) — heavy concepts get derive-the-design / failure-mode drills / Socratic pushback, not explanation dumps
+- [Turn economy](feedback_turn_economy.md) — in interactive sessions, one job per turn (affirm + one correction + one question); push tables/mnemonics/derivations into the written note, not the chat; progressive disclosure; don't re-explain a right answer
 - [No spoilers](feedback_no_spoilers.md) — zero hints/approaches unless explicitly asked or stuck; NEVER recap the approach (or stuck_log content) when a problem/retry begins
 - [No prior-attempt comparison](feedback_no_prior_attempt_comparison.md) — judge today's code on its own; never read or cite prior attempts (stashed in .history/ on a retry) when giving feedback or rating
 - [Infer comfort rating](feedback_infer_comfort.md) — read Clean/Shaky/Blank from the conversation against the rubric and propose it for confirmation; don't ask the user cold
