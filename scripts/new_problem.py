@@ -128,18 +128,63 @@ def solution_class_start(lines: list[str]) -> int | None:
     )
 
 
-def design_class_base(lines: list[str]) -> str | None:
+def design_class_base(lines: list[str], title: str = "") -> str | None:
     """Base name of a multi-method problem's own class — `Twitter` from `class Twitter`
-    or `class Twitter_20260706` — so a retry's dated sibling class mirrors the real name
-    (`Twitter_<stamp>`) instead of a generic `Solution_<stamp>`. Returns None when the
-    file's classes are all `Solution` (e.g. 271 encode/decode), where the generic name
-    is correct. The non-greedy group + optional `_<8 digits>` strips any dated suffix.
+    or `class Twitter_20260706`, `LRUCache` from `class LRUCache` — so a retry's dated
+    sibling class mirrors the real name (`Twitter_<stamp>`) instead of a generic
+    `Solution_<stamp>`. Returns None when the file's classes are all `Solution` (e.g. 271
+    encode/decode), where the generic name is correct. The non-greedy group + optional
+    `_<8 digits>` strips any dated suffix.
+
+    Skips data-structure HELPER classes the learner writes to support the design (a
+    doubly-linked-list `Node` for LRU, a `ListNode`, etc.). These precede the main class
+    in the file, so returning the *first* non-Solution class anchored the retry on `Node`
+    and produced a garbage `Node_<stamp>` stub. A class whose normalized name matches the
+    problem title wins outright (`LRUCache` ↔ "LRU Cache"); otherwise the first
+    non-Solution, non-helper class is used, falling back to the first if all look like
+    helpers.
     """
-    for ln in lines:
-        m = re.match(r"^class\s+([A-Za-z_]\w*?)(?:_\d{8})?\s*[:(]", ln)
-        if m and m.group(1) != "Solution":
-            return m.group(1)
-    return None
+    def norm(s: str) -> str:
+        return re.sub(r"[^a-z0-9]", "", s.lower())
+
+    bases = [
+        m.group(1)
+        for ln in lines
+        if (m := re.match(r"^class\s+([A-Za-z_]\w*?)(?:_\d{8})?\s*[:(]", ln))
+        and m.group(1) != "Solution"
+    ]
+    if not bases:
+        return None
+    target = norm(title)
+    if target:
+        for b in bases:
+            if norm(b) == target:
+                return b
+    for b in bases:
+        if not re.search(r"(?:Node|List)$", b):  # skip Node/ListNode/TreeNode/…List helpers
+            return b
+    return bases[0]
+
+
+def design_class_body(lines: list[str], base: str) -> str:
+    """Text of the design problem's main class block — the first class whose de-dated
+    name is `base`. Member signatures (especially the shared `__init__`) are read from
+    THIS, not from a helper class (`Node`) that also defines `__init__`: a whole-file
+    search grabs the first `def __init__`, which is the helper's, giving the retry stub a
+    `(self, k, v)` constructor instead of `(self, capacity: int)`. Returns the whole file
+    when `base` isn't found (a `Solution`-only or legacy file), preserving prior behavior.
+    """
+    start = next(
+        (i for i, ln in enumerate(lines)
+         if (m := re.match(r"^class\s+([A-Za-z_]\w*?)(?:_\d{8})?\s*[:(]", ln))
+         and m.group(1) == base),
+        None,
+    )
+    if start is None:
+        return "\n".join(lines)
+    end = next((j for j in range(start + 1, len(lines)) if re.match(r"^class\s", lines[j])),
+               len(lines))
+    return "\n".join(lines[start:end])
 
 
 def class_defines_init(lines: list[str]) -> bool:
@@ -341,7 +386,7 @@ def main() -> None:
     else:
         text = path.read_text(encoding="utf-8")
 
-        def stub(name_: str, indent: str, suffix: str) -> list[str]:
+        def stub(name_: str, indent: str, suffix: str, search_text: str = text) -> list[str]:
             """A blank `def` carrying the problem's real signature, never a bare (self).
 
             Retyping `(self, s1: str, s2: str) -> bool` on every retry is transcription,
@@ -350,8 +395,11 @@ def main() -> None:
             The file's own method wins over --signature: it's the signature the learner
             has actually been solving against, and it can't drift from what's on disk.
             --signature is the fallback for a legacy file whose method can't be parsed.
+
+            `search_text` scopes the signature lookup — the design branch passes the main
+            class's body so a shared `__init__` is read from it, not from a helper class.
             """
-            sig = existing_signature(text, name_)
+            sig = existing_signature(search_text, name_)
             if not sig and name_ in methods:
                 given = signatures[methods.index(name_)]
                 sig = given if given != ("self", "") else None
@@ -381,7 +429,19 @@ def main() -> None:
             # Dated sibling class — for multi-method problems (271 encode/decode, design
             # problems like 355 Twitter), and for legacy files with no `class Solution`.
             at = module_level_insert_at(lines)
-            base = design_class_base(lines) or "Solution"  # mirror the real class name
+            base = design_class_base(lines, args.title) or "Solution"  # mirror the real class name
+            # A named design class (Twitter, LRUCache) needs its public interface named
+            # explicitly — without --method the members fall back to camel(title), which
+            # invents a bogus method (`lRUCache()`) that isn't part of the class. Fail loud
+            # with guidance instead of scaffolding garbage. (`Solution`-only files keep the
+            # camel fallback: a single-method legacy file is a reasonable guess.)
+            if base != "Solution" and not args.method.strip():
+                ap.error(
+                    f"{args.number} is a design/multi-method problem (class {base}); its "
+                    f"retry stub needs the public interface named. Re-run with --method "
+                    f"(e.g. --method get,put) — without it the scaffold invents a bogus "
+                    f"'{camel(args.title)}()' method."
+                )
             members = methods[:]
             # A design problem's constructor is externally fixed too (LeetCode provides the
             # `__init__` line) — mirror it as a blank stub, with its real signature, when the
@@ -389,9 +449,10 @@ def main() -> None:
             # `LRUCache(capacity)` scaffolds as `__init__(self, capacity: int)`, not `()`.
             if class_defines_init(lines) and "__init__" not in members:
                 members.insert(0, "__init__")
+            scope = design_class_body(lines, base)  # read member sigs from the main class
             block = ["", "", f"# ── Attempt · {today} ──────────────", f"class {base}_{stamp}:"]
             for m in members:
-                block += [""] + stub(m, "    ", "")
+                block += [""] + stub(m, "    ", "", scope)
             what = f"class {base}_{stamp}: {', '.join(m + '()' for m in members)}"
 
         lines[at:at] = block
