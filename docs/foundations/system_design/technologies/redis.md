@@ -21,6 +21,8 @@ Redis (**RE**mote **DI**ctionary **S**erver) is a **shared, in-RAM dictionary** 
 
 ## 🎯 Recall log — blind sprints
 
+**Jul 15, 2026 — derive-the-design session (unrated, teaching).** Derived the full chain cold from constraints: N-server undercount → shared remote store → naive `GET`/`SET` race → atomic `INCR` → single-threaded → TTL reset → fail-open/closed policy. Big step from Jul 13. **Still sticky, drill before the Jul 19 rated sprint:** (1) **atomicity is fragile under full narration** — solid when isolated, dropped out when chaining the whole story, recovered only on a targeted re-ask; (2) **TTL vs token bucket re-fused ×2 in one session** — kept reaching for token-bucket to explain the window reset; the reset is *TTL/`EXPIRE`*, token bucket is a different algorithm with no role in this design. Also clarified: RDBMS (ACID, transaction+rollback) atomicity vs Redis single-command atomicity (really isolation, free from single-threading), and that "database" = *persistence*, not atomicity.
+
 **Jul 13, 2026 — first blind sprint → 🔴 Blank** (3 of 8 prompts attempted).
 
 **Came back cold (the hard part — solid):** the *why-shared-state* argument — horizontally-scaled middleware each has its own memory, so a per-instance counter is bypassed; Redis holds the **global** count.

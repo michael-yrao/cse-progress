@@ -195,4 +195,15 @@ per-track trackers stay in each track's `mastery/`.
 
 Be lean: answer the thing, skip preamble, and don't restate what I can already see. Under the **caveman** skill or any low-token / low-credit setup, tighten further — telegraphic replies, caveman-compressed problem statements, no recaps. The workflow and guardrails above never change; only verbosity does. For running this repo from another agent (Copilot, caveman), see [`AGENTS.md`](AGENTS.md).
 
+**Interactive sessions — one job per turn (avoid walls of text).** In derive-the-design, Socratic
+pushback, or failure-mode drills, keep **each turn to one job**: a one-line affirmation + at most one
+correction + one question, then stop. The back-and-forth *is* the teaching — a turn must not also
+sharpen, tabulate, and pre-empt the next three follow-ups. **Push depth into the written note, not the
+chat:** tables, mnemonics, full derivations belong in the tech/tracker note (e.g. a `technologies/<tech>.md`),
+updated live and referenced ("added to your note") so the chat stays conversational and the note is the
+thing they reread. Use **progressive disclosure** — short answer first, *offer* the deeper why rather
+than dumping it — and when the learner nails an answer, acknowledge in one line and move on; never
+re-explain what they just demonstrated. This is the [Spine-first rule](#) applied across a whole
+multi-turn session. (The depth still matters — this is about *packaging*, not cutting substance.)
+
 **Caveman default = `lite` (installed by default).** Caveman ships at `full` (aggressive); this repo pins it to **`lite`** — run `/caveman lite` at session start — and **never `full` / `ultra` / `wenyan`**, which strip the explanation coaching depends on. Compress mechanical output (schedule edits, git steps, status, confirmations), but **keep FULL**: the comfort-rating rationale (propose + why), concept explanations when stuck/asked (respecting no-spoilers), the "why" behind a decision, and `stuck_log.md` entries. Install once per machine (Node ≥ 18): `curl -fsSL https://raw.githubusercontent.com/JuliusBrussee/caveman/main/install.sh | bash` (Windows: `irm https://raw.githubusercontent.com/JuliusBrussee/caveman/main/install.ps1 | iex`).

@@ -27,21 +27,39 @@ Constraints:
 from typing import List
 
 class Solution:
-    def sortArrayHeapSort(self, nums: List[int]) -> List[int]:
-        # insert data into a min heap
-        # then pop one by one into the return list
-        # tree structure given index k:
-        # parent = k/2
-        # left child = 2k + 1
-        # right child = 2k + 2
-        return
-    
-    def sortArrayBSTSort(self, nums: List[int]) -> List[int]:
-        return
-    
-    def sortArrayQuickSort(self, nums: List[int]) -> List[int]:
 
-        return
+    # ── Attempt · 2026-07-15 ──────────────
+    def sortArrayMergeSort_20260715(self, nums: List[int]) -> List[int]:
+        # we will master the O(n) space solution of merge sort first
+        
+        # if 1 item or less, already sorted by default
+        if len(nums) <= 1:
+            return nums
+        middle = len(nums)//2
+        sortedLeft = self.sortArrayMergeSort_20260715(nums[:middle])
+        sortedRight = self.sortArrayMergeSort_20260715(nums[middle:])
+        
+        def merge(left,right):
+            result = []
+
+            leftPointer = 0
+            rightPointer = 0
+            # while there are elements in both
+            # compare values and put the smaller one in front
+            while leftPointer < len(left) and rightPointer < len(right):
+                if left[leftPointer] < right[rightPointer]:
+                    result.append(left[leftPointer])
+                    leftPointer+=1
+                else:
+                    result.append(right[rightPointer])
+                    rightPointer+=1
+            
+            # now only one is left
+            result+=left[leftPointer:]
+            result+=right[rightPointer:]
+            return result
+
+        return merge(sortedLeft, sortedRight)
     
     def sortArrayMergeSort(self, nums: List[int]) -> List[int]:
         # recursive divide and conquer
