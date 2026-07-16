@@ -23,8 +23,13 @@ if echo "$STAGED" | grep -qE "(dsa_progress|design_progress|ai_progress)\.md$|^d
     echo "Error: Python not found. Install Python to enable the auto-updater." >&2
     exit 1
   fi
-  git add docs/foundations/dsa/mastery/dsa_progress.md \
-          docs/foundations/system_design/mastery/design_progress.md \
-          docs/foundations/ai_engineering/mastery/ai_progress.md 2>/dev/null
+  # Re-stage only the trackers that exist. A single `git add` listing a missing
+  # path (e.g. the AI tracker before that track starts) aborts the whole command
+  # and stages nothing — silently, leaving the regeneration uncommitted (a
+  # one-commit lag). Add each individually so one absent file can't abort the rest.
+  DSA="docs/foundations/dsa/mastery/dsa_progress.md"
+  for tracker in "$DSA" "$SD" "$AI"; do
+    [ -f "$tracker" ] && git add "$tracker"
+  done
 fi
 exit 0
