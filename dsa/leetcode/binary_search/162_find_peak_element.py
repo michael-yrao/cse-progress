@@ -28,6 +28,26 @@ Constraints:
 from typing import List
 
 class Solution:
+
+    # ── Attempt · 2026-07-16 ──────────────
+    def findPeakElement_20260716(self, nums: List[int]) -> int:
+        # it's honestly a very strange problem
+        # but we can use binary search here
+        # so looking at example 2, at m = 3, m + 1 can be a peak because it is bigger, so we go that side
+        # so this is a min boundary binary search
+
+        l, r = 0, len(nums) - 1
+
+        while l < r:
+            m = (l+r)//2
+            if m+1 < len(nums) and nums[m] < nums[m+1]:
+                # we take m out of the convo for being a possible result
+                l = m + 1
+            else:
+                r = m
+        
+        return l
+
     def findPeakElement(self, nums: List[int]) -> int:
         # key is that a peak must exist
         # and a peak is only applicable to its immediate neighbors

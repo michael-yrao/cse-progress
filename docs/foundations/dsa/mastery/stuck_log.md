@@ -19,6 +19,32 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🔴 1584. Min Cost to Connect All Points (Prim's MST) — Jul 16, 2026
+**Topic**: Minimum Spanning Tree / Prim's — first exposure. Taught, not recalled (same shape as 743 Dijkstra Jul 13 and 787 Bellman-Ford Jul 14, both 🔴 on first exposure).
+
+### Where did I get stuck?
+Everything above the code. Didn't know what an MST was, or what Prim's was. Needed: the MST definition, Prim's greedy move, that a min-heap serves "cheapest edge leaving the blob", what to seed the heap with, and where the neighbor index `j` comes from. Wrote the loop correctly once the pieces were named. Self-reported: *"this did not feel very intuitive at all."*
+
+**Three concrete reasons it fought intuition** (worth re-reading before the retry):
+1. **The graph is invisible.** Every prior graph problem hands you edges (743 `times`, 787 `flights`, 207 `prerequisites`). Here you get *points* and manufacture the graph — kept hunting for an edge list / adjmap that doesn't exist. `range(n)` **is** the adjacency list; every other point is a neighbor.
+2. **Prim's doesn't walk.** BFS/DFS/Dijkstra feel like traversal — you're somewhere, you step to a neighbor. Prim's dumps every option in a bag and takes the globally cheapest, so it *teleports* across the graph. "You don't pick — the heap picks" fights the traversal instinct.
+3. **Dijkstra's skeleton, different soul.** Same heap + visited + greedy shape, but the push means something else. Near-miss similarity misleads harder than something wholly new.
+
+### Core Realization
+**MST** = spanning (touches every node) + tree (no cycles → exactly `n-1` edges) + minimum (least total weight). Cycles are always removable: a loop means one edge is redundant, so drop the priciest and stay connected for less.
+**Prim's** = grow ONE blob from any seed; repeatedly take the cheapest edge from blob → outside; stop when all `n` are in. Greedy is *provably* optimal here (crossing-edge property), so no backtracking. Seed `(0, 0)` — node arbitrary (MST spans all, so the start can't change the total), cost 0 (the seed isn't paid for), and it removes the empty-blob special case.
+**Prim vs Kruskal**: Kruskal sorts all edges + Union-Find (many blobs merging); Prim grows one blob + min-heap + a plain `visited` set. Prim suits 1584 — dense/complete graph, sorting ~500k edges is wasteful.
+**⚠️ Prim vs Dijkstra — the trap**: Dijkstra pushes `cost + edge` (cumulative from source); **Prim pushes the bare `edge`**. Prim doesn't care how far you are from the start, only what it costs to drag a node into the blob. (Avoided this one live.)
+**O(n²) is inherent, not a flaw** — a complete graph has ~n²/2 edges; `n ≤ 1000` is the tell that O(n² log n) is intended.
+
+### Code Snippet
+The bug at the end: passed **indices** where coordinates were wanted —
+```python
+distance = manhattanDistance(node, neighbor)        # node/neighbor are ints -> TypeError
+distance = manhattanDistance(points[node], points[neighbor])   # need the lookup
+```
+Retry (Sat Jul 18) will use the **dense/array lane** by choice — `minDist=[inf]*n`, scan for the min unvisited, relax `minDist[v]=min(minDist[v], dist(u,v))`. O(n²), O(n) space, and it maps onto Bellman-Ford's relax-an-array shape which came back clean Jul 16. **Lane may change; the derivation (one blob, cheapest crossing edge is safe) must be there cold.**
+
 ## 🟡 912. Sort an Array (Merge Sort) — Jul 15, 2026
 **Sticking point**: Concept was solid; the block was *writing* it. Switched from index-based in-place (Idiom A) to return-based slices (Idiom B) — merge step then came out clean and correct first try. One boundary slip: split as `nums[:middle]` / `nums[middle+1:]`, dropping `nums[middle]` — the `+1` is correct in A (right half is `[m+1, r]`) but wrong in B, where slices are right-exclusive so right must start at `middle`. Invariant: the two slices must tile the array gap-free — *left ends where right begins, at `middle`, no `+1`*. First time off 🔴 (Blank since Jan). Boundary-arithmetic weakness cluster (424, 75, 901).
 

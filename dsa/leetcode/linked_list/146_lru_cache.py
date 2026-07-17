@@ -39,6 +39,75 @@ Constraints:
 from typing import Optional
 
 
+# ── Attempt · 2026-07-16 ──────────────
+class ListNode:
+
+    def __init__(self, key: int, value: int, prev=None, next=None):
+        self.key = key
+        self.value = value
+        self.prev = prev
+        self.next = next
+
+class LRUCache_20260716:
+# LRU is a doubly linked list
+# we want to always have two dummies
+# one for LRU and one for MRU
+# this way both can be accessed in constant time
+# we will have MRU at the head, and LRU at the tail
+# this is also a cache with key value so we need a map of key -> Node
+
+    def __init__(self, capacity: int):
+        self.capacity = capacity
+        self.cache = {}
+        self.head = ListNode(-1,-1)
+        self.tail = ListNode(-1,-1)
+        self.head.next = self.tail
+        self.head.prev = None
+        self.tail.next = None
+        self.tail.prev = self.head
+
+    def delete(self, node: ListNode) -> None:
+        prevNode = node.prev
+        nextNode = node.next
+        prevNode.next = nextNode
+        nextNode.prev = prevNode
+
+    def insert(self, node: ListNode) -> None:
+        headNext = self.head.next
+        self.head.next = node
+        node.prev = self.head
+        node.next = headNext
+        headNext.prev = node
+
+    def get(self, key: int) -> int:
+        returnValue = -1
+        if key in self.cache:
+            node = self.cache[key]
+            returnValue = node.value
+            # now we move this item to MRU
+            # so we need a delete and insert for nodes
+            self.delete(node)
+            self.insert(node)
+        return returnValue
+
+    def put(self, key: int, value: int) -> None:
+        if key in self.cache:
+            node = self.cache[key]
+            node.value = value
+            # we accessed it, thus it is now MRU
+            self.delete(node)
+            self.insert(node)
+        else:
+            node = ListNode(key,value)
+            self.cache[key] = node
+            self.insert(node)
+
+        # now we check if we are over capacity
+        while len(self.cache) > self.capacity:
+            lru = self.tail.prev
+            self.delete(lru) # type: ignore
+            del self.cache[lru.key]
+
 class Node_20260704:
     def __init__(self, key,val,prev=None,next=None):
         self.key = key

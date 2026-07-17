@@ -31,6 +31,38 @@ from typing import List, Optional
 
 
 class Solution:
+
+    # ── Attempt · 2026-07-16 ──────────────
+    def findCheapestPrice_20260716(self, n: int, flights: List[List[int]], src: int, dst: int, k: int) -> int:
+        # we can initialize an array of max price and set src to 0
+        prices = [math.inf] * n
+        prices[src] = 0
+
+        # cool thing about bellman ford is that we don't need adjacency map, we just use flights
+        # we want to lockdown prices as our prices from the prior iteration since we are limited to number of stops
+        # k stops means we can have k + 1 edges, so that is our main constraint
+
+        stopCounter = 0
+
+        while stopCounter < k + 1: 
+            # we will perform all modification on unsettledPrices
+            # we can do one stop only here
+            unsettledPrices = prices.copy()
+            for source, destination, price in flights:
+                # if source is infinite, just skip this
+                if prices[source] == math.inf:
+                    continue
+                # now check if we can do better than our prior iteration
+                if prices[source] + price < unsettledPrices[destination]:
+                    unsettledPrices[destination] = prices[source] + price
+                # if not, we just continue to the next
+            stopCounter+=1
+            prices = unsettledPrices
+        
+        if prices[dst] == math.inf:
+            return -1
+        return prices[dst] # type: ignore
+
     # ── Attempt 1 · 2026-07-14 ────────────────────────────────────────────
     def findCheapestPrice(self, n: int, flights: List[List[int]], src: int, dst: int, k: int) -> int:
         # weighted directed graph

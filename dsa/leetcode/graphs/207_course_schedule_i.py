@@ -39,6 +39,41 @@ import collections
 from typing import List
 
 class Solution:
+
+    # ── Attempt · 2026-07-16 ──────────────
+    def canFinish_20260716(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
+        # a course can have multiple pre-reqs, so we need an array with number of prereqs
+        prereqCounter = [0] * numCourses
+        # this is a BFS problem, so we will take what we can with prereqCounter of 0
+        # we should move prereq into an adj map, so course -> courses that require course
+        adjMap = collections.defaultdict(list)
+        # we also need a way to tell us which course have been taken, so like a visited set
+        taken = set()
+
+        for course, prereq in prerequisites:
+            adjMap[prereq].append(course)
+            prereqCounter[course]+=1
+        
+        # pre-populate with courses we can take now
+        queue = collections.deque()
+
+        for i in range(len(prereqCounter)):
+            if prereqCounter[i] == 0:
+                queue.append(i)
+        
+        # now that we have courses we can take first, let's take them
+        while queue:
+            currentCourse = queue.popleft()
+            taken.add(currentCourse)
+            # now go through each of the courses that require currentCourse
+            # decrement reqs by 1 and add them to queue if they are at 0
+            for course in adjMap[currentCourse]:
+                prereqCounter[course]-=1
+                if prereqCounter[course] == 0:
+                    queue.append(course)
+        
+        return len(taken) == numCourses
+
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
         # one big thing that prevented us from solving this problem initially was not properly tracking
         # what if a course had multiple pre-reqs. So this means we should keep track of how many prereqs each node has
