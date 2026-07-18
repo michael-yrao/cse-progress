@@ -34,24 +34,24 @@ Constraints:
 
 
 # ── Attempt · 2026-07-17 ──────────────
-class TrieNode:
+class TrieNode_20260717:
     def __init__(self):
         self.children = {}
         self.isWord = False
-        
+
 class Trie_20260717:
 # Tries are trees, they don't have values on nodes
 # they have values on edges, thus we will have a children map of char -> TrieNode
 # we also need to know if this is a word
 
     def __init__(self):
-        self.root = TrieNode()
+        self.root = TrieNode_20260717()
 
     def insert(self, word: str) -> None:
         traversal = self.root
         for char in word:
             if char not in traversal.children:
-                newNode = TrieNode()
+                newNode = TrieNode_20260717()
                 traversal.children[char] = newNode
             traversal = traversal.children[char]
         traversal.isWord = True
