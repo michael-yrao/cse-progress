@@ -30,6 +30,34 @@ import collections
 
 
 class Solution:
+
+    # ── Attempt · 2026-07-17 ──────────────
+    def characterReplacement_20260717(self, s: str, k: int) -> int:
+        # this is a sliding window problem
+        # r - l is our potential longest string
+        # our longest possible is so if r - l > maxfreqChar + k, we are out of bounds and need to move l
+        # frequency, so we need a freqMap
+        # and maxfreqChar, constantly getting it is not efficient. We need a better way to get it
+
+        freqMap = defaultdict(int)
+
+        longest = 0
+        maxFreq = 0
+        l = r = 0
+        
+        while r < len(s):
+            freqMap[s[r]]+=1
+            # maxFreq represents biggest we can possibly make our window
+            maxFreq = max(maxFreq,freqMap[s[r]])
+            while r - l + 1 > maxFreq + k:
+                freqMap[s[l]]-=1
+                l+=1
+            # now that we are clear, let's update our answer    
+            longest = max(longest, r - l + 1)
+            r+=1
+        
+        return longest
+
     def characterReplacement(self, s: str, k: int) -> int:
         # longest substring is a two pointer / sliding window problem
         # length of substring is based on length of highest frequency value in the substring

@@ -30,6 +30,44 @@ Constraints:
 from typing import List
 
 class Solution:
+
+    # ── Attempt · 2026-07-17 ──────────────
+    def fourSum_20260717(self, nums: List[int], target: int) -> List[List[int]]:
+        nums.sort()
+        # a + b + c + d = target
+        # a + b + c = target - d
+
+        result = set()
+
+        def twoSumSorted(i,j,newTarget):
+            results = []
+            while i < j:
+                if nums[i] + nums[j] == newTarget:
+                    results.append([i,j])
+                    i+=1
+                    j-=1
+                elif nums[i] + nums[j] > newTarget:
+                    j-=1
+                else:
+                    i+=1
+            return results
+
+        for a in range(len(nums)-3):
+            for b in range(a+1,len(nums)-2):
+                c = b+1
+                d = len(nums)-1
+                newTarget = target - nums[a] - nums[b]
+                resultArray = twoSumSorted(c,d,newTarget)
+                for c, d in resultArray:
+                    result.add((nums[a],nums[b],nums[c],nums[d]))
+        
+        resultList = []
+
+        for a,b,c,d in result:
+            resultList.append([a,b,c,d])
+
+        return list(resultList)
+
     def fourSum(self, nums: List[int], target: int) -> List[List[int]]:
         resultSet = set()
         nums.sort()

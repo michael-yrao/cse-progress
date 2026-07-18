@@ -23,6 +23,33 @@ Constraints:
 from typing import List
 
 class Solution:
+
+    # ── Attempt · 2026-07-17 ──────────────
+    def singleNonDuplicate_20260717(self, nums: List[int]) -> int:
+        # so the annoying thing here is the duplication
+        # so we need to make sure we are always on the first number of duplicates
+        # also knowing all numbers except one is a dup
+        # it means that one side has odd, and one side has even numbers
+        # [1,1,2,3,3,4,4,8,8] ; m = 3 ; 3%2 != 0, therefore we go left
+        #  l     m         r
+        # since we are not looking for the exact number, this is another boundary search
+        
+        l, r = 0, len(nums) - 1
+
+        while l < r:
+            m = (l+r)//2
+            # we need to check if nums[m] is the first occurence of the number
+            if m-1 >= 0 and nums[m] == nums[m-1]:
+                m-=1
+            # now we know m is the first number of the dups, we can do the mod check
+            # if m%2 is true, then answer is definitely not in the left side
+            if m%2 == 0 and nums[m] == nums[m+1]:
+                l = m + 2
+            else:
+                r = m
+        
+        return nums[l]
+
     def singleNonDuplicate(self, nums: List[int]) -> int:
         # logn time and O(1) space means has to be binary search and no extra space
         # we don't know what we are looking for, thus we need a way to identify which half it is in

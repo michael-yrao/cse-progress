@@ -19,6 +19,15 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🟡 424. Longest Repeating Character Replacement — Jul 17, 2026
+**Sticking point**: Sliding-window skeleton + `windowLen - maxFreq > k` invalidity test + shrink all correct — and window bounds (`r-l+1`) were clean (progress on the boundary cluster). The one miss was the central insight: set `maxFreq = freqMap[s[r]]` (count of the *current* char) instead of the running high-water max `max(maxFreq, freqMap[s[r]])`. Also recomputed maxFreq inside the shrink loop (pointless — `s[r]` fixed while `l` moves). Key concept to own for the retry: **maxFreq is a high-water mark, not the live window max — it's allowed to go "stale" (higher than the current window's true max), because the answer only grows when a new high is hit, and a smaller maxFreq would only shrink the window, which never improves a *longest*-window answer.** That's why the classic form is an `if`-slide with no downward update. Verified 0/3200 vs brute force after fix.
+
+## 🟡 540. Single Element in a Sorted Array — Jul 17, 2026
+**Sticking point**: Binary-search skeleton recalled, but decided direction by *parity of the normalized index alone* — which can't tell an intact even-aligned pair from the single element sitting at an even index (both make `m` even), so it jumped `l=m+2` over the answer. Fix: after fixing `m` even, compare `nums[m]==nums[m+1]` — equal → pairing intact, go right; else break is at/left, `r=m`. Second miss: returned `l` (index) instead of `nums[l]` (value) — masked when index and value coincide. Verified correct vs brute force after both fixes.
+
+## 🟡 18. Four Sum — Jul 17, 2026
+**Sticking point**: Approach recalled cold (sort → two outer loops → two-pointer inner two-sum → set dedup), but four execution bugs, two in the boundary/pointer cluster: (1) outer bounds `range(n-4)` and `for b in range(a,...)` — first misses a minimal 4-element input, second reuses index a → `range(n-3)` / `range(a+1, n-2)`; (2) inner helper returned a bool but the quad was built from the untouched `nums[c]`/`nums[d]`; (3) even after returning indices, they weren't captured; (4) collect-all loop appended on a match but didn't advance both pointers → infinite loop. Pattern: the *algorithm* is there; the failures are all bounds + pointer bookkeeping (cf. 75, 424, 901). Say the two-pointer invariant out loud: on a match, record AND move both inward.
+
 ## 🔴 1584. Min Cost to Connect All Points (Prim's MST) — Jul 16, 2026
 **Topic**: Minimum Spanning Tree / Prim's — first exposure. Taught, not recalled (same shape as 743 Dijkstra Jul 13 and 787 Bellman-Ford Jul 14, both 🔴 on first exposure).
 

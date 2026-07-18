@@ -31,6 +31,34 @@ from typing import List
 
 
 class Solution:
+
+    # ── Attempt · 2026-07-17 ──────────────
+    def sortColors_20260717(self, nums: List[int]) -> None:
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+        # dutch flag algorithm : left, traversal, right pointers
+        # left to handle 0s
+        # right to handle 2s
+        # traversal pointer to read and swap numbers
+
+        def swap(a,b):
+            tmp = nums[a]
+            nums[a] = nums[b]
+            nums[b] = tmp
+        
+        left, traversal, right = 0, 0, len(nums) - 1
+
+        while traversal <= right:
+            if nums[traversal] == 0:
+                swap(left,traversal)
+                left+=1
+            elif nums[traversal] == 2:
+                swap(right, traversal)
+                right-=1
+                traversal-=1 # we do this so that we can look at the number we just swapped over
+            traversal+=1
+
     def sortColorsBucketSort(self, nums: List[int]) -> None:
         # since there's only 3 colors, we can just do count/bucket sort
         # and then loop through and replace

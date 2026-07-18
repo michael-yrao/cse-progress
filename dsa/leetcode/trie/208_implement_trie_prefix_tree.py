@@ -31,6 +31,47 @@ Constraints:
     word and prefix consist only of lowercase English letters.
     At most 3 * 104 calls in total will be made to insert, search, and startsWith.
 """
+
+
+# ── Attempt · 2026-07-17 ──────────────
+class TrieNode:
+    def __init__(self):
+        self.children = {}
+        self.isWord = False
+        
+class Trie_20260717:
+# Tries are trees, they don't have values on nodes
+# they have values on edges, thus we will have a children map of char -> TrieNode
+# we also need to know if this is a word
+
+    def __init__(self):
+        self.root = TrieNode()
+
+    def insert(self, word: str) -> None:
+        traversal = self.root
+        for char in word:
+            if char not in traversal.children:
+                newNode = TrieNode()
+                traversal.children[char] = newNode
+            traversal = traversal.children[char]
+        traversal.isWord = True
+
+    def search(self, word: str) -> bool:
+        traversal = self.root
+        for char in word:
+            if char not in traversal.children:
+                return False
+            traversal = traversal.children[char]
+        return traversal.isWord
+        
+    def startsWith(self, prefix: str) -> bool:
+        traversal = self.root
+        for char in prefix:
+            if char not in traversal.children:
+                return False
+            traversal = traversal.children[char]
+        return True
+
 class TrieNode:
     def __init__(self):
         # char -> TrieNode map
