@@ -30,6 +30,24 @@ Follow up: Could you minimize the total number of operations done?
 from typing import List
 
 class Solution:
+
+    # ── Attempt · 2026-07-19 ──────────────
+    def moveZeroes_20260719(self, nums: List[int]) -> None:
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+        # two pointers, we just want to move nonzeros to the front
+        # so we use l to keep track of where to put the next nonzero value
+        l = r = 0
+
+        while r < len(nums):
+            if nums[r] != 0:
+                tmp = nums[l]
+                nums[l] = nums[r]
+                nums[r] = tmp
+                l+=1
+            r+=1
+
     def moveZeroes(self, nums: List[int]) -> None:
         """
         Do not return anything, modify nums in-place instead.

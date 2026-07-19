@@ -36,6 +36,27 @@ class TreeNode:
         self.right = None
 
 class Solution:
+
+    # ── Attempt · 2026-07-19 ──────────────
+    def lowestCommonAncestor_20260719(self, root: TreeNode, p: TreeNode, q: TreeNode) -> TreeNode:
+        # this is a BST so we can decide direction to go based on values
+        # if root is smaller than both p and q, we go left
+        # if root is bigger than both p and q, we go right
+        # if root is in between, this is the smallest LCA
+        if not root or not p or not q:
+            return root
+        
+        # if root is in between p and q, we found the answer
+        if root.val <= p.val and root.val >= q.val:
+            return root
+        if root.val <= q.val and root.val >= p.val:
+            return root
+
+        if root.val <= p.val and root.val <= q.val:
+            return self.lowestCommonAncestor_20260719(root.right, p, q) # type: ignore
+        else:
+            return self.lowestCommonAncestor_20260719(root.left, p, q) # type: ignore
+
     def lowestCommonAncestor(self, root: TreeNode, p: TreeNode, q: TreeNode) -> TreeNode: # type: ignore
         # While we can generate the BST with inorder DFS
         # it isn't the right way to find the answer
