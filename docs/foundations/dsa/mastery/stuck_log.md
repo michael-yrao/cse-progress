@@ -83,6 +83,9 @@ Same first-exposure-🔴 pattern as 743/787/1584 (a new graph algorithm taught, 
 contrast: here the learner **owned the paradigm** (graph + BFS) and only needed the *optimization* + bug
 fixes — further along than the MST/shortest-path 🔴s where the paradigm itself was the gap. Retry Jul 20.
 
+## 🟡 235. Lowest Common Ancestor of a BST — Jul 19, 2026
+**Sticking point**: BST ordering logic sound (in-between → LCA; else descend), but two bugs, neither self-caught: (1) the recursive descent calls discarded their return value (`self.lca(root.left, …)` with no `return`), then unconditionally `return root` — so any descent handed back the current node, not the found LCA. (2) Direction inverted: root smaller than both went left, root bigger than both went right — backwards (smaller-than-both → targets are right; bigger-than-both → left). Notably the learner's *verbal* reasoning had the direction right; only the code disagreed. Fix: `return self.lca(right)` when `root < both`, `return self.lca(left)` when `root > both`.
+
 ## 🟡 417. Pacific Atlantic Water Flow — Jul 19, 2026
 **Sticking point**: Approach owned cold (reverse-BFS from each ocean's border, intersect the two reachable sets). Two silly bugs, neither self-caught: (1) visited-guard looked up `heights[nr][nc] not in canReach…` — a *height value* against a set of *coordinate tuples*, so it never actually blocked re-visits; should be `(nr,nc) not in …`. (2) Strict `>` on the height step dropped equal-height cells — reverse flow steps to a neighbor with height `>=` current, since water flows `<=`. Both are read-what-you-store / off-by-equality slips, not conceptual.
 
