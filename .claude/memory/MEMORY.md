@@ -13,9 +13,11 @@
 - [Spine first](feedback_spine_first.md) — open every conceptual explanation with the 2–3 load-bearing facts, then STOP and check in; tactics/tables/edge cases only on request
 - [Interactive learning](feedback_interactive_learning.md) — heavy concepts get derive-the-design / failure-mode drills / Socratic pushback, not explanation dumps
 - [Turn economy](feedback_turn_economy.md) — in interactive sessions, one job per turn (affirm + one correction + one question); push tables/mnemonics/derivations into the written note, not the chat; progressive disclosure; don't re-explain a right answer
+- [Procedure-first algorithm teaching](feedback_procedure_first.md) — teach a new algorithm as the literal loop in plain operational language + a hand-trace on tiny concrete numbers; add proof/complexity/jargon only later, only if asked; answer mechanics with mechanics; on "makes no sense" strip DOWN to procedure
 - [No spoilers](feedback_no_spoilers.md) — zero hints/approaches unless explicitly asked or stuck; NEVER recap the approach (or stuck_log content) when a problem/retry begins
 - [No prior-attempt comparison](feedback_no_prior_attempt_comparison.md) — judge today's code on its own; never read or cite prior attempts (stashed in .history/ on a retry) when giving feedback or rating
 - [Infer comfort rating](feedback_infer_comfort.md) — read Clean/Shaky/Blank from the conversation against the rubric and propose it for confirmation; don't ask the user cold
+- [Provisional Clean](feedback_provisional_clean.md) — a 🟢 directly after a 🔴 is logged Streak 0 → +10 lock-down (not +30); survives → Streak 1 → +30; only Blank→Clean is provisional; never "fix" 🟢/Streak-0 to Streak 1
 - [Git commit checklist](feedback_git_commit.md) — always run git status before committing to catch unstaged solution files
 - [Batch commits](feedback_batch_commits.md) — don't commit per problem; accumulate and commit once at session end (each commit re-injects ~70 lines of the tracker into context)
 - [Proactive scheduling](feedback_proactive_scheduling.md) — after logging any result, scan tracker for problems due within 7 days and slot them immediately

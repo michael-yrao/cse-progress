@@ -19,6 +19,76 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🔴 127. Word Ladder (BFS) — Jul 18, 2026
+**Topic**: BFS shortest path on an implicit word graph + the wildcard-bucket adjacency trick. First
+exposure. Learner self-rated 🔴 on hint volume — the spine was recalled, but the optimization was taught
+and the BFS had four bugs.
+
+### Where the struggle actually was
+Not the top-level framing — the learner **got that unaided**: "beginning and end, find a path one letter
+at a time → graph, shortest path." The stumbles were three layers down:
+1. **Algorithm choice.** Reached for Dijkstra. Needed the nudge that every edge costs 1 (equal weight) ⟹
+   BFS *is* the shortest-path algorithm here; Dijkstra is just a slower BFS on an unweighted graph.
+2. **Neighbor test.** Proposed a **frequency array** to decide "one letter apart" — that measures multiset
+   difference, so `dot`/`tod` would falsely count as neighbors. Position matters → char-by-char, count
+   positions that differ, valid iff exactly 1.
+3. **The wildcard-bucket adjacency was fully taught**, not recalled. Learner was heading toward O(N²·L)
+   pairwise comparison. The trick — bucket every word under its `*`-patterns (`h*t`, `ho*`, `*ot`); two
+   words in the same bucket are automatically one letter apart — dropped build+BFS to O(N·L²).
+4. **Four BFS bugs, cleared one at a time:**
+   - `level = len(queue)` used as the *depth* counter — that's frontier *size*, not depth. Fix: snapshot
+     `len(queue)` as the level batch size, drain exactly that many per `level += 1`.
+   - Added neighbors to `visited` but never *checked* `visited` before enqueue → words re-enqueued; also
+     `beginWord` never marked visited.
+   - **Off-by-one**: `endWord` is discovered as a *neighbor* (enqueue time), one level below the word being
+     processed, so returning `level` is one short. Fix: `return level + 1` at the moment `nextWord == endWord`.
+   - **Injected `endWord` into the graph** (`allWords.append(endWord)` unconditionally) → Example 2
+     (endWord not in wordList, answer 0) wrongly returned a path. `endWord` is a node only if `wordList`
+     already contains it.
+
+### Core Realization
+Two that the learner should carry to the retry: **(a)** equal edge weight ⟹ plain BFS gives shortest path
+(don't reach for Dijkstra); **(b)** to avoid O(N²) neighbor-finding, bucket words by `*`-wildcard pattern —
+sharing a bucket *is* the one-letter-apart relation, computed without any pairwise comparison. And the BFS
+counting contract: depth is counted per *level batch*, and the target is found the moment it's *enqueued*,
+so its depth is `current level + 1`.
+
+### Code Snippet (the shape to rebuild from a blank page)
+```python
+# build: word -> its L wildcard patterns -> bucket of words
+wildcardMap = collections.defaultdict(set)
+for word in [beginWord] + wordList:            # NOT endWord unless it's in wordList
+    for i in range(len(word)):
+        wildcardMap[word[:i] + '*' + word[i+1:]].add(word)
+
+visited = {beginWord}
+queue = collections.deque([beginWord])
+level = 0
+while queue:
+    level += 1
+    for _ in range(len(queue)):                # snapshot frontier size = this level
+        cur = queue.popleft()
+        for i in range(len(cur)):
+            for nxt in wildcardMap[cur[:i] + '*' + cur[i+1:]]:
+                if nxt == endWord:
+                    return level + 1           # found at enqueue → one level deeper
+                if nxt not in visited:
+                    visited.add(nxt)
+                    queue.append(nxt)
+return 0
+```
+
+### Meta
+Same first-exposure-🔴 pattern as 743/787/1584 (a new graph algorithm taught, not recalled). But note the
+contrast: here the learner **owned the paradigm** (graph + BFS) and only needed the *optimization* + bug
+fixes — further along than the MST/shortest-path 🔴s where the paradigm itself was the gap. Retry Jul 20.
+
+## 🟡 261. Graph Valid Tree (Union-Find) — Jul 18, 2026
+**Sticking point**: UF machinery clean (path-compressed `find`, union-by-rank returning False on cycle, n−1 edge-count guard up front). The miss was the *connectivity* half: used `len(visited) == n` where `visited` = "nodes that appeared in an edge" — not actual connectivity, and it wrongly fails the valid single-node tree (n=1, edges=[] → 0==1 → False). Key theorem to own: **an acyclic graph (forest) with n nodes and c components has exactly n−c edges**; so forcing edges = n−1 AND proving acyclic (UF) ⟹ n−1 = n−c ⟹ c=1 (connected). The connectivity check is therefore free — just `return True` after the guard + union loop. (If an explicit check is wanted, count distinct roots == 1, which also handles n=1.)
+
+## 🟡 19. Remove Nth Node From End (Postorder Recursion) — Jul 18, 2026
+**Sticking point**: Recursion-rewiring cluster again (cf. 143, 206). Two rounds: (1) counted with a `nonlocal` incremented *before* recursing → every frame on the way up sees the same max count, so `== n` can't identify any node; postorder count-from-back must accumulate on the way UP via the return value (`count = removeNode(node.next) + 1`). (2) Off-by-one + no-op removal: stopped at `count == n` (the target itself, un-removable in a singly list) instead of `n + 1` (the predecessor), and the "removal" was `node.next = node.next` (self-assign). Fix: at `count == n+1`, `node.next = node.next.next`. Dummy correctly handles head removal (becomes the predecessor at count n+1). Contract to say out loud: postorder count rides the return value up; act on the predecessor, not the target.
+
 ## 🟡 424. Longest Repeating Character Replacement — Jul 17, 2026
 **Sticking point**: Sliding-window skeleton + `windowLen - maxFreq > k` invalidity test + shrink all correct — and window bounds (`r-l+1`) were clean (progress on the boundary cluster). The one miss was the central insight: set `maxFreq = freqMap[s[r]]` (count of the *current* char) instead of the running high-water max `max(maxFreq, freqMap[s[r]])`. Also recomputed maxFreq inside the shrink loop (pointless — `s[r]` fixed while `l` moves). Key concept to own for the retry: **maxFreq is a high-water mark, not the live window max — it's allowed to go "stale" (higher than the current window's true max), because the answer only grows when a new high is hit, and a smaller maxFreq would only shrink the window, which never improves a *longest*-window answer.** That's why the classic form is an `if`-slide with no downward update. Verified 0/3200 vs brute force after fix.
 
@@ -27,6 +97,38 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ## 🟡 18. Four Sum — Jul 17, 2026
 **Sticking point**: Approach recalled cold (sort → two outer loops → two-pointer inner two-sum → set dedup), but four execution bugs, two in the boundary/pointer cluster: (1) outer bounds `range(n-4)` and `for b in range(a,...)` — first misses a minimal 4-element input, second reuses index a → `range(n-3)` / `range(a+1, n-2)`; (2) inner helper returned a bool but the quad was built from the untouched `nums[c]`/`nums[d]`; (3) even after returning indices, they weren't captured; (4) collect-all loop appended on a match but didn't advance both pointers → infinite loop. Pattern: the *algorithm* is there; the failures are all bounds + pointer bookkeeping (cf. 75, 424, 901). Say the two-pointer invariant out loud: on a match, record AND move both inward.
+
+## 🔴 1584. Min Cost to Connect All Points (Prim's MST) — Jul 18, 2026 (retry #1, still 🔴)
+**Topic**: MST / Prim's, dense-array lane. 2nd 🔴 — got a correct solution running (verified 0/2000 vs
+reference) but only after full pseudocode + a step-by-step walkthrough. Taught, not recalled.
+
+### Where the struggle actually was
+Not boundary arithmetic (that's the other cluster) — this was the **greedy paradigm itself** and
+**maintaining state across rounds**. Two recurring wrong structures before the right one:
+1. **Fused select and relax.** Kept writing a nested `for i / for j in range(i+1,…)` that walked index
+   pairs in order, instead of *each round* scanning the whole `distance[]` scoreboard for the cheapest
+   unvisited node, then relaxing from it. Select must **read** `distance[]`; relax is the **only** place
+   distances are computed. Fusing them = "connect each point to the previous / to node 0" = a path/star,
+   not an MST.
+2. **`visited.add(0)` without relaxing from 0** → round-1 select saw all-∞ and died. Insight the learner
+   reached themselves: *settling a node = mark visited AND relax, always together*; marking visited alone
+   leaves the scoreboard blind to that node's edges. Cleanest fix: don't pre-add 0; seed only
+   `distance[0]=0` and let the loop pull it in (glues the two actions).
+
+### Good signs (understanding forming even though recall isn't)
+Learner's *own* probing questions were sharp: "wouldn't select return -1 if everything's ∞?" (base case)
+and "why can't I add node 0 to visited immediately?" (found the settle=visited+relax tension). The model
+is building; cold production isn't there yet — expected for a hard greedy algorithm across 2 exposures.
+
+### The shape to recall (not memorize the code)
+`distance=[inf]*n; distance[0]=0; visited={}`. Repeat until all visited: **select** cheapest unvisited
+(read scoreboard) → **pull in** (mark visited, bank cost) → **relax** every remaining node from it. One
+line to carry: *one component grows; each round settle the cheapest edge crossing out of it.*
+
+### Meta (teaching)
+This retry exposed a coaching flaw — taught proof-first (cut property, "settled", complexity) before
+procedure. See [[feedback-procedure-first]]: lead with the literal loop in plain language + a hand-trace,
+proof only if asked. Next retry: start from the operational loop, not the theorem.
 
 ## 🔴 1584. Min Cost to Connect All Points (Prim's MST) — Jul 16, 2026
 **Topic**: Minimum Spanning Tree / Prim's — first exposure. Taught, not recalled (same shape as 743 Dijkstra Jul 13 and 787 Bellman-Ford Jul 14, both 🔴 on first exposure).

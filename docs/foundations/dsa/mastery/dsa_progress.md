@@ -6,11 +6,17 @@ Notes for future agents:
 - `Streak` tracks consecutive Clean results. Increments on Clean, resets to 0 on Shaky or Blank.
 - `Attempt Dates` is a collapsed summary of the original Attempt 1–5 columns.
 - Set `Next Review Date` as a computed value based on Comfort and Streak:
+  - 🟢 Clean, **Streak 0 (provisional — first Clean directly after a 🔴 Blank): +10 days** (lock-down check; not yet trusted)
   - 🟢 Clean, Streak 1: +30 days
   - 🟢 Clean, Streak 2: +60 days
   - 🏆 Retired (Streak 3+): +180 days (spot check)
   - 🟡 Shaky (any streak): +10 days, reset Streak to 0
   - 🔴 Blank (any streak): +2 days, reset Streak to 0
+- **Provisional Clean (🟢 + Streak 0):** log a 🟢 that *directly follows a 🔴* with **Streak 0**, not 1 — it
+  gets a short +10 lock-down to verify the Blank→Clean actually stuck. If it survives (Clean again), log it
+  Streak 1 (→ +30) and it rejoins the normal ladder; if it slips to 🟡/🔴, it resets as usual. A 🟢 after a
+  🟡 (not a 🔴) is logged Streak 1 as normal — only Blank→Clean is provisional. Do NOT "fix" a 🟢/Streak-0 to
+  Streak 1; that silently removes the lock-down.
 - When a problem reaches Streak 3, change Comfort to 🏆 to retire it from regular rotation.
 - Retired problems return for a spot check every 180 days. If still Clean, stays 🏆 (+180). If Shaky/Blank, return to active rotation.
 - This Markdown file is generated from current row data by `scripts/update_review_dates.py`.
@@ -30,21 +36,25 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/dsa/mastery/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **95** problems &nbsp;·&nbsp; **105** solutions &nbsp;·&nbsp; **317** attempts
+> **96** problems &nbsp;·&nbsp; **106** solutions &nbsp;·&nbsp; **322** attempts
 
 | | 🏆 Retired | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|
-| **Solutions** | 0 | 85 | 19 | 1 |
+| **Solutions** | 0 | 85 | 19 | 2 |
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|---|
+| Medium | [1584. Min Cost to Connect All Points (Prim's MST)](https://leetcode.com/problems/min-cost-to-connect-all-points/) | 🔴 | 0 | 2026-07-20 | 2026-07-18 | 2026-07-16, 2026-07-18 |
+| Medium | [261. Graph Valid Tree (Union-Find)](https://leetcode.com/problems/graph-valid-tree/) | 🟡 | 0 | 2026-07-28 | 2026-07-18 | 2026-06-19, 2026-06-29, 2026-07-09, 2026-07-18 |
+| Medium | [19. Remove Nth Node From End of List (Postorder Recursion)](https://leetcode.com/problems/remove-nth-node-from-end-of-list/) | 🟡 | 0 | 2026-07-28 | 2026-07-18 | 2026-05-18, 2026-05-21, 2026-06-18, 2026-06-28, 2026-07-08, 2026-07-18 |
+| Medium | [200. Number of Islands (BFS)](https://leetcode.com/problems/number-of-islands/) | 🟢 | 2 | 2026-09-16 | 2026-07-18 | 2026-05-30, 2026-06-01, 2026-06-07, 2026-07-18 |
+| Hard | [127. Word Ladder (BFS)](https://leetcode.com/problems/word-ladder/) | 🔴 | 0 | 2026-07-20 | 2026-07-18 | 2026-07-18 |
 | Medium | [424. Longest Repeating Character Replacement](https://leetcode.com/problems/longest-repeating-character-replacement/) | 🟡 | 0 | 2026-07-27 | 2026-07-17 | 2026-04-19, 2026-07-02, 2026-07-10, 2026-07-17 |
 | Medium | [208. Implement Trie (Prefix Tree)](https://leetcode.com/problems/implement-trie-prefix-tree/) | 🟢 | 1 | 2026-08-16 | 2026-07-17 | 2026-07-06, 2026-07-08, 2026-07-17 |
 | Medium | [75. Sort Colors (Dutch Flag)](https://leetcode.com/problems/sort-colors/) | 🟢 | 1 | 2026-08-16 | 2026-07-17 | 2026-01-08, 2026-04-01, 2026-05-26, 2026-05-28, 2026-06-28, 2026-07-08, 2026-07-17 |
 | Medium | [540. Single Element in a Sorted Array](https://leetcode.com/problems/single-element-in-a-sorted-array/) | 🟡 | 0 | 2026-07-27 | 2026-07-17 | 2026-05-02, 2026-06-12, 2026-06-13, 2026-07-17 |
 | Medium | [18. Four Sum](https://leetcode.com/problems/4sum/) | 🟡 | 0 | 2026-07-27 | 2026-07-17 | 2026-01-23, 2026-07-17 |
-| Medium | [1584. Min Cost to Connect All Points (Prim's MST)](https://leetcode.com/problems/min-cost-to-connect-all-points/) | 🔴 | 0 | 2026-07-18 | 2026-07-16 | 2026-07-16 |
-| Medium | [787. Cheapest Flights Within K Stops (Bellman-Ford)](https://leetcode.com/problems/cheapest-flights-within-k-stops/) | 🟢 | 1 | 2026-08-15 | 2026-07-16 | 2026-07-14, 2026-07-16 |
+| Medium | [787. Cheapest Flights Within K Stops (Bellman-Ford)](https://leetcode.com/problems/cheapest-flights-within-k-stops/) | 🟢 | 0 | 2026-07-26 | 2026-07-16 | 2026-07-14, 2026-07-16 |
 | Medium | [146. LRU Cache](https://leetcode.com/problems/lru-cache/) | 🟢 | 1 | 2026-08-15 | 2026-07-16 | 2026-07-04, 2026-07-07, 2026-07-16 |
 | Medium | [162. Find Peak Element](https://leetcode.com/problems/find-peak-element/) | 🟢 | 2 | 2026-09-14 | 2026-07-16 | 2026-05-02, 2026-06-12, 2026-06-13, 2026-07-16 |
 | Medium | [207. Course Schedule I](https://leetcode.com/problems/course-schedule/) | 🟢 | 2 | 2026-09-14 | 2026-07-16 | 2026-06-08, 2026-06-12, 2026-06-13, 2026-07-16 |
@@ -73,11 +83,9 @@ Notes for future agents:
 | Medium | [621. Task Scheduler](https://leetcode.com/problems/task-scheduler/) | 🟢 | 1 | 2026-08-09 | 2026-07-10 | 2026-06-30, 2026-07-01, 2026-07-10 |
 | Medium | [105. Construct Binary Tree from Preorder and Inorder Traversal](https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/) | 🟢 | 1 | 2026-08-09 | 2026-07-10 | 2026-07-08, 2026-07-10 |
 | Medium | [1448. Count Good Nodes in Binary Tree](https://leetcode.com/problems/count-good-nodes-in-binary-tree/) | 🟡 | 0 | 2026-07-20 | 2026-07-10 | 2026-05-15, 2026-06-18, 2026-07-10 |
-| Medium | [261. Graph Valid Tree (Union-Find)](https://leetcode.com/problems/graph-valid-tree/) | 🟡 | 0 | 2026-07-19 | 2026-07-09 | 2026-06-19, 2026-06-29, 2026-07-09 |
 | Medium | [36. Valid Sudoku](https://leetcode.com/problems/valid-sudoku/) | 🟢 | 1 | 2026-08-08 | 2026-07-09 | 2026-01-25, 2026-05-22, 2026-06-30, 2026-07-09 |
 | Medium | [19. Remove Nth Node From End of List (Iterative)](https://leetcode.com/problems/remove-nth-node-from-end-of-list/) | 🟢 | 1 | 2026-08-08 | 2026-07-09 | 2026-04-29, 2026-05-18, 2026-06-30, 2026-07-09 |
 | Easy | [20. Valid Parentheses](https://leetcode.com/problems/valid-parentheses/) | 🟢 | 1 | 2026-08-08 | 2026-07-09 | 2026-05-19, 2026-05-21, 2026-06-30, 2026-07-09 |
-| Medium | [19. Remove Nth Node From End of List (Postorder Recursion)](https://leetcode.com/problems/remove-nth-node-from-end-of-list/) | 🟡 | 0 | 2026-07-18 | 2026-07-08 | 2026-05-18, 2026-05-21, 2026-06-18, 2026-06-28, 2026-07-08 |
 | Hard | [42. Trapping Rain Water (Array)](https://leetcode.com/problems/trapping-rain-water/) | 🟢 | 1 | 2026-08-07 | 2026-07-08 | 2026-04-15, 2026-06-29, 2026-07-08 |
 | Easy | [496. Next Greater Element I](https://leetcode.com/problems/next-greater-element-i/) | 🟢 | 1 | 2026-08-05 | 2026-07-06 | 2026-07-04, 2026-07-06 |
 | Medium | [323. Number of Connected Components (BFS)](https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/) | 🟢 | 1 | 2026-08-05 | 2026-07-06 | 2026-06-16, 2026-06-22, 2026-07-06 |
@@ -128,7 +136,6 @@ Notes for future agents:
 | Medium | [1011. Capacity To Ship Packages Within D Days](https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/) | 🟢 | 1 | 2026-07-12 | 2026-06-12 | 2026-05-03, 2026-06-12 |
 | Medium | [417. Pacific Atlantic Water Flow](https://leetcode.com/problems/pacific-atlantic-water-flow/) | 🟢 | 1 | 2026-07-11 | 2026-06-11 | 2026-06-11 |
 | Medium | [133. Clone Graph](https://leetcode.com/problems/clone-graph/) | 🟢 | 1 | 2026-07-07 | 2026-06-07 | 2026-06-04, 2026-06-05, 2026-06-07 |
-| Medium | [200. Number of Islands (BFS)](https://leetcode.com/problems/number-of-islands/) | 🟢 | 1 | 2026-07-07 | 2026-06-07 | 2026-05-30, 2026-06-01, 2026-06-07 |
 | Easy | [100. Same Tree](https://leetcode.com/problems/same-tree/) | 🟢 | 1 | 2026-07-05 | 2026-06-05 | 2026-05-01, 2026-06-05 |
 | Easy | [88. Merge Sorted Array](https://leetcode.com/problems/merge-sorted-array/) | 🟢 | 1 | 2026-07-04 | 2026-06-04 | 2026-01-10, 2026-04-03, 2026-06-04 |
 | Medium | [15. 3Sum](https://leetcode.com/problems/3sum/) | 🟢 | 1 | 2026-06-29 | 2026-05-30 | 2026-01-19, 2026-04-07, 2026-05-30 |

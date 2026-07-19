@@ -262,23 +262,24 @@ editing. A category earns a harder tier when its new problems consistently log �
 | Standard Graphs | Moderate | 4–5 | |
 | Heap / Priority Queue | Moderate | 4–5 | |
 | Tries | Moderate | 4–5 | 3 problems; ~1 week |
-| **Advanced Graphs** | **Hard** | **4** | Reclassified moderate→hard Jul 14, 2026 (743+787 back-to-back 🔴) |
+| **Advanced Graphs** | **Hardest** | **3** | Hard→Hardest Jul 18, 2026: 1584 Prim still 🔴 after 2 exposures + review-saturated weeks; new-algorithm-per-problem at DP-level blank rate (was moderate→Hard/4 Jul 14) |
 | Sliding Window | Moderate | 4–5 | |
 | Stack | Moderate | 4–5 | |
 | Intervals + Greedy | Moderate | 4–5 | |
 | **Backtracking** | **Hard** | **4** | New decision-tree pattern per problem |
-| **1D Dynamic Programming** | **DP (Hardest)** | **3** | Hardest + slowest; do not compress phase below 4 weeks |
-| **2D Dynamic Programming** | **DP (Hardest)** | **3** | Hardest + slowest; do not compress phase below 4 weeks |
+| **1D Dynamic Programming** | **Hardest** | **3** | Hardest + slowest; do not compress phase below 4 weeks |
+| **2D Dynamic Programming** | **Hardest** | **3** | Hardest + slowest; do not compress phase below 4 weeks |
 | Bit Manipulation + Math/Geometry | Moderate | 4–5 | Many are Easy-tier |
 
 **Tier definitions:** **Moderate** = pattern reused across problems, first attempt often 🟡 not 🔴 → **4–5/week**.
 **Hard** = a *new algorithm per problem*, first attempt almost always 🔴 → **4/week**.
-**DP (Hardest)** = hardest + slowest, highest blank rate → **3/week**.
+**Hardest** = new-algorithm-per-problem *and* DP-level blank rate / slowest to settle → **3/week**
+(**Advanced Graphs**, 1D DP, 2D DP).
 
 - **New problems per week (difficulty-tiered, not just phase-dependent)** — per the table above:
   - **Moderate categories** (Standard Graphs / Heap / Tries / Sliding Window / Stack / Intervals+Greedy / Bit-Math): **4–5 per week.** Front-load these easier phases to bank a lead. Fits the 5/day cap (steady-state reviews ~3.5/day + 5 new ≈ 4.1/day).
-  - **Hard, algorithm-dense categories** (**Advanced Graphs**, **Backtracking**): **4 per week — not 5.** These introduce a *new algorithm per problem* (Dijkstra, Bellman-Ford, MST, Eulerian…), so the first attempt almost always logs 🔴, and every 🔴 spawns a +2-day retry that eats a warmup slot. Hold intake at 4 so the blank cascade has room to settle before the next new problem lands.
-  - **DP phases (1D Oct / 2D Nov)**: **3 per week.** Hardest and slowest; each new one spikes the Blank rate. Keep intake low so it doesn't trip the overdue-backlog rule.
+  - **Hard, algorithm-dense categories** (**Backtracking**): **4 per week — not 5.** A *new decision-tree pattern per problem*, so the first attempt often logs 🔴, and every 🔴 spawns a +2-day retry that eats a warmup slot. Hold intake at 4 so the blank cascade has room to settle before the next new problem lands.
+  - **Hardest categories** (**Advanced Graphs**, **1D DP** Oct, **2D DP** Nov): **3 per week.** Hardest and slowest, highest blank rate. Advanced Graphs was re-paced Hard→Hardest on Jul 18, 2026: it's a *new algorithm per problem* (Dijkstra, Bellman-Ford, MST/Prim, Eulerian…) **and** proving as blank-heavy as DP — 1584 Prim was still 🔴 after two exposures, and the +2 retry cascade collided with review-saturated weeks (Jul 20–26 was at 27/28 warmup slots on reviews alone). Keep intake at 3 so the blanks settle and it doesn't trip the overdue-backlog rule.
   - **Rationale — the blank tax.** A new problem is not a 1-slot commitment. A 🔴 costs 1 active slot *plus* ~2–3 follow-up warmup slots over the next fortnight as its +2 retries settle to 🟡. At 5 hard-category new/week, that cascade consumes ~40% of the 28 weekly warmup slots servicing *recent* material, starving the backlog (which is why the 🟢 pile sits at 35 and won't drain). Dropping hard categories to 4 returns roughly one warmup slot/week to genuine review. **Evidence this tier was real:** Advanced Graphs was mis-bucketed as "moderate" (4–5) and produced back-to-back 🔴 on 743 (Dijkstra) and 787 (Bellman-Ford) in one week — reclassified to hard on Jul 14, 2026.
   - **Net effect on the roadmap:** ~late-November NC150 completion holds, with far less Blank-pileup risk than 5/week through the hard blocks.
 - **Active-block guard**: only ~6 active-block slots exist per week (Sunday = system design). At 5 new/week, 5 slots are consumed by new problems — reserve at least 1 for re-coding Blanks. If Blank re-solves are stacking up, cut new intake that week.

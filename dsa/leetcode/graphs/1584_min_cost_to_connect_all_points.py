@@ -27,10 +27,60 @@ Constraints:
 # Write everything yourself from here — including any ListNode/TreeNode classes a
 # problem needs. No shared data-model imports (whiteboard fidelity).
 import heapq
+import math
 from typing import List, Optional
 
 
 class Solution:
+
+    # ── Attempt · 2026-07-18 ──────────────
+    def minCostConnectPoints_20260718(self, points: List[List[int]]) -> int:
+        # min spanning tree is the perfect candidate for greedy algorithm
+        # we will use an array like we did for bellman ford to indicate all nodes are infinite distance away
+        # then we update it as we go through them
+        # we need a visited set that tells us whether or not this is the absolute min we can get for this node
+        visited = set()
+
+        distance = [math.inf] * len(points)
+
+        # starting at first node, the distance is 0, so we will set it as such
+        distance[0] = 0
+
+        def findClosestNode():
+            minCost = math.inf
+            minNode = -1
+            for i in range(len(points)):
+                if i in visited:
+                    continue
+                if distance[i] < minCost:
+                    minCost = distance[i]
+                    minNode = i
+            return minNode
+        
+        def relax(node):
+            for i in range(len(points)):
+                # skip finalized nodes
+                if i in visited:
+                    continue
+                x1, y1 = points[node][0], points[node][1]
+                x2, y2 = points[i][0], points[i][1]
+                manhattanDistance = abs(x1-x2) + abs(y1-y2)
+                distance[i] = min(distance[i], manhattanDistance)
+
+        # while we have not finalized all nodes' min
+        while len(visited) < len(points):
+            # get the closest node that we have not visited yet
+            nextNode = findClosestNode()
+            # if visited is not len(points) AND we can't find a next node to visit, we can't build a MST
+            if nextNode == -1:
+                break
+            # if we can find a nextNode, add to visited
+            visited.add(nextNode)
+            # then we relax every other node relative to it
+            relax(nextNode)
+        
+        return sum(distance) # type: ignore
+
     # ── Attempt 1 · 2026-07-16 ────────────────────────────────────────────
     def minCostConnectPoints(self, points: List[List[int]]) -> int:
         # so we are the ones to draw the edges here

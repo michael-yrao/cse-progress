@@ -37,6 +37,47 @@ import collections
 from typing import List
 
 class Solution:
+
+    # ── Attempt · 2026-07-18 ──────────────
+    def numIslands_20260718(self, grid: List[List[str]]) -> int:
+        # BFS method, so we should go through each node and mark them as visited
+        # every time we see a land node, we should be hitting new land since BFS would mark everything as visited otherwise
+
+        rows, cols = len(grid), len(grid[0])
+
+        visited = set()
+
+        queue = collections.deque()
+
+        numberOfIslands = 0
+
+        def bfs():            
+            while queue:
+                currentRow, currentCol = queue.popleft()
+                neighbors = [[1,0],[-1,0],[0,1],[0,-1]]
+                for ir,ic in neighbors:
+                    nr = currentRow + ir
+                    nc = currentCol + ic
+                    # visit unvisited land neighbors
+                    if nr >= 0 and nr < rows and nc >= 0 and nc < cols and grid[nr][nc] == '1' and (nr,nc) not in visited:
+                        visited.add((nr,nc))
+                        queue.append((nr,nc))
+                    
+
+        for row in range(rows):
+            for col in range(cols):
+                # we found new island, let's mark all of it as visited
+                if grid[row][col] == '1' and (row, col) not in visited:
+                    numberOfIslands+=1
+                    # mark node as visited
+                    visited.add((row,col))
+                    # mark node to visit
+                    queue.append((row,col))
+                    # mark all connected nodes as visited
+                    bfs()
+        
+        return numberOfIslands
+
     def numIslands(self, grid: List[List[str]]) -> int:
         # so this is clearly a bfs question
         # So how do we determine we have an island

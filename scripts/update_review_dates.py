@@ -14,6 +14,7 @@ from pathlib import Path
 DEFAULT_CONFIG = {
     "source_root": "dsa/leetcode",
     "source_globs": ["*.py"],
+    "clean_provisional": 10,  # first Clean right after a Blank (streak 0) — lock-down check
     "clean_streak1": 30,
     "clean_streak2": 60,
     "retired": 180,
@@ -42,6 +43,7 @@ def load_config(path: Path = Path("cse.config.yml")) -> dict:
         items = [x.strip().strip("'\"") for x in m.group(1).split(",")]
         return [x for x in items if x]
 
+    _int(r"provisional:\s*(\d+)", "clean_provisional")
     _int(r"streak1:\s*(\d+)", "clean_streak1")
     _int(r"streak2:\s*(\d+)", "clean_streak2")
     _int(r"retired:\s*(\d+)", "retired")
@@ -145,7 +147,13 @@ def compute_next_review_date(comfort: str, latest_attempt_date: datetime | None,
     if not latest_attempt_date:
         return None
     if comfort in (COMFORT_CLEAN, COMFORT_RETIRED):
-        if streak >= CONFIG["retire_at_streak"]:
+        if comfort == COMFORT_CLEAN and streak == 0:
+            # Provisional Clean: a 🟢 logged with streak 0 is the FIRST Clean directly
+            # following a 🔴 Blank. One Clean right after a Blank may be recall of fresh
+            # teaching, not durable retention, so it gets a short lock-down (+10) to verify
+            # before earning the normal +30. Survives (Clean again) → log streak 1 → +30.
+            days = CONFIG["clean_provisional"]
+        elif streak >= CONFIG["retire_at_streak"]:
             days = CONFIG["retired"]  # spot check for retired problems
         elif streak == 2:
             days = CONFIG["clean_streak2"]

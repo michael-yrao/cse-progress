@@ -32,6 +32,63 @@ import collections
 from typing import List
 
 class Solution:
+
+    # ── Attempt · 2026-07-18 ──────────────
+    def validTree_20260718(self, n: int, edges: List[List[int]]) -> bool:
+        # a graph can be a tree if number of nodes = number of edges - 1
+        # this is generalized from an acyclic graph with n nodes and c components have n - c edges
+        # so we know n - 1 edges have 1 component for n nodes
+        # so we can just return false immediately if that is not the case
+
+        if len(edges) +1 != n:
+            return False
+        
+        # now, we also need to make sure we connect all nodes
+        # so if not all n nodes are connected, we are still not valid
+        # so let's add a visited set
+
+        rankMap = {}
+        parentMap = {}
+
+        for i in range(n):
+            rankMap[i] = 0
+            parentMap[i] = i
+
+        # find root parent of node
+        def find(node):
+            if parentMap[node] != node:
+                parentMap[node] = find(parentMap[node])
+            return parentMap[node]
+        
+        # union two nodes if we do not make a cycle
+        # if we do make a cycle, we return False, otherwise return True
+        def union(n1,n2):
+            n1r = find(n1)
+            n2r = find(n2)
+            # if same root parent, we will make cycle
+            if n1r == n2r:
+                return False
+            if rankMap[n1r] > rankMap[n2r]:
+                parentMap[n2r] = n1r
+            elif rankMap[n1r] < rankMap[n2r]:    
+                parentMap[n1r] = n2r
+            else:
+                # equal, so pick at random
+                parentMap[n2r] = n1r
+                rankMap[n1r]+=1
+            return True
+        
+        # now we go through the edges and try to connect them
+        # and as we connect them, let's add them to visited
+        for node1, node2 in edges:
+            if not union(node1, node2):
+                return False
+        
+        # because we forced n - 1 edges for the n nodes
+        # we are satisfying n - c edges for c components 
+        # thus, as long as we can prove that this is an acyclic graph, we are done validating whether this is a tree
+        return True
+
     def validTree(self, n: int, edges: List[List[int]]) -> bool:
         # so we basically need to return whether or not this has a cycle
         # [[0,1],[1,2],[2,0]] would be invalid because 2 leads back to 0

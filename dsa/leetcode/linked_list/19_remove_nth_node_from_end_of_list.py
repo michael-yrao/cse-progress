@@ -34,6 +34,32 @@ class ListNode:
         self.val = val
         self.next = next
 class Solution:
+
+    # ── Attempt · 2026-07-18 ──────────────
+    def removeNthFromEndRecursion_20260718(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
+        # we are repointing len - n - 1's node's next to len - n + 1
+        # this is the thinking if we go from the front
+        # now if we go from the back, we can just use n
+        # we do need to keep the n so we can reference it, so we need a traversal index
+        # starting from the back is classic post order recursion so we will do that
+
+        def removeNode(node):
+            if not node:
+                return 0
+            
+            currentCount = 1 + removeNode(node.next)
+            # we need to point the previous node to current node's next
+            # so that is node n + 1 from the end
+            if currentCount == n + 1:
+                node.next = node.next.next
+            return currentCount
+        
+        # we actually need dummy since we might remove head
+        dummy = ListNode(-1)
+        dummy.next = head
+        removeNode(dummy)
+        return dummy.next
+
     def removeNthFromEndTwoIteration(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
         # We need to get prev of the node and the next of the node
         # So one way to do this is just to loop through and set both

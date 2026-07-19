@@ -156,9 +156,19 @@ Next review intervals (set in `docs/foundations/dsa/mastery/dsa_progress.md` and
 
 | Comfort | Next Review |
 |---------|-------------|
-| Clean   | +30 days    |
+| Clean — **provisional** (Streak 0: first Clean directly after a 🔴 Blank) | **+10 days** (lock-down check) |
+| Clean — Streak 1 | +30 days |
+| Clean — Streak 2 | +60 days |
+| Clean — Retired (Streak 3+) | +180 days (spot check) |
 | Shaky   | +10 days    |
 | Blank   | +2 days     |
+
+**Provisional Clean (added Jul 18, 2026):** a 🟢 that *directly follows a 🔴* is logged with **Streak 0**
+(not 1) → it earns only a **+10 lock-down** to verify the Blank→Clean stuck, before the normal +30. Survives
+(Clean again) → log Streak 1 (→ +30); slips → resets as usual. Only **Blank→Clean** is provisional — a 🟢
+after a 🟡 is a normal Streak-1 Clean. Rationale: one Clean right after a Blank may be recall of fresh
+teaching, not durable retention (same logic as the SD teach/measure split). Interval configurable via
+`clean_provisional` in `cse.config.yml`.
 
 ## Schedule Integrity Rule
 
@@ -205,5 +215,19 @@ thing they reread. Use **progressive disclosure** — short answer first, *offer
 than dumping it — and when the learner nails an answer, acknowledge in one line and move on; never
 re-explain what they just demonstrated. This is the [Spine-first rule](#) applied across a whole
 multi-turn session. (The depth still matters — this is about *packaging*, not cutting substance.)
+
+**Teaching a new algorithm — procedure-first, not proof-first.** When the learner is trying to
+understand or code an algorithm they don't know, lead with the **literal loop in plain operational
+language** (*"each round: pick the unvisited node with the smallest number, mark it done, update its
+neighbors"*) and **run it by hand on a tiny 3–4 element example as concrete numbers**. Introduce the
+correctness proof, complexity, and named concepts (jargon) **only later, and only if they ask "why does
+this work?"** — for an algorithm-you're-coding, the load-bearing thing is the *procedure*, not the
+theorem (this is what "spine-first" means for algorithms). Separate **execute it** from **why it's
+optimal** — two lessons; get execution first (greedy-correctness proofs especially are the hardest part
+and are *not* needed to write the code). Answer a **mechanics question with mechanics**, never with more
+concept. Strip jargon unless they ask for the name. **The tell:** when they say "this makes no sense,"
+strip *down* to the concrete procedure — never add another layer of *why*. (Learned the hard way on
+Prim's/1584, Jul 18 — opened with the cut-property proof + "settled" + complexity before the learner
+could run a single step; their own plain code comments were clearer than the explanation.)
 
 **Caveman default = `lite` (installed by default).** Caveman ships at `full` (aggressive); this repo pins it to **`lite`** — run `/caveman lite` at session start — and **never `full` / `ultra` / `wenyan`**, which strip the explanation coaching depends on. Compress mechanical output (schedule edits, git steps, status, confirmations), but **keep FULL**: the comfort-rating rationale (propose + why), concept explanations when stuck/asked (respecting no-spoilers), the "why" behind a decision, and `stuck_log.md` entries. Install once per machine (Node ≥ 18): `curl -fsSL https://raw.githubusercontent.com/JuliusBrussee/caveman/main/install.sh | bash` (Windows: `irm https://raw.githubusercontent.com/JuliusBrussee/caveman/main/install.ps1 | iex`).
