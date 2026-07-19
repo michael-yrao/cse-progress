@@ -83,6 +83,9 @@ Same first-exposure-🔴 pattern as 743/787/1584 (a new graph algorithm taught, 
 contrast: here the learner **owned the paradigm** (graph + BFS) and only needed the *optimization* + bug
 fixes — further along than the MST/shortest-path 🔴s where the paradigm itself was the gap. Retry Jul 20.
 
+## 🟡 417. Pacific Atlantic Water Flow — Jul 19, 2026
+**Sticking point**: Approach owned cold (reverse-BFS from each ocean's border, intersect the two reachable sets). Two silly bugs, neither self-caught: (1) visited-guard looked up `heights[nr][nc] not in canReach…` — a *height value* against a set of *coordinate tuples*, so it never actually blocked re-visits; should be `(nr,nc) not in …`. (2) Strict `>` on the height step dropped equal-height cells — reverse flow steps to a neighbor with height `>=` current, since water flows `<=`. Both are read-what-you-store / off-by-equality slips, not conceptual.
+
 ## 🟡 261. Graph Valid Tree (Union-Find) — Jul 18, 2026
 **Sticking point**: UF machinery clean (path-compressed `find`, union-by-rank returning False on cycle, n−1 edge-count guard up front). The miss was the *connectivity* half: used `len(visited) == n` where `visited` = "nodes that appeared in an edge" — not actual connectivity, and it wrongly fails the valid single-node tree (n=1, edges=[] → 0==1 → False). Key theorem to own: **an acyclic graph (forest) with n nodes and c components has exactly n−c edges**; so forcing edges = n−1 AND proving acyclic (UF) ⟹ n−1 = n−c ⟹ c=1 (connected). The connectivity check is therefore free — just `return True` after the guard + union loop. (If an explicit check is wanted, count distinct roots == 1, which also handles n=1.)
 

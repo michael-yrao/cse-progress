@@ -116,6 +116,36 @@ def existing_signature(text: str, method: str) -> tuple[str, str] | None:
     return None
 
 
+def existing_method_name(lines: list[str], cls: int) -> str | None:
+    """Canonical method name of a single-method `class Solution`, read from disk.
+
+    On a retry the method name must come from the file, not from camel(title): the two
+    frequently disagree (102's method is `levelOrder`, not `binaryTreeLevelOrderTraversal`;
+    417's is `pacificAtlantic`), and guessing wrong both mis-names the stub and makes the
+    signature lookup miss, dropping the stub to a bare `(self)`. Prefer the unsuffixed
+    original; fall back to a dated variant with its `_YYYYMMDD` stripped. Nested helpers
+    (deeper indent) and `__init__` are skipped.
+    """
+    method_indent = None
+    dated = None
+    for ln in lines[cls + 1:]:
+        if re.match(r"^class\s", ln):  # next top-level class ends Solution's body
+            break
+        m = re.match(r"^(\s+)def\s+([A-Za-z_]\w*)\s*\(", ln)
+        if not m:
+            continue
+        indent, nm = len(m.group(1)), m.group(2)
+        if method_indent is None:
+            method_indent = indent
+        if indent != method_indent or nm == "__init__":
+            continue
+        base = re.sub(r"_\d{8}$", "", nm)
+        if base == nm:      # unsuffixed original — the canonical name, take it
+            return base
+        dated = dated or base   # a dated variant only; remember as fallback
+    return dated
+
+
 def solution_class_start(lines: list[str]) -> int | None:
     """Index of the `class Solution:` header line, if the file has one.
 
@@ -412,6 +442,14 @@ def main() -> None:
         # and any leftover stash pointer.
         lines = strip_pointer(strip_spoiler_region(text.splitlines()))
         cls = solution_class_start(lines)
+
+        # No --method on a retry: discover the name from the file rather than guessing
+        # camel(title). The two usually differ (levelOrder vs binaryTreeLevelOrderTraversal),
+        # and a wrong guess both mis-names the stub and misses the signature lookup.
+        if not args.method.strip() and cls is not None and len(methods) == 1:
+            discovered = existing_method_name(lines, cls)
+            if discovered:
+                method = methods[0] = discovered
 
         # One invariant, two layouts: today's stub goes at the TOP (of `class Solution`,
         # or as a dated sibling class), and EVERYTHING BELOW IT is "the prior attempts" —

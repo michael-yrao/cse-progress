@@ -45,9 +45,75 @@ Constraints:
     0 <= heights[r][c] <= 105
 """
 
+import collections
 from typing import List
 
 class Solution:
+
+    # ── Attempt · 2026-07-19 ──────────────
+    def pacificAtlantic_20260719(self, heights: List[List[int]]) -> List[List[int]]:
+        # we start from all the sides
+        # since each side already touches one side of the ocean
+        # from there, we can see if other nodes can reach the nodes that are already reach the ocean. BFS using the same logic
+        # so two sets. canReachPacific and canReachAtlantic
+        # canReachPacific starts with all values in column 0 and row 0
+        # canReachAtlantic starts with all values in last column and last row
+        
+        rows = len(heights)
+        cols = len(heights[0])
+        canReachPacific = set()
+        canReachAtlantic = set()
+        pacificQueue = collections.deque()
+        atlanticQueue = collections.deque()
+        
+
+        for row in range(rows):
+            canReachPacific.add((row,0))
+            canReachAtlantic.add((row,cols-1))
+            pacificQueue.append((row,0))
+            atlanticQueue.append((row,cols-1))
+        
+        for col in range(cols):
+            canReachPacific.add((0,col))
+            canReachAtlantic.add((rows-1,col))
+            pacificQueue.append((0,col))
+            atlanticQueue.append((rows-1,col))
+        
+        # now that we have our starting nodes, we will go through and populate both sets with appropriate nodes that can reach either
+        # once we finish that, we just return the nodes that are in both set
+        
+        while pacificQueue:
+            cr, cc = pacificQueue.popleft() 
+            neighbors = [[1,0],[-1,0],[0,1],[0,-1]]
+            for ir,ic in neighbors:
+                nr = cr + ir
+                nc = cc + ic
+                # if this is a valid node that can reach pacific and we have not visited it yet, add it to the set and the queue
+                if nr >= 0 and nr < rows and nc >= 0 and nc < cols and heights[nr][nc] >= heights[cr][cc] and (nr,nc) not in canReachPacific:
+                    canReachPacific.add((nr,nc))
+                    pacificQueue.append((nr,nc))
+        
+        while atlanticQueue:
+            cr, cc = atlanticQueue.popleft()
+            neighbors = [[1,0],[-1,0],[0,1],[0,-1]]
+            for ir,ic in neighbors:
+                nr = cr + ir
+                nc = cc + ic
+                # if this is a valid node that can reach pacific and we have not visited it yet, add it to the set and the queue
+                if nr >= 0 and nr < rows and nc >= 0 and nc < cols and heights[nr][nc] >= heights[cr][cc] and (nr,nc) not in canReachAtlantic:
+                    canReachAtlantic.add((nr,nc))
+                    atlanticQueue.append((nr,nc))    
+        
+        # now that we have both sets populated, take nodes that are in both
+        
+        result = []
+        
+        for pr, pc in canReachPacific:
+            if (pr,pc) in canReachAtlantic:
+                result.append([pr,pc])
+        
+        return result
+
     def pacificAtlantic(self, heights: List[List[int]]) -> List[List[int]]:
         # the question is really confusing
         # it is just asking to return a list of cells that can flow to both oceans
