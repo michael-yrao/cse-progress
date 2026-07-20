@@ -33,3 +33,4 @@
 - [Method-variant promotion](feedback_method_variant_promotion.md) — pull an alternate-method variant (e.g. 42 Two-Pointer) into rotation only when the base method retires (🏆), not while it's still churning 🟡/🟢
 - [Phase-gated Blanks](feedback_phase_gated_blanks.md) — a 🔴 on an un-taught technique is a premature attempt, not forgetting; park it in the Expansion Queue with a phase trigger instead of churning the +2 loop
 - [Schedule markdown escaping](feedback_schedule_markdown.md) — escape the period on bullets starting with a bare problem number (`- 143\.`) to avoid roman-numeral list markers
+- [Kickoff table links](feedback_kickoff_table_links.md) — start-of-day lineup tables hyperlink each problem to BOTH its local solution file and its LeetCode page

@@ -34,6 +34,55 @@ import collections
 from typing import List
 
 class Solution:
+
+    # ── Attempt · 2026-07-20 ──────────────
+    def solve_20260720(self, board: List[List[str]]) -> None:
+        """
+        Do not return anything, modify board in-place instead.
+        """
+        # exact same idea as pacific atlantic water flow
+        # we mark all nodes touching the edge as safe with BFS
+        # go through the grid again and mark everything unsafe as water
+        
+        # safe visited set
+        visited = set()
+        queue = collections.deque()
+
+        rows, cols = len(board), len(board[0])
+
+        for row in range(rows):
+            if board[row][0] == 'O':
+                visited.add((row,0))
+                queue.append((row,0))
+            if board[row][cols-1] == 'O':
+                visited.add((row,cols-1))
+                queue.append((row,cols-1))
+        
+        for col in range(cols):
+            if board[0][col] == 'O':
+                visited.add((0, col))
+                queue.append((0, col))
+            if board[rows-1][col] == 'O':
+                visited.add((rows-1,col))
+                queue.append((rows-1,col))
+        
+        # while we can still connect nodes, connect em
+        while queue:
+            cr, cc = queue.popleft()
+            neighbors = [[1,0],[-1,0],[0,1],[0,-1]]
+            for ir, ic in neighbors:
+                nr = cr + ir
+                nc = cc + ic
+                if nr >= 0 and nr < rows and nc >= 0 and nc < cols and (nr,nc) not in visited and board[nr][nc] == 'O':
+                    queue.append((nr,nc))
+                    visited.add((nr,nc))
+        
+        # now that all safe nodes are marked, mark all unsafe nodes as X
+        for row in range(rows):
+            for col in range(cols):
+                if board[row][col] == 'O' and (row,col) not in visited:
+                    board[row][col] = 'X'
+
     def solve(self, board: List[List[str]]) -> None:
         """
         Do not return anything, modify board in-place instead.
@@ -351,4 +400,3 @@ class Solution:
                     node = row * cols + col
                     if find(node) != find(externalNode):
                         board[row][col] = 'X'
-        

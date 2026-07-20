@@ -41,6 +41,22 @@ class TreeNode:
         self.left = left
         self.right = right
 class Solution:
+
+    # ── Attempt · 2026-07-20 ──────────────
+    def goodNodes_20260720(self, root: TreeNode) -> int:
+        # we pass largest value down to each children
+
+        def dfs(node, maxValue):
+            if not node:
+                return 0
+            
+            if node.val < maxValue:
+                return dfs(node.left, maxValue) + dfs(node.right, maxValue)
+            else:
+                return 1 + dfs(node.left, node.val) + dfs(node.right, node.val)
+        
+        return dfs(root, -math.inf)
+
     def goodNodes(self, root: TreeNode) -> int:
         # first thing that comes to mind is monotonic stack since we want all non-decreasing nodes
         # so we can do an iterative postorder dfs
