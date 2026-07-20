@@ -21,6 +21,13 @@ Redis (**RE**mote **DI**ctionary **S**erver) is a **shared, in-RAM dictionary** 
 
 ## 🎯 Recall log — blind sprints
 
+**Jul 19, 2026 — rated blind sprint → 🔴 Blank** (~4 of 11 cold; +2 → Jul 21). Stronger 🔴 than Jul 13. **Solid, cold:** card 2 (why shared/global count), card 3 **atomicity** (the #1 Jul-13 gap — now reflexive), card 1 & 10 (name + remote-vs-in-RAM). **Missed:** cards 5 (right/wrong tool), 8 (ZSet leaderboard/sliding-window), 9 (three costs of single-threaded), 4 & 11 partial.
+- **Root unlock for the failure-modes gap (card 7):** it wasn't the *content* — the learner couldn't parse the phrase **"on the request path."** Once defined (a mandatory synchronous stop for every request → its failure is total/immediate → SPOF), the SPOF→replication+fail-open/closed chain followed. If card 7 blanks again, check phrase-parsing first, not the mitigation list.
+- **TTL vs token-bucket fused a 3rd time (card 4).** Fix that stuck this session: **"window" is a fixed-window word → TTL/`EXPIRE` deletes the key; "refill / smooth / burst" → token bucket.** Sawtooth vs continuous trickle.
+- **fail-open/closed nuance corrected:** brute-force/login = clean fail-**closed**; **DDoS is NOT** — failing closed completes the attacker's denial-of-service, and DDoS is usually absorbed at the edge (CDN/WAF), not app-Redis. Dividing line: fail-closed when leaking is worse than denying (login, payments); fail-open when the limiter causing an outage is the bigger harm.
+- **Terminology:** use **leader/follower** (or primary/replica), not master/slave.
+- **Next drill targets (Jul 21):** cards 5, 8, 9 (never recalled) + the two stubborn ones (4 TTL-mechanism, 11 volatile-* footgun).
+
 **Jul 15, 2026 — derive-the-design session (unrated, teaching).** Derived the full chain cold from constraints: N-server undercount → shared remote store → naive `GET`/`SET` race → atomic `INCR` → single-threaded → TTL reset → fail-open/closed policy. Big step from Jul 13. **Still sticky, drill before the Jul 19 rated sprint:** (1) **atomicity is fragile under full narration** — solid when isolated, dropped out when chaining the whole story, recovered only on a targeted re-ask; (2) **TTL vs token bucket re-fused ×2 in one session** — kept reaching for token-bucket to explain the window reset; the reset is *TTL/`EXPIRE`*, token bucket is a different algorithm with no role in this design. Also clarified: RDBMS (ACID, transaction+rollback) atomicity vs Redis single-command atomicity (really isolation, free from single-threading), and that "database" = *persistence*, not atomicity.
 
 **Jul 13, 2026 — first blind sprint → 🔴 Blank** (3 of 8 prompts attempted).
