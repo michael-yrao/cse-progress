@@ -19,6 +19,9 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🟡 1584. Min Cost to Connect All Points (Prim's MST) — Jul 20, 2026
+**Sticking point**: had the eager array-Prim approach from memory but stalled reaching for the "missing data structure" (nearly went heap); needed a nudge that the `dist` array + linear min-scan *is* the frontier, no heap required. `getClosestNode` then came unaided.
+
 ## 🔴 127. Word Ladder (BFS) — Jul 18, 2026
 **Topic**: BFS shortest path on an implicit word graph + the wildcard-bucket adjacency trick. First
 exposure. Learner self-rated 🔴 on hint volume — the spine was recalled, but the optimization was taught

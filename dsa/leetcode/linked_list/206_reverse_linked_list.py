@@ -32,6 +32,20 @@ class ListNode:
         self.next = next
 
 class Solution:
+
+    # ── Attempt · 2026-07-20 ──────────────
+    def reverseList_20260720(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        # iterative
+        prev = None
+
+        while head:
+            next = head.next
+            head.next = prev
+            prev = head
+            head = next
+
+        return prev
+
     def reverseListIterative(self, head: Optional[ListNode]) -> Optional[ListNode]:
         # we need to initialize a prev so we can have the current head point to null
         # then we have a pointer to help us traverse through the list

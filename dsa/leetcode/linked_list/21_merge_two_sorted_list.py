@@ -35,6 +35,29 @@ class ListNode:
         self.next = next
 
 class Solution:
+
+    # ── Attempt · 2026-07-20 ──────────────
+    def mergeTwoLists_20260720(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
+        # recursion
+
+        if not list1 and not list2:
+            return None
+        
+        if not list1:
+            return list2
+        
+        if not list2:
+            return list1
+        
+        # now we have both, we move dependent on which one is smaller
+
+        if list1.val < list2.val:
+            list1.next = self.mergeTwoLists_20260720(list1.next, list2)
+            return list1
+        else:
+            list2.next = self.mergeTwoLists_20260720(list1, list2.next)
+            return list2
+
     def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
         # creating new linked list
         # thus we should use a dummy node to keep track of new head

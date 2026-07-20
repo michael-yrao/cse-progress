@@ -33,6 +33,52 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-07-20 ──────────────
+    def minCostConnectPoints_20260720(self, points: List[List[int]]) -> int:
+        # prim's algorithm to build a MST greedily
+        # we will find the closest unvisited node to our visited node set
+        # compare all unvisited's distance relative to it, continue until we did this for all nodes
+        # we will use indices to help us navigate
+        # have a math.inf array and starting node will have 0
+        # visited will contain nodes that we have finalized the distance in
+        visited = set()
+        distance = [math.inf] * len(points)
+        distance[0] = 0
+
+        def getClosestNode():
+            closestDistance = math.inf
+            closestNode = -1
+            for i in range(len(points)):
+                if i not in visited:
+                    if distance[i] < closestDistance:
+                        closestDistance = distance[i]
+                        closestNode = i
+            return closestNode
+        
+        def relax(index):
+            for i in range(len(points)):
+                if i not in visited and i != index:
+                    x1, y1 = points[i][0], points[i][1]
+                    x2, y2 = points[index][0], points[index][1]
+                    manhattanDistance = abs(x1-x2) + abs(y1-y2)
+                    distance[i] = min(distance[i],manhattanDistance)
+
+        # while we have not found the shortest distance to all nodes
+        # relax distance to all unvisited nodes relative to current node
+        # current node is closest node to our already visited component
+        while len(visited) < len(points):
+            nextNode = getClosestNode()
+            # if we don't have a next node to visit while we haven't filled visited
+            # we return -1
+            if nextNode == -1:
+                return -1
+            # now that we found the next node, relax everyone relative to it
+            relax(nextNode)
+            # mark nextNode as visited
+            visited.add(nextNode)
+        
+        return sum(distance) # type: ignore
+
     # ── Attempt · 2026-07-18 ──────────────
     def minCostConnectPoints_20260718(self, points: List[List[int]]) -> int:
         # min spanning tree is the perfect candidate for greedy algorithm
