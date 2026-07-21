@@ -114,6 +114,45 @@ of *your* design that's under the most pressure from *your* NFRs, not the part y
 
 ---
 
+## Quantify & Qualify — the habit that turns a claim into an answer
+
+Two reflexes, applied at **every step**, separate a mid answer from a senior one. Neither adds a step;
+both change *how you say every sentence.* This is the highest-leverage speaking habit in the interview.
+
+**Quantify — put a number on every claim.** A number turns an assertion into reasoning the interviewer
+can check. Every number you *volunteer* is a decision you've justified before being asked.
+
+- ❌ "It's read-heavy." → ✅ "100:1 read:write — **~100k read QPS** vs **~1k write QPS**."
+- ❌ "We need a cache." → ✅ "A cache at **~90% hit rate** drops DB reads from 100k to **~10k QPS** — one replica set serves that."
+- ❌ "Storage gets big." → ✅ "100M/day × 500 B × 5 yr ≈ **900 GB**, **~1.8 B rows**."
+
+**Qualify — put a condition and a boundary on every choice.** A choice without its conditions is a
+guess; with them it's a defended decision. Name the **assumption** (what must be true), the **tradeoff**
+(what you gave up), and the **boundary** (where it breaks and what you'd switch to).
+
+- ❌ "Use eventual consistency." → ✅ "Eventual is fine *because* a 2-second-stale redirect is harmless — inventory or payments would force strong."
+- ❌ "Shard by shortCode." → ✅ "Hash-shard on shortCode for even spread; holds while access is uniform — a viral link (hot key) breaks it, and I'd add a cache tier in front."
+
+**The fusion — one sentence template to speak every decision:**
+
+> **"I'll use [choice] because [quantified pressure]; it trades [X for Y] and holds while [condition] —
+> it breaks at [scale/boundary], where I'd move to [alternative]."**
+
+Say every fork this way and you hit quantify + qualify + the failure-mode signal in one breath.
+
+**Per-step targets — what to reach for at each box:**
+
+| Step | Quantify (the number) | Qualify (the condition) |
+|------|-----------------------|-------------------------|
+| Requirements | read/write QPS, storage/5 yr, payload size, read:write ratio | which NFR is the *hard* constraint vs a nice-to-have |
+| Core entities | rough row size, row count | which fields are hot/queried vs cold |
+| API | request rate & payload per endpoint | idempotency; what the server owns vs the client sends |
+| High-level design | load each component absorbs (cache hit % → DB QPS), # servers, per-shard size | *why each box exists* — the call that needs it |
+| Deep dives | replication lag, cache TTL, failover time, shard count | the assumption + boundary for **every** fork |
+
+**The tell you're doing it:** you almost never say a bare adjective — *fast, big, scalable, heavy* — without
+immediately following it with **the number that makes it true** and **the condition under which it holds.**
+
 ## The meta-rules (what actually scores)
 
 - **NFRs drive everything.** Every fork downstream traces back to a non-functional requirement. If you can't
