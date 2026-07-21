@@ -9,6 +9,7 @@
 - [Coding required for Clean](feedback_coding_for_clean.md) — 🟢 Clean requires coding; no-code blueprint caps at 🟡 Shaky (except flawless spot check confirms 🏆 Retired)
 - [Code by default](feedback_code_by_default.md) — every rep is coded, warmups included; no-code blueprint is an opt-in exception, never the scheduled default
 - [Whiteboard fidelity](feedback_whiteboard_fidelity.md) — write full solution incl. data-structure defs from scratch; no shared datamodel module
+- [Quantify & qualify](feedback_quantify_qualify.md) — in SD, push a number on every claim + a condition/boundary on every choice at every framework step; coach the fusion sentence ("[choice] because [number]; trades [X for Y]; breaks at [scale] → [alternative]")
 - [HLD altitude](feedback_hld_altitude.md) — learner defaults to LLD (storage shape, DB internals) in SD; hold them at HLD altitude through framework steps 1–4, name the slip when they drop into a box early ("drawing a box, or standing inside one?")
 - [SD three-lane structure](project_sd_three_lane_structure.md) — SD is 3×/wk from Jul 20: light midweek = tech fluency, fuller midweek = blocks & probes, Sunday = designs; **designs PULL blocks in** rather than grinding all blocks first; both midweek slots come out of warmups (🟢 backlog absorbs it), never the active block
 - [Spine first](feedback_spine_first.md) — open every conceptual explanation with the 2–3 load-bearing facts, then STOP and check in; tactics/tables/edge cases only on request
