@@ -19,6 +19,9 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🟡 543. Diameter of Binary Tree — Jul 20, 2026
+**Sticking point**: recurring problem — first only measured the path bending at the root (missed that the diameter can bend at any node → needs a global max updated inside the `depth` recursion); after fixing that, defined the nested `depth` helper but never called it, so returned 0.
+
 ## 🟡 1584. Min Cost to Connect All Points (Prim's MST) — Jul 20, 2026
 **Sticking point**: had the eager array-Prim approach from memory but stalled reaching for the "missing data structure" (nearly went heap); needed a nudge that the `dist` array + linear min-scan *is* the frontier, no heap required. `getClosestNode` then came unaided.
 

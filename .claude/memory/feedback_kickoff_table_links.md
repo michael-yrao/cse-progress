@@ -17,3 +17,11 @@ them a manual file hunt.
 **How to apply:** in the kickoff table, render the problem cell as a markdown link to the
 repo-relative `.py` path, and add an `LC` column (or inline `· [LC](url)`) to the LeetCode
 URL. Applies to §2a kickoff and any lineup/preview table. Related: [[feedback_proactive_scheduling]].
+
+**CAVEAT — a retry's file link is a spoiler until scaffolded.** File links are safe in the
+**kickoff** table because those items are scaffolded first (blank stub, prior attempts
+stashed). In a **selection/candidate menu** where the learner hasn't picked yet, the retry
+files are NOT scaffolded — opening one shows the old solution. So in a menu link **LC only**;
+surface the local file link **only after** the pick is scaffolded. (Learned Jul 20 — linked
+five unscaffolded retries and the learner opened one to their prior solution.) See
+[[feedback_no_spoilers]].

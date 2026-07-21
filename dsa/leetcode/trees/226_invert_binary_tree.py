@@ -32,6 +32,19 @@ class TreeNode:
         self.right = right
         
 class Solution:
+
+    # ── Attempt · 2026-07-20 ──────────────
+    def invertTree_20260720(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
+        if not root:
+            return None
+        
+        leftNode = self.invertTree_20260720(root.left)
+        rightNode = self.invertTree_20260720(root.right)
+
+        root.right = leftNode
+        root.left = rightNode
+        return root
+
     def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
         # processing children first
         # thus postorder dfs

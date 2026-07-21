@@ -31,6 +31,21 @@ class TreeNode:
         self.left = left
         self.right = right
 class Solution:
+
+    # ── Attempt · 2026-07-20 ──────────────
+    def diameterOfBinaryTree_20260720(self, root: Optional[TreeNode]) -> int:
+        maxDiameter = 0
+        def depth(root):
+            nonlocal maxDiameter
+            if not root:
+                return 0
+            leftDepth = depth(root.left)
+            rightDepth = depth(root.right)
+            maxDiameter = max(maxDiameter, leftDepth + rightDepth)
+            return 1 + max(leftDepth,rightDepth)
+        depth(root)
+        return maxDiameter
+
     def diameterOfBinaryTree(self, root: Optional[TreeNode]) -> int:
         # so what it looks like if we have to get max of both sides of the subtree and add it
         # in the example, we get depth of 2 on left and depth of 1 and the right
