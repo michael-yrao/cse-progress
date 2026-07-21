@@ -153,6 +153,33 @@ Say every fork this way and you hit quantify + qualify + the failure-mode signal
 **The tell you're doing it:** you almost never say a bare adjective — *fast, big, scalable, heavy* — without
 immediately following it with **the number that makes it true** and **the condition under which it holds.**
 
+## The question-lenses — how to generate the interviewer's questions yourself
+
+> ⚠️ **Provisional (synthesis, not a cited framework) — validate against Hello Interview's material
+> Wed Jul 22.** This is *my* distillation, and a tidy list of 7 feels more authoritative than it is.
+> If HI's rate-limiter deep-dive raises a question that fits none of these, that's a real gap → add it,
+> then drop this banner. Several lenses already restate the probe list in [study_guide.md](study_guide.md#L160).
+
+You don't invent design questions from experience — you **run a fixed checklist of lenses over every
+component**, and the questions fall out. Experience makes running them fast; the checklist is the
+learnable substitute for it. (Twin of Quantify & Qualify: Q&Q makes each *answer* senior; these lenses
+make each *question* senior.)
+
+| Lens | The question it generates | Example (rate limiter) |
+|------|---------------------------|------------------------|
+| **Placement** | Where in the request path does it live? | gateway vs per-service middleware vs sidecar |
+| **Key / granularity** | It acts *per what*? | per user / IP / API key / endpoint |
+| **State & storage** | Does it hold state? where, and is it shared across instances? | local counter vs shared Redis |
+| **Concurrency** | Two requests at the same instant — what happens? | atomic increment at the limit boundary |
+| **Failure mode** | This (or its store) dies — fail open or fail closed? | Redis down → block all vs allow all |
+| **Accuracy vs cost** | Exact or approximate? | fixed window vs sliding window vs token bucket |
+| **Scale / distribution** | One node or N — how do they coordinate? | shared count across many gateways |
+
+**How to use it:** at every deep dive, walk the lenses down the component under pressure. Each lens that
+applies *is* a question you raise (and then answer with Quantify & Qualify). Two questions the video
+raised — "where should it live?" (Placement) and "how do we identify clients?" (Key/granularity) — are
+just two lenses pointed at a rate limiter.
+
 ## The meta-rules (what actually scores)
 
 - **NFRs drive everything.** Every fork downstream traces back to a non-functional requirement. If you can't
