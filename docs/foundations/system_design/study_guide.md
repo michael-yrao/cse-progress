@@ -13,7 +13,7 @@ As with DSA, depth has diminishing returns *for interviews specifically*, so eve
 1. **Fundamentals & estimation** — latency numbers every engineer should know, back-of-envelope math (QPS, storage, bandwidth), vertical vs horizontal scaling.
 2. **Building blocks** — load balancing, caching (patterns, eviction, invalidation), CDN, reverse proxy / API gateway, message queues & async processing, rate limiting, consistent hashing, bloom filters.
 3. **Data layer** — SQL vs NoSQL tradeoffs, indexing, replication (leader/follower, multi-leader), sharding / partitioning, CAP & PACELC, consistency levels (strong → eventual), idempotency.
-4. **The interview framework** — requirements (functional + non-functional) → estimation → API design → data model → high-level diagram → deep dives → bottlenecks & tradeoffs. *Driving this framework fluently is 50% of the interview.*
+4. **The interview framework** — requirements (functional + non-functional) → core entities → API design → high-level diagram → deep dives (bottlenecks & tradeoffs); estimation inline, Data Flow only for data-processing systems. *Driving this framework fluently is 50% of the interview.* **→ Full step-by-step: [`framework.md`](framework.md).**
 5. **Canonical designs** (the "grokking" set): URL shortener, rate limiter, chat/messenger, news feed, notification service, typeahead/autocomplete, web crawler, video streaming (YouTube/Netflix), ride-share (Uber), file storage (Dropbox/Drive), Ticketmaster, distributed KV store / cache, payment/ledger, top-K / trending.
 
 Being fluent across (1)–(5) is the ceiling of *interview* ROI. Everything below sharpens you as an engineer but won't move an interview score much.
@@ -202,6 +202,7 @@ Not a queue to grind through. Each gets a `components/` note **when a design hit
 This guide is the single source of truth (map + ROI line). Current file state — **built** vs **planned**:
 
 **Built:**
+- [`framework.md`](framework.md) ✅ — the delivery framework, step by step (the *why* behind the case-study template's headings). Reread before any Transition/Mastery sprint.
 - `fundamentals/` ✅ — [`single_node_io_efficiency.md`](fundamentals/single_node_io_efficiency.md) (the 4096-byte buffer / sectors / pages / syscalls). *Depth material, not interview-core.*
 - `templates/` ✅ — the two scaffolds you fill during practice (see Cadence above).
 
