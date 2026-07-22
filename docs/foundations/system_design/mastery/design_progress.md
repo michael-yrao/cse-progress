@@ -25,7 +25,7 @@ Notes for future agents:
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|---|
-| Cache | [Redis](../technologies/redis.md) | 🔴 | 0 | 2026-07-21 | 2026-07-19 | 2026-07-13, 2026-07-19 |
+| Cache | [Redis](../technologies/redis.md) | 🟡 | 0 | 2026-07-31 | 2026-07-21 | 2026-07-13, 2026-07-19, 2026-07-21 |
 | SQL DB | [PostgreSQL](../technologies/postgresql.md) | 🔴 | 0 |  |  |  |
 | Wide-column NoSQL | [Cassandra](../technologies/cassandra.md) | 🔴 | 0 |  |  |  |
 | Managed NoSQL | [DynamoDB](../technologies/dynamodb.md) | 🔴 | 0 |  |  |  |

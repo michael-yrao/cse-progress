@@ -1,6 +1,6 @@
 ---
 name: feedback_kickoff_table_links
-description: start-of-day kickoff table should hyperlink each problem to its local solution file AND its LeetCode page
+description: hyperlink each problem to its local solution file AND its LeetCode page — at kickoff AND on every problem/set transition
 metadata:
   type: feedback
 ---
@@ -16,7 +16,10 @@ them a manual file hunt.
 
 **How to apply:** in the kickoff table, render the problem cell as a markdown link to the
 repo-relative `.py` path, and add an `LC` column (or inline `· [LC](url)`) to the LeetCode
-URL. Applies to §2a kickoff and any lineup/preview table. Related: [[feedback_proactive_scheduling]].
+URL. Applies to §2a kickoff and any lineup/preview table. **Also link on every transition:**
+whenever moving on to the next problem or starting a new set mid-session, restate the
+problem(s) with both links — don't make the learner scroll back to the kickoff table
+(reaffirmed Jul 21). Related: [[feedback_proactive_scheduling]].
 
 **CAVEAT — a retry's file link is a spoiler until scaffolded.** File links are safe in the
 **kickoff** table because those items are scaffolded first (blank stub, prior attempts

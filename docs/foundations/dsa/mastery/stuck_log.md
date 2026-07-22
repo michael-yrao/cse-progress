@@ -19,6 +19,42 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🟡 127. Word Ladder (BFS) — Jul 21, 2026
+**Sticking point**: 🔴→🟡 — full structure rebuilt cold (wildcard-bucket adjacency + layered BFS came back unaided; the Jul 18 teaching stuck). Only miss: off-by-one on the BFS level init — started `level = 0` and returned `level + 1`, undercounting by one (`beginWord` is already word #1 when popped, so the counter must start at 1).
+
+## 🔴 211. Design Add and Search Words Data Structure — Jul 21, 2026
+**Topic**: Trie with wildcard (`.`) search — the DFS that matches "any single char" against all children.
+
+### Where did I get stuck?
+`addWord` was clean. The wildcard `search` came apart two ways: (1) walked the trie by
+**reassigning `self.root`** down the tree — permanently corrupts the root, so a *second*
+search starts from the wrong node; (2) on a `.`, looped `j` over **positions in the word**
+and re-`search`ed suffixes from the root, instead of trying the **children of the current
+node**. Root cause: `search(word)` always begins at the root, so there's no way to carry
+*"resume from THIS node at THIS index"* into the recursion — the missing state is **(node, index)**.
+
+### Core Realization
+The fix is a helper `dfs(node, i)` answering one question: *"can I match `word[i:]` starting
+from `node`?"* — and `search(word)` is just `return dfs(self.root, 0)`. Three cases:
+- `i == len(word)` → the word is fully consumed; hit only if `node.isWord`.
+- normal letter → if `word[i]` is a child, the answer **is** `dfs(node.children[word[i]], i+1)`; else `False`.
+- `.` → try every child: `any(dfs(child, i+1) for child in node.children.values())`.
+
+Node and index advance **together** every call; `self.root` is never touched (a parameter
+carries the position), so the trie survives across searches — which also kills the mutation bug.
+
+### Code Snippet (the shape — not to peek at before re-rep; written for the concept)
+```
+def dfs(node, i):
+    if i == len(word): return node.isWord
+    c = word[i]
+    if c == '.':  return any(dfs(ch, i+1) for ch in node.children.values())
+    return c in node.children and dfs(node.children[c], i+1)
+```
+
+## 🟡 503. Next Greater Element II — Jul 21, 2026
+**Sticking point**: approach was clean (decreasing stack + double-loop for circular) but four small bugs I didn't self-catch — inverted `while` guard (`not stack` → crashes empty), unwrapped `nums[i]` on the 2nd lap (needs `i%length`), inverted assignment guard (`!= inf` wrote only filled slots), and `math.inf` sentinel never converted to `-1`.
+
 ## 🟡 543. Diameter of Binary Tree — Jul 20, 2026
 **Sticking point**: recurring problem — first only measured the path bending at the root (missed that the diameter can bend at any node → needs a global max updated inside the `depth` recursion); after fixing that, defined the nested `depth` helper but never called it, so returned 0.
 

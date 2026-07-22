@@ -38,6 +38,56 @@ from typing import List, Optional
 
 
 class Solution:
+
+    # ── Attempt · 2026-07-21 ──────────────
+    def ladderLength_20260721(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
+        # so this is a graph, we want to find a path from beginWord to endWord through wordList
+        # so we can add beginWord to the wordList and mark beginWord as our starting node
+        # since it's a graph, we need an adjacency map, how do we know hot is next to dot
+        # we take what we learned in 211 and create a map from .ot -> [hot, dot] and h.t -> [hot, dot], etc.
+        # so let's build this map first
+
+        adjMap = collections.defaultdict(list)
+        wordList.append(beginWord)
+
+        for string in wordList:
+            for i in range(len(string)):
+                wildCardKey = string[:i] + '.' + string[i+1:]
+                adjMap[wildCardKey].append(string)
+        
+        # now we have the adjacency map
+        # all edges are same length, so we default to BFS for shortest path
+        # that means queue and visited
+
+        visited = set()
+        
+        queue = collections.deque()
+        queue.append(beginWord)
+        visited.add(beginWord)
+
+        # we also need to keep track of depth cause that's how many iterations it would get to the end
+        level = 1
+        
+        # while we still have a path to go, keep looking
+        while queue:
+            queueSize = len(queue)
+            for _ in range(queueSize):
+                currentWord = queue.popleft()
+                # go through all neighbors of currentWord
+                for i in range(len(currentWord)):
+                    wildCardKey = currentWord[:i] + '.' + currentWord[i+1:]
+                    for neighbor in adjMap[wildCardKey]:
+                        # if we found endWord, return
+                        if neighbor == endWord:
+                            return level + 1
+                        # if not, add neighbor to the queue
+                        if neighbor not in visited:
+                            queue.append(neighbor)
+                            visited.add(neighbor)
+            level+=1
+        
+        return 0
+
     # ── Attempt 1 · 2026-07-18 ────────────────────────────────────────────
     def ladderLength(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
         # so we need to build an adjmap of beginWord, endWord and wordList

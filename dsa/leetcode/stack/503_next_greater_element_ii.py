@@ -21,9 +21,38 @@ Constraints:
     1 <= nums.length <= 104
     -109 <= nums[i] <= 109
 """
+import math
 from typing import List
 
 class Solution:
+
+    # ── Attempt · 2026-07-21 ──────────────
+    def nextGreaterElements_20260721(self, nums: List[int]) -> List[int]:
+        # so in the first variation of this problem
+        # we just go through the array and set next value accordingly using a stack
+        # if we are circular, we just need to circle back by duplicating the data
+        # and we just fill result[index%len]
+        # [1,2,1,1,2,1]
+        # if currentNumber > minStack, put it as minStack.pop's next biggest
+        # so we need to put (value, index) in minStack
+        length = len(nums)
+        decreasingStack = []
+        result = [-1] * length
+
+        # simulate circular by looping through twice
+        for i in range(length*2):
+            # if stack is not empty and nums[i] > decreasingStack[-1], pop it
+            # and assign if not assigned
+            while decreasingStack and nums[i%length] > decreasingStack[-1][0]:
+                priorNode = decreasingStack.pop()
+                priorValue, priorIndex = priorNode[0], priorNode[1]
+                if result[priorIndex%length] == -1:
+                    result[priorIndex%length] = nums[i%length]
+            # now that we are no longer increasing, add nums[i] to the stack
+            decreasingStack.append((nums[i%length],i%length))
+        
+        return result
+
     def nextGreaterElements_20260711(self, nums: List[int]) -> List[int]:
         # circular array, what does this mean exactly?
         # looking at the example, index 2's next greater is index 1
@@ -47,4 +76,3 @@ class Solution:
             decreasingStack.append(currentNumberIndex)
         
         return result
-        

@@ -36,7 +36,7 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/dsa/mastery/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **96** problems &nbsp;·&nbsp; **106** solutions &nbsp;·&nbsp; **334** attempts
+> **96** problems &nbsp;·&nbsp; **106** solutions &nbsp;·&nbsp; **337** attempts
 
 | | 🏆 Retired | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|
@@ -44,6 +44,9 @@ Notes for future agents:
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|---|
+| Hard | [127. Word Ladder (BFS)](https://leetcode.com/problems/word-ladder/) | 🟡 | 0 | 2026-07-31 | 2026-07-21 | 2026-07-18, 2026-07-21 |
+| Medium | [503. Next Greater Element II](https://leetcode.com/problems/next-greater-element-ii/) | 🟡 | 0 | 2026-07-31 | 2026-07-21 | 2026-07-11, 2026-07-21 |
+| Medium | [211. Design Add and Search Words Data Structure](https://leetcode.com/problems/design-add-and-search-words-data-structure/) | 🔴 | 0 | 2026-07-23 | 2026-07-21 | 2026-07-09, 2026-07-11, 2026-07-21 |
 | Medium | [1584. Min Cost to Connect All Points (Prim's MST)](https://leetcode.com/problems/min-cost-to-connect-all-points/) | 🟡 | 0 | 2026-07-30 | 2026-07-20 | 2026-07-16, 2026-07-18, 2026-07-20 |
 | Medium | [1448. Count Good Nodes in Binary Tree](https://leetcode.com/problems/count-good-nodes-in-binary-tree/) | 🟢 | 1 | 2026-08-19 | 2026-07-20 | 2026-05-15, 2026-06-18, 2026-07-10, 2026-07-20 |
 | Easy | [206. Reverse Linked List (Iterative)](https://leetcode.com/problems/reverse-linked-list/) | 🟢 | 2 | 2026-09-18 | 2026-07-20 | 2026-04-23, 2026-05-26, 2026-06-12, 2026-06-20, 2026-07-20 |
@@ -59,7 +62,6 @@ Notes for future agents:
 | Medium | [261. Graph Valid Tree (Union-Find)](https://leetcode.com/problems/graph-valid-tree/) | 🟡 | 0 | 2026-07-28 | 2026-07-18 | 2026-06-19, 2026-06-29, 2026-07-09, 2026-07-18 |
 | Medium | [19. Remove Nth Node From End of List (Postorder Recursion)](https://leetcode.com/problems/remove-nth-node-from-end-of-list/) | 🟡 | 0 | 2026-07-28 | 2026-07-18 | 2026-05-18, 2026-05-21, 2026-06-18, 2026-06-28, 2026-07-08, 2026-07-18 |
 | Medium | [200. Number of Islands (BFS)](https://leetcode.com/problems/number-of-islands/) | 🟢 | 2 | 2026-09-16 | 2026-07-18 | 2026-05-30, 2026-06-01, 2026-06-07, 2026-07-18 |
-| Hard | [127. Word Ladder (BFS)](https://leetcode.com/problems/word-ladder/) | 🔴 | 0 | 2026-07-20 | 2026-07-18 | 2026-07-18 |
 | Medium | [424. Longest Repeating Character Replacement](https://leetcode.com/problems/longest-repeating-character-replacement/) | 🟡 | 0 | 2026-07-27 | 2026-07-17 | 2026-04-19, 2026-07-02, 2026-07-10, 2026-07-17 |
 | Medium | [208. Implement Trie (Prefix Tree)](https://leetcode.com/problems/implement-trie-prefix-tree/) | 🟢 | 1 | 2026-08-16 | 2026-07-17 | 2026-07-06, 2026-07-08, 2026-07-17 |
 | Medium | [75. Sort Colors (Dutch Flag)](https://leetcode.com/problems/sort-colors/) | 🟢 | 1 | 2026-08-16 | 2026-07-17 | 2026-01-08, 2026-04-01, 2026-05-26, 2026-05-28, 2026-06-28, 2026-07-08, 2026-07-17 |
@@ -86,9 +88,7 @@ Notes for future agents:
 | Medium | [323. Number of Connected Components (DFS)](https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/) | 🟢 | 1 | 2026-08-11 | 2026-07-12 | 2026-07-02, 2026-07-12 |
 | Medium | [229. Majority Element II](https://leetcode.com/problems/majority-element-ii/) | 🟡 | 0 | 2026-07-22 | 2026-07-12 | 2026-01-30, 2026-04-14, 2026-06-27, 2026-06-29, 2026-07-12 |
 | Medium | [567. Permutation in String](https://leetcode.com/problems/permutation-in-string/) | 🟡 | 0 | 2026-07-22 | 2026-07-12 | 2026-04-20, 2026-07-02, 2026-07-12 |
-| Medium | [503. Next Greater Element II](https://leetcode.com/problems/next-greater-element-ii/) | 🟡 | 0 | 2026-07-21 | 2026-07-11 | 2026-07-11 |
 | Medium | [98. Validate Binary Search Tree](https://leetcode.com/problems/validate-binary-search-tree/) | 🟢 | 1 | 2026-08-10 | 2026-07-11 | 2026-05-16, 2026-05-20, 2026-06-30, 2026-07-02, 2026-07-11 |
-| Medium | [211. Design Add and Search Words Data Structure](https://leetcode.com/problems/design-add-and-search-words-data-structure/) | 🟡 | 0 | 2026-07-21 | 2026-07-11 | 2026-07-09, 2026-07-11 |
 | Medium | [80. Remove Duplicates from Sorted Array II](https://leetcode.com/problems/remove-duplicates-from-sorted-array-ii/) | 🟢 | 1 | 2026-08-10 | 2026-07-11 | 2026-01-13, 2026-04-13, 2026-06-25, 2026-06-27, 2026-07-11 |
 | Easy | [141. Linked List Cycle](https://leetcode.com/problems/linked-list-cycle/) | 🟢 | 1 | 2026-08-09 | 2026-07-10 | 2026-04-26, 2026-07-01, 2026-07-10 |
 | Medium | [621. Task Scheduler](https://leetcode.com/problems/task-scheduler/) | 🟢 | 1 | 2026-08-09 | 2026-07-10 | 2026-06-30, 2026-07-01, 2026-07-10 |
