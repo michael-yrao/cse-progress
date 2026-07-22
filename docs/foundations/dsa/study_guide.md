@@ -151,9 +151,17 @@ If you finish an active block problem in under 15 minutes, don't move on to a ne
 
 | Tier | Companies | When to focus |
 |------|-----------|---------------|
-| **Fintech targets** | Stripe, Robinhood, Citadel, Bloomberg, Goldman Sachs, JPMorgan | Late 2026 — interview here first |
-| **Big tech** | Google, Amazon, Meta, Microsoft, Apple | Early 2027 — after system design is prepped |
-| **Supplementary** | Netflix, Uber, Airbnb, DoorDash, LinkedIn, Databricks | Rotate in for pattern variety |
+| **Fintech targets** | Stripe, Robinhood, Citadel, Bloomberg, Goldman Sachs, JPMorgan | Late 2026 — interview here first. **Apply trigger: ~mid-Sept 2026** (decided Jul 21, 2026). First applications go to **Bloomberg, Stripe, Citadel** — leverages the reconciliation/ledger moat while at-scale SD is still the weak lane. |
+| **Big tech** | Google, Amazon, Meta, Microsoft, Apple | Early 2027 — after system design is prepped. Reached from a position of strength once the fintech-first offer(s) land. |
+| **Supplementary** | Netflix, Uber, Airbnb, DoorDash, LinkedIn, Databricks | Rotate in for pattern variety. **Optional live-fire calibration** before mid-Sept — treat as disposable interview reps, never a primary target. |
+
+> **Mid-Sept apply gate (readiness check, not just a date).** Before opening applications, confirm:
+> (1) DSA roadmap through the hard blocks on track with a low 🔴/🟡 count; (2) System Design Tier-1
+> fintech designs at Transition/Mastery — **rate limiter + payment/ledger + 2–3 canonicals**, with
+> payment/ledger owned cold (it's the moat). If SD is lagging the date, the date slips before the bar
+> does — applying into a weak SD window burns Stripe/Citadel as calibration fodder, the exact failure
+> the fintech-first ordering exists to avoid. Application→onsite lead time (~4–8 wks) puts real onsites
+> in **late 2026**, on plan.
 
 Don't pull from a company you're actively interviewing at that week — keep those problems as genuine unknowns.
 
