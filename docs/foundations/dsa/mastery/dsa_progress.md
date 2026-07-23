@@ -36,14 +36,16 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/dsa/mastery/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **96** problems &nbsp;·&nbsp; **106** solutions &nbsp;·&nbsp; **337** attempts
+> **97** problems &nbsp;·&nbsp; **107** solutions &nbsp;·&nbsp; **339** attempts
 
 | | 🏆 Retired | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|
-| **Solutions** | 0 | 83 | 22 | 1 |
+| **Solutions** | 0 | 83 | 22 | 2 |
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|---|
+| Hard | [332. Reconstruct Itinerary (Hierholzer)](https://leetcode.com/problems/reconstruct-itinerary/) | 🔴 | 0 | 2026-07-24 | 2026-07-22 | 2026-07-22 |
+| Easy | [242. Valid Anagram](https://leetcode.com/problems/valid-anagram/) | 🟢 | 2 | 2026-09-20 | 2026-07-22 | 2026-01-01, 2026-03-25, 2026-06-22, 2026-07-22 |
 | Hard | [127. Word Ladder (BFS)](https://leetcode.com/problems/word-ladder/) | 🟡 | 0 | 2026-07-31 | 2026-07-21 | 2026-07-18, 2026-07-21 |
 | Medium | [503. Next Greater Element II](https://leetcode.com/problems/next-greater-element-ii/) | 🟡 | 0 | 2026-07-31 | 2026-07-21 | 2026-07-11, 2026-07-21 |
 | Medium | [211. Design Add and Search Words Data Structure](https://leetcode.com/problems/design-add-and-search-words-data-structure/) | 🔴 | 0 | 2026-07-23 | 2026-07-21 | 2026-07-09, 2026-07-11, 2026-07-21 |
@@ -126,7 +128,6 @@ Notes for future agents:
 | Medium | [75. Sort Colors (Bucket Sort)](https://leetcode.com/problems/sort-colors/) | 🟢 | 1 | 2026-07-24 | 2026-06-24 | 2026-01-07, 2026-04-01, 2026-06-24 |
 | Medium | [261. Graph Valid Tree (DFS)](https://leetcode.com/problems/graph-valid-tree/) | 🟢 | 1 | 2026-07-23 | 2026-06-23 | 2026-06-15, 2026-06-17, 2026-06-21, 2026-06-23 |
 | Easy | [1046. Last Stone Weight](https://leetcode.com/problems/last-stone-weight/) | 🟢 | 1 | 2026-07-23 | 2026-06-23 | 2026-06-23 |
-| Easy | [242. Valid Anagram](https://leetcode.com/problems/valid-anagram/) | 🟢 | 1 | 2026-07-22 | 2026-06-22 | 2026-01-01, 2026-03-25, 2026-06-22 |
 | Medium | [2300. Successful Pairs of Spells and Potions](https://leetcode.com/problems/successful-pairs-of-spells-and-potions/) | 🟢 | 1 | 2026-07-19 | 2026-06-19 | 2026-05-03, 2026-06-12, 2026-06-19 |
 | Medium | [695. Max Area Of Island (DFS)](https://leetcode.com/problems/max-area-of-island/) | 🟢 | 1 | 2026-07-17 | 2026-06-17 | 2026-06-01, 2026-06-17 |
 | Easy | [14. Longest Common Prefix](https://leetcode.com/problems/longest-common-prefix/) | 🟢 | 1 | 2026-07-15 | 2026-06-15 | 2026-01-03, 2026-03-27, 2026-06-05, 2026-06-15 |

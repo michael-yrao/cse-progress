@@ -19,6 +19,7 @@
 - [No spoilers](feedback_no_spoilers.md) — zero hints/approaches unless explicitly asked or stuck; NEVER recap the approach (or stuck_log content) when a problem/retry begins
 - [No prior-attempt comparison](feedback_no_prior_attempt_comparison.md) — judge today's code on its own; never read or cite prior attempts (stashed in .history/ on a retry) when giving feedback or rating
 - [Infer comfort rating](feedback_infer_comfort.md) — read Clean/Shaky/Blank from the conversation against the rubric and propose it for confirmation; don't ask the user cold
+- [Ask for complexity](feedback_ask_complexity.md) — after a problem is coded, ASK the learner for time & space before rating; don't state it for them (⚠ whether a Big-O miss lowers the rating is PINNED/undecided as of Jul 22)
 - [Provisional Clean](feedback_provisional_clean.md) — a 🟢 directly after a 🔴 is logged Streak 0 → +10 lock-down (not +30); survives → Streak 1 → +30; only Blank→Clean is provisional; never "fix" 🟢/Streak-0 to Streak 1
 - [Git commit checklist](feedback_git_commit.md) — always run git status before committing to catch unstaged solution files
 - [Batch commits](feedback_batch_commits.md) — don't commit per problem; accumulate and commit once at session end (each commit re-injects ~70 lines of the tracker into context)

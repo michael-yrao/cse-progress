@@ -19,6 +19,33 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🔴 332. Reconstruct Itinerary (Hierholzer) — Jul 22, 2026
+**Topic**: Eulerian path — a walk that uses every **edge** exactly once — via Hierholzer's algorithm. First exposure to the technique.
+
+### Where did I get stuck?
+Set up the representation well cold — `adjMap: source -> min-heap(destinations)`, DFS not BFS, "consume the edge by popping." But the traversal came apart in two places:
+1. Used an `if adjMap[node]` that popped **one** neighbor and recursed — a node with 2+ tickets only ever spent one, and the walk stopped at the first dead end with tickets unused.
+2. Appended greedily **inside** the walk (pre-order), so the lexically-smallest neighbor got locked into `result` even when it was a dead end that belonged **last**. On `[["JFK","KUL"],["JFK","NRT"],["NRT","JFK"]]` this returned `["JFK","KUL"]` instead of `["JFK","NRT","JFK","KUL"]`.
+
+Self-derived: edges-not-nodes, DFS, "drain all tickets," and *sensed* pre-order append was wrong. Supplied by coach: the post-order + reverse core, and why greedy-forward strands you.
+
+### Core Realization
+- Don't **pick** a neighbor — **drain** them all: `while adjMap[node]:` pop smallest, recurse. Every edge gets used, smallest-first.
+- **Post-order append is the trick.** A node you enter with no exits left can only be the *end* of the trip → append a node only *after* its heap empties. Dead-ends land in `result` first.
+- Since dead-ends land first and the true start (`JFK`) drains last, `result` comes out reversed → one `result.reverse()` at the end.
+- No `visited` set: popping off the heap *is* the "mark used." No pre-seed of `JFK` either — every node is added by the post-order append.
+
+### Code Snippet
+```python
+def dfs(node):
+    while adjMap[node]:
+        dfs(heapq.heappop(adjMap[node]))
+    result.append(node)   # post-order: append when the node has no exits left
+dfs("JFK")
+result.reverse()
+```
+Complexity: **O(E log E)** time (each of E tickets pushed+popped from a heap, O(log) each), **O(E)** space. Big-O time was initially given as O(E) — the heap's log factor was the miss.
+
 ## 🟡 127. Word Ladder (BFS) — Jul 21, 2026
 **Sticking point**: 🔴→🟡 — full structure rebuilt cold (wildcard-bucket adjacency + layered BFS came back unaided; the Jul 18 teaching stuck). Only miss: off-by-one on the BFS level init — started `level = 0` and returned `level + 1`, undercounting by one (`beginWord` is already word #1 when popped, so the counter must start at 1).
 

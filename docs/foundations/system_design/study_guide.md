@@ -203,10 +203,11 @@ This guide is the single source of truth (map + ROI line). Current file state �
 
 **Built:**
 - [`framework.md`](framework.md) ✅ — the delivery framework, step by step (the *why* behind the case-study template's headings). Reread before any Transition/Mastery sprint.
-- `fundamentals/` ✅ — [`single_node_io_efficiency.md`](fundamentals/single_node_io_efficiency.md) (the 4096-byte buffer / sectors / pages / syscalls). *Depth material, not interview-core.*
 - `templates/` ✅ — the two scaffolds you fill during practice (see Cadence above).
 
-- `components/` 🌱 — per-block deep-dives, started: [`rate_limiter.md`](components/rate_limiter.md) (Transition ✅ — carries the named drill targets for Mastery). Grows as you cover each block.
+- `components/` 🌱 — per-block deep-dives: [`rate_limiter.md`](components/rate_limiter.md) (Transition ✅ — carries the named drill targets for Mastery) · [`caching.md`](components/caching.md) (Bootstrap ✅ Jul 22 — 3 pillars, thundering herd + penetration). Grows as you cover each block.
+- `concepts/` 🌱 — cross-cutting ideas (neither deployable tech nor full pattern): [`bloom_filter.md`](concepts/bloom_filter.md), [`zipfian_distribution.md`](concepts/zipfian_distribution.md). Each has a Recall Card.
+- `archive/` — retired depth material: [`fundamentals/single_node_io_efficiency.md`](archive/fundamentals/single_node_io_efficiency.md) (the 4096-byte buffer / sectors / pages / syscalls). *Depth material, not interview-core — archived Jul 22.*
 
 **Planned (not yet created — build as you reach each phase, no number prefixes):**
 - `databases/` — SQL vs NoSQL, replication, sharding

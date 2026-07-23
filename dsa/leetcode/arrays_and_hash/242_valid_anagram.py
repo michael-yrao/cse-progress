@@ -31,6 +31,22 @@ import unittest
 
 
 class Solution:
+
+    # ── Attempt · 2026-07-22 ──────────────
+    def isAnagram_20260722(self, s: str, t: str) -> bool:
+        sArray = [0] * 26
+        tArray = [0] * 26
+
+        for char in s:
+            index = ord(char) - ord('a')
+            sArray[index]+=1
+        
+        for char in t:
+            index = ord(char) - ord('a')
+            tArray[index]+=1
+        
+        return sArray==tArray
+
     def isAnagram(self, s: str, t: str) -> bool:
         # anagrams are same length
         # anagrams are the same if sorted
