@@ -61,6 +61,39 @@ Follow up: Could you write a generalized algorithm to work on any possible set o
 from typing import List
 
 
+# ── Attempt · 2026-07-23 ──────────────
+class Solution_20260723:
+    # Prefix Length Framing
+    # Used in transmitting messages across networks without ever reading the messages
+    # prefix string with <length># so it becomes <length>#<string><length>#<string>....
+    def encode(self, strs: List[str]) -> str:
+        resultStr = ""
+        for string in strs:
+            lenStr = len(string)
+            resultStr+=str(lenStr)
+            resultStr+="#"
+            resultStr+=string
+        return resultStr
+
+    def decode(self, s: str) -> List[str]:
+        # somewhat two pointer method, one to keep track of beginning of len
+        # another to get end of len, which is also at #
+        # then we use len to get full word without ever reading the word
+        
+        result = []
+        
+        i = 0
+        while i < len(s):
+            j = i + 1
+            while s[j] != '#':
+                j+=1
+            lenStr = int(s[i:j])
+            word = s[j+1:j+1+lenStr]
+            result.append(word)
+            i=j+1+lenStr
+        
+        return result
+
 # ── Attempt · 2026-07-13 ──────────────
 class Solution_20260713:
     # This problem is about Length Prefix Framing

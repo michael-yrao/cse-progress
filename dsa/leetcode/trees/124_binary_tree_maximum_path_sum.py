@@ -34,6 +34,23 @@ from typing import Optional
 
 class Solution:
 
+    # ── Attempt · 2026-07-23 ──────────────
+    def maxPathSum_20260723(self, root: Optional[TreeNode]) -> int:
+        maxSum = -math.inf
+
+        def dfs(node):
+            nonlocal maxSum
+            if not node:
+                return 0
+            
+            leftSum = max(0,dfs(node.left))
+            rightSum = max(0,dfs(node.right))
+            maxSum = max(maxSum, node.val + leftSum + rightSum)
+            return max(node.val + leftSum, node.val + rightSum)
+        
+        dfs(root)
+        return maxSum # type: ignore
+
     # ── Attempt · 2026-07-13 ──────────────
     def maxPathSum_20260713(self, root: Optional[TreeNode]) -> int:
         maxPath = -math.inf

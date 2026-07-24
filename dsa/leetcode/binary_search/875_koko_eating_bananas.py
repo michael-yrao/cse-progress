@@ -34,6 +34,33 @@ from typing import List
 
 class Solution:
 
+    # ── Attempt · 2026-07-23 ──────────────
+    def minEatingSpeed_20260723(self, piles: List[int], h: int) -> int:
+        # h is always equal or bigger than len(piles), so no need to worry about that case
+        # one thing we will note that, the upper bound in that case is max(piles)
+        # so our job is to find a number that is less than upperBound
+        # binary search on the answer, boundary search
+        upperBound = max(piles)
+        l, r = 1, upperBound
+
+        def canFinishBananas(speed):
+            hourCounter = 0
+            for pile in piles:
+                upperBoundHours = math.ceil(pile/speed)
+                hourCounter+=upperBoundHours
+            return hourCounter <= h
+
+        while l < r:
+            m = (l+r)//2
+            # if we can finish in m bananas / hour
+            # it is a potential answer, so r = m
+            if canFinishBananas(m):
+                r = m
+            else:
+                l = m + 1
+        
+        return l
+
     # ── Attempt · 2026-07-13 ──────────────
     def minEatingSpeed_20260713(self, piles: List[int], h: int) -> int:
         # maximum eating speed is max(piles)
