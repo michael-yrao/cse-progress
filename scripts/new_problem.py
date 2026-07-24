@@ -28,8 +28,18 @@ from __future__ import annotations
 
 import argparse
 import re
+import sys
 from datetime import datetime
 from pathlib import Path
+
+# Status lines below carry box-drawing / arrow glyphs (── ⤵ →). On a stock Windows
+# console (cp1252) printing them raises UnicodeEncodeError *after* the files are already
+# written — a scary traceback on a successful run. Force UTF-8 stdout so the script
+# runs clean on any machine. (File writes already pass encoding="utf-8" explicitly.)
+try:
+    sys.stdout.reconfigure(encoding="utf-8")
+except (AttributeError, ValueError):  # non-reconfigurable stream (redirected/wrapped)
+    pass
 
 TEMPLATE = Path("docs/foundations/dsa/templates/solution_template.py")
 DEFAULT_ROOT = "dsa/leetcode"
@@ -156,6 +166,46 @@ def solution_class_start(lines: list[str]) -> int | None:
         (i for i, ln in enumerate(lines) if re.match(r"^class\s+Solution\b", ln)),
         None,
     )
+
+
+def solution_interface_methods(lines: list[str]) -> list[str]:
+    """Public method base-names across every `Solution` / `Solution_<stamp>` class in the
+    file, read at the shallowest method indent.
+
+    Used only for `Solution`-named files (`design_class_base` is None) to tell a
+    multi-method problem (271 encode/decode — stored either as a plain `class Solution`
+    with several methods, or as dated `class Solution_<stamp>` siblings) apart from a
+    single-method one, and to suggest the `--method` list when refusing. Nested helpers
+    sit deeper than the class's method indent and are skipped; `__init__` is excluded;
+    dated suffixes collapse so `encode` / `encode_20260713` count once.
+
+    A single-method problem stores its attempts as dated *methods* (`maxPathSum_20260713`)
+    inside one class, so they collapse to a single base name and the caller's guard stays
+    silent. A rare class-level (non-nested) helper would inflate the count — but the
+    consequence is only a loud, recoverable refusal asking for `--method`, never the
+    silent spoiler the single-method path leaks, so erring toward refusal is correct.
+    """
+    method_indent = None
+    seen: list[str] = []
+    in_solution = False
+    for ln in lines:
+        if re.match(r"^class\s", ln):
+            in_solution = bool(re.match(r"^class\s+Solution(?:_\d{8})?\s*[:(]", ln))
+            continue
+        if not in_solution:
+            continue
+        m = re.match(r"^(\s+)def\s+([A-Za-z_]\w*)\s*\(", ln)
+        if not m:
+            continue
+        indent, nm = len(m.group(1)), m.group(2)
+        if method_indent is None:
+            method_indent = indent
+        if indent != method_indent or nm == "__init__":
+            continue
+        base = re.sub(r"_\d{8}$", "", nm)
+        if base not in seen:
+            seen.append(base)
+    return seen
 
 
 def design_class_base(lines: list[str], title: str = "") -> str | None:
@@ -442,6 +492,25 @@ def main() -> None:
         # and any leftover stash pointer.
         lines = strip_pointer(strip_spoiler_region(text.splitlines()))
         cls = solution_class_start(lines)
+
+        # Multi-method problems whose classes are all named `Solution` (271 encode/decode)
+        # can't have their interface inferred without --method. Stored as a plain
+        # `class Solution` with several methods, the single-method branch below would
+        # scaffold just ONE dated method and leave the other methods' prior attempts in
+        # view — the exact spoiler the stash removes; stored as dated `Solution_<stamp>`
+        # siblings, the sibling branch would fall back to a bogus camel(title) method.
+        # Refuse with the interface read from disk, mirroring the named-design guard in the
+        # else-branch. Named design classes (Twitter, LRUCache) have design_class_base != None
+        # and are handled there instead, so this catches only the `Solution`-named gap.
+        if not args.method.strip() and design_class_base(lines, args.title) is None:
+            pubs = solution_interface_methods(lines)
+            if len(pubs) > 1:
+                ap.error(
+                    f"{args.number} is a multi-method problem (class Solution defines "
+                    f"{', '.join(pubs)}); its retry stub needs the interface named. Re-run "
+                    f"with --method {','.join(pubs)} — without it only one method is "
+                    f"scaffolded and the other methods' prior attempts stay visible."
+                )
 
         # No --method on a retry: discover the name from the file rather than guessing
         # camel(title). The two usually differ (levelOrder vs binaryTreeLevelOrderTraversal),

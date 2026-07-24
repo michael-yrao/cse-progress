@@ -22,6 +22,53 @@ Constraints:
     At most 10^4 calls to addWord and search.
 """
 
+
+# ── Attempt · 2026-07-23 ──────────────
+# NOTE: suffix any helper class you write (Node, TrieNode, …) with _20260723 too — an undated helper collides with the restored canonical one.
+class TrieNode_20260723:
+    def __init__(self):
+        # char -> TrieNode map
+        self.children = {}
+        self.isWord = False
+        
+class WordDictionary_20260723:
+
+    def __init__(self):
+        self.root = TrieNode_20260723()
+
+    def addWord(self, word: str) -> None:
+        traversal = self.root
+        for char in word:
+            if char not in traversal.children:
+                traversal.children[char] = TrieNode_20260723()
+            traversal = traversal.children[char]
+        traversal.isWord = True
+
+    def search(self, word: str) -> bool:
+        traversal = self.root
+        # if we see a wildcard, dfs until we see a result
+        # otherwise, same as normal search
+        # we need to dfs on the node and pass starting index of string
+        def dfs(node, index):
+            for i in range(index, len(word)):
+                currentChar = word[i]
+                # if wildcard, we skip a char and search all node's childrens
+                if currentChar == '.':
+                    for child in node.children.values():
+                        # if we found a match, return True
+                        if dfs(child, i+1):
+                            return True
+                    # if we went through all children and did not return True
+                    # then we def don't have a match
+                    return False
+                elif currentChar in node.children:
+                    node = node.children[currentChar]
+                # if neither of these are true, then we just return False
+                else:
+                    return False
+            return node.isWord
+        return dfs(traversal, 0)
+
 # ── Attempt · 2026-07-21 ──────────────
 # NOTE: suffix any helper class you write (Node, TrieNode, …) with _20260721 too — an undated helper collides with the restored canonical one.
 class TrieNode:

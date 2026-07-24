@@ -19,6 +19,15 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🟡 778. Swim in Rising Water — Jul 23, 2026
+**Sticking point**: first exposure to grid-Dijkstra (max-of-path). Derived the min-heap frontier cold (jump `t` to the min blocked neighbor, not +1), but (1) initially thought the frontier was only the current cell's 4 neighbors — it's the whole 2D boundary, O(n²), which is *why* a heap beats a scan; (2) empty-heap `IndexError` from peeking `minHeap[0]` between inner-loop pops; (3) never checked for reaching the destination, so it drained the grid and returned an overshot `level`. Cleaner form = modified Dijkstra (answer = running max elevation, return on popping the end). Space Big-O: said O(n), actually O(n²).
+
+## 🟡 875. Koko Eating Bananas — Jul 23, 2026
+**Sticking point**: binary-search-on-answer was clean, but set `l = 0` — speed 0 is invalid and `math.ceil(pile/0)` divides by zero (crashes on `piles=[1], h=1`, where the first `m` is 0). Lower bound must be `l = 1`. Also stated complexity as n log n; it's n·log(max pile) — the search is over the value range, not the array.
+
+## 🟡 271. Encode and Decode Strings — Jul 23, 2026
+**Sticking point**: encode was clean; `decode` mixed a `for j in range(...)` with the two-pointer jump, so the `for` marched `j` through every index and the `i = j+1+lenStr` skip never drove the loop (re-scanned words, then `int('')` crash). Fix: make `i` the driver — `while i < len(s)`, inner `while` finds the `#`.
+
 ## 🔴 332. Reconstruct Itinerary (Hierholzer) — Jul 22, 2026
 **Topic**: Eulerian path — a walk that uses every **edge** exactly once — via Hierholzer's algorithm. First exposure to the technique.
 

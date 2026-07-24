@@ -36,19 +36,24 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/dsa/mastery/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **97** problems &nbsp;·&nbsp; **107** solutions &nbsp;·&nbsp; **339** attempts
+> **98** problems &nbsp;·&nbsp; **108** solutions &nbsp;·&nbsp; **345** attempts
 
 | | 🏆 Retired | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|
-| **Solutions** | 0 | 83 | 22 | 2 |
+| **Solutions** | 0 | 85 | 22 | 1 |
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|---|
+| Hard | [778. Swim in Rising Water (Dijkstra / Min-Heap)](https://leetcode.com/problems/swim-in-rising-water/) | 🟡 | 0 | 2026-08-02 | 2026-07-23 | 2026-07-23 |
+| Medium | [211. Design Add and Search Words Data Structure](https://leetcode.com/problems/design-add-and-search-words-data-structure/) | 🟢 | 0 | 2026-08-02 | 2026-07-23 | 2026-07-09, 2026-07-11, 2026-07-21, 2026-07-23 |
+| Hard | [124. Binary Tree Maximum Path Sum](https://leetcode.com/problems/binary-tree-maximum-path-sum/) | 🟢 | 1 | 2026-08-22 | 2026-07-23 | 2026-07-11, 2026-07-13, 2026-07-23 |
+| Medium | [271. Encode and Decode Strings](https://leetcode.com/problems/encode-and-decode-strings/) | 🟡 | 0 | 2026-08-02 | 2026-07-23 | 2026-07-01, 2026-07-03, 2026-07-13, 2026-07-23 |
+| Medium | [875. Koko Eating Bananas](https://leetcode.com/problems/koko-eating-bananas/) | 🟡 | 0 | 2026-08-02 | 2026-07-23 | 2026-04-22, 2026-07-03, 2026-07-13, 2026-07-23 |
+| Medium | [3. Longest Substring Without Repeating Characters](https://leetcode.com/problems/longest-substring-without-repeating-characters/) | 🟢 | 1 | 2026-08-22 | 2026-07-23 | 2026-04-17, 2026-07-23 |
 | Hard | [332. Reconstruct Itinerary (Hierholzer)](https://leetcode.com/problems/reconstruct-itinerary/) | 🔴 | 0 | 2026-07-24 | 2026-07-22 | 2026-07-22 |
 | Easy | [242. Valid Anagram](https://leetcode.com/problems/valid-anagram/) | 🟢 | 2 | 2026-09-20 | 2026-07-22 | 2026-01-01, 2026-03-25, 2026-06-22, 2026-07-22 |
 | Hard | [127. Word Ladder (BFS)](https://leetcode.com/problems/word-ladder/) | 🟡 | 0 | 2026-07-31 | 2026-07-21 | 2026-07-18, 2026-07-21 |
 | Medium | [503. Next Greater Element II](https://leetcode.com/problems/next-greater-element-ii/) | 🟡 | 0 | 2026-07-31 | 2026-07-21 | 2026-07-11, 2026-07-21 |
-| Medium | [211. Design Add and Search Words Data Structure](https://leetcode.com/problems/design-add-and-search-words-data-structure/) | 🔴 | 0 | 2026-07-23 | 2026-07-21 | 2026-07-09, 2026-07-11, 2026-07-21 |
 | Medium | [1584. Min Cost to Connect All Points (Prim's MST)](https://leetcode.com/problems/min-cost-to-connect-all-points/) | 🟡 | 0 | 2026-07-30 | 2026-07-20 | 2026-07-16, 2026-07-18, 2026-07-20 |
 | Medium | [1448. Count Good Nodes in Binary Tree](https://leetcode.com/problems/count-good-nodes-in-binary-tree/) | 🟢 | 1 | 2026-08-19 | 2026-07-20 | 2026-05-15, 2026-06-18, 2026-07-10, 2026-07-20 |
 | Easy | [206. Reverse Linked List (Iterative)](https://leetcode.com/problems/reverse-linked-list/) | 🟢 | 2 | 2026-09-18 | 2026-07-20 | 2026-04-23, 2026-05-26, 2026-06-12, 2026-06-20, 2026-07-20 |
@@ -83,9 +88,6 @@ Notes for future agents:
 | Easy | [121. Best Time to Buy and Sell Stock](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/) | 🟢 | 1 | 2026-08-13 | 2026-07-14 | 2026-03-22, 2026-04-15, 2026-06-25, 2026-07-03, 2026-07-14 |
 | Medium | [199. Binary Tree Right Side View](https://leetcode.com/problems/binary-tree-right-side-view/) | 🟢 | 2 | 2026-09-12 | 2026-07-14 | 2026-05-09, 2026-06-13, 2026-07-14 |
 | Medium | [167. Two Sum II](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/) | 🟢 | 2 | 2026-09-12 | 2026-07-14 | 2026-01-19, 2026-07-14 |
-| Hard | [124. Binary Tree Maximum Path Sum](https://leetcode.com/problems/binary-tree-maximum-path-sum/) | 🟡 | 0 | 2026-07-23 | 2026-07-13 | 2026-07-11, 2026-07-13 |
-| Medium | [271. Encode and Decode Strings](https://leetcode.com/problems/encode-and-decode-strings/) | 🟡 | 0 | 2026-07-23 | 2026-07-13 | 2026-07-01, 2026-07-03, 2026-07-13 |
-| Medium | [875. Koko Eating Bananas](https://leetcode.com/problems/koko-eating-bananas/) | 🟡 | 0 | 2026-07-23 | 2026-07-13 | 2026-04-22, 2026-07-03, 2026-07-13 |
 | Medium | [74. Search a 2D Matrix](https://leetcode.com/problems/search-a-2d-matrix/) | 🟡 | 0 | 2026-07-23 | 2026-07-13 | 2026-04-22, 2026-07-03, 2026-07-13 |
 | Medium | [323. Number of Connected Components (DFS)](https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/) | 🟢 | 1 | 2026-08-11 | 2026-07-12 | 2026-07-02, 2026-07-12 |
 | Medium | [229. Majority Element II](https://leetcode.com/problems/majority-element-ii/) | 🟡 | 0 | 2026-07-22 | 2026-07-12 | 2026-01-30, 2026-04-14, 2026-06-27, 2026-06-29, 2026-07-12 |
@@ -141,7 +143,6 @@ Notes for future agents:
 | Easy | [88. Merge Sorted Array](https://leetcode.com/problems/merge-sorted-array/) | 🟢 | 1 | 2026-07-04 | 2026-06-04 | 2026-01-10, 2026-04-03, 2026-06-04 |
 | Medium | [15. 3Sum](https://leetcode.com/problems/3sum/) | 🟢 | 1 | 2026-06-29 | 2026-05-30 | 2026-01-19, 2026-04-07, 2026-05-30 |
 | Medium | [347. Top K Frequent Elements](https://leetcode.com/problems/top-k-frequent-elements/) | 🟢 | 1 | 2026-06-29 | 2026-05-30 | 2026-01-11, 2026-04-09, 2026-05-30 |
-| Medium | [3. Longest Substring Without Repeating Characters](https://leetcode.com/problems/longest-substring-without-repeating-characters/) | 🟢 | 1 | 2026-05-17 | 2026-04-17 | 2026-04-17 |
 | Medium | [122. Best Time to Buy and Sell Stock II](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/) | 🟢 | 1 | 2026-05-17 | 2026-04-17 | 2026-01-28, 2026-04-17 |
 | Medium | [11. Container With Most Water](https://leetcode.com/problems/container-with-most-water/) | 🟢 | 1 | 2026-05-14 | 2026-04-14 | 2026-01-31, 2026-04-14 |
 | Medium | [238. Product of Array Except Self](https://leetcode.com/problems/product-of-array-except-self/) | 🟢 | 1 | 2026-05-13 | 2026-04-13 | 2026-01-24, 2026-04-13 |
