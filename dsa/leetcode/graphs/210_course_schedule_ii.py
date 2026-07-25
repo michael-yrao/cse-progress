@@ -44,6 +44,40 @@ import collections
 from typing import List
 
 class Solution:
+
+    # ── Attempt · 2026-07-24 ──────────────
+    def findOrder_20260724(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
+        # exact same approach as first course schedule
+        # we need a counter for how many prereqs a course has
+        # we use the 0s as our starting and perform BFS from there
+        # we also need an adjacency map, which is just prereq -> courses map
+        # don't really need taken set, we have result
+        prereqCounter = [0] * numCourses
+        adjMap = collections.defaultdict(list)
+
+        for pre, course in prerequisites:
+            adjMap[pre].append(course)
+            prereqCounter[course]+=1
+        
+        # BFS, so queue
+        queue = collections.deque()
+        for i in range(numCourses):
+            if prereqCounter[i] == 0:
+                queue.append(i)
+        result = []
+        while queue:
+            currentCourse = queue.popleft()
+            result.append(currentCourse)
+            # go through neighbors
+            for course in adjMap[currentCourse]:
+                prereqCounter[course]-=1
+                if prereqCounter[course] == 0:
+                    queue.append(course)
+        if len(result) != numCourses:
+            return []
+        result.reverse()
+        return result
+
     def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
         # so same idea as course schedule 1
         # we need to find starting nodes to go for

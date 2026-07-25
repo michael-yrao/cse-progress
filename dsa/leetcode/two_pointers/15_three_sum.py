@@ -38,6 +38,29 @@ Constraints:
 from typing import List
 
 class Solution:
+
+    # ── Attempt · 2026-07-24 ──────────────
+    def threeSum_20260724(self, nums: List[int]) -> List[List[int]]:
+        # sort, two sum sorted
+        # a + b + c = 0
+        nums.sort()
+        result = set()
+        for i in range(len(nums)-2):
+            j, k = i + 1, len(nums) - 1
+            while j < k:
+                # nums[j] + nums[k] == -nums[i]
+                if nums[j] + nums[k] == -nums[i]:
+                    resultSet = (nums[i], nums[j], nums[k])
+                    result.add(resultSet)
+                    # used both j and k, move on from both
+                    j+=1
+                    k-=1
+                elif nums[j] + nums[k] < -nums[i]:
+                    j+=1
+                else:
+                    k-=1
+        return list(result)
+
     def threeSumSet(self, nums: List[int]) -> List[List[int]]:
         # sort the list
         # use two sum 2 solution to solve subproblem

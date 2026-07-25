@@ -29,6 +29,32 @@ Follow up: Can you solve the problem in O(1) extra space complexity? (The output
 from typing import List
 
 class Solution:
+
+    # ── Attempt · 2026-07-24 ──────────────
+    def productExceptSelf_20260724(self, nums: List[int]) -> List[int]:
+        # my preferred solution for this is pre and post product like prefixSum
+        # input:       [1, 2, 3, 4]
+        # preProduct:  [1, 1, 2, 6]
+        # postProduct: [24, 12, 4, 1]
+        # result:      [24, 12, 8, 6] 
+        lenNums = len(nums)
+        prefixProduct = [1] * lenNums
+        postfixProduct = [1] * lenNums
+
+        for i in range(1, lenNums):
+            prefixProduct[i] = prefixProduct[i-1] * nums[i-1]
+        
+        for i in range(lenNums-2, -1, -1):
+            postfixProduct[i] = postfixProduct[i+1] * nums[i+1]
+        
+        result = []
+
+        for i in range(lenNums):
+            product = prefixProduct[i] * postfixProduct[i]
+            result.append(product)
+        
+        return result
+
     def productExceptSelfDivisionSolution(self, nums: List[int]) -> List[int]:
         total = 1
         result = []
