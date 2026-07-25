@@ -208,6 +208,21 @@ def solution_interface_methods(lines: list[str]) -> list[str]:
     return seen
 
 
+def has_dated_sibling_class(lines: list[str]) -> bool:
+    """True if the file stores prior attempts as DATED SIBLING CLASSES
+    (`class Solution_20260713`, `class Twitter_20260706`) — the layout the multi-method /
+    design scaffold path writes.
+
+    This is the true "needs --method" signature, and the right discriminator to gate the
+    retry on: single-method problems store their attempts as dated *methods* inside one
+    class (never dated classes), and a single-class file that merely collects several named
+    *approaches* (238 division/prefixSum/…, 15 set/no-set) has no dated class either — so
+    neither trips this. Method count does NOT distinguish those cases (it false-fires on the
+    approach collections); the sibling-class layout does.
+    """
+    return any(re.match(r"^class\s+[A-Za-z_]\w*_\d{8}\s*[:(]", ln) for ln in lines)
+
+
 def design_class_base(lines: list[str], title: str = "") -> str | None:
     """Base name of a multi-method problem's own class — `Twitter` from `class Twitter`
     or `class Twitter_20260706`, `LRUCache` from `class LRUCache` — so a retry's dated
@@ -493,24 +508,26 @@ def main() -> None:
         lines = strip_pointer(strip_spoiler_region(text.splitlines()))
         cls = solution_class_start(lines)
 
-        # Multi-method problems whose classes are all named `Solution` (271 encode/decode)
-        # can't have their interface inferred without --method. Stored as a plain
-        # `class Solution` with several methods, the single-method branch below would
-        # scaffold just ONE dated method and leave the other methods' prior attempts in
-        # view — the exact spoiler the stash removes; stored as dated `Solution_<stamp>`
-        # siblings, the sibling branch would fall back to a bogus camel(title) method.
-        # Refuse with the interface read from disk, mirroring the named-design guard in the
-        # else-branch. Named design classes (Twitter, LRUCache) have design_class_base != None
-        # and are handled there instead, so this catches only the `Solution`-named gap.
-        if not args.method.strip() and design_class_base(lines, args.title) is None:
+        # A `Solution`-named retry whose prior attempts are stored as DATED SIBLING CLASSES
+        # (271 encode/decode: `class Solution_20260713` …) can't have its interface inferred
+        # without --method. The single-method branch below stashes only from the plain
+        # `class Solution` down, leaving the sibling classes above it visible — the exact
+        # 271 spoiler; the sibling branch would fall back to a bogus camel(title) method.
+        # Gate on the sibling-class LAYOUT, not method count: a single class that merely
+        # collects several named approaches (238 division/prefixSum/…, 15 set/no-set) has no
+        # dated sibling class, so it correctly falls through to the single-method path (stub
+        # at top, every method stashed below — no spoiler). Named design classes (Twitter,
+        # LRUCache) have design_class_base != None and are handled by the else-branch guard.
+        if (not args.method.strip() and design_class_base(lines, args.title) is None
+                and has_dated_sibling_class(lines)):
             pubs = solution_interface_methods(lines)
-            if len(pubs) > 1:
-                ap.error(
-                    f"{args.number} is a multi-method problem (class Solution defines "
-                    f"{', '.join(pubs)}); its retry stub needs the interface named. Re-run "
-                    f"with --method {','.join(pubs)} — without it only one method is "
-                    f"scaffolded and the other methods' prior attempts stay visible."
-                )
+            suffix = f" (e.g. --method {','.join(pubs)})" if len(pubs) > 1 else ""
+            ap.error(
+                f"{args.number} stores prior attempts as dated sibling classes "
+                f"(multi-method layout); its retry stub needs the interface named. Re-run "
+                f"with --method{suffix} — without it the sibling classes are left visible "
+                f"or a bogus method is invented."
+            )
 
         # No --method on a retry: discover the name from the file rather than guessing
         # camel(title). The two usually differ (levelOrder vs binaryTreeLevelOrderTraversal),

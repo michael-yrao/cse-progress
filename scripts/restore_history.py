@@ -76,6 +76,32 @@ def find_source(number: str) -> Path | None:
     return matches[0] if matches else None
 
 
+DATED_DEF_OR_CLASS = re.compile(r"^\s*(?:def\s+\w+|class\s+\w+)_(\d{8})\b", re.M)
+
+
+def detect_session_stamp() -> str | None:
+    """Newest dated-attempt stamp (`_YYYYMMDD`) across the stashed problems' source files.
+
+    Restore runs at session end, and the stash exists only for problems touched THIS
+    session — each such file carries today's dated attempt at the top. Defaulting to this
+    instead of the wall clock is what keeps a **past-midnight close-out correct**: the stubs
+    are stamped with the session's start date, so `now()` (already rolled to the next day)
+    would look for an attempt that doesn't exist and wrongly declare every problem
+    un-attempted, keeping all stashes out. Returns None (→ caller falls back to now()) when
+    there's no stash or no stamp to read.
+    """
+    stamps: list[str] = []
+    hist = history_dir()
+    if hist.exists():
+        for stash in hist.glob("*.txt"):
+            m = re.match(r"(\d+)_", stash.name)
+            src = find_source(m.group(1)) if m else None
+            if src is None:
+                continue
+            stamps += DATED_DEF_OR_CLASS.findall(src.read_text(encoding="utf-8"))
+    return max(stamps) if stamps else None
+
+
 def restore_stash(stash: Path, stamp: str | None, dry_run: bool) -> str | None:
     """Paste `stash` back into its source file. Returns a skip reason, or None if restored."""
     m = re.match(r"(\d+)_", stash.name)
@@ -112,15 +138,23 @@ def strip_legacy_region(path: Path, stamp: str | None, dry_run: bool) -> str | N
 
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    ap.add_argument("--date", default=datetime.now().strftime("%Y%m%d"),
-                    help="session datestamp (YYYYMMDD); default today")
+    ap.add_argument("--date", default=None,
+                    help="session datestamp (YYYYMMDD); default = auto-detect from the "
+                         "stashed files' newest dated attempt (correct across midnight), "
+                         "else today")
     ap.add_argument("--all", action="store_true",
                     help="restore every stash / strip every region unconditionally, even "
                          "an un-attempted one — for reconciling old files, not session end")
     ap.add_argument("--dry-run", action="store_true", help="report only")
     args = ap.parse_args()
 
-    stamp = None if args.all else args.date
+    # Explicit --date wins; else auto-detect the session date from the stubs themselves
+    # (survives a past-midnight close-out); else fall back to the wall clock.
+    session_date = args.date or detect_session_stamp() or datetime.now().strftime("%Y%m%d")
+    if not args.all and not args.date and session_date != datetime.now().strftime("%Y%m%d"):
+        print(f"Using session date {session_date} (auto-detected from stubs; "
+              f"wall clock is {datetime.now().strftime('%Y%m%d')}).")
+    stamp = None if args.all else session_date
     verb = "Would restore" if args.dry_run else "Restored"
     done, kept = [], []
 
