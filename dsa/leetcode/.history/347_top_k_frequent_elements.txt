@@ -1,0 +1,31 @@
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        # We can have create a frequency map first
+        # After which, we can use a min heap
+        # pop until we get the kth element
+
+        freqMap = {}
+        for n in nums:
+            freqMap[n] = 1 + freqMap.get(n,0)
+        
+        heap = []
+        for num in freqMap.keys():
+            # default heap from heapq is a min heap
+            heapq.heappush(heap, (freqMap[num],num))
+            # since we only want the top k most frequent
+            # we just pop if we have more than k since pop removes min
+            if len(heap) > k:
+                heapq.heappop(heap)
+        
+        result = []
+        # put heap onto result
+        for freq, value in heap:
+            result.append(value)
+
+        return result
+    
+    def topKFrequent(nums: list[int], k: int) -> list[int]:
+        # creates a frequency map of num -> freq
+        count = Counter(nums)
+        
+        # nlargest(k, iterable, key) uses a max-heap under the hood
+        return heapq.nlargest(k, count.keys(), key=count.get)

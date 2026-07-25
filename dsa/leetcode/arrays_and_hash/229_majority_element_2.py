@@ -27,6 +27,31 @@ from typing import List
 import unittest
 
 class Solution:
+
+    # ── Attempt · 2026-07-24 ──────────────
+    def majorityElement_20260724(self, nums: List[int]) -> List[int]:
+        # we can never have more than 2 elements appearing more than n/3 times
+        # so this is a map problem, num -> freq
+
+        freqMap = collections.defaultdict(int)
+
+        for n in nums:
+            freqMap[n]+=1
+            if len(freqMap) > 2:
+                for key in freqMap:
+                    freqMap[key]-=1
+                for key in set(freqMap):
+                    if freqMap[key] == 0:
+                        del freqMap[key]
+        
+        minSize = len(nums)//3
+        result = []
+        for key in freqMap:
+            if nums.count(key) > minSize:
+                result.append(key)
+        
+        return result
+
     def majorityElement(self, nums: List[int]) -> List[int]:
         # all return keys must have size bigger than minSize
         # double / for int, single / for float

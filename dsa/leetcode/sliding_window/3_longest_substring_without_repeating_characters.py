@@ -41,4 +41,4 @@ class Solution:
             maxLength = max(maxLength, r - l + 1)
             r+=1
         
-        return maxLength
+        return maxLength # type: ignore

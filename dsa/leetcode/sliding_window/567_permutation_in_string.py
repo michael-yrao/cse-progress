@@ -22,6 +22,40 @@ Constraints:
 """
 
 class Solution:
+
+    # ── Attempt · 2026-07-24 ──────────────
+    def checkInclusion_20260724(self, s1: str, s2: str) -> bool:
+        # we look for window of size of s1 in s2 at each interval
+        # so sliding window
+        # doesn't say len s2 > len s1 so we gotta check that
+        # so save s1 as an frequency array
+        if len(s2) < len(s1):
+            return False
+        
+        s1Freq = [0] * 26
+        s2WindowFreq = [0] * 26
+
+        for char in s1:
+            index = ord(char) - ord('a')
+            s1Freq[index]+=1
+        
+        s1Len = len(s1)
+        l = r = 0
+
+        while r < len(s2):
+            rightIndex = ord(s2[r]) - ord('a')
+            s2WindowFreq[rightIndex]+=1
+            while r - l + 1 > s1Len:
+                leftIndex = ord(s2[l]) - ord('a')
+                s2WindowFreq[leftIndex]-=1
+                l+=1
+            # now that we are at correct size, check if is permutation
+            if s1Freq == s2WindowFreq:
+                return True
+            r+=1
+        
+        return False
+
     def checkInclusion(self, s1: str, s2: str) -> bool:
         # basically we are looking for some form of s1 in s2
         # we can just assume a window of size s1
