@@ -33,12 +33,13 @@ Follow up: Your algorithm's time complexity must be better than O(n log n), wher
 """
 
 import heapq
-from typing import Counter, List
+from collections import Counter
+from typing import List
 
 class Solution:
 
-    # ── Attempt · 2026-07-24 ──────────────
-    def topKFrequent_20260724(self, nums: List[int], k: int) -> List[int]:
+    # ── Attempt · 2026-07-25 ──────────────
+    def topKFrequent_20260725(self, nums: List[int], k: int) -> List[int]:
         # top k gives me the maxheap vibe instantly
         # we also want frequency, so this is a freqMap as well
         # so we are just doing a freq map and putting k elements into a min heap
@@ -61,7 +62,7 @@ class Solution:
         
         return result
 
-    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+    def topKFrequent_20260530(self, nums: List[int], k: int) -> List[int]:
         # We can have create a frequency map first
         # After which, we can use a min heap
         # pop until we get the kth element
@@ -86,7 +87,7 @@ class Solution:
 
         return result
     
-    def topKFrequent(nums: list[int], k: int) -> list[int]:
+    def topKFrequent_20260409(self, nums: list[int], k: int) -> list[int]:
         # creates a frequency map of num -> freq
         count = Counter(nums)
         
