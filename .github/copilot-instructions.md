@@ -38,19 +38,20 @@ cse-progress/
 ├── docs/
 │   ├── foundations/
 │   │   ├── schedules/                # weekly day-by-day plans, ALL tracks (+ archive/)
-│   │   ├── dsa/                      # study_guide.md, fundamentals/, patterns/, mastery/, templates/
+│   │   ├── dsa/                      # study_guide.md, fundamentals/, patterns/, mastery/, templates/, images/
 │   │   ├── system_design/            # study_guide.md, fundamentals/, components/, technologies/, mastery/, templates/
 │   │   └── ai_engineering/           # study_guide.md, templates/
-│   └── archive/2022/                 # legacy .tex notes (LaTeX)
+│   ├── archive/2022/                 # legacy .tex notes (LaTeX)
+│   ├── cse-coach/                    # the cse-coach ↔ cse-progress seam (ROADMAP.md)
+│   └── STYLE_GUIDE.md                # markdown conventions for cheatsheet docs
 ├── scripts/
 │   ├── new_problem.py                # scaffolds a problem file (statement + blank stub)
 │   ├── restore_history.py            # restores stashed prior attempts at session end
 │   ├── update_review_dates.py        # Comfort→interval engine (runs on commit)
 │   └── pull_interview.py
 ├── career/                           # resume + trajectory notes
-├── image/                            # algorithm diagrams (svg/png)
 ├── cse.config.yml                    # engine settings
-├── README.md · ROADMAP.md
+├── README.md
 ├── CLAUDE.md                         # full workflow (source of truth)
 └── AGENTS.md                         # agent-agnostic entry point
 ```

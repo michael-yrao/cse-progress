@@ -65,7 +65,7 @@ git config core.hooksPath .githooks
 
 ## Roadmap
 
-This is currently a personal system; the goal is to make it a **reusable template** other developers can fork. Progress toward that is tracked in [`ROADMAP.md`](ROADMAP.md).
+This is currently a personal system; the goal is to make it a **reusable template** other developers can fork. Progress toward that is tracked in [`docs/cse-coach/ROADMAP.md`](docs/cse-coach/ROADMAP.md), alongside anything else specific to how this repo and **cse-coach** fit together.
 
 ## External resources
 

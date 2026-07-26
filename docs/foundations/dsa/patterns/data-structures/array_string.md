@@ -27,6 +27,18 @@ Contiguous, index-addressable data. The most technique-rich structure — which 
 | Count/among subarrays with sum k? | prefix sum + hashmap |
 | Find first index satisfying a monotonic condition? | binary search (min boundary) |
 | Next greater / span / histogram? | monotonic stack |
+| Shift/rotate elements by k, in place? | three reversals (below) |
+
+## In-place rotation — the three-reversals trick
+
+Rotating right by `k` looks like it needs a second array or `k` passes. It doesn't: **reverse the
+whole array, then reverse each of the two pieces.** O(n) time, O(1) space, three calls to the same
+helper.
+
+![Array rotation by three reversals: reverse the entire array, then reverse the first k elements, then reverse the remaining n-k](../../images/array_rotation_technique.svg)
+
+Two things to get right: take `k %= n` first (rotating by more than the length wraps), and note the
+split lands at `k`, not `n-k`, once the array is already reversed.
 
 ## Representative problems
 
