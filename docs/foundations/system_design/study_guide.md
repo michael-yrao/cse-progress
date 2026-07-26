@@ -44,7 +44,7 @@ slots, **each lane owns one.** This is the arbiter — never let two lanes bid f
 | Slot | Lane | Shape | Driven by |
 |------|------|-------|-----------|
 | **Light midweek** — swaps **one 15-min warmup** | **① Technology fluency** — one blind sprint vs a Recall Card (`technologies/*.md`) | short, ~15 min | **due dates** (spaced rep). Nothing due → build the next tech's note. Order: Redis ✅ → **PostgreSQL** → Cassandra → DynamoDB → Kafka … |
-| **Fuller midweek** — swaps **both warmups** (~30 min) | **② Building blocks & probes** — write the `components/` note for whatever block the last design **hit cold**; then fire framework probe questions at a system already designed | ~30 min | **the pull queue** (see below) |
+| **Fuller midweek** — swaps **both warmups** (~30 min) | **② Building blocks & probes** — write the `components/` note for whatever block the last design **hit cold**; then fire framework probe questions at a system already designed. **Pull queue empty → drill a `concepts/` card instead** (see below) | ~30 min | **the pull queue**, falling back to **concepts** (see below) |
 | **Sunday** — the deep sprint | **③ Designs** — one staged session on a canonical system, full framework | 45–60 min | **sequence** |
 
 **Neither midweek slot cuts a 45-min DSA active block.** Both come out of **warmup** capacity: −4 DSA
@@ -89,6 +89,33 @@ design to go study.
 doesn't teach. When a rep comes back 🔴 because the thing was never encoded (vs. decayed), the next
 session is a **derive-the-design** (see below), **unrated**, and the rated sprint moves out far enough
 to be a real test. Rating a sprint run right after teaching measures the conversation, not retention.
+
+### The concepts lane — lane ②'s fallback ⭐
+
+**Added Jul 25, 2026.** The pull model catches **blocks** but structurally cannot catch **concepts.** A
+block is a box on the diagram — you notice when it's missing. A *concept* (Zipf, Little's Law, quorum
+math) is a fact you need mid-sentence to justify a number, so the gap only surfaces *after* you're
+already stuck. `concepts/` was, accordingly, an **ambush log**: it held exactly the two things that had
+already blindsided a session.
+
+**The rule:** when lane ② has **no cold-hit block queued**, it drills a `concepts/` card instead of
+idling — same blind-sprint format as lane ①. This gives concepts a lane without adding a slot.
+
+**Reading order** (front-loaded Jul 25 — the six with no natural design trigger):
+
+1. [Percentiles & tail latency](concepts/percentiles_and_tail_latency.md) — p99, fan-out amplification
+2. [Little's Law](concepts/littles_law.md) — `L = λW`, pool sizing, bottleneck-finding
+3. [Utilization & queueing](concepts/utilization_and_queueing.md) — the `1/(1−ρ)` curve, why 70%
+4. [Probabilistic sketches](concepts/probabilistic_sketches.md) — HyperLogLog + Count-Min (Bloom's siblings)
+5. [Retry storms & stampedes](concepts/retry_storms_and_stampedes.md) — backoff, jitter, metastable failure
+6. [Quorum math](concepts/quorum_math.md) — `R + W > N`
+
+**Deliberately *not* front-loaded** — these have a real design trigger, so let the pull queue work:
+WebSocket vs SSE vs polling (→ chat), birthday paradox / base62 / Snowflake IDs (→ URL shortener),
+vector clocks & clock skew (→ distributed KV), LSM vs B-tree (→ the Postgres and Cassandra cards).
+
+Each card leads with a **"You'll want this when…"** trigger line, so it also works as a symptom-indexed
+lookup when a design ambushes you — you don't have to have read it in advance for it to pay off.
 
 ### Session formats
 
