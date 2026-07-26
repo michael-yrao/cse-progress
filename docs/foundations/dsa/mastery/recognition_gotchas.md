@@ -4,6 +4,10 @@ The **front-gate** companion to [complexity_gotchas.md](complexity_gotchas.md): 
 analysis at the *end* of a rep, this one enforces **pattern recognition at the start**. Reread it
 like a Recall Card; the ledger below tracks which triggers trip the learner.
 
+> **Reference vs scoreboard:** the full trigger→technique catalog (12 cards, drill one/week) lives in
+> [recognition_patterns.md](../recognition_patterns.md). *That* file is the reference to reread; *this*
+> file is the miss ledger — which triggers you actually got wrong.
+
 ## The rule (how recognition is gated)
 
 Before writing any solution code, the learner states **shape → technique + why**:

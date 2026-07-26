@@ -184,6 +184,17 @@ Problems added for algorithmic depth — not part of the spaced repetition track
 | Hard | [85. Maximal Rectangle](https://leetcode.com/problems/maximal-rectangle/) | Matrix→row-histogram reduction (monotonic stack): per row, treat column heights as a histogram → run 84. Built on `84. Largest Rectangle in Histogram` (NC150 Stack). NOT DP space-compression. Not in NC150. |
 | Medium | [1504. Count Submatrices With All Ones](https://leetcode.com/problems/count-submatrices-with-all-ones/) | Same row-histogram reduction as 85, different aggregation. Anchored on 84 (NC150 Stack). Not in NC150. |
 
+### Post-NC150 Core-Fill (do FIRST — NC150 coverage gaps, not advanced)
+
+Genuine holes in NC150's coverage — medium difficulty, high interview frequency. Do these **before**
+the advanced techniques below. Added Jul 25 after a curriculum spot-check. Cap intake at **≤1 new/week**
+(blank tax). Also seeded in `cse-coach/curriculum/dsa/expansion_tier1.yml` (Core-fill group).
+
+| Technique | Representative problem(s) | Notes / when |
+|---|---|---|
+| **Tree DP** | [337. House Robber III](https://leetcode.com/problems/house-robber-iii/), [968. Binary Tree Cameras](https://leetcode.com/problems/binary-tree-cameras/) | DP whose recurrence runs over a tree — postorder, each node returns a small tuple of sub-answers (rob/not-rob). NC150 DP is **all** linear/grid/string — zero tree-DP. Common medium. **Trigger: pull in when the 1-D DP phase opens (trees already retired by then).** |
+| **Design — O(1) structures** | [380. Insert Delete GetRandom O(1)](https://leetcode.com/problems/insert-delete-getrandom-o1/), [460. LFU Cache](https://leetcode.com/problems/lfu-cache/) | OOD with hard per-op targets: array+hashmap-of-index for O(1) random; two-hashmap+freq-buckets for LFU. NC150 "design" is LRU+Twitter only; 380 is a top-frequency phone screen. **Trigger: pull 380 alongside the Heap/Design review cluster; 460 after 146 LRU retires.** |
+
 ### Post-NC150 Advanced Techniques
 
 Tackle **after** NC150 is comfortable. These are genuinely advanced but still surface in *hard* interviews (Tier 1). Order within is roughly by ROI. None are needed for NC150 itself.
