@@ -40,6 +40,30 @@ Follow up:
 from typing import List
 
 class Solution:
+
+    # ── Attempt · 2026-07-26 ──────────────
+    def rotate_20260726(self, nums: List[int], k: int) -> None:
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+        # reverse whole array
+        # reverse first k
+        # reverse last len(nums) - k
+        # O(n) time, O(1) space, will do everything in place
+        k = k%len(nums)
+        # reverse with l,r pointers
+        def reverse(l,r):
+            while l < r:
+                tmp = nums[l]
+                nums[l] = nums[r]
+                nums[r] = tmp
+                l+=1
+                r-=1
+        
+        reverse(0,len(nums)-1)
+        reverse(0,k-1)
+        reverse(k,len(nums)-1)
+
     def rotate(self, nums: List[int], k: int) -> None:
         """
         Do not return anything, modify nums in-place instead.

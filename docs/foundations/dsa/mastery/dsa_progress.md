@@ -19,6 +19,24 @@ Notes for future agents:
   Streak 1; that silently removes the lock-down.
 - When a problem reaches Streak 3, change Comfort to 🏆 to retire it from regular rotation.
 - Retired problems return for a spot check every 180 days. If still Clean, stays 🏆 (+180). If Shaky/Blank, return to active rotation.
+- **🎓 Graduation (added Jul 26, 2026) — the tier above 🏆.** A 🏆 problem that passes **two consecutive
+  180-day spot checks cleanly** graduates: move its row out of the review table into the
+  `## 🎓 Graduated` list at the bottom and **add its number to `discovery_skip` in `cse.config.yml`**.
+  ⚠️ **Both steps, always.** Discovery re-adds any problem under `dsa/leetcode/**` that has no row, so
+  removing the row alone silently resurrects it on the next commit. The Graduated list is deliberately a
+  **plain bullet list, not the 7-column table**, so this parser ignores it. Rationale: 🏆 is terminal but
+  still bills 0.039 slots/week forever; at ~28 slots/week the library caps out around 500–600 problems
+  without a release valve. See `study_guide.md` → "Library carrying capacity". If a graduated problem
+  ever resurfaces and fails, it re-enters at 🟡 like anything else.
+- **Disposable reps (added Jul 26, 2026) — not every solved problem gets a row.** A **consolidation rep**
+  or **application pull** is a probe testing whether a *technique* transfers, not an asset to maintain.
+  Solve it → log the outcome to the technique's ledger (`recognition_gotchas.md` / `complexity_gotchas.md`)
+  → **create no review row if it came back 🟢**. Only 🟡/🔴 earns a row, because only a gap needs
+  repetition. ⚠️ Same discovery caveat: a probe's file under `dsa/leetcode/**` is auto-added, so probes
+  need either a separate root outside `solutions.roots` (preferred) or a `discovery_skip` entry (stopgap).
+- **What this file means now:** it is **"everything still unproven"**, not "everything I've solved" — a
+  work queue, not a trophy case. A *shrinking* row count is the healthy direction. The accomplishment
+  record lives in the 🎓 Graduated list and the technique ledgers.
 - This Markdown file is generated from current row data by `scripts/update_review_dates.py`.
 - The script also discovers LeetCode problems defined under `dsa/leetcode/*` and adds missing rows automatically.
 - Problem titles in this table should include the method used, such as `(BFS)` or `(DFS)`.
@@ -36,14 +54,18 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/dsa/mastery/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **98** problems &nbsp;·&nbsp; **108** solutions &nbsp;·&nbsp; **356** attempts
+> **98** problems &nbsp;·&nbsp; **107** solutions &nbsp;·&nbsp; **357** attempts
 
 | | 🏆 Retired | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|
-| **Solutions** | 0 | 89 | 18 | 1 |
+| **Solutions** | 0 | 87 | 19 | 1 |
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|---|
+| Medium | [787. Cheapest Flights Within K Stops (Bellman-Ford)](https://leetcode.com/problems/cheapest-flights-within-k-stops/) | 🟡 | 0 | 2026-08-05 | 2026-07-26 | 2026-07-14, 2026-07-16, 2026-07-26 |
+| Medium | [53. Maximum Subarray (Kadane)](https://leetcode.com/problems/maximum-subarray/) | 🟢 | 2 | 2026-09-24 | 2026-07-26 | 2026-01-08, 2026-04-02, 2026-06-23, 2026-06-24, 2026-07-26 |
+| Medium | [189. Rotate Array](https://leetcode.com/problems/rotate-array/) | 🟢 | 2 | 2026-09-24 | 2026-07-26 | 2026-01-11, 2026-04-04, 2026-06-24, 2026-07-26 |
+| Easy | [1046. Last Stone Weight](https://leetcode.com/problems/last-stone-weight/) | 🟢 | 2 | 2026-09-24 | 2026-07-26 | 2026-06-23, 2026-07-26 |
 | Medium | [743. Network Delay Time (Dijkstra)](https://leetcode.com/problems/network-delay-time/) | 🟡 | 0 | 2026-08-04 | 2026-07-25 | 2026-07-13, 2026-07-15, 2026-07-25 |
 | Medium | [355. Design Twitter](https://leetcode.com/problems/design-twitter/) | 🟢 | 1 | 2026-08-24 | 2026-07-25 | 2026-06-24, 2026-06-26, 2026-07-06, 2026-07-15, 2026-07-25 |
 | Medium | [143. Reorder List](https://leetcode.com/problems/reorder-list/) | 🟡 | 0 | 2026-08-04 | 2026-07-25 | 2026-04-26, 2026-07-06, 2026-07-15, 2026-07-25 |
@@ -85,7 +107,6 @@ Notes for future agents:
 | Medium | [75. Sort Colors (Dutch Flag)](https://leetcode.com/problems/sort-colors/) | 🟢 | 1 | 2026-08-16 | 2026-07-17 | 2026-01-08, 2026-04-01, 2026-05-26, 2026-05-28, 2026-06-28, 2026-07-08, 2026-07-17 |
 | Medium | [540. Single Element in a Sorted Array](https://leetcode.com/problems/single-element-in-a-sorted-array/) | 🟡 | 0 | 2026-07-27 | 2026-07-17 | 2026-05-02, 2026-06-12, 2026-06-13, 2026-07-17 |
 | Medium | [18. Four Sum](https://leetcode.com/problems/4sum/) | 🟡 | 0 | 2026-07-27 | 2026-07-17 | 2026-01-23, 2026-07-17 |
-| Medium | [787. Cheapest Flights Within K Stops (Bellman-Ford)](https://leetcode.com/problems/cheapest-flights-within-k-stops/) | 🟢 | 0 | 2026-07-26 | 2026-07-16 | 2026-07-14, 2026-07-16 |
 | Medium | [146. LRU Cache](https://leetcode.com/problems/lru-cache/) | 🟢 | 1 | 2026-08-15 | 2026-07-16 | 2026-07-04, 2026-07-07, 2026-07-16 |
 | Medium | [162. Find Peak Element](https://leetcode.com/problems/find-peak-element/) | 🟢 | 2 | 2026-09-14 | 2026-07-16 | 2026-05-02, 2026-06-12, 2026-06-13, 2026-07-16 |
 | Medium | [207. Course Schedule I](https://leetcode.com/problems/course-schedule/) | 🟢 | 2 | 2026-09-14 | 2026-07-16 | 2026-06-08, 2026-06-12, 2026-06-13, 2026-07-16 |
@@ -129,11 +150,7 @@ Notes for future agents:
 | Medium | [53. Maximum Subarray (Prefix Sum)](https://leetcode.com/problems/maximum-subarray/) | 🟢 | 1 | 2026-07-27 | 2026-06-27 | 2026-01-08, 2026-04-01, 2026-06-27 |
 | Easy | [104. Maximum Depth of Binary Tree](https://leetcode.com/problems/maximum-depth-of-binary-tree/) | 🟢 | 1 | 2026-07-27 | 2026-06-27 | 2026-04-30, 2026-05-27, 2026-06-27 |
 | Easy | [704. Binary Search](https://leetcode.com/problems/binary-search/) | 🟢 | 1 | 2026-07-27 | 2026-06-27 | 2026-03-09, 2026-04-13, 2026-05-27, 2026-06-27 |
-| Medium | [53. Maximum Subarray (Kadane)](https://leetcode.com/problems/maximum-subarray/) | 🟢 | 1 | 2026-07-24 | 2026-06-24 | 2026-01-08, 2026-04-02, 2026-06-23, 2026-06-24 |
-| Medium | [189. Rotate Array](https://leetcode.com/problems/rotate-array/) | 🟢 | 1 | 2026-07-24 | 2026-06-24 | 2026-01-11, 2026-04-04, 2026-06-24 |
-| Medium | [75. Sort Colors (Bucket Sort)](https://leetcode.com/problems/sort-colors/) | 🟢 | 1 | 2026-07-24 | 2026-06-24 | 2026-01-07, 2026-04-01, 2026-06-24 |
 | Medium | [261. Graph Valid Tree (DFS)](https://leetcode.com/problems/graph-valid-tree/) | 🟢 | 1 | 2026-07-23 | 2026-06-23 | 2026-06-15, 2026-06-17, 2026-06-21, 2026-06-23 |
-| Easy | [1046. Last Stone Weight](https://leetcode.com/problems/last-stone-weight/) | 🟢 | 1 | 2026-07-23 | 2026-06-23 | 2026-06-23 |
 | Medium | [2300. Successful Pairs of Spells and Potions](https://leetcode.com/problems/successful-pairs-of-spells-and-potions/) | 🟢 | 1 | 2026-07-19 | 2026-06-19 | 2026-05-03, 2026-06-12, 2026-06-19 |
 | Medium | [695. Max Area Of Island (DFS)](https://leetcode.com/problems/max-area-of-island/) | 🟢 | 1 | 2026-07-17 | 2026-06-17 | 2026-06-01, 2026-06-17 |
 | Easy | [14. Longest Common Prefix](https://leetcode.com/problems/longest-common-prefix/) | 🟢 | 1 | 2026-07-15 | 2026-06-15 | 2026-01-03, 2026-03-27, 2026-06-05, 2026-06-15 |
@@ -183,6 +200,31 @@ Problems added for algorithmic depth — not part of the spaced repetition track
 | Hard | Bitmask DP (technique) — e.g. TSP / [847. Shortest Path Visiting All Nodes](https://leetcode.com/problems/shortest-path-visiting-all-nodes/) | DP enrichment: state = bitmask of visited set. Not in NC150; common in harder interviews. Learn after 2D DP block. |
 | Hard | [85. Maximal Rectangle](https://leetcode.com/problems/maximal-rectangle/) | Matrix→row-histogram reduction (monotonic stack): per row, treat column heights as a histogram → run 84. Built on `84. Largest Rectangle in Histogram` (NC150 Stack). NOT DP space-compression. Not in NC150. |
 | Medium | [1504. Count Submatrices With All Ones](https://leetcode.com/problems/count-submatrices-with-all-ones/) | Same row-histogram reduction as 85, different aggregation. Anchored on 84 (NC150 Stack). Not in NC150. |
+
+### Advanced Graphs breadth (queued Jul 26, 2026 — learner request)
+
+**Why queued and not scheduled:** Advanced Graphs is capped at **3 new/week (Hardest tier)** and right
+now **6 of its 7 problems are non-retired** (332 🔴 · 743/778/787/1584/127 🟡 · 269 not yet attempted).
+Adding new intake here fights the cap that was set Jul 18 for exactly this situation — the breadth the
+learner is asking for is *already scheduled*, as the retry cascade. **Trigger: pull these in once all 7
+Advanced Graphs problems sit at 🟢 or better.**
+
+**Also, honestly: "more Bellman-Ford problems" barely exists on LeetCode.** 787 is the canonical one.
+Breadth here comes from the *neighboring* algorithms and the boundaries between them — which is what
+this list is built around. See the four-way shortest-path split in
+[`recognition_gotchas.md`](recognition_gotchas.md).
+
+**⬆ Four problems were PROMOTED OUT of this queue into the Advanced Graphs phase on Jul 26, 2026.**
+**1334** (Floyd-Warshall) + **721** (Accounts Merge) as *new-technique* — real interview ROI belongs in
+the curriculum, not parked here. **1631** + **1514** as *consolidation reps* — an earlier decline
+("near-duplicate of 778") was reversed the same day: similarity to a solved problem is an argument
+**for** scheduling, since the minor differences are what recognition actually grades. Phase is now
+**11 problems, ending Aug 16**. See `study_guide.md` → "Two non-NC150 additions" and "Two kinds of new
+problem". What remains below is genuinely below-the-line.
+
+| Difficulty | Problem | Notes |
+|---|---|---|
+| Medium | [743. Network Delay Time (Bellman-Ford variant)](https://leetcode.com/problems/network-delay-time/) | The **direct contrast rep**: a problem already solved with Dijkstra, re-solved with Bellman-Ford on identical input, to feel the decision rule rather than recite it. **Gated by the method-variant rule** — needs 743 itself at 🏆 (currently 🟡). Different axis from a consolidation rep: this is *another technique on one problem*, not *one technique across problems*, and its gate is about rep economics rather than ROI. |
 
 ### Post-NC150 Core-Fill (do FIRST — NC150 coverage gaps, not advanced)
 
@@ -280,3 +322,21 @@ Tackle **after** NC150 is comfortable. These are genuinely advanced but still su
 - **Sprague–Grundy / Nim** — grundy numbers for impartial games.
 
 **Prerequisite chains within Tier 3:** segment tree → HLD / segment-tree-beats / Li Chao; LCA → HLD / virtual trees; SCC (Tarjan) → 2-SAT; modular arithmetic → NTT / discrete log; max-flow (Tier 2) → MCMF / min-cut modeling.
+
+---
+
+## 🎓 Graduated
+
+Problems that cleared **two consecutive 🏆 spot checks** (≈1 year clean at Retired, ~2.5 years from
+their first Clean). They carry **no interval and no ongoing review cost** — this is the release valve
+that keeps the library under its ~500–600 carrying capacity (see `../study_guide.md` → "Library
+carrying capacity").
+
+Deliberately a **plain list, not the 7-column table** — the tracker parser must not pick these up.
+Every entry here must also appear in `discovery_skip` in `cse.config.yml`, or discovery will resurrect
+it on the next commit.
+
+*Format:* `- <number>. <Title> (<method>) — graduated <YYYY-MM-DD>, spot checks <date>, <date>`
+
+_None yet._ The first candidates can't arrive before ~2028: nothing in the tracker has reached 🏆 at
+all as of Jul 26, 2026 (max streak is 2), and graduation needs 🏆 plus two more 180-day cycles.
