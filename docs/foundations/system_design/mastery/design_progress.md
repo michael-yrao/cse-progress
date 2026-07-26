@@ -8,8 +8,12 @@ Notes for future agents:
 - The pre-commit hook already recomputes + re-sorts this file when it is staged
   (recompute_simple()); there is NO source-file discovery here — rows are added by hand.
 - Column reuse (the parser requires the literal DSA headers):
-    * "Difficulty"          → the technology's ROLE (Cache, SQL DB, Stream, ...).
-    * "Problem"             → the technology, linked to its note in ../technologies/.
+    * "Difficulty"          → the technology's ROLE (Cache, SQL DB, Stream, ...), or the
+                              literal "Concept" for a ../concepts/ card.
+    * "Problem"             → the technology, linked to its note in ../technologies/,
+                              or the concept, linked into ../concepts/.
+- Rows with role "Concept" are drilled by lane ② as its fallback when the pull queue is
+  empty (see ../study_guide.md "The concepts lane"). Same blind-sprint format, same math.
 - The REP is a "blind sprint": open the technology's Recall Card, answer every prompt
   from memory, unfold to check, then rate:
     * 🟢 Clean  — every card answered cold, correctly.            +30d (streak2 +60, retire@3 +180)
@@ -34,3 +38,11 @@ Notes for future agents:
 | Search | [Elasticsearch](../technologies/elasticsearch.md) | 🔴 | 0 |  |  |  |
 | Edge / gateway | [API Gateway](../technologies/api_gateway.md) | 🔴 | 0 |  |  |  |
 | Coordination | [ZooKeeper](../technologies/zookeeper.md) | 🔴 | 0 |  |  |  |
+| Concept | [Percentiles & tail latency](../concepts/percentiles_and_tail_latency.md) | 🔴 | 0 |  |  |  |
+| Concept | [Little's Law](../concepts/littles_law.md) | 🔴 | 0 |  |  |  |
+| Concept | [Utilization & queueing](../concepts/utilization_and_queueing.md) | 🔴 | 0 |  |  |  |
+| Concept | [Probabilistic sketches (HLL, Count-Min)](../concepts/probabilistic_sketches.md) | 🔴 | 0 |  |  |  |
+| Concept | [Retry storms & stampedes](../concepts/retry_storms_and_stampedes.md) | 🔴 | 0 |  |  |  |
+| Concept | [Quorum math (R + W > N)](../concepts/quorum_math.md) | 🔴 | 0 |  |  |  |
+| Concept | [Zipfian distribution](../concepts/zipfian_distribution.md) | 🔴 | 0 |  |  |  |
+| Concept | [Bloom filter](../concepts/bloom_filter.md) | 🔴 | 0 |  |  |  |

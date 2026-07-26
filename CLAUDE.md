@@ -200,6 +200,8 @@ per-track trackers stay in each track's `mastery/`.
 - `docs/foundations/system_design/mastery/design_progress.md` — technology-fluency tracker; same 7-column table and same interval math as DSA, same script (`update_review_dates.py --tracker …`), rows added by hand
 - `docs/foundations/system_design/study_guide.md` — mission, Interview-ROI line, tiers
 - `docs/foundations/system_design/technologies/<tech>.md` — per-technology note + Recall Card (the blind-sprint rep)
+- `docs/foundations/system_design/components/<block>.md` — per-building-block note, written when a design hits it cold (lane ②)
+- `docs/foundations/system_design/concepts/<concept>.md` — per-concept note + Recall Card for the *quantitative/probabilistic foundations* (Zipf, Little's Law, percentiles, quorum math, sketches …). These are **not** building blocks and the pull queue can't catch them — lane ② drills these when its pull queue is empty. Each card opens with a "You'll want this when…" trigger line so it also works as a symptom-indexed lookup mid-design.
 
 ## Token discipline (efficiency by default)
 
