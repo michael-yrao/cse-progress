@@ -56,8 +56,8 @@ Best fit if you want deep technical work, not managing people.
 | Phase | Window | Focus |
 |-------|--------|-------|
 | 1. DSA + passive system design | Now – Dec 2026 | Finish NeetCode 150. Read Alex Xu *System Design Interview* Vol 1 on Sundays (passive, no pressure). Do NOT interview at FAANG yet — system design isn't ready |
-| 2. Fintech-adjacent interviews | Late 2026 – Jun 2027 | Interview at Stripe, Robinhood, Bloomberg, Two Sigma, Jane Street. These companies weight domain knowledge heavily and have lighter/more practical system design rounds. "Design a reconciliation system" is one you've literally built. Use these loops as calibration reps |
-| 3. Active system design prep + FAANG | Jan–Jun 2027 | Begin formal system design practice (one design per week, narrated out loud). Now FAANG loops are viable — DSA is solid and design is prepped. Target L5 first, don't hold out for L6 on day 1 |
+| 2. Fintech interviews as calibration | Late 2026 | Interview at Stripe, Robinhood, Bloomberg, Two Sigma, Jane Street. These weight domain knowledge heavily and have lighter/more practical design rounds — "design a reconciliation system" is one you've literally built. **Practice, not destination**: run them to measure the design lane, then debrief into the SD tracker |
+| 3. At-scale SD prep + the data-platform move | Late 2026 – 2027 | Formal system design practice on the weak lane (ingestion, columnar/time-series storage, partitioning, consistency), one design per week, narrated out loud. Then the real applications: **Datadog first, then Snowflake/Databricks.** This is the hop that counts — FAANG comes *after* it, from inside the tier, not instead of it |
 | 4. Build Staff-level scope | 2027–2029 | Own a technical domain, not a feature. Propose and drive cross-team initiatives. Produce at least one design doc that outlasts your tenure. Mentor 2–3 engineers. Get your skip-level to know your name |
 | 5. Promote to Staff | 2029–2031 | Most companies want: (a) cross-team technical influence, (b) a flagship project they can point to, (c) strong peer/skip endorsements |
 
@@ -95,14 +95,16 @@ Best fit if you want to build a company or run engineering at scale.
 2. **Have a Staff/Principal level conversation at MS** — the Snowflake/Serenity modernization is your leverage; use it now
 3. **Finish NeetCode 150** — cse-progress is your tracker; 5 problems/week gets you there by year-end
 4. **Read Alex Xu every Sunday** — *System Design Interview* Vol 1, one chapter per week, passive reading only; no practice problems yet
-5. **Interview at 2–3 fintech-adjacent companies (late 2026)** — Stripe, Robinhood, Two Sigma, Citadel Securities; do this before FAANG, not after
-6. **Write one technical post** — the accounting architecture migration (Snowflake + Serenity) is a great topic; it converts private work into public credibility
+5. **Interview at 2–3 fintech companies (late 2026) as practice** — Stripe, Robinhood, Two Sigma, Citadel Securities. These are calibration reps, not the destination; debrief every design round into the SD tracker, because that debrief is the input to #5b
+5b. **Target the data-platform tier as the next actual move (late 2026 – early 2027)** — **Datadog first**, then **Snowflake** and Databricks. Datadog rehearses the ingestion/storage design round at lower stakes and is NYC-based. For Snowflake, the migration you're leading *is* the referral story: get a warm intro through the MS account team or a Snowflake SE you already work with rather than applying cold
+6. **Write one technical post** — the accounting architecture migration (Snowflake + Serenity) is a great topic; it converts private work into public credibility, and it double-counts as the warm-intro artifact for the Snowflake target in #5b
 
 ### Interview sequencing — why order matters
-| Stage | Target | Why |
-|-------|--------|-----|
-| Late 2026 | Stripe, Robinhood, Bloomberg, Two Sigma | Domain knowledge covers the design gap; good calibration reps |
-| Early 2027 | FAANG (Google, Meta, Amazon) | System design is now prepped; DSA is solid; don't go here first |
+| Stage | Target | Role | Why |
+|-------|--------|------|-----|
+| Late 2026 | Stripe, Robinhood, Bloomberg, Two Sigma | **Practice** | Domain knowledge covers the design gap, so these are winnable now — which is exactly what makes them the right place to spend reps rather than the place to land. A fintech offer you decline costs nothing |
+| Late 2026 – early 2027 | **Datadog** (first), then **Snowflake**, Databricks | **Destination — the next actual move** | Data-platform tier. One hop that lands closer to big tech instead of lateral into another bank. Datadog goes first: same ingestion/storage design round at lower stakes, NYC-based, and no product story to spend. Then Snowflake, where the MS migration makes the screen easy and the onsite hard |
+| The move after this one | FAANG (Google, Meta, Amazon) | Not this cycle | Reached from *inside* the data-platform tier, where both the logo and the at-scale work count. Going there directly would be the extra hop this plan exists to avoid |
 
 ---
 
