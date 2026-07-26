@@ -57,7 +57,7 @@ class Solution:
         else:
             return self.lowestCommonAncestor_20260719(root.left, p, q) # type: ignore
 
-    def lowestCommonAncestor(self, root: TreeNode, p: TreeNode, q: TreeNode) -> TreeNode: # type: ignore
+    def lowestCommonAncestor_20260612(self, root: TreeNode, p: TreeNode, q: TreeNode) -> TreeNode: # type: ignore
         # While we can generate the BST with inorder DFS
         # it isn't the right way to find the answer
         # this is preorder DFS since the direction we go depends on the currentNode.val
@@ -75,7 +75,7 @@ class Solution:
             else:
                 return currentNode
     
-    def lowestCommonAncestor(self, root: TreeNode, p: TreeNode, q: TreeNode) -> TreeNode: # type: ignore
+    def lowestCommonAncestor_20260503(self, root: TreeNode, p: TreeNode, q: TreeNode) -> TreeNode: # type: ignore
         # kind of difficult for me to understand the concept of LCA
         # but essentially we are just trying to find the nodes p and q
         # so we do preorder since we need to compare value of current node to value of p and q

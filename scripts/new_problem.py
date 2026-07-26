@@ -27,6 +27,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import ast
 import re
 import sys
 from datetime import datetime
@@ -401,6 +402,41 @@ def module_level_insert_at(lines: list[str]) -> int:
     return last_import
 
 
+def warn_legacy_dupes(text: str, path: Path) -> None:
+    """Non-fatal heads-up on a retry whose file carries pre-convention lint debt: duplicate
+    class-level method names (F811 — the later `def` shadows the earlier, which is then dead
+    code) or a class-level method missing `self`.
+
+    We WARN rather than auto-fix on purpose. restore_history pastes history back as a verbatim
+    line slice (the load-bearing invariant: never reach *into* a prior solution), and a rename
+    would have to rewrite a prior attempt's own recursive `self.foo()` calls — exactly the kind
+    of reaching-in that breaks it. The deliberate repair lives in `fix_legacy_dupes.py`."""
+    try:
+        tree = ast.parse(text)
+    except SyntaxError:
+        return
+    problems: list[str] = []
+    for node in ast.walk(tree):
+        if not isinstance(node, ast.ClassDef):
+            continue
+        methods = [b for b in node.body
+                   if isinstance(b, (ast.FunctionDef, ast.AsyncFunctionDef))]
+        names = [m.name for m in methods]
+        for dup in sorted({n for n in names if names.count(n) > 1}):
+            problems.append(f"duplicate method '{dup}' (x{names.count(dup)})")
+        for m in methods:
+            fargs = m.args.posonlyargs + m.args.args
+            if not fargs or fargs[0].arg not in ("self", "cls"):
+                problems.append(f"method '{m.name}' missing self")
+    if problems:
+        print(
+            f"WARNING: {path.name} carries legacy lint debt ({'; '.join(problems)}). "
+            f"Predates the date-stamp convention; it won't block this retry but keeps the file "
+            f"red. Fix with:\n  python scripts/fix_legacy_dupes.py --file {path}",
+            file=sys.stderr,
+        )
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description="Scaffold a solution file (empty dated skeleton).")
     ap.add_argument("--number", required=True)
@@ -506,6 +542,7 @@ def main() -> None:
         # the markers are dropped, the code they wrapped becomes ordinary prior attempts)
         # and any leftover stash pointer.
         lines = strip_pointer(strip_spoiler_region(text.splitlines()))
+        warn_legacy_dupes(text, path)  # heads-up if this file carries pre-convention lint debt
         cls = solution_class_start(lines)
 
         # A `Solution`-named retry whose prior attempts are stored as DATED SIBLING CLASSES

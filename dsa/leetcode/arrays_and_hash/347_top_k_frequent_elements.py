@@ -92,4 +92,4 @@ class Solution:
         count = Counter(nums)
         
         # nlargest(k, iterable, key) uses a max-heap under the hood
-        return heapq.nlargest(k, count.keys(), key=count.get)
+        return heapq.nlargest(k, count.keys(), key=count.get) # type: ignore
