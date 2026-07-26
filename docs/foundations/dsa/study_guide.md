@@ -260,7 +260,7 @@ Every design session must be narrated out loud — not written silently. Intervi
 | **Recovery + Standard Graphs** | Jun 8–21 | 6–8 | Course Schedule I & II, Pacific Atlantic Water Flow, Surrounded Regions, Graph Valid Tree, Number of Connected Components, Redundant Connection |
 | **Heap / Priority Queue + Linked List catch-up** | Jun 22–Jul 5 | 13 | Kth Largest in Stream, Last Stone Weight, K Closest Points to Origin, Task Scheduler, Design Twitter, Find Median from Data Stream, Merge K Sorted Lists; *catch-up:* Encode and Decode Strings (LC 271), Add Two Numbers (LC 2), Copy List with Random Pointer (LC 138), LRU Cache (LC 146), Find the Duplicate Number (LC 287), Reverse Nodes in K-Group (LC 25) |
 | **Tries + Tree catch-up** | Jul 6–12 | 8 | Implement Trie, Design Add and Search Words, Word Search II; *catch-up:* Construct Binary Tree from Preorder/Inorder (LC 105), Kth Smallest in BST (LC 230), Binary Tree Maximum Path Sum (LC 124), Serialize and Deserialize Binary Tree (LC 297), Median of Two Sorted Arrays (LC 4) |
-| **Advanced Graphs** | Jul 13–Aug 2 | 7 | Network Delay Time (Dijkstra), Swim in Rising Water, Alien Dictionary, Cheapest Flights Within K Stops, Min Cost to Connect All Points, Reconstruct Itinerary, Word Ladder |
+| **Advanced Graphs** | Jul 13–**Aug 16** | **11** | Network Delay Time (Dijkstra), Swim in Rising Water, Alien Dictionary, Cheapest Flights Within K Stops, Min Cost to Connect All Points, Reconstruct Itinerary, Word Ladder, **+ 1334 Find the City (Floyd-Warshall), + 721 Accounts Merge** *(new-technique)*, **+ 1631 Path With Minimum Effort, + 1514 Path with Maximum Probability** *(consolidation reps)* |
 | **Sliding Window (finish) + Stack** | Aug 3–23 | 8 | Min Window Substring, Sliding Window Maximum; Min Stack, Evaluate Reverse Polish Notation, Generate Parentheses, Daily Temperatures, Car Fleet, Largest Rectangle in Histogram |
 | **Intervals + Greedy** | Aug 24–Sep 13 | 14 | Insert Interval, Merge Intervals, Non-overlapping Intervals, Min Interval to Include Each Query, Meeting Rooms I & II; Jump Game I & II, Gas Station, Hand of Straights, Merge Triplets, Partition Labels, Valid Parenthesis String |
 | **Backtracking** | Sep 14–Oct 11 | 9 | Subsets I & II, Combination Sum I & II, Permutations, Word Search, Palindrome Partitioning, Letter Combinations, N-Queens |
@@ -274,10 +274,77 @@ Every design session must be narrated out loud — not written silently. Intervi
 Once the roadmap completes and NC150 is Clean/retired, the mode shifts from **acquiring patterns** to three ongoing threads that run in parallel — this is the permanent steady state and the on-ramp to the competitive-programmer goal:
 
 1. **Maintenance** — spaced repetition keeps NC150 alive: 🏆 retired problems spot-check every 180 days; anything that slips to 🟡/🔴 returns to rotation. Never stops.
-2. **Application — *pull, not push*.** Company frequency lists are a **reference pool, not a checklist.** *Pull* problems from them **gated by patterns/techniques already learned** (NC150 + expansion queue), to build **speed and transfer** on your existing foundation. Never march a company list top-to-bottom — your knowledge drives the selection, not the company's list. Log each pull in the tracker: 🟢 confirms transfer works; 🟡/🔴 is a **diagnostic** pointing at a pattern to refresh (not a cue to learn something ad-hoc). The two curated **pull pools** — interview-sourced (during Tier 1) and competitive-style (after, for Tier 2) — live in [`backlog/`](backlog/README.md).
+2. **Application — *pull, not push*.** Company frequency lists are a **reference pool, not a checklist.** *Pull* problems from them **gated by patterns/techniques already learned** (NC150 + expansion queue), to build **speed and transfer** on your existing foundation. Never march a company list top-to-bottom — your knowledge drives the selection, not the company's list. Log each pull in the tracker: 🟢 confirms transfer works; 🟡/🔴 is a **diagnostic** pointing at a pattern to refresh (not a cue to learn something ad-hoc). The two curated **pull pools** — interview-sourced (during Tier 1) and competitive-style (after, for Tier 2) — live in [`backlog/`](backlog/README.md). **Pulls are gated on measured review-capacity surplus, not on NC150 being finished** — see "Review capacity math" above; the surplus is expected to open around Oct–Dec 2026, while the roadmap is still running.
 3. **Expansion — keep learning, deliberately.** Continue working the **Knowledge Expansion Queue** (bottom of `dsa_progress.md`): finish Tier 1 advanced (segment tree, KMP, XOR trie, …), then cross the Interview-ROI line into Tier 2 competitive material toward the competitive-programmer goal. New concepts enter **here, in order, deliberately** — never reactively off a company problem.
 
 **The direction of causation always runs from your knowledge outward.** NC150 + expansion queue = what you know → pull application problems that exercise it, and grow the queue on purpose. Nothing external (a company list, a random hard problem) is allowed to *dictate* the curriculum.
+
+### Two non-NC150 additions to Advanced Graphs (Jul 26, 2026)
+
+Added under the standing rule that **NC150 is the floor of the high-ROI set, not its ceiling** — real
+interview ROI earns a curriculum slot regardless of list membership.
+
+- **LC 1334 — Find the City With the Smallest Number of Neighbors (Floyd-Warshall).** This closes a
+  *family* gap, not just adds a problem. Shortest path has four cases and three were covered — BFS
+  (unweighted), Dijkstra (non-negative), Bellman-Ford (negatives / hop-cap) — with **all-pairs
+  entirely unrepped**. Floyd-Warshall is ~5 lines and the cheapest algorithm in the whole graph block
+  to learn; leaving the family three-quarters complete was the expensive option. Decision table lives
+  in [`mastery/recognition_gotchas.md`](mastery/recognition_gotchas.md).
+- **LC 721 — Accounts Merge.** A perennial interview problem where Union-Find *mechanics* are the easy
+  part and the **modeling** is the test — deciding that an email, not an account, is the node. The
+  mechanics are already 🟢 across 323/684/261, so this exercises the step those don't.
+
+**Two more added the same day as consolidation reps** (reversing an earlier decline — see "Two kinds
+of new problem" below; *"near-duplicate of something already done"* turned out to be an argument
+**for** scheduling, not against):
+
+- **LC 1631 — Path With Minimum Effort.** Dijkstra where path cost is a **max over edges**, not a sum.
+- **LC 1514 — Path with Maximum Probability.** Relaxation that **multiplies and maximizes** instead of
+  adding and minimizing.
+
+Together with 743 and 778 that's four Dijkstra-family problems whose differences are exactly what the
+recognition gate tests: sum vs max vs product, minimize vs maximize. One instance of a technique
+teaches "743 is the Dijkstra one" — a lookup. Four teaches the technique.
+
+**Cost, stated plainly:** the phase goes **7 → 11 problems**, end date **Aug 2 → Aug 16**, pushing
+Sliding Window/Stack back two weeks. Note the budget split: 1334 and 721 spend **new-technique**
+intake (capped 3/wk); 1631 and 1514 are **consolidation reps** against the separate ≤2/wk budget,
+gated on 778/743 sitting at 🟡+ — which they do.
+
+### Phase exit standard — per algorithm, not per problem (set Jul 26, 2026)
+
+**The goal at the end of a phase: every algorithm in it is locked down — recognized *and* executable.**
+
+The old framing, *"phase completion = every associated problem 🏆 Retired,"* cannot be met and therefore
+gates nothing. 🏆 requires streak 3: a coded 🟢, then +30, then +60 — **90+ days minimum per problem.**
+Advanced Graphs runs Jul 13–Aug 16. Nothing in it *can* be Retired by the exit date, so the rule
+would either stall the roadmap permanently or be quietly ignored. It was being quietly ignored.
+
+**The enforceable standard, measured per algorithm on two axes:**
+
+| Axis | What it means | Evidence |
+|---|---|---|
+| **Recognition** | Given the problem cold with the method label stripped, the shape → algorithm + picking feature comes out right | a clean cold cue; no unresolved entry in [`recognition_gotchas.md`](mastery/recognition_gotchas.md) for that trigger |
+| **Execution** | It can be written from a blank page, correct, with correct complexity | **≥1 problem for that algorithm at 🟢**, coded |
+
+Both are required. Recognition without execution is knowing the name of the thing; execution without
+recognition is a solution waiting for someone to tell it which problem it belongs to. **The interview
+grades recognition in the first two minutes and execution for the next thirty.**
+
+**On "slightly amiss" — tolerated, but only if named.** We do *not* wait for every problem to retire
+before advancing; that stalls the roadmap for no benefit. A lingering 🟡 on a *second or third* problem
+of an already-🟢 algorithm is acceptable. What is **not** acceptable is an algorithm with **zero** 🟢s,
+or a recognition trigger that's still missing. Anything carried out of a phase must be **written into
+the next phase's review load explicitly** — a carried gap that isn't scheduled is just a forgotten one.
+
+**Report at phase close per algorithm, not per problem:**
+
+> *Advanced Graphs — 8 algorithms: Dijkstra ✅(🟢 778) · Bellman-Ford ⚠️(🟡 787 only) · Prim/MST ⚠️ ·
+> Hierholzer ❌(🔴 332) · Topo sort ✅ · BFS-transform ✅ · Floyd-Warshall — · Union-Find modeling —.
+> Carrying: Hierholzer + Bellman-Ford into the Stack phase's warmups.*
+
+Per-problem counts hide exactly the thing that matters: eleven problems can look healthy while one
+*algorithm* is entirely unlearned.
 
 ### Why Heap Comes Before Advanced Graphs
 
@@ -333,8 +400,159 @@ editing. A category earns a harder tier when its new problems consistently log �
   - **Hardest categories** (**Advanced Graphs**, **1D DP** Oct, **2D DP** Nov): **3 per week.** Hardest and slowest, highest blank rate. Advanced Graphs was re-paced Hard→Hardest on Jul 18, 2026: it's a *new algorithm per problem* (Dijkstra, Bellman-Ford, MST/Prim, Eulerian…) **and** proving as blank-heavy as DP — 1584 Prim was still 🔴 after two exposures, and the +2 retry cascade collided with review-saturated weeks (Jul 20–26 was at 27/28 warmup slots on reviews alone). Keep intake at 3 so the blanks settle and it doesn't trip the overdue-backlog rule.
   - **Rationale — the blank tax.** A new problem is not a 1-slot commitment. A 🔴 costs 1 active slot *plus* ~2–3 follow-up warmup slots over the next fortnight as its +2 retries settle to 🟡. At 5 hard-category new/week, that cascade consumes ~40% of the 28 weekly warmup slots servicing *recent* material, starving the backlog (which is why the 🟢 pile sits at 35 and won't drain). Dropping hard categories to 4 returns roughly one warmup slot/week to genuine review. **Evidence this tier was real:** Advanced Graphs was mis-bucketed as "moderate" (4–5) and produced back-to-back 🔴 on 743 (Dijkstra) and 787 (Bellman-Ford) in one week — reclassified to hard on Jul 14, 2026.
   - **Net effect on the roadmap:** ~late-November NC150 completion holds, with far less Blank-pileup risk than 5/week through the hard blocks.
+### Two kinds of new problem — the cap only governs one (added Jul 26, 2026)
+
+The tiers above were calibrated on **new-algorithm** problems, and the blank-tax rationale says so
+outright: *"a 🔴 costs 1 active slot plus ~2–3 follow-up warmup slots as its +2 retries settle."*
+That is the cost of **learning an algorithm**, not the cost of *a problem*. So intake splits in two:
+
+| Class | What it is | Expected first result | Cascade | Counts against the tier cap? |
+|---|---|---|---|---|
+| **New-technique** | first problem of an algorithm (Dijkstra, Hierholzer, Floyd-Warshall…) | 🔴 | yes — ~2–3 warmup slots over a fortnight | **Yes.** This is what 3/4/5 governs |
+| **Consolidation rep** | *another* problem in a technique already at 🟡+ | 🟡, often 🟢 | none | **No.** Separate budget: **≤2/week** on top |
+
+**Why consolidation reps are non-negotiable, not enrichment.** One problem per technique trains
+**recall of that problem's solution**. It cannot train the technique, because there's no variation to
+generalize across — you learn "743 is the Dijkstra one," which is a lookup, not a skill. Transfer
+needs multiple surface forms of one underlying idea, and the *minor differences between near-identical
+problems are the training signal, not noise*: cost-is-a-max vs cost-is-a-sum, multiplicative vs
+additive relaxation, hop-capped vs unbounded. That discrimination is precisely what the
+**recognition front-gate** grades, and it is untrainable from a single instance. A problem being
+"similar enough to one already done" is therefore an argument **for** scheduling it, not against.
+
+**The one gate: the base technique must be at 🟡 or better.** A sibling problem consolidates a
+half-formed technique — that's the point, and interleaving while it's still settling is what makes it
+stick. But if the base is 🔴 (never encoded), a sibling just double-blanks. Teach first (§ teach/measure),
+*then* consolidate.
+
+**Slotting:** consolidation reps don't need the full 45-min active block the way a new algorithm does —
+they're closer to a review of a technique than an intake of one. Put them in an active block when the
+problem is Hard, a generous warmup when it isn't.
+
 - **Active-block guard**: only ~6 active-block slots exist per week (Sunday = system design). At 5 new/week, 5 slots are consumed by new problems — reserve at least 1 for re-coding Blanks. If Blank re-solves are stacking up, cut new intake that week.
 - **Max overdue backlog before pausing new intake**: 5 problems.
+
+### Review capacity math — and why intake becomes surplus-triggered (added Jul 26, 2026)
+
+Review demand is not a headcount, it's a **rate**: each tracked row generates `1 / interval` reps per
+day. Maturing a problem doesn't just mark it mastered — it **removes it from the schedule**.
+
+| Status | Interval | Demand per row | Relative |
+|---|---|---|---|
+| 🔴 Blank | +2 | 0.500 /day | ×83 |
+| 🟡 Shaky | +10 | 0.100 /day | ×17 |
+| 🟢 streak 1 | +30 | 0.033 /day | ×6 |
+| 🟢 streak 2 | +60 | 0.017 /day | ×3 |
+| 🏆 Retired | +180 | 0.006 /day | ×1 |
+
+**Weekly capacity ≈ 28 problem-slots**: 7 days × 2 warmup slots × ~2 problems (≈28) − ~6 consumed by
+the three SD lanes + ~6 active blocks (Sunday is SD).
+
+**Calibration, Jul 26, 2026:** 69 streak-1 + 17 streak-2 + 19 🟡 + 1 🔴 ≈ **35.6/wk demand vs 28
+capacity → −8 over-subscribed.** That deficit *is* the 23-item stale 🟢 pile; it isn't neglect, it's
+arithmetic, and no amount of diligence drains it while demand exceeds capacity.
+
+**The projection — the hole opens AFTER NC150, not before:**
+
+| Point | Rows | Demand | vs capacity |
+|---|---|---|---|
+| Jul 2026 | 107 | ~36/wk | −8 over |
+| Oct 2026 | ~150 | ~27/wk | at capacity |
+| Dec 2026 (NC150 done) | ~190 | ~27/wk | at capacity |
+| Mar 2027 | 190 | ~18/wk | **+10 idle** |
+| Jun 2027 | 190 | ~11/wk | **+17 idle** |
+| Late 2027 | 190 | ~7/wk | **+21 idle (75%)** |
+
+Through the roadmap, new intake keeps feeding fresh streak-1 rows (+30 is a *heavy* rate), holding
+demand near capacity. **The collapse comes when intake stops and the population matures to +60/+180
+with nothing replacing it.** At full maturity, maintaining all of NC150 costs ~7 problems/week — a
+quarter of the schedule.
+
+**⇒ The rule: application pulls and extra intake are gated on MEASURED SURPLUS, not on a date.**
+This supersedes *"no pulls during the NC150 milestone."* That phrasing is correct today only because
+we're at −8; it silently becomes wrong the moment demand crosses below capacity, which the table above
+puts around Oct–Dec 2026 — *while two phases are still open*.
+
+**Measure it at weekly schedule build**, before slotting anything: sum `1/interval` over the tracker,
+×7, compare to 28.
+
+| Measured surplus | Fill with, in order |
+|---|---|
+| **≤ 0** (over-subscribed) | Nothing. Reviews only; hold intake at the tier cap and let the backlog drain |
+| **1–5 slots** | **Consolidation reps** — techniques at 🟡+ that have fewer than 3 problems |
+| **6–12 slots** | Consolidation reps, **then** application pulls (`pull_interview.py`, gated on learned patterns) |
+| **13+ slots** | The above, **then** open Tier 1 advanced expansion early — don't wait for NC150 to formally close |
+
+**Consolidation reps are the first filler for a reason:** the backlog is large (NC150 supplies 1–2
+problems per technique where 3–4 are needed), it is directly aimed at the phase-exit standard, and it
+is higher-ROI than reaching for Tier 2 material early. Reach past it only once that queue is genuinely
+short.
+
+### Library carrying capacity — graduation and disposable reps (added Jul 26, 2026)
+
+**The constraint:** a tracked problem never stops costing. Even fully retired at +180 it bills
+**0.039 slots/week forever.** At 28 slots/week the library has a **carrying capacity of ~500–600
+problems**, past which maintenance eats everything and intake must stop. Sustainable intake *decays*
+as the library grows:
+
+| Library size | Maintenance | Sustainable new intake |
+|---|---|---|
+| 190 (NC150 done) | ~7/wk | ~3/week |
+| ~350 | ~14/wk | ~2/week |
+| ~500 | ~20/wk | ~1/week |
+| ~700 | 28/wk | **zero** |
+
+Left alone, "keep adding problems" strangles itself in about three years. Two mechanisms prevent that.
+
+#### 🎓 Graduation — the tier above 🏆
+
+🏆 Retired is currently terminal *and still bills every 180 days forever*. Add one step past it:
+
+> **A 🏆 problem that passes two consecutive 180-day spot checks cleanly (≈1 year at 🏆, ~2.5 years
+> from its first Clean) graduates.** Its row leaves the review table for a `🎓 Graduated` list — no
+> interval, no next-review date, no ongoing cost. If it ever resurfaces (a pull, a real interview) and
+> fails, it re-enters at 🟡 like anything else.
+
+This is the release valve. Without it the carrying capacity is a hard wall.
+
+**Mechanical requirement — do not skip this.** Discovery in `update_review_dates.py` scans
+`dsa/leetcode/**` and re-adds any problem it can't find a row for. A graduated problem still has its
+`.py` file, so **removing the row alone will silently resurrect it on the next commit.** Graduating
+requires *both*: move the row to the Graduated list **and** add the number to `discovery_skip` in
+`cse.config.yml`. Keep the Graduated list in **plain bullet form**, not the 7-column table, so the
+tracker parser doesn't pick it up.
+
+#### Disposable reps — the answer to staleness
+
+This one changes an assumption the system currently makes silently: *every problem solved gets a
+permanent tracker row.* It doesn't need to.
+
+For **consolidation reps** and **application pulls**, the thing under test is whether the *technique*
+transfers. The specific problem is a **probe, not an asset**.
+
+> **Solve it → record the outcome against the *technique's* ledger (`recognition_gotchas.md` /
+> `complexity_gotchas.md`) → create no review row.** A 🟢 means the technique is confirmed and that
+> problem is done forever. **Only a 🟡/🔴 earns a tracker row**, because only a gap needs repetition.
+
+**Why this is the real fix for freshness:** it makes new problems nearly free. You can run 3–5 fresh
+pulls a week indefinitely and maintenance barely moves, because you're maintaining **~30 techniques,
+not 700 problems**. It also matches reality — nobody re-solves the same Dijkstra problem a fifth time
+in year three; they solve a *new* one and confirm the technique still fires.
+
+**Mechanical requirement:** discovery would auto-add a probe the moment its file lands under
+`dsa/leetcode/`. Two options — **(a)** scaffold probes into a separate root (e.g. `dsa/probes/`) that
+isn't in `solutions.roots`, so discovery never sees them (needs a `--probe` flag on
+`new_problem.py`); or **(b)** leave them under `dsa/leetcode/` and add each to `discovery_skip`, which
+works today with no code change but grows that list without bound. **(a) is the right design; (b) is
+the stopgap.**
+
+#### What this does to the tracker's meaning
+
+Today `dsa_progress.md` is *"everything I've solved."* After this it becomes **"everything still
+unproven"** — a work queue, not a trophy case. Row count stops being a measure of progress and starts
+being a measure of *remaining debt*, so a **shrinking** tracker is the healthy direction. The record
+of what's been accomplished moves to two places: the **🎓 Graduated list**, and the **technique
+ledgers** that disposable reps write into.
 - **DP phases (1D + 2D)**: Allow 4–5 weeks each. Do not compress below 4 weeks per phase.
 
 ---

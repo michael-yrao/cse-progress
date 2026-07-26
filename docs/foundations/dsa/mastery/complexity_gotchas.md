@@ -38,6 +38,32 @@ Almost every miss so far is **space**, in one of these buckets. Time has been co
 (b) recursion — how deep does the stack go?
 (c) am I counting the output?
 
+### Reference — heap costs, and the language to describe them (added Jul 26, 2026, via 1046)
+
+Not a miss (the numbers were right), but the *phrasing* was: "the heap needs **reconstructing** each
+iteration." It doesn't, and an interviewer will poke at that.
+
+| Operation | Cost | Say this |
+|---|---|---|
+| `heappush` | O(log n) | appends at the bottom, **sifts up** — swaps with its parent while out of order |
+| `heappop` | O(log n) | takes the root, moves the last element there, **sifts down** — swaps with the larger child |
+| `heapify(list)` | **O(n)** | sifts down every node bottom-up; cost is each node's *height above the leaves* |
+| n × `heappush` | **O(n log n)** | the naive build — worth knowing it's beatable |
+
+**The load-bearing word is _path_.** A heap is a complete binary tree of height log n, and push/pop
+restore the invariant by walking **one root-to-leaf path** — a chain of parent-child swaps. "Reconstruct"
+implies touching the whole structure, which would be O(n).
+
+**Why heapify is O(n) — the asymmetry:** sift-**up** starts at a leaf, the point *farthest* from the
+root, so nearly every push pays the full log n. Sift-**down** costs a node's height above the leaves,
+and **half the nodes are leaves and cost zero**. At n=15: 8 leaves × 0 + 4 × 1 + 2 × 2 + 1 × 3 = **11
+operations, not 15 × 4 = 60**. In general Σ (n/2^(h+1))·h = (n/2)·Σ h/2^h = (n/2)·2 = **n** — the series
+converges to 2 regardless of n, so the total is linear. Only the root ever pays log n; the expensive
+nodes are rare.
+
+> **Interview line:** *"Heapify is O(n), not O(n log n), because sift-down cost is a node's height above
+> the leaves and half the nodes are leaves. The expensive nodes are rare — only the root pays log n."*
+
 ## Ledger (freebie state — being here = freebie spent)
 
 A problem in this table has used its one free complexity miss. The **next** miss on it caps the rep at 🟡.
