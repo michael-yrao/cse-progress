@@ -33,6 +33,32 @@ name) — the measured reps are new problems and cold cues with the label stripp
 | Array, contiguous run | longest/shortest/count subarray meeting a condition | **Sliding window** | contiguous + window monotonicity |
 | Array/string, pairs from ends | two values meeting a sum/area condition | **Two pointers** | sorted or convergent-from-ends |
 
+### Shortest path — the four-way split (added Jul 26, 2026)
+
+The rows above cover this piecemeal; this is the whole decision in one place, because "shortest path"
+is the single most over-loaded trigger in graphs. **Ask two questions in order: (1) from one source or
+between all pairs? (2) can an edge be negative?**
+
+| Source | Edge weights | → Algorithm | Cost | Why not the neighbor |
+|---|---|---|---|---|
+| Single | all equal (unweighted) | **BFS** | O(V+E) | Dijkstra works but the heap is wasted — equal weights mean FIFO order *is* cheapest-first |
+| Single | non-negative | **Dijkstra** | O(E log V) | fastest that's still correct; settling is safe only because nothing can get cheaper later |
+| Single | **negatives allowed**, or a **hop/stop limit** | **Bellman-Ford** | O(V·E) | Dijkstra's settle step is invalid with negatives; and BF's rounds are *indexed by edge count*, so a ≤k-edge cap is a free early stop |
+| **All pairs** | any (incl. negative) | **Floyd-Warshall** | O(V³) | running BF from every source is O(V²·E); FW is 3 nested loops and beats it on dense graphs |
+
+**The one-line version:** *unweighted → BFS · non-negative → Dijkstra · negatives or hop-cap →
+Bellman-Ford · every-pair → Floyd-Warshall.*
+
+**The purpose framing** (per [[feedback_algorithm_purpose_first]]): each is a **repair of the previous
+one's broken assumption.** BFS assumes uniform cost → Dijkstra repairs it with a heap. Dijkstra assumes
+no edge can lower a settled distance → Bellman-Ford repairs it by never settling. Bellman-Ford still
+answers only one source → Floyd-Warshall repairs it by relaxing through every intermediate node. Learn
+the assumptions, not four loops.
+
+> ⚠️ **Known gap as of Jul 26, 2026: Floyd-Warshall has never been repped.** The other three are
+> covered (127/994 BFS · 743/778 Dijkstra · 787 Bellman-Ford). **Now scheduled, not parked** —
+> LC 1334 was promoted into the Advanced Graphs phase (Jul 26), which runs to Aug 9.
+
 ## Miss ledger
 
 *(dated line per miss: problem · what they called · correct call · the picking feature they missed)*
