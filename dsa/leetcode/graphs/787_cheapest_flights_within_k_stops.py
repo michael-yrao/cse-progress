@@ -26,11 +26,43 @@ Constraints:
 """
 # Write everything yourself from here — including any ListNode/TreeNode classes a
 # problem needs. No shared data-model imports (whiteboard fidelity).
+import collections
 import math
 from typing import List, Optional
 
 
 class Solution:
+
+    # ── Attempt · 2026-07-26 ──────────────
+    def findCheapestPrice_20260726(self, n: int, flights: List[List[int]], src: int, dst: int, k: int) -> int:
+        # we are trying to travel from src to dst
+        # what we can do is use a distance map where we set everyone's distance to infinite
+        # except for starting node and update as we go through the graph
+        # adjacency map is given to us in flights, so no need to create one
+        # we don't need a visited because we can use distance
+        # one very important thing to note is that we can only make k stops, so we need to make sure
+        # we don't go two cities in one iteration, so this is a BFS with a traversal restriction
+        # so keep a global copy and a local copy so we can see where we've travelled so far to prevent multi-traversal
+        # we also need to have a counter for k, we will use k to track our level instead of a queue
+
+        distance = [math.inf] * n
+        distance[src] = 0
+        iteration = 0
+
+        # k = 1 means 1 node in between, that is 2 edges allowed, so k + 1
+        while iteration < k + 1:
+            workingDistance = distance.copy()
+            for source, destination, weight in flights:
+                if distance[source] == math.inf:
+                    continue
+                if distance[source] + weight < workingDistance[destination]:
+                    workingDistance[destination] = distance[source] + weight
+            distance = workingDistance
+            iteration+=1
+
+        if distance[dst] == math.inf:
+            return -1
+        return distance[dst] # type: ignore
 
     # ── Attempt · 2026-07-16 ──────────────
     def findCheapestPrice_20260716(self, n: int, flights: List[List[int]], src: int, dst: int, k: int) -> int:

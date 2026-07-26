@@ -19,6 +19,9 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🟡 787. Cheapest Flights Within K Stops (Bellman-Ford) — 2026-07-26
+**Sticking point**: recognition was fully cold and correct — including the snapshot (global/local copy), which *is* the algorithm. The cost was a **vestigial queue**: the plan carried a BFS queue whose layering job the snapshot already did, so most of the session went to maintaining it (infinite loop from unconditional `append`, level-size capture, counter placement). Two real bugs needed flagging: (1) `if iteration == k: break` fired *before* the round's work, so `k=1` ran zero rounds; (2) relaxation compared against `distance[destination]` (the stale snapshot) instead of `workingDistance[destination]`, so a worse edge later in the same round overwrote a better value already written — caught via `[[0,1,10],[0,2,20],[1,3,5],[2,3,100]]`, k=1 → 120 instead of 15. Derived `k+1` and the working-copy fix himself once pointed at a failing case. Complexity clean both ways (freebie unspent). **Lesson for the next rep: the snapshot alone gives you the layering — no queue.**
+
 ## 🟡 143. Reorder List — 2026-07-25
 **Sticking point**: decomposition (Floyd middle + reverse 2nd half + weave) was cold and correct; stalled on the merge loop's pointer-advance and asked for a hint before spotting it was a typo on the last two assignments (`head = headNext; secondHead = secondHeadNext`). Structure solid, execution slip.
 

@@ -34,6 +34,48 @@ import heapq
 from typing import List
 
 class Solution:
+
+    # ── Attempt · 2026-07-26 ──────────────
+    def lastStoneWeight_20260726(self, stones: List[int]) -> int:
+        # choosing heaviest = maxHeap
+        # basically if abs(pop1 - pop2) != 0, add it a new entry to maxHeap until we have 1 left
+        # and also gotta negate weight since minHeap is default in python
+
+        maxHeap = []
+
+        for stone in stones:
+            heapq.heappush(maxHeap, -stone)
+        
+        # while we have more than 1 stone, keep smashing
+        while len(maxHeap) > 1:
+            firstStone = heapq.heappop(maxHeap)
+            secondStone = heapq.heappop(maxHeap)
+            if abs(firstStone - secondStone) != 0:
+                heapq.heappush(maxHeap, -abs(firstStone - secondStone))
+        
+        if not maxHeap:
+            return 0
+        return -heapq.heappop(maxHeap)
+
+    def lastStoneWeight_v2_20260726(self, stones: List[int]) -> int:
+        # choosing heaviest = maxHeap
+        # basically if abs(pop1 - pop2) != 0, add it a new entry to maxHeap until we have 1 left
+        # and also gotta negate weight since minHeap is default in python
+
+        maxHeap = [stone * -1 for stone in stones]
+        heapq.heapify(maxHeap)
+        
+        # while we have more than 1 stone, keep smashing
+        while len(maxHeap) > 1:
+            firstStone = heapq.heappop(maxHeap)
+            secondStone = heapq.heappop(maxHeap)
+            if abs(firstStone - secondStone) != 0:
+                heapq.heappush(maxHeap, -abs(firstStone - secondStone))
+        
+        if not maxHeap:
+            return 0
+        return -heapq.heappop(maxHeap)
+
     def lastStoneWeight(self, stones: List[int]) -> int:
         # go through the list and heapify the array as a max heap
         # pop twice to smash, if diff is not zero, insert diff into heap

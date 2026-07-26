@@ -34,6 +34,24 @@ import math
 from typing import List
 
 class Solution:
+
+    # ── Attempt · 2026-07-26 ──────────────
+    def maxSubArrayKadane_20260726(self, nums: List[int]) -> int:
+        # Maximum Subarray with both positive and negative
+        # so we use Kadane's Greedy Algorithm
+        # since we are returning sum, we keep track of a runningSum, if it is less than 0
+        # we set it to 0 instead and start over
+
+        endSum = -math.inf
+        runningSum = 0
+        for num in nums:
+            runningSum+=num
+            endSum = max(endSum, runningSum)
+            if runningSum < 0:
+                runningSum = 0
+            
+        return endSum # type: ignore
+
     def maxSubArrayKadane(self, nums: List[int]) -> int:
         # Kadane's Algorithm
         maxSum = currentSum = nums[0]
