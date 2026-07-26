@@ -36,6 +36,53 @@ class ListNode:
         
 class Solution:
 
+    # ── Attempt · 2026-07-25 ──────────────
+    def reorderList_20260725(self, head: Optional[ListNode]) -> None:
+        """
+        Do not return anything, modify head in-place instead.
+        """
+        # 1 -> 2 -> 3 -> 4
+        # 0 -> nth -> 1 -> nth - 1 ...
+        # so second half of the linked list needs to be reversed
+        # that means we need to find the middle point, which is tortoise and hare algorithm
+        # we need to then cut off first half and second half to prevent cycles when we re-point
+        # reverse second half
+        # then link first and second half per requirement of the problem
+        slow, fast = head, head
+
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+        
+        # now slow is at the middle of the list
+        # slow.next is the second half, so we will save it and then break off
+        secondHead = slow.next
+        slow.next = None
+
+        # now we reverse second half
+        traversal = secondHead
+        prev = None
+        while traversal:
+            nextNode = traversal.next
+            traversal.next = prev
+            prev = traversal
+            traversal = nextNode
+        
+        secondHead = prev
+
+        # now we link the two lists
+
+        # 1 -> 2 -> 3 -> None
+        # 4 -> 5 -> None
+
+        while head and secondHead:
+            headNext = head.next
+            secondHeadNext = secondHead.next
+            head.next = secondHead
+            secondHead.next = headNext
+            head = headNext
+            secondHead = secondHeadNext
+
     # ── Attempt · 2026-07-15 ──────────────
     def reorderList_20260715(self, head: Optional[ListNode]) -> None:
         """

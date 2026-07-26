@@ -107,7 +107,7 @@ class Solution:
                 # if = 0, add to set
                 if total == 0:
                     oneSolution = (nums[i], nums[j], nums[k])
-                    solution.add(oneSolution)
+                    solution.append(oneSolution)
                     # have to increment both here since j and k are now used
                     j+=1
                     k-=1
