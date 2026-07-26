@@ -15,6 +15,7 @@
 
 **Use Case**: Finding pairs or checking symmetries in sorted structural constraints.
 
+![Opposite-direction pointers converging from both ends of a sorted array](../../images/two_pointers_technique.svg)
 
 | Component | Value |
 |-----------|-------|
@@ -92,6 +93,24 @@ def remove_duplicates(nums: list[int]) -> int:
 ```
 
 **Example**: [LeetCode 26 - Remove Duplicates from Sorted Array](https://leetcode.com)
+
+### Three-way variant — Dutch National Flag
+
+Separation with **three** regions instead of two. `low` and `mid` advance from the front, `high`
+retreats from the back, and the array is fully sorted in one pass with O(1) space. The whole
+algorithm is bookkeeping on four regions — read the invariant, not the swap code:
+
+![Dutch National Flag invariant regions: 0s below low, 1s from low to mid, unknown from mid to high, 2s above high](../../images/dutch_flag_algorithm_1.svg)
+
+Worked end-to-end on Sort Colors, input through output:
+
+![Dutch National Flag three-way partitioning applied to Sort Colors, showing input, pointer movement, and sorted output](../../images/dutch_flag_algorithm_2.svg)
+
+**The one trap**: when you swap with `high`, do **not** advance `mid` — the element you just pulled
+in from the back is unexamined. Swapping with `low` is safe to advance past, because what comes back
+is already known to be a 1.
+
+**Example**: [LeetCode 75 - Sort Colors](https://leetcode.com/problems/sort-colors/)
 
 ---
 

@@ -39,6 +39,11 @@ return slow                    # entrance of the cycle
 
 **287. Find the Duplicate** is this exact trick on an array: treat `i -> nums[i]` as "next," the duplicate forces a cycle, and phase 2 finds its entrance.
 
+Both phases in one picture — meeting point first, then the walk to the entrance (drawn in the
+array-index form used by 287):
+
+![Floyd's cycle detection: phase 1 slow and fast meet inside the cycle, phase 2 resets one pointer to the head and both advance one step to meet at the cycle entrance](../../images/floyd_cycle_dection_algorithm.svg)
+
 ## Practice
 
 | Problem | NC150? | Wrinkle |
