@@ -19,6 +19,12 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🟡 143. Reorder List — 2026-07-25
+**Sticking point**: decomposition (Floyd middle + reverse 2nd half + weave) was cold and correct; stalled on the merge loop's pointer-advance and asked for a hint before spotting it was a typo on the last two assignments (`head = headNext; secondHead = secondHeadNext`). Structure solid, execution slip.
+
+## 🟡 743. Network Delay Time (Dijkstra) — 2026-07-25
+**Sticking point**: marked `visited` on push instead of pop (locked in the first-discovered, non-shortest distance); after fixing that, missed the pop-time stale-entry guard (`if node in visited: continue`) — a node reached by two edges before being popped gets two heap entries. Recognition + structure cold; both bugs were `visited`-placement in the lazy heap.
+
 ## 🟡 229. Majority Element II — Jul 24, 2026
 **Sticking point**: Boyer-Moore n/3 (≤2 candidates) was correct, but the `for n in nums` loop variable leaked — used `minSize = n // 3` (last element) instead of `len(nums) // 3`, so the threshold was garbage (returned `[1,2]` on `[1,1,2]`). Also space miss: called the freq map O(n) when it's capped at ≤2 entries → O(1) (freebie, carded).
 

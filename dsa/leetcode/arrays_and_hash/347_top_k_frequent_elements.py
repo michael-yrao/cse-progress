@@ -39,6 +39,56 @@ class Solution:
 
     # ── Attempt · 2026-07-24 ──────────────
     def topKFrequent_20260724(self, nums: List[int], k: int) -> List[int]:
-        pass
+        # top k gives me the maxheap vibe instantly
+        # we also want frequency, so this is a freqMap as well
+        # so we are just doing a freq map and putting k elements into a min heap
+        # min heap so we can get rid of smallest frequencies when we push past k
 
-# ⤵ prior attempts stashed in dsa/leetcode/.history/347_top_k_frequent_elements.txt — restored at session end (python scripts/restore_history.py)
+        freqMap = Counter(nums)
+
+        minHeap = []
+
+        for key in freqMap:
+            heapq.heappush(minHeap, (freqMap[key], key))
+            while len(minHeap) > k:
+                heapq.heappop(minHeap)
+        
+        result = []
+
+        while minHeap:
+            freq, key = heapq.heappop(minHeap)
+            result.append(key)
+        
+        return result
+
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        # We can have create a frequency map first
+        # After which, we can use a min heap
+        # pop until we get the kth element
+
+        freqMap = {}
+        for n in nums:
+            freqMap[n] = 1 + freqMap.get(n,0)
+        
+        heap = []
+        for num in freqMap.keys():
+            # default heap from heapq is a min heap
+            heapq.heappush(heap, (freqMap[num],num))
+            # since we only want the top k most frequent
+            # we just pop if we have more than k since pop removes min
+            if len(heap) > k:
+                heapq.heappop(heap)
+        
+        result = []
+        # put heap onto result
+        for freq, value in heap:
+            result.append(value)
+
+        return result
+    
+    def topKFrequent(nums: list[int], k: int) -> list[int]:
+        # creates a frequency map of num -> freq
+        count = Counter(nums)
+        
+        # nlargest(k, iterable, key) uses a max-heap under the hood
+        return heapq.nlargest(k, count.keys(), key=count.get)

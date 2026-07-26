@@ -41,6 +41,50 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-07-25 ──────────────
+    def networkDelayTime_20260725(self, times: List[List[int]], n: int, k: int) -> int:
+        # directed graph, edges are also weighted, so not standard DFS/BFS
+        # we are looking for min time to reach all edges, min time is the whole crux of Dijkstra
+        # Dijkstra is essentially BFS for weighted nonnegative edges, so we use min heap as our queue
+        # we still use adjacency map where it tells our immediate neighbor's cost
+        # so we will do source -> list of (dest, cost)
+        # we also still use a visited set to tell us when we have visited somewhere
+        # and have confirmed it is the shortest
+        # we should also note that since we are n 
+        minTime = 0
+        visited = set()
+        minHeap = []
+        
+        adjMap = collections.defaultdict(list)
+        
+        for source, destination, weight in times:
+            adjMap[source].append((destination, weight))
+        
+        # we are also given that we start at k, we we put that on the minHeap
+        # weight to reach it is 0, so we add (0, k)
+        # we also have to note that we are adding total weight to the minHeap
+        heapq.heappush(minHeap, (minTime, k))
+
+        while minHeap:
+            currentTime, currentNode = heapq.heappop(minHeap)
+            # since we add to visited on pop, we need to check if we've already calc'd shortest
+            if currentNode in visited:
+                continue
+            # we are looking for min time but we have to visit everything
+            # so we update minTime accordingly each time we visit somewhere
+            # the last node should be the 'min' time
+            minTime = currentTime
+            visited.add(currentNode)
+            # check neighbors
+            for neighborDestination, neighborWeight in adjMap[currentNode]:
+                neighborWeight = currentTime + neighborWeight
+                if neighborDestination not in visited:
+                    heapq.heappush(minHeap, (neighborWeight, neighborDestination))
+        
+        if len(visited) != n:
+            return -1
+        return minTime
+
     def networkDelayTime_20260715(self, times: List[List[int]], n: int, k: int) -> int:
         # Dijkstra's algorithm is a modified BFS
         # BFS uses visited set, queue and adjacency map

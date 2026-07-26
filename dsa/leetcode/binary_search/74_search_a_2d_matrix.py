@@ -28,6 +28,39 @@ Constraints:
 from typing import List
 class Solution:
 
+    # ── Attempt · 2026-07-25 ──────────────
+    def searchMatrix_20260725(self, matrix: List[List[int]], target: int) -> bool:
+        # since we know we are non-decreasing, it means we can find the highest row
+        # that our value can be at, so this is max boundary binary search
+        # since we know our value can be there, we will do an exact value binary search on the row
+        # this gives us our O(log(m * n)) where m and n are row/col sizes respectively
+        rows, cols = len(matrix), len(matrix[0])
+
+        l, r = 0, rows - 1
+
+        while l < r:
+            # max boundary binary search starts higher
+            m = (l + r + 1) // 2
+            # this is a potential solution, so we keep it
+            if matrix[m][0] <= target:
+                l = m
+            else:
+                r = m - 1
+        
+        # now we know l is the row, we do search on this row
+        row = l
+        l, r = 0, cols - 1
+        while l <= r:
+            m = (l + r) // 2
+            if matrix[row][m] == target:
+                return True
+            elif matrix[row][m] > target:
+                r = m - 1
+            else:
+                l = m + 1
+        
+        return False
+
     # ── Attempt · 2026-07-13 ──────────────
     def searchMatrix_20260713(self, matrix: List[List[int]], target: int) -> bool:
         # we can find in the first column the element that is larger than target

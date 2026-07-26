@@ -28,6 +28,45 @@ from typing import List
 
 class Solution:
 
+    # ── Attempt · 2026-07-25 ──────────────
+    def sortArrayMergeSort_20260725(self, nums: List[int]) -> List[int]:
+        # divide and conquer via merge sort
+        # main thing to remember, D&C is a strategy not a framework
+        # so don't think of it as divide method and merge method
+        # we are dividing and then merging in the same function
+        # one down the stack, one up the stack
+
+        def merge(leftArray, rightArray):
+            # we assume left and right side are sorted
+            resultArray = []
+            li = ri = 0
+            while li < len(leftArray) and ri < len(rightArray):
+                if leftArray[li] < rightArray[ri]:
+                    resultArray.append(leftArray[li])
+                    li+=1
+                else:
+                    resultArray.append(rightArray[ri])
+                    ri+=1
+            while li < len(leftArray):
+                resultArray.append(leftArray[li])
+                li+=1
+            while ri < len(rightArray):
+                resultArray.append(rightArray[ri])
+                ri+=1
+            return resultArray
+
+        def mergeSort(inputArray):
+            # if inputArray is size 1 or less, we don't need to divide
+            if len(inputArray) <= 1:
+                return inputArray
+            # otherwise, we find the middle point and divide them up
+            mid = len(inputArray) // 2
+            leftSide = mergeSort(inputArray[:mid])
+            rightSide = mergeSort(inputArray[mid:])
+            return merge(leftSide, rightSide)
+        
+        return mergeSort(nums)
+
     # ── Attempt · 2026-07-15 ──────────────
     def sortArrayMergeSort_20260715(self, nums: List[int]) -> List[int]:
         # we will master the O(n) space solution of merge sort first

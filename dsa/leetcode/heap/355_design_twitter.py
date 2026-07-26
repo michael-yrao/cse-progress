@@ -40,6 +40,62 @@ import heapq
 from typing import List
 
 
+# ── Attempt · 2026-07-25 ──────────────
+class Twitter_20260725:
+    # when we initialize twitter
+    # we want to keep a list of tweets an user posts
+    # so map of user -> list of (timestamp, tweets)
+    # we want to be able to grab feed, so a map of user -> list followee
+    # e.g. who does user follow
+    # we don't want to iterate on both when we fetch the feed, so we can utilize a maxHeap
+    # which tells us latest feeds which can help reduce our time complexity
+    globalTimeStamp = 0
+
+    def __init__(self):
+        self.limit = 10
+        self.tweetMap = collections.defaultdict(list)
+        self.followeeMap = collections.defaultdict(list)
+
+    def postTweet(self, userId: int, tweetId: int) -> None:
+        self.tweetMap[userId].append((self.globalTimeStamp, tweetId))
+        self.globalTimeStamp+=1
+
+    def getNewsFeed(self, userId: int) -> List[int]:
+        # add self to followees if not added already
+        # ideally we don't do this here since this is a read, not a write operation
+        # what we would normally do when a user creates his account is that we initialize
+        # his followee map to have himself by default but we are not implementing that for this exercise
+        if userId not in self.followeeMap[userId]:
+            self.followeeMap[userId].append(userId)
+        # we want only up to the limit so we will keep maxHeap under or at that limit
+        minHeap = []
+        
+        # go through each of the person userId follows
+        for followee in self.followeeMap[userId]:
+            for timeStamp, tweetId in self.tweetMap[followee]:
+                heapq.heappush(minHeap, (timeStamp,tweetId))
+                while len(minHeap) > self.limit:
+                    heapq.heappop(minHeap)
+        # now we know minHeap has 10 or less
+        # so push them onto a list to return
+        result = []
+        while minHeap:
+            timestamp, tweetId = heapq.heappop(minHeap)
+            result.append(tweetId)
+        result.reverse()
+        return result
+
+    def follow(self, followerId: int, followeeId: int) -> None:
+        # add self to followees if not added already
+        if followerId not in self.followeeMap[followerId]:
+            self.followeeMap[followerId].append(followerId)
+        if followeeId not in self.followeeMap[followerId]:
+            self.followeeMap[followerId].append(followeeId)
+
+    def unfollow(self, followerId: int, followeeId: int) -> None:
+        if followeeId in self.followeeMap[followerId]:
+            self.followeeMap[followerId].remove(followeeId)
+
 # ── Attempt · 2026-07-15 ──────────────
 class Twitter_20260715:
 
