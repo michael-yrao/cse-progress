@@ -17,7 +17,7 @@ But depth has diminishing returns *for interviews specifically*. So everything i
 **=== INTERVIEW-ROI LINE ===**
 
 **Below the line (competitive-programming growth; NOT for interview ROI):**
-5. **Tier 2 "further horizon"** (Knowledge Expansion Queue) — sweep line, max-flow, LCA, Mo's algorithm, SOS DP, suffix automaton, Aho-Corasick, persistent structures, etc. Pursue **only** after interview-readiness is solid, and **only** for competitive-programming ambition — near-zero interview payoff.
+5. **Tier 2 "further horizon"** (Knowledge Expansion Queue) — sweep line, max-flow, LCA, Mo's algorithm, SOS DP, suffix automaton, Aho-Corasick, persistent structures, etc. Pursue **only** after interview-readiness is solid, and **only** for competitive-programming ambition — near-zero interview payoff. *"Interview-readiness is solid" resolves to the measurable gate in "When to open Tier 1 expansion" below (pull rate + coverage + surplus) — never to an offer or an interview outcome.*
 6. **Tier 3 "competitive / research horizon"** (Knowledge Expansion Queue) — the deepest layer: HLD, centroid decomposition, link-cut trees, suffix automaton/Eertree, FFT/NTT, MCMF & min-cut modeling, D&C DP / Aliens trick, segment tree beats, 2-SAT, advanced geometry, Sprague–Grundy. ICPC/Codeforces territory — pursued deliberately over months for true competitive-programmer depth. See the Tier 3 section in `mastery/dsa_progress.md`.
 
 **How to use the line:** when deciding whether to learn something, ask *"which side of the line is it, and am I currently optimizing for interviews or competitive depth?"* Don't spend interview-prep time below the line; don't mistake below-the-line mastery for interview readiness. Finish NC150 + Tier 1 before crossing.
@@ -545,6 +545,45 @@ isn't in `solutions.roots`, so discovery never sees them (needs a `--probe` flag
 `new_problem.py`); or **(b)** leave them under `dsa/leetcode/` and add each to `discovery_skip`, which
 works today with no code change but grows that list without bound. **(a) is the right design; (b) is
 the stopgap.**
+
+#### When to open Tier 1 expansion — the pull-rate trigger
+
+Consolidation is **a phase, not a steady state.** ~30 NC150 techniques × 2–3 confirming pulls each is
+**60–90 pulls total**; at ~10/week once surplus opens, that pool is exhausted of diagnostic value in
+**6–9 weeks.** So "what comes after consolidation" needs its own trigger.
+
+**Primary signal — the pull diagnostic rate.** A pull's 🟢 confirms transfer; a 🟡/🔴 is a diagnostic
+pointing at a pattern to refresh. So the pool's *teaching value* is measurable directly:
+
+> Over a rolling window of **~15 pulls**, if **≥85% come back 🟢**, the pull pool has stopped teaching
+> anything — it's maintenance now, not learning. **That's the cue to open Tier 1 advanced.**
+> Below **~70% 🟢**, real gaps remain and Tier 1 would be front-running them: keep consolidating.
+
+**This metric is free, courtesy of disposable reps.** A 🟡/🔴 pull creates a tracker row and a 🟢
+doesn't — so **the row-creation rate over a window *is* the diagnostic rate.** Nothing extra to track;
+just count how many of the last 15 pulls left a row behind.
+
+**Two supporting conditions** (they should converge; if they don't, the pull rate governs — capacity
+without confirmed transfer just means room to learn new things on a shaky base):
+
+1. **Coverage** — every NC150 technique at ≥1 🟢 with ≥3 problems of evidence. The per-algorithm exit
+   standard applied to the whole roadmap rather than one phase.
+2. **Capacity** — ≥10–13 surplus slots. Tier 1 is *new-technique* intake (segment tree, KMP,
+   Manacher's are dense), so it reinstates the blank tax: ~2/week × ~3 slots each ≈ 6 sustained, plus
+   headroom. Projected around Mar–May 2027.
+
+> ### ⚠️ Gate on internal state, never on job outcomes
+>
+> **No milestone in this system — phase exit, ROI-line crossing, Tier 1 or Tier 2 opening — is ever
+> gated on an offer, an interview result, or an application date.** Those matter financially, but they
+> depend on outside factors that can't be predicted or controlled, and hanging a study trigger on one
+> means the plan stalls or lurches for reasons that have nothing to do with what's actually been
+> learned.
+>
+> Every gate here resolves against something **measurable in this repo**: a comfort rating, a streak, a
+> surplus computation, a pull rate. The job-search timeline lives in `career/career_trajectory.md` and
+> the company-tier tables above — it informs *what* is worth learning (interview ROI), never *when*
+> you're ready to move on.
 
 #### What this does to the tracker's meaning
 
