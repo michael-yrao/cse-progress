@@ -580,6 +580,34 @@ isn't in `solutions.roots`, so discovery never sees them (needs a `--probe` flag
 works today with no code change but grows that list without bound. **(a) is the right design; (b) is
 the stopgap.**
 
+#### ⚡ The over-learned fast-track (added Jul 26, 2026)
+
+Some problems cannot plausibly decay. Standard binary search, after four clean reps, is a motor skill
+rather than a recalled algorithm — and **the ladder's only job is to catch decay**, so climbing
+s1 → s2 → s3 on it spends slots for nothing. The stale 🟢 pile is almost entirely this: 1929, 217, 26,
+344, 125, 1768, 88, 100, 14.
+
+**A problem may skip straight to 🏆 Retired (Streak 3, +180) on its next clean rep when all three hold:**
+
+1. It's **🟢 and has been cleaned before** — not a first success.
+2. The learner **declares it over-learned.** Self-reported, like Comfort.
+3. **Coverage gate — the technique appears in at least one *harder* tracked problem still on the
+   normal ladder.**
+
+**Condition 3 is what makes it safe**, and it's the whole rule. You're not stopping testing the
+technique; you're stopping testing it **at its easiest instance** while harder ones still do the work.
+Same logic as per-algorithm phase exit: *the technique is the unit, not the problem.* If the technique
+has no harder representative, the easy problem **is** the coverage and the fast-track is refused.
+
+**Worked example — 704 Binary Search, Jul 26, 2026** (the first application): 🟢 s1, cleaned four times
+since March, and binary search is carried by **seven** harder tracked problems (74, 875, 540, 33, 153,
+2300, 1011) of which **two were 🟡 at the time**. Fast-tracked to 🏆, next look Jan 22 2027. Load drops
+from 0.033 to 0.006 slots/day — about **6×**.
+
+**Open question, not yet decided:** whether a fast-tracked 🏆 should graduate after **one** clean spot
+check instead of the standard two, on the grounds that the coverage gate is itself the evidence the
+second check would provide.
+
 #### When to open Tier 1 expansion — the pull-rate trigger
 
 Consolidation is **a phase, not a steady state.** ~30 NC150 techniques × 2–3 confirming pulls each is

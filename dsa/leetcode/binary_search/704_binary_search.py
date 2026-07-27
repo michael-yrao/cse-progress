@@ -26,6 +26,22 @@ Constraints:
 from typing import List
 
 class Solution:
+
+    # ── Attempt · 2026-07-26 ──────────────
+    def loopSearch_20260726(self, nums: List[int], target: int) -> int:
+        l, r = 0, len(nums) - 1
+
+        while l <= r:
+            m = (l+r)//2
+            if nums[m] == target:
+                return m
+            if nums[m] > target:
+                r = m - 1
+            else:
+                l = m + 1
+
+        return -1
+
     # recursion method
     def recursiveSearch(self, nums: List[int], target: int) -> int:
         def search(l,r):
@@ -60,4 +76,3 @@ class Solution:
                 l = mid + 1
 
         return -1
-    

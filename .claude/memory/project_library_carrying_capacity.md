@@ -17,6 +17,16 @@ problems" self-strangles in roughly three years.
 checks** leaves the tracker entirely for a plain-list `## 🎓 Graduated` section: no interval, no cost.
 Re-enters at 🟡 if it ever resurfaces and fails.
 
+**Valve 1b — the over-learned fast-track** (added Jul 26, 2026). A 🟢 problem that's been cleaned
+before may skip straight to **🏆 (Streak 3, +180)** on its next clean rep, if the learner declares it
+over-learned **and** the technique appears in ≥1 *harder* tracked problem still on the normal ladder.
+**That coverage gate is the whole rule** — you stop testing the technique at its *easiest instance*
+while harder ones keep doing the work; if no harder representative exists, the easy problem *is* the
+coverage and the fast-track is refused. Cuts a row's load ~6× (0.033 → 0.006 slots/day). First
+applied to 704 Binary Search, Jul 26 2026 (binary search carried by 74/875/540/33/153/2300/1011, two
+of them 🟡 at the time). Aims squarely at the stale-🟢 pile, which is almost entirely Easy problems.
+*Open: whether a fast-tracked 🏆 graduates after one spot check rather than two.*
+
 **Valve 2 — disposable reps.** A [[feedback-consolidation-reps]] rep or an application pull is a
 **probe testing whether a *technique* transfers**, not an asset to maintain. Solve it → log to the
 technique's ledger (`recognition_gotchas.md` / `complexity_gotchas.md`) → **create no review row if it
