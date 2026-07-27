@@ -180,6 +180,13 @@ Notes for future agents:
 
 Problems added for algorithmic depth — not part of the spaced repetition tracker or stats. No attempt dates; these enter the schedule when the relevant topic week arrives.
 
+> ⚠️ **Audit this queue's triggers at every weekly build.** Nothing watches them, so a **date-based**
+> trigger can fire and be missed silently — the item just sits here looking parked. Found Jul 26, 2026:
+> 53 D&C carried *"active block week of Jul 6"* and went **three weeks past unfired**, with an abandoned
+> stub left in the solution file. **Prefer conditional triggers over dates** ("when X graduates", "when
+> the Backtracking phase opens", "once surplus ≥ 1") — a condition can't silently expire, and it stays
+> meaningful when the schedule slips. Any date-based trigger in here is a liability; convert it.
+
 **Also parked here: phase-gated 🔴s.** A Blank on a technique that hasn't been *taught yet* is a **premature attempt**, not a spaced-rep failure — the +2-day loop assumes forgetting, but there was never any encoding to forget. Churning it just re-blanks it. Park it with an explicit phase trigger instead; it re-enters rotation when its phase opens. (Leaving it in the review table isn't an option: the script recomputes `next review = latest attempt + interval`, so it snaps back to permanently-overdue and inflates the backlog signal.)
 
 | Difficulty | Problem | Notes |
@@ -190,7 +197,7 @@ Problems added for algorithmic depth — not part of the spaced repetition track
 | Medium | [912. Sort an Array (Radix Sort)](https://leetcode.com/problems/sort-an-array/) | Sorting algorithms deep-dive |
 | Medium | [912. Sort an Array (Counting Sort)](https://leetcode.com/problems/sort-an-array/) | Sorting algorithms deep-dive |
 | Medium | [912. Sort an Array (Timsort)](https://leetcode.com/problems/sort-an-array/) | Sorting algorithms deep-dive |
-| Medium | [53. Maximum Subarray (Divide and Conquer)](https://leetcode.com/problems/maximum-subarray/) | D&C pattern — active block week of Jul 6 |
+| Medium | [53. Maximum Subarray (Divide and Conquer)](https://leetcode.com/problems/maximum-subarray/) | **D&C consolidation rep.** ⚠️ *Original trigger "active block week of Jul 6" **expired unfired** — caught Jul 26, 2026, three weeks stale. A dead stub (`maxSubarrayDivideNConquer`, body `return`) sits in the solution file from that abandoned setup.* **Re-triggered as a condition, not a date: pull once (a) 912 Merge Sort has its RATED rep (Jul 29 — D&C was taught unrated Jul 25, so 912 measures retention first) AND (b) surplus ≥ 1.** Rationale: D&C currently has exactly **one** problem (912) where a technique wants 3–4, and this is the natural second — but running it before 912 is rated would measure the teaching, not the technique. See [[project_dandc_coding_gap]]. |
 | Medium | [19. Remove Nth Node From End of List (Preorder Recursion)](https://leetcode.com/problems/remove-nth-node-from-end-of-list/) | Parked Jul 9 — was rotating 3 variants (iterative + postorder + preorder); kept iterative + postorder in active rotation. Preorder (count length forward, then remove on the way down) is the most contrived direction for remove-from-end; revisit for enrichment. |
 | Hard | [42. Trapping Rain Water (Two Pointer)](https://leetcode.com/problems/trapping-rain-water/) | O(1) space optimization. **Trigger: pull into rotation when 42 Array retires (🏆, streak 3).** Array method 🟢 streak 1 as of Jul 8. |
 | Medium | [138. Copy List with Random Pointer (one-pass O(1))](https://leetcode.com/problems/copy-list-with-random-pointer/) | Space optimization: interweave copies between originals (A→A'→B→B'…), set `.random`, then unweave — no map. Solved with two-pass hashmap Jul 5; low priority, revisit the interweaving trick later. |
