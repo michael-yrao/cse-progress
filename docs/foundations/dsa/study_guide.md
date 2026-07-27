@@ -311,6 +311,21 @@ Sliding Window/Stack back two weeks. Note the budget split: 1334 and 721 spend *
 intake (capped 3/wk); 1631 and 1514 are **consolidation reps** against the separate ≤2/wk budget,
 gated on 778/743 sitting at 🟡+ — which they do.
 
+> **⚠️ Reconciled at the Jul 27 weekly build — two rules written the same day collide, and the surplus
+> rule wins.** Measured surplus came back **−7.3**, and the fill table permits reviews plus cap-level
+> new intake *only* at ≤0 — **no consolidation reps.** The projection doesn't open surplus until
+> Oct–Dec, so **1631 and 1514 will not land inside the Aug 16 window**; they become the first items
+> scheduled when surplus turns positive.
+>
+> **This does not move the exit bar**, because exit is judged **per algorithm** (≥1 🟢 + recognition),
+> not per problem — and Dijkstra already has 743 + 778. The consolidation reps deepen an algorithm
+> that already clears the bar rather than being needed to reach it. **So Advanced Graphs is scheduled
+> on 9 and exits on its 8 algorithms;** 1631/1514 stay in scope, just not in this window.
+>
+> The general shape worth remembering: **curriculum scope and schedulability are separate questions,
+> and capacity decides the second.** Promoting something into a phase says it's worth doing, never
+> that there's room for it this month.
+
 ### Phase exit standard — per algorithm, not per problem (set Jul 26, 2026)
 
 **The goal at the end of a phase: every algorithm in it is locked down — recognized *and* executable.**
