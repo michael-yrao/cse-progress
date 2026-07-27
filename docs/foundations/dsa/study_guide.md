@@ -538,14 +538,26 @@ as the library grows:
 
 Left alone, "keep adding problems" strangles itself in about three years. Two mechanisms prevent that.
 
-#### 🏆 Graduation — the tier above 🎓
+#### 🏆 Retirement — the terminal tier, above 🎓
 
-🎓 Graduated is currently terminal *and still bills every 180 days forever*. Add one step past it:
+🎓 Graduated still bills a spot check every 180 days, forever. Retirement is the step past it, and
+**how many spot checks it takes depends on how the problem reached 🎓:**
 
-> **A 🎓 problem that passes two consecutive 180-day spot checks cleanly (≈1 year at 🎓, ~2.5 years
-> from its first Clean) graduates.** Its row leaves the review table for a `🏆 Retired` list — no
-> interval, no next-review date, no ongoing cost. If it ever resurfaces (a pull, a real interview) and
-> fails, it re-enters at 🟡 like anything else.
+| Path to 🎓 | Spot checks needed to retire | Why |
+|---|---|---|
+| **Standard** — climbed s1 → s2 → s3 | **two** clean (≈1 year at 🎓, ~2.5 years from first Clean) | nothing else is testing this technique; the second check is the evidence |
+| **Over-learned fast-track** | **one** clean | the **coverage gate** already supplied that evidence — harder problems are still testing the technique on the normal ladder |
+
+> On retiring, the row leaves the review table for the `🏆 Retired` list — no interval, no
+> next-review date, no ongoing cost. If it ever resurfaces (a pull, a real interview) and fails, it
+> re-enters at 🟡 like anything else.
+
+**Why the fast-track needs only one** (decided Jul 26, 2026): the standard path's second spot check
+exists because a problem that climbed the ladder normally has no *other* evidence behind it — the
+ladder is the only thing vouching for it. A fast-tracked problem was admitted to 🎓 precisely *because*
+the technique is under active test elsewhere (condition 3, the coverage gate). That gate is a standing
+guarantee, not a one-time check, so it does the second check's job continuously. Requiring two would
+be asking the same question twice.
 
 This is the release valve. Without it the carrying capacity is a hard wall.
 
@@ -604,9 +616,10 @@ since March, and binary search is carried by **seven** harder tracked problems (
 2300, 1011) of which **two were 🟡 at the time**. Fast-tracked to 🎓, next look Jan 22 2027. Load drops
 from 0.033 to 0.006 slots/day — about **6×**.
 
-**Open question, not yet decided:** whether a fast-tracked 🎓 should graduate after **one** clean spot
-check instead of the standard two, on the grounds that the coverage gate is itself the evidence the
-second check would provide.
+**Retires after ONE clean spot check, not the standard two** (decided Jul 26, 2026) — the coverage
+gate is a standing guarantee that the technique stays under test elsewhere, so it does the second
+check's job continuously. For 704 that means: graduated Jul 26 2026 → spot check **Jan 22, 2027** →
+if clean, **retired that day** rather than waiting for a second check in mid-2027.
 
 #### When to open Tier 1 expansion — the pull-rate trigger
 

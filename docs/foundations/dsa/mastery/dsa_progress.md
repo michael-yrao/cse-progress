@@ -23,8 +23,9 @@ Notes for future agents:
 - When a problem reaches Streak 3, change Comfort to 🎓 to graduate it out of regular rotation.
 - Graduated problems return for a spot check every 180 days. Still Clean → stays 🎓 (+180).
   Shaky/Blank → back to active rotation. A legacy 🏆 row still parses and is treated as 🎓.
-- **🏆 Retirement (added Jul 26, 2026) — the TERMINAL tier, above 🎓.** A 🎓 problem that passes **two
-  consecutive 180-day spot checks cleanly** retires: move its row out of the review table into the
+- **🏆 Retirement (added Jul 26, 2026) — the TERMINAL tier, above 🎓.** A 🎓 problem that clears its
+  spot checks retires — **two** clean if it climbed the ladder normally, **ONE** if it arrived by the
+  over-learned fast-track (its coverage gate already supplies what the second check would): move its row out of the review table into the
   `## 🏆 Retired` list at the bottom and **add its number to `discovery_skip` in `cse.config.yml`**.
   ⚠️ **Both steps, always.** Discovery re-adds any problem under `dsa/leetcode/**` that has no row, so
   removing the row alone silently resurrects it on the next commit. The Retired list is deliberately a
@@ -346,7 +347,9 @@ Tackle **after** NC150 is comfortable. These are genuinely advanced but still su
 
 ## 🏆 Retired
 
-**The terminal tier.** Problems that cleared **two consecutive 🎓 spot checks** (≈1 year at Graduated).
+**The terminal tier.** Problems that cleared their 🎓 spot checks — **two** clean if they climbed the
+ladder normally, **one** if they arrived by the over-learned fast-track (the coverage gate is a
+standing guarantee, so it already does the second check's job).
 They carry **no interval and no ongoing review cost** — this is the release valve that keeps the
 library under its ~500–600 carrying capacity (see `../study_guide.md` → "Library carrying capacity").
 
@@ -362,5 +365,5 @@ on the next commit.
 *Format:* `- <number>. <Title> (<method>) — retired <YYYY-MM-DD>, spot checks <date>, <date>`
 
 _None yet._ **704 Binary Search** is the first problem at 🎓 (Jul 26, 2026, via the over-learned
-fast-track) and the earliest possible retirement: two clean spot checks would put it here around
-**Jan 2028**.
+fast-track) and the earliest retirement: it needs **one** clean spot check, due **Jan 22, 2027** —
+so it lands here that day if it holds.
