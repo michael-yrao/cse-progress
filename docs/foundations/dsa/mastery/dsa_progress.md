@@ -176,66 +176,74 @@ Notes for future agents:
 
 ---
 
-## Knowledge Expansion Queue
+## ⏳ Waiting Room — will enter rotation
 
-Problems added for algorithmic depth — not part of the spaced repetition tracker or stats. No attempt dates; these enter the schedule when the relevant topic week arrives.
+**These are NOT parked.** Every entry here *will* be scheduled; it is waiting on a stated
+condition. This section is **short by design and read at every weekly build** — that is the whole
+anti-void mechanism. Split out of the Knowledge Expansion Queue on Jul 26, 2026 after *53 D&C*
+sat three weeks past its trigger unfired: it had been filed in a bin whose name says *"don't
+expect this soon,"* so nobody was wrong to skim past it. **The bin was lying.** At the split,
+**14 of the queue's 21 entries turned out to belong here** — two-thirds of a "parking lot" was
+actually a waiting room.
 
-> ⚠️ **Audit this queue's triggers at every weekly build.** Nothing watches them, so a **date-based**
-> trigger can fire and be missed silently — the item just sits here looking parked. Found Jul 26, 2026:
-> 53 D&C carried *"active block week of Jul 6"* and went **three weeks past unfired**, with an abandoned
-> stub left in the solution file. **Prefer conditional triggers over dates** ("when X graduates", "when
-> the Backtracking phase opens", "once surplus ≥ 1") — a condition can't silently expire, and it stays
-> meaningful when the schedule slips. Any date-based trigger in here is a liability; convert it.
+### Trigger vocabulary (keep it to these — they're all machine-checkable)
 
-**Also parked here: phase-gated 🔴s.** A Blank on a technique that hasn't been *taught yet* is a **premature attempt**, not a spaced-rep failure — the +2-day loop assumes forgetting, but there was never any encoding to forget. Churning it just re-blanks it. Park it with an explicit phase trigger instead; it re-enters rotation when its phase opens. (Leaving it in the review table isn't an option: the script recomputes `next review = latest attempt + interval`, so it snaps back to permanently-overdue and inflates the backlog signal.)
+| Form | Fires when | Checked against |
+|---|---|---|
+| `phase:<Name>` | that roadmap phase opens | `study_guide.md` phase table + today's date |
+| `graduates:<num>` | that problem's row reaches 🎓 | this tracker |
+| `rated:<num>` | that problem has a rating logged | this tracker's attempt dates |
+| `solved:<num>` | that problem has any 🟢 | this tracker |
+| `surplus>=<n>` | measured weekly surplus | the capacity computation |
+
+Combine with `+` (all must hold). **Never use a bare date** — a date is the one trigger that can
+expire silently, which is exactly how 53 D&C was lost. Conditions survive schedule slip; dates don't.
+
+**At every weekly build:** evaluate every row below. A fired trigger is either **slotted that week**
+or **re-deferred with a written reason** — never left sitting. A fired-but-unslotted trigger with no
+note is the failure mode this section exists to prevent.
+
+| Difficulty | Problem | Trigger | Notes |
+|---|---|---|---|
+| Hard | [1216. Valid Palindrome III (backtracking)](https://leetcode.com/problems/valid-palindrome-iii/) | `phase:Backtracking` | **Phase-gated 🔴.** Attempted 2026-05-31 → Blank; the Backtracking foundation isn't built until **Sep 14 – Oct 11**. Premature, not forgotten. **Trigger: pull into rotation when the Backtracking phase opens (Sep 14).** |
+| Hard | [1216. Valid Palindrome III (1DP)](https://leetcode.com/problems/valid-palindrome-iii/) | `phase:1D-DP` | **Phase-gated 🔴.** Attempted 2026-05-31 → Blank; the 1D DP foundation isn't built until **Oct 12 – Nov 8**. Premature, not forgotten. **Trigger: pull into rotation when the 1D DP phase opens (Oct 12).** |
+| Medium | [53. Maximum Subarray (Divide and Conquer)](https://leetcode.com/problems/maximum-subarray/) | `rated:912` + `surplus>=1` | **D&C consolidation rep.** ⚠️ *Original trigger "active block week of Jul 6" **expired unfired** — caught Jul 26, 2026, three weeks stale. A dead stub (`maxSubarrayDivideNConquer`, body `return`) sits in the solution file from that abandoned setup.* **Re-triggered as a condition, not a date: pull once (a) 912 Merge Sort has its RATED rep (Jul 29 — D&C was taught unrated Jul 25, so 912 measures retention first) AND (b) surplus ≥ 1.** Rationale: D&C currently has exactly **one** problem (912) where a technique wants 3–4, and this is the natural second — but running it before 912 is rated would measure the teaching, not the technique. See [[project_dandc_coding_gap]]. |
+| Hard | [42. Trapping Rain Water (Two Pointer)](https://leetcode.com/problems/trapping-rain-water/) | `graduates:42` | O(1) space optimization. **Trigger: pull into rotation when 42 Array retires (🏆, streak 3).** Array method 🟢 streak 1 as of Jul 8. |
+| Hard | Digit DP (technique) — e.g. [233. Number of Digit One](https://leetcode.com/problems/number-of-digit-one/) | `phase:2D-DP` | Technique: counting numbers in a range by digit constraints. Not in NC150; advanced DP. Best learned AFTER the 1D/2D DP blocks (Oct–Dec) once DP foundation is solid. |
+| Medium | [300. Longest Increasing Subsequence (O(n log n))](https://leetcode.com/problems/longest-increasing-subsequence/) | `phase:1D-DP` | DP enrichment: patience-sorting / binary-search LIS. Base O(n²) LIS is NC150; this is the optimized form. Learn after the 1D DP block. |
+| Hard | [354. Russian Doll Envelopes](https://leetcode.com/problems/russian-doll-envelopes/) | `phase:1D-DP` | DP enrichment: multi-dimensional LIS (sort on one dim, LIS on the other). Extension of 300, NOT grid DP. Not in NC150. |
+| Medium | [646. Maximum Length of Pair Chain](https://leetcode.com/problems/maximum-length-of-pair-chain/) | `phase:1D-DP` | DP enrichment: LIS/greedy chain variant (sort + LIS). Same family as 354/Building Bridges. Not in NC150. |
+| Medium | [646. Maximum Length of Pair Chain](https://leetcode.com/problems/maximum-length-of-pair-chain/) | `phase:1D-DP` | DP enrichment: LIS/greedy chain variant (sort + LIS). Same family as 354/Building Bridges. Not in NC150. |
+| Hard | Interval DP — Matrix Chain Multiplication (classic) | `phase:2D-DP` | DP enrichment: broader interval DP beyond NC150's Burst Balloons (312). "Solve inner intervals, combine outward." Learn after 2D DP block. |
+| Hard | Bitmask DP (technique) — e.g. TSP / [847. Shortest Path Visiting All Nodes](https://leetcode.com/problems/shortest-path-visiting-all-nodes/) | `phase:2D-DP` | DP enrichment: state = bitmask of visited set. Not in NC150; common in harder interviews. Learn after 2D DP block. |
+| Hard | [85. Maximal Rectangle](https://leetcode.com/problems/maximal-rectangle/) | `solved:84` | Matrix→row-histogram reduction (monotonic stack): per row, treat column heights as a histogram → run 84. Built on `84. Largest Rectangle in Histogram` (NC150 Stack). NOT DP space-compression. Not in NC150. |
+| Medium | [1504. Count Submatrices With All Ones](https://leetcode.com/problems/count-submatrices-with-all-ones/) | `solved:84` | Same row-histogram reduction as 85, different aggregation. Anchored on 84 (NC150 Stack). Not in NC150. |
+| Medium | [743. Network Delay Time (Bellman-Ford variant)](https://leetcode.com/problems/network-delay-time/) | `graduates:743` | The **direct contrast rep**: a problem already solved with Dijkstra, re-solved with Bellman-Ford on identical input, to feel the decision rule rather than recite it. **Gated by the method-variant rule** — needs 743 itself at 🏆 (currently 🟡). Different axis from a consolidation rep: this is *another technique on one problem*, not *one technique across problems*, and its gate is about rep economics rather than ROI. |
+
+---
+
+## 🧊 Knowledge Expansion Queue — post-NC150 / below the ROI line
+
+**Genuinely parked.** Depth and enrichment that is *deliberately* deferred — no trigger needed
+beyond "after NC150," and no expectation of scheduling before then. If an entry here acquires a
+real condition, it belongs in the **Waiting Room** above instead; if a Waiting Room entry turns out
+to be below the ROI line, move it down here. Keeping the two separated is what stops the second
+kind from burying the first.
+
+*(Phase-gated 🔴s live in the Waiting Room, not here — a Blank on an un-taught technique is a
+premature attempt with a real trigger, not enrichment. Leaving one in the review table isn't an
+option either: the script recomputes `next review = latest attempt + interval`, so it snaps back
+to permanently-overdue and inflates the backlog signal.)*
 
 | Difficulty | Problem | Notes |
 |---|---|---|
-| Hard | [1216. Valid Palindrome III (backtracking)](https://leetcode.com/problems/valid-palindrome-iii/) | **Phase-gated 🔴.** Attempted 2026-05-31 → Blank; the Backtracking foundation isn't built until **Sep 14 – Oct 11**. Premature, not forgotten. **Trigger: pull into rotation when the Backtracking phase opens (Sep 14).** |
-| Hard | [1216. Valid Palindrome III (1DP)](https://leetcode.com/problems/valid-palindrome-iii/) | **Phase-gated 🔴.** Attempted 2026-05-31 → Blank; the 1D DP foundation isn't built until **Oct 12 – Nov 8**. Premature, not forgotten. **Trigger: pull into rotation when the 1D DP phase opens (Oct 12).** |
 | Medium | [912. Sort an Array (Quick Sort)](https://leetcode.com/problems/sort-an-array/) | Sorting algorithms deep-dive |
 | Medium | [912. Sort an Array (Radix Sort)](https://leetcode.com/problems/sort-an-array/) | Sorting algorithms deep-dive |
 | Medium | [912. Sort an Array (Counting Sort)](https://leetcode.com/problems/sort-an-array/) | Sorting algorithms deep-dive |
 | Medium | [912. Sort an Array (Timsort)](https://leetcode.com/problems/sort-an-array/) | Sorting algorithms deep-dive |
-| Medium | [53. Maximum Subarray (Divide and Conquer)](https://leetcode.com/problems/maximum-subarray/) | **D&C consolidation rep.** ⚠️ *Original trigger "active block week of Jul 6" **expired unfired** — caught Jul 26, 2026, three weeks stale. A dead stub (`maxSubarrayDivideNConquer`, body `return`) sits in the solution file from that abandoned setup.* **Re-triggered as a condition, not a date: pull once (a) 912 Merge Sort has its RATED rep (Jul 29 — D&C was taught unrated Jul 25, so 912 measures retention first) AND (b) surplus ≥ 1.** Rationale: D&C currently has exactly **one** problem (912) where a technique wants 3–4, and this is the natural second — but running it before 912 is rated would measure the teaching, not the technique. See [[project_dandc_coding_gap]]. |
 | Medium | [19. Remove Nth Node From End of List (Preorder Recursion)](https://leetcode.com/problems/remove-nth-node-from-end-of-list/) | Parked Jul 9 — was rotating 3 variants (iterative + postorder + preorder); kept iterative + postorder in active rotation. Preorder (count length forward, then remove on the way down) is the most contrived direction for remove-from-end; revisit for enrichment. |
-| Hard | [42. Trapping Rain Water (Two Pointer)](https://leetcode.com/problems/trapping-rain-water/) | O(1) space optimization. **Trigger: pull into rotation when 42 Array retires (🏆, streak 3).** Array method 🟢 streak 1 as of Jul 8. |
 | Medium | [138. Copy List with Random Pointer (one-pass O(1))](https://leetcode.com/problems/copy-list-with-random-pointer/) | Space optimization: interweave copies between originals (A→A'→B→B'…), set `.random`, then unweave — no map. Solved with two-pass hashmap Jul 5; low priority, revisit the interweaving trick later. |
 | Medium | [94. Binary Tree Inorder Traversal (Morris)](https://leetcode.com/problems/binary-tree-inorder-traversal/) | Technique: Morris traversal — O(1)-space inorder via threaded trees. Niche interview follow-up; not needed for any NC150 problem. Learn after NC150. |
-| Hard | Digit DP (technique) — e.g. [233. Number of Digit One](https://leetcode.com/problems/number-of-digit-one/) | Technique: counting numbers in a range by digit constraints. Not in NC150; advanced DP. Best learned AFTER the 1D/2D DP blocks (Oct–Dec) once DP foundation is solid. |
-| Medium | [300. Longest Increasing Subsequence (O(n log n))](https://leetcode.com/problems/longest-increasing-subsequence/) | DP enrichment: patience-sorting / binary-search LIS. Base O(n²) LIS is NC150; this is the optimized form. Learn after the 1D DP block. |
-| Hard | [354. Russian Doll Envelopes](https://leetcode.com/problems/russian-doll-envelopes/) | DP enrichment: multi-dimensional LIS (sort on one dim, LIS on the other). Extension of 300, NOT grid DP. Not in NC150. |
-| Medium | [646. Maximum Length of Pair Chain](https://leetcode.com/problems/maximum-length-of-pair-chain/) | DP enrichment: LIS/greedy chain variant (sort + LIS). Same family as 354/Building Bridges. Not in NC150. |
-| Hard | Building Bridges (LintCode/classic) | DP enrichment: 2D LIS (sort by one endpoint, LIS on the other). Same "sort + LIS" cluster as 354/646. Not on LeetCode NC150. |
-| Hard | Interval DP — Matrix Chain Multiplication (classic) | DP enrichment: broader interval DP beyond NC150's Burst Balloons (312). "Solve inner intervals, combine outward." Learn after 2D DP block. |
-| Hard | Bitmask DP (technique) — e.g. TSP / [847. Shortest Path Visiting All Nodes](https://leetcode.com/problems/shortest-path-visiting-all-nodes/) | DP enrichment: state = bitmask of visited set. Not in NC150; common in harder interviews. Learn after 2D DP block. |
-| Hard | [85. Maximal Rectangle](https://leetcode.com/problems/maximal-rectangle/) | Matrix→row-histogram reduction (monotonic stack): per row, treat column heights as a histogram → run 84. Built on `84. Largest Rectangle in Histogram` (NC150 Stack). NOT DP space-compression. Not in NC150. |
-| Medium | [1504. Count Submatrices With All Ones](https://leetcode.com/problems/count-submatrices-with-all-ones/) | Same row-histogram reduction as 85, different aggregation. Anchored on 84 (NC150 Stack). Not in NC150. |
-
-### Advanced Graphs breadth (queued Jul 26, 2026 — learner request)
-
-**Why queued and not scheduled:** Advanced Graphs is capped at **3 new/week (Hardest tier)** and right
-now **6 of its 7 problems are non-retired** (332 🔴 · 743/778/787/1584/127 🟡 · 269 not yet attempted).
-Adding new intake here fights the cap that was set Jul 18 for exactly this situation — the breadth the
-learner is asking for is *already scheduled*, as the retry cascade. **Trigger: pull these in once all 7
-Advanced Graphs problems sit at 🟢 or better.**
-
-**Also, honestly: "more Bellman-Ford problems" barely exists on LeetCode.** 787 is the canonical one.
-Breadth here comes from the *neighboring* algorithms and the boundaries between them — which is what
-this list is built around. See the four-way shortest-path split in
-[`recognition_gotchas.md`](recognition_gotchas.md).
-
-**⬆ Four problems were PROMOTED OUT of this queue into the Advanced Graphs phase on Jul 26, 2026.**
-**1334** (Floyd-Warshall) + **721** (Accounts Merge) as *new-technique* — real interview ROI belongs in
-the curriculum, not parked here. **1631** + **1514** as *consolidation reps* — an earlier decline
-("near-duplicate of 778") was reversed the same day: similarity to a solved problem is an argument
-**for** scheduling, since the minor differences are what recognition actually grades. Phase is now
-**11 problems, ending Aug 16**. See `study_guide.md` → "Two non-NC150 additions" and "Two kinds of new
-problem". What remains below is genuinely below-the-line.
-
-| Difficulty | Problem | Notes |
-|---|---|---|
-| Medium | [743. Network Delay Time (Bellman-Ford variant)](https://leetcode.com/problems/network-delay-time/) | The **direct contrast rep**: a problem already solved with Dijkstra, re-solved with Bellman-Ford on identical input, to feel the decision rule rather than recite it. **Gated by the method-variant rule** — needs 743 itself at 🏆 (currently 🟡). Different axis from a consolidation rep: this is *another technique on one problem*, not *one technique across problems*, and its gate is about rep economics rather than ROI. |
 
 ### Post-NC150 Core-Fill (do FIRST — NC150 coverage gaps, not advanced)
 
