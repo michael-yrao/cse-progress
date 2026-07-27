@@ -9,7 +9,7 @@ metadata:
 intervals lengthen near the end of NC150. It does — and the old date-based rule would have missed it.
 
 **The model:** each tracked row generates `1 / interval` reps per day. 🔴 +2 → 0.50/day · 🟡 +10 →
-0.10 · 🟢 s1 +30 → 0.033 · 🟢 s2 +60 → 0.017 · 🏆 +180 → 0.006. **A retired problem generates 1/83rd
+0.10 · 🟢 s1 +30 → 0.033 · 🟢 s2 +60 → 0.017 · 🎓 +180 → 0.006. **A graduated problem generates 1/83rd
 the load of a Blank** — retirement removes a problem from the schedule, it doesn't just label it.
 
 **Capacity ≈ 28 problem-slots/week** (7 × 2 warmup slots × ~2 problems, −6 for the three SD lanes,

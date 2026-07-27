@@ -9,7 +9,7 @@ Notes for future agents:
   - 🟢 Clean, **Streak 0 (provisional — first Clean directly after a 🔴 Blank): +10 days** (lock-down check; not yet trusted)
   - 🟢 Clean, Streak 1: +30 days
   - 🟢 Clean, Streak 2: +60 days
-  - 🏆 Retired (Streak 3+): +180 days (spot check)
+  - 🎓 Graduated (Streak 3+): +180 days (recurring spot check)
   - 🟡 Shaky (any streak): +10 days, reset Streak to 0
   - 🔴 Blank (any streak): +2 days, reset Streak to 0
 - **Provisional Clean (🟢 + Streak 0):** log a 🟢 that *directly follows a 🔴* with **Streak 0**, not 1 — it
@@ -17,16 +17,20 @@ Notes for future agents:
   Streak 1 (→ +30) and it rejoins the normal ladder; if it slips to 🟡/🔴, it resets as usual. A 🟢 after a
   🟡 (not a 🔴) is logged Streak 1 as normal — only Blank→Clean is provisional. Do NOT "fix" a 🟢/Streak-0 to
   Streak 1; that silently removes the lock-down.
-- When a problem reaches Streak 3, change Comfort to 🏆 to retire it from regular rotation.
-- Retired problems return for a spot check every 180 days. If still Clean, stays 🏆 (+180). If Shaky/Blank, return to active rotation.
-- **🎓 Graduation (added Jul 26, 2026) — the tier above 🏆.** A 🏆 problem that passes **two consecutive
-  180-day spot checks cleanly** graduates: move its row out of the review table into the
-  `## 🎓 Graduated` list at the bottom and **add its number to `discovery_skip` in `cse.config.yml`**.
+- ⚠️ NAMES SWAPPED Jul 26, 2026 — you GRADUATE, then you RETIRE. 🎓 Graduated is the streak-3 tier
+  that still comes back every 180 days; 🏆 Retired is TERMINAL. The labels were originally the other
+  way round, which read backwards against the ordinary meaning of the words.
+- When a problem reaches Streak 3, change Comfort to 🎓 to graduate it out of regular rotation.
+- Graduated problems return for a spot check every 180 days. Still Clean → stays 🎓 (+180).
+  Shaky/Blank → back to active rotation. A legacy 🏆 row still parses and is treated as 🎓.
+- **🏆 Retirement (added Jul 26, 2026) — the TERMINAL tier, above 🎓.** A 🎓 problem that passes **two
+  consecutive 180-day spot checks cleanly** retires: move its row out of the review table into the
+  `## 🏆 Retired` list at the bottom and **add its number to `discovery_skip` in `cse.config.yml`**.
   ⚠️ **Both steps, always.** Discovery re-adds any problem under `dsa/leetcode/**` that has no row, so
-  removing the row alone silently resurrects it on the next commit. The Graduated list is deliberately a
-  **plain bullet list, not the 7-column table**, so this parser ignores it. Rationale: 🏆 is terminal but
-  still bills 0.039 slots/week forever; at ~28 slots/week the library caps out around 500–600 problems
-  without a release valve. See `study_guide.md` → "Library carrying capacity". If a graduated problem
+  removing the row alone silently resurrects it on the next commit. The Retired list is deliberately a
+  **plain bullet list, not the 7-column table**, so this parser ignores it. Rationale: 🎓 is not terminal —
+  it still bills 0.039 slots/week forever; at ~28 slots/week the library caps out around 500–600 problems
+  without a release valve. See `study_guide.md` → "Library carrying capacity". If a retired problem
   ever resurfaces and fails, it re-enters at 🟡 like anything else.
 - **Disposable reps (added Jul 26, 2026) — not every solved problem gets a row.** A **consolidation rep**
   or **application pull** is a probe testing whether a *technique* transfers, not an asset to maintain.
@@ -36,7 +40,7 @@ Notes for future agents:
   need either a separate root outside `solutions.roots` (preferred) or a `discovery_skip` entry (stopgap).
 - **What this file means now:** it is **"everything still unproven"**, not "everything I've solved" — a
   work queue, not a trophy case. A *shrinking* row count is the healthy direction. The accomplishment
-  record lives in the 🎓 Graduated list and the technique ledgers.
+  record lives in the 🏆 Retired list and the technique ledgers.
 - This Markdown file is generated from current row data by `scripts/update_review_dates.py`.
 - The script also discovers LeetCode problems defined under `dsa/leetcode/*` and adds missing rows automatically.
 - Problem titles in this table should include the method used, such as `(BFS)` or `(DFS)`.
@@ -56,9 +60,9 @@ Notes for future agents:
 
 > **98** problems &nbsp;·&nbsp; **107** solutions &nbsp;·&nbsp; **358** attempts
 
-| | 🏆 Retired | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
-|:---|:---:|:---:|:---:|:---:|
-| **Solutions** | 1 | 86 | 19 | 1 |
+| | 🏆 Retired | 🎓 Graduated | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
+|:---|:---:|:---:|:---:|:---:|:---:|
+| **Solutions** | 0 | 1 | 86 | 19 | 1 |
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|---|
@@ -66,7 +70,7 @@ Notes for future agents:
 | Medium | [53. Maximum Subarray (Kadane)](https://leetcode.com/problems/maximum-subarray/) | 🟢 | 2 | 2026-09-24 | 2026-07-26 | 2026-01-08, 2026-04-02, 2026-06-23, 2026-06-24, 2026-07-26 |
 | Medium | [189. Rotate Array](https://leetcode.com/problems/rotate-array/) | 🟢 | 2 | 2026-09-24 | 2026-07-26 | 2026-01-11, 2026-04-04, 2026-06-24, 2026-07-26 |
 | Easy | [1046. Last Stone Weight](https://leetcode.com/problems/last-stone-weight/) | 🟢 | 2 | 2026-09-24 | 2026-07-26 | 2026-06-23, 2026-07-26 |
-| Easy | [704. Binary Search](https://leetcode.com/problems/binary-search/) | 🏆 | 3 | 2027-01-22 | 2026-07-26 | 2026-03-09, 2026-04-13, 2026-05-27, 2026-06-27, 2026-07-26 |
+| Easy | [704. Binary Search](https://leetcode.com/problems/binary-search/) | 🎓 | 3 | 2027-01-22 | 2026-07-26 | 2026-03-09, 2026-04-13, 2026-05-27, 2026-06-27, 2026-07-26 |
 | Medium | [743. Network Delay Time (Dijkstra)](https://leetcode.com/problems/network-delay-time/) | 🟡 | 0 | 2026-08-04 | 2026-07-25 | 2026-07-13, 2026-07-15, 2026-07-25 |
 | Medium | [355. Design Twitter](https://leetcode.com/problems/design-twitter/) | 🟢 | 1 | 2026-08-24 | 2026-07-25 | 2026-06-24, 2026-06-26, 2026-07-06, 2026-07-15, 2026-07-25 |
 | Medium | [143. Reorder List](https://leetcode.com/problems/reorder-list/) | 🟡 | 0 | 2026-08-04 | 2026-07-25 | 2026-04-26, 2026-07-06, 2026-07-15, 2026-07-25 |
@@ -325,18 +329,23 @@ Tackle **after** NC150 is comfortable. These are genuinely advanced but still su
 
 ---
 
-## 🎓 Graduated
+## 🏆 Retired
 
-Problems that cleared **two consecutive 🏆 spot checks** (≈1 year clean at Retired, ~2.5 years from
-their first Clean). They carry **no interval and no ongoing review cost** — this is the release valve
-that keeps the library under its ~500–600 carrying capacity (see `../study_guide.md` → "Library
-carrying capacity").
+**The terminal tier.** Problems that cleared **two consecutive 🎓 spot checks** (≈1 year at Graduated).
+They carry **no interval and no ongoing review cost** — this is the release valve that keeps the
+library under its ~500–600 carrying capacity (see `../study_guide.md` → "Library carrying capacity").
 
-Deliberately a **plain list, not the 7-column table** — the tracker parser must not pick these up.
-Every entry here must also appear in `discovery_skip` in `cse.config.yml`, or discovery will resurrect
-it on the next commit.
+> **You graduate, then you retire.** 🎓 Graduated is the streak-3 tier that still comes back every 180
+> days for a spot check; 🏆 Retired is done — never called back. *(Renamed Jul 26, 2026 — the two labels
+> were originally the other way round, which read backwards against the ordinary meaning of the words.)*
 
-*Format:* `- <number>. <Title> (<method>) — graduated <YYYY-MM-DD>, spot checks <date>, <date>`
+Deliberately a **plain list, not the 7-column table** — the tracker parser must not pick these up. It
+counts entries here by matching `- <number>.` inside this section for the summary's Retired column.
+Every entry must also appear in `discovery_skip` in `cse.config.yml`, or discovery will resurrect it
+on the next commit.
 
-_None yet._ The first candidates can't arrive before ~2028: nothing in the tracker has reached 🏆 at
-all as of Jul 26, 2026 (max streak is 2), and graduation needs 🏆 plus two more 180-day cycles.
+*Format:* `- <number>. <Title> (<method>) — retired <YYYY-MM-DD>, spot checks <date>, <date>`
+
+_None yet._ **704 Binary Search** is the first problem at 🎓 (Jul 26, 2026, via the over-learned
+fast-track) and the earliest possible retirement: two clean spot checks would put it here around
+**Jan 2028**.

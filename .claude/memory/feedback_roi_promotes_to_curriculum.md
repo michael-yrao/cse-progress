@@ -26,7 +26,7 @@ NC150 problem. Parking is a statement about ROI; making it for the wrong reason 
    not "is this in NC150?"
 2. **Promote into the phase it belongs to** in `docs/foundations/dsa/study_guide.md` (phase table +
    any per-phase notes), and update that phase's **new-problem count** so the intake cap arithmetic
-   and the phase-completion bar ("N of M 🏆 Retired") stay honest.
+   and the phase-completion bar ("N of M 🎓 Graduated") stay honest.
 3. **Curriculum scope ≠ schedule timing.** Promoting something into a phase says it is *in scope*;
    it does **not** override the difficulty-tiered intake cap ([[feedback_difficulty_tiered_intake]]).
    A promoted item still waits for a real slot. Say the new count out loud when promoting — a phase
