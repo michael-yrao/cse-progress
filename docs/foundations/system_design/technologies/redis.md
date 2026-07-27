@@ -89,6 +89,51 @@ B: write 5   → 2 admitted, +1 only
 
 `INCR` returns the *new* value; the middleware checks that against the limit. **"Consume a token AND check" = `INCR`.** This is the standard follow-up the instant you say "Redis."
 
+### ⚠️ Per COMMAND, not across commands — the limit of what atomicity buys (added Jul 26, 2026)
+
+**This is the trap, found cold in the Rate Limiter Mastery mock.** `INCR` is safe because the read
+*and* the modify happen **inside one command**. The guarantee does **not** extend across two
+commands with your own logic in between:
+
+```
+BROKEN AGAIN (logic between round trips):
+A: HGETALL → (tokens=1, ts=T) ┐ both read 1 token
+B: HGETALL → (tokens=1, ts=T) ┘ both compute "a token is available"
+A: HSET tokens=0                both allow → limit bypassed
+B: HSET tokens=0
+```
+
+Anything needing **read → compute → conditionally write** (a token bucket: `min(capacity,
+tokens + elapsed × rate)`, then decrement) is a multi-step read-modify-write, and single-threadedness
+does nothing for it. *"Redis is single-threaded so I'm safe"* is only true per command.
+
+### 🌙 `EVAL` — Lua scripting, the fix for multi-step atomicity
+
+Send Redis a **Lua script**; it runs the whole script on the single thread as **one command**. Nothing
+interleaves. Read + math + clamp + conditional write become one indivisible operation, one round trip.
+
+```
+EVAL "<lua>" <numkeys> <key1> ... <arg1> ...
+EVAL "return redis.call('HGET', KEYS[1], 'tokens')" 1 bucket:abc123
+```
+
+- `numkeys` splits **`KEYS[]`** from **`ARGV[]`**. Not cosmetic: **Redis Cluster shards by key**, so it
+  must know which keys a script touches to route it. Passing a key via `ARGV` works on one instance and
+  **breaks the day you cluster** — a common bug.
+- **`EVALSHA <sha1>`** invokes a cached script by hash instead of resending the source. ⚠️ **The cache
+  is not durable** — restart, failover, or `SCRIPT FLUSH` empties it and you get `NOSCRIPT`. Standard
+  pattern: *try `EVALSHA` → on `NOSCRIPT`, fall back to `EVAL`* (which re-caches). At high rps this
+  surfaces as an error burst right after a failover. Redis 7's `FUNCTION LOAD` registers persistently
+  and removes the dance.
+- **Cost:** the script occupies the one thread and blocks every other client — same bill as `KEYS *`.
+  Keep scripts **tiny and loop-free**.
+- **Determinism:** scripts were historically replicated as scripts, so they must not read the clock or
+  use unseeded randomness. **Pass `now` in as an `ARGV`** rather than calling a time function inside.
+
+**Why Lua and not Python:** ~200KB interpreter *designed* to be embedded in C · microsecond startup
+(it's blocking the server) · small enough surface to sandbox (no file I/O, no `os`) · deterministic.
+Same reasons nginx embeds it.
+
 ### What single-threaded *costs* (the other half — say both)
 Atomicity is what you buy; here's the bill. Volunteering it is the senior signal.
 
@@ -155,6 +200,13 @@ Middleware is horizontally scaled; each instance has its own RAM. A user hitting
 <details><summary><b>3. A user's 2 requests hit Redis at the same instant. Why don't both slip through the limit?</b></summary>
 
 Redis is **single-threaded** — commands run one at a time, no interleaving. `INCR` is an atomic read-modify-write, so the second request sees the first's result. It returns the new count, which the middleware checks against the limit.
+</details>
+
+<details><summary><b>3b. Your limiter now needs "read tokens + timestamp, refill by elapsed × rate, then decrement." Does <code>INCR</code>'s atomicity still cover you? <i>(added Jul 26 — missed cold)</i></b></summary>
+
+**No.** Redis guarantees atomicity **per command**, not across commands. `INCR` was safe because the read *and* the modify happened inside one command. A read → compute → conditional-write spans two round trips with your logic in the gap, and two instances can both read `tokens=1` and both allow.
+
+**Fix: `EVAL`** — ship a Lua script; Redis runs the whole thing as one command on its single thread. One round trip, nothing interleaves. `EVALSHA <sha1>` calls a cached one by hash, but the cache isn't durable — handle `NOSCRIPT` by falling back to `EVAL`. Keep scripts tiny (they block every other client) and pass `now` as an `ARGV` (determinism).
 </details>
 
 <details><summary><b>4. How does the time window reset without a cleanup job?</b></summary>
