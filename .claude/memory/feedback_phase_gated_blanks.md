@@ -16,3 +16,16 @@ A Blank on a technique with no foundation is a **premature attempt**, not a spac
 - **Do NOT** just set a far-future `Next Review Date` in the review table — `update_review_dates.py` recomputes it as `latest_attempt + interval(comfort)`, so it snaps straight back to permanently-overdue.
 - **Check for orphans too:** a problem whose technique appears in **no phase at all** (912 Sort an Array / Merge Sort — there is no sorting or divide-and-conquer phase in the whole Jun–Dec roadmap) will never surface naturally. Either park it in the queue, or close it as a deliberate one-off. User chose to close 912 as a one-off (foundational, ~20 lines, 🔴 since January).
 - Same trigger mechanism as [[feedback_method_variant_promotion]].
+
+**⚠️ Audit the queue's triggers at every weekly build (added Jul 26, 2026).** Nothing watches them, so
+a **date-based** trigger can fire and be missed **silently** — the item just sits there, and the failure
+is invisible because *a parked item and a missed item look identical*. Found Jul 26: *53 Maximum Subarray
+(Divide and Conquer)* carried *"active block week of Jul 6"* and went **three weeks past unfired**, with
+an abandoned stub (`maxSubarrayDivideNConquer`, body `return`) left in the solution file from the setup.
+
+**Prefer conditional triggers to dates** — *"when 42 Array graduates"*, *"when the Backtracking phase
+opens"*, *"once surplus ≥ 1"*. A condition cannot silently expire and stays meaningful when the schedule
+slips; a date becomes a liability the moment anything moves. **When re-triggering a missed item, replace
+the date with a condition rather than picking a new date** — otherwise the same failure just recurs
+later. (Audited Jul 26: 53 D&C was the *only* expired trigger; everything else in the queue is
+conditional or future-dated.)
