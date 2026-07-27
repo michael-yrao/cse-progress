@@ -491,6 +491,25 @@ puts around Oct–Dec 2026 — *while two phases are still open*.
 **Measure it at weekly schedule build**, before slotting anything: sum `1/interval` over the tracker,
 ×7, compare to 28.
 
+> **⚠️ Then check the per-day distribution — the surplus measures the WEEK, not the DAY.**
+> A negative weekly surplus does **not** mean every day is full. SD lanes and doubled warmups land
+> unevenly, so a −7 week routinely contains days sitting at 1–2 problems against a cap of 5. Slipping
+> reviews off a week that still has slack days is a **false shortage**, and it costs real reps.
+>
+> **Before accepting any slip list, write the per-day row:**
+>
+> | | Mon | Tue | Wed | Thu | Fri | Sat | Sun |
+> |---|---|---|---|---|---|---|---|
+> | DSA problems | | | | | | | |
+> | Other (SD lanes, one-offs) | | | | | | | |
+>
+> Any day under the cap absorbs items back off the slip list — **prefer ones already due that day**,
+> since those aren't being pulled forward at all, they simply stop slipping. Only then is the slip
+> list final.
+>
+> *(Found Jul 27, 2026: a −7.3 build slipped 12 🟢 while Wed carried 1 problem and Sun carried 2.
+> Four came straight back. The weekly total was correct and the conclusion drawn from it was not.)*
+
 | Measured surplus | Fill with, in order |
 |---|---|
 | **≤ 0** (over-subscribed) | Nothing. Reviews only; hold intake at the tier cap and let the backlog drain |
