@@ -30,8 +30,8 @@ Every Sunday, open `docs/foundations/dsa/mastery/dsa_progress.md` and sweep for 
 
 1. **Priority 1 (High Risk)**: 🔴 Blank — oldest Latest Attempt Date first.
 2. **Priority 2 (Medium Risk)**: 🟡 Shaky — oldest Latest Attempt Date first.
-3. **Priority 3 (Maintenance)**: 🟢 Clean — due this week. No-code review is allowed, but it **caps at 🟡 Shaky** — to hold or advance 🟢 Clean toward retirement you must code it. Coding your way to 🏆 Retired is what buys cheap no-code maintenance later.
-4. **Priority 4 (Spot Check)**: 🏆 Retired — due every 180 days; a flawless no-code blueprint *confirms* retention (stays 🏆). This is the one place a blueprint holds a status.
+3. **Priority 3 (Maintenance)**: 🟢 Clean — due this week. No-code review is allowed, but it **caps at 🟡 Shaky** — to hold or advance 🟢 Clean toward graduation you must code it. Coding your way to 🎓 Graduated is what buys cheap no-code maintenance later.
+4. **Priority 4 (Spot Check)**: 🎓 Graduated — due every 180 days; a flawless no-code blueprint *confirms* retention (stays 🎓). This is the one place a blueprint holds a status.
 
 Daily cap is **5 problems**. The active block is never cut — trim from warmup slots first (max 4 warmup problems across morning + evening combined). When a problem is bumped, slot it to a specific future day in the same edit.
 
@@ -58,12 +58,12 @@ Because 15 minutes passes incredibly fast, **never write code during a backlog w
 ### 📋 Post-Warmup Updates:
 Log the result in `docs/foundations/dsa/mastery/dsa_progress.md` using the comfort system.
 
-> **Coding is required for 🟢 Clean.** A no-code blueprint **cannot** log Clean — the best a no-code rep earns is 🟡 Shaky, no matter how flawless. To *reach* or *advance* Clean (increment the streak toward retirement), you must **code it** — in the 45-min active block, or as an Easy problem coded in-warmup. "Mostly remembered it out loud" is not mastery. The one carve-out is below (🏆 Retired spot checks).
+> **Coding is required for 🟢 Clean.** A no-code blueprint **cannot** log Clean — the best a no-code rep earns is 🟡 Shaky, no matter how flawless. To *reach* or *advance* Clean (increment the streak toward graduation), you must **code it** — in the 45-min active block, or as an Easy problem coded in-warmup. "Mostly remembered it out loud" is not mastery. The one carve-out is below (🎓 Graduated spot checks).
 
 * **Blueprint flawless but not coded** → 🟡 Shaky. Keeps the problem warm (+10 days); code it to restore/advance 🟢.
 * **Needed a nudge or wasn't fully confident** → 🟡 Shaky. Streak resets to 0; next review in +10 days.
 * **Completely forgot the approach** → 🔴 Blank. Streak resets to 0; next review in +2 days.
-* **🏆 Retired spot check (the carve-out)** → a flawless no-code blueprint on an already-Retired problem *confirms* it (stays 🏆, +180 days). Retirement — earned by repeated **coded** Cleans — is the one status a blueprint can hold; everything below it needs code to reach or keep 🟢.
+* **🎓 Graduated spot check (the carve-out)** → a flawless no-code blueprint on an already-Graduated problem *confirms* it (stays 🎓, +180 days). Graduation — earned by repeated **coded** Cleans — is the one status a blueprint can hold; everything below it needs code to reach or keep 🟢.
 
 ### ⚡ Easy Problem Exception
 
@@ -273,7 +273,7 @@ Every design session must be narrated out loud — not written silently. Intervi
 
 Once the roadmap completes and NC150 is Clean/retired, the mode shifts from **acquiring patterns** to three ongoing threads that run in parallel — this is the permanent steady state and the on-ramp to the competitive-programmer goal:
 
-1. **Maintenance** — spaced repetition keeps NC150 alive: 🏆 retired problems spot-check every 180 days; anything that slips to 🟡/🔴 returns to rotation. Never stops.
+1. **Maintenance** — spaced repetition keeps NC150 alive: 🎓 graduated problems spot-check every 180 days; anything that slips to 🟡/🔴 returns to rotation. Never stops.
 2. **Application — *pull, not push*.** Company frequency lists are a **reference pool, not a checklist.** *Pull* problems from them **gated by patterns/techniques already learned** (NC150 + expansion queue), to build **speed and transfer** on your existing foundation. Never march a company list top-to-bottom — your knowledge drives the selection, not the company's list. Log each pull in the tracker: 🟢 confirms transfer works; 🟡/🔴 is a **diagnostic** pointing at a pattern to refresh (not a cue to learn something ad-hoc). The two curated **pull pools** — interview-sourced (during Tier 1) and competitive-style (after, for Tier 2) — live in [`backlog/`](backlog/README.md). **Pulls are gated on measured review-capacity surplus, not on NC150 being finished** — see "Review capacity math" above; the surplus is expected to open around Oct–Dec 2026, while the roadmap is still running.
 3. **Expansion — keep learning, deliberately.** Continue working the **Knowledge Expansion Queue** (bottom of `dsa_progress.md`): finish Tier 1 advanced (segment tree, KMP, XOR trie, …), then cross the Interview-ROI line into Tier 2 competitive material toward the competitive-programmer goal. New concepts enter **here, in order, deliberately** — never reactively off a company problem.
 
@@ -330,8 +330,8 @@ gated on 778/743 sitting at 🟡+ — which they do.
 
 **The goal at the end of a phase: every algorithm in it is locked down — recognized *and* executable.**
 
-The old framing, *"phase completion = every associated problem 🏆 Retired,"* cannot be met and therefore
-gates nothing. 🏆 requires streak 3: a coded 🟢, then +30, then +60 — **90+ days minimum per problem.**
+The old framing, *"phase completion = every associated problem 🎓 Graduated,"* cannot be met and therefore
+gates nothing. 🎓 requires streak 3: a coded 🟢, then +30, then +60 — **90+ days minimum per problem.**
 Advanced Graphs runs Jul 13–Aug 16. Nothing in it *can* be Retired by the exit date, so the rule
 would either stall the roadmap permanently or be quietly ignored. It was being quietly ignored.
 
@@ -458,7 +458,7 @@ day. Maturing a problem doesn't just mark it mastered — it **removes it from t
 | 🟡 Shaky | +10 | 0.100 /day | ×17 |
 | 🟢 streak 1 | +30 | 0.033 /day | ×6 |
 | 🟢 streak 2 | +60 | 0.017 /day | ×3 |
-| 🏆 Retired | +180 | 0.006 /day | ×1 |
+| 🎓 Graduated | +180 | 0.006 /day | ×1 |
 
 **Weekly capacity ≈ 28 problem-slots**: 7 days × 2 warmup slots × ~2 problems (≈28) − ~6 consumed by
 the three SD lanes + ~6 active blocks (Sunday is SD).
@@ -538,12 +538,12 @@ as the library grows:
 
 Left alone, "keep adding problems" strangles itself in about three years. Two mechanisms prevent that.
 
-#### 🎓 Graduation — the tier above 🏆
+#### 🏆 Graduation — the tier above 🎓
 
-🏆 Retired is currently terminal *and still bills every 180 days forever*. Add one step past it:
+🎓 Graduated is currently terminal *and still bills every 180 days forever*. Add one step past it:
 
-> **A 🏆 problem that passes two consecutive 180-day spot checks cleanly (≈1 year at 🏆, ~2.5 years
-> from its first Clean) graduates.** Its row leaves the review table for a `🎓 Graduated` list — no
+> **A 🎓 problem that passes two consecutive 180-day spot checks cleanly (≈1 year at 🎓, ~2.5 years
+> from its first Clean) graduates.** Its row leaves the review table for a `🏆 Retired` list — no
 > interval, no next-review date, no ongoing cost. If it ever resurfaces (a pull, a real interview) and
 > fails, it re-enters at 🟡 like anything else.
 
@@ -587,7 +587,7 @@ rather than a recalled algorithm — and **the ladder's only job is to catch dec
 s1 → s2 → s3 on it spends slots for nothing. The stale 🟢 pile is almost entirely this: 1929, 217, 26,
 344, 125, 1768, 88, 100, 14.
 
-**A problem may skip straight to 🏆 Retired (Streak 3, +180) on its next clean rep when all three hold:**
+**A problem may skip straight to 🎓 Graduated (Streak 3, +180) on its next clean rep when all three hold:**
 
 1. It's **🟢 and has been cleaned before** — not a first success.
 2. The learner **declares it over-learned.** Self-reported, like Comfort.
@@ -601,10 +601,10 @@ has no harder representative, the easy problem **is** the coverage and the fast-
 
 **Worked example — 704 Binary Search, Jul 26, 2026** (the first application): 🟢 s1, cleaned four times
 since March, and binary search is carried by **seven** harder tracked problems (74, 875, 540, 33, 153,
-2300, 1011) of which **two were 🟡 at the time**. Fast-tracked to 🏆, next look Jan 22 2027. Load drops
+2300, 1011) of which **two were 🟡 at the time**. Fast-tracked to 🎓, next look Jan 22 2027. Load drops
 from 0.033 to 0.006 slots/day — about **6×**.
 
-**Open question, not yet decided:** whether a fast-tracked 🏆 should graduate after **one** clean spot
+**Open question, not yet decided:** whether a fast-tracked 🎓 should graduate after **one** clean spot
 check instead of the standard two, on the grounds that the coverage gate is itself the evidence the
 second check would provide.
 
@@ -652,7 +652,7 @@ without confirmed transfer just means room to learn new things on a shaky base):
 Today `dsa_progress.md` is *"everything I've solved."* After this it becomes **"everything still
 unproven"** — a work queue, not a trophy case. Row count stops being a measure of progress and starts
 being a measure of *remaining debt*, so a **shrinking** tracker is the healthy direction. The record
-of what's been accomplished moves to two places: the **🎓 Graduated list**, and the **technique
+of what's been accomplished moves to two places: the **🏆 Retired list**, and the **technique
 ledgers** that disposable reps write into.
 - **DP phases (1D + 2D)**: Allow 4–5 weeks each. Do not compress below 4 weeks per phase.
 
@@ -798,6 +798,6 @@ See [stuck_log.md](stuck_log.md) for the live log. Template for reference:
 ## Core Rules
 1.  **Strict 45-Minute Cap**: If a new problem isn't solved in 45 minutes, stop, look up the solution, and log it 🔴 Blank. It re-appears in 2 days.
 2.  **Quality > Quantity — Hard Comfort Bar**: Aim for 3–4 deeply understood problems per week. A problem is 🟢 Clean only when you can write the complete solution on a blank page with no hints and state the correct time/space complexity unprompted. "Mostly remembered it" = 🟡 Shaky. Every non-Clean result gets logged in `stuck_log.md`: 🔴 Blank gets a full entry naming the conceptual gap; 🟡 Shaky gets a one-liner naming the specific friction point.
-3.  **Coding Required for Clean**: 🟢 Clean is earned only by **coding** the solution from a blank page. A no-code blueprint caps at 🟡 Shaky and cannot advance the streak toward retirement; the sole carve-out is a flawless spot check *confirming* an already-🏆 Retired problem.
+3.  **Coding Required for Clean**: 🟢 Clean is earned only by **coding** the solution from a blank page. A no-code blueprint caps at 🟡 Shaky and cannot advance the streak toward graduation; the sole carve-out is a flawless spot check *confirming* an already-🎓 Graduated problem.
 4.  **Whiteboard Fidelity**: Write the *full* solution from scratch every time — including any `ListNode` / `TreeNode` / `TrieNode` definitions. No shared boilerplate/data-model module to import; re-deriving the scaffolding is part of the rep, exactly as on an interview whiteboard.
 5.  **5-Problem Daily Cap**: Never exceed 5 problems in a day. Active block is always protected — trim warmup slots first. When a problem is bumped, assign it a specific future slot in the same edit.

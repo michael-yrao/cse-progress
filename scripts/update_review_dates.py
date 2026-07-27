@@ -17,10 +17,10 @@ DEFAULT_CONFIG = {
     "clean_provisional": 10,  # first Clean right after a Blank (streak 0) — lock-down check
     "clean_streak1": 30,
     "clean_streak2": 60,
-    "retired": 180,
+    "graduated": 180,  # 🎓 streak-3 tier: recurring spot check
     "shaky": 10,
     "blank": 2,
-    "retire_at_streak": 3,
+    "graduate_at_streak": 3,
     "discovery_skip": [],  # problem numbers whose source files should NOT be auto-added
 }
 
@@ -46,10 +46,13 @@ def load_config(path: Path = Path("cse.config.yml")) -> dict:
     _int(r"provisional:\s*(\d+)", "clean_provisional")
     _int(r"streak1:\s*(\d+)", "clean_streak1")
     _int(r"streak2:\s*(\d+)", "clean_streak2")
-    _int(r"retired:\s*(\d+)", "retired")
+    # Accept the pre-Jul-26-2026 key names too, so an older cse.config.yml keeps working.
+    _int(r"retired:\s*(\d+)", "graduated")
+    _int(r"graduated:\s*(\d+)", "graduated")
     _int(r"\bshaky:\s*(\d+)", "shaky")
     _int(r"\bblank:\s*(\d+)", "blank")
-    _int(r"retire_at_streak:\s*(\d+)", "retire_at_streak")
+    _int(r"retire_at_streak:\s*(\d+)", "graduate_at_streak")
+    _int(r"graduate_at_streak:\s*(\d+)", "graduate_at_streak")
 
     globs = _list(r"globs:\s*\[([^\]]*)\]")
     if globs:
@@ -75,8 +78,14 @@ ROW_SEPARATOR_LEGACY = "|---|---|---|---|---|---|"
 COMFORT_CLEAN = "🟢"
 COMFORT_SHAKY = "🟡"
 COMFORT_BLANK = "🔴"
+# 🎓 Graduated = streak-3 tier, recurring +180 spot checks. Still IN this table.
+COMFORT_GRADUATED = "🎓"
+# 🏆 Retired = TERMINAL. Earned by two clean spot checks at 🎓; leaves the review table
+# entirely for the plain-list "## 🏆 Retired" section, so it normally has no rows here.
+# Kept parseable so a legacy 🏆 row (pre-Jul 26 2026 naming, when 🏆 meant the streak-3
+# tier) still parses and is treated as 🎓 rather than being silently dropped.
 COMFORT_RETIRED = "🏆"
-COMFORT_VALUES = f"{COMFORT_CLEAN}|{COMFORT_SHAKY}|{COMFORT_BLANK}|{COMFORT_RETIRED}"
+COMFORT_VALUES = f"{COMFORT_CLEAN}|{COMFORT_SHAKY}|{COMFORT_BLANK}|{COMFORT_GRADUATED}|{COMFORT_RETIRED}"
 
 ROW_RE = re.compile(
     r"^\| (?P<difficulty>[^|]+) \| \[(?P<problem>[^\]]+)\]\((?P<url>[^)]+)\) \| (?P<comfort>" + COMFORT_VALUES + r") \| (?P<streak>\d+) \| (?P<next>[^|]*) \| (?P<latest>[^|]*) \| (?P<attempts>.*) \|$"
@@ -146,15 +155,15 @@ def extract_problem_number(problem_title: str) -> int | None:
 def compute_next_review_date(comfort: str, latest_attempt_date: datetime | None, streak: int = 1) -> datetime | None:
     if not latest_attempt_date:
         return None
-    if comfort in (COMFORT_CLEAN, COMFORT_RETIRED):
+    if comfort in (COMFORT_CLEAN, COMFORT_GRADUATED, COMFORT_RETIRED):
         if comfort == COMFORT_CLEAN and streak == 0:
             # Provisional Clean: a 🟢 logged with streak 0 is the FIRST Clean directly
             # following a 🔴 Blank. One Clean right after a Blank may be recall of fresh
             # teaching, not durable retention, so it gets a short lock-down (+10) to verify
             # before earning the normal +30. Survives (Clean again) → log streak 1 → +30.
             days = CONFIG["clean_provisional"]
-        elif streak >= CONFIG["retire_at_streak"]:
-            days = CONFIG["retired"]  # spot check for retired problems
+        elif streak >= CONFIG["graduate_at_streak"]:
+            days = CONFIG["graduated"]  # 🎓 recurring spot check
         elif streak == 2:
             days = CONFIG["clean_streak2"]
         else:
@@ -170,7 +179,26 @@ def count_attempt_dates(attempts: str) -> int:
     return len([part for part in attempts.split(",") if part.strip()])
 
 
-def build_summary_lines(table_rows: list[dict]) -> list[str]:
+def count_retired_entries(lines: list[str]) -> int:
+    """Count entries in the terminal '## 🏆 Retired' section.
+
+    Retired problems have LEFT the review table (that is what retiring means), so they
+    cannot be counted from table_rows. The section is a plain bullet list precisely so
+    this parser never mistakes it for table rows — see the tracker's header notes.
+    """
+    count = 0
+    in_section = False
+    for line in lines:
+        stripped = line.strip()
+        if stripped.startswith("## "):
+            in_section = stripped.startswith(f"## {COMFORT_RETIRED}")
+            continue
+        if in_section and re.match(r"^- \d+\.", stripped):
+            count += 1
+    return count
+
+
+def build_summary_lines(table_rows: list[dict], retired: int = 0) -> list[str]:
     attempted_rows = [row for row in table_rows if row["latest"] is not None]
     unique_problems = len({
         extract_problem_number(row["problem"])
@@ -182,14 +210,18 @@ def build_summary_lines(table_rows: list[dict]) -> list[str]:
     clean = sum(1 for row in table_rows if row["comfort"] == COMFORT_CLEAN)
     shaky = sum(1 for row in table_rows if row["comfort"] == COMFORT_SHAKY)
     blank = sum(1 for row in table_rows if row["comfort"] == COMFORT_BLANK and row["latest"] is not None)
-    retired = sum(1 for row in table_rows if row["comfort"] == COMFORT_RETIRED)
+    # A legacy 🏆 row (pre-Jul-26-2026, when 🏆 meant the streak-3 tier) counts as 🎓.
+    graduated = sum(
+        1 for row in table_rows
+        if row["comfort"] in (COMFORT_GRADUATED, COMFORT_RETIRED)
+    )
     return [
         "",
         f"> **{unique_problems}** problems &nbsp;·&nbsp; **{solutions_done}** solutions &nbsp;·&nbsp; **{total_attempts}** attempts",
         "",
-        f"| | {COMFORT_RETIRED} Retired | {COMFORT_CLEAN} Clean | {COMFORT_SHAKY} Shaky | {COMFORT_BLANK} Blank |",
-        "|:---|:---:|:---:|:---:|:---:|",
-        f"| **Solutions** | {retired} | {clean} | {shaky} | {blank} |",
+        f"| | {COMFORT_RETIRED} Retired | {COMFORT_GRADUATED} Graduated | {COMFORT_CLEAN} Clean | {COMFORT_SHAKY} Shaky | {COMFORT_BLANK} Blank |",
+        "|:---|:---:|:---:|:---:|:---:|:---:|",
+        f"| **Solutions** | {retired} | {graduated} | {clean} | {shaky} | {blank} |",
         "",
     ]
 
@@ -675,7 +707,12 @@ def main() -> None:
         if any(s.startswith(p) for p in (
             "**Problems Done:**", "**Total Successful Attempts:**", "**Mastered",
             "| Problems Done |", "| Unique Problems |", "| Solutions |",
-            f"| | {COMFORT_RETIRED} Retired |", f"| {COMFORT_RETIRED} Retired |", "|:---|", "|:---:|",
+            # Both the current header and the pre-Jul-26-2026 one. If an old header stops
+            # being matched here, the previous summary block is never stripped and a new
+            # one is appended — stacking a duplicate table on every run.
+            f"| | {COMFORT_RETIRED} Retired |", f"| {COMFORT_RETIRED} Retired |",
+            f"| | {COMFORT_GRADUATED} Graduated |", f"| {COMFORT_GRADUATED} Graduated |",
+            "|:---|", "|:---:|",
         )):
             return True
         if re.match(r"^\*\*\d+ problems done\*\*$", s):
@@ -699,7 +736,7 @@ def main() -> None:
     while filtered_prefix and filtered_prefix[-1].strip() == "":
         filtered_prefix.pop()
 
-    summary_lines = build_summary_lines(sorted_rows)
+    summary_lines = build_summary_lines(sorted_rows, retired=count_retired_entries(lines))
 
     # Replace legacy header/separator with new format
     header_and_after = []
