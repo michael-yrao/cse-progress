@@ -28,13 +28,21 @@ population matures to +60/+180, demand falls to ~7/wk by late 2027 — **75% idl
 
 1. **At every weekly schedule build, compute the surplus before slotting anything**: sum `1/interval`
    across the tracker, ×7, subtract from 28.
-2. **Gate pulls and extra intake on that number, never on a date.** This supersedes *"no application
+2. **Then write the per-day row — the surplus measures the WEEK, not the DAY.** A negative weekly
+   surplus does *not* mean every day is full; SD lanes and doubled warmups land unevenly, so a −7 week
+   routinely holds days at 1–2 problems against a cap of 5. **Slipping reviews off a week that still
+   has slack days is a false shortage and costs real reps.** Any under-cap day absorbs items back off
+   the slip list, preferring ones **already due that day** (those aren't pulled forward at all — they
+   just stop slipping). Only then is the slip list final. *Found Jul 27, 2026: a −7.3 build slipped
+   12 🟢 while Wed carried 1 problem and Sun carried 2; four came straight back. The arithmetic was
+   right and the conclusion drawn from it was wrong — **an aggregate is not a schedule.***
+3. **Gate pulls and extra intake on that number, never on a date.** This supersedes *"no application
    pulls during the NC150 milestone"* — correct only while over-subscribed, and silently wrong once
    demand crosses below capacity (projected Oct–Dec 2026, with two phases still open).
-3. **Fill order:** ≤0 → reviews only · 1–5 → [[feedback_consolidation_reps]] · 6–12 → + application
+4. **Fill order:** ≤0 → reviews only · 1–5 → [[feedback_consolidation_reps]] · 6–12 → + application
    pulls · 13+ → + open Tier 1 advanced early.
-4. **Consolidation reps fill first** — NC150 supplies 1–2 problems per technique where 3–4 are needed,
+5. **Consolidation reps fill first** — NC150 supplies 1–2 problems per technique where 3–4 are needed,
    so that queue is large, aimed at [[feedback_phase_exit_per_algorithm]], and higher-ROI than reaching
    for Tier 2 material early.
-5. **Don't read a shrinking review list as being ahead.** It's the intervals doing their job, and it
+6. **Don't read a shrinking review list as being ahead.** It's the intervals doing their job, and it
    means capacity needs redirecting, not banking.
