@@ -19,6 +19,79 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🔴 269. Alien Dictionary — 2026-07-27
+**Topic**: Topological Sort (Kahn's) / graph *modeling*
+
+### Where did I get stuck?
+**Not the algorithm — the modeling.** Kahn's itself was recalled unprompted ("increment the
+dependencies like course schedule"), and the recognition call (graph + produce an ordering → topo
+sort) was cold and correct. Every single failure was in the four steps *before* the graph exists:
+
+1. **The edge-extraction rule.** Opening plan was "from each letter of each word, build an adjacency
+   map to the next word" — i.e. an edge at *every* differing position. Correctly said `["wrt","wrf"]`
+   yields only `t→f` when asked, but attributed it to *"t and f are at the end, so the loop naturally
+   stops"* — a coincidence of that example, not the rule. Needed the `apple`/`banana` derivation
+   (does it tell you anything about `p` vs `a`?) and then the statement's own words (*"at the **first
+   position** where they differ"*) before it landed.
+2. **Where the letter set comes from.** Seeded `rankMap` from `adjMap` three separate times — first
+   before `adjMap` was populated (`{}`), then after it (wiping the counts), then still keyed on
+   `adjMap` (which only holds edge *sources*). `["az","bz"]` silently dropped `z`. Had to be told
+   outright: **the letters come from `words`, not from the graph.**
+3. **`break` on the first *difference*, not the first *new edge*.** Break was nested inside the
+   dedupe guard, so a duplicate edge fell through and kept scanning meaningless later positions —
+   fabricating constraints. `["axp","ayq","bxp","byq"]` invented `p→q`.
+4. **Cycle detection.** Asked twice, unanswered until the third prompt; the plan was to *"build the
+   rest in order of rank where rank > 0"* rather than recognizing leftover indegree as "no valid
+   order exists." `["a","b","ca","cb","b"]` returned `'a'` instead of `''`.
+
+Zero bugs self-caught. Also proposed the DFS lane first, then switched to BFS mid-plan — both were
+half-specified at the moment of the switch.
+
+### Core Realization
+**269 is a modeling problem wearing a topo-sort costume.** The graph is the easy half; the hard half
+is that *nothing in the input is a node or an edge yet*. Three separate derivations have to happen
+before Kahn's can start:
+
+- **Nodes** = every distinct char across all of `words` — **not** the keys of the adjacency map.
+  Letters with no ordering constraint still belong in the output.
+- **Edges** = **exactly one per adjacent word pair**, at the first differing position, then stop.
+  Lexicographic comparison short-circuits at the first difference, so every later position is
+  *unconstrained*, not equal. Proof: `azzz` < `baaa` despite `z` "after" `a` at position 1.
+- **Invalid input has two shapes** — the prefix violation (`["abc","ab"]`, caught pre-graph) and the
+  cycle (caught post-BFS by `len(result) != len(rankMap)`). Missing either returns a plausible
+  wrong answer rather than crashing.
+
+The partial-order point also had to be surfaced: disconnected letters have *no* provable relative
+order, which is why the problem says "return any of them."
+
+### Code Snippet
+```python
+# Nodes come from `words`, NOT from adjMap — letters with no edges still ship.
+adjMap  = {char: set() for word in words for char in word}
+rankMap = {char: 0     for char in adjMap}
+
+def buildAdjMap(firstWord, secondWord):
+    if len(firstWord) > len(secondWord) and firstWord[:len(secondWord)] == secondWord:
+        return ""                                  # prefix violation — invalid #1
+    for i in range(min(len(firstWord), len(secondWord))):
+        if firstWord[i] != secondWord[i]:
+            if secondWord[i] not in adjMap[firstWord[i]]:   # dedupe the EDGE...
+                adjMap[firstWord[i]].add(secondWord[i])
+                rankMap[secondWord[i]] += 1
+            break            # ...but break on the DIFFERENCE, outside the guard
+
+# ... Kahn's ...
+if len(rankMap) != len(result):
+    return ""                                      # cycle — invalid #2
+```
+
+**Next rep — the four checkpoints, in order:** (1) nodes from `words`; (2) one edge per pair, break
+on the difference; (3) prefix check before the loop; (4) length check after the loop. If the graph
+is built right, Kahn's is muscle memory from 207/210.
+
+## 🟡 540. Single Element in a Sorted Array — 2026-07-27
+**Sticking point**: had the parity crux in the code already (`m % 2 == 0` → single is right of `m`), but stalled on turning it into a *safe* discard. Two bugs needed flagging: (1) `l = m` on the even branch never advances → infinite loop (correct jump is `m + 2`, since `m` is a pair *start* so `nums[m]`/`nums[m+1]` are both spoken for); first instinct on the fix was `m - 2`, direction flipped. (2) `return l` returned the index, not the value — caught on `[3,3,7,7,10,11,11]` → 4 instead of 10 (Example 1 hides it: the answer's index and value are both 2). Complexity clean both ways, freebie unspent. **Watch:** 5th attempt, still 🟡 — the pair-start-parity invariant (*even before the single, odd after*) has never once come back cold. If the next rep needs it supplied again, that's never-encoded, not decaying, and it wants a teaching pass rather than another +10.
+
 ## 🟡 787. Cheapest Flights Within K Stops (Bellman-Ford) — 2026-07-26
 **Sticking point**: recognition was fully cold and correct — including the snapshot (global/local copy), which *is* the algorithm. The cost was a **vestigial queue**: the plan carried a BFS queue whose layering job the snapshot already did, so most of the session went to maintaining it (infinite loop from unconditional `append`, level-size capture, counter placement). Two real bugs needed flagging: (1) `if iteration == k: break` fired *before* the round's work, so `k=1` ran zero rounds; (2) relaxation compared against `distance[destination]` (the stale snapshot) instead of `workingDistance[destination]`, so a worse edge later in the same round overwrote a better value already written — caught via `[[0,1,10],[0,2,20],[1,3,5],[2,3,100]]`, k=1 → 120 instead of 15. Derived `k+1` and the working-copy fix himself once pointed at a failing case. Complexity clean both ways (freebie unspent). **Lesson for the next rep: the snapshot alone gives you the layering — no queue.**
 

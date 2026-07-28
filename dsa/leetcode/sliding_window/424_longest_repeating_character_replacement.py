@@ -31,6 +31,33 @@ import collections
 
 class Solution:
 
+    # ── Attempt · 2026-07-27 ──────────────
+    def characterReplacement_20260727(self, s: str, k: int) -> int:
+        # looking for longest substring, so sliding window
+        # the longest sliding window here is reliant on highest freq char in the current window
+        # biggest window size can be is maxFreq + k
+        # main blocker here is the maxFreq element and how to do that efficiently
+        # let's work on a frame first and then we can iron out the maxFreq detail
+
+        maxLength = 0
+
+        freqMap = collections.defaultdict(int)
+
+        maxFreq = 0
+
+        l = r = 0
+
+        while r < len(s):
+            freqMap[s[r]]+=1
+            maxFreq = max(maxFreq,freqMap[s[r]])
+            while r - l + 1 > maxFreq + k:
+                freqMap[s[l]]-=1
+                l+=1
+            maxLength = max(maxLength, r - l + 1)
+            r+=1
+        
+        return maxLength
+
     # ── Attempt · 2026-07-17 ──────────────
     def characterReplacement_20260717(self, s: str, k: int) -> int:
         # this is a sliding window problem

@@ -24,6 +24,27 @@ from typing import List
 
 class Solution:
 
+    # ── Attempt · 2026-07-27 ──────────────
+    def singleNonDuplicate_20260727(self, nums: List[int]) -> int:
+        # min boundary binary search
+        # we can only consider ourselves at a number if we are at the first occurence of it
+        # we can also note that if mid % 2 == 0, then the number is not in the first half
+        # so we will use that as our crux to move
+        
+        l, r = 0, len(nums) - 1
+
+        while l < r:
+            m = (l + r) // 2
+            if m - 1 >= 0 and nums[m] == nums[m-1]:
+                m-=1
+            # not in left side
+            if m%2==0 and nums[m] == nums[m+1]:
+                l = m + 2
+            else:
+                r = m
+        
+        return nums[l]
+
     # ── Attempt · 2026-07-17 ──────────────
     def singleNonDuplicate_20260717(self, nums: List[int]) -> int:
         # so the annoying thing here is the duplication
