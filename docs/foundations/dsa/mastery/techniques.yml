@@ -1,0 +1,417 @@
+# Canonical DSA technique vocabulary.
+#
+# The tracker (dsa_progress.md) is keyed by PROBLEM. This file is keyed by TECHNIQUE,
+# and `scripts/technique_coverage.py` joins the two to produce technique_coverage.md.
+#
+# Schema
+# ------
+#   name          canonical technique name. This is the vocabulary — keep it stable;
+#                 everything downstream keys off it.
+#   family        grouping for the report, roughly the dsa/leetcode/<folder> pattern.
+#   min_problems  coverage bar. Defaults to 3 (a technique needs 3-4 surface forms before
+#                 it is a skill rather than recall of one problem). Drop to 1-2 for
+#                 patterns that are genuinely problem-specific — Dutch National Flag has
+#                 exactly one canonical problem and flagging it "thin" forever is noise.
+#   variants      alternative METHODS for the same technique, when exercising both is
+#                 worth an interview rep. A variant with zero problems is a gap.
+#                 `queued: <trigger>` marks one already sitting in the Waiting Room or
+#                 Expansion Queue, so a known gap is not re-reported as a new finding.
+#                 Trigger vocabulary matches dsa_progress.md: graduates:<n>, rated:<n>,
+#                 surplus>=<n>, phase:<Name>, combined with +.
+#   problems      list of {number, method?, variant?, review?}
+#                   number   LeetCode number — the join key, same as the tracker
+#                   method   match ONLY the tracker row whose title parenthetical equals
+#                            this. Required for problems carrying several rows (200 has
+#                            DFS + BFS, 323 has DFS + BFS + Union-Find). Omit to match
+#                            every row for that number.
+#                   variant  which declared variant this row credits. Defaults to
+#                            `method` — set it explicitly when the row has no
+#                            parenthetical but the method is known (269 is Kahn's).
+#                   review   true = the method here is an ASSUMPTION, because the tracker
+#                            row carries no parenthetical. Confirm, add the parenthetical
+#                            to the tracker, then drop this flag.
+#
+# Adding a solved problem here is not optional bookkeeping: the report lists every
+# unmapped tracker row, so anything left out shows up as a gap in the vocabulary itself.
+
+version: 1
+
+defaults:
+  min_problems: 3
+
+techniques:
+  # ── Arrays & hashing ────────────────────────────────────────────────────────
+  - name: Hash Map Lookup
+    family: arrays_and_hash
+    min_problems: 2
+    problems:
+      - {number: 1}
+      - {number: 219}
+
+  - name: Hash Set Membership
+    family: arrays_and_hash
+    problems:
+      - {number: 217}
+      - {number: 36}
+      - {number: 128}
+
+  - name: Frequency Counting
+    family: arrays_and_hash
+    min_problems: 2
+    problems:
+      - {number: 242}
+      - {number: 49}
+
+  - name: Prefix/Suffix Products
+    family: arrays_and_hash
+    min_problems: 1
+    problems:
+      - {number: 238}
+
+  - name: Boyer-Moore Voting
+    family: arrays_and_hash
+    min_problems: 2
+    problems:
+      - {number: 169}
+      - {number: 229}
+
+  - name: Length-Prefix Encoding
+    family: arrays_and_hash
+    min_problems: 1
+    problems:
+      - {number: 271}
+
+  - name: In-Place Array Rotation
+    family: arrays_and_hash
+    min_problems: 1
+    problems:
+      - {number: 189}
+
+  - name: Array/String Fundamentals
+    family: arrays_and_hash
+    min_problems: 1
+    problems:
+      - {number: 1929}
+      - {number: 66}
+      - {number: 14}
+
+  # ── Two pointers ────────────────────────────────────────────────────────────
+  - name: Two Pointers (converging)
+    family: two_pointers
+    problems:
+      - {number: 125}
+      - {number: 344}
+      - {number: 680}
+      - {number: 167}
+      - {number: 15}
+      - {number: 18}
+      - {number: 11}
+      - {number: 88}
+      - {number: 1768}
+
+  - name: Fast/Slow In-Place Write
+    family: two_pointers
+    problems:
+      - {number: 26}
+      - {number: 80}
+      - {number: 27}
+      - {number: 283}
+
+  - name: Dutch National Flag
+    family: two_pointers
+    min_problems: 1
+    problems:
+      - {number: 75, method: Dutch Flag}
+
+  - name: Prefix/Suffix Max
+    family: two_pointers
+    min_problems: 1
+    variants:
+      - {name: Array}
+      - {name: Two Pointer, queued: "graduates:42"}
+    problems:
+      - {number: 42, method: Array}
+
+  # ── Sliding window ──────────────────────────────────────────────────────────
+  - name: Sliding Window
+    family: sliding_window
+    problems:
+      - {number: 3}
+      - {number: 424}
+      - {number: 567}
+      - {number: 121}
+
+  - name: Greedy (single pass)
+    family: sliding_window
+    min_problems: 1
+    problems:
+      - {number: 122}
+
+  # ── Prefix sum ──────────────────────────────────────────────────────────────
+  - name: Prefix Sum
+    family: prefix_sum
+    min_problems: 2
+    problems:
+      - {number: 560}
+      - {number: 53, method: Prefix Sum}
+
+  - name: Kadane
+    family: prefix_sum
+    min_problems: 1
+    problems:
+      - {number: 53, method: Kadane}
+
+  # ── Binary search ───────────────────────────────────────────────────────────
+  - name: Binary Search
+    family: binary_search
+    problems:
+      - {number: 704}
+      - {number: 74}
+      - {number: 33}
+      - {number: 153}
+      - {number: 162}
+      - {number: 540}
+      - {number: 2300}
+
+  - name: Binary Search on Answer
+    family: binary_search
+    min_problems: 2
+    problems:
+      - {number: 875}
+      - {number: 1011}
+
+  # ── Stack ───────────────────────────────────────────────────────────────────
+  - name: Stack (matching)
+    family: stack
+    min_problems: 1
+    problems:
+      - {number: 20}
+
+  - name: Monotonic Stack
+    family: stack
+    problems:
+      - {number: 496}
+      - {number: 503}
+      - {number: 901}
+
+  # ── Linked list ─────────────────────────────────────────────────────────────
+  - name: Linked List Reversal
+    family: linked_list
+    min_problems: 1
+    variants:
+      - {name: Iterative}
+      - {name: Recursion}
+    problems:
+      - {number: 206, method: Iterative}
+      - {number: 206, method: Recursion}
+
+  - name: Linked List Merge
+    family: linked_list
+    min_problems: 1
+    variants:
+      - {name: Iterative}
+      - {name: Recursion}
+    problems:
+      - {number: 21, method: Iterative}
+      - {number: 21, method: Recursion}
+
+  - name: Remove Nth From End
+    family: linked_list
+    min_problems: 1
+    variants:
+      - {name: Iterative}
+      - {name: Postorder Recursion}
+      - {name: Preorder Recursion, queued: "expansion — parked Jul 9"}
+    problems:
+      - {number: 19, method: Iterative}
+      - {number: 19, method: Postorder Recursion}
+
+  - name: Floyd's Cycle / Midpoint
+    family: linked_list
+    min_problems: 2
+    problems:
+      - {number: 141}
+      - {number: 143}
+
+  - name: Linked List Arithmetic
+    family: linked_list
+    min_problems: 1
+    problems:
+      - {number: 2}
+
+  - name: Deep Copy via Hash Map
+    family: linked_list
+    min_problems: 1
+    problems:
+      - {number: 138}
+
+  - name: HashMap + Doubly Linked List (LRU)
+    family: linked_list
+    min_problems: 1
+    problems:
+      - {number: 146}
+
+  # ── Trees ───────────────────────────────────────────────────────────────────
+  - name: Tree DFS (recursive)
+    family: trees
+    problems:
+      - {number: 226}
+      - {number: 104}
+      - {number: 110}
+      - {number: 100}
+      - {number: 572}
+      - {number: 1448}
+
+  - name: Tree DFS with Postorder Return
+    family: trees
+    min_problems: 2
+    problems:
+      - {number: 543}
+      - {number: 124}
+
+  - name: Tree BFS (level order)
+    family: trees
+    min_problems: 2
+    problems:
+      - {number: 102}
+      - {number: 199}
+
+  - name: BST Descent
+    family: trees
+    min_problems: 2
+    problems:
+      - {number: 235}
+      - {number: 98}
+
+  - name: Tree Construction (Divide & Conquer)
+    family: trees
+    min_problems: 1
+    problems:
+      - {number: 105}
+
+  # ── Tries ───────────────────────────────────────────────────────────────────
+  - name: Trie
+    family: tries
+    min_problems: 2
+    problems:
+      - {number: 208, method: Prefix Tree}
+      - {number: 211}
+
+  # ── Heap ────────────────────────────────────────────────────────────────────
+  - name: Heap / Priority Queue
+    family: heap
+    problems:
+      - {number: 703}
+      - {number: 1046}
+      - {number: 973}
+      - {number: 621}
+      - {number: 355}
+      - {number: 347}
+
+  # ── Graphs ──────────────────────────────────────────────────────────────────
+  - name: Grid DFS
+    family: graphs
+    problems:
+      - {number: 200, method: DFS}
+      - {number: 695, method: DFS}
+      - {number: 417, review: true}
+
+  - name: Grid BFS
+    family: graphs
+    problems:
+      - {number: 200, method: BFS}
+      - {number: 130, method: BFS}
+      - {number: 733, review: true}
+
+  - name: Multi-source BFS
+    family: graphs
+    min_problems: 1
+    problems:
+      - {number: 994}
+
+  - name: Graph Clone (DFS + Hash Map)
+    family: graphs
+    min_problems: 1
+    problems:
+      - {number: 133}
+
+  - name: Graph Cycle Detection (DFS)
+    family: graphs
+    min_problems: 1
+    problems:
+      - {number: 261, method: DFS}
+
+  - name: Connected Components
+    family: graphs
+    variants:
+      - {name: DFS}
+      - {name: BFS}
+      - {name: Union-Find}
+    problems:
+      - {number: 323, method: DFS}
+      - {number: 323, method: BFS}
+      - {number: 323, method: Union-Find}
+
+  - name: Union-Find
+    family: graphs
+    problems:
+      - {number: 130, method: Union-Find}
+      - {number: 261, method: Union-Find}
+      - {number: 684, method: Union-Find}
+
+  - name: Topological Sort
+    family: graphs
+    variants:
+      - {name: Kahn's (BFS)}
+      - {name: DFS postorder}
+    problems:
+      - {number: 207, variant: Kahn's (BFS)}
+      - {number: 210, variant: Kahn's (BFS)}
+      - {number: 269, variant: Kahn's (BFS)}
+
+  - name: BFS on Implicit Graph
+    family: graphs
+    min_problems: 1
+    problems:
+      - {number: 127, method: BFS}
+
+  # ── Advanced graphs ─────────────────────────────────────────────────────────
+  - name: Dijkstra
+    family: advanced_graphs
+    problems:
+      - {number: 743, method: Dijkstra}
+      - {number: 778, method: Dijkstra / Min-Heap}
+
+  - name: Bellman-Ford
+    family: advanced_graphs
+    variants:
+      - {name: Standard}
+      - {name: Contrast rep on 743, queued: "graduates:743"}
+    problems:
+      - {number: 787, method: Bellman-Ford, variant: Standard}
+
+  - name: Hierholzer (Eulerian path)
+    family: advanced_graphs
+    min_problems: 1
+    problems:
+      - {number: 332, method: Hierholzer}
+
+  - name: Prim's MST
+    family: advanced_graphs
+    min_problems: 1
+    problems:
+      - {number: 1584, method: Prim's MST}
+
+  # ── Sorting & divide and conquer ────────────────────────────────────────────
+  - name: Divide & Conquer / Sorting
+    family: sorting
+    min_problems: 2
+    variants:
+      - {name: Merge Sort}
+      - {name: Quick Sort, queued: "expansion — sorting deep-dive"}
+      - {name: Radix Sort, queued: "expansion — sorting deep-dive"}
+      - {name: Counting Sort, queued: "expansion — sorting deep-dive"}
+      - {name: Timsort, queued: "expansion — sorting deep-dive"}
+      - {name: D&C on 53, queued: "rated:912 + surplus>=1"}
+    problems:
+      - {number: 912, method: Merge Sort}
