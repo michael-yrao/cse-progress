@@ -31,6 +31,35 @@ from typing import List
 
 class Solution:
 
+    # ── Attempt · 2026-07-27 ──────────────
+    def fourSum_20260727(self, nums: List[int], target: int) -> List[List[int]]:
+        # treat like 3sum
+        # sort and then use set to prevent duplicates
+
+        nums.sort()
+        lenNums = len(nums)
+        resultSet = set()
+        for i in range(lenNums-3):
+            for j in range(i+1, lenNums-2):
+                k, l = j+1, len(nums) - 1
+                runningTarget = target - nums[i] - nums[j]
+                while k < l:
+                    if nums[k] + nums[l] == runningTarget:
+                        resultSet.add((nums[i], nums[j], nums[k], nums[l]))
+                        k+=1
+                        l-=1
+                    elif nums[k] + nums[l] > runningTarget:
+                        l-=1
+                    else:
+                        k+=1
+        
+        result = []
+
+        for a,b,c,d in resultSet:
+            result.append([a,b,c,d])
+        
+        return result
+
     # ── Attempt · 2026-07-17 ──────────────
     def fourSum_20260717(self, nums: List[int], target: int) -> List[List[int]]:
         nums.sort()

@@ -29,6 +29,16 @@ class TreeNode:
         self.left = left
         self.right = right
 class Solution:
+
+    # ── Attempt · 2026-07-27 ──────────────
+    def maxDepth_20260727(self, root: Optional[TreeNode]) -> int:
+        if not root:
+            return 0
+        
+        leftDepth = self.maxDepth_20260727(root.left)
+        rightDepth = self.maxDepth_20260727(root.right)
+        return 1 + max(leftDepth, rightDepth)
+
     def maxDepth(self, root: Optional[TreeNode]) -> int:
         # max depth = dfs
         # how do we think about this? is this postorder/preorder/inorder
