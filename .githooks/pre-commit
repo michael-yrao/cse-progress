@@ -32,4 +32,24 @@ if echo "$STAGED" | grep -qE "(dsa_progress|design_progress|ai_progress)\.md$|^d
     [ -f "$tracker" ] && git add "$tracker"
   done
 fi
+
+# Technique coverage. Keyed by TECHNIQUE rather than by problem, so it answers "is
+# Dijkstra actually learned" — a question the per-problem tracker structurally cannot.
+# Must run AFTER the block above, which rewrites dsa_progress.md; this reads it.
+COVERAGE_TRIGGER=$(echo "$STAGED" | grep -E "dsa_progress\.md$|techniques\.yml$|^dsa/leetcode/.*\.(py|java|ts|js|cpp)$")
+if [ -n "$COVERAGE_TRIGGER" ]; then
+  echo "Regenerating technique coverage..."
+  COVERAGE="docs/foundations/dsa/mastery/technique_coverage.md"
+  if command -v py >/dev/null 2>&1; then
+    py scripts/technique_coverage.py
+  elif command -v python >/dev/null 2>&1; then
+    python scripts/technique_coverage.py
+  elif command -v python3 >/dev/null 2>&1; then
+    python3 scripts/technique_coverage.py
+  fi
+  # Non-fatal by design: a missing PyYAML or a hand-edit mid-refactor of techniques.yml
+  # must not block committing the day's actual work. The report simply goes stale, and
+  # `technique_coverage.py --check` reports that.
+  [ -f "$COVERAGE" ] && git add "$COVERAGE"
+fi
 exit 0
