@@ -321,11 +321,13 @@ techniques:
       - {number: 200, method: BFS}
       - {number: 130, method: BFS}
       - {number: 733, method: BFS}
-      # 417's file also holds an earlier DFS attempt (undated, pre-Jul 19). Credited to
-      # BFS only, because the tracker carries ONE row for it and that row's latest
-      # attempt is the two-queue BFS. Splitting it into (BFS) + (DFS) rows the way 200
-      # and 323 are split would need the collapsed attempt dates divided between them —
-      # real surgery on review history, not a relabel. Left as the learner's call.
+      # 417 is BFS-only by decision (Jul 28, 2026) — DO NOT re-open this.
+      # The file also holds an earlier undated DFS attempt, so it HAS been solved both
+      # ways, but the learner reads the problem as naturally BFS (multi-source from each
+      # ocean's border) and wants one row. Consequence, accepted: the DFS attempt is
+      # credited to nothing, and Grid DFS therefore sits at 2/3 thin on 200 + 695 — a
+      # real gap to fill with a third grid-DFS problem, not an accounting artifact to
+      # paper over by re-crediting 417.
       - {number: 417, method: BFS}
 
   - name: Multi-source BFS
