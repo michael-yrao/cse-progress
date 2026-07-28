@@ -6,7 +6,7 @@
 
 > The tracker is keyed by **problem**; this is keyed by **technique**. Use it at the weekly build to decide what to pull, and at phase exit to check the per-algorithm bar (recognition + execution, ≥1 🟢 each).
 
-> **48** techniques &nbsp;·&nbsp; **7** with no 🟢 &nbsp;·&nbsp; **3** thin &nbsp;·&nbsp; **1** unqueued variant gaps
+> **48** techniques &nbsp;·&nbsp; **7** with no 🟢 &nbsp;·&nbsp; **4** thin &nbsp;·&nbsp; **0** unqueued variant gaps
 
 ## ⚠️ Action list
 
@@ -25,10 +25,7 @@
 - **Bellman-Ford** (advanced_graphs) — 1/3: 787
 - **Divide & Conquer / Sorting** (sorting) — 1/2: 912
 - **Dijkstra** (advanced_graphs) — 2/3: 743, 778
-
-**Unqueued variant gaps — a method never once exercised, and not in any queue.**
-
-- **Topological Sort** — missing **DFS postorder**. Exercised: Kahn's (BFS) ×3
+- **Grid DFS** (graphs) — 2/3: 200, 695
 
 ## Coverage
 
@@ -52,10 +49,10 @@
 | Connected Components | graphs | 3 (323, 323, 323) | 🟢 | ✅ | DFS ×1 · BFS ×1 · Union-Find ×1 | — |
 | Graph Clone (DFS + Hash Map) | graphs | 1 (133) | 🟢 | ✅ | — | — |
 | Graph Cycle Detection (DFS) | graphs | 1 (261) | 🟢 | ✅ | — | — |
-| Grid BFS | graphs | 3 (130, 200, 733) | 🟢 | ✅ | — | — |
-| Grid DFS | graphs | 3 (200, 417, 695) | 🟢 | ✅ | — | — |
+| Grid BFS | graphs | 4 (130, 200, 417, 733) | 🟢 | ✅ | — | — |
+| Grid DFS | graphs | 2 (200, 695) | 🟢 | ✅ | — | thin (2/3) |
 | Multi-source BFS | graphs | 1 (994) | 🟢 | ✅ | — | — |
-| Topological Sort | graphs | 3 (207, 210, 269) | 🟢 | ✅ | Kahn's (BFS) ×3 · **DFS postorder ×0** | variant: **DFS postorder** |
+| Topological Sort | graphs | 3 (207, 210, 269) | 🟢 | ✅ | Kahn's (BFS) ×3 · ~~DFS postorder~~ *(queued: `graduates:210`)* | — |
 | Union-Find | graphs | 3 (130, 261, 684) | 🟢 | ✅ | — | — |
 | Heap / Priority Queue | heap | 6 (347, 355, 621, 703, 973, 1046) | 🟢 | ✅ | — | — |
 | Deep Copy via Hash Map | linked_list | 1 (138) | 🟢 | ✅ | — | — |
@@ -82,11 +79,4 @@
 | Fast/Slow In-Place Write | two_pointers | 4 (26, 27, 80, 283) | 🟢 | ✅ | — | — |
 | Prefix/Suffix Max | two_pointers | 1 (42) | 🟢 | ✅ | Array ×1 · ~~Two Pointer~~ *(queued: `graduates:42`)* | — |
 | Two Pointers (converging) | two_pointers | 9 (11, 15, 18, 88, 125, 167, 344, 680, 1768) | 🟢 | ✅ | — | — |
-
-## Vocabulary maintenance
-
-**Method unconfirmed (2)** — mapped, but the tracker row carries no method parenthetical, so the variant credited here is an assumption. Confirm and drop the `review: true` flag.
-
-- 417 Pacific Atlantic Water Flow
-- 733 Flood Fill
 
