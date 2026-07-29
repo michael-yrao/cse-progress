@@ -19,6 +19,65 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🔴 332. Reconstruct Itinerary (Hierholzer) — 2026-07-28 *(2nd consecutive 🔴 → became a teaching session)*
+**Topic**: Eulerian path / Hierholzer's
+
+### Where did I get stuck?
+Three separate places, in order:
+
+1. **Recognition.** Called it "BFS with directed edges." Self-corrected to DFS on one push, but could
+   not name *Eulerian path* — and had never encoded the Eulerian-vs-Hamiltonian split. The
+   edges-not-nodes discriminator was stated correctly **in the pre-code comment**, so the concept was
+   there without the label.
+2. **The post-order append.** Appended each airport on *arrival*. Greedy-smallest-first then strands at
+   a dead end with tickets unused. Reached the "append on the way out, reverse at the end" idea through
+   a guided derivation — not cold.
+3. **Exhausting a node's edges — the actual never-encoded piece.** Even after the post-order fix, each
+   call popped **one** ticket and returned, so every airport used exactly one of its tickets. Needed a
+   `while` loop, and needed the append to move from `currentChild` to `node`. This was supplied outright.
+
+### Core Realization
+Two rules, and rule 2 does all the work:
+- while this airport still has an unused ticket → pop the smallest, fly it, finish that trip entirely;
+- when it has none left → **append the airport itself**, then back out.
+
+The first airport to run out is the last stop, so the list builds end-to-front → reverse.
+
+**Why exhausting is safe (the correctness spine):** every airport except start and end has as many
+tickets in as out, so the *only* place you can strand is the final airport. Therefore any tickets still
+left at a node when you come back up must form a **cycle returning to that node** — and a cycle splices
+in cleanly wherever its airport already appears. That is why greedy-smallest-first never needs
+backtracking: it can strand you, but it cannot make the remainder unfixable.
+
+### Code Snippet
+```python
+def dfs(node):
+    while adjMap[node]:                       # exhaust ALL tickets, not one
+        dfs(heapq.heappop(adjMap[node]))      # smallest first; heappop IS the consumption
+    result.append(node)                       # append SELF, after the loop — no guard, no return value
+
+dfs("JFK")
+result.reverse()
+```
+
+### Cross-problem pattern (flagged same day)
+Invented a propagated return value (`returnNode`) where the call's **own post-order position** was the
+real carrier of information — **twice in one session**, here and in 19 Remove Nth Node that morning. In
+both cases the return value was assigned, passed up, and never read. Watch for this shape: reaching for
+a value to hand upward when the answer is "do the work on the way back out, using this call's own
+variable."
+
+### Follow-up
++2 **overridden** → rated re-rep **Tue Aug 4** (7-day forgetting gap; a Thursday rep would measure
+recall of this conversation). If Aug 4 blanks again, stop re-repping and change format.
+
+---
+
+## 🟡 19. Remove Nth Node From End (Postorder Recursion) — 2026-07-28
+**Sticking point**: postorder counter counts **from the tail** (tail = 1), but was compared against `n - 1`, which is front-indexed — the predecessor of the nth-from-end node sits at `n + 1`. Structure, dummy, and increment placement were all correct; only the comparison value was wrong. *(Same variant was 🟡 Jul 18 on a different sticking point — the counting direction itself.)*
+
+---
+
 ## 🔴 269. Alien Dictionary — 2026-07-27
 **Topic**: Topological Sort (Kahn's) / graph *modeling*
 

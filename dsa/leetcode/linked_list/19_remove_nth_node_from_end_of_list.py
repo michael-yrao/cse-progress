@@ -35,6 +35,35 @@ class ListNode:
         self.next = next
 class Solution:
 
+    # ── Attempt · 2026-07-28 ──────────────
+    def removeNthFromEndRecursion_20260728(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
+        # We should do postorder DFS here because the problem statement says to remove nth from end
+        # if we did this the other way around, we need to find length of linked list
+        # then find len - nth to remove
+        # since we are removing nth node, we want (n - 1)th node to point to (n + 1)th node
+
+        currentCounter = 0
+
+        def dfs(node):
+            nonlocal currentCounter
+            if not node:
+                return node
+
+            returnNode = dfs(node.next)
+
+            currentCounter+=1
+
+            if currentCounter == n + 1:
+                if node.next:
+                    node.next = node.next.next
+        
+            return returnNode
+        
+        dummy = ListNode(-1)
+        dummy.next = head
+        dfs(dummy)
+        return dummy.next
+
     # ── Attempt · 2026-07-18 ──────────────
     def removeNthFromEndRecursion_20260718(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
         # we are repointing len - n - 1's node's next to len - n + 1

@@ -32,6 +32,13 @@ name) — the measured reps are new problems and cold cues with the label stripp
 | Sorted array | find element / boundary / min-max feasible value | **Binary search** | monotonic + sorted (or monotonic answer space) |
 | Array, contiguous run | longest/shortest/count subarray meeting a condition | **Sliding window** | contiguous + window monotonicity |
 | Array/string, pairs from ends | two values meeting a sum/area condition | **Two pointers** | sorted or convergent-from-ends |
+| Graph | use **every edge** exactly once | **Eulerian path → Hierholzer** | the thing consumed is an **edge**, not a node — visited-marking goes on edges |
+| Graph | visit **every node** exactly once | **Hamiltonian path** (NP-hard; expect backtracking) | the thing consumed is a **node** |
+
+> **The "exactly once" trigger** (added Jul 28, 2026 — carded from a 332 miss). A statement that says
+> *"use all the X exactly once"* is naming its own algorithm family, and **the only question that
+> matters is what X is.** Edges → Eulerian, and there's a linear-time algorithm. Nodes → Hamiltonian,
+> and there isn't. Same sentence shape, opposite tractability.
 
 ### Shortest path — the four-way split (added Jul 26, 2026)
 
@@ -63,4 +70,17 @@ the assumptions, not four loops.
 
 *(dated line per miss: problem · what they called · correct call · the picking feature they missed)*
 
-_None yet — started Jul 25, 2026._
+> ⚠️ **Reading note, Jul 28 → Aug 4.** The 332 entry below names the technique, and **332's rated
+> re-rep is Tue Aug 4**. Reading it before that rep spends the measurement. Skip this section until
+> Aug 4 if you want that rating to mean anything.
+
+- **2026-07-28 · 332 Reconstruct Itinerary** — called it *"BFS with directed edges."* Correct call:
+  **Eulerian path → Hierholzer's** (DFS-based). Two misses in one:
+  - **BFS vs DFS** — self-corrected on one push, by reading their own plan back (*pop the smallest
+    ticket and follow it, then follow that airport's smallest*) and noticing it commits down a single
+    path rather than expanding level by level. **Cue: "what does my own plan actually do — go deep, or
+    go wide?"** — the plan was already depth-first before the label was.
+  - **Eulerian vs Hamiltonian — never encoded.** Could not name the path class at all. Notably the
+    *discriminator* was already correct in the pre-code comment (*"we are marking edges as visited not
+    nodes"*), so this was a missing **label**, not a missing concept. Worth separating those two
+    failure kinds when rating: a missing name is cheap to fix, a missing discriminator is not.

@@ -21,6 +21,43 @@ from typing import List, Optional
 
 
 class Solution:
+
+    # ── Attempt · 2026-07-28 ──────────────
+    def findItinerary_20260728(self, tickets: List[List[str]]) -> List[str]:
+        # Eulerian Path = visit all edges once - Hierholzer's
+        # Hamiltonian Path = visit all nodes once
+        # we are marking edges as visited not nodes, so this is Eulerian
+        # We know the starting location of JFK
+        # for adjMap, do string -> minHeap to get smallest lexical ordering
+        # DFS since we don't want to push all neighbors of JFK (e.g. example 2)
+        # One very important detail to note is that what happens when there is nowhere to go
+        # Since we know we must form a valid itinerary, this node must be the end
+        # so we should append backwards on the DFS
+        # [["JFK","KUL"],["JFK","NRT"],["NRT","JFK"]]
+        result = []
+
+        adjMap = collections.defaultdict(list)
+
+        # construct the adjacency map
+        for source, destination in tickets:
+            heapq.heappush(adjMap[source], destination)
+        
+        def dfs(node):
+            # exhaust every ticket out of a node, then append the node itself
+            # first node to run out = last stop, so the list builds end-to-front
+            # on the way back up the stack, push leftover tickets into the result
+            while adjMap[node]:
+                currentChild = heapq.heappop(adjMap[node])
+                # go as deep as we can here
+                dfs(currentChild)
+            # now when we are back here, we are the last node of this DFS
+            # so we add ourselves to the result
+            result.append(node)
+
+        dfs("JFK")
+        result.reverse()
+        return result
+
     # ── Attempt 1 · 2026-07-22 ────────────────────────────────────────────
     def findItinerary(self, tickets: List[List[str]]) -> List[str]:
         # using only once means we should keep track of edges and not nodes

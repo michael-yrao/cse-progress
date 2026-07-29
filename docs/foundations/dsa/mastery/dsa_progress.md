@@ -59,7 +59,7 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/dsa/mastery/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **99** problems &nbsp;·&nbsp; **108** solutions &nbsp;·&nbsp; **363** attempts
+> **99** problems &nbsp;·&nbsp; **108** solutions &nbsp;·&nbsp; **366** attempts
 
 | | 🏆 Retired | 🎓 Graduated | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|:---:|
@@ -67,6 +67,9 @@ Notes for future agents:
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|---|
+| Hard | [332. Reconstruct Itinerary (Hierholzer)](https://leetcode.com/problems/reconstruct-itinerary/) | 🔴 | 0 | 2026-07-30 | 2026-07-28 | 2026-07-22, 2026-07-28 |
+| Medium | [19. Remove Nth Node From End of List (Postorder Recursion)](https://leetcode.com/problems/remove-nth-node-from-end-of-list/) | 🟡 | 0 | 2026-08-07 | 2026-07-28 | 2026-05-18, 2026-05-21, 2026-06-18, 2026-06-28, 2026-07-08, 2026-07-18, 2026-07-28 |
+| Easy | [169. Majority Element](https://leetcode.com/problems/majority-element/) | 🟢 | 2 | 2026-09-26 | 2026-07-28 | 2026-01-05, 2026-04-01, 2026-05-28, 2026-06-27, 2026-07-28 |
 | Medium | [424. Longest Repeating Character Replacement](https://leetcode.com/problems/longest-repeating-character-replacement/) | 🟢 | 1 | 2026-08-26 | 2026-07-27 | 2026-04-19, 2026-07-02, 2026-07-10, 2026-07-17, 2026-07-27 |
 | Medium | [540. Single Element in a Sorted Array](https://leetcode.com/problems/single-element-in-a-sorted-array/) | 🟡 | 0 | 2026-08-06 | 2026-07-27 | 2026-05-02, 2026-06-12, 2026-06-13, 2026-07-17, 2026-07-27 |
 | Medium | [18. Four Sum](https://leetcode.com/problems/4sum/) | 🟢 | 1 | 2026-08-26 | 2026-07-27 | 2026-01-23, 2026-07-17, 2026-07-27 |
@@ -94,7 +97,6 @@ Notes for future agents:
 | Medium | [271. Encode and Decode Strings](https://leetcode.com/problems/encode-and-decode-strings/) | 🟡 | 0 | 2026-08-02 | 2026-07-23 | 2026-07-01, 2026-07-03, 2026-07-13, 2026-07-23 |
 | Medium | [875. Koko Eating Bananas](https://leetcode.com/problems/koko-eating-bananas/) | 🟡 | 0 | 2026-08-02 | 2026-07-23 | 2026-04-22, 2026-07-03, 2026-07-13, 2026-07-23 |
 | Medium | [3. Longest Substring Without Repeating Characters](https://leetcode.com/problems/longest-substring-without-repeating-characters/) | 🟢 | 1 | 2026-08-22 | 2026-07-23 | 2026-04-17, 2026-07-23 |
-| Hard | [332. Reconstruct Itinerary (Hierholzer)](https://leetcode.com/problems/reconstruct-itinerary/) | 🔴 | 0 | 2026-07-24 | 2026-07-22 | 2026-07-22 |
 | Easy | [242. Valid Anagram](https://leetcode.com/problems/valid-anagram/) | 🟢 | 2 | 2026-09-20 | 2026-07-22 | 2026-01-01, 2026-03-25, 2026-06-22, 2026-07-22 |
 | Hard | [127. Word Ladder (BFS)](https://leetcode.com/problems/word-ladder/) | 🟡 | 0 | 2026-07-31 | 2026-07-21 | 2026-07-18, 2026-07-21 |
 | Medium | [503. Next Greater Element II](https://leetcode.com/problems/next-greater-element-ii/) | 🟡 | 0 | 2026-07-31 | 2026-07-21 | 2026-07-11, 2026-07-21 |
@@ -111,7 +113,6 @@ Notes for future agents:
 | Easy | [283. Move Zeroes](https://leetcode.com/problems/move-zeroes/) | 🟢 | 2 | 2026-09-17 | 2026-07-19 | 2026-01-10, 2026-04-02, 2026-06-02, 2026-06-12, 2026-07-19 |
 | Medium | [235. Lowest Common Ancestor of a Binary Search Tree](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/) | 🟡 | 0 | 2026-07-29 | 2026-07-19 | 2026-05-03, 2026-06-12, 2026-07-19 |
 | Medium | [261. Graph Valid Tree (Union-Find)](https://leetcode.com/problems/graph-valid-tree/) | 🟡 | 0 | 2026-07-28 | 2026-07-18 | 2026-06-19, 2026-06-29, 2026-07-09, 2026-07-18 |
-| Medium | [19. Remove Nth Node From End of List (Postorder Recursion)](https://leetcode.com/problems/remove-nth-node-from-end-of-list/) | 🟡 | 0 | 2026-07-28 | 2026-07-18 | 2026-05-18, 2026-05-21, 2026-06-18, 2026-06-28, 2026-07-08, 2026-07-18 |
 | Medium | [200. Number of Islands (BFS)](https://leetcode.com/problems/number-of-islands/) | 🟢 | 2 | 2026-09-16 | 2026-07-18 | 2026-05-30, 2026-06-01, 2026-06-07, 2026-07-18 |
 | Medium | [208. Implement Trie (Prefix Tree)](https://leetcode.com/problems/implement-trie-prefix-tree/) | 🟢 | 1 | 2026-08-16 | 2026-07-17 | 2026-07-06, 2026-07-08, 2026-07-17 |
 | Medium | [75. Sort Colors (Dutch Flag)](https://leetcode.com/problems/sort-colors/) | 🟢 | 1 | 2026-08-16 | 2026-07-17 | 2026-01-08, 2026-04-01, 2026-05-26, 2026-05-28, 2026-06-28, 2026-07-08, 2026-07-17 |
@@ -154,7 +155,6 @@ Notes for future agents:
 | Medium | [560. Subarray Sum Equals K](https://leetcode.com/problems/subarray-sum-equals-k/) | 🟢 | 1 | 2026-07-28 | 2026-06-28 | 2026-04-05, 2026-06-26, 2026-06-28 |
 | Medium | [49. Group Anagrams](https://leetcode.com/problems/group-anagrams/) | 🟢 | 2 | 2026-08-27 | 2026-06-28 | 2026-01-04, 2026-03-27, 2026-05-29, 2026-06-28 |
 | Easy | [733. Flood Fill (BFS)](https://leetcode.com/problems/flood-fill/) | 🟢 | 1 | 2026-07-28 | 2026-06-28 | 2026-06-12, 2026-06-19, 2026-06-28 |
-| Easy | [169. Majority Element](https://leetcode.com/problems/majority-element/) | 🟢 | 1 | 2026-07-27 | 2026-06-27 | 2026-01-05, 2026-04-01, 2026-05-28, 2026-06-27 |
 | Medium | [53. Maximum Subarray (Prefix Sum)](https://leetcode.com/problems/maximum-subarray/) | 🟢 | 1 | 2026-07-27 | 2026-06-27 | 2026-01-08, 2026-04-01, 2026-06-27 |
 | Medium | [261. Graph Valid Tree (DFS)](https://leetcode.com/problems/graph-valid-tree/) | 🟢 | 1 | 2026-07-23 | 2026-06-23 | 2026-06-15, 2026-06-17, 2026-06-21, 2026-06-23 |
 | Medium | [2300. Successful Pairs of Spells and Potions](https://leetcode.com/problems/successful-pairs-of-spells-and-potions/) | 🟢 | 1 | 2026-07-19 | 2026-06-19 | 2026-05-03, 2026-06-12, 2026-06-19 |
