@@ -36,6 +36,25 @@ import unittest
 
 
 class Solution:
+
+    # ── Attempt · 2026-07-28 ──────────────
+    def majorityElement_20260728(self, nums: List[int]) -> int:
+        # majority voting algorithm
+        
+        currentMaxFreq = 1
+        currentMaxValue = nums[0]
+
+        for i in range(1,len(nums)):
+            if nums[i] == currentMaxValue:
+                currentMaxFreq+=1
+            else:
+                currentMaxFreq-=1
+                if currentMaxFreq == 0:
+                    currentMaxValue = nums[i]
+                    currentMaxFreq = 1
+        
+        return currentMaxValue
+
     def majorityElement(self, nums: List[int]) -> int:
         freqMap = {}
         # not sure if we need both result and maxCount, TBD
