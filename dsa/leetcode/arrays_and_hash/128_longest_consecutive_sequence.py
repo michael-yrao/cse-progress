@@ -30,6 +30,29 @@ from collections import defaultdict
 from typing import List
 
 class Solution:
+
+    # ── Attempt · 2026-07-29 ──────────────
+    def longestConsecutive_20260729(self, nums: List[int]) -> int:
+        # for this problem, we only go further if it is the first node in sequence
+        # so check if previous exists, if it does, move on
+        # otherwise check and update max sequence
+        # we can use a set to make lookup faster
+
+        numSet = set(nums)
+
+        maxSequence = 0
+
+        for n in numSet:
+            if n - 1 not in numSet:
+                m = n
+                currentSequence = 0
+                while m in numSet:
+                    m+=1
+                    currentSequence+=1
+                maxSequence = max(maxSequence, currentSequence)
+        
+        return maxSequence
+
     def longestConsecutive(self, nums: List[int]) -> int:
         numSet = set(nums)
         longestSequence = 0

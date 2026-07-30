@@ -28,6 +28,41 @@ from typing import List
 
 class Solution:
 
+    # ── Attempt · 2026-07-29 ──────────────
+    def sortArrayMergeSort_20260729(self, nums: List[int]) -> List[int]:
+        # merge sort
+        # key to remember is that we do divide AND conquer
+        # they are not separate pieces
+
+        def merge(leftArray, rightArray):
+            li = ri = 0
+            result = []
+            while li < len(leftArray) and ri < len(rightArray):
+                if leftArray[li] < rightArray[ri]:
+                    result.append(leftArray[li])
+                    li+=1
+                else:
+                    result.append(rightArray[ri])
+                    ri+=1
+            
+            result+=(leftArray[li:])
+            result+=(rightArray[ri:])
+            
+            return result
+
+        def mergeSort(nums):
+            # if size is <= 1, then it is sorted
+            if len(nums) <= 1:
+                return nums
+            m = len(nums)//2
+            leftSide = mergeSort(nums[:m])
+            rightSide = mergeSort(nums[m:])
+
+            # now that we got both sides, we merge them
+            return merge(leftSide,rightSide)
+        
+        return mergeSort(nums)
+
     # ── Attempt · 2026-07-25 ──────────────
     def sortArrayMergeSort_20260725(self, nums: List[int]) -> List[int]:
         # divide and conquer via merge sort
