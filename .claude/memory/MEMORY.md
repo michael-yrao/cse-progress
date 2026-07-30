@@ -4,6 +4,7 @@
 - [Self-evaluation loop](feedback_self_evaluation.md) — on any correction, append to self_eval_log.md; meta-review weekly to promote recurring mistakes into rules
 - [Self-eval log](self_eval_log.md) — append-only running log of corrections (data for the meta-review)
 - [Read before asserting](feedback_read_before_asserting.md) — never state a file's/tracker's contents from memory or a partial read; grep/tail answer "does X exist", not "what is the state of this"
+- [Verify before terminal actions](feedback_verify_terminal_actions.md) — **never close out / commit / push / archive on an instruction that contradicts the visible state of the work; ASK.** And a turn containing any fabricated content (pre-filled tool results, repeated empty tool output) is evidence for nothing — never salvage the plausible half. Fired twice Jul 29, 2026, the 2nd time one turn after logging the 1st → promote on the spot, never "later"
 - [Session dating](feedback_session_dating.md) — date logs by study session not wall clock; a session crossing midnight keeps its start date; verify against the schedule day
 - [No code edits in cse-progress](feedback_no_code_edits.md) — never edit source files; user writes all code, assistant reads/explains only
 - [Coding required for Clean](feedback_coding_for_clean.md) — 🟢 Clean requires coding; no-code blueprint caps at 🟡 Shaky (except flawless spot check confirms 🎓 Graduated)
