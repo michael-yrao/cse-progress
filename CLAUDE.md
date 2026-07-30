@@ -26,6 +26,36 @@ scaffold **every** problem on the day's schedule — active block *and* both war
 alike — in one batch, before the learner starts. New → new file; retry → appended dated attempt.
 Don't ask which ones to set up.
 
+### Scaffold scope follows what the learner named — batching needs an actual kickoff
+
+**A message naming specific problems scaffolds exactly those problems.** "I'll do 235", "let's do
+417 and 543", "235 next" → scaffold 235 (or 417+543), and nothing else. The batch rule above fires
+on a **kickoff**: an explicit "start today" / "what's up today" / `/start-day`, or a first message
+that asks for the day rather than for a problem. **A named problem is a request, not a kickoff** —
+do not infer one from "it's the first message I've seen today," and do not treat batching as the
+safe default because it's cheap. If it's genuinely ambiguous, scaffold what they named and *ask*
+before batching the rest.
+
+**Why this is a correctness rule, not a preference.** A scaffolded-but-unattempted file is not
+inert:
+
+- **Discovery plants phantom rows.** `update_review_dates.py` auto-adds any problem file it finds
+  with no tracker row as **🔴 Blank / streak 0 / attempt date = today / next review = +2**
+  (`discover_source_problems`). Commit a scaffold for a problem that was never attempted and the
+  tracker gains a Blank that never happened, plus a +2 rep to service it. This collides head-on
+  with the end-of-session `git status` sweep, whose whole job is to catch unstaged solution files.
+- **Retry scaffolds move history out of the file.** Scaffolding a retry the learner didn't ask for
+  stashes their prior attempts to `.history/`. `restore_history.py` correctly declines to restore
+  an unattempted stub, so the file stays blank and the stash gets committed — recoverable, but it
+  ships a solution file emptied for a rep that never ran.
+- **The date stamp is wall-clock.** `new_problem.py` has no `--date` flag; it stamps `datetime.now()`.
+  Scaffolding past midnight in a session that started the previous day writes the **wrong attempt
+  date** into the method name and banner, and it must be hand-corrected to the session date. See
+  [[feedback_session_dating]].
+
+So the blast radius of an unwanted scaffold is the tracker, not just a stray file. Scaffold what
+was asked for.
+
 Consequence, stated plainly: coding is the only path to 🟢, so scaffolding a 🟡/🟢 warmup **raises**
 its ceiling from the no-code cap (🟡) to a real 🟢. Warmups are still 15-min slots — if they'd rather
 blueprint one verbally, the file just goes unused that day; nothing is lost. Blind sprints (SD/AI

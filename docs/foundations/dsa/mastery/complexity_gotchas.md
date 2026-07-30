@@ -23,7 +23,8 @@ The gate and the correction always happen; the freebie only governs the *rating 
 
 ## Recurring categories (the transfer — this is the part to master)
 
-Almost every miss so far is **space**, in one of these buckets. Time has been consistently correct.
+Almost every miss so far is **space**, in one of these buckets. Time was consistently correct until
+Jul 29 (235), where **time** was the wrong one and space was right — see the tree-height row.
 
 | Category | Code trigger | Coach cue (fire this) | Right answer |
 |---|---|---|---|
@@ -33,6 +34,14 @@ Almost every miss so far is **space**, in one of these buckets. Time has been co
 | **Output counting** | returns a built list/structure | *"counting the output, or extra-only?"* | state the convention: "O(1) *extra*" vs "O(n) incl. output" |
 | **Graph traversal (time)** | adjacency list + visit-each-node loop (BFS/DFS/topo) | *"each node once, each edge once — do those add or multiply?"* | **O(V + E)** — visits add, they don't multiply; O(V·E) would mean re-walking every edge per node |
 | **Combination-holding structure** | a set/list accumulating *k-tuples* of elements (k-Sum results, pair lists, subsets) | *"you're storing combinations of k elements, not elements — how many are there?"* | **O(n^(k−1))** for k-Sum — pick k−1 freely, the last is forced. 3Sum O(n²), 4Sum O(n³). **Not O(n)** — `n` is a false anchor from the input's length |
+
+| **Tree height (time *and* space)** | walking down one path of a tree — BST descent, insert, search | *"balanced, or is a chain also legal here?"* | **O(h)** — `O(log n)` **only if balanced**, `O(n)` degenerate. "It's a BST" does not give you balance; a chain like `1→2→3→4` (all right children) is a legal BST — *a sorted list in tree form*. Balance is an **assumption you state**, not a freebie |
+
+**⚠ Consistency check — the two bounds must agree.** On a single downward walk, the recursion stack's
+depth **is** the number of steps taken, so time and space are the *same* bound. Answering `O(log n)`
+time with `O(n)` space (or vice versa) is self-contradictory and is the cheapest tell that a
+balance assumption got applied to one and not the other. **Whenever a recursive walk's time and space
+come out different, one of them is wrong** — check before you say it out loud.
 
 **Space-contributors checklist (run before answering):**
 (a) extra data structures — bounded by *input* or by a *constant alphabet*?
@@ -98,6 +107,7 @@ sub-errors, neither of them the ceiling:
 gets 1000× bigger?"* — if no, write O(1) and stop. And when timing a build step, count **what you
 touch**, not **what you produce**.
 | 18 Four Sum | combination-holding structure (space) | `resultSet` O(n) → **O(n³)** worst case. Verified by running the learner's own code on `[-m…m]`, target 0: n=101 → **27,369** entries (271× n), and n 51→101 multiplies the count by 8.1 ≈ 2³ | 2026-07-27 | spent |
+| 235 LCA of a BST | **"BST" read as "balanced"** (time *and* space, inconsistently) | Gave `O(n)` space for the recursion stack but `O(log n)` time — the two **contradict**, since stack depth *is* the number of steps walked down. `log n` needs *balance*, which the constraints never promise. Counterexample: `1→2→3→4` all as right children is a legal BST; the mental image is **a sorted list in tree form**. True bound is **O(h)** — `O(log n)` balanced, `O(n)` degenerate | 2026-07-29 | spent |
 
 <!-- Add a row on every first-time complexity miss. A repeat miss on a problem ALREADY here caps that
 rep at 🟡 (freebie spent) — note the repeat in the schedule/stuck_log where the rating is recorded.
