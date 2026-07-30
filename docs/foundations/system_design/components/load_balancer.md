@@ -79,14 +79,38 @@ three-server pool. Every one of them loses whatever was in local RAM.
 key's destination, so changing N rewrites the whole mapping.
 
 ### Consistent hashing
-* **Picks by:**
-* **Assumes:**
-* **Breaks when:**
-* **Tradeoff:**
-* **What fraction of keys move when a server is added?**
-* **→ Open question you stopped on:** the servers must stay locatable *without counting them*. Using
-  the **same hash function** already applied to the client IP — what could you do to the *servers* so
-  a key finds one on its own?
+> ⚠️ **Written up by the coach Jul 29, not learner-derived** — the ring rule and its consequence were
+> supplied at the end of a session that overran badly. Treat every cell below as **taught, not tested.**
+> The measurement is the rated blind sprint in the Aug 3 week, not the Jul 30 quiz.
+
+* **Picks by:** hash the **servers** into the same fixed space as the clients (say 0–999), then a key
+  goes to the **next server upward, wrapping** at the top. `% N` is gone — nothing counts the servers.
+* **Assumes:** the servers' hashes land reasonably spread around the ring.
+* **Breaks when:** that spread doesn't happen. With few servers, hashes clump by luck and the arcs come
+  out wildly unequal — the server below a big gap owns a big share of the keyspace and becomes a hot
+  spot. *(Fix: **virtual nodes** — hash each physical server to many points on the ring, e.g. 150
+  each, so the arcs average out. Not covered Jul 29.)*
+* **Tradeoff:** more machinery than `% N` — a sorted structure of ring positions and a successor
+  lookup (binary search, `O(log N)`) instead of one modulo. You buy stability under membership change
+  and pay in complexity. Still load-blind, exactly like IP hash.
+* **What fraction of keys move when a server is added?** **~1/N**, and **exactly one existing server is
+  affected** — the new node's successor, which gives up the arc between itself and the new node.
+  Nobody else notices.
+
+**The trace that produced that (servers 120 / 480 / 850, then add 700):**
+
+| Server | Owns before | Owns after | Change |
+|---|---|---|---|
+| **120** | 851–999, 0–120 *(wraps)* | same | untouched |
+| **480** | 121–480 | same | untouched |
+| **700** | — | 481–700 | *new* |
+| **850** | 481–850 | 701–850 | lost 481–700 |
+
+**220 of 1000 keys move ≈ 22%** (against 1/4 = 25% expected for N=4) — versus **75%** under `% N`.
+
+* **Why *next-upward* and not "closest"** *(learner's first instinct — deterministic and count-free, so
+  it did meet the stated constraints)*: under next-upward a new node carves its arc out of **one**
+  neighbour. Under closest it takes from **two**, and the clean one-neighbour bound disappears.
 
 ---
 
@@ -149,8 +173,22 @@ sequenceDiagram
 ```
 
 ## 📇 Recall Card
-> Blind-sprint prompts for the review rep — fill after the note is written.
 
-1.
-2.
-3.
+> **Jul 30 quiz (10 min, UNRATED).** Answer cold, then unfold the note. This is consolidation the day
+> after a teaching session — a rating here would measure recall of yesterday's conversation, not
+> retention (§2a). The **rated** blind sprint is in the Aug 3 week, with a real forgetting gap.
+> Cards 1–4 are learner-derived; 5–7 were supplied and are the ones most likely to have evaporated.
+
+1. Round robin: what does it assume, and what's the one thing its state *cannot* get wrong?
+2. Least connections: two separate ways it breaks. One is about cost-per-connection; what's the other?
+3. Least connections picks server B with 5 busy sockets over server A with 50 idle ones. Why — and
+   which is actually more loaded?
+4. IP hash: what does it guarantee that neither algorithm above it can? And what did it stop doing to
+   buy that?
+5. `hash(ip) % 3` becomes `% 4`. What fraction of clients keep their server? *(number, not "most")*
+6. State the ring rule in one sentence, without using the word "modulo."
+7. Servers at 120 / 480 / 850; add one at 700. Which clients move, and **how many servers are
+   affected**? Then: why next-upward rather than closest?
+
+**Still unwritten in this note** — for the Aug 3 close-out, not the quiz: sticky sessions · the
+rate-limit interaction table · L4 vs L7 · failure modes & the LB-as-SPOF · the metaphor · virtual nodes.
