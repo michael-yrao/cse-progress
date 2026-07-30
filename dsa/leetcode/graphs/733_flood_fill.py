@@ -48,6 +48,36 @@ import collections
 from typing import List
 
 class Solution:
+
+    # ── Attempt · 2026-07-29 ──────────────
+    def floodFill_20260729(self, image: List[List[int]], sr: int, sc: int, color: int) -> List[List[int]]:
+        # we have a starting node and we want to change all nodes of the same color to target color
+        # basic BFS, don't need a visited since we are changing the value of each node
+
+        rows, cols = len(image), len(image[0])
+
+        # nothing to change if same color
+        if image[sr][sc] == color:
+            return image
+
+        sourceColor = image[sr][sc]
+
+        queue = collections.deque()
+
+        queue.append((sr,sc))
+        neighbors = [[1,0],[-1,0],[0,1],[0,-1]]
+        while queue:
+            cr, cc = queue.popleft()
+            originalColor = image[cr][cc]
+            if originalColor == sourceColor:
+                image[cr][cc] = color
+                for ir, ic in neighbors:
+                    nr, nc = cr + ir, cc + ic
+                    if nr >= 0 and nr < rows and nc >= 0 and nc < cols and image[nr][nc] == sourceColor:
+                        queue.append((nr,nc))
+        
+        return image
+
     def floodFill(self, image: List[List[int]], sr: int, sc: int, color: int) -> List[List[int]]:
         # we are basically just doing BFS from one node and that's it
         # we actually need to save the original color of starting point so it can be compared

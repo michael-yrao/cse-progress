@@ -19,6 +19,18 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🟡 269. Alien Dictionary — 2026-07-29 *(🔴 → 🟡; Monday's re-rep)*
+**Sticking point**: two bugs, neither self-caught. (a) `firstWord = words[i]` / `secondWord = words[i]` — compared each word to **itself**, so `adjMap` came out empty and every char read indegree 0; (b) **duplicate edges double-counted** — `adjMap` is a `set` and silently absorbs a repeat, but `rankMap[...] += 1` fired anyway, so a graph with one `b→c` edge gave `c` indegree 2 and the cycle check falsely tripped (`["ab","ac","xb","xc"]` → `""` instead of `"abxc"`). Guard the increment on the edge being new.
+**What came back clean** (worth recording — Monday's four failures were all *modeling*): recognition (first-differing-letter → adjacency → topo, stated in the pre-code comment), the **prefix-invalid rule** (`["abc","ab"]` → `""`), the full Kahn's loop, and the `len(result) == len(rankMap)` cycle check. Also self-initiated the array→dict fix on the indegree map, for the right reason (a 26-slot array emits letters that never appear in the input).
+**Complexity**: repeat miss, freebie already spent Jul 27 → capped the rep at 🟡. See the annotated 269 entry in [`complexity_gotchas.md`](complexity_gotchas.md) — named the 26-key ceiling and *still* wrote O(C), then charged `adjMap`'s build at O(E) (output size, not work done).
+**Coach note**: the hand-over sentence pre-localized Monday's failure category as "graph modeling" — a stuck-log recap at the start of a retry, logged in `self_eval_log.md`. Factored into the rating.
+
+## 🟡 912. Sort an Array (Merge Sort) — 2026-07-29 *(rated measurement of the Jul 25 D&C teaching session)*
+**Sticking point**: `result.append(leftArray[li:])` instead of `extend` — appended the leftover *slice as one element*, so `merge([5],[2])` returned `[2, [5], []]`. **Not** a D&C failure: the skeleton (base case, split, recurse both, merge the two returns, uniform return contract) came back cold and correct, which is what Jul 25 taught. The residual gap has moved from **conceptual → Python API**, so the §2a "teach it again" reflex does *not* apply here; watch `append` vs `extend` on the next rep, not the recursion.
+
+## 🟡 560. Subarray Sum Equals K — 2026-07-29
+**Sticking point**: two nudges, both on the *map's contents* rather than the technique — (a) the opening plan pre-counted `Counter(prefixSum)` over the **whole** array, so a lookup could match a prefix sum lying to its *right*; (b) after correcting to a running sum built as you go, the `diffMap[0] = 1` empty-prefix seed was missing, so every subarray starting at index 0 was invisible. Also **mis-localized** the missing case on first trace (said the second pair of 1s; it was the first). Prefix-sum-minus-k itself was derived cold and correct.
+
 ## 🔴 332. Reconstruct Itinerary (Hierholzer) — 2026-07-28 *(2nd consecutive 🔴 → became a teaching session)*
 **Topic**: Eulerian path / Hierholzer's
 

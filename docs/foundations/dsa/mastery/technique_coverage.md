@@ -49,7 +49,7 @@
 | Connected Components | graphs | 3 (323, 323, 323) | 🟢 | ✅ | DFS ×1 · BFS ×1 · Union-Find ×1 | — |
 | Graph Clone (DFS + Hash Map) | graphs | 1 (133) | 🟢 | ✅ | — | — |
 | Graph Cycle Detection (DFS) | graphs | 1 (261) | 🟢 | ✅ | — | — |
-| Grid BFS | graphs | 4 (130, 200, 417, 733) | 🟢 | ✅ | — | — |
+| Grid BFS | graphs | 4 (130, 200, 417, 733) | 🎓 | ✅ | — | — |
 | Grid DFS | graphs | 2 (200, 695) | 🟢 | ✅ | — | thin (2/3) |
 | Multi-source BFS | graphs | 1 (994) | 🟢 | ✅ | — | — |
 | Topological Sort | graphs | 3 (207, 210, 269) | 🟢 | ✅ | Kahn's (BFS) ×3 · ~~DFS postorder~~ *(queued: `graduates:210`)* | — |

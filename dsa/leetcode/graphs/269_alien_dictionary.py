@@ -40,6 +40,60 @@ from typing import List, Optional
 
 
 class Solution:
+
+    # ── Attempt · 2026-07-29 ──────────────
+    def alienOrder_20260729(self, words: List[str]) -> str:
+        # the FIRST different letter determines lexicographically difference
+        # so we need to stop at the first instance of difference and that is our mapping
+        # so we construct an adjacency map based on this lexicographical order
+        # now how do we know what order to go in for the map
+        # smallest first, so we can use topological sort like course schedule
+        # simply put, we give rank to each char and we only go through it if it is zero
+        
+        rankMap = {}
+        # pre-populate rankMap for chars in words only
+        for word in words:
+            for char in word:
+                rankMap[char] = 0
+
+        adjMap = collections.defaultdict(set)
+
+        for i in range(1,len(words)):
+            firstWord = words[i-1]
+            secondWord = words[i]
+            minSize = min(len(firstWord), len(secondWord))
+            # example 3 failure case
+            if len(firstWord) > len(secondWord) and firstWord[:minSize] == secondWord[:minSize]:
+                return ""
+            # now that we know we can map, find the first diff
+            for i in range(minSize):
+                # if not equal, firstWord[i] comes before secondWord[i]
+                if firstWord[i] != secondWord[i]:
+                    if secondWord[i] not in adjMap[firstWord[i]]:
+                        adjMap[firstWord[i]].add(secondWord[i])
+                        rankMap[secondWord[i]]+=1
+                    break
+        
+        # now we go through the rankMap and only use chars with 0
+        queue = collections.deque()
+        for key in rankMap:
+            if rankMap[key] == 0:
+                queue.append(key)
+        
+        result = ""
+        while queue:
+            currentKey = queue.popleft()
+            result+=currentKey
+            for neighbor in adjMap[currentKey]:
+                rankMap[neighbor]-=1
+                if rankMap[neighbor] == 0:
+                    queue.append(neighbor)
+        
+        # check if we went through all available chars
+        if len(result) == len(rankMap):
+            return result
+        return ""
+
     # ── Attempt 1 · 2026-07-27 ────────────────────────────────────────────
     def alienOrder(self, words: List[str]) -> str:
         # build adjacency map of letters

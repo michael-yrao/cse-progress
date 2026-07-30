@@ -20,9 +20,32 @@ Constraints:
     -107 <= k <= 107
 """
 from collections import defaultdict
+import collections
 from typing import List
 
 class Solution:
+
+    # ── Attempt · 2026-07-29 ──────────────
+    def subarraySum_20260729(self, nums: List[int], k: int) -> int:
+        # subarray sum = prefix[j] - prefix[i]
+        # subarray sum is k
+        # prefix[j] - prefix[i] = k
+        # so we are going through as j, as we go through we store the prefixSum in map
+        # prefix[j] will just be a runningSum at that point
+
+        freq = 0
+        runningSum = 0
+        diffMap = collections.defaultdict(int)
+        diffMap[0]+=1
+
+        for n in nums:
+            runningSum+=n
+            if runningSum - k in diffMap:
+                freq+=diffMap[runningSum - k]
+            diffMap[runningSum]+=1
+        
+        return freq
+
     def subarraySum(self, nums: List[int], k: int) -> int:
         # first thing that comes to mind for subarray sum is prefixSum
         # we are looking for # of times prefix[j] - prefix[i] = k

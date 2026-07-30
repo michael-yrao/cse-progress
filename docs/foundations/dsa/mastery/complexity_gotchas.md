@@ -81,7 +81,22 @@ A problem in this table has used its one free complexity miss. The **next** miss
 | 355 Design Twitter | list-membership scan (**time**) + squared-dims/phantom-log (**time**) | `follow` O(1) → **O(F)** (list `in` scan; set→O(1)); `getNewsFeed` O(n²logn) → **O(F·T)** (heap capped at 10 = O(1)/op, no square) | 2026-07-25 | spent |
 | 424 Longest Repeating Char Replacement | fixed-alphabet array (space) | O(n) → **O(1)** (freqMap ≤ 26 keys — uppercase-only constraint) | 2026-07-27 | spent |
 | 104 Max Depth of Binary Tree | full-traversal vs search (**time**) | O(log n) → **O(n)** — recursing into *both* children never discards a subtree; O(log n) requires each step to *throw half away* (binary search, BST descent). Computing a property **of the whole tree** ≠ searching **for a node** | 2026-07-27 | spent |
-| 269 Alien Dictionary | fixed-alphabet graph (**time + space**) | time "no idea" → **O(C)** (C = total chars; the graph work is O(1)); space O(V+E) → **O(1)** — `V ≤ 26`, `E ≤ 26² = 676` by the lowercase-only constraint, so both collapse to constants. *Same fixed-alphabet family as 242/567/424, first time it appeared on a **graph** rather than a freq array* | 2026-07-27 | spent |
+| 269 Alien Dictionary | fixed-alphabet graph (**time + space**) | time "no idea" → **O(C)** (C = total chars; the graph work is O(1)); space O(V+E) → **O(1)** — `V ≤ 26`, `E ≤ 26² = 676` by the lowercase-only constraint, so both collapse to constants. *Same fixed-alphabet family as 242/567/424, first time it appeared on a **graph** rather than a freq array* | 2026-07-27 | **spent → REPEAT MISS 2026-07-29 (capped that rep at 🟡)** |
+
+**⚠️ 269's repeat miss (Jul 29) took a specific shape worth naming, because it is the shape this whole
+category takes.** The learner correctly derived *"`rankMap` holds at most 26 keys"* — the load-bearing
+fact — and then still answered **space O(C)**, then **"O(V) where V maxes at 26"**. Two distinct
+sub-errors, neither of them the ceiling:
+
+1. **Naming a constant ceiling and still writing a growing term.** `O(26)` is `O(1)`; a bound that
+   doesn't move when the input grows is not a variable. Knowing the ceiling and applying it are
+   separate steps, and only the second one was missing.
+2. **Charging *output size* as *work done*.** Said building `adjMap` costs `O(E)`. E is how many edges
+   come out; the work is scanning adjacent word pairs character by character → `O(C)`.
+
+**Cue for next time:** after you name a ceiling, immediately ask *"does this number move when the input
+gets 1000× bigger?"* — if no, write O(1) and stop. And when timing a build step, count **what you
+touch**, not **what you produce**.
 | 18 Four Sum | combination-holding structure (space) | `resultSet` O(n) → **O(n³)** worst case. Verified by running the learner's own code on `[-m…m]`, target 0: n=101 → **27,369** entries (271× n), and n 51→101 multiplies the count by 8.1 ≈ 2³ | 2026-07-27 | spent |
 
 <!-- Add a row on every first-time complexity miss. A repeat miss on a problem ALREADY here caps that

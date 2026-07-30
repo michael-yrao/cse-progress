@@ -20,8 +20,16 @@ block is the recursion structure, not the strategy.
 - Binary split (2 halves per call, log n deep) — *not* n arrays at once; it's a call stack of
   depth log n.
 
-**Why / how to apply:** this is a recurring, never-durably-encoded gap — reach for these exact
-framings when D&C code stalls (procedure-first, [[feedback_procedure_first]]). The Jul 25 rep was
-a **teaching session, unrated** ([[feedback_recognition_gate]] not the issue — this is §2a
-teach-then-measure); the **rated** measure is the 912 merge-sort re-rep **Jul 29**. If that comes
-back shaky, the structure still hasn't stuck — teach the same framing, don't just re-rep.
+**RESOLVED Jul 29, 2026 — the teaching worked; the gap is closed.** The rated measurement (912
+merge sort, Jul 29) came back **🟡, but for a different reason entirely**: the whole D&C skeleton
+was written cold and correct — base case, binary split, recurse both halves, merge the two returns,
+uniform return contract. The only defect was `result.append(leftArray[li:])` instead of `extend`,
+so `merge([5],[2])` returned `[2, [5], []]`.
+
+**Why / how to apply:** the framings above are the ones that landed — reach for them if D&C stalls
+again (procedure-first, [[feedback_procedure_first]]). But **do not re-teach D&C to this learner on
+the strength of another 🟡 on 912.** The failure mode has moved **conceptual → Python API**, and
+§2a's "a repeat 🔴/🟡 means it was never encoded, so teach it" reflex misfires when the *category*
+of the error changes. Read the stuck-log entry, not just the rating: three consecutive 🟡s on one
+row can be three unrelated defects. Watch list-API slips (`append` vs `extend`, in-place vs
+returning) on the next rep, not the recursion.
