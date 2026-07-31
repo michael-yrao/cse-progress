@@ -19,6 +19,39 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🟡 721. Accounts Merge — 2026-07-30 *(NEW — first exposure)*
+**Sticking point**: not the algorithm — **five supplied bugs, and every one was list-mutate-vs-return Python API**:
+(1) `find` read/wrote `rankMap` where it meant `parentMap` (localized by coach, diagnosed by learner);
+(2) `nodeMap[email].append(accounts[i][0])` appended the **name** instead of the index `i`, though their own
+plan comment one line above said "map of node to *indices*" — would `KeyError` on `parentMap["John"]`, and
+silently merges same-name-different-people; (3) `list(emails).sort()` → `None` (`.sort()` mutates, returns
+nothing); (4) `resultArray += name` — `+=` on a list is `extend`, so a string splats to `['J','o','h','n']`;
+(5) same line initially fed it `parent` (an int index) instead of `accounts[parent][0]`.
+**What came back clean, cold, on a first exposure**: recognition (components → Union-Find, written in the
+pre-code comment before any prompt), the modeling decision to union **account indices**, the email→indices
+map as the driver of which unions to run, the entire DSU (union by rank + path compression, incl. the
+equal-rank tiebreak and the `False` on already-joined), and a **self-caught** `accounts`/`accts` shadowing
+bug the coach had spotted and deliberately not mentioned. Bringing the algorithm *and* the modeling on a
+new-technique problem is the hard half — this is why it isn't 🔴.
+**Mechanism inventory fired and worked**: learner proposed "a set and a minHeap" before justifying either.
+Set survived (dedupe within a component); heap was cut — same O(k log k) as `sorted()` but a structure to
+build and drain, and heaps earn their keep only for *incremental/partial* order (streams, top-k, k-way
+merge). Also cut a vestigial `if len(accts) > 1` guard (`range(1,1)` is already empty).
+**Result-assembly was hinted**: learner was stuck on getting from parent pointers to output rows, asked for
+a hint, and produced "root parent -> nodes mapping?" after a hand-trace on 4 concrete accounts.
+**Complexity**: learner **passed and asked to be taught** — so this was taught, not recalled (new problem,
+double freebie, no rating hit; 1 of 2 spent). They then stepped both bounds correctly with the framework:
+space `O(E)` (and spotted, once prompted, that `O(E+N)` collapses because the constraints guarantee ≥1 email
+per account, plus the `O(log N)` `find` stack), time `O(E log E)`. Best moment of the night: they challenged
+the sort bound unprompted — *"is it not O(N · E log E) since we loop N keys?"* — the exact multiply-vs-add
+trap. Resolved with `Σ kᵢ = E` and the reductio that 12 singleton groups would cost 516 ops to sort 12 emails.
+**⚠️ Coach note — the real finding.** The algorithmic reasoning was clean end to end and **100% of the
+failures were Python list API**: mutate-in-place vs return-new. Third occurrence in a week (912 was
+`append` vs `extend`, 235's was different, this is `.sort()`/`sorted()` + `+=`/`append`). This is **not** a
+Union-Find gap and must not be re-repped as one — the Aug 9 rep should be read against the API axis, not
+the algorithm axis. Candidate intervention: a short `mutate-vs-return` reference card (proposed, not yet
+created — learner's call).
+
 ## 🟡 235. Lowest Common Ancestor of a BST — 2026-07-29 *(4th attempt, 3rd consecutive 🟡)*
 **Sticking point**: **the identical bug as Jul 19** — the recursive descent calls discarded their return value (`self.lca(root.left, p, q)` with no `return`), so any input whose answer wasn't at the root fell off the end of the function and returned `None`. Diagnosed with example 2 (`p=2, q=4` → `None`, expected node `2`). ⚠️ **Same failure two reps running** — see Coach note.
 **What came back clean**: recognition cold and correct, written as a pre-code comment (BST ordering → decide direction from values alone, walk one path instead of searching both subtrees). Direction correct this time — **the Jul 19 inversion did not recur**. And on the mechanism-inventory prompt they *removed* their own rule 4 (an explicit equality check), correctly seeing the `else` branch already covers `root == p`.

@@ -365,6 +365,7 @@ techniques:
       - {number: 130, method: Union-Find}
       - {number: 261, method: Union-Find}
       - {number: 684, method: Union-Find}
+      - {number: 721, method: Union-Find}
 
   - name: Topological Sort
     family: graphs

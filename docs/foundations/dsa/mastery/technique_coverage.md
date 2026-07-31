@@ -53,7 +53,7 @@
 | Grid DFS | graphs | 2 (200, 695) | 🟢 | ✅ | — | thin (2/3) |
 | Multi-source BFS | graphs | 1 (994) | 🟢 | ✅ | — | — |
 | Topological Sort | graphs | 3 (207, 210, 269) | 🟢 | ✅ | Kahn's (BFS) ×3 · ~~DFS postorder~~ *(queued: `graduates:210`)* | — |
-| Union-Find | graphs | 3 (130, 261, 684) | 🟢 | ✅ | — | — |
+| Union-Find | graphs | 4 (130, 261, 684, 721) | 🟢 | ✅ | — | — |
 | Heap / Priority Queue | heap | 6 (347, 355, 621, 703, 973, 1046) | 🟢 | ✅ | — | — |
 | Deep Copy via Hash Map | linked_list | 1 (138) | 🟢 | ✅ | — | — |
 | Floyd's Cycle / Midpoint | linked_list | 2 (141, 143) | 🟢 | ✅ | — | — |
