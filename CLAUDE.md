@@ -10,6 +10,30 @@ git config core.hooksPath .githooks
 
 This replaces the old per-machine `.git/hooks/pre-commit` (which was never synced). After this, the hook stays in sync via git across all machines.
 
+**Second one-time step — the scaffold-links agent hook.** `.claude/hooks/scaffold_links_reminder.py` is
+version-controlled, but `.claude/settings.json` is **gitignored** (it holds machine-absolute paths), so the
+wiring that invokes the script does *not* sync. On each machine, add this block to `.claude/settings.json`
+once, merging with whatever `permissions` are already there:
+
+```json
+"hooks": {
+  "PostToolUse": [
+    {
+      "matcher": "Bash",
+      "hooks": [
+        { "type": "command",
+          "command": "python \"${CLAUDE_PROJECT_DIR:-.}/.claude/hooks/scaffold_links_reminder.py\"",
+          "timeout": 10 }
+      ]
+    }
+  ]
+}
+```
+
+It fires on any Bash command mentioning `new_problem.py` and reminds the agent to emit both the local file
+link and the LeetCode link for every problem it just scaffolded — a rule that lapsed five times while it
+lived only as prose. Costs nothing until it fires. See `.claude/memory/feedback_kickoff_table_links.md`.
+
 ## Agent Memory
 
 Persistent behavioral preferences are stored in `.claude/memory/`. At the start of each session, read `.claude/memory/MEMORY.md` for the index, then load any files relevant to the current task.
@@ -52,6 +76,10 @@ inert:
   Scaffolding past midnight in a session that started the previous day writes the **wrong attempt
   date** into the method name and banner, and it must be hand-corrected to the session date. See
   [[feedback_session_dating]].
+  - **So: past midnight, establish the session date BEFORE scaffolding, not before logging.** Run
+    `git log --date=iso -3` — commits from minutes ago mean a *live session*, not a new day. The date
+    is an input to *what gets set up*, not merely to how it's labelled. (4+ occurrences; the Jul 29
+    one mis-anchored an entire day's board before a single log line was written.)
 
 So the blast radius of an unwanted scaffold is the tracker, not just a stray file. Scaffold what
 was asked for.

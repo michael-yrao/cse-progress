@@ -398,6 +398,12 @@ techniques:
     problems:
       - {number: 787, method: Bellman-Ford, variant: Standard}
 
+  - name: Floyd-Warshall (all-pairs shortest path)
+    family: advanced_graphs
+    min_problems: 1
+    problems:
+      - {number: 1334, method: Floyd-Warshall}
+
   - name: Hierholzer (Eulerian path)
     family: advanced_graphs
     min_problems: 1

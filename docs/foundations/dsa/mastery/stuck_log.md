@@ -19,6 +19,72 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🔴 1334. Find the City (Floyd-Warshall) — 2026-07-31 *(NEW — first exposure, became a full teaching session)*
+**Topic**: Floyd-Warshall / all-pairs shortest path. Full note written live:
+[`patterns/techniques/floyd_warshall.md`](../patterns/techniques/floyd_warshall.md).
+
+### Where did I get stuck?
+Two distinct places, and only the second was the algorithm.
+
+**(a) Reading the question.** Asked for a plain restatement before any approach — the confusion was that
+"neighbor" reads as *directly connected*, when the problem means *reachable within a total-weight budget*.
+Also missed on first read that the tie-break returns the **largest** city index. Cleared by hand-tracing
+Example 1 into a per-city count table; no algorithmic content was supplied at this stage.
+
+**(b) The algorithm itself — not known at all.** Correct instinct that every node takes a turn as the
+source. Proposed **DFS from each node**, which fails on weights: a visited set assumes the first arrival
+at a node is the cheapest, which is only true unweighted. Given the threshold-6 counterexample, correctly
+identified that pruning over-budget paths is legitimate *and* that it doesn't rescue the visited problem.
+Next proposed **tracking edges per path** — which does fix correctness, but enumerates simple paths
+(exponential). At that point asked to be taught the algorithm outright.
+
+### Core Realization
+Taught, not derived — record it as supplied:
+
+> A boolean `visited` is the wrong per-node fact. Not *whether* you reached it, nor *by which route*, but
+> **what it cost**.
+
+And the invariant that makes Floyd-Warshall work: after stopovers `k = 0…K`, `dist[i][j]` is the shortest
+path allowed to pass through only `{0…K}` as intermediates. Each new `k` splits into "path avoids k" (the
+current value) vs "path uses k exactly once" (`dist[i][k] + dist[k][j]`, both halves already correct).
+**This is why `k` must be the outermost loop** — the induction runs over the stopover set, which has to
+grow across the whole table at once.
+
+### Code Snippet
+```python
+for mid in range(n):              # stopover — MUST be outermost
+    for start in range(n):
+        for end in range(n):
+            if distance[start][mid] + distance[mid][end] < distance[start][end]:
+                distance[start][end] = distance[start][mid] + distance[mid][end]
+```
+
+### Bugs supplied (5)
+1. **Edges never loaded** — allocated `inf`, seeded the diagonal, then ran the algorithm on a graph with no
+   roads. Step 1 is *three* parts: allocate, diagonal, **write the edge weights in**.
+2. **Undirected double-write missing** — `distance[dst][src] = weight` absent, so the table described a
+   one-way network.
+3. `currentCount = math.inf` then `+= 1` — `inf + 1` is `inf`. A counter starts at zero.
+4. **Returned the count, not the city** — `min()` discarded the identity being asked for.
+5. **Tie-break `<` instead of `<=`** — scanning ascending, strict `<` keeps the *first* winner; the problem
+   wants the *largest* index. Example 1 returns 0 instead of 3.
+
+Bugs 3–5 all sit in the final counting loop, i.e. in the part that was *not* taught — worth noting, since
+the taught triple loop was translated correctly on the first try (with better naming: `mid`/`start`/`end`).
+
+### Follow-up
+⚠️ **+2 deliberately overridden → rated re-rep Wed Aug 5** (tracker will read **2026-08-02**; ignore it,
+the schedule is source of truth). Same reasoning as 332 on Jul 28: a rep 36 hours after the teaching
+measures recall of the conversation, not retention, and an inflated rating there corrupts every interval
+computed from it (§2a). Complexity was **passed and taught** — new-problem freebie, 1 of 2; both bounds
+were then stated correctly.
+
+**On the re-rep, watch:** whether the table seeding is complete without prompting (bugs 1–2 were both
+seeding), and whether `k`-outermost survives. The counting-loop bugs are ordinary and not the signal.
+
+## 🟡 503. Next Greater Element II — 2026-07-31 *(3rd attempt)*
+**Sticking point**: two supplied bugs, different in kind. (a) `i % 2` instead of `i % len(nums)` — a **slip, not a gap**: the pre-code comment already said "go through the array twice via modular arithmetic," so the intent was right and only the code disagreed; it silently visited indices 0 and 1 forever. (b) The `-math.inf` sentinel was **never mapped back to the required `-1`** — the design was deliberate and correct, but the output contract was left unconverted, which is what would have failed the judge. Everything structural was cold and correct: monotonic stack recognition, double-pass modular circularity, storing *indices* not values with the reason, and — the subtle one — the `-inf` + overwrite-guard pairing, which is load-bearing here because pushing on all `2n` iterations means an index can be popped twice, and which can't be replaced by a `-1` init since `-1` is a legal value in `nums`. Complexity passed both bounds; the amortized "each index pushed ≤ 2×, popped ≤ 2×" framing was taught after (the stated why was per-op cost, not the aggregate argument). **Watch next rep:** whether the sentinel gets converted without prompting.
+
 ## 🟡 721. Accounts Merge — 2026-07-30 *(NEW — first exposure)*
 **Sticking point**: not the algorithm — **five supplied bugs, and every one was list-mutate-vs-return Python API**:
 (1) `find` read/wrote `rankMap` where it meant `parentMap` (localized by coach, diagnosed by learner);

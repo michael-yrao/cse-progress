@@ -26,6 +26,37 @@ from typing import List
 
 class Solution:
 
+    # ── Attempt · 2026-07-31 ──────────────
+    def nextGreaterElements_20260731(self, nums: List[int]) -> List[int]:
+        # next greater is classic monotonic stack things
+        # twist here is that we have a circular array, so the way we simulate that
+        # is that we go through the array twice via modular arithmetic
+        # we start with a next greater array of size -math.inf
+        # keep a monotonically decreasing array so that when we get the next greater element
+        # we mark it for all prior nodes
+        # we store the index in the stack, not the value so we can track where it was
+
+        decreasingStack = []
+        greater = [-math.inf] * len(nums)
+
+        for i in range(len(nums)*2):
+            actualIndex = i%len(nums)
+            currentNumber = nums[actualIndex]
+            while decreasingStack and currentNumber > nums[decreasingStack[-1]]:
+                prevNode = decreasingStack.pop()
+                # if we have not calculated it yet, mark it
+                if greater[prevNode] == -math.inf:
+                    greater[prevNode] = currentNumber
+            # now that we are no longer greater, add i%2 in there
+            decreasingStack.append(actualIndex)
+        
+        # we will have -inf leftover that had no greater elements
+        for i in range(len(greater)):
+            if greater[i] == -math.inf:
+                greater[i] = -1
+
+        return greater # type: ignore
+
     # ── Attempt · 2026-07-21 ──────────────
     def nextGreaterElements_20260721(self, nums: List[int]) -> List[int]:
         # so in the first variation of this problem
