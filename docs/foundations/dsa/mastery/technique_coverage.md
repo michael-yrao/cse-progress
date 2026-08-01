@@ -6,7 +6,7 @@
 
 > The tracker is keyed by **problem**; this is keyed by **technique**. Use it at the weekly build to decide what to pull, and at phase exit to check the per-algorithm bar (recognition + execution, ≥1 🟢 each).
 
-> **48** techniques &nbsp;·&nbsp; **7** with no 🟢 &nbsp;·&nbsp; **4** thin &nbsp;·&nbsp; **0** unqueued variant gaps
+> **49** techniques &nbsp;·&nbsp; **8** with no 🟢 &nbsp;·&nbsp; **4** thin &nbsp;·&nbsp; **0** unqueued variant gaps
 
 ## ⚠️ Action list
 
@@ -16,6 +16,7 @@
 - **Bellman-Ford** (advanced_graphs) — best 🟡 across 787
 - **Dijkstra** (advanced_graphs) — best 🟡 across 743, 778
 - **Divide & Conquer / Sorting** (sorting) — best 🟡 across 912
+- **Floyd-Warshall (all-pairs shortest path)** (advanced_graphs) — best 🔴 across 1334
 - **Hierholzer (Eulerian path)** (advanced_graphs) — best 🔴 across 332
 - **Length-Prefix Encoding** (arrays_and_hash) — best 🟡 across 271
 - **Prim's MST** (advanced_graphs) — best 🟡 across 1584
@@ -33,6 +34,7 @@
 |---|---|---:|:---:|:---:|---|---|
 | Bellman-Ford | advanced_graphs | 1 (787) | 🟡 | ❌ | Standard ×1 · ~~Contrast rep on 743~~ *(queued: `graduates:743`)* | **no-green** · thin (1/3) |
 | Dijkstra | advanced_graphs | 2 (743, 778) | 🟡 | ❌ | — | **no-green** · thin (2/3) |
+| Floyd-Warshall (all-pairs shortest path) | advanced_graphs | 1 (1334) | 🔴 | ❌ | — | **no-green** |
 | Hierholzer (Eulerian path) | advanced_graphs | 1 (332) | 🔴 | ❌ | — | **no-green** |
 | Prim's MST | advanced_graphs | 1 (1584) | 🟡 | ❌ | — | **no-green** |
 | Array/String Fundamentals | arrays_and_hash | 3 (14, 66, 1929) | 🟢 | ✅ | — | — |

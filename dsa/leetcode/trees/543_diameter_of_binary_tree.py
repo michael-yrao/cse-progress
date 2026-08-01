@@ -32,6 +32,20 @@ class TreeNode:
         self.right = right
 class Solution:
 
+    # ── Attempt · 2026-07-31 ──────────────
+    def diameterOfBinaryTree_20260731(self, root: Optional[TreeNode]) -> int:
+        diameter = 0
+        def depth(node):
+            nonlocal diameter
+            if not node:
+                return 0
+            leftSide = depth(node.left)
+            rightSide = depth(node.right)
+            diameter = max(diameter, leftSide + rightSide)
+            return 1 + max(leftSide, rightSide)
+        depth(root)
+        return diameter
+
     # ── Attempt · 2026-07-20 ──────────────
     def diameterOfBinaryTree_20260720(self, root: Optional[TreeNode]) -> int:
         maxDiameter = 0

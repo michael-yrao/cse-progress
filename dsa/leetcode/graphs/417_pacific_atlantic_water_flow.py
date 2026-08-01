@@ -50,6 +50,66 @@ from typing import List
 
 class Solution:
 
+    # ── Attempt · 2026-07-31 ──────────────
+    def pacificAtlantic_20260731(self, heights: List[List[int]]) -> List[List[int]]:
+        # BFS from each side
+        # we care only for nodes that reach both oceans
+        # so we first need to know which ones make to each
+        # then cross those two lists
+        # BFS, so visited, queue. start from each side
+
+        rows, cols = len(heights), len(heights[0])
+
+        pacificQueue = collections.deque()
+        atlanticQueue = collections.deque()
+
+        canReachPacific = set()
+        canReachAtlantic = set()
+
+        # look at cols
+        for i in range(cols):
+            pacificQueue.append((0,i))
+            canReachPacific.add((0,i))
+            atlanticQueue.append((rows-1,i))
+            canReachAtlantic.add((rows-1,i))
+        
+        # look at rows
+        for i in range(rows):
+            pacificQueue.append((i,0))
+            canReachPacific.add((i,0))
+            atlanticQueue.append((i,cols-1))
+            canReachAtlantic.add((i,cols-1))
+
+        # now we BFS through both queues
+        neighbors = [[1,0],[-1,0],[0,1],[0,-1]]
+        while pacificQueue:
+            cr, cc = pacificQueue.popleft()
+            # check neighbors
+            for ir, ic in neighbors:
+                nr, nc = cr + ir, cc + ic
+                # if neighbor is valid, add to queue and mark as visited
+                if nr >= 0 and nr < rows and nc >= 0 and nc < cols and heights[nr][nc] >= heights[cr][cc] and (nr,nc) not in canReachPacific:
+                    pacificQueue.append((nr,nc))
+                    canReachPacific.add((nr,nc))
+
+        while atlanticQueue:
+            cr, cc = atlanticQueue.popleft()
+            # check neighbors
+            for ir, ic in neighbors:
+                nr, nc = cr + ir, cc + ic
+                # if neighbor is valid, add to queue and mark as visited
+                if nr >= 0 and nr < rows and nc >= 0 and nc < cols and heights[nr][nc] >= heights[cr][cc] and (nr,nc) not in canReachAtlantic:
+                    atlanticQueue.append((nr,nc))
+                    canReachAtlantic.add((nr,nc))
+        
+        result = []
+
+        for row, col in canReachAtlantic:
+            if (row, col) in canReachPacific:
+                result.append([row,col])
+        
+        return result
+
     # ── Attempt · 2026-07-19 ──────────────
     def pacificAtlantic_20260719(self, heights: List[List[int]]) -> List[List[int]]:
         # we start from all the sides
