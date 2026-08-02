@@ -33,6 +33,59 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-08-01 ──────────────
+    def minCostConnectPoints_20260801(self, points: List[List[int]]) -> int:
+        # connecting all points with minimum cost, min spanning tree
+        # Prim's Algorithm
+        # we start with the first node, which is the start of our component
+        # from here, we want to be greedy and find the closest node to our component
+        # add it to our component, then update all unvisited edges if it is smaller than the existing potential edge to attach
+        # repeat until we do it for all nodes
+        # we will start with distance of infinity to all nodes except our starting node
+        # distance[i] represents shortest edge to attach i to the component, so min(distance[i], currentManhattanDistance)
+        
+        size = len(points)
+
+        distance = [math.inf] * size
+        # our starting value will have distance of 0 to itself
+        distance[0] = 0
+
+        # i think we still need visited to say what is in the component so far
+        visited = set()
+
+        def findNext():
+            minValue = math.inf
+            minIndex = math.inf
+            for i in range(size):
+                # we only care for smallest that is not visited
+                if i not in visited:
+                    if distance[i] < minValue:
+                        minValue = distance[i]
+                        minIndex = i
+            return minIndex
+        
+        def updateDistance(nodeIndex):
+            cx, cy = points[nodeIndex][0], points[nodeIndex][1]
+            
+            # go through the points that are not yet in visited
+            # update distance compared to cx, cy
+            for i in range(size):
+                if i not in visited:
+                    nx, ny = points[i][0], points[i][1]
+                    manhattanDistance = abs(cx-nx) + abs(cy-ny)
+                    distance[i] = min(distance[i],manhattanDistance)
+
+        # while we have not connected all nodes to the component
+        while len(visited) != size:
+            # find the smallest distance that is not in visited
+            nextNodeIndex = findNext()
+            # mark it as visited
+            visited.add(nextNodeIndex)
+            # update distance of all unvisited nodes relative to nextNodeIndex
+            updateDistance(nextNodeIndex)
+        
+        return sum(distance) # type: ignore
+
     # ── Attempt · 2026-07-20 ──────────────
     def minCostConnectPoints_20260720(self, points: List[List[int]]) -> int:
         # prim's algorithm to build a MST greedily

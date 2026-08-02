@@ -33,6 +33,50 @@ from typing import List
 
 class Solution:
 
+    # ── Attempt · 2026-08-01 ──────────────
+    def validTree_20260801(self, n: int, edges: List[List[int]]) -> bool:
+        # a graph is a tree iff it is acylic and has exact n - 1 edges to its n nodes
+        # we will do a simple comparison between n and len(edges) to check node and edge property
+        # we will use union find to make sure there is no cycle
+
+        if n - 1 != len(edges):
+            return False
+
+        parentMap = {}
+        rankMap = {}
+
+        for i in range(n):
+            parentMap[i] = i
+            rankMap[i] = 0
+        
+        def find(node):
+            # if not at root parent already, find the root parent
+            if parentMap[node] != node:
+                parentMap[node] = find(parentMap[node])
+            return parentMap[node]
+        
+        def union(n1,n2):
+            n1r = find(n1)
+            n2r = find(n2)
+            # if same root, cycle, return False
+            if n1r == n2r:
+                return False
+            if rankMap[n1r] > rankMap[n2r]:
+                parentMap[n2r] = n1r
+            elif rankMap[n1r] < rankMap[n2r]:
+                parentMap[n1r] = n2r
+            else:
+                parentMap[n2r] = n1r
+                rankMap[n1r]+=1
+            return True
+        
+        # now that our basic union find is written out, we just go through edges to make sure no cycle
+        for n1, n2 in edges:
+            if not union(n1,n2):
+                return False
+        
+        return True
+
     # ── Attempt · 2026-07-18 ──────────────
     def validTree_20260718(self, n: int, edges: List[List[int]]) -> bool:
         # a graph can be a tree if number of nodes = number of edges - 1

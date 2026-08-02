@@ -19,6 +19,16 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🟡 1584. Min Cost to Connect All Points (Prim's) — 2026-08-01
+**Sticking point**: `updateDistance` **assigned** instead of `min`'d, so `distance[i]` quietly meant "distance
+to the node just added" rather than "cheapest edge attaching `i` to the component" — the pre-code comment said
+the former, which is where the bug came from. Secondary: `for i in range(size)` read as meaningless, because
+`i` is a pure round-counter and never a node; `while len(visited) < size` is the honest form. **Rule to carry:
+when an array's meaning is relative to a growing set, the write is a `min`/`max`, never an assignment** — and
+a comment stating an invariant should also state what the invariant *forbids*.
+
+---
+
 ## 🔴 1334. Find the City (Floyd-Warshall) — 2026-07-31 *(NEW — first exposure, became a full teaching session)*
 **Topic**: Floyd-Warshall / all-pairs shortest path. Full note written live:
 [`patterns/techniques/floyd_warshall.md`](../patterns/techniques/floyd_warshall.md).
