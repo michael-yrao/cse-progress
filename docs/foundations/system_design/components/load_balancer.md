@@ -18,9 +18,50 @@
 ## 📋 Core Architectural Configurations
 
 ### 1. Where it sits (L4 vs L7)
-* **L4 (transport)**:
-* **L7 (application)**:
-* **Which one can do the thing you need**:
+> ⚠️ **Taught Aug 1, not derived** — the learner flagged missing networking fundamentals partway through,
+> so this was explained rather than pulled out of them. **Taught, not tested.** Prerequisite card scheduled:
+> `concepts/networking_basics.md`.
+
+**The prerequisite, in one picture.** Your data is wrapped in nested envelopes:
+
+```
+┌─ L3 (IP) ──────── to: 93.184.216.34 ─────────────────────┐
+│ ┌─ L4 (TCP) ───── to: port 443 ──────────────────────┐   │
+│ │  ┌─ L7 (HTTP) ── GET /home, Cookie: route=srv2 ─┐  │   │
+│ │  └────────────────────────────────────────────────┘  │   │
+│ └────────────────────────────────────────────────────┘   │
+└──────────────────────────────────────────────────────────┘
+```
+
+* **L3 / IP — *which machine*.** The street address.
+* **L4 / TCP — *which program on it*, plus reliable delivery.** The port is the apartment number (443 = web
+  server, 5432 = Postgres). TCP is also what makes a "connection" exist — it splits data into packets,
+  numbers them, and reassembles them in order.
+* **L7 / HTTP — *the message itself*.** URLs, headers, cookies.
+
+**"L4 LB" and "L7 LB" just mean how many envelopes it opens.**
+
+* **L4 (transport)**: reads source/destination IP and port, forwards the packets, never looks inside. It
+  doesn't know or care whether the payload is HTTP.
+* **L7 (application)**: must **terminate the connection** — accept the TCP connection itself, wait for
+  enough packets, reassemble the HTTP request, parse the headers — and only then open a **second, separate
+  connection** to the chosen backend and relay it.
+
+**The mental image: L4 is a mail sorter reading the envelope. L7 opens the letter and reads it.**
+Every trade below falls out of that one difference:
+
+| | **L4** | **L7** |
+|---|---|---|
+| Sees | IP + port | URL, headers, cookies, method |
+| Connections | one flow, forwarded | **two** — client↔LB, LB↔server |
+| TLS | passes encrypted bytes through untouched | must **decrypt** to read anything |
+| Cost | very fast, minimal CPU | real per-request work |
+| Unlocks | nothing content-based | **cookie stickiness**, path routing (`/api`→svc A), header routing, compression, rewriting |
+
+* **Which one can do the thing you need**: **anything that depends on request *content* requires L7.**
+  The sharpest instance is in §3 — **sticky sessions require L7**, because a cookie is written on the letter
+  and an L4 device never opens the envelope. Conversely, if you're balancing a non-HTTP protocol, or you want
+  the lowest possible added latency and TLS passed straight through, L4 is the right answer.
 
 ---
 
@@ -28,6 +69,19 @@
 
 > Read top to bottom. Each one is a repair of the one above it, except IP hash, which
 > solves a different problem entirely.
+
+**Vocabulary.** The family is called **load balancing algorithms** — also *server selection*, *routing
+strategy*, or *distribution algorithm*. It splits in two, and the split is why this ladder has a
+discontinuity at IP hash:
+
+| Family | Members | Goal | Accepts |
+|---|---|---|---|
+| **Load-aware distribution** | round robin · least connections | spread work evenly; any server will do | no affinity — a client can land anywhere |
+| **Affinity / key-based routing** | IP hash · consistent hashing | same key always reaches the same server | **load-blindness** — that's the price, not a bug |
+
+**Say it this way in an interview:** *the first family optimizes throughput; the second optimizes cache
+locality and session continuity.* IP hash is therefore not a better round robin — it is a different
+question being answered.
 
 ### Round robin
 * **Picks by:** picks sequentially around and around
@@ -112,12 +166,95 @@ key's destination, so changing N rewrites the whole mapping.
   it did meet the stated constraints)*: under next-upward a new node carves its arc out of **one**
   neighbour. Under closest it takes from **two**, and the clean one-neighbour bound disappears.
 
+### Virtual nodes *(the repair for consistent hashing's own weakness)*
+> ⚠️ **Taught Aug 1, not derived.** The learner named "virtual nodes" but not the mechanism, which was
+> supplied. What *was* theirs: correctly segmenting the 120/130/140 ring into its three arcs, including
+> the wrap. Same status as consistent hashing above — **taught, not tested.**
+
+**The problem it repairs.** Consistent hashing killed the 75% remap, but *where* a server lands on the ring
+is the hash function's choice, not yours. Three servers hashing to **120, 130, 140** is not exotic — with few
+servers, clumping is typical, not unlucky:
+
+| Server | Owns | Share |
+|---|---|---|
+| **120** | `141…999, 0…120` *(wraps)* | **98%** 🔥 |
+| 130 | `121…130` | 1% |
+| 140 | `131…140` | 1% |
+
+A server owns the arc *below* it, so 120 sits at the top of the 980-wide gap around the back.
+
+**The mechanism: don't hash a server once — hash it many times under different labels.**
+
+```
+"ServerA#0" → 45     "ServerA#1" → 310    "ServerA#2" → 620    "ServerA#3" → 880
+```
+
+Four different strings ⟹ four unrelated positions, all pointing at **one physical machine**. The ring just
+records which server each point belongs to. **Lookup is completely unchanged** — a key walks upward, hits a
+point, and the point names its server.
+
+**Why it works:** 3 random points can land 10 apart by bad luck; 450 random points cannot *all* clump. Long
+and short arcs average out across the many copies each server owns. Production uses **~100–200 virtual nodes
+per server**.
+
+**Cost — and the load-bearing distinction is *when* it's paid:**
+
+| | Cost |
+|---|---|
+| Build the ring | `N × V` hashes, **once** (and again only on join/leave) |
+| Memory | `N × V` ring entries — 10 servers × 150 = 1500, nothing |
+| **Per request** | **one hash + one binary search, `O(log(N × V))`** |
+
+`N` = physical servers, `V` = virtual nodes each. The `log` goes from `log 10` (~4 comparisons) to `log 1500`
+(~11) — irrelevant next to a network hop. **The 150× is setup cost, not request cost**, which is the whole
+reason this is affordable.
+
 ---
 
 ### 3. Sticky sessions
-* **What it is**:
-* **What it buys**:
-* **What it costs**:
+> ✅ **Learner-derived Aug 1**, apart from the stateless-servers conclusion, which was asked for and taught.
+> Both failure modes below (IP changes · NAT collision) and the cookie mechanism came from the learner.
+
+* **The problem.** Round robin sends a logged-in user to a server that never created their session. The app
+  sees no valid session, makes an empty one, and bounces them to the login page. Symptom: **random logouts
+  every few clicks.**
+
+* **First instinct — IP hash / consistent hashing.** Correct family (affinity), wrong identity. Two mirror
+  failures, and they're the ones an interviewer probes:
+
+  | Failure | What happens |
+  |---|---|
+  | **IP changes** — phone leaves wifi for cellular | new IP ⟹ new hash ⟹ new server ⟹ logged out anyway |
+  | **IPs collide** — 2,000 staff behind one corporate NAT | one IP, one hash, **all 2,000 on one server** (this *is* the key-skew row above) |
+
+  **The lesson:** IP is borrowed from the network layer, and the network layer promises neither stability
+  nor uniqueness.
+
+* **What it is.** The LB sets **its own cookie** on the first response (nginx `route=srv2`, AWS ALB
+  `AWSALB`) naming the target server; every later request carries it back and the LB routes on it.
+  **The identity is issued by the LB, not borrowed** — so it survives an IP change and doesn't collapse
+  under NAT.
+
+* **What it buys.** Session-affinity that actually holds, and local in-RAM session state keeps working.
+
+* **What it costs.**
+  * **Server dies ⟹ its sessions die with it.** Everyone stuck to it is logged out at once.
+  * **Load skews over time.** Sessions accumulate on long-lived servers, and a **newly added server gets no
+    existing traffic** — scaling out stops giving immediate relief.
+  * **Requires an L7 LB**, since reading a cookie means parsing HTTP (see §1).
+
+* **⭐ The senior answer: sticky sessions are a workaround. Make the servers stateless instead.**
+  The LB was never the problem — the problem is that session state lives in one server's RAM, which makes
+  machines **non-interchangeable**, and non-interchangeable machines are what force affinity. Move session
+  state to a shared store (Redis) and any server can serve any request. Stickiness becomes unnecessary and
+  you get everything back: round robin, even load, instant benefit from scale-out, no session loss on death.
+
+  **Same shape as the rate limiter derivation** — three servers each with a local counter → *"put the counter
+  where all three can see it."* Identical move, identical answer. **Local state is the disease; affinity is
+  the painkiller.**
+
+  *(Second option, not yet covered: put the session data **in** the signed cookie itself — JWT-style — so
+  there's no lookup at all. Owed to a later session.)*
 
 ## 📊 Quick-reference (fill last — one line per cell, for scanning mid-interview)
 

@@ -59,14 +59,16 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/dsa/mastery/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **101** problems &nbsp;·&nbsp; **110** solutions &nbsp;·&nbsp; **377** attempts
+> **101** problems &nbsp;·&nbsp; **110** solutions &nbsp;·&nbsp; **379** attempts
 
 | | 🏆 Retired | 🎓 Graduated | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|:---:|
-| **Solutions** | 0 | 2 | 88 | 18 | 2 |
+| **Solutions** | 0 | 2 | 89 | 17 | 2 |
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|---|
+| Medium | [1584. Min Cost to Connect All Points (Prim's MST)](https://leetcode.com/problems/min-cost-to-connect-all-points/) | 🟡 | 0 | 2026-08-11 | 2026-08-01 | 2026-07-16, 2026-07-18, 2026-07-20, 2026-08-01 |
+| Medium | [261. Graph Valid Tree (Union-Find)](https://leetcode.com/problems/graph-valid-tree/) | 🟢 | 1 | 2026-08-31 | 2026-08-01 | 2026-06-19, 2026-06-29, 2026-07-09, 2026-07-18, 2026-08-01 |
 | Easy | [543. Diameter of Binary Tree](https://leetcode.com/problems/diameter-of-binary-tree/) | 🟢 | 1 | 2026-08-30 | 2026-07-31 | 2026-04-30, 2026-06-02, 2026-06-12, 2026-06-14, 2026-06-24, 2026-06-26, 2026-07-20, 2026-07-31 |
 | Medium | [503. Next Greater Element II](https://leetcode.com/problems/next-greater-element-ii/) | 🟡 | 0 | 2026-08-10 | 2026-07-31 | 2026-07-11, 2026-07-21, 2026-07-31 |
 | Medium | [417. Pacific Atlantic Water Flow (BFS)](https://leetcode.com/problems/pacific-atlantic-water-flow/) | 🟢 | 1 | 2026-08-30 | 2026-07-31 | 2026-06-11, 2026-07-19, 2026-07-31 |
@@ -109,7 +111,6 @@ Notes for future agents:
 | Medium | [3. Longest Substring Without Repeating Characters](https://leetcode.com/problems/longest-substring-without-repeating-characters/) | 🟢 | 1 | 2026-08-22 | 2026-07-23 | 2026-04-17, 2026-07-23 |
 | Easy | [242. Valid Anagram](https://leetcode.com/problems/valid-anagram/) | 🟢 | 2 | 2026-09-20 | 2026-07-22 | 2026-01-01, 2026-03-25, 2026-06-22, 2026-07-22 |
 | Hard | [127. Word Ladder (BFS)](https://leetcode.com/problems/word-ladder/) | 🟡 | 0 | 2026-07-31 | 2026-07-21 | 2026-07-18, 2026-07-21 |
-| Medium | [1584. Min Cost to Connect All Points (Prim's MST)](https://leetcode.com/problems/min-cost-to-connect-all-points/) | 🟡 | 0 | 2026-07-30 | 2026-07-20 | 2026-07-16, 2026-07-18, 2026-07-20 |
 | Medium | [1448. Count Good Nodes in Binary Tree](https://leetcode.com/problems/count-good-nodes-in-binary-tree/) | 🟢 | 1 | 2026-08-19 | 2026-07-20 | 2026-05-15, 2026-06-18, 2026-07-10, 2026-07-20 |
 | Easy | [206. Reverse Linked List (Iterative)](https://leetcode.com/problems/reverse-linked-list/) | 🟢 | 2 | 2026-09-18 | 2026-07-20 | 2026-04-23, 2026-05-26, 2026-06-12, 2026-06-20, 2026-07-20 |
 | Easy | [21. Merge Two Sorted Lists (Recursion)](https://leetcode.com/problems/merge-two-sorted-lists/) | 🟢 | 2 | 2026-09-18 | 2026-07-20 | 2026-05-20, 2026-05-21, 2026-06-12, 2026-06-20, 2026-07-20 |
@@ -118,7 +119,6 @@ Notes for future agents:
 | Easy | [226. Invert Binary Tree](https://leetcode.com/problems/invert-binary-tree/) | 🟢 | 2 | 2026-09-18 | 2026-07-20 | 2026-04-30, 2026-05-26, 2026-06-25, 2026-07-20 |
 | Medium | [102. Binary Tree Level Order Traversal](https://leetcode.com/problems/binary-tree-level-order-traversal/) | 🟢 | 2 | 2026-09-17 | 2026-07-19 | 2026-05-03, 2026-06-12, 2026-07-19 |
 | Easy | [283. Move Zeroes](https://leetcode.com/problems/move-zeroes/) | 🟢 | 2 | 2026-09-17 | 2026-07-19 | 2026-01-10, 2026-04-02, 2026-06-02, 2026-06-12, 2026-07-19 |
-| Medium | [261. Graph Valid Tree (Union-Find)](https://leetcode.com/problems/graph-valid-tree/) | 🟡 | 0 | 2026-07-28 | 2026-07-18 | 2026-06-19, 2026-06-29, 2026-07-09, 2026-07-18 |
 | Medium | [200. Number of Islands (BFS)](https://leetcode.com/problems/number-of-islands/) | 🟢 | 2 | 2026-09-16 | 2026-07-18 | 2026-05-30, 2026-06-01, 2026-06-07, 2026-07-18 |
 | Medium | [208. Implement Trie (Prefix Tree)](https://leetcode.com/problems/implement-trie-prefix-tree/) | 🟢 | 1 | 2026-08-16 | 2026-07-17 | 2026-07-06, 2026-07-08, 2026-07-17 |
 | Medium | [75. Sort Colors (Dutch Flag)](https://leetcode.com/problems/sort-colors/) | 🟢 | 1 | 2026-08-16 | 2026-07-17 | 2026-01-08, 2026-04-01, 2026-05-26, 2026-05-28, 2026-06-28, 2026-07-08, 2026-07-17 |
