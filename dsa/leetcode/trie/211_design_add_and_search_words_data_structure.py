@@ -23,6 +23,54 @@ Constraints:
 """
 
 
+# ── Attempt · 2026-08-02 ──────────────
+# NOTE: suffix any helper class you write (Node, TrieNode, …) with _20260802 too — an undated helper collides with the restored canonical one.
+class TrieNode:
+    def __init__(self):
+        # maps char to a TrieNode
+        self.children = {}
+        # tells us if this node is end of a word
+        self.isWord = False
+
+class WordDictionary_20260802:
+
+    def __init__(self):
+        self.root = TrieNode()
+
+    def addWord(self, word: str) -> None:
+        traversal = self.root
+        for char in word:
+            if char not in traversal.children:
+                traversal.children[char] = TrieNode()
+            traversal = traversal.children[char]
+        traversal.isWord = True
+
+    def search(self, word: str) -> bool:
+        # any wildcard character, we need to look at all its children and DFS
+        # otherwise, it is the safe as regular search for word
+        traversal = self.root
+        def dfs(node,index):
+            # go through the chars in the word
+            for i in range(index,len(word)):
+                # if char is wildcard, we do the dfs
+                if word[i] == '.':
+                    # go through each children
+                    for trieNode in node.children.values():
+                        # skip current index
+                        if dfs(trieNode,i+1):
+                            return True
+                    # went through all nodes and didn't find anything, return False
+                    return False
+                elif word[i] in node.children:
+                    # exact match
+                    node = node.children[word[i]]
+                else:
+                    # no match at all
+                    return False
+            return node.isWord
+        
+        return dfs(traversal,0)
+
 # ── Attempt · 2026-07-23 ──────────────
 # NOTE: suffix any helper class you write (Node, TrieNode, …) with _20260723 too — an undated helper collides with the restored canonical one.
 class TrieNode_20260723:

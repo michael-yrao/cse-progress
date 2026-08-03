@@ -6,6 +6,18 @@ import subprocess
 from datetime import datetime, timedelta
 from pathlib import Path
 
+import session_date
+
+# Session "now", resolved once in main(). A study session that crosses midnight keeps
+# its START date, so stamping attempt dates from the wall clock silently mis-dates every
+# row written after 00:00 — see scripts/session_date.py and feedback_session_dating.
+_SESSION_NOW: datetime | None = None
+
+
+def session_now() -> datetime:
+    """The session's 'today'. Use this instead of datetime.now() for anything stamped."""
+    return _SESSION_NOW or session_date.resolve_datetime()
+
 # --- Configuration -----------------------------------------------------------
 # Defaults reproduce cse-progress's original behavior exactly. cse.config.yml (if
 # present at the repo root) overrides intervals, source root, and solution globs.
@@ -368,7 +380,7 @@ def fill_current_date_for_staged_rows(
         return 0
 
     staged_numbers = get_staged_problem_numbers(staged_files) if staged_files else set()
-    now = datetime.now()
+    now = session_now()
     updated_count = 0
 
     for row in table_rows:
@@ -445,7 +457,7 @@ def discover_source_problems(existing_titles: set[str], staged_files: list[Path]
         paths = staged_files
 
     use_today = staged_files is not None
-    now = datetime.now() if use_today else None
+    now = session_now() if use_today else None
 
     existing_numbers = {
         extract_problem_number(title)
@@ -651,7 +663,18 @@ def main() -> None:
         help="Extra same-format tracker(s) to recompute + re-sort without source "
         "discovery (e.g. the System Design / AI progress files). Repeatable.",
     )
+    parser.add_argument(
+        "--date",
+        default=None,
+        help="Session date (YYYY-MM-DD or YYYYMMDD) used to stamp attempt dates. "
+        "Default = auto-detected session date, which past midnight is YESTERDAY when a "
+        "session is in progress. The pre-commit hook passes nothing, so detection is "
+        "what actually protects a past-midnight commit.",
+    )
     args = parser.parse_args()
+
+    global _SESSION_NOW
+    _SESSION_NOW = session_date.resolve_datetime(args.date)
 
     staged_files = None
     markdown_staged = False

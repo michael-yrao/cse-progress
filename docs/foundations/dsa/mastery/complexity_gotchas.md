@@ -37,6 +37,8 @@ Jul 29 (235), where **time** was the wrong one and space was right — see the t
 
 | **Partitioned work (time)** | a loop over *groups* with a sort/scan **inside** each group | *"does every group see the whole input, or a slice of it?"* | **Add, don't multiply.** Groups partition the input, so `Σ kᵢ = E` and the total is `Σ kᵢ log kᵢ ≤ E log E` — **not** `groups × E log E`. More groups forces smaller groups; the two are coupled, not independent. Bound is tight when one group holds everything. Reductio: 12 singleton groups would cost `12 × 12log12` ≈ 516 ops to sort 12 items whose true cost is 0 |
 | **Tree height (time *and* space)** | walking down one path of a tree — BST descent, insert, search | *"balanced, or is a chain also legal here?"* | **O(h)** — `O(log n)` **only if balanced**, `O(n)` degenerate. "It's a BST" does not give you balance; a chain like `1→2→3→4` (all right children) is a legal BST — *a sorted list in tree form*. Balance is an **assumption you state**, not a freebie |
+| **Branching factor (time)** | a `for child in node.children` that **recurses**, sitting next to a branch that recurses on **one** child | *"at this character, how many children do you step into — one, or all of them?"* | **O(b^d · L)** where `b` = fan-out, `d` = how many times you fan out. Fan-out **does not accumulate across the walk** — a step that picks one child collapses the paths back to one. Only *consecutive* fan-outs compound. Read `d` off the **constraints**, not off `L` |
+| **Sequential fan-out (space)** | same `for`-loop recursion as above | *"how many of those paths are alive at once?"* | **O(depth), not O(b^d)** — DFS walks one path to the bottom, returns, and **reuses the frames**. Explored-sequentially branching is a *time* cost only. You'd pay it in space only by holding all paths simultaneously (BFS with a queue) |
 
 **⚠ Consistency check — the two bounds must agree.** On a single downward walk, the recursion stack's
 depth **is** the number of steps taken, so time and space are the *same* bound. Answering `O(log n)`
@@ -82,7 +84,7 @@ A problem in this table has used its one free complexity miss. The **next** miss
 | Problem | Category | Said → Actual | First-miss date | Freebie |
 |---|---|---|---|---|
 | 242 Valid Anagram | fixed-alphabet array (space) | O(n) → **O(1)** | 2026-07-22 | spent |
-| 778 Swim in Rising Water | 2D structure (space) | O(n) → **O(n²)** | 2026-07-23 | spent |
+| 778 Swim in Rising Water | 2D structure (space) | O(n) → **O(n²)** | 2026-07-23 | **spent → REPEAT MISS 2026-08-02 (capped that rep at 🟡)** |
 | 206 Reverse Linked List (Recursion) | recursion stack (space) | O(1) → **O(n)** | 2026-07-24 | spent |
 | 567 Permutation in String | fixed-alphabet array (space) | O(n) → **O(1)** | 2026-07-24 | spent |
 | 229 Majority Element II | bounded structure (space) | O(n) → **O(1)** (map capped at ≤2) | 2026-07-24 | spent |
@@ -107,9 +109,60 @@ sub-errors, neither of them the ceiling:
 **Cue for next time:** after you name a ceiling, immediately ask *"does this number move when the input
 gets 1000× bigger?"* — if no, write O(1) and stop. And when timing a build step, count **what you
 touch**, not **what you produce**.
+
+**⚠️ 778's repeat miss (Aug 2) is the SAME cue fired in the opposite direction — and that symmetry is the
+lesson.** The rep's outer loop increments `time` one unit at a time until the heap drains, so its iteration
+count is bounded by the largest elevation in the grid. Asked what that costs, the learner answered
+**"n ≤ 50 and `grid[i][j] < n² = 2500`, so it's constant"** — and held that answer when asked directly
+whether it still stood at n = 1000.
+
+- **The ceiling here MOVES.** `2500` is `n²`, not a literal. At n = 1000 it is 1,000,000. So the loop is
+  `O(n²) = O(N)` — dominated by the heap's `O(N log N)`, which is why the final bound was right anyway.
+  **Being right about the bound while wrong about the term is exactly what the itemized why-clause exists
+  to catch**; a bare "O(N log N)" would have passed.
+- **The discriminator against 269:** 269's `26` is fixed by the **alphabet**, so it is genuinely `O(1)`.
+  778's `2500` is fixed by **n**, so it is not. *Same question, opposite answer* — the question is never
+  "is there a stated ceiling?", it is **"is the ceiling a function of the input?"**
+- **The test that settles it in one line — the argument proves too much.** If "n ≤ 50, therefore constant"
+  were valid, then `N ≤ 2500` too and the entire function is `O(1)`. Any reasoning that collapses the whole
+  analysis to `O(1)` has just told you it is the wrong reasoning. **Reach for this whenever a constraint
+  from the problem statement is doing the work in a complexity claim.**
+
+**⚠️ MULTIPLY-VS-ADD is now a three-occurrence pattern (Jul 30 · Aug 1 · Aug 2) and the direction is what's
+unstable — the concept is demonstrably present.** On **721** (Jul 30) the learner challenged the sort bound
+*unprompted* — *"isn't it `O(N · E log E)`?"* — and resolved it correctly via `Σ kᵢ = E`. On **1584** (Aug 1)
+the same trap ran the other way: `(V-1)·(V-2)·…·1`, which is `V!`, for work that **sums** to `V(V-1)/2 = O(V²)`.
+On **271** (Aug 2) again: `O(N·n)` for per-string slices whose costs **sum** to `N`.
+
+**Cue:** work done across *successive iterations* **accumulates → add**. It **multiplies** only when one loop
+runs fully **inside** another, i.e. the inner work repeats *per* outer step rather than dividing the total
+between steps. Test to say aloud: *"does each iteration handle a **share** of the input, or **all** of it?"* —
+a share means sum, all of it means product.
+
+**⚠️ 211 (Aug 2) is a FOURTH occurrence, in a new shape: multiplying two *ceilings* rather than two loops.**
+Asked to tighten the wildcard bound using the "at most 2 dots" constraint, the learner answered `O(n·N)` —
+the product of the search-word length and the whole trie. The two prior shapes were about loop nesting; this
+one has no second loop at all. It is reflex reaching for `×` whenever two symbols are in play.
+
+**The sanity check that kills it instantly, and it's free: compare the answer to the ceilings you already
+have.** `O(N)` was already established as a true upper bound. `O(n·N)` is *larger than `O(N)`* — so it cannot
+be a tightening, and a bound that exceeds a bound you already proved is wrong on arithmetic alone, before
+any algorithmic reasoning. **Direction is checkable without understanding the algorithm.** Add to the gate:
+after stating a bound, ask *"is this bigger or smaller than the last bound I gave, and is that the direction
+I intended?"* — a constraint that **restricts** the input can only move a bound **down**.
+
+Related and worth keeping separate: fan-out is a **time** cost, not a **space** one (see the two new
+Branching-factor rows above). 676 paths, but only one alive at a time.
+
+**⚠️ UNIT-OF-WORK is now a two-occurrence pattern (721 Jul 30 · 271 Aug 2 ×2).** Both times the count used was
+the number of **containers** (accounts, strings) when the work is per **element inside** them (emails,
+characters). **Cue: before naming `n`, ask "what does one unit of work touch?"** — if a single "item" can hold
+200 characters, the item is not the unit.
 | 18 Four Sum | combination-holding structure (space) | `resultSet` O(n) → **O(n³)** worst case. Verified by running the learner's own code on `[-m…m]`, target 0: n=101 → **27,369** entries (271× n), and n 51→101 multiplies the count by 8.1 ≈ 2³ | 2026-07-27 | spent |
 | 721 Accounts Merge | **passed the gate — asked to be taught** (not a miss; carded so the next rep is asked cold) | Whole analysis taught: the unit is **total emails E**, not accounts N; DSU with rank + path compression is `O(α(N))` ≈ free; **time `O(E log E)`** (the sort dominates). Learner then derived both bounds correctly, incl. `O(E+N) → O(E)` (constraints guarantee ≥1 email/account) and the `O(log N)` `find` stack. **Then challenged the sort bound unprompted** — *"isn't it `O(N · E log E)`?"* — the multiply-vs-add trap; resolved via `Σ kᵢ = E`, tight when one group holds everything | 2026-07-30 | **1 of 2** *(new-problem double freebie)* |
 | 1584 Min Cost Connect Points | **Multiply-vs-add on accumulated loop work** (time) | Right bound `O(V²)`, wrong derivation: wrote `(V-1)*(V-2)*…*1`, which is **V!**, not V². Work across rounds **accumulates**, it doesn't compound → `(V-1)+(V-2)+…+1 = V(V-1)/2 = O(V²)`. ⚠️ **Same trap the learner caught *unprompted* on 721 the other direction** (Jul 30) — so the concept is there and the slip is directional. Cleaner framing to reach for: **V rounds × two O(V) scans**. Bonus payoff: complete graph ⟹ `E ≈ V²`, so the array version is `O(V²) = O(E)` while a heap would be `O(E log V)` — *worse* | 2026-08-01 | spent |
+| 271 Encode and Decode Strings | **unit-of-work** (time, ×2) + **immutable-string concatenation** (time) + **multiply-vs-add** (time) | Three misses, one rep, one freebie. (a) Counted `n` = **number of strings** for both `encode` and `decode`; the unit is **N = total characters** — *same correction taught on 721 four days earlier* (the unit is total emails, not accounts). (b) Assumed `result += string` is O(1); Python strings are **immutable**, so each `+=` copies everything built so far → naive loop is **O(N²)**, fixed to O(N) with `"".join`. (c) On `decode`'s slices, gave **O(N·n)** where the per-string copies **sum** to N | 2026-08-02 | spent |
+| 211 Add and Search Words | **branching factor** (time) — multiplied two ceilings that don't compose | Asked for the ≤2-dot bound, gave **`O(n·N)`** — bigger than *either* input ceiling, for a restriction that makes the bound **smaller**. Actual **`O(26^d · L)` → `O(L)`** with `d ≤ 2` (676 as a constant). Everything else was right, incl. the all-dots `O(N)` ceiling *with the correct argument* (a node sits at a fixed depth and `index` advances one per level, so no node is ever visited twice), and both space terms — trie `O(N)`, stack `O(L)` | 2026-08-02 | spent |
 | 235 LCA of a BST | **"BST" read as "balanced"** (time *and* space, inconsistently) | Gave `O(n)` space for the recursion stack but `O(log n)` time — the two **contradict**, since stack depth *is* the number of steps walked down. `log n` needs *balance*, which the constraints never promise. Counterexample: `1→2→3→4` all as right children is a legal BST; the mental image is **a sorted list in tree form**. True bound is **O(h)** — `O(log n)` balanced, `O(n)` degenerate | 2026-07-29 | spent |
 
 <!-- Add a row on every first-time complexity miss. A repeat miss on a problem ALREADY here caps that

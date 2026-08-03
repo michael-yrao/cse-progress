@@ -56,3 +56,19 @@ area?"; **returns a built structure** → "counting the output or extra-only?".
 
 The card thus **teaches forward on new problems and tests on reviews**; the trigger→cue map lives in
 [`complexity_gotchas.md`](../../docs/foundations/dsa/mastery/complexity_gotchas.md).
+
+## ⚠️ WHEN it fires (added 2026-08-02, after the gate was skipped entirely on 211)
+
+The gate is **step 1 of CLAUDE.md's LeetCode Review Workflow** — ahead of the schedule mark and ahead of
+the rating. It was moved there because keeping it *only* here, as a precondition to a workflow that didn't
+list it, meant the workflow could reach the rating step without it — and did. Step 3's 🟢 definition
+requires *"correct complexity"*, so the list was consuming an input it never gathered.
+
+- **It fires on the rep, not on the ritual.** 211 arrived as *"whats the issue with my code here"* — no
+  `new_problem.py` call, no kickoff, no front-gate. None of the usual cues fired, and the gate went with
+  them. **The trigger is: am I about to propose a comfort rating?** If yes, the gate is already overdue.
+- **The failure is silent, which is why it needs to be a step.** A skipped gate leaves every artifact
+  looking correct — no wrong date, no unstaged file, nothing that surfaces later. Only the learner can
+  catch it, in the moment, and on 211 that is exactly what happened.
+- **Late is better than never, but say so.** Running it after the rating means their confirmation was
+  given on incomplete information — re-check whether the miss changes the rating and tell them either way.

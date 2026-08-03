@@ -34,10 +34,55 @@ Constraints:
 # Write everything yourself from here — including any ListNode/TreeNode classes a
 # problem needs. No shared data-model imports (whiteboard fidelity).
 import heapq
+import math
 from typing import List, Optional
 
 
 class Solution:
+
+    # ── Attempt · 2026-08-02 ──────────────
+    def swimInWater_20260802(self, grid: List[List[int]]) -> int:
+        # from our starting point, it seems like we go in the direction that has the min
+        # but this fails if the min goes to a dead end so we need to add nodes from neighbors
+        # into a minHeap, so either Dijkstra or Prims but Prims doesn't have a source/destination
+        # so this is a Dijkstra style BFS 
+        # the result is also the biggest node traversed along the way instead of summing
+        # 
+
+        rows, cols = len(grid), len(grid[0])
+        # holds (value, row, col)
+        minHeap = []
+        # holds nodes we already traversed
+        visited = set()
+        # need time to count how far we can go
+        time = 0
+
+        # add starting node
+        heapq.heappush(minHeap, (grid[0][0],0,0))
+
+        neighbors = [[1,0],[-1,0],[0,1],[0,-1]]
+
+        while minHeap:
+            # if current time allows us to continue running through the minHeap, we use the node
+            while minHeap and time >= minHeap[0][0]:
+                currentValue, cr, cc = heapq.heappop(minHeap)
+                # add node to visited
+                visited.add((cr,cc))
+                # add neighbors to minHeap
+                for ir, ic in neighbors:
+                    nr = cr + ir
+                    nc = cc + ic
+                    # add neighbors to minHeap
+                    if nr >= 0 and nr < rows and nc >= 0 and nc < cols and (nr,nc) not in visited:
+                        # if we are reaching the end on this neighbor
+                        # return the max
+                        if nr == rows - 1 and nc == cols - 1:
+                            return max(time, grid[nr][nc])
+                        heapq.heappush(minHeap,(grid[nr][nc],nr,nc))
+            time+=1
+        
+        return 0
+
     # ── Attempt 1 · 2026-07-23 ────────────────────────────────────────────
     def swimInWater(self, grid: List[List[int]]) -> int:
         # in example 2, we see that we will wait 11 iterations to go to the closest one
