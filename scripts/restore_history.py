@@ -23,6 +23,7 @@ attempt-has-body guard applied. No stash is involved for those — the code neve
 from __future__ import annotations
 
 import argparse
+import ast
 import re
 from datetime import datetime
 from pathlib import Path
@@ -102,7 +103,47 @@ def detect_session_stamp() -> str | None:
     return max(stamps) if stamps else None
 
 
-def restore_stash(stash: Path, stamp: str | None, dry_run: bool) -> str | None:
+def duplicate_top_level_names(text: str) -> list[tuple[str, list[int]]]:
+    """Top-level classes/functions defined more than once, as (name, line numbers).
+
+    Why this check exists. Restore pastes the prior attempts back as a **verbatim line
+    slice** and deliberately never parses their shape — that opacity is the invariant
+    that keeps it working across dated methods, dated sibling classes and trailing
+    unittest blocks. The cost is that it cannot notice when the merge lands two classes
+    with the SAME name in one file, and Python silently binds the LAST one: today's
+    attempt then runs a *previous attempt's* helper class.
+
+    The scaffold banner already asks the learner to date their helpers
+    (`TrieNode_20260802`), but a banner is prose, and on 2026-08-02 in problem 211 it was
+    skipped — today's undated `TrieNode` was shadowed by the Jul 21 one. The classes
+    happened to be identical, so nothing crashed, which is the bad case: silently wrong.
+
+    Checking the merged text is cheap, needs no knowledge of the slice's shape, and so
+    doesn't weaken the invariant above — it reads the RESULT, not the parts.
+    """
+    try:
+        tree = ast.parse(text)
+    except SyntaxError:
+        return []  # a file mid-edit is not this check's problem
+    seen: dict[str, list[int]] = {}
+    for node in tree.body:
+        if isinstance(node, (ast.ClassDef, ast.FunctionDef, ast.AsyncFunctionDef)):
+            seen.setdefault(node.name, []).append(node.lineno)
+    return [(name, lines) for name, lines in seen.items() if len(lines) > 1]
+
+
+def collision_warnings(path: Path, text: str) -> list[str]:
+    """Human-readable warnings for duplicate definitions in `text`."""
+    return [
+        f"{path}: '{name}' defined {len(lines)}× (lines {', '.join(map(str, lines))}) — "
+        f"Python binds the LAST one, so the newest attempt may be running an older "
+        f"attempt's helper. Suffix the newest with its date."
+        for name, lines in duplicate_top_level_names(text)
+    ]
+
+
+def restore_stash(stash: Path, stamp: str | None, dry_run: bool,
+                  warnings: list[str]) -> str | None:
     """Paste `stash` back into its source file. Returns a skip reason, or None if restored."""
     m = re.match(r"(\d+)_", stash.name)
     if not m:
@@ -115,15 +156,20 @@ def restore_stash(stash: Path, stamp: str | None, dry_run: bool) -> str | None:
     if stamp is not None and not attempt_has_body(src_lines, stamp):
         return f"attempt {stamp} still empty — keeping stash out"
 
+    body = strip_pointer(src_lines)                 # drop the breadcrumb
+    merged = body + [""] + stash.read_text(encoding="utf-8").splitlines()
+    text = "\n".join(merged).rstrip() + "\n"
+    # Checked on --dry-run too: the whole point is to see the collision BEFORE it lands.
+    warnings.extend(collision_warnings(src, text))
+
     if not dry_run:
-        body = strip_pointer(src_lines)             # drop the breadcrumb
-        merged = body + [""] + stash.read_text(encoding="utf-8").splitlines()
-        src.write_text("\n".join(merged).rstrip() + "\n", encoding="utf-8")
+        src.write_text(text, encoding="utf-8")
         stash.unlink()
     return None
 
 
-def strip_legacy_region(path: Path, stamp: str | None, dry_run: bool) -> str | None:
+def strip_legacy_region(path: Path, stamp: str | None, dry_run: bool,
+                        warnings: list[str]) -> str | None:
     """Strip a pre-stash `# region` fold from `path`. Returns a skip reason, or None if done."""
     text = path.read_text(encoding="utf-8")
     if REGION_HEAD not in text:
@@ -131,8 +177,10 @@ def strip_legacy_region(path: Path, stamp: str | None, dry_run: bool) -> str | N
     lines = text.splitlines()
     if stamp is not None and not attempt_has_body(lines, stamp):
         return f"attempt {stamp} still empty — keeping the fold"
+    unfolded = "\n".join(strip_spoiler_region(lines)) + "\n"
+    warnings.extend(collision_warnings(path, unfolded))
     if not dry_run:
-        path.write_text("\n".join(strip_spoiler_region(lines)) + "\n", encoding="utf-8")
+        path.write_text(unfolded, encoding="utf-8")
     return None
 
 
@@ -156,18 +204,18 @@ def main() -> None:
               f"wall clock is {datetime.now().strftime('%Y%m%d')}).")
     stamp = None if args.all else session_date
     verb = "Would restore" if args.dry_run else "Restored"
-    done, kept = [], []
+    done, kept, warnings = [], [], []
 
     # 1. Restore stashes written by the new extract path.
     hist = history_dir()
     if hist.exists():
         for stash in sorted(hist.glob("*.txt")):
-            reason = restore_stash(stash, stamp, args.dry_run)
+            reason = restore_stash(stash, stamp, args.dry_run, warnings)
             (kept if reason else done).append((stash, reason))
 
     # 2. Migrate any legacy folded files (their code never left the file).
     for path in sorted(source_root().glob("*/*.py")):
-        reason = strip_legacy_region(path, stamp, args.dry_run)
+        reason = strip_legacy_region(path, stamp, args.dry_run, warnings)
         if reason == "no region":
             continue
         (kept if reason else done).append((path, reason))
@@ -178,6 +226,13 @@ def main() -> None:
         print(f"Kept {target} ({reason})")
     if not done:
         print("Nothing to restore.")
+
+    # Surface loudly and last, so it survives a wall of "Restored ..." lines. Not fatal:
+    # the paste itself is correct and the rename is the learner's to make (their code).
+    if warnings:
+        print(f"\n⚠️  {len(warnings)} name collision(s) in the merged file(s):")
+        for warning in warnings:
+            print(f"   - {warning}")
 
 
 if __name__ == "__main__":
