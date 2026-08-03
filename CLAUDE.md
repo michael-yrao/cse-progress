@@ -2,75 +2,18 @@
 
 ## Repo Setup (one-time per machine/clone)
 
-The pre-commit hook that auto-updates the spaced-repetition tracker is **version-controlled** in `.githooks/`. To activate it on a machine, run once:
+**Three one-time steps on a fresh clone — see [`docs/SETUP.md`](docs/SETUP.md):** the git hooks path,
+the scaffold-links agent hook, and the session-start memory hook. The last two need a manual paste into
+`.claude/settings.json`, which is **gitignored** and therefore does not sync between machines.
 
-```sh
-git config core.hooksPath .githooks
-```
-
-This replaces the old per-machine `.git/hooks/pre-commit` (which was never synced). After this, the hook stays in sync via git across all machines.
-
-**Second one-time step — the scaffold-links agent hook.** `.claude/hooks/scaffold_links_reminder.py` is
-version-controlled, but `.claude/settings.json` is **gitignored** (it holds machine-absolute paths), so the
-wiring that invokes the script does *not* sync. On each machine, add this block to `.claude/settings.json`
-once, merging with whatever `permissions` are already there:
-
-```json
-"hooks": {
-  "PostToolUse": [
-    {
-      "matcher": "Bash",
-      "hooks": [
-        { "type": "command",
-          "command": "python \"${CLAUDE_PROJECT_DIR:-.}/.claude/hooks/scaffold_links_reminder.py\"",
-          "timeout": 10 }
-      ]
-    }
-  ]
-}
-```
-
-It fires on a Bash command that actually **invokes** `new_problem.py` (matched as `new_problem.py … --number`,
-since `--number` is required by the script's argparse) and reminds the agent to emit both the local file link
-and the LeetCode link for every problem it just scaffolded — a rule that lapsed five times while it lived only
-as prose. Costs nothing until it fires. See `.claude/memory/feedback_kickoff_table_links.md`.
-
-⚠️ The trigger was a bare substring until Aug 2, 2026, which also matched `grep`s and read-only commands that
-merely *mentioned* the script. Tightened because **a hook that cries wolf trains the agent to skim past it** —
-which costs precisely the reliability that makes a hook stronger than a written rule.
-
-**Third one-time step — the session-start memory hook.** Same deal: the script
-(`.claude/hooks/session_start_memory.py`) is version-controlled, the wiring is not. Merge this into the
-same `hooks` block:
-
-```json
-"SessionStart": [
-  {
-    "hooks": [
-      { "type": "command",
-        "command": "python \"${CLAUDE_PROJECT_DIR:-.}/.claude/hooks/session_start_memory.py\"",
-        "timeout": 10 }
-    ]
-  }
-]
-```
-
-It injects `.claude/memory/MEMORY.md` — plus the five gates that must fire unprompted — at session start,
-resume, clear, and post-compact. **Unlike the other two hooks this one is not free: ~3.6k tokens per fire.**
-That is the deliberate price of the thing it fixes. On 2026-08-02 the memory index was never loaded at all
-until the learner asked about it nine turns in, so the complexity gate and the self-eval loop weren't
-ignored — they were *absent*, and both failed in the same session. The rule "read MEMORY.md at session
-start" is itself a rule about starting a session, and a session that opens with a bare technical question
-doesn't feel like a start. Removing that judgement call is the whole point.
+*(Moved out of this file Aug 3, 2026 — it is read once per machine, ever, but was loading into every
+session. The rule below stayed, because it is not setup.)*
 
 **The structural principle behind all three hooks, worth stating once:** CLAUDE.md is *always* injected;
 `.claude/memory/*.md` are *opt-in reads*. A rule that must fire **unprompted** cannot live only in memory —
 memory is for rules the agent will deliberately go look up. If a standing rule keeps lapsing, the question
 is not "is it written down clearly enough" but **"is it a step in an executable list, or merely a
 paragraph?"** All five lapses of the links rule, and the Aug 2 complexity-gate miss, were paragraphs.
-
-If the token cost bites, drop `compact` from the fire list first — startup/resume/clear are the
-load-bearing ones.
 
 ## Agent Memory
 
@@ -335,7 +278,7 @@ per-track trackers stay in each track's `mastery/`.
 
 **Cross-track (shared)**
 
-- `docs/foundations/schedules/<YYYYMMDD>_schedule.md` — current week's day-by-day schedule (e.g. `20260615_schedule.md`); archive the current week's schedule and generate the next week's schedule together at the end of the last session of the week — move the current file to `docs/foundations/schedules/archive/`
+- `docs/foundations/schedules/<YYYYMMDD>_schedule.md` — current week's day-by-day schedule (e.g. `20260615_schedule.md`); archived to `docs/foundations/schedules/archive/`. **The when/how is workflow step 7**, not repeated here.
 
 **DSA track**
 
