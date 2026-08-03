@@ -30,8 +30,9 @@ import argparse
 import ast
 import re
 import sys
-from datetime import datetime
 from pathlib import Path
+
+import session_date
 
 # Status lines below carry box-drawing / arrow glyphs (── ⤵ →). On a stock Windows
 # console (cp1252) printing them raises UnicodeEncodeError *after* the files are already
@@ -460,10 +461,19 @@ def main() -> None:
                     help="create a new file even though this number already exists on "
                          "disk under a different filename (normally refused — it forks "
                          "the attempt history)")
+    ap.add_argument("--date", default=None,
+                    help="session date (YYYY-MM-DD or YYYYMMDD) for the banner and the "
+                         "dated method suffix; default = auto-detected session date, "
+                         "which past midnight is YESTERDAY if a session is in progress "
+                         "(see scripts/session_date.py). Override only when the "
+                         "auto-detection announces something wrong")
     args = ap.parse_args()
 
-    today = datetime.now().strftime("%Y-%m-%d")
-    stamp = datetime.now().strftime("%Y%m%d")  # method suffix, matches existing convention
+    # NOT datetime.now(): a session that crosses midnight keeps its START date, and
+    # stamping wall clock here wrote the wrong attempt date into both the method name
+    # and the banner (2026-07-29, and 3 prior occurrences). See session_date.py.
+    today = session_date.resolve(args.date)
+    stamp = session_date.resolve(args.date, fmt="%Y%m%d", announce=False)
     name = snake(args.title)
     methods = [m.strip() for m in args.method.split(",") if m.strip()] or [camel(args.title)]
     method = methods[0]

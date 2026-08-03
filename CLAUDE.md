@@ -30,9 +30,47 @@ once, merging with whatever `permissions` are already there:
 }
 ```
 
-It fires on any Bash command mentioning `new_problem.py` and reminds the agent to emit both the local file
-link and the LeetCode link for every problem it just scaffolded — a rule that lapsed five times while it
-lived only as prose. Costs nothing until it fires. See `.claude/memory/feedback_kickoff_table_links.md`.
+It fires on a Bash command that actually **invokes** `new_problem.py` (matched as `new_problem.py … --number`,
+since `--number` is required by the script's argparse) and reminds the agent to emit both the local file link
+and the LeetCode link for every problem it just scaffolded — a rule that lapsed five times while it lived only
+as prose. Costs nothing until it fires. See `.claude/memory/feedback_kickoff_table_links.md`.
+
+⚠️ The trigger was a bare substring until Aug 2, 2026, which also matched `grep`s and read-only commands that
+merely *mentioned* the script. Tightened because **a hook that cries wolf trains the agent to skim past it** —
+which costs precisely the reliability that makes a hook stronger than a written rule.
+
+**Third one-time step — the session-start memory hook.** Same deal: the script
+(`.claude/hooks/session_start_memory.py`) is version-controlled, the wiring is not. Merge this into the
+same `hooks` block:
+
+```json
+"SessionStart": [
+  {
+    "hooks": [
+      { "type": "command",
+        "command": "python \"${CLAUDE_PROJECT_DIR:-.}/.claude/hooks/session_start_memory.py\"",
+        "timeout": 10 }
+    ]
+  }
+]
+```
+
+It injects `.claude/memory/MEMORY.md` — plus the five gates that must fire unprompted — at session start,
+resume, clear, and post-compact. **Unlike the other two hooks this one is not free: ~3.6k tokens per fire.**
+That is the deliberate price of the thing it fixes. On 2026-08-02 the memory index was never loaded at all
+until the learner asked about it nine turns in, so the complexity gate and the self-eval loop weren't
+ignored — they were *absent*, and both failed in the same session. The rule "read MEMORY.md at session
+start" is itself a rule about starting a session, and a session that opens with a bare technical question
+doesn't feel like a start. Removing that judgement call is the whole point.
+
+**The structural principle behind all three hooks, worth stating once:** CLAUDE.md is *always* injected;
+`.claude/memory/*.md` are *opt-in reads*. A rule that must fire **unprompted** cannot live only in memory —
+memory is for rules the agent will deliberately go look up. If a standing rule keeps lapsing, the question
+is not "is it written down clearly enough" but **"is it a step in an executable list, or merely a
+paragraph?"** All five lapses of the links rule, and the Aug 2 complexity-gate miss, were paragraphs.
+
+If the token cost bites, drop `compact` from the fire list first — startup/resume/clear are the
+load-bearing ones.
 
 ## Agent Memory
 
@@ -72,14 +110,20 @@ inert:
   stashes their prior attempts to `.history/`. `restore_history.py` correctly declines to restore
   an unattempted stub, so the file stays blank and the stash gets committed — recoverable, but it
   ships a solution file emptied for a rep that never ran.
-- **The date stamp is wall-clock.** `new_problem.py` has no `--date` flag; it stamps `datetime.now()`.
-  Scaffolding past midnight in a session that started the previous day writes the **wrong attempt
-  date** into the method name and banner, and it must be hand-corrected to the session date. See
-  [[feedback_session_dating]].
-  - **So: past midnight, establish the session date BEFORE scaffolding, not before logging.** Run
-    `git log --date=iso -3` — commits from minutes ago mean a *live session*, not a new day. The date
-    is an input to *what gets set up*, not merely to how it's labelled. (4+ occurrences; the Jul 29
-    one mis-anchored an entire day's board before a single log line was written.)
+- ~~**The date stamp is wall-clock.**~~ **✅ FIXED AT SOURCE (Aug 2, 2026).** `new_problem.py`,
+  `restore_history.py` and `update_review_dates.py` now all resolve the **session** date via
+  [`scripts/session_date.py`](scripts/session_date.py) instead of `datetime.now()`, and each takes
+  `--date` as an explicit override. Past midnight, a **dirty working tree** means a session is in
+  progress — so the session started yesterday, and that is the date used. The scripts announce the
+  override when it fires.
+  - **Why the tree and not `git log`:** in a past-midnight session the last commit is usually *also*
+    past midnight and carries the rolled-over date, so the git signal is polluted by the very bug
+    being fixed; and because commits are batched to session end, mid-session the newest commit is
+    often the *previous* session's, 24h+ back. The tree being dirty needs no timestamp at all.
+    (Recent-commit is kept as a weaker secondary signal.)
+  - This was a 4+ occurrence bug that recurred **three times after** being promoted to a memory
+    file — the case study for why a source fix outranks a written rule. See [[feedback_session_dating]]
+    and the Aug 2 meta-review in `.claude/memory/self_eval_log.md`.
 
 So the blast radius of an unwanted scaffold is the tracker, not just a stray file. Scaffold what
 was asked for.
@@ -197,16 +241,40 @@ Notes for whoever maintains this:
 
 After any problem discussion (solving, reviewing, or mentioning a problem by number or name):
 
-1. Check the current week's schedule file (`docs/foundations/schedules/<YYYYMMDD>_schedule.md`) and mark the problem as completed in the table.
-2. **Infer the Comfort rating from the session, then propose it for confirmation** — don't ask an open "how did that feel?" when the transcript already answers it. You watched the attempt: how many hints you gave, whether they self-caught their bugs, whether they could derive the approach. Propose it plainly ("That reads as 🟡 Shaky — you had the sliding window but I flagged the inverted shrink condition. Confirm?"), then log on their yes/override — never log silently. Comfort is self-reported, so their call is final, but honesty over agreeableness: if they claim 🟢 but you supplied a real fix they missed (or it was a no-code rep), say so, then defer to their call.
+1. **Run the complexity gate — FIRST, before any rating is proposed.** Ask for **time AND space, each
+   with an itemized why-clause** ("O(1), one fixed 26-array" — not a bare "O(1)"), and don't move on
+   until they've answered or explicitly passed. Full rules, the freebie ledger, and the trigger→cue map:
+   [`complexity_gotchas.md`](docs/foundations/dsa/mastery/complexity_gotchas.md) and
+   `.claude/memory/feedback_ask_complexity.md`.
+   - **This step exists because its absence is a silent failure.** "Correct complexity" is a criterion
+     of 🟢 in step 3, so a rating proposed without it is built on an unchecked premise, and the learner
+     confirms on incomplete information. Nothing in the artifacts looks wrong afterwards — which is
+     exactly why the gate has to be a *step*, not a remembered precondition (missed Aug 2, 2026 on 211;
+     the learner had to ask *"you never asked the time/space complexity here"*).
+   - **It fires on the rep, not on the ritual.** A session that arrives as "what's the issue with my
+     code" and never had a scaffold or a kickoff is still a rep. If you are about to propose a comfort
+     rating, the gate is already overdue.
+2. **If the learner says they're stuck — READ THEIR SOLUTION FILE BEFORE SAYING ANYTHING.** Not before
+   *asserting*; before **hinting**. It is one tool call and it is free.
+   - **Why it's a step and not a nicety:** on 540 (Jul 27) the coaching started immediately — worked
+     array, which indices to write down, the pair-start parity rule — and the learner already had
+     `m % 2 == 0` in the file. Handing over something they'd already derived wastes the rep and is a
+     spoiler by any other name. The same omission then contaminated the *rating rationale*: 🔴 was
+     proposed on the premise that the invariant had been supplied, and the learner had to correct the
+     person rating them. Ratings set intervals, so an unverified premise here has a cost that outlives
+     the session.
+   - 3+ occurrences of this root cause (Jul 25, Jul 27, Jul 29). See
+     `.claude/memory/feedback_read_before_asserting.md`.
+3. Check the current week's schedule file (`docs/foundations/schedules/<YYYYMMDD>_schedule.md`) and mark the problem as completed in the table.
+4. **Infer the Comfort rating from the session, then propose it for confirmation** — don't ask an open "how did that feel?" when the transcript already answers it. You watched the attempt: how many hints you gave, whether they self-caught their bugs, whether they could derive the approach. Propose it plainly ("That reads as 🟡 Shaky — you had the sliding window but I flagged the inverted shrink condition. Confirm?"), then log on their yes/override — never log silently. Comfort is self-reported, so their call is final, but honesty over agreeableness: if they claim 🟢 but you supplied a real fix they missed (or it was a no-code rep), say so, then defer to their call.
    - **Clean**: coded from a blank page, correct complexity, no hints. Second-guessing the data structure or peeking → Shaky. A no-code blueprint caps at Shaky (coding required); the sole exception is a flawless spot check confirming an already-🎓 Graduated problem.
    - **Shaky**: got there but needed a nudge, peeked, or wasn't fully confident mid-approach.
    - **Blank**: couldn't recall the approach; had to look it up.
-3. Update `docs/foundations/dsa/mastery/dsa_progress.md` with the reported Comfort level and run the review script.
-4. **At session end, before committing:** run `python scripts/restore_history.py` to paste the
+5. Update `docs/foundations/dsa/mastery/dsa_progress.md` with the reported Comfort level and run the review script.
+6. **At session end, before committing:** run `python scripts/restore_history.py` to paste the
    stashed prior attempts back into the problems that actually got done (see above — un-attempted
    scaffolds keep their stash out).
-5. **Do not commit per problem — batch.** Make the edits (tracker row, `stuck_log.md`, schedule strike) and move on; commit + push **once** at session end. Every commit fires the pre-commit hook, which rewrites the tracker and causes ~70 lines of it to be re-injected into context; at one commit per problem that is a large, avoidable token cost. Commit early only if the user is about to switch machines (unpushed work would strand them) or the session ends unexpectedly.
+7. **Do not commit per problem — batch.** Make the edits (tracker row, `stuck_log.md`, schedule strike) and move on; commit + push **once** at session end. Every commit fires the pre-commit hook, which rewrites the tracker and causes ~70 lines of it to be re-injected into context; at one commit per problem that is a large, avoidable token cost. Commit early only if the user is about to switch machines (unpushed work would strand them) or the session ends unexpectedly.
 
 ## Comfort-Based Spaced Repetition
 

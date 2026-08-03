@@ -19,6 +19,84 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🟡 211. Design Add and Search Words Data Structure — 2026-08-02 *(5th attempt; provisional 🟢 lock-down — failed)*
+**Sticking point**: the whole trie + wildcard-DFS structure came out clean from a blank page — `addWord`, the
+fan-out over `node.children.values()` on `'.'`, the `i + 1` recursion, the early `return False` on a dead
+branch. The single bug was the **terminal check reading the wrong variable**: `return traversal.isWord` where
+`traversal` is the *root* captured by the closure, never advanced. Only `node` moves during the walk, so the
+function answered "is the empty string a word?" on every path. Self-caught nothing here — I flagged the line.
+```python
+# the closure trap: two names for "current node", only one of them moves
+traversal = self.root
+def dfs(node, index):
+    ...
+    node = node.children[word[i]]   # ← this one advances
+    return traversal.isWord         # ✗ root, always False   → node.isWord
+```
+**Pattern to watch**: a closure that captures an outer cursor *and* takes the same cursor as a parameter.
+Inside the nested function, the outer name is a stale snapshot — shadow it or don't capture it at all.
+Cheapest fix at write-time: name them differently enough that `traversal` inside `dfs` looks obviously wrong.
+**Complexity** (gate was asked late, after the rating — my miss): one miss, freebie spent, carded in
+`complexity_gotchas.md` — `O(n·N)` for the ≤2-dot bound, i.e. a *tightening* that came out **larger than the
+ceiling already proven**. Both space terms and the all-dots `O(N)` argument were correct and unaided.
+
+---
+
+## 🟡 875. Koko Eating Bananas — 2026-08-02 *(5th attempt, 4th consecutive 🟡)*
+**Sticking point**: **the search-space endpoints, again — and `l = 0` is a verbatim repeat of Jul 23**, whose
+entry names the identical failing case (`piles=[1], h=1` → speed 0 → `ZeroDivisionError`). Line 45 was wrong
+three times in a row before it was right: first `l, r = 0, len(piles) - 1` (searching **indices**, not speeds,
+despite the pre-code comment stating the range correctly), then `0, max(piles) - 1`, then `1, max(piles) - 1`.
+The `- 1` is the `len(arr) - 1` reflex from **index** binary search bleeding into an **answer-space** search
+where `max(piles)` is a legal answer. All three supplied. Also stated the monotone direction inverted at the
+front gate — *"if we cannot finish at k, cut off possibilities **above** k"* — self-corrected to "at and below"
+when handed `k=1` on `[3,6,7,11], h=8`.
+**⚠️ Not a §2a teach trigger, and re-repping will not fix it.** Binary-search-on-answer is plainly encoded:
+technique named instantly, upper bound `max(piles)` derived, the **min-boundary loop shape** (`r = m` on
+success, `l = m + 1` on failure, return `l`) correct first pass, and `canFinish` correct first pass — which is
+where *both* Jul 3 (TLE from a decrementing loop) and Jul 13 (`ceil(pile // speed)` floors first) failed. The
+failure has migrated to one place and stayed there. ✅ **Genuine movement**: Jul 23 also logged a complexity
+miss (*"said n log n; it's n·log(max pile)"*) — today `O(n log k)` was **volunteered unprompted with a
+why-clause** in the pre-code comment.
+**Rule to carry — say the endpoints aloud, then read line 1 of the loop against that sentence.** *"The answer
+lives in `[1, max(piles)]`, both inclusive"* was **stated correctly at the gate and then not honoured by the
+code.** The gap is between saying it and typing it, so the check belongs *after* typing: **write the range
+sentence, write the init, then diff them.** And ask what each endpoint *means* — `r` here is a **speed**, not
+an index, so there is nothing for a `- 1` to do.
+
+---
+
+## 🟡 271. Encode and Decode Strings — 2026-08-02 *(5th attempt)*
+**Sticking point**: the technique came instantly (length-prefix framing) but the **discriminator was the wrong
+kind of argument** — rejected a `#` delimiter for *cost* ("having to read char until the next `#`") rather than
+for *correctness*. Supplied via `["a#b","c"]`: any delimiter you pick is legal payload, so no rarer choice fixes
+it. **Rule to carry: the sentence is "any delimiter can appear inside the data, so the boundary must be stated
+out-of-band" — the delimiter scheme isn't slower, it's wrong.** One supplied bug: `while j != '#'` compared the
+*index* to the character (infinite loop) — ⚠️ **same family as 778's dead `visited` check the same morning**,
+both "comparing the wrong kind of thing," neither an algorithm error. The two-pointer parse itself was right on
+the first structural pass and survived 3000 random round-trips incl. all 256 ASCII chars as payload.
+**⚠️ `while j != '#'` is a VERBATIM repeat of the Jul 3, 2026 entry** ("decode wrote `while j != '#'` (comparing
+the index int)"), supplied both times, a month apart — on a problem whose framing logic has been solid since
+Jul 3. Like [[875]], the algorithm is not the gap; a specific mechanical slip is.
+
+---
+
+## 🟡 778. Swim in Rising Water (Dijkstra / Min-Heap) — 2026-08-02 *(2nd attempt)*
+**Sticking point**: the opening plan was *"step to the cheapest neighbour, DFS until stuck, wait for the water"* —
+correct instinct, one hole: **the next cell to enter need not touch the one you're standing on.** Surfaced by a
+counterexample grid where the cheap route sits beside the *start*, not beside the current cell; the min-heap
+(and therefore "keep the whole frontier, not the local neighbours") was the learner's own once the hole was
+visible. **Rule to carry: whenever a greedy walk can dead-end, ask what the candidate set actually is — if it's
+everything reached so far, it's a heap, not a walk.** Three supplied bugs, all mechanical, none algorithmic:
+(1) `visited` held `(r,c)` tuples but the membership test passed `grid[nr][nc]`, an int — so the set was dead
+code and never blocked a push; (2) the source was pushed as `(0,0,0)`, hardcoding its elevation to 0 — the
+source is *on* the path, failing case `[[3,2],[1,0]]` → 1 instead of 3; (3) the inner `while time >= minHeap[0][0]`
+peeked at an empty heap, `IndexError` on `[[0]]`. Discrimination vs Prim's was cold and correct and is the
+keeper: **Prim's has no source and no target, and its key is one edge's weight, spent on absorption; a key that
+carries the whole path's history is a path cost.**
+
+---
+
 ## 🟡 1584. Min Cost to Connect All Points (Prim's) — 2026-08-01
 **Sticking point**: `updateDistance` **assigned** instead of `min`'d, so `distance[i]` quietly meant "distance
 to the node just added" rather than "cheapest edge attaching `i` to the component" — the pre-code comment said

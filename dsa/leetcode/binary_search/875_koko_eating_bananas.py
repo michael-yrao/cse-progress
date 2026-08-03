@@ -34,6 +34,32 @@ from typing import List
 
 class Solution:
 
+    # ── Attempt · 2026-08-02 ──────────────
+    def minEatingSpeed_20260802(self, piles: List[int], h: int) -> int:
+        # h is given to be bigger than len(piles) so we can always finish
+        # we can also easily notice that the biggest k can be is max(piles)
+        # so this is a min boundary binary search on the result
+        # binary search is O(logk), we need to check if Koko can finish the full pile given any number k, which means we have to loop through piles each time, so time is O(nlogk)
+        # space is O(1)
+
+        l, r = 1, max(piles)
+
+        def canFinish(speed):
+            hours = 0
+            for pile in piles:
+                hourSpent = math.ceil(pile/speed)
+                hours+=hourSpent
+            return hours <= h
+
+        while l < r:
+            m = (l + r)//2
+            if canFinish(m):
+                r = m
+            else:
+                l = m + 1
+        
+        return l
+
     # ── Attempt · 2026-07-23 ──────────────
     def minEatingSpeed_20260723(self, piles: List[int], h: int) -> int:
         # h is always equal or bigger than len(piles), so no need to worry about that case

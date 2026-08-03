@@ -13,9 +13,17 @@ anchored to a *tool invocation* cannot. See the Jul 31 entry in
 Costs no context tokens until it fires.
 """
 import json
+import re
 import sys
 
-TRIGGER = "new_problem.py"
+# An *invocation*, not a mention. A bare "new_problem.py" substring also matches
+# `grep -n ... scripts/new_problem.py` and `python -c "...new_problem.py..."`, which
+# fired the reminder twice on 2026-08-02 during read-only work on the script itself.
+# That is not harmless: a hook that cries wolf trains the agent to skim past it, which
+# costs exactly the reliability that makes a hook stronger than a written rule.
+# `--number` is required by the script's own argparse, so every real scaffold has it
+# and no read-only command does.
+TRIGGER = re.compile(r"new_problem\.py.*--number", re.DOTALL)
 
 REMINDER = (
     "Scaffold complete. Before continuing, reply with BOTH links for EVERY problem "
@@ -32,7 +40,7 @@ def main() -> None:
         return  # Malformed input is not this hook's problem — stay silent.
 
     command = (payload.get("tool_input") or {}).get("command", "")
-    if TRIGGER not in command:
+    if not TRIGGER.search(command):
         return
 
     json.dump(
