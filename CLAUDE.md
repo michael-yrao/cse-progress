@@ -282,7 +282,22 @@ After any problem discussion (solving, reviewing, or mentioning a problem by num
 6. **At session end, before committing:** run `python scripts/restore_history.py` to paste the
    stashed prior attempts back into the problems that actually got done (see above — un-attempted
    scaffolds keep their stash out).
-7. **Do not commit per problem — batch.** Make the edits (tracker row, `stuck_log.md`, schedule strike) and move on; commit + push **once** at session end. Every commit fires the pre-commit hook, which rewrites the tracker and causes ~70 lines of it to be re-injected into context; at one commit per problem that is a large, avoidable token cost. Commit early only if the user is about to switch machines (unpushed work would strand them) or the session ends unexpectedly.
+   - ⚠️ It now **warns on duplicate top-level names** in the merged file. Act on the warning — an
+     undated helper in today's attempt is silently shadowed by the same-named one from a prior attempt.
+7. **Is this the last session of the week? Then archive + generate next week's schedule BEFORE the
+   commit.** `git mv` the current file into `docs/foundations/schedules/archive/`, and write
+   `<next-Monday>_schedule.md`. Both, in the same close-out — never one without the other.
+   - **The check is "is today the last session of the week", not "does it feel like a milestone".**
+     Missed Aug 2, 2026: the session ran long on harness work and closed out cleanly on everything
+     *except* this, because the rule lived only in `feedback_end_of_week_schedule.md` — a paragraph.
+   - **A week with no schedule file is not a neutral state.** The weekly build is where surplus is
+     recomputed, where the per-day load row gets drawn (an aggregate is not a schedule), and where
+     `technique_coverage.md` is read to pick conversion reps. Skipping it means the next week runs
+     off the previous week's assumptions.
+   - Minimum contents: capacity/surplus arithmetic · per-day load row · daily table · protected reps ·
+     backlog/slip list (nothing dropped without a date or an explicit "no date exists") · SD lanes ·
+     end-of-week targets · next-week preview.
+8. **Do not commit per problem — batch.** Make the edits (tracker row, `stuck_log.md`, schedule strike) and move on; commit + push **once** at session end. Every commit fires the pre-commit hook, which rewrites the tracker and causes ~70 lines of it to be re-injected into context; at one commit per problem that is a large, avoidable token cost. Commit early only if the user is about to switch machines (unpushed work would strand them) or the session ends unexpectedly.
 
 ## Comfort-Based Spaced Repetition
 

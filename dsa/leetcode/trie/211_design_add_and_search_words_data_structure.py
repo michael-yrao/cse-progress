@@ -25,7 +25,7 @@ Constraints:
 
 # ── Attempt · 2026-08-02 ──────────────
 # NOTE: suffix any helper class you write (Node, TrieNode, …) with _20260802 too — an undated helper collides with the restored canonical one.
-class TrieNode:
+class TrieNode_20260802:
     def __init__(self):
         # maps char to a TrieNode
         self.children = {}
@@ -35,13 +35,13 @@ class TrieNode:
 class WordDictionary_20260802:
 
     def __init__(self):
-        self.root = TrieNode()
+        self.root = TrieNode_20260802()
 
     def addWord(self, word: str) -> None:
         traversal = self.root
         for char in word:
             if char not in traversal.children:
-                traversal.children[char] = TrieNode()
+                traversal.children[char] = TrieNode_20260802()
             traversal = traversal.children[char]
         traversal.isWord = True
 
