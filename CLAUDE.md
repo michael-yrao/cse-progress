@@ -214,6 +214,14 @@ at EOF; today's attempt sits above. Keep it that way — anything that reaches *
 decide the cut is how this breaks.
 
 Notes for whoever maintains this:
+- **Restore warns on duplicate top-level names in the merged file (added Aug 2, 2026).** The slice is
+  pasted verbatim and never parsed — that opacity is the invariant — but the *result* is checked with
+  `ast`, and a class or function defined twice is reported. Python binds the **last** definition, so an
+  undated helper in today's attempt is silently shadowed by the same-named one from a previous attempt,
+  and today's code then runs the older class. Found on 211: two `TrieNode`s (today's and Jul 21's) that
+  happened to be identical, so nothing crashed — the bad case. The scaffold banner already asks for a
+  dated helper (`TrieNode_20260802`); the banner is prose and was skipped, so the check reads the merge
+  instead. Non-fatal by design: the paste is correct and the rename is the learner's code to change.
 - The stash is a **`.txt`**, deliberately: it never matches the `*.py` source glob, so the tracker's
   discovery (`scripts/update_review_dates.py`) ignores it and no phantom problem row appears. If you
   ever add `.txt` to `source_globs`, exclude `.history/` there.
