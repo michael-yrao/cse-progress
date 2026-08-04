@@ -39,6 +39,55 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-08-03 ──────────────
+    def ladderLength_20260803(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
+        # this builds off of the trie problem we had with the wildcard
+        # because for us to properly look for neighbors, e.g. one char diff, we need to use wildcard
+        # so for the word hit, we should have '.it' -> [hit], 'h.t' -> [hit], 'hi.' -> [hit]
+        # this is clearly a graph question, we are looking for a sequence that gets us from a node to another node
+        # beginWord + wordList are the nodes on the list, beginWord is our start
+        # endWord must exist in that list of nodes. shortest in non-weighted graph is BFS
+
+        fullWordList = []
+        fullWordList.append(beginWord)
+        fullWordList+=wordList
+
+        # build our adjacency map
+        adjMap = collections.defaultdict(list)
+
+        for string in fullWordList:
+            for i in range(len(string)):
+                strBeforeI = string[:i]
+                strAfterI = string[i+1:]
+                key = strBeforeI + '.' + strAfterI
+                adjMap[key].append(string)
+        
+        # with the adjMap built, we'll add beginWord to the queue for us to start traversing through
+        queue = collections.deque()
+        queue.append(beginWord)
+        visited = set()
+        visited.add(beginWord)
+        # start at 1 to count starting node
+        iteration = 1
+        while queue:
+            lenQueue = len(queue)
+            for _ in range(lenQueue):
+                currentWord = queue.popleft()
+                # for all neighbors of currentWord, we add them to the queue
+                for i in range(len(currentWord)):
+                    strBeforeI = currentWord[:i]
+                    strAfterI = currentWord[i+1:]
+                    key = strBeforeI + '.' + strAfterI
+                    for neighbor in adjMap[key]:
+                        if neighbor not in visited:
+                            if neighbor == endWord:
+                                return iteration + 1
+                            queue.append(neighbor)
+                            visited.add(neighbor)
+            iteration+=1
+        
+        return 0
+
     # ── Attempt · 2026-07-21 ──────────────
     def ladderLength_20260721(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
         # so this is a graph, we want to find a path from beginWord to endWord through wordList

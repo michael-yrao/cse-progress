@@ -38,6 +38,7 @@ Notes for future agents:
 | Search | [Elasticsearch](../technologies/elasticsearch.md) | 🔴 | 0 |  |  |  |
 | Edge / gateway | [API Gateway](../technologies/api_gateway.md) | 🔴 | 0 |  |  |  |
 | Coordination | [ZooKeeper](../technologies/zookeeper.md) | 🔴 | 0 |  |  |  |
+| Concept | [Networking fundamentals](../concepts/networking_basics.md) | 🔴 | 0 |  |  |  |
 | Concept | [Percentiles & tail latency](../concepts/percentiles_and_tail_latency.md) | 🔴 | 0 |  |  |  |
 | Concept | [Little's Law](../concepts/littles_law.md) | 🔴 | 0 |  |  |  |
 | Concept | [Utilization & queueing](../concepts/utilization_and_queueing.md) | 🔴 | 0 |  |  |  |

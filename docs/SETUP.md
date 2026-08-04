@@ -29,7 +29,7 @@ sync. On each machine, add this block to `.claude/settings.json` once, merging w
 "hooks": {
   "PostToolUse": [
     {
-      "matcher": "Bash",
+      "matcher": "Bash|PowerShell",
       "hooks": [
         { "type": "command",
           "command": "python \"${CLAUDE_PROJECT_DIR:-.}/.claude/hooks/scaffold_links_reminder.py\"",
@@ -40,11 +40,18 @@ sync. On each machine, add this block to `.claude/settings.json` once, merging w
 }
 ```
 
-It fires on a Bash command that actually **invokes** `new_problem.py` (matched as
+It fires on a shell command that actually **invokes** `new_problem.py` (matched as
 `new_problem.py … --number`, since `--number` is required by the script's argparse) and reminds the
-agent to emit both the local file link and the LeetCode link for every problem it just scaffolded — a
-rule that lapsed five times while it lived only as prose. Costs nothing until it fires. See
-`.claude/memory/feedback_kickoff_table_links.md`.
+agent to emit both the local file link and the problem-page link for every problem it just
+scaffolded — a rule that lapsed five times while it lived only as prose. Costs nothing until it
+fires. See `.claude/memory/feedback_kickoff_table_links.md`.
+
+⚠️ **This hook is now the backup, not the enforcement.** As of Aug 3, 2026 `new_problem.py` prints
+the links itself (`report_links()`), so they arrive as tool output on every machine regardless of
+whether this block was ever pasted. That change was forced by the 6th lapse: the matcher read
+`"Bash"` alone, and a scaffold run through the **PowerShell** tool skipped the hook silently. The
+matcher above is widened, but the lesson is the general one — *a hook that depends on a tool matcher
+plus a gitignored config has two ways to not exist, and the script has none*.
 
 ⚠️ The trigger was a bare substring until Aug 2, 2026, which also matched `grep`s and read-only
 commands that merely *mentioned* the script. Tightened because **a hook that cries wolf trains the

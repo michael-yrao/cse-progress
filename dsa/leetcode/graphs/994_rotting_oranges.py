@@ -1,4 +1,6 @@
 """
+994. Rotting Oranges   ·   https://leetcode.com/problems/rotting-oranges/
+Pattern: graphs
 
 MEDIUM
 
@@ -43,6 +45,51 @@ import collections
 from typing import List
 
 class Solution:
+
+    # ── Attempt · 2026-08-03 ──────────────
+    def orangesRotting_20260803(self, grid: List[List[int]]) -> int:
+        # BFS
+        # we use 2s as our starting point for queues
+        # we don't need set since we are just marking visited as 2s
+        # time is basically how many layers of BFS we had to do
+        # we also need to consider unreachable oranges, so need to keep a counter
+        rows, cols = len(grid), len(grid[0])
+
+        rottenQueue = collections.deque()
+        freshCounter = 0
+        time = 0
+
+        for row in range(rows):
+            for col in range(cols):
+                if grid[row][col] == 1:
+                    freshCounter+=1
+                elif grid[row][col] == 2:
+                    rottenQueue.append((row,col))
+        
+        neighbors = [[1,0],[-1,0],[0,1],[0,-1]]
+
+        # now that our queue is ready, we start rotting everything
+        # so while we have oranges to continue rotting
+        while freshCounter > 0 and rottenQueue:
+            # do everything related to current level
+            currentLevelSize = len(rottenQueue)
+            for _ in range(currentLevelSize):
+                cr,cc = rottenQueue.popleft()
+                # rot neighbors of cr,cc
+                for ir, ic in neighbors:
+                    nr, nc = cr + ir, cc + ic
+                    if nr >= 0 and nr < rows and nc >= 0 and nc < cols and grid[nr][nc] == 1:
+                        # rot the neighbor
+                        grid[nr][nc] = 2
+                        # decrement the fresh counter
+                        freshCounter-=1
+                        rottenQueue.append((nr,nc))
+            time+=1
+        
+        if freshCounter > 0:
+            return -1
+        return time
+
     def orangesRotting(self, grid: List[List[int]]) -> int:
         # so this is clearly a bfs problem
         # what happens is when we hit a rotten orange, we perform a bfs on it to mark its neighbors as rotten

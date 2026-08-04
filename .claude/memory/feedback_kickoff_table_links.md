@@ -1,6 +1,6 @@
 ---
 name: feedback_kickoff_table_links
-description: hyperlink each problem to its local solution file AND its LeetCode page — fires when new_problem.py runs, at kickoff, and on every problem/set transition
+description: hyperlink each problem to its local solution file AND its problem page (LC, or the NeetCode mirror if premium) — fires when new_problem.py runs, at kickoff, and on every problem/set transition
 metadata:
   type: feedback
 ---
@@ -11,11 +11,25 @@ names the file as a clickable link + its LC link. No exceptions, no waiting to b
 not deferred to a later lineup table. *(Set by the learner Jul 31: "when anything is scaffolded,
 we should be given the link so we can start the work on them.")*
 
-**ENFORCED BY HOOK (Jul 31, 2026).** `.claude/hooks/scaffold_links_reminder.py` fires as a
-`PostToolUse`/`Bash` hook on any command containing `new_problem.py` and injects this reminder.
-Wired in `.claude/settings.json`, version-controlled, so it travels across machines. This rule no
-longer depends on my recall — but keep the prose: the hook fires the reminder, it can't write the
-links for me, and it cannot fire on the *hand-over* and *lineup-table* cases below.
+**ENFORCED AT SOURCE (Aug 3, 2026).** `new_problem.py` now ends every run with a `LINKS:` line
+carrying both links (`report_links()` / `docstring_url()`). The links arrive as **tool output** —
+nothing to remember, no config to install. This is the top rung of the intervention ladder in
+[[feedback_self_evaluation]] and it supersedes the hook below as the primary enforcement.
+
+The **problem-page link is `LC` or `NC`**: a premium problem links the free NeetCode mirror, never
+the paywalled LeetCode page. The script picks the label from the URL host, and reads the URL out of
+the **file's own docstring header** in preference to deriving it — the header is the only place that
+knows a problem is premium, and the only place with the true slug when the filename disagrees
+(`229_majority_element_2.py` derives `majority-element-2`; LeetCode says `majority-element-ii`).
+**A legacy file with no URL in its header falls back to the derived guess** — when you spot one,
+write the `<number>. <title>   ·   <url>` header line into it, as was done for 219/229/994 on Aug 3.
+
+**Hook, now the backup (Jul 31, 2026).** `.claude/hooks/scaffold_links_reminder.py` fires as a
+`PostToolUse` hook on a command invoking `new_problem.py … --number` and injects this reminder.
+⚠️ Its matcher was `"Bash"` alone until Aug 3, so a scaffold run through the **PowerShell tool**
+skipped it in silence — that is the 6th lapse, and it was mechanical, not recall. Matcher widened to
+`"Bash|PowerShell"`. Keep the hook and keep the prose anyway: neither fires on the *hand-over* and
+*lineup-table* cases below, which the script cannot reach.
 
 Why this is the trigger and the table is not: the rule was written against the **kickoff table**
 and has now lapsed five times (Jul 20, 21, 23, 30, 31) — every time the output format stopped
@@ -25,8 +39,10 @@ to a *tool invocation* cannot. Scaffolding is also the exact moment the file lin
 
 Beyond the scaffold, the same two links apply when presenting the start-of-day (or any
 problem-lineup) table. Provide **two** links per problem: the **local solution file** (relative
-path, e.g. `[206 Reverse LL](dsa/leetcode/linked_list/206_reverse_linked_list.py)`) and
-the **LeetCode page** (e.g. a separate `LC` link to `https://leetcode.com/problems/...`).
+path, e.g. `[206 Reverse LL](dsa/leetcode/linked_list/206_reverse_linked_list.py)`) and the
+**problem page** as a separate short link — `LC` → `https://leetcode.com/problems/...`, or `NC` →
+`https://neetcode.io/problems/...` **when the problem is LC-premium** (the LeetCode statement is
+paywalled; the NeetCode mirror is free). Same rule the `--premium` flag encodes.
 
 **Why:** the learner explicitly asked for it (Jul 20) — the file link opens the scaffold
 in one click; the LC link is the canonical problem reference. Plain-text problem names cost
