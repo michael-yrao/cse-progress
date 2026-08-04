@@ -128,6 +128,46 @@ def existing_signature(text: str, method: str) -> tuple[str, str] | None:
     return None
 
 
+def docstring_url(text: str) -> str | None:
+    """The problem URL recorded in the file's own header, which outranks any derived one.
+
+    A retry passes no `--url`, and the slug derived from the filename is only a guess:
+    `229_majority_element_2.py` derives "majority-element-2" where LeetCode says
+    "majority-element-ii". The header was written once — by the template's `{url}` slot
+    or by hand — and it also records whether the problem is **premium** (a neetcode.io
+    link instead of leetcode.com). Neither fact is recoverable from the filename, so the
+    file wins whenever it has an answer.
+    """
+    parts = text.split('"""')
+    if len(parts) < 2:
+        return None
+    m = re.search(r"https?://\S+", parts[1])
+    return m.group(0).rstrip(".,;)") if m else None
+
+
+def report_links(path: Path, number: str, title: str, url: str) -> None:
+    """Print both links — the local file and the problem page — for what was scaffolded.
+
+    THIS IS A SOURCE FIX, not a convenience. "Link the file and the problem page on every
+    scaffold" lapsed six times as a written rule (Jul 20/21/23/30/31, Aug 3, 2026). The
+    Jul 31 attempt to enforce it, `.claude/hooks/scaffold_links_reminder.py`, is a
+    `PostToolUse` hook matching the **Bash** tool — so a scaffold run through the
+    PowerShell tool skipped it silently, which is exactly what happened on Aug 3. It also
+    lives in `.claude/settings.json`, which is gitignored and does not travel between
+    machines.
+
+    Emitting the links from the script makes them tool output: no matcher to miss, no
+    per-machine setup, no recall. Per the intervention ladder in
+    `.claude/memory/feedback_self_evaluation.md` — source fix > hook > CLAUDE.md step >
+    memory file.
+
+    The label tracks the host, so a premium problem reads `NC` and points at the free
+    NeetCode mirror rather than the paywalled LeetCode page.
+    """
+    label = "NC" if "neetcode" in url else "LC"
+    print(f"LINKS: [{number} {title}]({path.as_posix()}) · [{label}]({url})")
+
+
 def existing_method_name(lines: list[str], cls: int) -> str | None:
     """Canonical method name of a single-method `class Solution`, read from disk.
 
@@ -674,6 +714,11 @@ def main() -> None:
         path.write_text("\n".join(active).rstrip() + "\n", encoding="utf-8")
         where = f"stashed → {stash.as_posix()}" if stashed else "no prior attempts to stash"
         print(f"Inserted attempt {today} -> {what} in {path} (line {at + 2}); {where}.")
+
+    # Both links, unconditionally, on every branch — see report_links(). The file's own
+    # header wins over the derived URL: on a retry it is the only correct source.
+    report_links(path, str(args.number), args.title,
+                 docstring_url(path.read_text(encoding="utf-8")) or url)
 
 
 if __name__ == "__main__":

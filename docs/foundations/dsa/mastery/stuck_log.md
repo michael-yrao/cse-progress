@@ -404,6 +404,19 @@ result.reverse()
 ```
 Complexity: **O(E log E)** time (each of E tickets pushed+popped from a heap, O(log) each), **O(E)** space. Big-O time was initially given as O(E) — the heap's log factor was the miss.
 
+## 🟡 127. Word Ladder (BFS) — Aug 3, 2026
+**Sticking point**: ⚠️ **same off-by-one as Jul 21, plus a regression.** Graph modeling was cold and
+unaided again (wildcard-bucket adjacency, unweighted → BFS — lines 44–49 written before any code). Two
+execution misses: (1) **no layer loop at all** — `iteration += 1` fired once per *pop*, counting nodes
+instead of levels, which Jul 21 had gotten right unaided; (2) after adding the level-size loop, the
+**identical `level = 0` / `return level + 1` off-by-one from Jul 21** — `beginWord` is already word #1
+when popped, so the counter starts at 1. Both fixed by the learner from a failing case + one Socratic
+nudge each; neither was supplied. **3rd attempt, 2nd consecutive occurrence of the same off-by-one →
+teaching signal, not a repetition signal** (same rule applied to 540 and 19). What decays is *"what does
+my counter mean and when does it increment"*, not the graph framing — evidenced by 994 the same day,
+where the layered BFS and its counter were both perfect. Complexity correct unaided: O(n·c²) time and
+space, with `c` (word length) correctly refused as a constant.
+
 ## 🟡 127. Word Ladder (BFS) — Jul 21, 2026
 **Sticking point**: 🔴→🟡 — full structure rebuilt cold (wildcard-bucket adjacency + layered BFS came back unaided; the Jul 18 teaching stuck). Only miss: off-by-one on the BFS level init — started `level = 0` and returned `level + 1`, undercounting by one (`beginWord` is already word #1 when popped, so the counter must start at 1).
 

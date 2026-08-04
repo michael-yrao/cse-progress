@@ -1,5 +1,7 @@
 """
-Docstring for dsa.leetcode.arrays_and_hash.229_majority_element_2
+229. Majority Element II   ·   https://leetcode.com/problems/majority-element-ii/
+Pattern: arrays_and_hash
+
 Given an integer array of size n, find all elements that appear more than ⌊ n/3 ⌋ times.
 
 Example 1:
@@ -27,6 +29,33 @@ from typing import List
 import unittest
 
 class Solution:
+
+    # ── Attempt · 2026-08-03 ──────────────
+    def majorityElement_20260803(self, nums: List[int]) -> List[int]:
+        # there are at most two elements that can appear more than n/3 times
+        # this problem deals with frequency so freq map
+        # since we know there at most two elements that can satisfy this criteria, we should try to keep the map to size of two as well
+        freqMap = defaultdict(int)
+
+        # we will go through each number in the list and add to freqMap
+        # if we go past 2 in the size, we should -1 from all freq and then remove the ones that are zeros
+        # we can't modify a map while going over it so need to be clever about that
+        for n in nums:
+            freqMap[n]+=1
+            if len(freqMap) > 2:
+                for key in freqMap:
+                    freqMap[key]-=1
+                for key in set(freqMap):
+                    if freqMap[key] == 0:
+                        del freqMap[key]
+
+        # now that freqMap has max two, let's see if they are actually the most frequent
+        minSize = len(nums)//3
+        result = []
+        for key in freqMap:
+            if nums.count(key) > minSize:
+                result.append(key)
+        return result
 
     # ── Attempt · 2026-07-24 ──────────────
     def majorityElement_20260724(self, nums: List[int]) -> List[int]:

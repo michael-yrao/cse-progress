@@ -1,4 +1,7 @@
 """
+219. Contains Duplicate II   ·   https://leetcode.com/problems/contains-duplicate-ii/
+Pattern: sliding_window
+
 Given an integer array nums and an integer k, return true if there are two distinct indices i and j in the array such that nums[i] == nums[j] and abs(i - j) <= k.
 
 Example 1:
@@ -27,6 +30,25 @@ Constraints:
 from typing import List
 
 class Solution:
+
+    # ── Attempt · 2026-08-03 ──────────────
+    def containsNearbyDuplicate_20260803(self, nums: List[int], k: int) -> bool:
+        # so k is the window size
+        # we will add from r and remove from l and compare
+        l, r = 0, 0
+        windowSet = set()
+        while r < len(nums):
+            windowSet.add(nums[r])
+            while r - l + 1 > k:
+                windowSet.remove(nums[l])
+                l+=1
+            # now that we know the window size is valid
+            # let's check if window set is size of window, if it is not, we have a duplicate
+            if len(windowSet) != r - l + 1:
+                return True
+            r+=1
+        return False
+
     def containsNearbyDuplicate(self, nums: List[int], k: int) -> bool:
         # create a set that keeps track of values inside the window size of k
         windowSet = set()
