@@ -36,6 +36,137 @@ class Solution:
 
     # ── Attempt · 2026-08-04 ──────────────
     def addTwoNumbers_20260804(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
-        pass
+        # the numbers are reversed
+        # so we add from the front
+        l1t = l1
+        l2t = l2
+        carry = 0
+        
+        # use a dummy as result
+        dummy = ListNode(-1)
+        result = dummy
+        # while both have value
+        while l1t and l2t:
+            # use the carry
+            value = l1t.val + l2t.val + carry
+            nodeValue = value % 10
+            newNode = ListNode(nodeValue)
+            result.next = newNode
+            result = result.next
+            # calc next carry
+            carry = value // 10
+            l1t = l1t.next
+            l2t = l2t.next
+        
+        # if either l1t or l2t are not None, we just add them to the end
+        while l1t:
+            value = l1t.val + carry
+            nodeValue = value % 10
+            newNode = ListNode(nodeValue)
+            result.next = newNode
+            result = result.next
+            carry = value // 10
+            l1t = l1t.next
+        while l2t:
+            value = l2t.val + carry
+            nodeValue = value % 10
+            newNode = ListNode(nodeValue)
+            result.next = newNode
+            result = result.next
+            carry = value // 10
+            l2t = l2t.next
+        
+        if carry == 1:
+            result.next = ListNode(1)
 
-# ⤵ prior attempts stashed in dsa/leetcode/.history/2_add_two_numbers.txt — restored at session end (python scripts/restore_history.py)
+        return dummy.next
+
+    def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+        # so we have to go to the end of both linked list. this screams postorder recursion
+        # on re-read, it actually says the linked list is in reverse order
+        # so we don't need to do that at all
+        # in that case, we will do while both nodes exist
+
+        l1t = l1
+        l2t = l2
+        carryover = 0
+        resultList = ListNode(-1)
+        resultTraversal = resultList
+
+        # because this is in reverse order, this works regardless of size
+        while l1t and l2t:
+            digitSum = l1t.val + l2t.val
+            digitSum+=carryover
+            # only special case is if they add to above 10
+            if digitSum >= 10:
+                carryover = 1
+            else:
+                carryover = 0
+            resultNode = ListNode(digitSum%10)
+            resultTraversal.next = resultNode
+            resultTraversal = resultTraversal.next
+            l1t = l1t.next
+            l2t = l2t.next
+        
+        # now that we are here, we should check if either of l1t or l2t are not None
+        while l1t:
+            digitSum = l1t.val + carryover
+            if digitSum >= 10:
+                carryover = 1
+            else:
+                carryover = 0
+            resultNode = ListNode(digitSum%10)
+            resultTraversal.next = resultNode
+            resultTraversal = resultTraversal.next
+            l1t = l1t.next
+
+        # now that we are here, we should check if either of l1t or l2t are not None
+        while l2t:
+            digitSum = l2t.val + carryover
+            if digitSum >= 10:
+                carryover = 1
+            else:
+                carryover = 0
+            resultNode = ListNode(digitSum%10)
+            resultTraversal.next = resultNode
+            resultTraversal = resultTraversal.next
+            l2t = l2t.next
+
+        # if carryover is still one, we need to put a one at the end
+
+        if carryover == 1:
+            resultNode = ListNode(1)
+            resultTraversal.next = resultNode
+            resultTraversal = resultTraversal.next
+        
+        return resultList.next
+    
+    def addTwoNumbers_20260705_elegant(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+        # slightly cleaner version of linked list arithmetic
+        # since the above literally just does 3 loops with the same code
+        l1t = l1
+        l2t = l2
+        carryover = 0
+        dummyResultNode = ListNode(-1)
+        dummyTraversal = dummyResultNode
+
+        while l1t or l2t or carryover:
+            l1tVal = l2tVal = 0
+            if l1t:
+                l1tVal = l1t.val
+            if l2t:
+                l2tVal = l2t.val
+            digitSum = l1tVal + l2tVal + carryover
+            if digitSum >= 10:
+                carryover = 1
+            else:
+                carryover = 0
+            resultNode = ListNode(digitSum%10)
+            dummyTraversal.next = resultNode
+            dummyTraversal = dummyTraversal.next
+            if l1t:
+                l1t = l1t.next
+            if l2t:
+                l2t = l2t.next
+        
+        return dummyResultNode.next

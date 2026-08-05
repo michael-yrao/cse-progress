@@ -59,16 +59,19 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/dsa/mastery/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **101** problems &nbsp;·&nbsp; **110** solutions &nbsp;·&nbsp; **389** attempts
+> **101** problems &nbsp;·&nbsp; **110** solutions &nbsp;·&nbsp; **392** attempts
 
 | | 🏆 Retired | 🎓 Graduated | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|:---:|
-| **Solutions** | 0 | 2 | 90 | 16 | 2 |
+| **Solutions** | 0 | 2 | 89 | 18 | 1 |
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|---|
 | Medium | [143. Reorder List](https://leetcode.com/problems/reorder-list/) | 🟢 | 1 | 2026-09-03 | 2026-08-04 | 2026-04-26, 2026-07-06, 2026-07-15, 2026-07-25, 2026-08-04 |
 | Medium | [743. Network Delay Time (Dijkstra)](https://leetcode.com/problems/network-delay-time/) | 🟡 | 0 | 2026-08-14 | 2026-08-04 | 2026-07-13, 2026-07-15, 2026-07-25, 2026-08-04 |
+| Hard | [332. Reconstruct Itinerary (Hierholzer)](https://leetcode.com/problems/reconstruct-itinerary/) | 🟡 | 0 | 2026-08-14 | 2026-08-04 | 2026-07-22, 2026-07-28, 2026-08-04 |
+| Medium | [138. Copy List with Random Pointer](https://leetcode.com/problems/copy-list-with-random-pointer/) | 🟡 | 0 | 2026-08-14 | 2026-08-04 | 2026-07-03, 2026-07-05, 2026-08-04 |
+| Medium | [2. Add Two Numbers](https://leetcode.com/problems/add-two-numbers/) | 🟢 | 2 | 2026-10-03 | 2026-08-04 | 2026-07-05, 2026-08-04 |
 | Hard | [127. Word Ladder (BFS)](https://leetcode.com/problems/word-ladder/) | 🟡 | 0 | 2026-08-13 | 2026-08-03 | 2026-07-18, 2026-07-21, 2026-08-03 |
 | Medium | [994. Rotting Oranges](https://leetcode.com/problems/rotting-oranges/) | 🟢 | 2 | 2026-10-02 | 2026-08-03 | 2026-06-06, 2026-06-15, 2026-06-25, 2026-07-04, 2026-08-03 |
 | Easy | [219. Contains Duplicate II](https://leetcode.com/problems/contains-duplicate-ii/) | 🟢 | 2 | 2026-10-02 | 2026-08-03 | 2026-03-22, 2026-04-14, 2026-06-25, 2026-07-04, 2026-08-03 |
@@ -90,7 +93,6 @@ Notes for future agents:
 | Medium | [560. Subarray Sum Equals K](https://leetcode.com/problems/subarray-sum-equals-k/) | 🟡 | 0 | 2026-08-08 | 2026-07-29 | 2026-04-05, 2026-06-26, 2026-06-28, 2026-07-29 |
 | Easy | [733. Flood Fill (BFS)](https://leetcode.com/problems/flood-fill/) | 🎓 | 3 | 2027-01-25 | 2026-07-29 | 2026-06-12, 2026-06-19, 2026-06-28, 2026-07-29 |
 | Medium | [235. Lowest Common Ancestor of a Binary Search Tree](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/) | 🟡 | 0 | 2026-08-08 | 2026-07-29 | 2026-05-03, 2026-06-12, 2026-07-19, 2026-07-29 |
-| Hard | [332. Reconstruct Itinerary (Hierholzer)](https://leetcode.com/problems/reconstruct-itinerary/) | 🔴 | 0 | 2026-07-30 | 2026-07-28 | 2026-07-22, 2026-07-28 |
 | Medium | [19. Remove Nth Node From End of List (Postorder Recursion)](https://leetcode.com/problems/remove-nth-node-from-end-of-list/) | 🟡 | 0 | 2026-08-07 | 2026-07-28 | 2026-05-18, 2026-05-21, 2026-06-18, 2026-06-28, 2026-07-08, 2026-07-18, 2026-07-28 |
 | Easy | [169. Majority Element](https://leetcode.com/problems/majority-element/) | 🟢 | 2 | 2026-09-26 | 2026-07-28 | 2026-01-05, 2026-04-01, 2026-05-28, 2026-06-27, 2026-07-28 |
 | Medium | [424. Longest Repeating Character Replacement](https://leetcode.com/problems/longest-repeating-character-replacement/) | 🟢 | 1 | 2026-08-26 | 2026-07-27 | 2026-04-19, 2026-07-02, 2026-07-10, 2026-07-17, 2026-07-27 |
@@ -145,8 +147,6 @@ Notes for future agents:
 | Easy | [496. Next Greater Element I](https://leetcode.com/problems/next-greater-element-i/) | 🟢 | 1 | 2026-08-05 | 2026-07-06 | 2026-07-04, 2026-07-06 |
 | Medium | [323. Number of Connected Components (BFS)](https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/) | 🟢 | 1 | 2026-08-05 | 2026-07-06 | 2026-06-16, 2026-06-22, 2026-07-06 |
 | Easy | [27. Remove Element](https://leetcode.com/problems/remove-element/) | 🟢 | 1 | 2026-08-04 | 2026-07-05 | 2026-01-05, 2026-03-28, 2026-05-27, 2026-06-26, 2026-07-05 |
-| Medium | [138. Copy List with Random Pointer](https://leetcode.com/problems/copy-list-with-random-pointer/) | 🟢 | 1 | 2026-08-04 | 2026-07-05 | 2026-07-03, 2026-07-05 |
-| Medium | [2. Add Two Numbers](https://leetcode.com/problems/add-two-numbers/) | 🟢 | 1 | 2026-08-04 | 2026-07-05 | 2026-07-05 |
 | Medium | [33. Search in Rotated Sorted Array](https://leetcode.com/problems/search-in-rotated-sorted-array/) | 🟢 | 1 | 2026-08-03 | 2026-07-04 | 2026-04-13, 2026-05-29, 2026-06-15, 2026-06-25, 2026-07-04 |
 | Medium | [973. K Closest Points to Origin](https://leetcode.com/problems/k-closest-points-to-origin/) | 🟢 | 1 | 2026-08-02 | 2026-07-03 | 2026-06-23, 2026-07-03 |
 | Medium | [130. Surrounded Regions (Union-Find)](https://leetcode.com/problems/surrounded-regions/) | 🟢 | 1 | 2026-08-02 | 2026-07-03 | 2026-06-21, 2026-06-23, 2026-07-03 |
