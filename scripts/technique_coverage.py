@@ -31,11 +31,46 @@ from __future__ import annotations
 
 import argparse
 import re
+import subprocess
 import sys
 from dataclasses import dataclass, field
 from pathlib import Path
 
-import yaml
+
+def _load_yaml():
+    """Return the `yaml` module, auto-installing PyYAML on first use.
+
+    This script runs from the daily pre-commit hook, so it cannot assume the
+    one-time `bootstrap.py` setup was ever run on this machine — a fresh clone
+    would otherwise fail the coverage step with a bare ImportError traceback.
+    Try the import; if it's missing, pip-install PyYAML (falling back to
+    `--user` for PEP-668 externally-managed environments) and retry once. If
+    the install itself fails (offline, locked-down Python), print one clear
+    line and let the caller decide — the hook already treats this step as
+    non-fatal, so a stale report never blocks committing the day's work.
+    """
+    try:
+        import yaml  # noqa: PLC0415
+        return yaml
+    except ImportError:
+        pass
+    for extra in ([], ["--user"]):
+        try:
+            subprocess.check_call(
+                [sys.executable, "-m", "pip", "install", "--quiet", *extra, "pyyaml"]
+            )
+            import yaml  # noqa: PLC0415
+            return yaml
+        except (subprocess.CalledProcessError, ImportError):
+            continue
+    sys.stderr.write(
+        "technique_coverage: PyYAML is required but could not be installed "
+        "automatically. Install it with `pip3 install pyyaml` and re-run.\n"
+    )
+    raise SystemExit(0)
+
+
+yaml = _load_yaml()
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 MASTERY = REPO_ROOT / "docs" / "foundations" / "dsa" / "mastery"
