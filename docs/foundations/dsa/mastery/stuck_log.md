@@ -1459,3 +1459,17 @@ miss was the **aggregation semantics**: accumulated `totalTime += currentWeight`
 **last arrival**. Summed per-node arrival times that were never meant to combine. Self-reported as
 "stuck on where to do the visited" — the `visited` placement was already right; the real defect was
 one line below it.
+
+## 🟡 138. Copy List with Random Pointer (hashmap two-pass) — Aug 4, 2026
+**Sticking point**: map approach was correct, but three bugs surfaced by coach, not self-caught —
+(1) `next` pointers never wired (copy was 5 isolated nodes, not a list); (2) `oldToNewMap[old.random]`
+KeyError'd on `random=None`; (3) `oldToNewMap[head]` KeyError'd on empty head. All three are the
+*None-guard family* — core algorithm fine, misses were unhandled null edges.
+
+## 🟡 332. Reconstruct Itinerary (Hierholzer) — Aug 4, 2026
+**Sticking point**: teaching measurement after 2× 🔴 — the teaching took. Hierholzer recalled cold
+(postorder append, reverse, "final node has nowhere to go"). One nudge needed: **forgot the
+lexicographic-smallest requirement entirely** → prompted, immediately reached for a per-airport
+min-heap. Also left a **vestigial `visited` set** in after switching to `heappop` — harmless (verified
+correct over 4000 random multigraphs vs brute force) but dead weight, since popping already consumes the
+edge. Mechanism-inventory miss, not a correctness bug. Execution axis still lacks a 🟢 for Hierholzer.

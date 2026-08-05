@@ -49,6 +49,83 @@ class Solution:
 
     # ── Attempt · 2026-08-04 ──────────────
     def copyRandomList_20260804(self, head: 'Optional[Node]') -> 'Optional[Node]':
-        pass
+        # to perform a deep copy, we need to create a map of old to new
+        # so we go through the list, create a copy and link each old node to the new node via the map
 
-# ⤵ prior attempts stashed in dsa/leetcode/.history/138_copy_list_with_random_pointer.txt — restored at session end (python scripts/restore_history.py)
+        oldToNewMap = {}
+
+        traversal = head
+
+        # construct the map
+        while traversal:
+            newNode = Node(traversal.val)
+            oldToNewMap[traversal] = newNode
+            traversal = traversal.next
+
+        traversal = head
+        # map next
+        while traversal:
+            newNext = None
+            if traversal.next:
+                newNext = oldToNewMap[traversal.next]
+            oldToNewMap[traversal].next = newNext
+            traversal = traversal.next
+
+        # go through the map and set the random
+        for old, new in oldToNewMap.items():
+            if old.random:
+                newRandom = oldToNewMap[old.random]
+                new.random = newRandom
+
+        if not head:
+            return None
+        return oldToNewMap[head]
+
+    def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
+        # we can do an old to new mapping like how we do tree copies
+
+        if not head:
+            return None
+
+        oldToNew = {}
+
+        node = head
+        while node:
+            newNode = Node(node.val)
+            oldToNew[node] = newNode
+            node = node.next
+        
+        node = head
+        while node:
+            copy = oldToNew[node]
+            if node.next:
+                copy.next = oldToNew[node.next]
+            if node.random:
+                copy.random = oldToNew[node.random]
+            node = node.next
+        return oldToNew[head]
+
+    def copyRandomList_20260705(self, head: 'Optional[Node]') -> 'Optional[Node]':
+        # deep copy problems typically require a map of old to new
+        oldToNew = {}
+
+        node = head
+
+        while node:
+            newNode = Node(node.val)
+            oldToNew[node] = newNode
+            node = node.next
+        
+        node = head
+
+        while node:
+            newNode = oldToNew[node]
+            if node.next:
+                newNode.next = oldToNew[node.next]
+            if node.random:
+                newNode.random = oldToNew[node.random]
+            node = node.next
+        
+        if not head:
+            return None
+        return oldToNew[head]
