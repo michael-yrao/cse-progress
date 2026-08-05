@@ -36,6 +36,57 @@ class ListNode:
         
 class Solution:
 
+    # ── Attempt · 2026-08-04 ──────────────
+    def reorderList_20260804(self, head: Optional[ListNode]) -> None:
+        """
+        Do not return anything, modify head in-place instead.
+        """
+        # 1 -> 2 -> 3 -> 4 -> 5
+        # 1 -> 2 -> 3
+        # 4 -> 5
+        # find middle
+        # reverse second half
+        # connect two linked list
+
+        slow, fast = head, head
+
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+        
+        # now slow is at middle point
+        # slow.next is start of second half
+        secondHalf = slow.next
+        
+        # disconnect the two halves
+        slow.next = None
+        prev = None
+
+        def reverse(node):
+            nonlocal prev
+            while node:
+                nextNode = node.next
+                node.next = prev
+                prev = node
+                node = nextNode
+
+        reverse(secondHalf)
+
+        secondHalf = prev
+
+        # now we connect the two sides
+
+        firstTrav = head
+        secondTrav = secondHalf
+
+        while firstTrav and secondTrav:
+            firstTravNext = firstTrav.next
+            secondTravNext = secondTrav.next
+            firstTrav.next = secondTrav
+            secondTrav.next = firstTravNext
+            firstTrav = firstTravNext
+            secondTrav = secondTravNext
+
     # ── Attempt · 2026-07-25 ──────────────
     def reorderList_20260725(self, head: Optional[ListNode]) -> None:
         """

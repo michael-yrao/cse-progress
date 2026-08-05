@@ -22,82 +22,8 @@ from typing import List, Optional
 
 class Solution:
 
-    # ── Attempt · 2026-07-28 ──────────────
-    def findItinerary_20260728(self, tickets: List[List[str]]) -> List[str]:
-        # Eulerian Path = visit all edges once - Hierholzer's
-        # Hamiltonian Path = visit all nodes once
-        # we are marking edges as visited not nodes, so this is Eulerian
-        # We know the starting location of JFK
-        # for adjMap, do string -> minHeap to get smallest lexical ordering
-        # DFS since we don't want to push all neighbors of JFK (e.g. example 2)
-        # One very important detail to note is that what happens when there is nowhere to go
-        # Since we know we must form a valid itinerary, this node must be the end
-        # so we should append backwards on the DFS
-        # [["JFK","KUL"],["JFK","NRT"],["NRT","JFK"]]
-        result = []
+    # ── Attempt · 2026-08-04 ──────────────
+    def findItinerary_20260804(self, tickets: List[List[str]]) -> List[str]:
+        pass
 
-        adjMap = collections.defaultdict(list)
-
-        # construct the adjacency map
-        for source, destination in tickets:
-            heapq.heappush(adjMap[source], destination)
-        
-        def dfs(node):
-            # exhaust every ticket out of a node, then append the node itself
-            # first node to run out = last stop, so the list builds end-to-front
-            # on the way back up the stack, push leftover tickets into the result
-            while adjMap[node]:
-                currentChild = heapq.heappop(adjMap[node])
-                # go as deep as we can here
-                dfs(currentChild)
-            # now when we are back here, we are the last node of this DFS
-            # so we add ourselves to the result
-            result.append(node)
-
-        dfs("JFK")
-        result.reverse()
-        return result
-
-    # ── Attempt 1 · 2026-07-22 ────────────────────────────────────────────
-    def findItinerary(self, tickets: List[List[str]]) -> List[str]:
-        # using only once means we should keep track of edges and not nodes
-        # so maybe set of tuple, (from, to)
-        # since we should also go in smaller lexical order, I'm also considering using a minHeap
-        # so adjMap -> minHeap
-        # popping off the heap is kinda us telling us we visited already, so don't need visited set
-        # problem tells us our starting node is JFK, so we can work off that as well
-        # so is this a DFS or BFS or does it not matter since we cannot revisit edges
-        # I will try DFS since I cannot use a queue since I don't know my destination node instantly so I can't initialize my starting node
-        
-        # string -> minheap
-        adjMap = collections.defaultdict(list)
-        # construct our minHeap
-        for source, destination in tickets:
-            heapq.heappush(adjMap[source], destination)
-        
-        # add JFK to result
-        result = []
-
-        # go to the first destination possible from current node
-        def dfs(node):
-            nonlocal result
-            # if node is null or node has no more neighbors
-            if not node:
-                return
-            
-            # one important thing to note that the destination with nowhere else to go
-            # must be our end
-            while adjMap[node]:
-                closestNeighbor = heapq.heappop(adjMap[node])
-                
-                # go to neighbor
-                dfs(closestNeighbor)
-            # we are popping back from the end, so we need to remember to reverse when we return
-            if not adjMap[node]:
-                result.append(node)
-
-        dfs("JFK")
-
-        result.reverse()
-
-        return result
+# ⤵ prior attempts stashed in dsa/leetcode/.history/332_reconstruct_itinerary.txt — restored at session end (python scripts/restore_history.py)

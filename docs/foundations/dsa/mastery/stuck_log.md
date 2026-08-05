@@ -1449,3 +1449,13 @@ The call stack is a natural memory engine. Placing `counter += 1` *after* the re
 head.next = removeFromEnd(node.next)  # 1. Go all the way to the end first
 counter += 1                          # 2. Increments from the back on the way up
 ```
+
+---
+
+## 🟡 743. Network Delay Time (Dijkstra) — Aug 4, 2026
+**Sticking point**: not the algorithm — Dijkstra was recognized cold and the whole scaffold (adjacency
+map, heap seeding, `visited` marked on *pop* with the skip-guard) was correct from a blank page. The
+miss was the **aggregation semantics**: accumulated `totalTime += currentWeight` instead of taking the
+**last arrival**. Summed per-node arrival times that were never meant to combine. Self-reported as
+"stuck on where to do the visited" — the `visited` placement was already right; the real defect was
+one line below it.

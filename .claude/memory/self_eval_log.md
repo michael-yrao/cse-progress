@@ -170,3 +170,14 @@ disease as everything in Cluster A. It is now item 2 of the SessionStart hook's 
 
 
 - 2026-07-14 — Learner set **code-by-default for every rep** (warmups included); no-code blueprints retired as a scheduled format. Promoted to `.claude/memory/feedback_code_by_default.md`. Root cause: blueprint reps kept passing on approach while the same pointer/boundary arithmetic failed at the keyboard (206, 424, 75, 567, 901).
+
+- **2026-08-04 · [P1] · Asserted a complexity freebie was unspent without reading the ledger.** On
+  743's rating rationale I wrote *"first miss on this problem, so it's a freebie, no further hit"* —
+  then opened `complexity_gotchas.md` to log it and found 743's freebie **already spent 2026-07-25 on
+  the identical category** (`heap ops per-edge`, time). Self-caught, same turn, before the learner saw
+  a wrong ledger. **Root cause: stated the contents of a file from impression instead of reading it** —
+  the same root cause as `feedback_read_before_asserting`, but pointed at a *ledger* rather than at the
+  learner's solution file. The rating was 🟡 either way so nothing downstream broke, which is exactly
+  what makes it worth logging: it was invisible. **The read is one grep and it belongs BEFORE the
+  rating rationale is written, not after** — the freebie/repeat status is an input to the rating, not
+  a bookkeeping detail. Status: `open`.
