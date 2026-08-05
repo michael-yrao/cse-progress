@@ -84,3 +84,12 @@ the assumptions, not four loops.
     *discriminator* was already correct in the pre-code comment (*"we are marking edges as visited not
     nodes"*), so this was a missing **label**, not a missing concept. Worth separating those two
     failure kinds when rating: a missing name is cheap to fix, a missing discriminator is not.
+
+- **2026-08-04 · 143 Reorder List** — **name-only miss, code was correct.** Called the slow/fast
+  midpoint scan **"Boyer-Moore."** Correct call: **Floyd's tortoise and hare.** Boyer-Moore is the
+  *voting* algorithm (169 / 229) — and 229 was repped the day before, which is where the crossed wire
+  came from. Same failure kind as 332's Eulerian/Hamiltonian slip: a **missing label, not a missing
+  discriminator** — the mechanism was implemented correctly on the first pass. Cheap to fix, so it did
+  not cap the rating. **Learner's chosen handle: "tortoise and hare."**
+  **Cue: two pointer names that both start with a person's name are not interchangeable — Boyer-Moore
+  counts votes over an array; Floyd walks a linked structure at two speeds.**

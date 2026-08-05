@@ -89,7 +89,7 @@ A problem in this table has used its one free complexity miss. The **next** miss
 | 567 Permutation in String | fixed-alphabet array (space) | O(n) → **O(1)** | 2026-07-24 | spent |
 | 229 Majority Element II | bounded structure (space) | O(n) → **O(1)** (map capped at ≤2) | 2026-07-24 | spent |
 | 210 Course Schedule II | graph traversal (**time**) | O(V·E) → **O(V+E)** (Kahn's/topo) | 2026-07-24 | spent |
-| 743 Network Delay Time (Dijkstra) | heap ops per-edge (**time**) | O(V log E) → **O(E log V)** (E pushes/pops dominate) | 2026-07-25 | spent |
+| 743 Network Delay Time (Dijkstra) | heap ops per-edge (**time**) | O(V log E) → **O(E log V)** (E pushes/pops dominate) | 2026-07-25 | **spent → REPEAT MISS 2026-08-04 (capped that rep at 🟡)** |
 | 355 Design Twitter | list-membership scan (**time**) + squared-dims/phantom-log (**time**) | `follow` O(1) → **O(F)** (list `in` scan; set→O(1)); `getNewsFeed` O(n²logn) → **O(F·T)** (heap capped at 10 = O(1)/op, no square) | 2026-07-25 | spent |
 | 424 Longest Repeating Char Replacement | fixed-alphabet array (space) | O(n) → **O(1)** (freqMap ≤ 26 keys — uppercase-only constraint) | 2026-07-27 | spent |
 | 104 Max Depth of Binary Tree | full-traversal vs search (**time**) | O(log n) → **O(n)** — recursing into *both* children never discards a subtree; O(log n) requires each step to *throw half away* (binary search, BST descent). Computing a property **of the whole tree** ≠ searching **for a node** | 2026-07-27 | spent |

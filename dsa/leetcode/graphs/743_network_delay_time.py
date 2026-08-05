@@ -41,6 +41,41 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-08-04 ──────────────
+    def networkDelayTime_20260804(self, times: List[List[int]], n: int, k: int) -> int:
+        # k is our starting node
+        # edges are weighted and directed
+        # we are looking for min time to all nodes, which is just dijkstra's
+        # dijkstra = min heap, visited, adjmap
+        # dijkstra minHeap stores total distance to node
+
+        adjMap = collections.defaultdict(list)
+        minHeap = []
+        visited = set()
+
+        for src, dst, weight in times:
+            adjMap[src].append((dst, weight))
+
+        # distance to start is zero
+        heapq.heappush(minHeap, (0, k))
+
+        totalTime = 0
+
+        # while we can still traverse the nodes, we continue
+        while minHeap:
+            currentWeight, currentNode = heapq.heappop(minHeap)
+            if currentNode in visited:
+                continue
+            totalTime = currentWeight
+            visited.add(currentNode)
+            for neighbor, weight in adjMap[currentNode]:
+                timeToNeighbor = currentWeight + weight
+                heapq.heappush(minHeap,(timeToNeighbor,neighbor))
+        
+        if len(visited) == n:
+            return totalTime
+        return -1
+
     # ── Attempt · 2026-07-25 ──────────────
     def networkDelayTime_20260725(self, times: List[List[int]], n: int, k: int) -> int:
         # directed graph, edges are also weighted, so not standard DFS/BFS
