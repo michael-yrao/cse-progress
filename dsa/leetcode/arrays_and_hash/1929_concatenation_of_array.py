@@ -36,6 +36,11 @@ from typing import List
 import unittest
 
 class Solution:
+
+    # ── Attempt · 2026-08-05 ──────────────
+    def getConcatenation_20260805(self, nums: List[int]) -> List[int]:
+        return nums*2
+
     def getConcatenation(self, nums: List[int]) -> List[int]:
         # python solution
         return nums * 2
