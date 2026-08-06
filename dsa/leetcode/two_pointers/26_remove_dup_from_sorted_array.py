@@ -1,4 +1,5 @@
 """
+26. Remove Duplicates from Sorted Array   ·   https://leetcode.com/problems/remove-duplicates-from-sorted-array/
 Docstring for dsa.leetcode.two_pointers.26_remove_dup_from_sorted_array
 Given an integer array nums sorted in non-decreasing order, remove the duplicates in-place such that each unique element appears only once. The relative order of the elements should be kept the same.
 
@@ -48,6 +49,24 @@ from typing import List
 import unittest
 
 class Solution:
+
+    # ── Attempt · 2026-08-05 ──────────────
+    def removeDuplicates_20260805(self, nums: List[int]) -> int:
+        # basic two pointers
+        # we will use l as a way to keep track of positions to replace
+        # r to check for dups
+        # we start with l=1 since first element is always valid
+
+        l = r = 1
+
+        while r < len(nums):
+            # if r != l - 1, replace l with r and move l forward
+            if nums[r] != nums[l-1]:
+                nums[l] = nums[r]
+                l+=1
+            r+=1
+        return l
+
     def removeDuplicates(self, nums: List[int]) -> int:
         # two pointer
         # l to keep track current duplicate index to be replaced
