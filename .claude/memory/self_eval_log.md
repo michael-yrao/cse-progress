@@ -182,4 +182,64 @@ disease as everything in Cluster A. It is now item 2 of the SessionStart hook's 
   rating rationale is written, not after** — the freebie/repeat status is an input to the rating, not
   a bookkeeping detail. Status: `open`.
 
+- **2026-08-05 · [P1] · Wrote reference-card content with anaphoric cross-references.** Asked for a
+  one-line "what does this algorithm solve" per advanced-graph algorithm, I wrote Bellman-Ford as
+  *"same, but survives negative edges"* and Kruskal's as *"same goal, sorting all edges cheapest-first"*.
+  Learner: *"lets not connect one to another, hard to tell what 'same goal' means for kruskal."*
+  Correct — and the failure is specific to the artifact type. **A recall card is read cold, one row at a
+  time, weeks later; a row that begins "same" has nothing to point at in that reading context.** In chat
+  the antecedent is one line up, which is exactly why the phrasing felt fine as I wrote it. Root cause:
+  **wrote for the medium I was typing in rather than the medium it would be read in** — the compression
+  that reads as elegant in prose is a dangling pointer on a card. Rule: **every row of a card/table/ledger
+  must stand alone**; no "same", "likewise", "as above", "ditto" across rows. Repetition between rows is
+  the correct cost. (Adjacent to `feedback_spine_first` — both are about packaging teaching for how it's
+  consumed — but distinct: that one is about *volume*, this is about *self-containment*.) Status: `open`.
+
+- **2026-08-05 · [P1] · Wrote a reference table into the miss-ledger file, which states in its own header
+  that it is not for reference tables.** Asked to persist the algorithm name index, I put it in
+  `recognition_gotchas.md`. Learner: *"I wouldn't think to look for the oneliner breakdown of the advanced
+  graphs in recognition gotchas tbh, is there a better home for it."* Correct, and the repo had **already
+  answered the question in two places I had read**: `recognition_gotchas.md` lines 7–9 draw the split
+  explicitly (*"that file is the reference to reread; this file is the miss ledger"*), and
+  `patterns/README.md` says *"techniques are never duplicated; hubs only link"* while already containing
+  the exact artifact — a **By technique (A→Z)** index with a one-line-each column. **Root cause: I chose
+  the file I happened to have open rather than the file whose stated scope matched.** Reading a file for
+  its *content* is not the same as reading it for *what it is for*, and the second read is the one that
+  places an artifact correctly. Rule: **before writing a new section into an existing doc, read that
+  doc's header/purpose statement and any sibling index, and ask "does this file claim this job?"** — the
+  repo is heavily self-documenting and in this case had the answer written down twice.
+  Side finding, worth more than the miss: the A→Z index in `patterns/README.md` was **stale** —
+  `floyd_warshall.md` and `prims_mst.md` exist on disk but were not listed, so two technique notes the
+  learner already owned were unfindable from the index meant to find them. Fixed in the same edit.
+  Status: `open`.
+
 - **2026-08-04 · [P2] · Asserted a bug in the learner's 332 from a hand-trace, without running it.** Told the learner their `visited`-set-plus-`heappop` code lost the second of a duplicate ticket and returned `["JFK","A","JFK"]` on `[["JFK","A"],["A","JFK"],["JFK","A"]]`. **The learner pushed back ("this worked for all LC cases, is this not right?"), I ran it, and my claim was false** — the code is correct (verified 4000 random multigraphs vs brute force); the `visited` set is merely vestigial, not wrong. **Root cause: same as `feedback_read_before_asserting`, one level worse — I didn't assert a file's contents from impression, I asserted the *runtime behavior of code I could have executed in one Bash call*.** A hand-trace is impression; the interpreter is ground truth. Cost: unchallenged, I'd have pushed the learner to "fix" correct code — wasting the rep and eroding trust on a protected measurement. **Rule: when about to claim code produces a specific wrong output, RUN IT FIRST** (`python3`, as cheap as the grep in read-before-asserting). Status: `open` (clusters with the ledger entry above and `feedback_read_before_asserting` under one root cause: *ground-truth is one tool call away — take it before asserting*).
+
+- **2026-08-05 · [P1] · Administered a rated measurement on an instrument whose flaws I had just read in
+  full, and the learner had to catch them — twice, mid-sprint.** Ran the Redis blind sprint straight off
+  the 12-card recall card. Learner, after card 3: *"there is a fundamental issue with how the questioning
+  here works… it feels like it is asking me about what I don't know about Redis."* Then, after the rating:
+  *"from question 1 to question 2 there is no connectivity at all except that we are looking at Redis."*
+  **Both upheld, and they are two distinct defects.** (1) The stems **named the answer's category** —
+  *"which Redis **data type** powers a leaderboard"*, *"**TTL vs LRU** — are they alternatives"*, *"name
+  **three**"* — which is recognition with a cue, not recall. (2) The twelve cards had **no causal thread**,
+  so nothing the learner said ever had a consequence.
+  **Root cause: I read the card for its *answers* — to grade against — and never once for whether it was
+  a valid instrument.** I had every stem in context before asking a single question. This is the same
+  root as the 2026-08-05 [P1] above (*read a file for content, not for what it is for*), applied to a
+  measurement tool instead of a destination file: **reading an artifact to *use* it is not the same as
+  reading it to *evaluate* it.**
+  Two aggravating factors, both of which should have made it obvious without the learner:
+  - The evidence was **inside the artifact I was reading**. The one card whose stem supplied the least
+    (SPOF/request-path) is the one that had **never come back clean in four sprints** — the correlation
+    was sitting in the recall log I quoted from.
+  - The fix was **already the file's own shape**. The 🦴 spine derives everything from three facts, and
+    the **Jul 15 derive-the-design session — logged in that same file as the best Redis rep on record —
+    is a chain**. The card was the single artifact in the note that had thrown the derivation away.
+  Cost: a 4th rated sprint spent re-measuring the same four gaps, and a 🟡 whose comparability I then had
+  to spend anyway when the card was rebuilt. **Rule: before administering any rated instrument, read it
+  once as an examiner — does a stem give away the category? does the sequence have a spine? — and say so
+  BEFORE the rep, not after.** A measurement is not neutral just because it is pre-written; running a bad
+  instrument spends a slot and produces a number that means less than it appears to.
+  Status: `open`. (Clusters with `feedback_operating_principles` #1 — the learner should not have to catch
+  this, and here they caught it twice in one session.)

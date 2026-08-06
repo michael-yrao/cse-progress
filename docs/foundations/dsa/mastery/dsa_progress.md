@@ -59,14 +59,17 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/dsa/mastery/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **101** problems &nbsp;·&nbsp; **110** solutions &nbsp;·&nbsp; **392** attempts
+> **101** problems &nbsp;·&nbsp; **110** solutions &nbsp;·&nbsp; **395** attempts
 
 | | 🏆 Retired | 🎓 Graduated | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|:---:|
-| **Solutions** | 0 | 2 | 89 | 18 | 1 |
+| **Solutions** | 0 | 2 | 89 | 19 | 0 |
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|---|
+| Medium | [1334. Find the City With the Smallest Number of Neighbors at a Threshold Distance (Floyd-Warshall)](https://leetcode.com/problems/find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance/) | 🟡 | 0 | 2026-08-15 | 2026-08-05 | 2026-07-31, 2026-08-05 |
+| Medium | [787. Cheapest Flights Within K Stops (Bellman-Ford)](https://leetcode.com/problems/cheapest-flights-within-k-stops/) | 🟡 | 0 | 2026-08-15 | 2026-08-05 | 2026-07-14, 2026-07-16, 2026-07-26, 2026-08-05 |
+| Medium | [323. Number of Connected Components (BFS)](https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/) | 🟢 | 2 | 2026-10-04 | 2026-08-05 | 2026-06-16, 2026-06-22, 2026-07-06, 2026-08-05 |
 | Medium | [143. Reorder List](https://leetcode.com/problems/reorder-list/) | 🟢 | 1 | 2026-09-03 | 2026-08-04 | 2026-04-26, 2026-07-06, 2026-07-15, 2026-07-25, 2026-08-04 |
 | Medium | [743. Network Delay Time (Dijkstra)](https://leetcode.com/problems/network-delay-time/) | 🟡 | 0 | 2026-08-14 | 2026-08-04 | 2026-07-13, 2026-07-15, 2026-07-25, 2026-08-04 |
 | Hard | [332. Reconstruct Itinerary (Hierholzer)](https://leetcode.com/problems/reconstruct-itinerary/) | 🟡 | 0 | 2026-08-14 | 2026-08-04 | 2026-07-22, 2026-07-28, 2026-08-04 |
@@ -85,7 +88,6 @@ Notes for future agents:
 | Easy | [543. Diameter of Binary Tree](https://leetcode.com/problems/diameter-of-binary-tree/) | 🟢 | 1 | 2026-08-30 | 2026-07-31 | 2026-04-30, 2026-06-02, 2026-06-12, 2026-06-14, 2026-06-24, 2026-06-26, 2026-07-20, 2026-07-31 |
 | Medium | [503. Next Greater Element II](https://leetcode.com/problems/next-greater-element-ii/) | 🟡 | 0 | 2026-08-10 | 2026-07-31 | 2026-07-11, 2026-07-21, 2026-07-31 |
 | Medium | [417. Pacific Atlantic Water Flow (BFS)](https://leetcode.com/problems/pacific-atlantic-water-flow/) | 🟢 | 1 | 2026-08-30 | 2026-07-31 | 2026-06-11, 2026-07-19, 2026-07-31 |
-| Medium | [1334. Find the City With the Smallest Number of Neighbors at a Threshold Distance (Floyd-Warshall)](https://leetcode.com/problems/find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance/) | 🔴 | 0 | 2026-08-02 | 2026-07-31 | 2026-07-31 |
 | Medium | [721. Accounts Merge (Union-Find)](https://leetcode.com/problems/accounts-merge/) | 🟡 | 0 | 2026-08-09 | 2026-07-30 | 2026-07-30 |
 | Hard | [269. Alien Dictionary](https://leetcode.com/problems/alien-dictionary/) | 🟡 | 0 | 2026-08-08 | 2026-07-29 | 2026-07-27, 2026-07-29 |
 | Medium | [912. Sort an Array (Merge Sort)](https://leetcode.com/problems/sort-an-array/) | 🟡 | 0 | 2026-08-08 | 2026-07-29 | 2026-01-06, 2026-03-26, 2026-07-15, 2026-07-29 |
@@ -99,7 +101,6 @@ Notes for future agents:
 | Medium | [540. Single Element in a Sorted Array](https://leetcode.com/problems/single-element-in-a-sorted-array/) | 🟡 | 0 | 2026-08-06 | 2026-07-27 | 2026-05-02, 2026-06-12, 2026-06-13, 2026-07-17, 2026-07-27 |
 | Medium | [18. Four Sum](https://leetcode.com/problems/4sum/) | 🟢 | 1 | 2026-08-26 | 2026-07-27 | 2026-01-23, 2026-07-17, 2026-07-27 |
 | Easy | [104. Maximum Depth of Binary Tree](https://leetcode.com/problems/maximum-depth-of-binary-tree/) | 🟢 | 2 | 2026-09-25 | 2026-07-27 | 2026-04-30, 2026-05-27, 2026-06-27, 2026-07-27 |
-| Medium | [787. Cheapest Flights Within K Stops (Bellman-Ford)](https://leetcode.com/problems/cheapest-flights-within-k-stops/) | 🟡 | 0 | 2026-08-05 | 2026-07-26 | 2026-07-14, 2026-07-16, 2026-07-26 |
 | Medium | [53. Maximum Subarray (Kadane)](https://leetcode.com/problems/maximum-subarray/) | 🟢 | 2 | 2026-09-24 | 2026-07-26 | 2026-01-08, 2026-04-02, 2026-06-23, 2026-06-24, 2026-07-26 |
 | Medium | [189. Rotate Array](https://leetcode.com/problems/rotate-array/) | 🟢 | 2 | 2026-09-24 | 2026-07-26 | 2026-01-11, 2026-04-04, 2026-06-24, 2026-07-26 |
 | Easy | [1046. Last Stone Weight](https://leetcode.com/problems/last-stone-weight/) | 🟢 | 2 | 2026-09-24 | 2026-07-26 | 2026-06-23, 2026-07-26 |
@@ -145,7 +146,6 @@ Notes for future agents:
 | Easy | [20. Valid Parentheses](https://leetcode.com/problems/valid-parentheses/) | 🟢 | 1 | 2026-08-08 | 2026-07-09 | 2026-05-19, 2026-05-21, 2026-06-30, 2026-07-09 |
 | Hard | [42. Trapping Rain Water (Array)](https://leetcode.com/problems/trapping-rain-water/) | 🟢 | 1 | 2026-08-07 | 2026-07-08 | 2026-04-15, 2026-06-29, 2026-07-08 |
 | Easy | [496. Next Greater Element I](https://leetcode.com/problems/next-greater-element-i/) | 🟢 | 1 | 2026-08-05 | 2026-07-06 | 2026-07-04, 2026-07-06 |
-| Medium | [323. Number of Connected Components (BFS)](https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/) | 🟢 | 1 | 2026-08-05 | 2026-07-06 | 2026-06-16, 2026-06-22, 2026-07-06 |
 | Easy | [27. Remove Element](https://leetcode.com/problems/remove-element/) | 🟢 | 1 | 2026-08-04 | 2026-07-05 | 2026-01-05, 2026-03-28, 2026-05-27, 2026-06-26, 2026-07-05 |
 | Medium | [33. Search in Rotated Sorted Array](https://leetcode.com/problems/search-in-rotated-sorted-array/) | 🟢 | 1 | 2026-08-03 | 2026-07-04 | 2026-04-13, 2026-05-29, 2026-06-15, 2026-06-25, 2026-07-04 |
 | Medium | [973. K Closest Points to Origin](https://leetcode.com/problems/k-closest-points-to-origin/) | 🟢 | 1 | 2026-08-02 | 2026-07-03 | 2026-06-23, 2026-07-03 |

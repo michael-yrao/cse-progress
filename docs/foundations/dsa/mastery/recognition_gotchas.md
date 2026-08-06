@@ -22,6 +22,11 @@ confirms/corrects before coding. A miss (wrong technique, or right technique for
 reason) is corrected and carded below. **Retries are half-spoiled** (method is in the tracker
 name) — the measured reps are new problems and cold cues with the label stripped.
 
+> **Can't remember what an algorithm's *name* means?** That's the reverse lookup and it lives in
+> [patterns/README.md → Graph algorithms — the name index](../patterns/README.md#graph-algorithms--the-name-index-added-aug-5-2026).
+> This file maps *shape → technique*; that one maps *name → the problem it solves*. Added Aug 5, 2026
+> after 787, where the mechanism was derived correctly but the label "Bellman-Ford" couldn't be recalled.
+
 ## Trigger → technique map (the transfer — this is the part to master)
 
 | Input shape | + What's asked | → Technique | Picking feature |

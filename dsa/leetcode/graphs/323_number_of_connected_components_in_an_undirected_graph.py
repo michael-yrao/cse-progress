@@ -1,4 +1,8 @@
 """
+323. Number of Connected Components in an Undirected Graph   ·   https://neetcode.io/problems/count-connected-components
+Pattern: graphs
+LeetCode (premium/paywalled): https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/
+
 You have a graph of n nodes. You are given an integer n and an array edges where edges[i] = [aᵢ, bᵢ] indicates that there is an edge between aᵢ and bᵢ in the graph.
 
 Return the number of connected components in the graph.
@@ -30,6 +34,39 @@ import collections
 from typing import List
 
 class Solution:
+
+    # ── Attempt · 2026-08-05 ──────────────
+    def countComponents_20260805(self, n: int, edges: List[List[int]]) -> int:
+        # requirement was to do this via BFS today
+        # so this is basically just number of islands in a way
+        # find a node, mark all adjacent nodes as visited, increment
+        # so adjacency map and visited set and queue
+        adjMap = collections.defaultdict(list)
+        visited = set()
+        queue = collections.deque()
+
+        for n1, n2 in edges:
+            adjMap[n1].append(n2)
+            adjMap[n2].append(n1)
+
+        def bfs():
+            while queue:
+                currentNode = queue.popleft()
+                for neighbor in adjMap[currentNode]:
+                    if neighbor not in visited:
+                        visited.add(neighbor)
+                        queue.append(neighbor)
+
+        numComponents = 0
+        for node in range(n):
+            if node not in visited:
+                numComponents+=1
+                visited.add(node)
+                queue.append(node)
+                bfs()
+        
+        return numComponents
+
     def countComponents_BFS_20260616(self, n: int, edges: List[List[int]]) -> int:
         # first thought is that we iterate through n
         # bfs on each node and mark them as visited as we visit them
