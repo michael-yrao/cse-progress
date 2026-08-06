@@ -19,6 +19,41 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🟡 1334. Find the City (Floyd-Warshall) — 2026-08-05 *(2nd attempt; measurement half of the Jul 31 teach)*
+**Sticking point**: **the teach took on recognition, not on the data structure.** Named Floyd-Warshall cold
+from "all pairs + n ≤ 100" before writing a line, and stated the relaxation premise correctly in the pre-code
+comment — then started building a `defaultdict` **adjacency map**, which cannot answer `dist[i][j]` for a
+non-adjacent pair. Redirect to the n×n matrix was supplied; the three init cases (`inf` / `0` / weight) were
+prompted rather than derived. Loop ordering (midpoint outermost) was correct unaided. Two bugs in the final
+scan, neither self-caught: (1) `return city` instead of `return minCity` — returns the loop variable, i.e.
+always `n-1`, which *accidentally passes Example 1*; (2) strict `<` on the count comparison, so ties kept the
+**smallest** index when the problem asks for the **greatest** — Example 1 is built to catch exactly this.
+Complexity correct unaided (O(n³) / O(n²), both with itemized why-clauses).
+**Cue: Floyd-Warshall never traverses — it never asks "who are i's neighbours?", it asks "what is the best
+known cost i→j?" for every pair, adjacent or not. An adjacency list cannot answer that. If you reach for
+`defaultdict(list)` on an all-pairs problem, you have reached for the wrong shape.**
+*(Secondary, recurring: the tie-break direction was also missed on the Jul 31 first exposure — see that entry's
+section (a). Same problem, same clause, second miss. Read the tie-break sentence twice on any "if there are
+multiple, return the X" problem.)*
+
+---
+
+## 🟡 787. Cheapest Flights Within K Stops (Bellman-Ford) — 2026-08-05 *(4th attempt)*
+**Sticking point**: `for _ in range(k)` instead of `range(k+1)` — **`k` counts stops (intermediate cities),
+not edges**, so `k` stops is `k+1` flights and therefore `k+1` relaxation rounds. Failed LC example 1 (returned
+`-1`, expected `700`) and, more sharply, `k=0` with a direct `src→dst` flight returned `-1` instead of the
+direct price — zero rounds means zero edges relaxed. Everything else was correct cold from a blank page,
+including the hard part (read the frozen `prices`, write to `workingPrices`, swap at round end), and the
+technique was derived unaided in the pre-code comment. Needed three nudges to localise, after being told it
+was semantic rather than a typo. **Not a Bellman-Ford gap — a problem-statement-vocabulary gap.**
+**Cue: whenever a problem caps a path length, write down what the cap counts — nodes, edges, or intermediate
+stops — before writing the loop. "Stops" is the off-by-one trap; `k` stops = `k+1` edges.**
+*(Name-only miss, uncapped: could not recall the algorithm was called "Bellman-Ford" despite implementing it
+correctly — same failure kind as 332's Eulerian and 143's tortoise-and-hare. Prompted the algorithm name-index
+table now in [`patterns/README.md`](../../patterns/README.md).)*
+
+---
+
 ## 🟡 211. Design Add and Search Words Data Structure — 2026-08-02 *(5th attempt; provisional 🟢 lock-down — failed)*
 **Sticking point**: the whole trie + wildcard-DFS structure came out clean from a blank page — `addWord`, the
 fan-out over `node.children.values()` on `'.'`, the `i + 1` recursion, the early `return False` on a dead

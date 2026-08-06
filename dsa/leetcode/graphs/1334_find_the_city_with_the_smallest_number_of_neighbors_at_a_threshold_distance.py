@@ -44,11 +44,64 @@ Constraints:
 """
 # Write everything yourself from here — including any ListNode/TreeNode classes a
 # problem needs. No shared data-model imports (whiteboard fidelity).
+import collections
 import math
 from typing import List, Optional
 
 
 class Solution:
+
+    # ── Attempt · 2026-08-05 ──────────────
+    def findTheCity_20260805(self, n: int, edges: List[List[int]], distanceThreshold: int) -> int:
+        # from all cities, we want the one with the smallest amount of connections under the distance threshold
+        # we also want the highest numbered node that fits that criteria
+        # we need to know what every single node can reach within distanceThreshold
+        # Since we need to look at all pairs of nodes, this is Floyd Warshall algorithm
+        # the premise of Floyd Warshall is that given i -> j takes x, can we get there faster via a midpoint
+        # for Floyd Warshall, we create a 2D array of distances, so distance[i][j] tells me shortest path from i to j
+
+        distance = []
+
+        for _ in range(n):
+            row = [math.inf] * n
+            distance.append(row)
+
+        # populate this distance map with the edges provided
+
+        for n1, n2, weight in edges:
+            distance[n1][n2] = weight
+            distance[n2][n1] = weight
+        
+        # set distance to self to 0
+
+        for i in range(n):
+            for j in range(n):
+                if i == j:
+                    distance[i][j] = 0
+
+        # now we go through the premise of the problem
+
+        for midway in range(n):
+            for src in range(n):
+                for dst in range(n):
+                    if distance[src][midway] + distance[midway][dst] < distance[src][dst]:
+                        distance[src][dst] = distance[src][midway] + distance[midway][dst]
+        
+        # now that we relaxed all the nodes, go through each row and grab smallest count under distanceThreshold
+
+        minCounter = math.inf
+        minCity = -1
+        for city in range(n):
+            cityCounter = 0
+            for neighbor in range(n):
+                if distance[city][neighbor] <= distanceThreshold:
+                    cityCounter+=1
+            if cityCounter <= minCounter:
+                minCounter = cityCounter
+                minCity = city
+        
+        return minCity
+
     # ── Attempt 1 · 2026-07-31 ────────────────────────────────────────────
     def findTheCity(self, n: int, edges: List[List[int]], distanceThreshold: int) -> int:
         # We need to use every node as the source here and then find the smallest number of nodes
@@ -92,4 +145,4 @@ class Solution:
                 minPath = currentPath
                 minPathCity = i
 
-        return minPathCity    
+        return minPathCity

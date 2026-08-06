@@ -33,6 +33,45 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-08-05 ──────────────
+    def findCheapestPrice_20260805(self, n: int, flights: List[List[int]], src: int, dst: int, k: int) -> int:
+        # looking for cheapest within k means we need to limit the amount of iterations
+        # which also means we need a working copy and a primary copy of the distance
+        # this way, we can make sure we get the cheapest at each iteration
+        # this is the premise of Bellman Ford's shortest path algorithm
+        # we will create a distance array to indicate distance to all nodes
+        # Bellman Ford is not a greedy algorithm, we need to consider all edges and nodes
+        # so we do not use a minHeap here and will just use a queue
+        # bellman ford's algorithm just relax every node if possible
+        
+        prices = [math.inf] * n
+
+        # we set the distance at src to zero
+        prices[src] = 0
+
+        # k is number of nodes we can go through but we are iteration through edges, so we need to do k + 1
+        for _ in range(k+1):
+            workingPrices = prices.copy()
+            # now for each iteration, let's take a look and see if we can relax the node
+            for source, destination, price in flights:
+                # if we can't start from source, we just continue
+                if prices[source] == math.inf:
+                    continue
+                # if not, then let's update working copy to lowest price
+                # we need to update working prices and check working prices in case multiple routes go to the same destination
+                # we use the canonical prices to not do multiple steps in 1 iteration
+                if prices[source] + price < workingPrices[destination]:
+                    workingPrices[destination] = prices[source] + price
+            # now that we relaxed what we could have this iteration, update prices to the working prices
+            prices = workingPrices
+        
+        # now if the distance is still math.inf, we can't reach the destination
+        # otherwise, return shortest distance we found
+
+        if prices[dst] == math.inf:
+            return -1
+        return prices[dst] # type: ignore
+
     # ── Attempt · 2026-07-26 ──────────────
     def findCheapestPrice_20260726(self, n: int, flights: List[List[int]], src: int, dst: int, k: int) -> int:
         # we are trying to travel from src to dst

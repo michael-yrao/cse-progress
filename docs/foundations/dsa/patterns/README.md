@@ -38,3 +38,43 @@ Rule of thumb: **know the move → open a technique. Know the shape → open a h
 | [tree_dfs](techniques/tree_dfs.md) | Pre/in/post traversal; property from children |
 | [two_pointer](techniques/two_pointer.md) | Converging or same-direction pointers driven by an invariant |
 | [union_find](techniques/union_find.md) | Connectivity / grouping / undirected cycle detection |
+
+## Graph algorithms — the name index (added Aug 5, 2026)
+
+**Why this is its own section:** the A→Z table above answers *"I see this shape, what's the move?"*
+This one answers the reverse — **"what does this name actually solve?"** — because the advanced graph
+algorithms are the ones whose *names* don't stick. A name you can't retrieve is a technique you can't
+reach for cold, and recognition is one of the two phase-exit axes.
+
+Each row **stands alone on purpose** — no "same as above", no "likewise". This gets read one row at a
+time, weeks apart, and a row starting with "same" has nothing to point at.
+
+| Algorithm | Solves | Note |
+|---|---|---|
+| **Dijkstra** | cheapest path from one source to everywhere, when every edge cost is non-negative | ⚠️ not written |
+| **Bellman-Ford** | cheapest path from one source to everywhere, tolerating negative edge costs; works in rounds, so the number of edges used can be capped | ⚠️ not written |
+| **Floyd-Warshall** | the cheapest path between *every* pair of nodes at once, by repeatedly asking whether routing through one more allowed midpoint beats the best cost known so far | [floyd_warshall](techniques/floyd_warshall.md) |
+| **Prim's** | connect every node into one network for the least total edge cost, growing a single tree outward from a start node | [prims_mst](techniques/prims_mst.md) |
+| **Kruskal's** | connect every node into one network for the least total edge cost, taking edges cheapest-first and skipping any that closes a cycle | ⚠️ not written |
+| **Hierholzer** | find a walk that uses every edge in the graph exactly once | ⚠️ not written |
+| **Topological sort** | order the nodes so that every node comes after everything it depends on | [topological_sort](techniques/topological_sort.md) |
+
+**The shape of the list — three questions, two answers each.** Dijkstra and Bellman-Ford answer *"what's
+the cheapest way to get there."* Prim's and Kruskal's answer *"what's the cheapest way to connect
+everything."* Hierholzer and topological sort aren't about cost at all — they answer *"in what order do I
+walk this."* Each pair differs by one condition; the picking features are in
+[recognition_patterns.md](../recognition_patterns.md).
+
+**Floyd-Warshall is the one with no partner**, and that *is* its recognition signal. Dijkstra and
+Bellman-Ford answer the cheapest-path question **from one source**; Floyd-Warshall answers it **between every
+pair**, which is a different question and not a loop around the other two. The trigger is a problem that needs
+distances it never names a source for — *"for each city, how many others are within…"* — plus a small `n`
+(≤ ~400), because the cost is O(n³) and that bound is what makes it affordable.
+
+The **⚠️ not written** marks double as the gap list — four of these seven have no technique note, and
+Bellman-Ford and Dijkstra are both gate-relevant before Aug 16.
+
+> ✅ **Floyd-Warshall's row filled Aug 5, 2026** at 1334's close-out, as planned — the rated measurement half
+> of the Jul 31 teach. **The recognition half of that rep landed: the algorithm was named cold from "all pairs
+> + small n" before any code.** Execution did not — 1334 came back 🟡 (adjacency map instead of the n×n matrix),
+> so Floyd-Warshall still holds **zero 🟢** going into the Aug 16 gate.
