@@ -44,6 +44,11 @@ from typing import List
 import unittest
 
 class Solution:
+
+    # ── Attempt · 2026-08-05 ──────────────
+    def hasDuplicate_20260805(self, nums: List[int]) -> bool:
+       return len(nums) != len(set(nums))
+
     def containsDuplicate(self, nums: List[int]) -> bool:
         # since we only care about if it contains duplicates
         # what we can do is just iterate til we see a duplicate

@@ -55,6 +55,14 @@ whenever moving on to the next problem or starting a new set mid-session, restat
 problem(s) with both links — don't make the learner scroll back to the kickoff table
 (reaffirmed Jul 21). Related: [[feedback_proactive_scheduling]].
 
+**⚠️ 7th lapse, Aug 5, 2026 — "provide LC link" was answered with LC only.** The learner
+asked explicitly for the LC link after a scaffold; the reply gave the bare LC URL and dropped
+the file link. **A request for one link is NOT a waiver of the other** — the standing pair is
+`[file] · [LC/NC]`, and "give me the LC link" means *surface the link block*, both rungs, not
+"omit the file link." This is the hand-over case the source fix can't reach (no `new_problem.py`
+run), so it's recall-bound: any time a single link is requested mid-session, answer with the
+full pair.
+
 **CAVEAT — a retry's file link is a spoiler until scaffolded.** File links are safe in the
 **kickoff** table because those items are scaffolded first (blank stub, prior attempts
 stashed). In a **selection/candidate menu** where the learner hasn't picked yet, the retry
