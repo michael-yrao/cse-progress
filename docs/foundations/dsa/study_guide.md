@@ -118,6 +118,11 @@ If you finish an active block problem in under 15 minutes, don't move on to a ne
 
 ## Daily Structure: Design & AI Phase (Blocks 5–8)
 *Use this structure from Week 17 onward to protect your DSA knowledge.*
+
+> **📍 SD source of truth = [`senior_ramp.md`](../system_design/senior_ramp.md)** (created Aug 6, 2026).
+> The design list, sourcing (systemdesign.io), the prerequisite-tech gate, the scored-mock rubric, and the
+> phase/exit gates live there — this study-guide section is kept for the daily-loop mechanics and the
+> company-targeting strategy, not as a second design plan. Where the two differ, the ramp wins.
 *   **00:00–00:15 | DSA Maintenance Flashcard**: Look at a random past LeetCode prompt. Explain the data structure pattern and optimal Time/Space complexity out loud.
 *   **00:15–01:00 | Architecture Deep Dive**: Spend 45 minutes on system design practice using the weekly loop below.
 
@@ -147,64 +152,14 @@ If you finish an active block problem in under 15 minutes, don't move on to a ne
 | **LeetCode Discuss / Blind** | High | Real candidates posting recent questions; search by company + "2025" or "2026" |
 | **Glassdoor interview questions** | Medium | Less technical detail but useful for recency confirmation |
 
-**Company priority for the pool:**
+**Company targeting, the tier route, the "why," and the apply gates now live in
+[`../career_strategy.md`](../career_strategy.md)** — the single cross-track home for the goal (relocated out
+of this guide Aug 6, 2026 so it stops drifting across copies). This guide is *how to study DSA*; the north
+star is one click away.
 
-| Tier | Companies | Role | When to focus |
-|------|-----------|------|---------------|
-| **Fintech** | Stripe, Robinhood, Citadel, Bloomberg, Goldman Sachs, JPMorgan | **Calibration** — interview here to practice, not to land | Interview *first*, **apply trigger ~mid-Sept 2026**. First applications go to **Bloomberg, Stripe, Citadel**. The reconciliation/ledger moat carries these loops, which is exactly why they're the safe place to burn early reps |
-| **Data platform / infra** | **Snowflake**, Databricks, **Datadog** (entry point), Confluent, MongoDB | **Destination — the next actual move** (decided Jul 26, 2026) | Apply once at-scale SD reaches Transition/Mastery, ~2–3 months behind the fintech batch. DSA bar is big-tech-grade (LC medium/hard); SD is distributed-storage flavored (query engines, partitioning, columnar storage, consistency), not social-feed |
-| **Big tech** | Google, Amazon, Meta, Microsoft, Apple | The move *after* this one | Not this cycle. Reached from inside the data-platform tier, where the logo and the at-scale work both count |
-| **Supplementary** | Netflix, Uber, Airbnb, DoorDash, LinkedIn | Pattern variety only | Rotate in for problem coverage. Not an interview target this cycle |
-
-> **Why the data-platform tier is the destination, and fintech became calibration** (decided Jul 26,
-> 2026). The constraint driving this is **hop count**: too many moves before big-tech-adjacent reads
-> as churn on a resume that's already carrying a title stuck at Senior since 2017. So the next move
-> has to *count* — one hop that lands closer to big tech, not a lateral into another bank. Fintech
-> was the earlier plan's destination because the reconciliation/ledger moat covers the design gap
-> there. That property is now the reason it's the **practice** tier: loops you can walk into on
-> domain strength are the right place to spend early reps, and a fintech offer you decline costs you
-> nothing.
->
-> **The honest cost of the inversion: the readiness bar went up, not down.** The old plan let you
-> apply into your strength. This one aims at a tier whose system design round is at-scale distributed
-> data — the weakest lane on the board. Leading the Snowflake + Serenity migration at Morgan Stanley
-> is a *ran-your-product-at-scale-in-a-regulated-bank* story and it is genuine referral and
-> recruiter-screen leverage, but be exact about what it buys: **it gets you the screen, not the
-> offer.** Expect the top of that funnel to be unusually easy and the onsite to be hard. Databricks
-> sits here for the same reason — same round shape, so prep transfers between them.
->
-> **Sequencing consequence — don't collapse the gap.** Calibration only works if the fintech loops
-> *finish* before the Snowflake applications go out, and application→onsite runs 4–8 weeks on each
-> side. That's what puts the data-platform batch ~2–3 months behind mid-Sept. "Interview at fintech
-> when fully ready" is right in spirit, but ready-enough-to-learn beats ready-enough-to-win here: a
-> loop run too late to inform the real target is just an offer you decline.
->
-> **Datadog is the tier's entry point — interview there first.** It belongs on round shape (metrics
-> ingestion, time-series storage, high-cardinality aggregation, alerting ≈ 60% overlap with the
-> Snowflake/Databricks design round; the non-overlap is query engines and SQL semantics). But it
-> differs on the two things that earned Snowflake its row: there's **no product-familiarity story**
-> here, so it's a cold application, and the bar and comp sit a rung lower. Both cut in favor of
-> going there *first* — it rehearses the ingestion/storage design round at lower stakes before
-> Snowflake sees you run it, and it's NYC-headquartered. Treat it as calibration aimed at infra,
-> not as a disposable rep.
-
-> **Two apply gates now, not one** (restructured Jul 26, 2026 when data platform became the
-> destination). Each tier gates on its own readiness bar, because they no longer share one.
->
-> **Gate 1 — fintech / calibration, ~mid-Sept 2026.** Confirm: (1) DSA roadmap through the hard
-> blocks on track with a low 🔴/🟡 count; (2) SD Tier-1 fintech designs at Transition/Mastery —
-> **rate limiter + payment/ledger + 2–3 canonicals**, payment/ledger owned cold (it's the moat).
-> This gate is deliberately *not* raised now that these are practice loops: the point is to run them
-> while they're still winnable on domain strength. But don't drop it either — a loop you bomb on
-> fundamentals teaches you nothing about the design lane you're actually trying to measure.
->
-> **Gate 2 — data platform / destination, ~2–3 months later.** Confirm: (1) Gate 1 loops actually
-> *run*, with the design rounds debriefed into the SD tracker — the calibration is the input to this
-> gate, so unfinished loops hold it; (2) **at-scale distributed-data SD at Transition/Mastery** —
-> ingestion pipeline, time-series/columnar storage, partitioning and consistency. That second item is
-> the weak lane, so expect this gate, not the calendar, to set the date. If SD lags, the date slips
-> before the bar does. Burning Snowflake on an unprepped design round is now the expensive failure —
-> it's the destination, and there's no third tier behind it to fall back on this cycle.
+For **problem-pull** purposes only: fintech (Stripe/Bloomberg/Citadel…) and data-platform
+(Snowflake/Databricks/Datadog…) are the calibration/next-hop sources, big-tech/MANGA is the end goal — full
+reasoning and the apply gates are in `career_strategy.md`.
 
 Don't pull from a company you're actively interviewing at that week — keep those problems as genuine unknowns.
 
@@ -232,18 +187,24 @@ The 15-minute daily maintenance flashcard keeps mastered patterns warm. But not 
 
 The Saturday randomized DSA sprint covers the pattern recognition gap regardless of category status — it's always on.
 
-### 📋 Recommended Design Question Order (Phase 2)
+### 📋 Design Question Order — see the ramp
 
-Start with fintech-relevant designs — these map directly to interview questions at Stripe, Robinhood, and Two Sigma, and connect to your real-world experience:
+> **The design list, order, and exit gates now live in [`senior_ramp.md`](../system_design/senior_ramp.md).**
+> Do not maintain a second order here (the old fintech-first list was retired Aug 6, 2026 with the re-aim
+> to big tech).
 
-1. **Rate limiter** — simplest, teaches token bucket vs sliding window, good warm-up
-2. **Payment processing system** — your domain; own this cold
-3. **Notification system** — teaches async queues (Kafka/SQS), fan-out patterns
-4. **URL shortener** — classic; teaches consistent hashing, caching, DB design
-5. **Reconciliation pipeline** — you've built this; narrate your real MS experience then generalize to scale
-6. **Distributed ledger / accounting system** — deepest domain advantage; save for late Phase 2
+**Source: [systemdesign.io](https://systemdesign.io/)** — pull one design per session, weighted to the
+**canonical big-tech set** (news feed, chat/messenger, YouTube/video, typeahead, web crawler, Google Docs,
+rate limiter, URL shortener, distributed cache, notification, proximity, ad-click aggregation). **No
+fintech weighting** — big tech/MANGA is the end goal, so payment/ledger is one design among many (useful
+for a fintech *waypoint* loop, not prioritized).
 
-Only move to FAANG-style designs (Twitter, YouTube, Google Drive) after the above 6 are solid. Walk into Stripe talking about reconciliation, not social feeds.
+**Prerequisite-tech gate (bar: off 🔴):** before a design needs a core tech not yet drilled (Redis,
+Postgres, Vitess, …), cover that tech first. Phase ordering (A: framework + data-store trio → B: senior
+signals → C: simulation), the scored-mock rubric (#5 forks / #6 failure modes / #7 evolve-operate), and the
+apply trigger are all in the ramp.
+
+**Still walk in talking tradeoffs, not diagrams** — the narration rule below is unchanged.
 
 ### 🔑 The Narration Rule
 Every design session must be narrated out loud — not written silently. Interviewers score your communication, not your diagram. If you can't explain a tradeoff in one sentence, you don't own it yet.

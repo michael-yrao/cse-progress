@@ -1,5 +1,8 @@
 # AI System Engineering Study Guide — Practitioner Core → Infra Depth
 
+> **📍 Overarching career goal & apply strategy → [`../career_strategy.md`](../career_strategy.md).**
+> This guide is the AI-track study *mechanics*; the goal and apply gates live there.
+
 ## Mission & the Interview-ROI Line
 
 **End goal:** be able to design and reason about **production AI/LLM systems** —

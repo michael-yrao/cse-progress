@@ -1,6 +1,13 @@
 # Engine config, read by scripts/update_review_dates.py.
 # Intervals and source root default to the standard values; the one non-default
 # here is discovery_skip.
+
+# Raised 5 → 7 on Aug 6, 2026 for the senior-fintech ramp. The extra +2/day (+14/week)
+# is REVIEW/backlog capacity only — new-problem intake stays capped at the difficulty
+# tiers (moderate 5 / hard 4 / DP 3), so the surplus deficit and 🟢 backlog drain instead
+# of the blank-tax cascade growing. This is what funds finishing the DSA roadmap (incl.
+# DP, Oct–Dec) AND the SD ramp in parallel, rather than stealing the DSA active block.
+daily_cap: 7
 system_design:
   # three_weekly from the Jul 20 week (raised from twice_weekly on Jul 14, 2026).
   # Each lane owns a slot — never let two bid for the same one:

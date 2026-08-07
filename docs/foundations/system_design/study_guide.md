@@ -1,5 +1,9 @@
 # System Design Study Guide — Interview Core → Architect Depth
 
+> **📍 Overarching career goal & apply strategy → [`../career_strategy.md`](../career_strategy.md).**
+> SD *execution roadmap* (phases, rubric, sourcing, tech order) → [`senior_ramp.md`](senior_ramp.md).
+> This guide is the SD study *mechanics*; those two own the goal and the plan.
+
 ## Mission & the Interview-ROI Line
 
 **End goal:** become a genuine systems **architect** (Staff / Principal / CTO-level) — someone who can design, reason about, and defend planet-scale distributed systems from first principles. **Passing the system-design interview is a milestone on that path, not the finish line.**
