@@ -106,11 +106,16 @@ makes *parallel* feasible instead of forcing a strict sequence.
 failure modes, and evolve/operate instead of remembering the steps. Drill the cheap/canonical designs
 where the framework itself is the thing being practiced. **Order easiest-framework-rep first.**
 
-- **Designs (Sunday, from systemdesign.io):** finish **URL shortener** *(in flight)* → **rate limiter**
-  (close the open arc) → **chat/messenger** (WebSockets, queues, fan-out) → **news feed**
-  (push-vs-pull fan-out, celebrity problem, CDN).
+- **Designs — walk systemdesign.io's tiers, one design = one row = one session** (weekly-loop retired;
+  the tracker's `Design (tier)` rows are the concrete unit, like LeetCode numbers). **Finish the open arcs
+  first**, then the **Easy tier** in order:
+  1. **URL Shortener** *(in flight — Sunday)* · 2. **Rate Limiter** *(close the Mastery arc, 🟡; it's
+     systemdesign.io-Hard but this is a closing re-rep, not a cold learn)* →
+  then Easy: **Pastebin → Instagram → Twitter → Top-K (App Store Rankings) → Job Scheduler → Document Mgmt
+  (Notion) → FB Likes w/ live updates.** *(Skip the low-ROI easies — Weather, Price-Alert, Parts-Compat.)*
 - **Lane ① tech fluency — the data-store trio (highest leverage):** **Postgres** (note built → drill to
-  🟢) → **Cassandra** → **DynamoDB**. **Vitess** (sharded MySQL) pulled in when a design demands it.
+  🟢) → **Cassandra** → **DynamoDB**. **Vitess** (sharded MySQL) pulled in when a design demands it. Per the
+  **prereq-tech gate**, a design's core tech must be off 🔴 before its session.
 - **Lane ② concepts fallback:** the six front-loaded cards (percentiles, Little's Law, utilization,
   sketches, retry storms, quorum math) as the pull queue allows.
 
@@ -122,10 +127,9 @@ is each **off 🔴**. Until both hold, stay in Phase A.
 **Goal:** where L6 is won — **forks, failure modes, and evolve/operate (#5/#6/#7).** Re-run Phase-A designs
 at Mastery timing scored *specifically* on #5–7, and add the harder canonical set.
 
-- **Designs — the harder big-tech canonical set:** **YouTube/video** (CDN, chunking), **typeahead**
-  (ties DSA tries / 208), **web crawler**, **Google Docs** (collab/OT/CRDT), **distributed cache**,
-  **notification service**, **proximity/nearby**, **ad-click aggregation** (streaming + dedup). *(Payment/
-  ledger is optional — decent prep for a fintech waypoint, but not prioritized for the big-tech goal.)*
+- **Designs — systemdesign.io's Medium tier:** **Dropbox/Google Drive · Messenger/WhatsApp · YouTube/
+  Netflix · Key-Value Store · Web Crawler · News Feed · Google Calendar.** Same one-row/one-session unit;
+  re-run the Phase-A Easy designs at Mastery timing scored *specifically* on #5–7 alongside.
 - **Lane ① tech fluency — streaming + coordination tier:** **Kafka** → **Flink** (exactly-once,
   watermarks), **Elasticsearch**, **API Gateway**, **ZooKeeper**.
 - **Lane ② concepts:** quorum math, consistency levels (strong→eventual), LSM vs B-tree, idempotency.
@@ -140,6 +144,9 @@ at Mastery timing scored *specifically* on #5–7, and add the harder canonical 
 **Goal:** convert bank into interview reflexes; calibrate against real loops.
 
 - **Full cold 45-min mocks** on random designs from the bank, strict timing.
+- **Add systemdesign.io's Hard / Very-Hard tier** as the depth material: **Typeahead · Notification Service ·
+  Metrics Collection**, then **Yelp/Nearby · Credit-Card Processing** *(the last is a fintech-waypoint
+  design — do it only if a fintech loop is imminent)*. Same one-row/one-session unit.
 - **Deep-dive rounds:** pick 2–3 systems, go two levels deeper (senior loops often spend a full 45 min
   drilling *one* system rather than breadth).
 - **Live-fire calibration:** apply to **1–2 lower-priority companies** (fintech waypoints are fine here) —
