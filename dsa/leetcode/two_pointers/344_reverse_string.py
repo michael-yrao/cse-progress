@@ -31,6 +31,23 @@ Constraints:
 from typing import List
 
 class Solution:
+
+    # ── Attempt · 2026-08-06 ──────────────
+    def reverseString_20260806(self, s: List[str]) -> None:
+        """
+        Do not return anything, modify s in-place instead.
+        """
+        def swap(l,r):
+            tmp=s[l]
+            s[l]=s[r]
+            s[r]=tmp
+        
+        l,r=0,len(s)-1
+        while l < r:
+            swap(l,r)
+            l+=1
+            r-=1
+
     def reverseString(self, s: List[str]) -> None:
         """
         Do not return anything, modify s in-place instead.

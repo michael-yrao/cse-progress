@@ -41,6 +41,27 @@ Constraints:
 """
 
 class Solution:
+
+    # ── Attempt · 2026-08-06 ──────────────
+    def mergeAlternately_20260806(self, word1: str, word2: str) -> str:
+        w1t, w2t = 0, 0
+        result = []
+        while w1t < len(word1) and w2t < len(word2):
+            result.append(word1[w1t])
+            result.append(word2[w2t])
+            w1t+=1
+            w2t+=1
+        
+        while w1t < len(word1):
+            result.append(word1[w1t])
+            w1t+=1
+        
+        while w2t < len(word2):
+            result.append(word2[w2t])
+            w2t+=1
+        
+        return "".join(result)
+
     def mergeAlternately(self, word1: str, word2: str) -> str:
         result = ""
         p1 = p2 = 0
