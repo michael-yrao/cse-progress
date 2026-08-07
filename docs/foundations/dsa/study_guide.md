@@ -230,6 +230,18 @@ Every design session must be narrated out loud — not written silently. Intervi
 | **Bit Manipulation + Math & Geometry** | Dec 7–28 | 15 | Single Number, # of 1 Bits, Counting Bits, Reverse Bits, Missing Number, Sum of Two Integers, Reverse Integer; Rotate Image, Spiral Matrix, Set Matrix Zeroes, Happy Number, Pow(x,n), Multiply Strings, Detect Squares |
 | **Buffer + Final EOY Review** | Dec 29–31 | — | Sweep `dsa_progress.md` for all 🔴 Blank and 🟡 Shaky solutions. Target: ≤ 10 non-Clean by EOY |
 
+> **🏖️ TWO NOVEMBER BREAKS — flagged Aug 6, 2026; the Oct/Nov weekly builds MUST sequence DP around
+> these** (see [[project_november_breaks]]). ~1 week at **start of Nov (~Nov 1–7)** and ~1 week at **end
+> of Nov (~Nov 24–30)**, both **light-maintenance, not full-offline** (flashcard-level at most). Both land
+> **inside the DP phases** — start-of-Nov eats 1D DP's last week, end-of-Nov eats a week of 2D DP. Effects:
+> **(1)** DP slips ~2 weeks → completion ~mid-to-late Dec, and "DSA → maintenance" (plus the earliest
+> big-tech apply gate) moves with it — a **normal carry per [[feedback_phase_dates_are_advisory]]**, not a
+> failure. **(2)** The load-bearing lever: **do NOT teach a brand-new DP pattern in the 2–3 days before
+> either break** — a just-taught pattern + a week untouched = the never-encoded→gap→🔴 failure. Front-load
+> new DP right after returning; leave pre-break days for review/consolidation. **(3)** Re-entry days after
+> each break run **review-heavy** (double warmups) to drain the spaced-rep bulge; cap-7 is the drain
+> capacity. Light maintenance during the weeks keeps the bulge small.
+
 ### Post-NC150 — The Steady State (Maintenance · Application · Expansion)
 
 Once the roadmap completes and NC150 is Clean/retired, the mode shifts from **acquiring patterns** to three ongoing threads that run in parallel — this is the permanent steady state and the on-ramp to the competitive-programmer goal:
