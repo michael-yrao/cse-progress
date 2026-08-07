@@ -1508,3 +1508,20 @@ lexicographic-smallest requirement entirely** → prompted, immediately reached 
 min-heap. Also left a **vestigial `visited` set** in after switching to `heappop` — harmless (verified
 correct over 4000 random multigraphs vs brute force) but dead weight, since popping already consumes the
 edge. Mechanism-inventory miss, not a correctness bug. Execution axis still lacks a 🟢 for Hierholzer.
+
+### 2026-08-06 · 261 Graph Valid Tree (DFS) 🟡
+**Sticking point**: two bugs I flagged (not self-caught). (1) `if i in visited` / `visited.add(i)`
+inside `dfs` used the **outer loop variable `i`** instead of `currentNode` — the traversed node was
+never recorded, so cycle detection ran on the wrong identity. (2) `dfs(neighbor, currentNode)` **discarded
+its return value** — a deeper `False` (cycle found) never propagated up. Recognition was clean (undirected
++ "is it a tree" → DFS cycle + connectivity), parent-skip for the back-edge was correct, and the design
+was clean (edge-count guard + cycle check ⟹ connectivity implied, no redundant guard). Complexity: missed
+the **recursion stack** as a space term (path graph → O(V) deep) — carded, freebie.
+
+### 2026-08-06 · 496 Next Greater Element I 🟡
+**Sticking point**: the monotonic-stack pass (next-greater for every nums2 position) was correct and
+complete unaided. Stuck on the **bridge** — results were keyed by nums2 *index* while nums1 supplies
+*values*, so the nums1 lookup had no path. Nudge given: the "all integers unique" constraint makes value↔answer
+1:1, so **key the results map by value, not index** → nums1 becomes a direct lookup (also what unlocks the
+O(n1+n2) follow-up). Complexity was strong and self-derived: amortized O(n) time (each element pushed/popped
+once), O(n) space; no miss.

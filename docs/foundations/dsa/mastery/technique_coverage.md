@@ -6,7 +6,7 @@
 
 > The tracker is keyed by **problem**; this is keyed by **technique**. Use it at the weekly build to decide what to pull, and at phase exit to check the per-algorithm bar (recognition + execution, ≥1 🟢 each).
 
-> **49** techniques &nbsp;·&nbsp; **9** with no 🟢 &nbsp;·&nbsp; **4** thin &nbsp;·&nbsp; **0** unqueued variant gaps
+> **49** techniques &nbsp;·&nbsp; **10** with no 🟢 &nbsp;·&nbsp; **4** thin &nbsp;·&nbsp; **0** unqueued variant gaps
 
 ## ⚠️ Action list
 
@@ -18,6 +18,7 @@
 - **Dijkstra** (advanced_graphs) — best 🟡 across 743, 778
 - **Divide & Conquer / Sorting** (sorting) — best 🟡 across 912
 - **Floyd-Warshall (all-pairs shortest path)** (advanced_graphs) — best 🟡 across 1334
+- **Graph Cycle Detection (DFS)** (graphs) — best 🟡 across 261
 - **Hierholzer (Eulerian path)** (advanced_graphs) — best 🟡 across 332
 - **Length-Prefix Encoding** (arrays_and_hash) — best 🟡 across 271
 - **Prim's MST** (advanced_graphs) — best 🟡 across 1584
@@ -51,7 +52,7 @@
 | BFS on Implicit Graph | graphs | 1 (127) | 🟡 | ❌ | — | **no-green** |
 | Connected Components | graphs | 3 (323, 323, 323) | 🟢 | ✅ | DFS ×1 · BFS ×1 · Union-Find ×1 | — |
 | Graph Clone (DFS + Hash Map) | graphs | 1 (133) | 🟢 | ✅ | — | — |
-| Graph Cycle Detection (DFS) | graphs | 1 (261) | 🟢 | ✅ | — | — |
+| Graph Cycle Detection (DFS) | graphs | 1 (261) | 🟡 | ❌ | — | **no-green** |
 | Grid BFS | graphs | 4 (130, 200, 417, 733) | 🎓 | ✅ | — | — |
 | Grid DFS | graphs | 2 (200, 695) | 🟢 | ✅ | — | thin (2/3) |
 | Multi-source BFS | graphs | 1 (994) | 🟢 | ✅ | — | — |

@@ -33,6 +33,44 @@ from typing import List
 
 class Solution:
 
+    # ── Attempt · 2026-08-06 ──────────────
+    def validTree_20260806(self, n: int, edges: List[List[int]]) -> bool:
+        # what we are checking here if we circle back at any point
+        # so today we want to solve this using DFS
+        # adjMap, visited, if we already visited the node, we have a cycle
+        # a graph with n nodes must have exactly n - 1 edges to make a tree
+
+        if len(edges) != n - 1:
+            return False
+
+        adjMap = collections.defaultdict(list)
+
+        for n1,n2 in edges:
+            adjMap[n1].append(n2)
+            adjMap[n2].append(n1)
+        
+        visited = set()
+
+        def dfs(currentNode, prevNode):
+            if currentNode in visited:
+                return False
+            
+            visited.add(currentNode)
+
+            for neighbor in adjMap[currentNode]:
+                if neighbor == prevNode:
+                    continue
+                if not dfs(neighbor, currentNode):
+                    return False
+            return True
+
+        for i in range(n):
+            if i not in visited:
+                if not dfs(i,-1):
+                    return False
+        
+        return True
+
     # ── Attempt · 2026-08-01 ──────────────
     def validTree_20260801(self, n: int, edges: List[List[int]]) -> bool:
         # a graph is a tree iff it is acylic and has exact n - 1 edges to its n nodes

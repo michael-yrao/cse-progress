@@ -243,3 +243,15 @@ disease as everything in Cluster A. It is now item 2 of the SessionStart hook's 
   instrument spends a slot and produces a number that means less than it appears to.
   Status: `open`. (Clusters with `feedback_operating_principles` #1 — the learner should not have to catch
   this, and here they caught it twice in one session.)
+
+- **2026-08-06 [P1] — Kickoff/hand-over links rule lapsed AGAIN** (8th logged occurrence; the learner
+  said "3rd or 4th time I've had to remind the agent"). Restated the remaining Thursday board as bare
+  names + comfort ("261 (DFS) 🟢 warmup, 496 & 27 🟢 active, and SD ②") with **no file link and no
+  LC/NC link** — the exact mid-session restate the rule names as still-recall-bound after the Aug 3
+  source fix covered only the `new_problem.py` scaffold case. Ties to [[feedback_kickoff_table_links]].
+  **Why it keeps recurring:** the source fix put a `LINKS:` line in the *scaffold* output, but a plain
+  end-of-turn "what's next" restate calls no script, so it falls back to recall — and recall is the
+  thing the ladder says never holds. **The lapse point is specifically the un-scaffolded restate**
+  (kickoff table, "still on the board", "your call on what's next"). Candidate rung-2 fix worth raising
+  at the weekly meta-review: a Stop-hook that flags an assistant turn containing a bare LeetCode number
+  not inside a markdown link. Status: `open`.
