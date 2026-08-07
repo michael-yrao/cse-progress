@@ -24,6 +24,29 @@ from typing import List
 
 class Solution:
 
+    # ── Attempt · 2026-08-06 ──────────────
+    def singleNonDuplicate_20260806(self, nums: List[int]) -> int:
+        # min boundary binary search
+        # we want to have our index on the first occurence of the number
+        # if index%2==0, then answer is not on the left side
+        
+        l, r = 0, len(nums) - 1
+
+        while l < r:
+            m = (l+r)//2
+            # 0 0 1 1 2 2
+            # 0   2   4
+            # if m sits on an odd index, we are not at the start of the doubles
+            if m%2:
+                m-=1
+            # now that m is start of the dups, if equal, skip this
+            if nums[m] == nums[m+1]:
+                l = m + 2
+            else:
+                r = m
+
+        return nums[l]
+
     # ── Attempt · 2026-07-27 ──────────────
     def singleNonDuplicate_20260727(self, nums: List[int]) -> int:
         # min boundary binary search

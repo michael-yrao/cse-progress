@@ -37,6 +37,31 @@ import collections
 from typing import List
 
 class Solution:
+
+    # ── Attempt · 2026-08-06 ──────────────
+    def nextGreaterElement_20260806(self, nums1: List[int], nums2: List[int]) -> List[int]:
+        # next greater, so monotonic stack
+        # the numbers in nums1 doesn't actually matter too much
+        # we need to find next greater for elements in nums2
+
+        decreasingStack = []
+        nextGreater = {}
+
+        for i in range(len(nums2)):
+            # check if current value is bigger than what is in the stack
+            # if it is, set the prior value's next to current value
+            while decreasingStack and nums2[i] > nums2[decreasingStack[-1]]:
+                priorIndex = decreasingStack.pop()
+                nextGreater[nums2[priorIndex]] = nums2[i]
+            decreasingStack.append(i)
+        
+        result = [-1] * len(nums1)
+        for i in range(len(nums1)):
+            if nums1[i] in nextGreater:
+                result[i] = nextGreater[nums1[i]]
+        
+        return result
+
     def nextGreaterElement(self, nums1: List[int], nums2: List[int]) -> List[int]:
         # brute force is to double for loop, when we see the nums1[i] in nums2, we look further right until we find a bigger number giving us O(n^2)
         # What we should do instead of go through nums2 first and map all next greater element. This is done through a monotonic stack

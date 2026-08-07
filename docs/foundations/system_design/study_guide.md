@@ -229,6 +229,7 @@ Not a queue to grind through. Each gets a `components/` note **when a design hit
 This guide is the single source of truth (map + ROI line). Current file state — **built** vs **planned**:
 
 **Built:**
+- [`senior_ramp.md`](senior_ramp.md) ✅ — **the L5 interview ramp**: phased sequence + exit gates + the design-scoring rubric that gives *designs* a scoreboard (score the cold mock, log comfort in the tracker). Read when planning the senior push; the cadence/lanes here still govern execution.
 - [`framework.md`](framework.md) ✅ — the delivery framework, step by step (the *why* behind the case-study template's headings). Reread before any Transition/Mastery sprint.
 - `templates/` ✅ — the two scaffolds you fill during practice (see Cadence above).
 

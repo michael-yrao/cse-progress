@@ -63,6 +63,16 @@ the file link. **A request for one link is NOT a waiver of the other** — the s
 run), so it's recall-bound: any time a single link is requested mid-session, answer with the
 full pair.
 
+**⚠️ 8th lapse, Aug 6, 2026 — the un-scaffolded mid-session restate.** Ended a turn with the
+remaining board as bare names ("261 (DFS) 🟢 warmup, 496 & 27 🟢 active, and SD ②") — no file
+links, no LC/NC. The learner: *"3rd or 4th time I've had to remind the agent."* This is the
+recall-bound restate case (no `new_problem.py` run → source fix can't reach it), and it is the
+**dominant remaining failure mode**: kickoff table, "still on the board", "your call on what's
+next". **Rule of thumb: any turn that names a problem number — restate, hand-over, or "what's
+next" — carries the full `[file] · [LC/NC]` pair.** Silence is not lighter, it's a lapse.
+Candidate rung-2 fix (raise at meta-review): a Stop-hook flagging an assistant turn with a bare
+LC number outside a markdown link. Occurrence dates: Jul 20/21/23/30/31, Aug 3, Aug 5, **Aug 6**.
+
 **CAVEAT — a retry's file link is a spoiler until scaffolded.** File links are safe in the
 **kickoff** table because those items are scaffolded first (blank stub, prior attempts
 stashed). In a **selection/candidate menu** where the learner hasn't picked yet, the retry

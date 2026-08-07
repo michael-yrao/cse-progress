@@ -8,7 +8,14 @@
 > line is the load-bearing part; a table had nowhere to put it.
 
 ## 🎯 1-Sentence Metaphor
-*
+> ✅ **Learner-derived Aug 6, 2026** (one word sharpened: *host*, not *server* — "server" already means a
+> backend in this domain, so it can't also name the LB).
+
+**A load balancer is the host at a busy restaurant** — standing at the single entrance, distributing
+arriving **diners (requests)** across the open **tables (backend servers)** so none is overwhelmed while
+others sit empty. The tension the rest of this note lives on rides right on top: the host can seat you
+*wherever there's room* (**load-aware** — round robin, least connections) **or** always put you in your
+regular waiter's section (**affinity** — IP hash, sticky sessions), but not both for free.
 
 ## 🧠 Underlying DSA Connection
 * **Core Data Structure**:
@@ -267,26 +274,75 @@ reason this is affordable.
 
 ## 🔗 The rate-limit interaction (the reason this note exists)
 
-You designed a per-instance in-memory rate-limit fallback for when Redis is down. Work out, for each
-algorithm above, whether that fallback still holds:
+> ✅ **Learner-derived Aug 6, 2026.** The whole table, both threshold designs, and the coupling punchline
+> came from the learner. One reset needed early — separating *rate limiting* (count a user's requests vs a
+> fixed threshold) from *load balancing* (spread work) — after which it derived cleanly.
 
-| Algorithm | Do a user's requests land on one instance? | Is the per-instance fallback correct? | Effective limit vs intended |
+You designed a per-instance in-memory rate-limit fallback for when Redis is down. **The fallback = each
+instance independently enforces the *full* policy it knows (10/min/user)** — because with Redis down the
+instances *can't coordinate*, so there's no "N" to divide by; each server just applies the limit it has.
+Whether that holds depends entirely on **whether the LB concentrates a user onto one instance or scatters
+them** — which is a property *of the LB algorithm*, which is why this table lives in the LB note.
+
+| Algorithm | User's requests land on one instance? | Per-instance fallback correct? | Effective limit vs intended |
 |---|---|---|---|
-| Round robin | | | |
-| Least connections | | | |
-| IP hash | | | |
-| Consistent hashing | | | |
-| Sticky sessions | | | |
+| Round robin | ❌ scatters evenly across all N | ❌ **leaks** | **10 × N** |
+| Least connections | ❌ load-aware, still scatters | ❌ **leaks** | **≈ 10 × N** |
+| IP hash | ✅ same client → same server | ✅ correct | 10 (= intended) |
+| Consistent hashing | ✅ same key → same server | ✅ correct | 10 (= intended) |
+| Sticky sessions | ✅ LB cookie pins the user | ✅ correct | 10 (= intended) |
 
-* **Conclusion — what routing does the fallback actually require?**
-* **And what does that requirement cost you elsewhere?**
+**The two threshold designs are mirror images — each is correct under exactly one routing family:**
+
+| Per-instance threshold | Correct under… | Breaks under… |
+|---|---|---|
+| **Full limit** (10) | affinity (IP hash · consistent hashing · sticky) — user concentrates on one counter | scatter (RR · least-conn) → **leaks to 10 × N** |
+| **total / N** (10/N) | scatter — the N partial counts sum back to 10 | affinity → **over-restricts to 10 ÷ N** |
+
+* **Conclusion — what routing does the (full-limit) fallback require?** **Affinity routing** — IP hash,
+  consistent hashing, or sticky sessions. A local counter is only honest when it sees *all* of a user's
+  traffic, and only affinity guarantees that concentration.
+* **And what does that requirement cost you elsewhere?** **Load-blindness.** The affinity family routes by
+  key and never looks at server load (§2), so you give up even distribution and inherit **key-skew hot
+  spots** — the NAT-collision row (2,000 users → one server) is now also 2,000 users on *one rate-limit
+  counter*.
+* **⭐ The coupling punchline:** the rate-limiter's fallback design and the LB algorithm are **not
+  independent choices.** Full-limit counter ⟹ must use affinity ⟹ must accept load-blindness. Naming that
+  chain unprompted is the senior tell. *(The real fix, same as everywhere else in this note: don't fall
+  back to local counters — put the counter in a shared store so any routing works. Local state is the
+  disease; affinity is the painkiller.)*
 
 ## 🚨 Operational Bottlenecks & Failure Modes
-* **Failure Mode 1**:
-  * *Mitigation*:
-* **Failure Mode 2**:
-  * *Mitigation*:
-* **The LB itself is a single point of failure** — how is it made not one?
+* **Failure Mode 1 — a backend dies but the LB keeps routing to it.** *(Not yet derived — owed. The
+  mitigation is **active health checks**: the LB probes each backend on an interval and pulls a
+  non-responsive one from rotation. The open question for that session: detection speed vs false
+  positives — see Likely Questions "how fast?".)*
+* **Failure Mode 2 — a backend is slow but not dead** (see Likely Questions). *(Owed.)*
+* **The LB itself is a single point of failure — how is it made not one?**
+  > ⚠️ **Taught Aug 6, 2026, not derived** — the learner reached for leader-follower correctly (the
+  > active-passive shape *is* leader-follower), but the failover *mechanism* (floating IP + ARP) was
+  > supplied. **Taught, not tested** — owed a blind sprint. Recognition of the pattern was theirs.
+
+  **Run two LBs, active-passive (= leader-follower): one serves all traffic, a standby sits idle.** The
+  hard part is *not* "run two" — it's that the client is the whole internet, hardcoded to one IP, and
+  can't be told to reconnect. So **the address moves to the survivor, not the client to a new address.**
+
+  * **Floating IP / VIP (Virtual IP).** Clients dial one IP that belongs to *neither* box permanently.
+    An IP is **a claim a machine makes on the local network, not a physical property of the card** — so
+    it can be reassigned. The active LB holds the claim; the standby stays quiet.
+  * **Heartbeat.** The two LBs exchange a heartbeat (VRRP / keepalived). Standby stops hearing the leader
+    ⟹ concludes it's dead ⟹ claims the VIP.
+  * **Gratuitous ARP** (ARP = Address Resolution Protocol; maps IP → MAC, the physical card address used
+    for the final LAN hop). The standby *volunteers* the new mapping unasked — "`VIP` is at **my** MAC
+    now" — and every switch/router on the LAN overwrites its cache. The next packet for the VIP arrives
+    at the standby. **Client dialed the same IP the whole time; only the machine behind it changed.**
+  * **Why the announcement goes to the local network, not the client:** the VIP physically lives on one
+    LAN, so only that segment's switches must relearn the IP→MAC binding — a fast, local update. The
+    client is many hops away and has no channel to push to (and doesn't need one).
+
+  **Chain to recall:** heartbeat lost → standby claims VIP → gratuitous ARP → switches update IP→MAC →
+  traffic reroutes, client oblivious. *(Owed later: active-active via DNS round-robin / anycast, and the
+  health-check detection above.)*
 
 ## ⚖️ Decision Rationale
 * **Choose this when**:

@@ -55,6 +55,18 @@ Constraints:
 from typing import List
 
 class Solution:
+
+    # ── Attempt · 2026-08-06 ──────────────
+    def removeElement_20260806(self, nums: List[int], val: int) -> int:
+        # two pointer, l to keep track of where val is currently for replacement
+        l = r = 0
+        while r < len(nums):
+            if nums[r] != val:
+                nums[l] = nums[r]
+                l+=1
+            r+=1
+        return l
+
     def removeElement(self, nums: List[int], val: int) -> int:
         # keep a counter, loop through array
         # if val is not found, increment counter, continue

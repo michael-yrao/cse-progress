@@ -47,3 +47,12 @@ Notes for future agents:
 | Concept | [Quorum math (R + W > N)](../concepts/quorum_math.md) | 🔴 | 0 |  |  |  |
 | Concept | [Zipfian distribution](../concepts/zipfian_distribution.md) | 🔴 | 0 |  |  |  |
 | Concept | [Bloom filter](../concepts/bloom_filter.md) | 🔴 | 0 |  |  |  |
+| Design | [URL shortener](../case_studies/url_shortener.md) | 🔴 | 0 |  |  |  |
+| Design | [Rate limiter](../case_studies/rate_limiter.md) | 🔴 | 0 |  |  |  |
+| Design | [Chat / messenger](../case_studies/chat_messenger.md) | 🔴 | 0 |  |  |  |
+| Design | [News feed](../case_studies/news_feed.md) | 🔴 | 0 |  |  |  |
+| Design | [Payment / ledger](../case_studies/payment_ledger.md) | 🔴 | 0 |  |  |  |
+| Design | [Notification service](../case_studies/notification_service.md) | 🔴 | 0 |  |  |  |
+| Design | [Typeahead / autocomplete](../case_studies/typeahead.md) | 🔴 | 0 |  |  |  |
+| Design | [Design YouTube](../case_studies/youtube.md) | 🔴 | 0 |  |  |  |
+| Design | [Distributed KV store](../case_studies/distributed_kv_store.md) | 🔴 | 0 |  |  |  |
