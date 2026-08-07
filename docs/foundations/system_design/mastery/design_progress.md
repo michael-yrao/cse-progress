@@ -14,6 +14,14 @@ Notes for future agents:
                               or the concept, linked into ../concepts/.
 - Rows with role "Concept" are drilled by lane ② as its fallback when the pull queue is
   empty (see ../study_guide.md "The concepts lane"). Same blind-sprint format, same math.
+- Rows with role "Design (Easy|Med|Hard|V.Hard)" are the end-to-end DESIGN reps, reseeded
+  Aug 6, 2026 to the systemdesign.io catalog + its difficulty tiers. The "Problem" links to
+  the systemdesign.io question (the LeetCode-equivalent anchor), + a local note link once
+  work exists. **One design = one row = one session** (the old multi-day "Weekly Design
+  Question Loop" is retired). Do them in tier order — finish open arcs first (URL Shortener
+  in flight, Rate Limiter arc at 🟡), then Easy → Med → Hard. Queued designs sit 🔴/blank
+  (inert, no review load) until their session. Rate the ~45-min cold mock on the senior_ramp
+  7-point rubric (#5 forks / #6 failure modes / #7 evolve-operate) — see ../senior_ramp.md.
 - The REP is a "blind sprint": open the technology's Recall Card, answer every prompt
   from memory, unfold to check, then rate:
     * 🟢 Clean  — every card answered cold, correctly.            +30d (streak2 +60, retire@3 +180)
@@ -47,12 +55,24 @@ Notes for future agents:
 | Concept | [Quorum math (R + W > N)](../concepts/quorum_math.md) | 🔴 | 0 |  |  |  |
 | Concept | [Zipfian distribution](../concepts/zipfian_distribution.md) | 🔴 | 0 |  |  |  |
 | Concept | [Bloom filter](../concepts/bloom_filter.md) | 🔴 | 0 |  |  |  |
-| Design | [URL shortener](../case_studies/url_shortener.md) | 🔴 | 0 |  |  |  |
-| Design | [Rate limiter](../case_studies/rate_limiter.md) | 🔴 | 0 |  |  |  |
-| Design | [Chat / messenger](../case_studies/chat_messenger.md) | 🔴 | 0 |  |  |  |
-| Design | [News feed](../case_studies/news_feed.md) | 🔴 | 0 |  |  |  |
-| Design | [Payment / ledger](../case_studies/payment_ledger.md) | 🔴 | 0 |  |  |  |
-| Design | [Notification service](../case_studies/notification_service.md) | 🔴 | 0 |  |  |  |
-| Design | [Typeahead / autocomplete](../case_studies/typeahead.md) | 🔴 | 0 |  |  |  |
-| Design | [Design YouTube](../case_studies/youtube.md) | 🔴 | 0 |  |  |  |
-| Design | [Distributed KV store](../case_studies/distributed_kv_store.md) | 🔴 | 0 |  |  |  |
+| Design (Easy) | [Pastebin](https://systemdesign.io/question/design-pastebin) | 🔴 | 0 |  |  |  |
+| Design (Easy) | [Instagram](https://systemdesign.io/question/design-instagram) | 🔴 | 0 |  |  |  |
+| Design (Easy) | [Twitter](https://systemdesign.io/question/design-twitter-for-millions-of-users) | 🔴 | 0 |  |  |  |
+| Design (Easy) | [Top-K (App Store Rankings)](https://systemdesign.io/question/top-k-elements-app-store-rankings-amazon-bestsellers) | 🔴 | 0 |  |  |  |
+| Design (Easy) | [Job Scheduler](https://systemdesign.io/question/design-a-job-scheduler) | 🔴 | 0 |  |  |  |
+| Design (Easy) | [Document Mgmt (Notion/Wikipedia)](https://systemdesign.io/question/create-a-document-management-system-like-wikipedia-or-notion) | 🔴 | 0 |  |  |  |
+| Design (Easy) | [FB Likes w/ Live Updates](https://systemdesign.io/question/design-facebook-likes-feature-with-live-updates) | 🔴 | 0 |  |  |  |
+| Design (Med) | [Dropbox / Google Drive](https://systemdesign.io/question/design-dropbox-or-google-drive) | 🔴 | 0 |  |  |  |
+| Design (Med) | [Messenger / WhatsApp](https://systemdesign.io/question/design-facebook-messenger-or-whatsapp) | 🔴 | 0 |  |  |  |
+| Design (Med) | [YouTube / Netflix](https://systemdesign.io/question/design-youtube-or-netflix) | 🔴 | 0 |  |  |  |
+| Design (Med) | [Key-Value Store](https://systemdesign.io/question/design-a-keyvalue-store) | 🔴 | 0 |  |  |  |
+| Design (Med) | [Web Crawler](https://systemdesign.io/question/design-web-crawler) | 🔴 | 0 |  |  |  |
+| Design (Med) | [News Feed](https://systemdesign.io/question/design-facebooks-news-feed) | 🔴 | 0 |  |  |  |
+| Design (Med) | [Google Calendar](https://systemdesign.io/question/design-google-calendar) | 🔴 | 0 |  |  |  |
+| Design (Hard) | [Typeahead / Autocomplete](https://systemdesign.io/question/design-typeahead-suggestion-autocomplete) | 🔴 | 0 |  |  |  |
+| Design (Hard) | [Notification Service](https://systemdesign.io/question/design-a-notification-service-at-scale) | 🔴 | 0 |  |  |  |
+| Design (Hard) | [Metrics Collection](https://systemdesign.io/question/system-to-collect-metrics-from-thousands-of-servers) | 🔴 | 0 |  |  |  |
+| Design (V.Hard) | [Yelp / Nearby Friends](https://systemdesign.io/question/design-yelp-or-nearby-friends) | 🔴 | 0 |  |  |  |
+| Design (V.Hard) | [Credit-Card Processing (fintech waypoint — deprioritized)](https://systemdesign.io/question/design-a-credit-card-processing-system) | 🔴 | 0 |  |  |  |
+| Design (Easy) | [URL Shortener (TinyURL)](https://systemdesign.io/question/design-url-shortening-service-like-tinyurl) · [wip](../case_studies/url_shortener.md) | 🔴 | 0 |  |  |  |
+| Design (Hard) | [API Rate Limiter](https://systemdesign.io/question/design-an-api-rate-limiter) · [arc](../components/rate_limiter.md) | 🟡 | 0 | 2026-08-05 | 2026-07-26 | 2026-07-05, 2026-07-12, 2026-07-26 |

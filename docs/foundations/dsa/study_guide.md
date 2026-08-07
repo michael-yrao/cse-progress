@@ -163,17 +163,18 @@ reasoning and the apply gates are in `career_strategy.md`.
 
 Don't pull from a company you're actively interviewing at that week — keep those problems as genuine unknowns.
 
-### 🔁 The Weekly Design Question Loop
+### 🔁 Design reps — one design, one session (weekly-loop RETIRED Aug 6, 2026)
 
-Spend a full week on **one** design question. Same depth-over-breadth principle as DSA.
+> **Superseded.** The old "spend a full week on one design, Mon→Fri" loop is retired — it split a single
+> topic across days, which the learner explicitly doesn't want. **New model: one systemdesign.io problem =
+> one tracked row = one ~45–60-min session, done in a single sitting** (only a genuinely huge design becomes
+> a named 2-parter, never a smeared week). Same depth-over-breadth principle, just not fragmented.
 
-| Day | Focus | What to do |
-|-----|-------|------------|
-| Mon | Requirements + Scale | Clarify functional/non-functional requirements. Estimate QPS, storage, bandwidth. Write these down — don't skip |
-| Tue | High-level design | Draw the major components and data flow. API contracts. No deep dives yet |
-| Wed | Deep dive: Storage | Pick the database layer. Justify SQL vs NoSQL. Define schema. Think about sharding/replication if scale demands it |
-| Thu | Deep dive: Bottlenecks | Where does this system break at 10x load? Add caching, queues, CDN where justified. Explain the tradeoff for each |
-| Fri | Full timed mock | Run the full design from scratch in 45 minutes. Use the 5-step framework: Requirements → Scale → High-level → Deep dive → Bottlenecks |
+The full framework still runs *within* the one session: **Requirements → Estimation → API/data model →
+High-level → Deep-dive forks → Failure modes → Evolve/operate.** Scoring, tier order, and the design list
+live in [`../system_design/senior_ramp.md`](../system_design/senior_ramp.md); the trackable rows are the
+`Design (tier)` entries in [`../system_design/mastery/design_progress.md`](../system_design/mastery/design_progress.md),
+sourced from **systemdesign.io**.
 
 ### 🔄 Phase 2 DSA Hybrid Rule
 
