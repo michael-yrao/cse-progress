@@ -35,6 +35,13 @@ import re
 
 
 class Solution:
+
+    # ── Attempt · 2026-08-06 ──────────────
+    def isPalindrome_20260806(self, s: str) -> bool:
+        trimmedString = re.sub(r'[^a-zA-Z0-9]', '', s)
+        trimmedReversedString = re.sub(r'[^a-zA-Z0-9]', '', s[::-1])
+        return trimmedString.upper() == trimmedReversedString.upper()
+
     def isPalindrome(self, s: str) -> bool:
         # clean string to alphabet only
         # also make it lowercase
