@@ -118,6 +118,11 @@ If you finish an active block problem in under 15 minutes, don't move on to a ne
 
 ## Daily Structure: Design & AI Phase (Blocks 5–8)
 *Use this structure from Week 17 onward to protect your DSA knowledge.*
+
+> **📍 SD source of truth = [`senior_ramp.md`](../system_design/senior_ramp.md)** (created Aug 6, 2026).
+> The design list, sourcing (systemdesign.io), the prerequisite-tech gate, the scored-mock rubric, and the
+> phase/exit gates live there — this study-guide section is kept for the daily-loop mechanics and the
+> company-targeting strategy, not as a second design plan. Where the two differ, the ramp wins.
 *   **00:00–00:15 | DSA Maintenance Flashcard**: Look at a random past LeetCode prompt. Explain the data structure pattern and optimal Time/Space complexity out loud.
 *   **00:15–01:00 | Architecture Deep Dive**: Spend 45 minutes on system design practice using the weekly loop below.
 
@@ -147,6 +152,15 @@ If you finish an active block problem in under 15 minutes, don't move on to a ne
 | **LeetCode Discuss / Blind** | High | Real candidates posting recent questions; search by company + "2025" or "2026" |
 | **Glassdoor interview questions** | Medium | Less technical detail but useful for recency confirmation |
 
+**Company targeting, the tier route, the "why," and the apply gates now live in
+[`../career_strategy.md`](../career_strategy.md)** — the single cross-track home for the goal (relocated out
+of this guide Aug 6, 2026 so it stops drifting across copies). This guide is *how to study DSA*; the north
+star is one click away.
+
+For **problem-pull** purposes only: fintech (Stripe/Bloomberg/Citadel…) and data-platform
+(Snowflake/Databricks/Datadog…) are the calibration/next-hop sources, big-tech/MANGA is the end goal — full
+reasoning and the apply gates are in `career_strategy.md`.
+
 Don't pull from a company you're actively interviewing at that week — keep those problems as genuine unknowns.
 
 ### 🔁 The Weekly Design Question Loop
@@ -173,18 +187,24 @@ The 15-minute daily maintenance flashcard keeps mastered patterns warm. But not 
 
 The Saturday randomized DSA sprint covers the pattern recognition gap regardless of category status — it's always on.
 
-### 📋 Recommended Design Question Order (Phase 2)
+### 📋 Design Question Order — see the ramp
 
-Start with fintech-relevant designs — these map directly to interview questions at Stripe, Robinhood, and Two Sigma, and connect to your real-world experience:
+> **The design list, order, and exit gates now live in [`senior_ramp.md`](../system_design/senior_ramp.md).**
+> Do not maintain a second order here (the old fintech-first list was retired Aug 6, 2026 with the re-aim
+> to big tech).
 
-1. **Rate limiter** — simplest, teaches token bucket vs sliding window, good warm-up
-2. **Payment processing system** — your domain; own this cold
-3. **Notification system** — teaches async queues (Kafka/SQS), fan-out patterns
-4. **URL shortener** — classic; teaches consistent hashing, caching, DB design
-5. **Reconciliation pipeline** — you've built this; narrate your real MS experience then generalize to scale
-6. **Distributed ledger / accounting system** — deepest domain advantage; save for late Phase 2
+**Source: [systemdesign.io](https://systemdesign.io/)** — pull one design per session, weighted to the
+**canonical big-tech set** (news feed, chat/messenger, YouTube/video, typeahead, web crawler, Google Docs,
+rate limiter, URL shortener, distributed cache, notification, proximity, ad-click aggregation). **No
+fintech weighting** — big tech/MANGA is the end goal, so payment/ledger is one design among many (useful
+for a fintech *waypoint* loop, not prioritized).
 
-Only move to FAANG-style designs (Twitter, YouTube, Google Drive) after the above 6 are solid. Walk into Stripe talking about reconciliation, not social feeds.
+**Prerequisite-tech gate (bar: off 🔴):** before a design needs a core tech not yet drilled (Redis,
+Postgres, Vitess, …), cover that tech first. Phase ordering (A: framework + data-store trio → B: senior
+signals → C: simulation), the scored-mock rubric (#5 forks / #6 failure modes / #7 evolve-operate), and the
+apply trigger are all in the ramp.
+
+**Still walk in talking tradeoffs, not diagrams** — the narration rule below is unchanged.
 
 ### 🔑 The Narration Rule
 Every design session must be narrated out loud — not written silently. Interviewers score your communication, not your diagram. If you can't explain a tradeoff in one sentence, you don't own it yet.

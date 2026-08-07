@@ -1,26 +1,27 @@
 ---
 name: project_interview_goal
-description: Learner is targeting Staff-level (L6) fintech interviews; SD is the binding constraint and top priority, DSA is already at bar
+description: End goal is big tech / MANGA-adjacent at senior/staff (L6); fintech & other domain roles are paid waypoints. SD is the binding constraint; DSA (incl. DP) still ahead. Full strategy in docs/foundations/career_strategy.md.
 metadata:
   type: project
 ---
 
-Set by learner Aug 7, 2026. **Target: Staff-adjacent (L6) roles at fintechs** (~10 years' experience).
+**Compact recall pointer — the full goal/strategy lives in
+[`docs/foundations/career_strategy.md`](../../docs/foundations/career_strategy.md)** (single source of
+truth, cross-track). Read that when planning; this file only carries the load-bearing facts so they surface
+in recall. Do NOT restate the strategy here — that's how it drifted to three stale "Staff fintech" copies on
+Aug 6, 2026.
 
-- **DSA is already interview-ready** — deep, mostly-consolidated library (88 🟢, 38 retired). It drops to
-  pure maintenance once Advanced Graphs closes (~Aug 16); no new intake during the SD push.
-- **System design is THE binding constraint and top priority.** At L6 the emphasis is **depth over
-  breadth** — 3–4 designs defended 2–3 levels deep under sustained pushback beats many shallow ones.
-  Fintech domain depth (payment/ledger, idempotency, exactly-once, consistency, reconciliation) is
-  non-optional.
-- **The roadmap lives in [`docs/foundations/system_design/senior_ramp.md`](../../docs/foundations/system_design/senior_ramp.md)** —
-  phased (A framework → B senior signals + fintech domain → C simulation), gated not dated, with a
-  7-point design-scoring rubric (#5 forks, #6 failure modes, #7 evolve/operate must all pass for 🟢 at
-  L6). Designs are now tracker rows in `design_progress.md` (role `Design`).
-
-**Why:** the target level determines how SD readiness is measured and when to apply — it drives capacity
-allocation (redirect a DSA active block to a 2nd design sprint/week after graphs close) and the
-application trigger. **How to apply:** when planning schedules or SD work, weight SD heavily and measure
-designs by depth-under-pushback, not count. The **apply trigger is a repo-evaluable SD gate** (designs at
-🟢-with-forks + core techs off 🔴 + cold 45-min mock), never an offer/interview outcome — see
-[[feedback_gate_on_internal_state]] and [[feedback_phase_dates_are_advisory]].
+- **End goal: big tech / MANGA-adjacent (L6).** Fintech + other domain roles are **paid waypoints**, not the
+  target. **Do not fintech-weight SD** — payment/ledger is one design among many; the design set is general
+  big-tech (news feed, chat, YouTube, typeahead, crawler, Google Docs, rate limiter, URL shortener, cache,
+  notifications, proximity, ad-click). Route: fintech calibration → data-platform (next hop) → big tech.
+- **DSA is NOT done — DP still ahead** (1D Oct 12–Nov 8, 2D Nov 9–Dec 6); maintenance ~Dec, not at the
+  Advanced Graphs close. Corrects the earlier "DSA at bar" premise.
+- **Capacity (Aug 6):** `daily_cap` 5 → 7; **new-problem intake stays capped.** The +2/day is review/backlog
+  throughput → funds DSA (incl. DP) **and** the SD ramp in parallel. Supersedes the "free the DSA block at
+  Aug 16" trigger.
+- **SD is the binding constraint & top priority**, depth-over-breadth. Designs from **systemdesign.io** +
+  **prereq-tech gate at off 🔴** (Redis 🟡 · Postgres note-built/undrilled · Vitess none). Execution plan:
+  [`system_design/senior_ramp.md`](../../docs/foundations/system_design/senior_ramp.md).
+- **Apply trigger = a repo-evaluable gate**, never an offer/interview outcome — see `career_strategy.md` §4,
+  [[feedback_gate_on_internal_state]], [[feedback_phase_dates_are_advisory]].
