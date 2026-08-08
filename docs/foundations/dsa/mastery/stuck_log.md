@@ -1525,3 +1525,15 @@ complete unaided. Stuck on the **bridge** — results were keyed by nums2 *index
 1:1, so **key the results map by value, not index** → nums1 becomes a direct lookup (also what unlocks the
 O(n1+n2) follow-up). Complexity was strong and self-derived: amortized O(n) time (each element pushed/popped
 once), O(n) space; no miss.
+
+### 2026-08-07 · 19 Remove Nth Node From End (Postorder Recursion) 🟡
+**Sticking point**: the counter was right this time — `n + 1` from the end, incremented postorder, with
+the reasoning written out in a pre-code comment. The bug was the **traversal root**: `dfs(dummy.next)`
+started at `head`, so the dummy was never visited and the one case where the dummy *is* the surgeon
+(`n == sz`, remove the head) was unreachable — `[1], n=1` returned `[1]` instead of `[]`. Nudge given
+was the failing case only; fix found instantly and unaided. Also a vestigial `returnNode = dfs(...)`
+assignment (dfs returns nothing) — dead, flagged, not a correctness bug. Complexity self-derived and
+correct: O(n) time one pass, O(n) space for the recursion stack; no miss.
+**Note for the next rep**: this is the 3rd consecutive 🟡 on the postorder variant but the **first**
+whose cause is not the counter's origin. Learner declined the teach ("caught it instantly") — re-rep,
+not teach. If the *next* one misses on the counter again, the original trigger stands.

@@ -23,6 +23,33 @@ Constraints:
 from typing import List
 
 class Solution:
+
+    # ── Attempt · 2026-08-07 ──────────────
+    def trap_20260807(self, height: List[int]) -> int:
+        # potential water at each index = min(left,right)
+        # where left and right are max height on either sides
+        # actual water at each index = max(0,min(left,right) - height[i])
+        # height = [0,1,0,2,1,0,1,3,2,1,2,1]
+        # left   = [0,0,1,1,2,2,2,2,3,3,3,3]
+        # right  = [3,3,3,3,3,3,3,2,2,2,1,0]
+        # water  = [0,0,1,0,1,2,1,0,0,1,0,0]
+
+        left = [0] * len(height)
+        right = [0] * len(height)
+        water = 0
+
+        for i in range(1,len(height)):
+            left[i] = max(left[i-1],height[i-1])
+        
+        for i in range(len(height)-2,-1,-1):
+            right[i] = max(right[i+1],height[i+1])
+        
+        for i in range(len(height)):
+            waterGathered = max(0,min(left[i],right[i])-height[i])
+            water+=waterGathered
+        
+        return water
+
     def trap(self, height: List[int]) -> int:
         # knowing water at each index = min(leftMax, rightMax) - height[i]
         # we need to keep track of leftMax and rightMax of each index

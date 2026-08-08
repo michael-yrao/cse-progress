@@ -19,6 +19,25 @@ Output: 1
 from typing import List
 
 class Solution:
+
+    # ── Attempt · 2026-08-07 ──────────────
+    def maxArea_20260807(self, height: List[int]) -> int:
+        # area = length * width
+        # start l and r as far as possible to maximize length
+        # move the one with smaller height down
+        l, r = 0, len(height) - 1
+
+        area = 0
+        while l < r:
+            currentArea = (r-l) * min(height[l], height[r])
+            area = max(area, currentArea)
+            if height[l] < height[r]:
+                l+=1
+            else:
+                r-=1
+        
+        return area
+
     def maxArea(self, height: List[int]) -> int:
         # height = min(height[l], height[r])
         # width = r - l

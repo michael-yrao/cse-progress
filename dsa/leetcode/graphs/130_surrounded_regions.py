@@ -35,6 +35,82 @@ from typing import List
 
 class Solution:
 
+    # ── Attempt · 2026-08-07 ──────────────
+    def solve_20260807(self, board: List[List[str]]) -> None:
+        """
+        Do not return anything, modify board in-place instead.
+        """
+        # union find method, so we assume the outside is a component by itself
+        # then we will connect nodes to the outside component
+        # since board is 2D, we need to convert it to 1D to properly create an outside node
+        # to cover to 1D, we use row major index formula
+        # 1dIndex = row * cols + col
+        # col = 1dIndex - row * cols
+        # row = (1dIndex - col)/cols
+        # we are using UF here, so we need to create rank map and parent map
+        
+        rankMap = {}
+        parentMap = {}
+
+        rows, cols = len(board), len(board[0])
+
+        # add outer index
+        outerComponent = rows * cols + cols
+        rankMap[outerComponent] = 0
+        parentMap[outerComponent] = outerComponent
+
+        # add all other land in the board to the rankMap and parentMap
+        for row in range(rows):
+            for col in range(cols):
+                if board[row][col] == 'O':
+                    oneDIndex = row * cols + col
+                    rankMap[oneDIndex] = 0
+                    parentMap[oneDIndex] = oneDIndex
+        
+        def find(node):
+            if parentMap[node] != node:
+                parentMap[node] = find(parentMap[node])
+            return parentMap[node]
+        
+        def union(n1,n2):
+            n1p = find(n1)
+            n2p = find(n2)
+            if n1p == n2p:
+                return False
+            if rankMap[n1p] > rankMap[n2p]:
+                parentMap[n2p] = n1p
+            elif rankMap[n1p] < rankMap[n2p]:
+                parentMap[n1p] = n2p
+            else:
+                parentMap[n2p] = n1p
+                rankMap[n1p]+=1
+            return True
+
+        neighbors = [[1,0],[-1,0],[0,1],[0,-1]]
+
+        # we can go through the grid and if it is a land, we try to connect it to its neighbors
+        for row in range(rows):
+            for col in range(cols):
+                if board[row][col] == 'O':
+                    oneDIndex = row * cols + col
+                    # if we are an edge node, connect to the outer component
+                    if row == 0 or row == rows - 1 or col == 0 or col == cols - 1:
+                        union(outerComponent, oneDIndex)
+                    # if not, connect to its neighboring land
+                    for ir, ic in neighbors:
+                        nr, nc = row + ir, col + ic
+                        if nr >= 0 and nr < rows and nc >= 0 and nc < cols and board[nr][nc] == 'O':
+                            neighborOneDIndex = nr * cols + nc
+                            union(oneDIndex, neighborOneDIndex)
+        
+        # now that all the lands are connected, if it is not connected to outer component, we turn it to X
+        for row in range(rows):
+            for col in range(cols):
+                oneDIndex = row * cols + col
+                if board[row][col] == 'O':
+                    if find(oneDIndex) != find(outerComponent):
+                        board[row][col] = 'X'
+
     # ── Attempt · 2026-07-20 ──────────────
     def solve_20260720(self, board: List[List[str]]) -> None:
         """

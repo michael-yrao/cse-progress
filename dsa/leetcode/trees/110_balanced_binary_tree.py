@@ -31,6 +31,26 @@ class TreeNode:
         self.left = left
         self.right = right
 class Solution:
+
+    # ── Attempt · 2026-08-07 ──────────────
+    def isBalanced_20260807(self, root: Optional[TreeNode]) -> bool:
+        # height balanced so just check if height between left and right ever differ by more than 1
+        balanced = True
+        def depth(node):
+            nonlocal balanced
+            if not node:
+                return 0
+            
+            leftDepth = depth(node.left)
+            rightDepth = depth(node.right)
+            if abs(leftDepth-rightDepth) > 1:
+                balanced = False
+
+            return 1+max(leftDepth,rightDepth)
+        
+        depth(root)
+        return balanced
+
     def isBalanced(self, root: Optional[TreeNode]) -> bool:
         # another dfs question since we want to check difference in depth
         # how do we know if a tree is height balanced?
