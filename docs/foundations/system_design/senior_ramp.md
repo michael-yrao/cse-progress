@@ -89,6 +89,10 @@ makes *parallel* feasible instead of forcing a strict sequence.
 
 - **Source → [systemdesign.io](https://systemdesign.io/).** Each design session pulls one problem from
   there (weighted to the canonical big-tech set above), rather than a fixed hardcoded list.
+  **All 55 of its questions are now triaged against the L6 bar** — see *The L6 Interview-ROI Line* below.
+  ⚠️ **One canonical design the source does not cover: distributed cache.** systemdesign.io has no question
+  for it, so it needs a different source or a self-directed session — and Redis's technology note is not a
+  substitute (using a cache ≠ designing one: consistent hashing, eviction, replication, invalidation).
 - **Prerequisite-tech gate — cover *before* you design (bar: off 🔴, confirmed by the learner).** Before a
   design that needs a core technology not yet at **off 🔴**, cover that tech first: build/drill its
   `technologies/<tech>.md` note to at least one clean-ish sprint. This is stricter than the old
@@ -97,6 +101,129 @@ makes *parallel* feasible instead of forcing a strict sequence.
   - **Current tech status:** **Redis 🟡** (usable) · **Postgres** note built but **undrilled** → drill to
     off-🔴 before a Postgres-heavy design · **Vitess** no note → build before any sharded-MySQL design ·
     everything else 🔴.
+
+---
+
+## The L6 Interview-ROI Line — all 55 systemdesign.io questions, triaged
+
+> **Written Aug 8, 2026**, at the learner's request: *"let's keep in sync with DSA study for system design
+> so we have phases with the 55 SD problems split out between high ROI and low ROI… and I want to be clear
+> that L6 is the goal so let's have our ROI reflect that."*
+>
+> **This is the SD analogue of [`dsa/study_guide.md`](../dsa/study_guide.md)'s Interview-ROI Line.** Same
+> shape, same discipline: a numbered stack of tiers with **one explicit line drawn through it**, and every
+> item on the source list placed on one side of it *with a reason*.
+
+**Why this section exists.** The Aug 6 reseed selected 21 of the catalog's 55 questions and discarded the
+other 34 **without recording what or why** — the only trace was a parenthetical naming three of them. That
+breaks the rule this repo already has in [[feedback_roi_promotes_to_curriculum]]: *"say what you did NOT
+promote and why — the bar only means something if applied in both directions."* Applied in one direction,
+"curated by ROI" is indistinguishable from "picked 21 and stopped," and a wrong decline stays invisible
+until Phase C, when you'd re-derive the catalog from scratch. It also left SD with no equivalent of DSA's
+**two deferral bins**, so a declined design and a design nobody ever read looked identical.
+
+**The bar, stated once, because every call below is an application of it:**
+
+> **Would a strong L6 candidate at Meta / Apple / Netflix / Google / Amazon (or the tier around them) be
+> expected to handle this in a 45-minute round?**
+
+Not *"is it a good system"* and not *"is it interesting."* Three things follow from the L6 framing
+specifically, and they do most of the sorting:
+
+- **Depth over breadth.** The gate is *a handful of designs defended 2–3 levels deep*, not a large bank.
+  So a design earns a place by teaching something no design above it teaches — **redundancy is the most
+  common reason to decline**, not difficulty.
+- **Distributed-systems altitude only.** At L6 the round is boxes, arrows, forks and failure domains. A
+  question whose real content is class design is *actively harmful* here — see [[feedback_hld_altitude]],
+  the learner's known default failure.
+- **No domain weighting.** Fintech is a paid waypoint, not the target ([[project_interview_goal]]), so
+  payments/banking designs sit below the line **even when they are hard and well-known**.
+
+### Above the line — do these, in order
+
+1. **Core canonical set (20)** — the Phase A/B/C designs below. Non-negotiable; this is the SD analogue of
+   NC150. Every one of them is a design MANGA loops actually pull from.
+2. **Tier 1 advanced (10)** — the **⏳ SD Waiting Room**. High L6 value, but second-order: each is either a
+   harder sibling of a core design or a specialty round (streaming, observability, experimentation, ads).
+   **Trigger: `phase:B` + the core design it extends is off 🔴.** Pull from here once the core set is
+   moving — *not* before, and not top-to-bottom. **Evaluate every trigger at the weekly build.**
+
+**=== L6 INTERVIEW-ROI LINE ===**
+
+3. **Tier 2 — platform & real-world depth (18)** — genuinely good systems, **rarely a generalist L6 round**.
+   Mostly redundant with something above the line, or aimed at a specific infra/platform team. Worth
+   pursuing *after* the apply trigger, or immediately if a loop is known to target that team.
+4. **Tier 3 — off-target (7)** — wrong altitude, wrong domain, or not interview material. These are
+   declined outright, not deferred. **A Tier-3 item needs a stated reason to ever move up.**
+
+### Tier 1 advanced — ⏳ SD Waiting Room (above the line)
+
+| # | Question | Tier | Why it's above the line | Extends |
+|---|---|---|---|---|
+| 11 | [Stream processing system like Kafka](https://systemdesign.io/question/design-a-stream-processing-system-like-kafka) | V.Hard | Designing *the log itself* — partitioning, replication, consumer groups, exactly-once. Kafka is already a Phase-B tech; this is the design that proves you understand it rather than use it | — |
+| 55 | [Ads management & display for a social feed](https://systemdesign.io/question/develop-ads-management-and-display-system-for-social-feed) | V.Hard | **Ad serving + click aggregation** — the canonical Meta/Google money-path design, named in this ramp's own canonical set | — |
+| 20 | [Google Analytics dashboard & pipeline](https://systemdesign.io/question/design-google-analytics-dashboard-and-pipeline) | Hard | The analytics-pipeline shape (ingest → aggregate → serve) at a gentler slope than #55 | #55 |
+| 13 | [K most-shared articles in time windows](https://systemdesign.io/question/identify-k-most-shared-articles-in-time-windows) | Hard | **Windowed** top-K, which the tracked static Top-K does not teach. Directly exercises the sketches card (Count-Min) and Zipfian skew | Top-K |
+| 41 | [Distributed tracing system](https://systemdesign.io/question/design-a-distributed-tracing-system) | V.Hard | Observability — flagged in [[project_curriculum_additions_pending]] as added to cse-coach Jul 25 and **never synced here**. Asked at L6 (Dapper/Jaeger lineage) | — |
+| 29 | [A/B testing system (Optimizely)](https://systemdesign.io/question/design-an-ab-testing-system-like-optimizely) | Hard | Experimentation platforms are core infrastructure at Meta/Google/Netflix, and this is a real round | — |
+| 48 | [Live comments for Facebook](https://systemdesign.io/question/design-a-live-comments-feature-for-facebook) | Hard | Real-time fan-out at scale — the harder, canonical version of the tracked FB-Likes-live-updates | FB Likes |
+| 51 | [Migrate large data to Google Cloud](https://systemdesign.io/question/create-a-system-to-migrate-large-data-to-google-cloud) | V.Hard | **Rubric #7 as an entire design.** Migration/zero-downtime/cutover is the checkpoint this ramp says decides L6, and it is the one no other design forces | — |
+| 33 | [Count FB likes for high-profile users](https://systemdesign.io/question/count-facebook-likes-especially-for-popular-users) | Med | The **hot-key / celebrity-skew** problem in isolation. Cheap (Medium) and teaches the one thing the plain Likes design skips | FB Likes |
+| 10 | [Distributed metrics logging & aggregation](https://systemdesign.io/question/design-a-metrics-logging-and-aggregation-system) | V.Hard | The V.Hard sibling of the tracked Hard metrics-collection design — the natural Phase-C depth re-rep | Metrics Collection |
+
+### Tier 2 — platform & real-world depth (below the line)
+
+| # | Question | Tier | Why it's below the line |
+|---|---|---|---|
+| 19 | Distributed queue like RabbitMQ | Hard | Broker semantics (ack/redelivery/DLQ) are real, but **#11 Kafka covers queueing at higher L6 frequency**. Do this only if the loop is messaging-infra |
+| 34 | Control plane for a distributed database | V.Hard | Excellent, and squarely a **data-platform** round rather than a generalist one. Promote if a data-platform loop lands (the tier route's middle waypoint) |
+| 25 | Surge pricing (Uber, stream processing) | V.Hard | Strong stream-processing content, but overlaps #11/#20 and carries Uber-specific domain load |
+| 27 | ETA service & driver/rider location sharing | V.Hard | Geospatial + live location — **redundant with the tracked Yelp/Nearby**, which teaches the indexing |
+| 40 | Find a rider for Uber / Uber Eats | Hard | Matching + dispatch; same geo core as #27 and Yelp/Nearby |
+| 42 | Distribute 6M free burgers in one hour | Med | The **flash-sale / thundering-herd** design, which is genuinely canonical under other names. Closest call on this list — promote it the moment a retail/commerce loop appears |
+| 28 | Hotel booking system | Med | Reservation/inventory consistency. Booking-and-Airbnb territory, not MANGA generalist |
+| 21 | System for sorting large data sets | Easy | External merge sort / MapReduce fundamentals. Real, but a dated round shape for L6 today |
+| 53 | Distributed file transfer like BitTorrent | Hard | P2P is a narrow specialty; the sync half is already covered by the tracked Dropbox/Drive |
+| 26 | Netflix: limit screens per user | Hard | Distributed leases/counting — a good *deep dive*, too thin as a whole round |
+| 39 | Monitor the health of a cluster | Med | Redundant with the metrics designs (#17 tracked, #10 Tier 1) |
+| 45 | Photo sharing like Flickr / Google Photos | Med | Substantially the tracked Instagram design |
+| 46 | On-call escalation system | Med | A specialization of the tracked Notification Service |
+| 49 | Show number of users viewing a page | Easy | Real-time counting at a low ceiling; #33 teaches the same thing harder |
+| 35 | User login & authentication | Med | ⚠️ **Reclassify rather than decline** — auth is a recurring *deep-dive inside other designs*, not a round of its own. **Owed as a `components/auth.md` note**, not a design row |
+| 44 | Latest stock prices worldwide | Easy | Pub/sub fan-out, low ceiling, and the live-update pattern is covered |
+| 38 | Marketplace feature for Facebook | Easy | CRUD + search; no distinctive distributed-systems content |
+| 43 | File downloader library (frontend→backend) | Hard | Library/client design — **wrong altitude** for an L6 distributed-systems round |
+
+### Tier 3 — off-target (declined, not deferred)
+
+| # | Question | Tier | Why |
+|---|---|---|---|
+| 31 | IoC / dependency-injection framework | V.Hard | **OOD/LLD, not distributed design.** Actively counterproductive given [[feedback_hld_altitude]] — it rehearses the learner's known failure mode |
+| 32 | Credit-card processing | V.Hard | ⚠️ **Demoted from the tracker in this edit.** Fintech is a paid waypoint, not the target; keeping it in the core set was exactly the domain weighting [[project_interview_goal]] forbids. Re-promote **only** if a fintech onsite is scheduled |
+| 47 | Wire transfer API | Hard | Same — fintech domain, and narrower than #32 |
+| 52 | Distributed botnet | Hard | Not an interview design |
+| 30 | Price alert system | Easy | Named as a skip at the Aug 6 reseed; low ceiling |
+| 36 | Weather application | Easy | Named as a skip at the Aug 6 reseed |
+| 54 | Parts-compatibility for eCommerce | Easy | Named as a skip at the Aug 6 reseed; domain CRUD |
+
+### Three findings from the diff, recorded so they aren't re-derived
+
+1. **Google Docs was never missing.** Catalog #37 reads *"…like Wikipedia, Notion **or Google Docs**"* —
+   one question covering all three. The tracker row said only "Document Mgmt (Notion/Wikipedia)", which is
+   what made it look absent against this ramp's canonical set. **Row renamed, not added.** ⚠️ But the row
+   now has to carry the harder half: *real-time collaborative editing (OT/CRDT, presence, conflict
+   resolution)* is a different design from document CRUD + versioning, and it is the part L6 asks about.
+   **Do not let this one be rated on the CRUD half.**
+2. **"Distributed cache" is absent from the catalog entirely.** It is in this ramp's canonical set and
+   systemdesign.io has no question for it — a **source** gap, not a curation gap. It needs a different
+   source or a self-directed design. Redis's technology note is not a substitute: designing a distributed
+   cache (consistent hashing, eviction, replication, invalidation) is a different rep from using one.
+3. **Ad-click aggregation was in the catalog the whole time** — #55 and #20, both untracked until now.
+
+⚠️ **These tier assignments are the coach's calls, not the learner's**, and the borderline ones are named
+as borderline (#42 burgers, #34 control plane, #19 RabbitMQ, #21 sorting). **Override any of them** — the
+list is only useful because it is written down and arguable; it was the *absence* of a written list, not
+the placement of any single item, that this section fixes.
 
 ---
 
@@ -145,8 +272,13 @@ at Mastery timing scored *specifically* on #5–7, and add the harder canonical 
 
 - **Full cold 45-min mocks** on random designs from the bank, strict timing.
 - **Add systemdesign.io's Hard / Very-Hard tier** as the depth material: **Typeahead · Notification Service ·
-  Metrics Collection**, then **Yelp/Nearby · Credit-Card Processing** *(the last is a fintech-waypoint
-  design — do it only if a fintech loop is imminent)*. Same one-row/one-session unit.
+  Metrics Collection · Yelp/Nearby.** Same one-row/one-session unit.
+  - ⚠️ **Credit-Card Processing was removed from this list Aug 8, 2026** and sits in Tier 3 below the ROI
+    line — fintech is a paid waypoint, not the target. Re-promote only against a scheduled fintech onsite.
+  - **Phase C is also where the ⏳ Tier 1 advanced queue empties** (Kafka · Ads · Analytics · windowed
+    Top-K · Distributed Tracing · A/B Testing · Live Comments · Data Migration · Hot-key Likes · V.Hard
+    Metrics). Those are the depth reps, and **Data Migration is the one to protect** — it is rubric #7
+    turned into an entire design, and #7 is what the L6 rating actually hinges on.
 - **Deep-dive rounds:** pick 2–3 systems, go two levels deeper (senior loops often spend a full 45 min
   drilling *one* system rather than breadth).
 - **Live-fire calibration:** apply to **1–2 lower-priority companies** (fintech waypoints are fine here) —
@@ -171,3 +303,18 @@ real. See `career_strategy.md` for the full tier route (fintech calibration → 
 | Designs defended-deep (incl. #7) | 0 | skeleton on 3 | ~4 under pushback | handful under pushback |
 | Core techs off 🔴 | 1 (Redis 🟡) | +3 (data-store trio) | all Tier-1 | all Tier-1 |
 | Cold 45-min mock | no | — | — | **yes** |
+
+**Catalog coverage (Aug 8, 2026) — 55 systemdesign.io questions, all placed:**
+
+| | Count | Where |
+|---|---|---|
+| Core canonical set | **20** | the review table in `mastery/design_progress.md` |
+| ⏳ Tier 1 advanced | **10** | SD Waiting Room, `phase:B` trigger |
+| 🧊 Tier 2 platform/real-world | **18** | below the line, reason each |
+| 🧊 Tier 3 off-target | **7** | declined, reason each |
+
+⚠️ **The count is not the goal and should never be reported as progress.** The gate is *a handful of
+designs defended 2–3 levels deep*, so 30 above-the-line designs is a **menu**, not a target — the same
+reading the DSA tracker gets ("everything still unproven", not a trophy case). At one design per Sunday,
+the core 20 alone is ~5 months; the Tier-1 queue is explicitly *not* meant to be drained before the apply
+trigger.
