@@ -14,6 +14,14 @@ Notes for future agents:
                               or the concept, linked into ../concepts/.
 - Rows with role "Concept" are drilled by lane ② as its fallback when the pull queue is
   empty (see ../study_guide.md "The concepts lane"). Same blind-sprint format, same math.
+- Rows with role "Component" are the BUILDING BLOCKS (../components/*.md), drilled by lane ②
+  as its primary work. Added Aug 8, 2026 — blocks were the last SD category with notes but no
+  review rows, so they could not decay and nothing surfaced when one went cold. **A block earns
+  a row the moment its note exists**; a block with no note yet is listed in ../study_guide.md's
+  "Building blocks" table and is pulled in by a design, not tracked here.
+  ⚠️ Rate limiter deliberately has NO Component row: it is already tracked as `Design (Hard)
+  API Rate Limiter`, and ../components/rate_limiter.md carries that arc's drill targets. One
+  rep, one row — do not add a second.
 - Rows with role "Design (Easy|Med|Hard|V.Hard)" are the end-to-end DESIGN reps, reseeded
   Aug 6, 2026 to the systemdesign.io catalog + its difficulty tiers. The "Problem" links to
   the systemdesign.io question (the LeetCode-equivalent anchor), + a local note link once
@@ -46,6 +54,8 @@ Notes for future agents:
 | Search | [Elasticsearch](../technologies/elasticsearch.md) | 🔴 | 0 |  |  |  |
 | Edge / gateway | [API Gateway](../technologies/api_gateway.md) | 🔴 | 0 |  |  |  |
 | Coordination | [ZooKeeper](../technologies/zookeeper.md) | 🔴 | 0 |  |  |  |
+| Component | [Caching (patterns, eviction, invalidation)](../components/caching.md) | 🔴 | 0 |  |  |  |
+| Component | [Load balancer](../components/load_balancer.md) | 🔴 | 0 |  |  |  |
 | Concept | [Networking fundamentals](../concepts/networking_basics.md) | 🔴 | 0 |  |  |  |
 | Concept | [Percentiles & tail latency](../concepts/percentiles_and_tail_latency.md) | 🔴 | 0 |  |  |  |
 | Concept | [Little's Law](../concepts/littles_law.md) | 🔴 | 0 |  |  |  |
