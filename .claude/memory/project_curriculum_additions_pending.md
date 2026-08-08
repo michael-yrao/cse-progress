@@ -14,8 +14,18 @@ these do **NOT** auto-sync. Fold each in when its lane builds:
 `design_progress.md` / SD `study_guide.md` as those blocks/designs come up:
 - **Operability** building block — observability (metrics, logging, distributed tracing, health
   checks, alerting) + deployment & rollout (blue-green, canary, feature flags, rollback).
+  - ✅ **Partly folded Aug 8, 2026:** *Distributed Tracing* is now a ⏳ Tier-1 design in the SD Waiting
+    Room, and *Metrics Collection* (Hard) + *Distributed Metrics Logging & Aggregation* (V.Hard) are both
+    placed. **Still owed as building-block notes:** health checks/alerting, and the whole deployment &
+    rollout half (blue-green, canary, feature flags, rollback) — no `components/` note exists for either.
 - **2 new canonical designs** — Collaborative editing (Google Docs — OT/CRDT) and Distributed
   job scheduler / cron. (Design backlog now 16.)
+  - ✅ **Both folded Aug 8, 2026.** Job Scheduler was already a core row. Google Docs turned out **not to
+    be missing** — systemdesign.io #37 bundles *"Wikipedia, Notion **or Google Docs**"* into one question
+    and the tracker row title had dropped the Google Docs half; renamed rather than added. ⚠️ **The
+    OT/CRDT content is the point** — that row must be rated on real-time collaborative editing (presence,
+    conflict resolution), not on document CRUD + versioning, or the fold is cosmetic. See
+    [[project_sd_roi_line]].
 
 **AI Engineering** (`cse-coach/curriculum/ai_engineering/tier1_core.yml`) — capture at **AI-track
 bootstrap** (gated on SD Tier-1 majority retired; track not set up yet):

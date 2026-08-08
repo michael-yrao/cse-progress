@@ -60,7 +60,7 @@ Notes for future agents:
 | Design (Easy) | [Twitter](https://systemdesign.io/question/design-twitter-for-millions-of-users) | 🔴 | 0 |  |  |  |
 | Design (Easy) | [Top-K (App Store Rankings)](https://systemdesign.io/question/top-k-elements-app-store-rankings-amazon-bestsellers) | 🔴 | 0 |  |  |  |
 | Design (Easy) | [Job Scheduler](https://systemdesign.io/question/design-a-job-scheduler) | 🔴 | 0 |  |  |  |
-| Design (Easy) | [Document Mgmt (Notion/Wikipedia)](https://systemdesign.io/question/create-a-document-management-system-like-wikipedia-or-notion) | 🔴 | 0 |  |  |  |
+| Design (Easy) | [Document Mgmt / Google Docs (Wikipedia, Notion)](https://systemdesign.io/question/create-a-document-management-system-like-wikipedia-or-notion) | 🔴 | 0 |  |  |  |
 | Design (Easy) | [FB Likes w/ Live Updates](https://systemdesign.io/question/design-facebook-likes-feature-with-live-updates) | 🔴 | 0 |  |  |  |
 | Design (Med) | [Dropbox / Google Drive](https://systemdesign.io/question/design-dropbox-or-google-drive) | 🔴 | 0 |  |  |  |
 | Design (Med) | [Messenger / WhatsApp](https://systemdesign.io/question/design-facebook-messenger-or-whatsapp) | 🔴 | 0 |  |  |  |
@@ -73,6 +73,44 @@ Notes for future agents:
 | Design (Hard) | [Notification Service](https://systemdesign.io/question/design-a-notification-service-at-scale) | 🔴 | 0 |  |  |  |
 | Design (Hard) | [Metrics Collection](https://systemdesign.io/question/system-to-collect-metrics-from-thousands-of-servers) | 🔴 | 0 |  |  |  |
 | Design (V.Hard) | [Yelp / Nearby Friends](https://systemdesign.io/question/design-yelp-or-nearby-friends) | 🔴 | 0 |  |  |  |
-| Design (V.Hard) | [Credit-Card Processing (fintech waypoint — deprioritized)](https://systemdesign.io/question/design-a-credit-card-processing-system) | 🔴 | 0 |  |  |  |
 | Design (Easy) | [URL Shortener (TinyURL)](https://systemdesign.io/question/design-url-shortening-service-like-tinyurl) · [wip](../case_studies/url_shortener.md) | 🔴 | 0 |  |  |  |
 | Design (Hard) | [API Rate Limiter](https://systemdesign.io/question/design-an-api-rate-limiter) · [arc](../components/rate_limiter.md) | 🟡 | 0 | 2026-08-05 | 2026-07-26 | 2026-07-05, 2026-07-12, 2026-07-26 |
+
+---
+
+## ⏳ SD Waiting Room — Tier 1 advanced designs (ABOVE the L6 ROI line)
+
+**Deliberately not 7-column rows** — same reason DSA's Knowledge Expansion Queue is a plain table at the
+bottom of `dsa_progress.md`: the parser only touches the review table, so a queued item carries **zero
+review load** until it is pulled up. Full reasoning for every placement, and the 34 below-the-line
+questions, live in [`../senior_ramp.md`](../senior_ramp.md) → *The L6 Interview-ROI Line*.
+
+**Trigger: `phase:B` + the core design it extends is off 🔴.** Evaluate at every weekly build; a fired
+trigger is either slotted that week or re-deferred **with a written reason** — never left sitting.
+
+| Question | Tier | Extends | What it adds |
+|---|---|---|---|
+| [Stream processing like Kafka](https://systemdesign.io/question/design-a-stream-processing-system-like-kafka) | V.Hard | — | designing the log: partitioning, replication, consumer groups, exactly-once |
+| [Ads management & display](https://systemdesign.io/question/develop-ads-management-and-display-system-for-social-feed) | V.Hard | — | ad serving + click aggregation — the canonical Meta/Google money path |
+| [Google Analytics pipeline](https://systemdesign.io/question/design-google-analytics-dashboard-and-pipeline) | Hard | Ads | ingest → aggregate → serve, at a gentler slope |
+| [K most-shared articles in time windows](https://systemdesign.io/question/identify-k-most-shared-articles-in-time-windows) | Hard | Top-K | **windowed** top-K; exercises Count-Min + Zipfian skew |
+| [Distributed tracing](https://systemdesign.io/question/design-a-distributed-tracing-system) | V.Hard | — | observability — owed from the Jul 25 cse-coach additions, never synced |
+| [A/B testing system](https://systemdesign.io/question/design-an-ab-testing-system-like-optimizely) | Hard | — | experimentation platform; a real round at Meta/Google/Netflix |
+| [Live comments](https://systemdesign.io/question/design-a-live-comments-feature-for-facebook) | Hard | FB Likes | real-time fan-out at scale |
+| [Migrate large data to cloud](https://systemdesign.io/question/create-a-system-to-migrate-large-data-to-google-cloud) | V.Hard | — | **rubric #7 as a whole design** — migration / zero-downtime cutover |
+| [Count FB likes for high-profile users](https://systemdesign.io/question/count-facebook-likes-especially-for-popular-users) | Med | FB Likes | hot-key / celebrity skew in isolation; cheap |
+| [Distributed metrics logging & aggregation](https://systemdesign.io/question/design-a-metrics-logging-and-aggregation-system) | V.Hard | Metrics Collection | the V.Hard sibling — Phase-C depth re-rep |
+
+## 🧊 Below the L6 ROI line
+
+**25 questions** (18 Tier-2 platform/real-world depth + 7 Tier-3 off-target), each with a written reason,
+in [`../senior_ramp.md`](../senior_ramp.md). Not listed twice — one source of truth.
+
+Two that moved in the Aug 8 triage and are easy to mis-read later:
+
+- **Credit-Card Processing — REMOVED from the review table above** (was `Design (V.Hard)`, 🔴, inert).
+  Fintech is a paid waypoint, not the target, so keeping it in the core set was the domain weighting
+  [[project_interview_goal]] rules out. Re-promote **only** if a fintech onsite is actually scheduled.
+- **User login & authentication — reclassified, not declined.** It is a recurring deep-dive *inside* other
+  designs rather than a round of its own, so it is **owed as a `components/auth.md` note**. Tracked here so
+  the reclassification doesn't quietly become a deletion.
