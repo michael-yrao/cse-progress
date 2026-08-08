@@ -25,6 +25,32 @@ from typing import List
 
 class Solution:
 
+    # ── Attempt · 2026-08-08 ──────────────
+    def subarraySum_20260808(self, nums: List[int], k: int) -> int:
+        # first instinct when I see subarray sum is prefix sum
+        # but we are also asking for the number of subarray sum equal to k
+        # so that makes it a bit more annoying because we would have to go through all combinations of prefix sum to get the answer, making it inefficient to use prefixsum
+        # so what we can do is a variation of prefixsum, aka runningSum which is basically prefixSum
+        # since we have a specific target, we can try to leverage the two sum technique
+        # runningSum = oldrunningSum + k. If diff exists in map, we increment
+        # oldrunningSum = runningSum - k
+        # add runningSum to the map as a diff and continue
+        # we will have a map of runningSum and counter of how many times we've seen that runningSum
+        totalCount = 0
+        runningSum = 0
+        runningSumMap = collections.defaultdict(int)
+        # we need 0 in the diff map in case runningSum = k exactly
+        runningSumMap[0] = 1
+
+        for num in nums:
+            runningSum+=num
+            oldSum = runningSum - k
+            if oldSum in runningSumMap:
+                totalCount+=runningSumMap[oldSum]
+            runningSumMap[runningSum]+=1
+        
+        return totalCount
+
     # ── Attempt · 2026-07-29 ──────────────
     def subarraySum_20260729(self, nums: List[int], k: int) -> int:
         # subarray sum = prefix[j] - prefix[i]
