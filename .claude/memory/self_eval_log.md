@@ -271,3 +271,27 @@ disease as everything in Cluster A. It is now item 2 of the SessionStart hook's 
   shape→technique call" into the kickoff presentation so it is answered per problem up front, before any
   self-serving starts. Rung 1 looks right here for the same reason it did for the links rule: it needs no
   turn to exist. Status: `open`.
+
+- **2026-08-07 [P1] — a config edit silently rewrote three review dates; caught only because
+  the post-commit tracker dump was read.** Added an `effort_budget` block to `cse.config.yml`
+  containing effort *weights* (`comfort_base: {blank: 3.0, shaky: 2.0, clean: 1.0, graduated: 0.5}`).
+  `update_review_dates.py`'s `load_config()` did not parse YAML — it ran `re.search` over the whole
+  file text — so `shaky: 2.0` was read as the **Shaky interval** (10 days → 2) and `graduated: 0.5`
+  as the **Graduated interval** (180 → 0). The pre-commit hook then rewrote 19 → Aug 9, 269 → Aug 9,
+  110 → today, and **the commit succeeded with no error, no warning, and a hook message that read
+  like a normal successful run**. Damage: three wrong review dates shipped; had it gone unnoticed,
+  every row logged afterward would have inherited the corrupted intervals.
+  **Root cause is not "I picked bad key names."** It is that a flat regex over a nested document
+  cannot distinguish *the interval named shaky* from *any mapping that happens to contain the word
+  shaky*, so the config was a landmine for **any** future addition reusing a common word — the next
+  person to add a `weights:` or `costs:` block would have hit it identically.
+  **Fixed at source (rung 1):** `load_config()` now parses with PyYAML and reads `intervals.*` by
+  structure; the regex survives only as a no-PyYAML fallback, documented with this incident.
+  **Belt and braces (rung 1 again):** the weights are now keyed by **glyph** (`"🟡": 2.0`) rather
+  than by word, so even the fallback path cannot collide. Regression test written: the original
+  poisoned config shape now yields shaky=10 / blank=2 / graduated=180.
+  **The transferable lesson:** editing a config is a *code change* when something parses it by
+  pattern rather than by structure. Before adding a key to a file a script reads, check HOW it reads
+  it. And the near-miss is the scary part — the only reason this was caught is that the hook echoes
+  the rewritten table into context and the changed dates were noticed by eye. Status:
+  `consolidated→source fix in update_review_dates.load_config + glyph keys in cse.config.yml`.

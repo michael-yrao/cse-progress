@@ -38,11 +38,66 @@ DEFAULT_CONFIG = {
 
 
 def load_config(path: Path = Path("cse.config.yml")) -> dict:
+    """Read intervals, source root and globs from cse.config.yml.
+
+    ⚠️ **Structured keys are read with a real YAML parser; the regex scrape below is only
+    a fallback for when PyYAML is unavailable.** It used to be the *only* path, and that
+    was a live hazard rather than a theoretical one: on Aug 7, 2026 an unrelated
+    `effort_budget` block was added to the config containing effort WEIGHTS —
+
+        comfort_base: {blank: 3.0, shaky: 2.0, clean: 1.0, graduated: 0.5}
+
+    — and the scraper, which searches the whole file text with no notion of nesting,
+    read `shaky: 2.0` as the Shaky INTERVAL (10 days -> 2) and `graduated: 0.5` as the
+    Graduated interval (180 days -> 0). Three rows were silently rewritten to wrong
+    review dates in the same commit that introduced the block. Nothing errored.
+
+    A flat regex over a nested document cannot tell "the interval named shaky" from "some
+    other mapping that happens to contain the word shaky", so it will mis-read any future
+    addition that reuses a word. Parse the structure when we can.
+    """
     cfg = dict(DEFAULT_CONFIG)
     if not path.exists():
         return cfg
     text = path.read_text(encoding="utf-8")
 
+    try:
+        import yaml  # noqa: PLC0415
+        doc = yaml.safe_load(text) or {}
+    except Exception:  # noqa: BLE001 — PyYAML missing or the file is mid-edit
+        doc = None
+
+    if isinstance(doc, dict):
+        intervals = doc.get("intervals") or {}
+        if isinstance(intervals, dict):
+            clean = intervals.get("clean") or {}
+            pairs = [
+                (clean.get("provisional") if isinstance(clean, dict) else None, "clean_provisional"),
+                (clean.get("streak1") if isinstance(clean, dict) else None, "clean_streak1"),
+                (clean.get("streak2") if isinstance(clean, dict) else None, "clean_streak2"),
+                (intervals.get("graduated", intervals.get("retired")), "graduated"),
+                (intervals.get("shaky"), "shaky"),
+                (intervals.get("blank"), "blank"),
+            ]
+            for value, key in pairs:
+                if isinstance(value, (int, float)):
+                    cfg[key] = int(value)
+        for key, cfg_key in (("graduate_at_streak", "graduate_at_streak"),
+                             ("retire_at_streak", "graduate_at_streak")):
+            if isinstance(doc.get(key), int):
+                cfg[cfg_key] = doc[key]
+        solutions = doc.get("solutions") or {}
+        if isinstance(solutions, dict):
+            if solutions.get("globs"):
+                cfg["source_globs"] = list(solutions["globs"])
+            if solutions.get("roots"):
+                cfg["source_root"] = str(solutions["roots"][0])
+        if isinstance(doc.get("discovery_skip"), list):
+            cfg["discovery_skip"] = [int(x) for x in doc["discovery_skip"]
+                                     if isinstance(x, int) or str(x).isdigit()]
+        return cfg
+
+    # ---- Fallback: no PyYAML. Same scrape as before, with the same known weakness. ----
     def _int(pattern: str, key: str) -> None:
         m = re.search(pattern, text)
         if m:

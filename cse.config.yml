@@ -21,10 +21,21 @@ daily_cap: 7
 # 🟢 Easy from a 🔴 Hard, and every weekly schedule note reading "Saturday is the heaviest
 # day by some margin" was a human correcting for that in prose.
 effort_budget:
-  # units = comfort_base × difficulty_factor, rated by the comfort the row carries GOING IN
+  # units = comfort_units × difficulty, rated by the comfort the row carries GOING IN
   # (never the one it earns — the budget is built before the day runs).
-  comfort_base: {blank: 3.0, shaky: 2.0, clean: 1.0, graduated: 0.5}
-  difficulty:   {Easy: 0.5, Medium: 1.0, Hard: 1.5}
+  #
+  # ⚠️ KEYED BY GLYPH ON PURPOSE, not by the words blank/shaky/clean/graduated. Those
+  # words are exactly what update_review_dates.py's fallback config scrape searches for,
+  # and on Aug 7, 2026 an earlier draft of this block (`{blank: 3.0, shaky: 2.0, ...}`)
+  # was read as INTERVALS: Shaky went 10 days -> 2, Graduated 180 -> 0, and three rows
+  # were silently written with wrong review dates. The parser is fixed to read YAML
+  # structure, but the glyph keys mean even the fallback path cannot collide.
+  comfort_units:
+    "🔴": 3.0
+    "🟡": 2.0
+    "🟢": 1.0
+    "🎓": 0.5
+  difficulty: {Easy: 0.5, Medium: 1.0, Hard: 1.5}
 
   # A hard ceiling, one number for every day (not per-day) — decided by the learner
   # Aug 7, 2026. It is NOT derived from demand, and must never be raised to chase a
