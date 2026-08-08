@@ -26,6 +26,18 @@ was written cold and correct — base case, binary split, recurse both halves, m
 uniform return contract. The only defect was `result.append(leftArray[li:])` instead of `extend`,
 so `merge([5],[2])` returned `[2, [5], []]`.
 
+**FULLY CLOSED Aug 8, 2026 — 912 came back 🟢 s1 (→ Sep 7), its first clean after three 🟡s.** Skeleton and
+Python API both cold and correct; the `extend` slip was sidestepped with explicit drain loops. The
+complexity answer was the strongest signal: asked to disambiguate "the recursion is O(n)", the learner
+separated **call-stack depth O(log n)** from **retained slices `n + n/2 + n/4 + … = O(n)`** unaided — the
+sharp form of the recursion-stack family, not the memorized one.
+
+**The generalizable lesson, which outlives this row:** *three consecutive 🟡s on one problem were three
+unrelated defects* (conceptual Jul 25 → Python API Jul 29 → nothing Aug 8), and the same pattern appeared
+on **560 the same day** (map contents Jul 29 → lookup sign Aug 8). A repeat non-Clean rating is **not**
+evidence of a repeating cause. Diff the stuck-log entries before firing §2a's teach reflex; the trigger is
+*the same gap* missed repeatedly, not *the same row* rated low repeatedly. See [[feedback_infer_comfort]].
+
 **Why / how to apply:** the framings above are the ones that landed — reach for them if D&C stalls
 again (procedure-first, [[feedback_procedure_first]]). But **do not re-teach D&C to this learner on
 the strength of another 🟡 on 912.** The failure mode has moved **conceptual → Python API**, and

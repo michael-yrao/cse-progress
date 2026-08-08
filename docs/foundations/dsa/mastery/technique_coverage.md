@@ -6,7 +6,7 @@
 
 > The tracker is keyed by **problem**; this is keyed by **technique**. Use it at the weekly build to decide what to pull, and at phase exit to check the per-algorithm bar (recognition + execution, ≥1 🟢 each).
 
-> **49** techniques &nbsp;·&nbsp; **10** with no 🟢 &nbsp;·&nbsp; **4** thin &nbsp;·&nbsp; **0** unqueued variant gaps
+> **49** techniques &nbsp;·&nbsp; **9** with no 🟢 &nbsp;·&nbsp; **4** thin &nbsp;·&nbsp; **0** unqueued variant gaps
 
 ## ⚠️ Action list
 
@@ -16,7 +16,6 @@
 - **Bellman-Ford** (advanced_graphs) — best 🟡 across 787
 - **Deep Copy via Hash Map** (linked_list) — best 🟡 across 138
 - **Dijkstra** (advanced_graphs) — best 🟡 across 743, 778
-- **Divide & Conquer / Sorting** (sorting) — best 🟡 across 912
 - **Floyd-Warshall (all-pairs shortest path)** (advanced_graphs) — best 🟡 across 1334
 - **Graph Cycle Detection (DFS)** (graphs) — best 🟡 across 261
 - **Hierholzer (Eulerian path)** (advanced_graphs) — best 🟡 across 332
@@ -70,7 +69,7 @@
 | Prefix Sum | prefix_sum | 2 (53, 560) | 🟢 | ✅ | — | — |
 | Greedy (single pass) | sliding_window | 1 (122) | 🟢 | ✅ | — | — |
 | Sliding Window | sliding_window | 4 (3, 121, 424, 567) | 🟢 | ✅ | — | — |
-| Divide & Conquer / Sorting | sorting | 1 (912) | 🟡 | ❌ | Merge Sort ×1 · ~~Quick Sort~~ *(queued: `expansion — sorting deep-dive`)* · ~~Radix Sort~~ *(queued: `expansion — sorting deep-dive`)* · ~~Counting Sort~~ *(queued: `expansion — sorting deep-dive`)* · ~~Timsort~~ *(queued: `expansion — sorting deep-dive`)* · ~~D&C on 53~~ *(queued: `rated:912 + surplus>=1`)* | **no-green** · thin (1/2) |
+| Divide & Conquer / Sorting | sorting | 1 (912) | 🟢 | ✅ | Merge Sort ×1 · ~~Quick Sort~~ *(queued: `expansion — sorting deep-dive`)* · ~~Radix Sort~~ *(queued: `expansion — sorting deep-dive`)* · ~~Counting Sort~~ *(queued: `expansion — sorting deep-dive`)* · ~~Timsort~~ *(queued: `expansion — sorting deep-dive`)* · ~~D&C on 53~~ *(queued: `rated:912 + surplus>=1`)* | thin (1/2) |
 | Monotonic Stack | stack | 3 (496, 503, 901) | 🟢 | ✅ | — | — |
 | Stack (matching) | stack | 1 (20) | 🟢 | ✅ | — | — |
 | BST Descent | trees | 2 (98, 235) | 🟢 | ✅ | — | — |
@@ -82,5 +81,5 @@
 | Dutch National Flag | two_pointers | 1 (75) | 🟢 | ✅ | — | — |
 | Fast/Slow In-Place Write | two_pointers | 4 (26, 27, 80, 283) | 🟢 | ✅ | — | — |
 | Prefix/Suffix Max | two_pointers | 1 (42) | 🟢 | ✅ | Array ×1 · ~~Two Pointer~~ *(queued: `graduates:42`)* | — |
-| Two Pointers (converging) | two_pointers | 9 (11, 15, 18, 88, 125, 167, 344, 680, 1768) | 🟢 | ✅ | — | — |
+| Two Pointers (converging) | two_pointers | 9 (11, 15, 18, 88, 125, 167, 344, 680, 1768) | 🎓 | ✅ | — | — |
 

@@ -34,6 +34,23 @@ class TreeNode:
         self.left = left
         self.right = right
 class Solution:
+
+    # ── Attempt · 2026-08-08 ──────────────
+    def isSameTree_20260808(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
+        if not p and not q:
+            return True
+        if not p or not q:
+            return False
+        if p.val != q.val:
+            return False
+        
+        leftSide = self.isSameTree_20260808(p.left, q.left)
+        rightSide = self.isSameTree_20260808(p.right, q.right)
+        if not leftSide or not rightSide:
+            return False
+        
+        return True
+
     def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
         # we return false if at any point, these two are not the same
         # we check parent first, so this is preorder dfs

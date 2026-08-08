@@ -37,6 +37,22 @@ class TreeNode:
 
 class Solution:
 
+    # ── Attempt · 2026-08-08 ──────────────
+    def lowestCommonAncestor_20260808(self, root: TreeNode, p: TreeNode, q: TreeNode) -> TreeNode:
+        # we know this is a BST
+        # so if the two nodes are smaller than root, we go left
+        # if the two nodes are bigger than root, we go right
+        # we do have to check equality as well since we can be own our ancestor
+
+        # success scenario: if root.val is in between p and q or if root.val is equal to one of them
+        if p.val <= root.val <= q.val or q.val <= root.val <= p.val:
+            return root
+        
+        if p.val < root.val and q.val < root.val:
+            return self.lowestCommonAncestor_20260808(root.left, p, q) # type: ignore
+        else:
+            return self.lowestCommonAncestor_20260808(root.right, p, q) # type: ignore
+
     # ── Attempt · 2026-07-29 ──────────────
     def lowestCommonAncestor_20260729(self, root: TreeNode, p: TreeNode, q: TreeNode) -> TreeNode:
         # BST, so a few checks we should do

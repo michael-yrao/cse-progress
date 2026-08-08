@@ -46,6 +46,33 @@ from collections import deque
 
 
 class Solution:
+
+    # ── Attempt · 2026-08-08 ──────────────
+    def isValid_20260808(self, s: str) -> bool:
+        # we keep a map of what is valid
+        # so open to close or close to open, either works
+        # we will do closed to open, since we want to push when it is an open bracket
+        # pop when it is a closed bracket so check map's value on closed only
+
+        bracketMap = {'}':'{', ']':'[', ')':'('}
+        stack = []
+
+        # we are given the chars can only be brackets
+        # so we just push if it is not in the map
+        # and pop if it is
+        for char in s:
+            if char not in bracketMap:
+                stack.append(char)
+            else:
+                # if closed bracket and stack is empty, return false immediately
+                if not stack:
+                    return False
+                # otherwise, check if top of the stack is the open bracket
+                prevNode = stack.pop()
+                if bracketMap[char] != prevNode:
+                    return False
+        return len(stack) == 0
+
     def isValid(self, s: str) -> bool:
         # basically a bunch of if else statements
         # we can insert into stack on opening bracket
