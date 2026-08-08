@@ -150,11 +150,17 @@ specifically, and they do most of the sorting:
 
 **=== L6 INTERVIEW-ROI LINE ===**
 
-3. **Tier 2 — platform & real-world depth (18)** — genuinely good systems, **rarely a generalist L6 round**.
-   Mostly redundant with something above the line, or aimed at a specific infra/platform team. Worth
-   pursuing *after* the apply trigger, or immediately if a loop is known to target that team.
-4. **Tier 3 — off-target (7)** — wrong altitude, wrong domain, or not interview material. These are
-   declined outright, not deferred. **A Tier-3 item needs a stated reason to ever move up.**
+3. **Tier 2 — platform, real-world & domain depth (20)** — genuinely good systems, **rarely a generalist L6
+   round**. Mostly redundant with something above the line, aimed at a specific infra/platform team, or
+   aimed at a **different employer** (the two fintech designs). **Everything here can fire** — Tier 2 is
+   the SD Expansion Queue's deferral bin, and a deferred item with a trigger is not a dead one.
+4. **Tier 3 — off-target (5)** — wrong altitude or not interview material. Declined outright.
+   ⚠️ **The tier's definition is "no trigger exists and none can."** If you want to write a trigger on a
+   Tier-3 item, it was misfiled and belongs in Tier 2 — that mistake was made and corrected on Aug 8 with
+   the two fintech designs.
+
+> **The easy Tier-3 entries are available, not forbidden** — see the **🔁 SD overflow block** at the end of
+> this section. Below-the-line means *"never worth displacing a Sunday for"*, not *"never do this."*
 
 ### Tier 1 advanced — ⏳ SD Waiting Room (above the line)
 
@@ -193,18 +199,66 @@ specifically, and they do most of the sorting:
 | 44 | Latest stock prices worldwide | Easy | Pub/sub fan-out, low ceiling, and the live-update pattern is covered |
 | 38 | Marketplace feature for Facebook | Easy | CRUD + search; no distinctive distributed-systems content |
 | 43 | File downloader library (frontend→backend) | Hard | Library/client design — **wrong altitude** for an L6 distributed-systems round |
+| 32 | **Credit-card processing** | V.Hard | ⚠️ **Removed from the review table Aug 8** — fintech is a paid waypoint, not the target, and keeping it in the core set was the domain weighting [[project_interview_goal]] rules out. **Trigger: `waypoint_loop:fintech`** — the learner decides to work a fintech loop. Restores the ramp's original wording (*"only if a fintech loop is imminent"*) |
+| 47 | **Wire transfer API** | Hard | Same trigger, narrower than #32. Do it **only** as a second fintech rep, after #32 |
+
+> **⬆ #32 and #47 were in Tier 3 for about an hour and the learner was right to challenge it** (Aug 8).
+> Tier 3 means *not the thing*; these are **the right thing aimed at the wrong employer**, which is a
+> different state with a **real trigger** — and merging two states into one bin is precisely the anti-void
+> failure the two-bin rule exists to prevent. *"It's still good to know"* is true and is **not** the test:
+> everything is good to know, and the line rations **Sundays**, not knowledge. But a domain-mismatch
+> decline can fire; an off-altitude one never will, and they must not share a bin.
 
 ### Tier 3 — off-target (declined, not deferred)
+
+**Nothing here has a trigger, and that is the definition of the tier** — these are declined on grounds that
+cannot change: wrong altitude, or not an interview design at all. If you find yourself wanting a trigger on
+a Tier-3 item, it belongs in Tier 2.
 
 | # | Question | Tier | Why |
 |---|---|---|---|
 | 31 | IoC / dependency-injection framework | V.Hard | **OOD/LLD, not distributed design.** Actively counterproductive given [[feedback_hld_altitude]] — it rehearses the learner's known failure mode |
-| 32 | Credit-card processing | V.Hard | ⚠️ **Demoted from the tracker in this edit.** Fintech is a paid waypoint, not the target; keeping it in the core set was exactly the domain weighting [[project_interview_goal]] forbids. Re-promote **only** if a fintech onsite is scheduled |
-| 47 | Wire transfer API | Hard | Same — fintech domain, and narrower than #32 |
 | 52 | Distributed botnet | Hard | Not an interview design |
-| 30 | Price alert system | Easy | Named as a skip at the Aug 6 reseed; low ceiling |
-| 36 | Weather application | Easy | Named as a skip at the Aug 6 reseed |
-| 54 | Parts-compatibility for eCommerce | Easy | Named as a skip at the Aug 6 reseed; domain CRUD |
+| 30 | Price alert system | Easy | Low ceiling — but see the **SD overflow block** below; it is available, not forbidden |
+| 36 | Weather application | Easy | Same |
+| 54 | Parts-compatibility for eCommerce | Easy | Domain CRUD — same |
+
+### 🔁 SD overflow block — cheap framework reps, pull when a Sunday finishes early
+
+**Set by the learner Aug 8, 2026**, and it is a *yes* to a good instinct rather than a concession: *"I am
+pretty bad at SD so any small advantage helps."* True, and Phase A agrees — it orders designs
+easiest-framework-rep first precisely so the **framework** is what gets drilled rather than the domain.
+
+**Why these are overflow and not promotions**, stated plainly so the decision isn't relitigated:
+
+- **You already have 8 easy framework reps above the line** — Pastebin · Instagram · Twitter · Top-K · Job
+  Scheduler · Doc Mgmt · FB Likes · URL Shortener. Weather and Parts-Compatibility teach no framework step
+  those eight don't.
+- **One design = one row = one session**, at roughly one Sunday a week. An easy design is therefore never
+  *extra* practice — it is a **displaced canonical design**. The core 20 is already ~5 months at that rate.
+- **The Phase A gate is not a count.** It is *"framework skeleton clean on 3+ different designs"*, and the
+  standing is **0 of 3**. The fastest route to three clean skeletons is three canonical designs that have
+  to be done anyway.
+
+| Order | Question | Tier | Good for |
+|---|---|---|---|
+| 1 | [Price alert system](https://systemdesign.io/question/design-a-price-alert-system-for-amazon-or-stock-prices) | Easy | pub/sub fan-out + threshold evaluation; cleanest of the three |
+| 2 | [Weather application](https://systemdesign.io/question/design-a-weather-application) | Easy | read-heavy caching + TTL reasoning, end to end |
+| 3 | [Parts-compatibility (eCommerce)](https://systemdesign.io/question/design-a-parts-compatibility-feature-for-ecommerce-site) | Easy | pure framework rep; the domain is deliberately boring |
+| 4+ | then Tier 2's Easy/Medium entries — #21 sorting · #44 stock prices · #38 marketplace · #49 page viewers | Easy/Med | same purpose, slightly more content |
+
+**Rules for pulling from it** *(mirroring the DSA overflow block, which cleared eight 3-month-overdue rows
+this week)*:
+
+- **Never at the expense of a core design.** If the Sunday design isn't finished, the board wins.
+- **Rate it like anything else** — same 7-point rubric, same comfort→interval engine. A framework rep that
+  isn't scored teaches the framework without measuring it.
+- ⚠️ **It gets a tracker row only if it comes back 🟡 or 🔴** — the **disposable-rep** rule
+  ([[project_library_carrying_capacity]]). A 🟢 on an easy design is a probe that confirmed the framework
+  transferred; logging a row for it buys permanent review load for no information. This is what makes the
+  overflow block genuinely free rather than quietly expensive.
+- **Don't pull one to avoid a hard core design.** The tell is reaching for #3 while a Medium canonical
+  design keeps sliding.
 
 ### Three findings from the diff, recorded so they aren't re-derived
 
@@ -310,8 +364,9 @@ real. See `career_strategy.md` for the full tier route (fintech calibration → 
 |---|---|---|
 | Core canonical set | **20** | the review table in `mastery/design_progress.md` |
 | ⏳ Tier 1 advanced | **10** | SD Waiting Room, `phase:B` trigger |
-| 🧊 Tier 2 platform/real-world | **18** | below the line, reason each |
-| 🧊 Tier 3 off-target | **7** | declined, reason each |
+| 🧊 Tier 2 platform/real-world/domain | **20** | below the line, reason each; **all triggerable** (incl. the 2 fintech designs, `waypoint_loop:fintech`) |
+| 🧊 Tier 3 off-target | **5** | declined — no trigger exists and none can |
+| 🔁 of which, available as overflow | *3 of the Tier-3 easies + 4 Tier-2 easies* | cheap framework reps when a Sunday finishes early |
 
 ⚠️ **The count is not the goal and should never be reported as progress.** The gate is *a handful of
 designs defended 2–3 levels deep*, so 30 above-the-line designs is a **menu**, not a target — the same

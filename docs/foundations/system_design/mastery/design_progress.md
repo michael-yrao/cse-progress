@@ -103,14 +103,20 @@ trigger is either slotted that week or re-deferred **with a written reason** —
 
 ## 🧊 Below the L6 ROI line
 
-**25 questions** (18 Tier-2 platform/real-world depth + 7 Tier-3 off-target), each with a written reason,
-in [`../senior_ramp.md`](../senior_ramp.md). Not listed twice — one source of truth.
+**25 questions** (20 Tier-2 platform/real-world/domain depth + 5 Tier-3 off-target), each with a written
+reason, in [`../senior_ramp.md`](../senior_ramp.md). Not listed twice — one source of truth.
 
-Two that moved in the Aug 8 triage and are easy to mis-read later:
+Three things from the Aug 8 triage that are easy to mis-read later:
 
 - **Credit-Card Processing — REMOVED from the review table above** (was `Design (V.Hard)`, 🔴, inert).
   Fintech is a paid waypoint, not the target, so keeping it in the core set was the domain weighting
-  [[project_interview_goal]] rules out. Re-promote **only** if a fintech onsite is actually scheduled.
+  [[project_interview_goal]] rules out. **Tier 2 with trigger `waypoint_loop:fintech`** — it fires when the
+  learner decides to work a fintech loop, alongside Wire Transfer API.
+- **🔁 An SD overflow block exists** (end of the ROI-line section) — the three low-ceiling Easy designs plus
+  four Tier-2 easies, pullable when a Sunday finishes early. **Below the line means "never worth displacing
+  a Sunday for", not "never do this."** ⚠️ An overflow design earns a row here **only at 🟡/🔴** — a 🟢 is a
+  disposable probe ([[project_library_carrying_capacity]]), and rowing it buys permanent load for no
+  information.
 - **User login & authentication — reclassified, not declined.** It is a recurring deep-dive *inside* other
   designs rather than a round of its own, so it is **owed as a `components/auth.md` note**. Tracked here so
   the reclassification doesn't quietly become a deletion.

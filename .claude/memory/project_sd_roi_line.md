@@ -14,8 +14,29 @@ Lives in [`docs/foundations/system_design/senior_ramp.md`](../../docs/foundation
 |---|---|---|
 | Core canonical set | 20 | the 7-column review table in `mastery/design_progress.md` |
 | ⏳ Tier 1 advanced | 10 | SD Waiting Room (plain table, no review load), trigger `phase:B` + extended design off 🔴 |
-| 🧊 Tier 2 platform/real-world | 18 | below the line, one reason each |
-| 🧊 Tier 3 off-target | 7 | declined outright, one reason each |
+| 🧊 Tier 2 platform/real-world/domain | 20 | below the line, one reason each — **all triggerable** |
+| 🧊 Tier 3 off-target | 5 | declined — **no trigger exists and none can**; that IS the tier's definition |
+
+⚠️ **Tier 2 vs Tier 3 is about whether a trigger can exist, not about quality.** Corrected the same day it
+was written: the two **fintech** designs (Credit-Card #32, Wire Transfer #47) were filed in Tier 3 beside
+IoC/DI and Botnet, and the learner challenged it. They are *the right thing aimed at the wrong employer* —
+a state with a real trigger (`waypoint_loop:fintech`) — while off-altitude declines can never fire. Merging
+them is the anti-void failure the two-bin rule exists to stop. **If you want to write a trigger on a Tier-3
+item, it is misfiled.**
+
+**🔁 There is also an SD overflow block** (end of the ROI-line section): the three low-ceiling Easy designs
+plus four Tier-2 easies, pullable when a Sunday finishes early. **Below the line means "never worth
+displacing a Sunday for", not "never do this"** — say that plainly whenever the learner asks why they can't
+just do the easy ones. ⚠️ An overflow design earns a tracker row **only at 🟡/🔴** (disposable rep,
+[[project_library_carrying_capacity]]), which is what keeps it free.
+
+**The argument that settles "why not do the easy ones anyway", worth reusing verbatim:** the instinct is
+right (Phase A orders designs easiest-framework-rep first on purpose), but (1) **8 easy framework reps are
+already above the line**, (2) **one design = one session ≈ one Sunday**, so an easy design is a *displaced*
+canonical one rather than extra practice, and (3) **the Phase A gate is not a count** — it is *skeleton
+clean on 3+ designs*, standing at 0 of 3, and the fastest route there is canonical designs that must be
+done anyway. *"It's still good to know"* is true and is not the test: **the line rations Sundays, not
+knowledge.**
 
 **The bar, verbatim:** *would a strong L6 candidate at Meta/Apple/Netflix/Google/Amazon be expected to
 handle this in a 45-minute round?* Three consequences do most of the sorting: **depth over breadth**
