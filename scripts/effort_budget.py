@@ -11,7 +11,7 @@ not have to be remembered or re-derived. Per the intervention ladder in
 .claude/memory/feedback_self_evaluation.md — a tool that emits the right value
 outranks a rule that asks someone to compute it.
 
-    units = comfort_base × difficulty_factor      (weights live in cse.config.yml)
+    units = comfort_units × difficulty      (weights live in cse.config.yml)
 
 Usage:
     python scripts/effort_budget.py                     # demand, floor, ceiling, due queue
@@ -31,8 +31,10 @@ REPO = Path(__file__).resolve().parent.parent
 TRACKER = REPO / "docs/foundations/dsa/mastery/dsa_progress.md"
 CONFIG = REPO / "cse.config.yml"
 
-# Comfort glyph -> the config key naming its base cost.
-BASE_KEY = {"🔴": "blank", "🟡": "shaky", "🟢": "clean", "🎓": "graduated"}
+# Weights are keyed by the comfort GLYPH, never by the words blank/shaky/clean/graduated
+# — see the note in cse.config.yml. Those words collide with update_review_dates.py's
+# fallback config scrape and, in this file's first draft, silently rewrote three review
+# dates by being read as intervals.
 # Streak -> interval for a 🟢. Non-clean comforts have a flat interval.
 CLEAN_INTERVAL = {0: 10, 1: 30, 2: 60}
 FLAT_INTERVAL = {"🔴": 2, "🟡": 10, "🎓": 180}
@@ -53,7 +55,7 @@ def load_config() -> dict:
     doc and the defaults here are that same judgment.
     """
     defaults = {
-        "comfort_base": {"blank": 3.0, "shaky": 2.0, "clean": 1.0, "graduated": 0.5},
+        "comfort_units": {"🔴": 3.0, "🟡": 2.0, "🟢": 1.0, "🎓": 0.5},
         "difficulty": {"Easy": 0.5, "Medium": 1.0, "Hard": 1.5},
         "ceiling": 9.0,
         "floor_min": 3.0,
@@ -89,7 +91,7 @@ def interval(row: dict) -> int:
 
 
 def units(row: dict, cfg: dict) -> float:
-    base = cfg["comfort_base"][BASE_KEY[row["comfort"]]]
+    base = cfg["comfort_units"][row["comfort"]]
     return base * cfg["difficulty"][row["diff"]]
 
 
@@ -128,7 +130,7 @@ def price_day(nums: list[str], rows: list[dict], cfg: dict, sd: bool) -> None:
         if not found:
             # An untracked number is a NEW problem: no row, no history. Price it as a
             # Blank Medium, because that is what a first exposure usually costs.
-            guess = cfg["comfort_base"]["blank"] * cfg["difficulty"]["Medium"]
+            guess = cfg["comfort_units"]["🔴"] * cfg["difficulty"]["Medium"]
             total += guess
             print(f"  {num:>5}  {guess:4.1f}  (untracked — priced as a new 🔴 Medium)")
             continue
