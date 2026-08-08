@@ -255,3 +255,19 @@ disease as everything in Cluster A. It is now item 2 of the SessionStart hook's 
   (kickoff table, "still on the board", "your call on what's next"). Candidate rung-2 fix worth raising
   at the weekly meta-review: a Stop-hook that flags an assistant turn containing a bare LeetCode number
   not inside a markdown link. Status: `open`.
+
+- **2026-08-07 [P2] — recognition front-gate fired on 1 of 7 reps.** Asked it on 110 (unanswered — the
+  learner replied "done, O(n) time and space"), and **never asked it at all** on 122, 130, 973, 11, 42.
+  Ties to [[feedback_recognition_gate]]. **Root cause is structural, not forgetfulness:** the front-gate
+  is written to fire "before the learner writes any solution code," which assumes a hand-over turn where
+  the coach passes the problem across. On a batch-scaffolded day the learner **self-serves** — they open
+  the next file and the next message is already `done, O(n)…`. There is no window, so the gate cannot
+  fire, and the complexity back-gate silently becomes the only gate. Note the asymmetry: the back-gate
+  held on 7 of 7 today (it fires at rating time, a turn the coach always owns) while the front-gate held
+  on 0 of 7. **That difference is the finding** — a gate anchored to a turn the coach controls survives;
+  one anchored to a turn the learner may skip does not. Candidate fixes by ladder rung: (1) source —
+  `new_problem.py` writes a `# shape → technique → why:` line into the stub, so the prompt is on the page
+  the learner is already typing into and needs no coach turn at all; (3) numbered step — fold "state the
+  shape→technique call" into the kickoff presentation so it is answered per problem up front, before any
+  self-serving starts. Rung 1 looks right here for the same reason it did for the links rule: it needs no
+  turn to exist. Status: `open`.
