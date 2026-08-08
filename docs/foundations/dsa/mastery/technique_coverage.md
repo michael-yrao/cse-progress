@@ -76,7 +76,7 @@
 | BST Descent | trees | 2 (98, 235) | 🟢 | ✅ | — | — |
 | Tree BFS (level order) | trees | 2 (102, 199) | 🟢 | ✅ | — | — |
 | Tree Construction (Divide & Conquer) | trees | 1 (105) | 🟢 | ✅ | — | — |
-| Tree DFS (recursive) | trees | 6 (100, 104, 110, 226, 572, 1448) | 🟢 | ✅ | — | — |
+| Tree DFS (recursive) | trees | 6 (100, 104, 110, 226, 572, 1448) | 🎓 | ✅ | — | — |
 | Tree DFS with Postorder Return | trees | 2 (124, 543) | 🟢 | ✅ | — | — |
 | Trie | tries | 2 (208, 211) | 🟢 | ✅ | — | — |
 | Dutch National Flag | two_pointers | 1 (75) | 🟢 | ✅ | — | — |

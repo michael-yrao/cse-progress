@@ -59,14 +59,21 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/dsa/mastery/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **101** problems &nbsp;·&nbsp; **110** solutions &nbsp;·&nbsp; **405** attempts
+> **101** problems &nbsp;·&nbsp; **110** solutions &nbsp;·&nbsp; **412** attempts
 
 | | 🏆 Retired | 🎓 Graduated | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|:---:|
-| **Solutions** | 0 | 2 | 88 | 20 | 0 |
+| **Solutions** | 0 | 3 | 87 | 20 | 0 |
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|---|
+| Medium | [19. Remove Nth Node From End of List (Postorder Recursion)](https://leetcode.com/problems/remove-nth-node-from-end-of-list/) | 🟡 | 0 | 2026-08-17 | 2026-08-07 | 2026-05-18, 2026-05-21, 2026-06-18, 2026-06-28, 2026-07-08, 2026-07-18, 2026-07-28, 2026-08-07 |
+| Hard | [42. Trapping Rain Water (Array)](https://leetcode.com/problems/trapping-rain-water/) | 🟢 | 2 | 2026-10-06 | 2026-08-07 | 2026-04-15, 2026-06-29, 2026-07-08, 2026-08-07 |
+| Medium | [973. K Closest Points to Origin](https://leetcode.com/problems/k-closest-points-to-origin/) | 🟢 | 2 | 2026-10-06 | 2026-08-07 | 2026-06-23, 2026-07-03, 2026-08-07 |
+| Medium | [130. Surrounded Regions (Union-Find)](https://leetcode.com/problems/surrounded-regions/) | 🟢 | 2 | 2026-10-06 | 2026-08-07 | 2026-06-21, 2026-06-23, 2026-07-03, 2026-08-07 |
+| Easy | [110. Balanced Binary Tree](https://leetcode.com/problems/balanced-binary-tree/) | 🎓 | 3 | 2027-02-03 | 2026-08-07 | 2026-05-01, 2026-06-04, 2026-06-14, 2026-06-24, 2026-07-03, 2026-08-07 |
+| Medium | [122. Best Time to Buy and Sell Stock II](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/) | 🟢 | 2 | 2026-10-06 | 2026-08-07 | 2026-01-28, 2026-04-17, 2026-08-07 |
+| Medium | [11. Container With Most Water](https://leetcode.com/problems/container-with-most-water/) | 🟢 | 2 | 2026-10-06 | 2026-08-07 | 2026-01-31, 2026-04-14, 2026-08-07 |
 | Medium | [540. Single Element in a Sorted Array](https://leetcode.com/problems/single-element-in-a-sorted-array/) | 🟢 | 1 | 2026-09-05 | 2026-08-06 | 2026-05-02, 2026-06-12, 2026-06-13, 2026-07-17, 2026-07-27, 2026-08-06 |
 | Easy | [496. Next Greater Element I](https://leetcode.com/problems/next-greater-element-i/) | 🟡 | 0 | 2026-08-16 | 2026-08-06 | 2026-07-04, 2026-07-06, 2026-08-06 |
 | Easy | [27. Remove Element](https://leetcode.com/problems/remove-element/) | 🟢 | 2 | 2026-10-05 | 2026-08-06 | 2026-01-05, 2026-03-28, 2026-05-27, 2026-06-26, 2026-07-05, 2026-08-06 |
@@ -105,7 +112,6 @@ Notes for future agents:
 | Medium | [560. Subarray Sum Equals K](https://leetcode.com/problems/subarray-sum-equals-k/) | 🟡 | 0 | 2026-08-08 | 2026-07-29 | 2026-04-05, 2026-06-26, 2026-06-28, 2026-07-29 |
 | Easy | [733. Flood Fill (BFS)](https://leetcode.com/problems/flood-fill/) | 🎓 | 3 | 2027-01-25 | 2026-07-29 | 2026-06-12, 2026-06-19, 2026-06-28, 2026-07-29 |
 | Medium | [235. Lowest Common Ancestor of a Binary Search Tree](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/) | 🟡 | 0 | 2026-08-08 | 2026-07-29 | 2026-05-03, 2026-06-12, 2026-07-19, 2026-07-29 |
-| Medium | [19. Remove Nth Node From End of List (Postorder Recursion)](https://leetcode.com/problems/remove-nth-node-from-end-of-list/) | 🟡 | 0 | 2026-08-07 | 2026-07-28 | 2026-05-18, 2026-05-21, 2026-06-18, 2026-06-28, 2026-07-08, 2026-07-18, 2026-07-28 |
 | Easy | [169. Majority Element](https://leetcode.com/problems/majority-element/) | 🟢 | 2 | 2026-09-26 | 2026-07-28 | 2026-01-05, 2026-04-01, 2026-05-28, 2026-06-27, 2026-07-28 |
 | Medium | [424. Longest Repeating Character Replacement](https://leetcode.com/problems/longest-repeating-character-replacement/) | 🟢 | 1 | 2026-08-26 | 2026-07-27 | 2026-04-19, 2026-07-02, 2026-07-10, 2026-07-17, 2026-07-27 |
 | Medium | [18. Four Sum](https://leetcode.com/problems/4sum/) | 🟢 | 1 | 2026-08-26 | 2026-07-27 | 2026-01-23, 2026-07-17, 2026-07-27 |
@@ -153,11 +159,7 @@ Notes for future agents:
 | Medium | [36. Valid Sudoku](https://leetcode.com/problems/valid-sudoku/) | 🟢 | 1 | 2026-08-08 | 2026-07-09 | 2026-01-25, 2026-05-22, 2026-06-30, 2026-07-09 |
 | Medium | [19. Remove Nth Node From End of List (Iterative)](https://leetcode.com/problems/remove-nth-node-from-end-of-list/) | 🟢 | 1 | 2026-08-08 | 2026-07-09 | 2026-04-29, 2026-05-18, 2026-06-30, 2026-07-09 |
 | Easy | [20. Valid Parentheses](https://leetcode.com/problems/valid-parentheses/) | 🟢 | 1 | 2026-08-08 | 2026-07-09 | 2026-05-19, 2026-05-21, 2026-06-30, 2026-07-09 |
-| Hard | [42. Trapping Rain Water (Array)](https://leetcode.com/problems/trapping-rain-water/) | 🟢 | 1 | 2026-08-07 | 2026-07-08 | 2026-04-15, 2026-06-29, 2026-07-08 |
 | Medium | [33. Search in Rotated Sorted Array](https://leetcode.com/problems/search-in-rotated-sorted-array/) | 🟢 | 1 | 2026-08-03 | 2026-07-04 | 2026-04-13, 2026-05-29, 2026-06-15, 2026-06-25, 2026-07-04 |
-| Medium | [973. K Closest Points to Origin](https://leetcode.com/problems/k-closest-points-to-origin/) | 🟢 | 1 | 2026-08-02 | 2026-07-03 | 2026-06-23, 2026-07-03 |
-| Medium | [130. Surrounded Regions (Union-Find)](https://leetcode.com/problems/surrounded-regions/) | 🟢 | 1 | 2026-08-02 | 2026-07-03 | 2026-06-21, 2026-06-23, 2026-07-03 |
-| Easy | [110. Balanced Binary Tree](https://leetcode.com/problems/balanced-binary-tree/) | 🟢 | 1 | 2026-08-02 | 2026-07-03 | 2026-05-01, 2026-06-04, 2026-06-14, 2026-06-24, 2026-07-03 |
 | Easy | [703. Kth Largest Element in a Stream](https://leetcode.com/problems/kth-largest-element-in-a-stream/) | 🟢 | 1 | 2026-08-01 | 2026-07-02 | 2026-06-22, 2026-07-02 |
 | Easy | [66. Plus One](https://leetcode.com/problems/plus-one/) | 🟢 | 1 | 2026-07-31 | 2026-07-01 | 2026-01-02, 2026-03-25, 2026-06-22, 2026-07-01 |
 | Medium | [684. Redundant Connection (Union-Find)](https://leetcode.com/problems/redundant-connection/) | 🟢 | 1 | 2026-07-31 | 2026-07-01 | 2026-06-18, 2026-06-22, 2026-07-01 |
@@ -175,8 +177,6 @@ Notes for future agents:
 | Medium | [133. Clone Graph](https://leetcode.com/problems/clone-graph/) | 🟢 | 1 | 2026-07-07 | 2026-06-07 | 2026-06-04, 2026-06-05, 2026-06-07 |
 | Easy | [100. Same Tree](https://leetcode.com/problems/same-tree/) | 🟢 | 1 | 2026-07-05 | 2026-06-05 | 2026-05-01, 2026-06-05 |
 | Easy | [88. Merge Sorted Array](https://leetcode.com/problems/merge-sorted-array/) | 🟢 | 1 | 2026-07-04 | 2026-06-04 | 2026-01-10, 2026-04-03, 2026-06-04 |
-| Medium | [122. Best Time to Buy and Sell Stock II](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/) | 🟢 | 1 | 2026-05-17 | 2026-04-17 | 2026-01-28, 2026-04-17 |
-| Medium | [11. Container With Most Water](https://leetcode.com/problems/container-with-most-water/) | 🟢 | 1 | 2026-05-14 | 2026-04-14 | 2026-01-31, 2026-04-14 |
 
 ---
 
@@ -212,7 +212,7 @@ note is the failure mode this section exists to prevent.
 | Hard | [1216. Valid Palindrome III (backtracking)](https://leetcode.com/problems/valid-palindrome-iii/) | `phase:Backtracking` | **Phase-gated 🔴.** Attempted 2026-05-31 → Blank; the Backtracking foundation isn't built until **Sep 14 – Oct 11**. Premature, not forgotten. **Trigger: pull into rotation when the Backtracking phase opens (Sep 14).** |
 | Hard | [1216. Valid Palindrome III (1DP)](https://leetcode.com/problems/valid-palindrome-iii/) | `phase:1D-DP` | **Phase-gated 🔴.** Attempted 2026-05-31 → Blank; the 1D DP foundation isn't built until **Oct 12 – Nov 8**. Premature, not forgotten. **Trigger: pull into rotation when the 1D DP phase opens (Oct 12).** |
 | Medium | [53. Maximum Subarray (Divide and Conquer)](https://leetcode.com/problems/maximum-subarray/) | `rated:912` + `surplus>=1` | **D&C consolidation rep.** ⚠️ *Original trigger "active block week of Jul 6" **expired unfired** — caught Jul 26, 2026, three weeks stale. A dead stub (`maxSubarrayDivideNConquer`, body `return`) sits in the solution file from that abandoned setup.* **Re-triggered as a condition, not a date: pull once (a) 912 Merge Sort has its RATED rep (Jul 29 — D&C was taught unrated Jul 25, so 912 measures retention first) AND (b) surplus ≥ 1.** Rationale: D&C currently has exactly **one** problem (912) where a technique wants 3–4, and this is the natural second — but running it before 912 is rated would measure the teaching, not the technique. See [[project_dandc_coding_gap]]. |
-| Hard | [42. Trapping Rain Water (Two Pointer)](https://leetcode.com/problems/trapping-rain-water/) | `graduates:42` | O(1) space optimization. **Trigger: pull into rotation when 42 Array retires (🏆, streak 3).** Array method 🟢 streak 1 as of Jul 8. |
+| Hard | [42. Trapping Rain Water (Two Pointer)](https://leetcode.com/problems/trapping-rain-water/) | `graduates:42` | O(1) space optimization. **Trigger: pull into rotation when 42 Array GRADUATES (🎓, streak 3).** ⚠️ Wording corrected Aug 7, 2026 — it read "retires (🏆, streak 3)", which predates the Jul 26 label swap; streak 3 is 🎓 Graduated, and 🏆 Retired is the terminal tier well beyond it. Gating on 🏆 would have deferred this variant by ~a year past its intended trigger. **Array method 🟢 streak 2 as of Aug 7 → the NEXT clean rep (due Oct 6) fires this trigger.** |
 | Medium | [210. Course Schedule II (DFS postorder)](https://leetcode.com/problems/course-schedule-ii/) | `graduates:210` | **Method variant — the only unqueued variant gap in [`technique_coverage.md`](technique_coverage.md).** Topological sort has three problems (207, 210, 269) and **all three are Kahn's**; DFS-topo has never been written once. Gated by the method-variant rule — needs 210 itself at 🎓 (currently 🟢 streak 1, next Aug 23). **Why it earns a rep rather than a footnote:** DFS-topo requires a *three-state* visited (unvisited / in-progress / done) to detect a cycle as a back edge, plus reverse-postorder to emit forward — machinery Kahn's never makes you build, so three Kahn's reps leave it genuinely untrained. Surfaced Jul 28, 2026 by the coverage report. |
 | Hard | Digit DP (technique) — e.g. [233. Number of Digit One](https://leetcode.com/problems/number-of-digit-one/) | `phase:2D-DP` | Technique: counting numbers in a range by digit constraints. Not in NC150; advanced DP. Best learned AFTER the 1D/2D DP blocks (Oct–Dec) once DP foundation is solid. |
 | Medium | [300. Longest Increasing Subsequence (O(n log n))](https://leetcode.com/problems/longest-increasing-subsequence/) | `phase:1D-DP` | DP enrichment: patience-sorting / binary-search LIS. Base O(n²) LIS is NC150; this is the optimized form. Learn after the 1D DP block. |

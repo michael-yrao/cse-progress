@@ -37,6 +37,20 @@ Constraints:
 from typing import List
 
 class Solution:
+
+    # ── Attempt · 2026-08-07 ──────────────
+    def maxProfit_20260807(self, prices: List[int]) -> int:
+        # count all upward trend basically
+        l = r = 0
+        totalProfit = 0
+        while r < len(prices):
+            if prices[l] < prices[r]:
+                profit = prices[r] - prices[l]
+                totalProfit+=profit
+            l = r
+            r+=1
+        return totalProfit
+
     def maxProfit(self, prices: List[int]) -> int:
         # greedy algorithm solution
         # draw graph to see solution easier
