@@ -70,14 +70,26 @@ def load_config(path: Path = Path("cse.config.yml")) -> dict:
     if isinstance(doc, dict):
         intervals = doc.get("intervals") or {}
         if isinstance(intervals, dict):
-            clean = intervals.get("clean") or {}
+            clean = intervals.get("clean") if isinstance(intervals.get("clean"), dict) else {}
+
+            def _first(*candidates):
+                """First non-None candidate. The graduated interval has lived in three
+                places across the Jul 26, 2026 rename — `intervals.clean.retired`,
+                `intervals.clean.graduated`, and `intervals.graduated` — and all three
+                appear in configs in the wild, so all three are honoured."""
+                for c in candidates:
+                    if isinstance(c, (int, float)):
+                        return c
+                return None
+
             pairs = [
-                (clean.get("provisional") if isinstance(clean, dict) else None, "clean_provisional"),
-                (clean.get("streak1") if isinstance(clean, dict) else None, "clean_streak1"),
-                (clean.get("streak2") if isinstance(clean, dict) else None, "clean_streak2"),
-                (intervals.get("graduated", intervals.get("retired")), "graduated"),
-                (intervals.get("shaky"), "shaky"),
-                (intervals.get("blank"), "blank"),
+                (_first(clean.get("provisional")), "clean_provisional"),
+                (_first(clean.get("streak1")), "clean_streak1"),
+                (_first(clean.get("streak2")), "clean_streak2"),
+                (_first(clean.get("graduated"), clean.get("retired"),
+                        intervals.get("graduated"), intervals.get("retired")), "graduated"),
+                (_first(intervals.get("shaky")), "shaky"),
+                (_first(intervals.get("blank")), "blank"),
             ]
             for value, key in pairs:
                 if isinstance(value, (int, float)):
