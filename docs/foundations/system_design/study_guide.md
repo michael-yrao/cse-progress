@@ -4,6 +4,23 @@
 > SD *execution roadmap* (phases, rubric, sourcing, tech order) → [`senior_ramp.md`](senior_ramp.md).
 > This guide is the SD study *mechanics*; those two own the goal and the plan.
 
+## 🧭 Who owns what — read this before editing any SD file
+
+**Reconciled Aug 8, 2026.** Three files had drifted into holding three different design lists, two stale
+status tables, and a claim in this file that it was *"the single source of truth"* — which it no longer is.
+Each thing now has exactly one owner, and everything else **links** rather than restates:
+
+| Thing | Owner | Everyone else |
+|---|---|---|
+| **State** — comfort, streak, next review, for every tech · concept · component · design | [`mastery/design_progress.md`](mastery/design_progress.md) | link to it; never restate a status in prose |
+| **The plan** — L6 ROI triage of all 55 designs, phases + exit gates, the 7-point rubric, tech order, prereq-tech gate | [`senior_ramp.md`](senior_ramp.md) | link to it; never keep a second design list |
+| **The mechanics** — cadence & the three lanes, session formats, the framework, fork drills, template usage | **this file** | — |
+
+⚠️ **A status written in prose is a status that will be wrong in three weeks.** Every stale thing found in
+this reconciliation was a hand-written date or ✅ duplicating something the tracker already computes
+(*"Mastery ⏳ Sun Jul 19"*, *"Bootstrap ⏳ Jul 20 wk"*, *"Redis ✅"* on a row that is 🟡). **If the engine
+can compute it, do not write it down here.**
+
 ## Mission & the Interview-ROI Line
 
 **End goal:** become a genuine systems **architect** (Staff / Principal / CTO-level) — someone who can design, reason about, and defend planet-scale distributed systems from first principles. **Passing the system-design interview is a milestone on that path, not the finish line.**
@@ -18,7 +35,11 @@ As with DSA, depth has diminishing returns *for interviews specifically*, so eve
 2. **Building blocks** — load balancing, caching (patterns, eviction, invalidation), CDN, reverse proxy / API gateway, message queues & async processing, rate limiting, consistent hashing, bloom filters.
 3. **Data layer** — SQL vs NoSQL tradeoffs, indexing, replication (leader/follower, multi-leader), sharding / partitioning, CAP & PACELC, consistency levels (strong → eventual), idempotency.
 4. **The interview framework** — requirements (functional + non-functional) → core entities → API design → high-level diagram → deep dives (bottlenecks & tradeoffs); estimation inline, Data Flow only for data-processing systems. *Driving this framework fluently is 50% of the interview.* **→ Full step-by-step: [`framework.md`](framework.md).**
-5. **Canonical designs** (the "grokking" set): URL shortener, rate limiter, chat/messenger, news feed, notification service, typeahead/autocomplete, web crawler, video streaming (YouTube/Netflix), ride-share (Uber), file storage (Dropbox/Drive), Ticketmaster, distributed KV store / cache, payment/ledger, top-K / trending.
+5. **Canonical designs** — **owned by [`senior_ramp.md`](senior_ramp.md) → *The L6 Interview-ROI Line***,
+   where all 55 systemdesign.io questions are triaged (20 core · 10 ⏳ Tier-1 · 25 below the line), each
+   with a written reason. *The old hand-listed "grokking set" was removed here Aug 8, 2026 — it was a
+   second, unmaintained design list, and it disagreed with the triage (it named Ticketmaster,
+   Uber and payment/ledger as core; the L6 triage does not).*
 
 Being fluent across (1)–(5) is the ceiling of *interview* ROI. Everything below sharpens you as an engineer but won't move an interview score much.
 
@@ -142,10 +163,11 @@ else derives from — then stop and check in. Depth on request only.
 
 ### Stage status
 
-| Topic | Bootstrap | Transition | Mastery |
-|-------|-----------|------------|---------|
-| [Rate limiter](components/rate_limiter.md) | ✅ Jul 5 | ✅ Jul 12 | ⏳ **Sun Jul 19** |
-| Caching | ⏳ Jul 20 wk | — | — |
+**→ [`mastery/design_progress.md`](mastery/design_progress.md).** *The hand-maintained table that used to
+sit here was deleted Aug 8, 2026: it still read "Rate limiter — Mastery ⏳ Sun Jul 19" and "Caching —
+Bootstrap ⏳ Jul 20 wk", three weeks stale, while the tracker had the real state all along. The staged arc
+above (Bootstrap → Transition → Mastery) is still how a block or design is worked; **the comfort rating is
+how its state is recorded**, and nothing should record it twice.*
 
 Below-the-line (Tier 2+) work is **not** a sprint activity — it's long-form reading (DDIA, papers) pursued deliberately *after* interview-core is solid, on its own track.
 
@@ -155,7 +177,13 @@ Designs are argued in the vocabulary of concrete **technologies** ("I'd put Redi
 
 - **The unit:** one technology, with a note + **Recall Card** in [`technologies/`](technologies/).
 - **The rep (a "blind sprint"):** answer the card's prompts from memory → unfold to check → rate 🟢/🟡/🔴 → log + commit → next review auto-computes (+30/+10/+2).
-- **Backlog & order** (data-store trio is highest-leverage): Redis ✅ · **PostgreSQL** (next) → Cassandra → DynamoDB · Kafka → Flink · Elasticsearch · API Gateway · ZooKeeper.
+- **Backlog & order** (data-store trio is highest-leverage): **Redis → PostgreSQL → Cassandra → DynamoDB ·
+  Kafka → Flink · Elasticsearch · API Gateway · ZooKeeper.** Live comfort per tech is in the
+  [tracker](mastery/design_progress.md) — *the "Redis ✅" that used to be written here was wrong; Redis is
+  🟡 and its next slot is a **teach**, not a sprint.*
+- ⚠️ **7 of the 9 have a tracker row but no note file yet** — only `redis.md` and `postgresql.md` exist. A
+  row without a note **cannot be drilled**; that tech's first slot builds the note (teaching, unrated) and
+  the sprint comes later. Read "9 techs queued" as *2 drillable, 7 unwritten*.
 - **This is lane ①** — the *light* midweek slot. One rep; nothing due → build the next tech's note.
 
 **Drive every practice session through the templates** in [`templates/`](templates/):
@@ -200,47 +228,73 @@ naming your own design's failure mode before they ask is the senior signal.
 Treat each as a rep: pick a system you've designed, have the coach fire these, and
 defend cold. A shaky answer points at a fork you memorized instead of understood.
 
-## Design Practice Backlog
+## Design Practice Backlog → moved
 
-Specific systems to design end-to-end (drive the full framework on each). **This is the Sunday queue** — designs pull the blocks in behind them (see Cadence). Ordered easiest-framework-rep first, so the *framework* is what's being drilled early, not the exotica.
+**The Sunday queue is [`mastery/design_progress.md`](mastery/design_progress.md); its ordering and ROI
+triage are [`senior_ramp.md`](senior_ramp.md).** The hand-numbered 6-row table that used to sit here was
+removed Aug 8, 2026 — it was the **third** competing design list in the repo, it had no state (the tracker
+has comfort/streak/dates), and it predated the systemdesign.io sourcing decision of Aug 6.
 
-| # | System | Tier | Blocks it will pull in |
-|---|--------|------|------------------------|
-| 1 | **URL shortener** | 1 | hashing/encoding, KV store, cache-aside, read-heavy scaling. *The canonical first design — small enough that the **framework** is the thing you're practicing.* |
-| 2 | **Chat / messenger** | 1 | WebSockets, **message queues**, fan-out, presence, delivery/read receipts |
-| 3 | **News feed** | 1 | **push vs pull fan-out** (the celebrity problem), CDN, ranking |
-| 4 | **Typeahead / autocomplete** | 1 | tries (← DSA 208!), **caching**, top-K |
-| 5 | **Design YouTube** | 1 | upload/transcoding pipeline, **CDN**, metadata + view counts, recommendations |
-| 6 | **Design an LLM chat assistant** (Claude/ChatGPT-style) | 1–2 | token streaming (SSE/WebSocket), context-window mgmt, request batching / GPU scheduling, **rate limiting** & quotas, conversation storage, optional RAG. Ties into the planned AI-Engineering phase. |
+**One item from it was NOT in the triage and is preserved here so it isn't lost** (schedule-integrity rule
+— nothing gets dropped without a home):
 
-Remaining canonical set to slot in later: notification service, web crawler, ride-share (Uber), file storage (Dropbox), Ticketmaster, distributed KV store, payment/ledger, top-K/trending.
+- ⏳ **Design an LLM chat assistant** (Claude/ChatGPT-style) — token streaming (SSE/WebSocket),
+  context-window management, request batching / GPU scheduling, rate limiting & quotas, conversation
+  storage, optional RAG. **Not a systemdesign.io question**, so the catalog triage could not place it.
+  **Trigger: `phase:ai_bootstrap`** — it belongs to the AI-Engineering track (not yet bootstrapped), where
+  it is the natural capstone design. Until then it is genuinely parked, not forgotten.
+  *(Second design with no catalog home: **distributed cache** — see `senior_ramp.md`.)*
 
 ### Building blocks — pulled in on demand
 
-Not a queue to grind through. Each gets a `components/` note **when a design hits it**, or when it's the obvious next gap.
+Not a queue to grind through. Each gets a `components/` note **when a design hits it**, or when it's the
+obvious next gap.
 
-| Block | Status |
-|-------|--------|
-| [Rate limiter](components/rate_limiter.md) | Mastery ⏳ Sun Jul 19 |
-| Caching (patterns, eviction, invalidation) | Bootstrap ⏳ Jul 20 wk — *the one block to do proactively; it's load-bearing everywhere* |
-| Message queues & async | pulled by **Chat** (#2) |
-| CDN / reverse proxy / API gateway | pulled by **News feed** (#3) / **YouTube** (#5) |
-| Load balancing | pulled by whichever design saturates first |
-| Consistent hashing · Bloom filters | small; fold into the design that needs them |
+⚠️ **Blocks were the last SD category with no measurement** — notes existed, none were on the review
+engine, so they could not decay and nothing surfaced when one went cold. **Fixed Aug 8, 2026: a block gets
+a `Component` row in the tracker the moment its note exists.** Status lives there, not here.
+
+| Block | Note | Pulled by |
+|-------|------|-----------|
+| [Rate limiter](components/rate_limiter.md) | ✅ | tracked as a **design** too (`API Rate Limiter`, 🟡) — the component note carries that arc's drill targets |
+| [Caching](components/caching.md) | ✅ | *done proactively* — load-bearing everywhere |
+| [Load balancer](components/load_balancer.md) | ✅ | ⚠️ **2 backend failure modes still owed** (dead vs slow → health checks), from the Aug 6 close-out |
+| Message queues & async | — | Chat / Messenger |
+| CDN / reverse proxy / API gateway | — | News feed · YouTube *(API Gateway is also a tracked **technology** row — the block note and the tech sprint are different reps)* |
+| Consistent hashing · Bloom filters | *(Bloom filter has a [concept card](concepts/bloom_filter.md))* | fold into the design that needs them |
 
 ## Where things live
 
-This guide is the single source of truth (map + ROI line). Current file state — **built** vs **planned**:
+**This guide owns the *mechanics*, not the plan or the state** — see *Who owns what* at the top.
+Current file state:
 
-**Built:**
-- [`senior_ramp.md`](senior_ramp.md) ✅ — **the L5 interview ramp**: phased sequence + exit gates + the design-scoring rubric that gives *designs* a scoreboard (score the cold mock, log comfort in the tracker). Read when planning the senior push; the cadence/lanes here still govern execution.
-- [`framework.md`](framework.md) ✅ — the delivery framework, step by step (the *why* behind the case-study template's headings). Reread before any Transition/Mastery sprint.
+**The three owners**
+- [`mastery/design_progress.md`](mastery/design_progress.md) ✅ — **state.** Every tech · concept ·
+  component · design, with comfort/streak/next-review, plus the ⏳ Tier-1 Waiting Room.
+- [`senior_ramp.md`](senior_ramp.md) ✅ — **the plan.** The **L6** ramp (big tech / MANGA-adjacent, ~10 yrs
+  in): the ROI triage of all 55 systemdesign.io questions, phases + exit gates, the 7-point rubric, tech
+  order, the prereq-tech gate, and the 🔁 overflow block. *(Called "the L5 ramp" here until Aug 8 — stale
+  since the Aug 6 re-aim.)*
+- **this file** ✅ — **the mechanics.** Cadence & the three lanes, session formats, fork drills, templates.
+
+**Material**
+- [`framework.md`](framework.md) ✅ — the delivery framework, step by step. Reread before any
+  Transition/Mastery sprint.
 - `templates/` ✅ — the two scaffolds you fill during practice (see Cadence above).
+- `technologies/` 🌱 — **2 of 9 written**: [`redis.md`](technologies/redis.md) ·
+  [`postgresql.md`](technologies/postgresql.md). The other seven rows have no note yet (see *Technology
+  fluency* above).
+- `components/` 🌱 — **3 written**: [`rate_limiter.md`](components/rate_limiter.md) ·
+  [`caching.md`](components/caching.md) · [`load_balancer.md`](components/load_balancer.md).
+- `concepts/` 🌱 — **9 written, and the one lane that is fully ready to run** (9 rows, 9 files, exact
+  match): networking basics · percentiles & tail latency · Little's Law · utilization & queueing ·
+  probabilistic sketches · retry storms & stampedes · quorum math · Zipfian · Bloom filter.
+- `case_studies/` 🌱 — [`url_shortener.md`](case_studies/url_shortener.md) (in flight).
+- `archive/` — retired depth material: [`fundamentals/single_node_io_efficiency.md`](archive/fundamentals/single_node_io_efficiency.md). *Depth material, not interview-core — archived Jul 22.*
 
-- `components/` 🌱 — per-block deep-dives: [`rate_limiter.md`](components/rate_limiter.md) (Transition ✅ — carries the named drill targets for Mastery) · [`caching.md`](components/caching.md) (Bootstrap ✅ Jul 22 — 3 pillars, thundering herd + penetration). Grows as you cover each block.
-- `concepts/` 🌱 — cross-cutting ideas (neither deployable tech nor full pattern): [`bloom_filter.md`](concepts/bloom_filter.md), [`zipfian_distribution.md`](concepts/zipfian_distribution.md). Each has a Recall Card.
-- `archive/` — retired depth material: [`fundamentals/single_node_io_efficiency.md`](archive/fundamentals/single_node_io_efficiency.md) (the 4096-byte buffer / sectors / pages / syscalls). *Depth material, not interview-core — archived Jul 22.*
+**Planned:** `databases/` — SQL vs NoSQL, replication, sharding *(may end up folded into the per-technology
+notes instead; decide when Cassandra's note is built rather than creating an empty directory)*.
 
-**Planned (not yet created — build as you reach each phase, no number prefixes):**
-- `databases/` — SQL vs NoSQL, replication, sharding
-- `case_studies/` — worked canonical designs (start from the templates)
+> ⚠️ **Counts in this section are the one place a stale number is tolerable** — they are a *map*, not a
+> status, and they are cheap to re-derive with `ls`. Everything that is a **status** (comfort, stage,
+> "next", ✅ done) belongs in the tracker. That distinction is what this reconciliation was about.

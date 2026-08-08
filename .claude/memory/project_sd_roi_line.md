@@ -63,6 +63,33 @@ had no equivalent of DSA's two deferral bins, so a declined design and an unread
 - **Coach's calls, learner-overridable.** Borderline items are flagged as borderline in the doc
   (#42 burgers, #34 control plane, #19 RabbitMQ, #21 sorting).
 
+## Aug 8 follow-up — the three SD files now have ONE owner each
+
+The triage exposed that `study_guide.md`, `senior_ramp.md` and `design_progress.md` held **three competing
+design lists** and two stale status tables, while `study_guide.md` still claimed to be *"the single source
+of truth."* Reconciled the same session; the ownership table is now at the **top of `study_guide.md`**:
+
+| Thing | Owner |
+|---|---|
+| **State** (comfort/streak/next review — techs, concepts, components, designs) | `mastery/design_progress.md` |
+| **The plan** (ROI triage, phases, exit gates, 7-pt rubric, tech order, prereq gate, overflow block) | `senior_ramp.md` |
+| **The mechanics** (cadence & 3 lanes, session formats, fork drills, templates) | `study_guide.md` |
+
+**The rule that prevents the regression — apply it beyond SD:** ⚠️ **if the engine can compute it, do not
+write it down in prose.** Every stale item found was a hand-written date or ✅ duplicating tracker state
+(*"Mastery ⏳ Sun Jul 19"*, *"Bootstrap ⏳ Jul 20 wk"*, *"Redis ✅"* on a row that is 🟡, `senior_ramp`
+described as *"the L5 ramp"* after the Aug 6 re-aim to L6). Deleting the duplicates beats remembering to
+update them — [[feedback_self_evaluation]]'s intervention ladder: **source fix over reminder.**
+
+**Also fixed Aug 8 — components are now measured.** Building blocks were the last SD category with notes
+but **no review rows**, so they could not decay. `Component` is now a role in the tracker (Caching, Load
+Balancer). ⚠️ **Rate limiter deliberately gets no Component row** — it is already tracked as
+`Design (Hard) API Rate Limiter` and the component note carries that arc's drill targets. One rep, one row.
+
+**Two designs have no catalog home and are parked with triggers, not dates:** *LLM chat assistant*
+(`phase:ai_bootstrap`, capstone for the AI track) and *distributed cache* (absent from systemdesign.io
+entirely — needs another source).
+
 **Two structural gaps recorded there, worth not rediscovering:**
 1. **"Distributed cache" is not in the systemdesign.io catalog at all** — a *source* gap. Needs another
    source or a self-directed session; Redis's tech note is not a substitute (using ≠ designing).
