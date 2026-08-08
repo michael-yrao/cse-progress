@@ -1537,3 +1537,24 @@ correct: O(n) time one pass, O(n) space for the recursion stack; no miss.
 **Note for the next rep**: this is the 3rd consecutive 🟡 on the postorder variant but the **first**
 whose cause is not the counter's origin. Learner declined the teach ("caught it instantly") — re-rep,
 not teach. If the *next* one misses on the counter again, the original trigger stands.
+
+### 2026-08-07 · 269 Alien Dictionary 🟡
+**Sticking point**: recognition was clean and unprompted — the pre-code comment names topological sort and
+reaches for Kahn's (indegree counter + adjacency map + queue) before any code, and the prefix failure case
+(`["abc","ab"] → ""`) was handled correctly *first*, unaided. Four execution bugs, none self-caught:
+1. **Node set built from the wrong map.** Queue seeded by iterating `adjMap`, which only holds letters with
+   *outgoing* edges — so a letter with no edges at all is never emitted. `["ac","ab"] → "cb"`, missing `a`.
+2. **No cycle detection.** Kahn's detects a cycle by *finishing early*, not by failing; the final
+   `len(result) == len(counterMap)` guard was absent. `["x","a","b","a"] → "x"` instead of `""`.
+3. **`for char in range(len(word))`** on the init pass — iterated indices, not characters, so `counterMap`
+   was keyed by ints and the first edge raised `KeyError`.
+4. **No `break` after the first differing position.** Kept comparing past it and recorded `a→b` *and* `b→a`
+   from `["ab","ba"]` — a self-invented cycle. **Only the first difference carries information.**
+Verified after the fixes: 3000 random inputs vs brute-force permutation check, plus 10 edge cases, all clean.
+**Complexity: 3rd miss on 269, all the same fixed-alphabet family** (Jul 27 freebie, Jul 29 repeat, tonight).
+Time `O(c)` was right and the unit was right (total characters, not word count — the 721/271 lesson holding).
+Space given as `O(c)`; it is **`O(1)`** — lowercase-only means `V ≤ 26`, `E ≤ 676`, neither growing with `c`.
+**Note for the Aug 10 build**: #1 and #4 are both *set-construction* errors (which nodes exist / which edges
+exist), and #4 is the same edge-set bookkeeping flagged as the open gap after Jul 29. That is now two
+consecutive reps failing on edge bookkeeping — a teach signal by the 540/19 rule. #2 was closed by
+explanation this session (why Kahn's needs no `visited`), so the next rep measures whether that took.

@@ -92,7 +92,23 @@ already in the file, which always wins (it can't drift from what's on disk).
   [`docs/foundations/dsa/templates/solution_template.py`](docs/foundations/dsa/templates/solution_template.py).
 - **Retry** (file exists) → inserts a dated stub `def <method>_<YYYYMMDD>(self)` at the end of the
   `Solution` class body. Never a second file.
-- `--premium` links the free NeetCode mirror instead of the paywalled LC page.
+- `--premium` links the free NeetCode mirror instead of the paywalled LC page. **Usually unnecessary
+  as of Aug 7, 2026** — the script asks LeetCode's GraphQL API whether the problem is paid-only and
+  switches hosts on its own.
+
+**Link verification (added Aug 7, 2026).** Before printing the `LINKS:` line the script checks the slug
+against `leetcode.com/graphql`: does it exist, does its `questionFrontendId` match `--number`, and is it
+premium. **Warn-only — it never blocks a scaffold and is silent when offline.** Two things worth knowing:
+- **A status-code check does not work on either host** and was tried first: LeetCode returns `403` to a
+  HEAD for real and fake slugs alike (bot protection), NeetCode returns `200` for both (it is an SPA).
+  A 404 check would pass every broken link it exists to catch. Hence GraphQL.
+- **NeetCode cannot be verified at all** — no API, and the SPA answers 200 for anything. Renamed problems
+  live in the hand-curated `NEETCODE_RENAMES` map in the script (`alien-dictionary` →
+  `foreign-dictionary`). **Add an entry the moment a premium link is found broken**; that is the only way
+  it grows, and an unlisted premium slug says so rather than implying it was checked.
+- ⚠️ A TLS-trust failure is **not** treated as "offline". A Python with no root certificates fails every
+  call forever, so silence would leave the check looking installed while never running. It prints one line
+  naming the fix (`Install Certificates.command` / `pip install certifi`).
 
 **Attempts are keyed by date, not by a counter** (`checkInclusion_20260712`) — matching the existing
 convention across the solution files. A counter can't be derived correctly on legacy files (they carry
@@ -261,6 +277,30 @@ Next review intervals (set in `docs/foundations/dsa/mastery/dsa_progress.md` and
 after a 🟡 is a normal Streak-1 Clean. Rationale: one Clean right after a Blank may be recall of fresh
 teaching, not durable retention (same logic as the SD teach/measure split). Interval configurable via
 `clean_provisional` in `cse.config.yml`.
+
+## Daily load is an EFFORT BUDGET, not a problem count (adopted Aug 7, 2026)
+
+`daily_cap: 7` is superseded. A day is budgeted in **units**, not problems:
+`units = comfort_base × difficulty` (🔴 3.0 / 🟡 2.0 / 🟢 1.0 / 🎓 0.5, × Easy 0.5 / Medium 1.0 /
+Hard 1.5), **ceiling 9.0/day**, hard floor 3.0, an SD lane slot costs 2.0. Weights in
+`cse.config.yml`; rationale and calibration in [`docs/foundations/effort_budget.md`](docs/foundations/effort_budget.md).
+
+**Don't hand-compute it — run the script.** At the weekly build and before accepting any overflow pull:
+
+```sh
+python scripts/effort_budget.py                          # demand · floor · ceiling · overdue cost
+python scripts/effort_budget.py --day 560 912 235 88 100 20 [--sd]   # price a specific day
+```
+
+**Why this replaced the count.** Thu Aug 6, Fri Aug 7 and Sat Aug 8 were each "7 problems" and measured
+**5.5 / 8.0 / 10.5 units** — the count cannot distinguish a five-minute 🟢 Easy from a 🔴 Hard, so every
+weekly note reading *"Saturday is the heaviest day by some margin"* was a human patching that in prose.
+
+⚠️ **Never raise the ceiling to catch up on a backlog.** On a Medium row a 🟡 bills **73 units/year**
+against 🟢 s2's **6.1** — a rep rushed into a 🟡 costs **12× forever**, so chasing a deficit with a higher
+ceiling *increases* future demand. Demand sets the **floor**; the ceiling is a quality judgment and stays
+put. (Fri Aug 7 is the worked example: the board was 7.8/9, the pull that took it to 10.8 was the single
+dearest item available, and it came back 🟡 with four bugs.)
 
 ## Schedule Integrity Rule
 
