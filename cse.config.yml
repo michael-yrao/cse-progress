@@ -7,7 +7,40 @@
 # tiers (moderate 5 / hard 4 / DP 3), so the surplus deficit and 🟢 backlog drain instead
 # of the blank-tax cascade growing. This is what funds finishing the DSA roadmap (incl.
 # DP, Oct–Dec) AND the SD ramp in parallel, rather than stealing the DSA active block.
+#
+# ⚠️ SUPERSEDED Aug 7, 2026 by `effort_budget` below. Kept as a fallback for any tool that
+# still reads it (nothing does today — it was always a convention the coach enforced by
+# reading this file, never a value a script consumed).
 daily_cap: 7
+
+# The effort budget — replaces the problem COUNT cap with a cost-weighted one.
+# Full rationale, calibration and the decision log: docs/foundations/effort_budget.md
+#
+# Why: a problem is not a unit of work. Thu Aug 6, Fri Aug 7 and Sat Aug 8 were each
+# "7 problems" and measured 5.5 / 8.0 / 10.5 units — the count cannot tell a five-minute
+# 🟢 Easy from a 🔴 Hard, and every weekly schedule note reading "Saturday is the heaviest
+# day by some margin" was a human correcting for that in prose.
+effort_budget:
+  # units = comfort_base × difficulty_factor, rated by the comfort the row carries GOING IN
+  # (never the one it earns — the budget is built before the day runs).
+  comfort_base: {blank: 3.0, shaky: 2.0, clean: 1.0, graduated: 0.5}
+  difficulty:   {Easy: 0.5, Medium: 1.0, Hard: 1.5}
+
+  # A hard ceiling, one number for every day (not per-day) — decided by the learner
+  # Aug 7, 2026. It is NOT derived from demand, and must never be raised to chase a
+  # deficit: on a Medium row a 🟡 bills 73 units/year against 🟢 s2's 6.1, so a rep
+  # rushed into a 🟡 costs 12× forever. Raising the ceiling to catch up increases
+  # future demand. Starting value is a calibrated guess — see the doc for how to
+  # settle it from the tracker once there is enough data.
+  ceiling: 9.0
+
+  # "Always do something" minimum. Advisory floor is ceil(demand) ≈ 7 units/day today;
+  # this is the hard one beneath it, so a bad day still lands somewhere.
+  floor_min: 3.0
+
+  # An SD lane slot costs this much against the day's budget. Sunday is where
+  # over-scheduling has been flagged twice, and the design session is real work.
+  sd_lane_units: 2.0
 system_design:
   # three_weekly from the Jul 20 week (raised from twice_weekly on Jul 14, 2026).
   # Each lane owns a slot — never let two bid for the same one:

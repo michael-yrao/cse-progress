@@ -28,11 +28,30 @@ from __future__ import annotations
 
 import argparse
 import ast
+import json
 import re
 import sys
+import urllib.error
+import urllib.request
 from pathlib import Path
 
 import session_date
+
+# NeetCode slugs that differ from the LeetCode title's slug. This map exists because
+# NeetCode CANNOT be checked over the network: it is a client-side SPA, so a dead slug
+# and a live one both return 200 with the same HTML shell (verified Aug 7, 2026 —
+# /problems/alien-dictionary and /problems/foreign-dictionary are indistinguishable to
+# any HTTP check). There is no public problems API either. So the only honest option is
+# a curated list, and an unlisted premium slug gets an explicit "unverified" warning
+# rather than false confidence.
+#
+# Add an entry the moment a premium link is found broken — that is the only way this
+# grows. Keyed by the LeetCode slug.
+NEETCODE_RENAMES = {
+    "alien-dictionary": "foreign-dictionary",
+}
+
+LEETCODE_GRAPHQL = "https://leetcode.com/graphql"
 
 # Status lines below carry box-drawing / arrow glyphs (── ⤵ →). On a stock Windows
 # console (cp1252) printing them raises UnicodeEncodeError *after* the files are already
@@ -143,6 +162,96 @@ def docstring_url(text: str) -> str | None:
         return None
     m = re.search(r"https?://\S+", parts[1])
     return m.group(0).rstrip(".,;)") if m else None
+
+
+def lookup_leetcode(slug: str, timeout: float = 4.0) -> dict | None:
+    """Ask LeetCode's GraphQL API about a slug. Returns None if the question doesn't exist.
+
+    Raises on any network/transport problem so the caller can distinguish "this slug is
+    wrong" (None) from "I couldn't check" (exception) — those must never be conflated,
+    because only the first one is worth warning about.
+
+    Why GraphQL and not a HEAD request: **neither host answers a status-code check.**
+    LeetCode returns 403 to `curl -I` for real and fake slugs alike (bot protection), and
+    NeetCode returns 200 for both (SPA). A 404 check would have silently passed every
+    broken link it was built to catch — verified Aug 7, 2026 before writing this.
+
+    The API gives three facts instead of one, which is why this ended up stronger than
+    the check originally scoped:
+      * existence        — a bad slug returns null
+      * questionFrontendId — catches a slug that resolves to a DIFFERENT problem number
+      * isPaidOnly       — so --premium stops being something the caller must remember
+    """
+    query = ("query($t:String!){question(titleSlug:$t)"
+             "{questionFrontendId title isPaidOnly}}")
+    payload = json.dumps({"query": query, "variables": {"t": slug}}).encode()
+    req = urllib.request.Request(
+        LEETCODE_GRAPHQL, data=payload,
+        headers={"Content-Type": "application/json", "User-Agent": "Mozilla/5.0"},
+    )
+    with urllib.request.urlopen(req, timeout=timeout) as resp:
+        body = json.load(resp)
+    return (body.get("data") or {}).get("question")
+
+
+def verify_links(number: str, slug: str, url: str, premium: bool,
+                 check: bool = True) -> str:
+    """Warn about a wrong link before it is printed. Returns the URL to actually use.
+
+    **Warn, never block, and never fail on a network problem.** A scaffold must not
+    depend on the network — same principle as the engine update check: offline is a
+    non-event, not an error. Every failure path here returns the URL unchanged.
+
+    The one thing it will *silently* change is the host: a problem LeetCode reports as
+    paid-only is pointed at the free NeetCode mirror even without --premium, because
+    that flag is exactly the sort of per-problem fact a human forgets (missed on 269,
+    Aug 7, 2026, which is what prompted this function).
+    """
+    if not check or not url.startswith("https://leetcode.com/problems/"):
+        # A hand-passed --url or an already-NeetCode link is the caller's call, not ours.
+        if premium and slug not in NEETCODE_RENAMES and "neetcode" in url:
+            print(f"NOTE: NeetCode slug '{slug}' is unverified — NeetCode is an SPA and "
+                  f"cannot be link-checked. If it 404s, add it to NEETCODE_RENAMES.")
+        return url
+
+    try:
+        q = lookup_leetcode(slug)
+    except (urllib.error.URLError, TimeoutError, OSError, ValueError,
+            json.JSONDecodeError) as exc:
+        # Offline / rate-limited / changed schema: say nothing, carry on.
+        #
+        # EXCEPT a TLS trust failure, which is a different animal and must not be
+        # swallowed. Being offline is transient and self-announcing; a Python with no
+        # root certificates fails EVERY time, forever, so a silent handler leaves this
+        # check looking installed while it has never once run. That is strictly worse
+        # than not having the check — found immediately on the first test run, Aug 7,
+        # 2026, on a python.org macOS build. One line, with the fix in it.
+        if "CERTIFICATE_VERIFY" in str(exc):
+            print("NOTE: link check skipped — this Python has no root certificates, so "
+                  "every HTTPS call fails. Fix once with: "
+                  "'/Applications/Python 3.x/Install Certificates.command' (macOS "
+                  "python.org build), or `pip install certifi`.")
+        return url
+
+    if q is None:
+        print(f"WARNING: no LeetCode problem has the slug '{slug}' — the link below is "
+              f"probably dead. It was derived from --title, so check the real title "
+              f"(e.g. Roman numerals: 'stock-ii', not 'stock-2').")
+        return url
+
+    got = str(q.get("questionFrontendId", ""))
+    if got and got != str(number):
+        print(f"WARNING: slug '{slug}' is LeetCode #{got} ({q.get('title')}), but "
+              f"--number says {number}. One of the two is wrong.")
+
+    if q.get("isPaidOnly") and "neetcode" not in url:
+        nc = NEETCODE_RENAMES.get(slug, slug)
+        unknown = "" if slug in NEETCODE_RENAMES else " (slug unverified — NeetCode has no API)"
+        print(f"NOTE: LeetCode #{got or number} is premium; linking the free NeetCode "
+              f"mirror instead{unknown}. --premium was not needed.")
+        return f"https://neetcode.io/problems/{nc}"
+
+    return url
 
 
 def report_links(path: Path, number: str, title: str, url: str) -> None:
@@ -496,7 +605,11 @@ def main() -> None:
                          "Only used for a NEW problem — on a retry the signature is read "
                          "from the existing method, which always wins")
     ap.add_argument("--premium", action="store_true",
-                    help="LC-premium problem -> link the free NeetCode mirror instead")
+                    help="LC-premium problem -> link the free NeetCode mirror instead "
+                         "(usually unnecessary: premium is auto-detected)")
+    ap.add_argument("--no-link-check", action="store_true",
+                    help="skip the LeetCode slug/number/premium verification "
+                         "(it is warn-only and already silent when offline)")
     ap.add_argument("--force-new", action="store_true",
                     help="create a new file even though this number already exists on "
                          "disk under a different filename (normally refused — it forks "
@@ -524,7 +637,11 @@ def main() -> None:
     if args.url:
         url = args.url
     elif args.premium:
-        url = f"https://neetcode.io/problems/{slug}"  # LC statement is paywalled; NC is free
+        # LC statement is paywalled; NC is free. NeetCode renames some problems
+        # ("Alien Dictionary" -> "Foreign Dictionary"), and since NeetCode cannot be
+        # link-checked over the network, the map is the only thing standing between the
+        # learner and a dead link.
+        url = f"https://neetcode.io/problems/{NEETCODE_RENAMES.get(slug, slug)}"
     else:
         url = f"https://leetcode.com/problems/{slug}/"
     root = source_root()
@@ -717,8 +834,18 @@ def main() -> None:
 
     # Both links, unconditionally, on every branch — see report_links(). The file's own
     # header wins over the derived URL: on a retry it is the only correct source.
-    report_links(path, str(args.number), args.title,
-                 docstring_url(path.read_text(encoding="utf-8")) or url)
+    final_url = docstring_url(path.read_text(encoding="utf-8")) or url
+    # Verify what will actually be PRINTED, not what was derived — on a retry those differ,
+    # and the header URL is just as capable of being stale. Slug comes from the URL for the
+    # same reason. Warn-only; returns the URL unchanged on every failure path.
+    final_url = verify_links(
+        str(args.number),
+        final_url.rstrip("/").rsplit("/", 1)[-1],
+        final_url,
+        args.premium,
+        check=not args.no_link_check,
+    )
+    report_links(path, str(args.number), args.title, final_url)
 
 
 if __name__ == "__main__":

@@ -41,6 +41,72 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-08-07 ──────────────
+    def alienOrder_20260807(self, words: List[str]) -> str:
+        # so this is like a topological graph
+        # between z and o, z comes first because there is no dependency on z but there is dependency on o
+        # we also only care about the first letter
+        # example 3 is a failure case, so need to consider that
+        # but since we know this is topological graph, we can thinking of course schedule
+        # which means we need a counter of prerequisites for each node
+        # we also need adjacency map so we know what we can go to next
+        # also we need a queue to keep track of the ones that have no prereqs
+        adjMap = collections.defaultdict(set)
+        counterMap = {}
+        queue = collections.deque()
+        
+        # since w1 = "a", w2 = "a" should still produce "a", it means we need to init our counterMap
+        
+        for word in words:
+            for char in word:
+                counterMap[char] = 0
+
+        # let's start by constructing our adjMap and maybe populating our counterMap along the way
+
+        for i in range(1,len(words)):
+            w1 = words[i-1]
+            w2 = words[i]
+            # compare the two words, when we see the first lexicographical difference, we stop
+            # w1 and w2 are not always the same size, so get the min first
+            minLength = min(len(w1),len(w2))
+            # let's cover example 3's failure case first
+            if len(w1) > len(w2) and w1[:minLength] == w2:
+                return ""
+            # now that we know we are not in the failure case, let's do the mapping
+            for j in range(minLength):
+                if w1[j] != w2[j]:
+                    # need to make sure we account for dups, so add a not in condition here
+                    if w2[j] not in adjMap[w1[j]]:
+                        adjMap[w1[j]].add(w2[j])
+                        counterMap[w2[j]]+=1
+                    break
+        
+        # now that our adjMap is setup and our counterMap is setup
+        # let's get all the ones with no dependencies to add to our queue first
+        # these guys must be the key of counterMap, so we can just loop there
+        for key in counterMap:
+            if counterMap[key] == 0:
+                queue.append(key)
+
+        # string array to construct our result
+        # we also need to consider whether or not we've visited this already
+        # so we should have a visited set while we go through this
+        result = []
+        while queue:
+            # let's use all the nodes that have 0 req
+            lenQueue = len(queue)
+            for _ in range(lenQueue):
+                currentNode = queue.popleft()
+                result.append(currentNode)
+                for neighbor in adjMap[currentNode]:
+                    counterMap[neighbor]-=1
+                    if counterMap[neighbor] == 0:
+                        queue.append(neighbor)
+        
+        if len(result) == len(counterMap):
+            return "".join(result)
+        return ""
+
     # ── Attempt · 2026-07-29 ──────────────
     def alienOrder_20260729(self, words: List[str]) -> str:
         # the FIRST different letter determines lexicographically difference
