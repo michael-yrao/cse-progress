@@ -477,6 +477,30 @@ plain HTTP to the backend is the common, cheap choice.
 
 ## 🤝 What TCP actually guarantees (and what it doesn't)
 
+> ### ⏳ Fact 2 is NOT finished — read this before drilling the TCP questions
+> *Flagged by the learner, Aug 8, 2026: **"I don't think I have fact 2 done, I want to dive deeper when
+> I have spare time."*** Correct, and worth stating in the card rather than in a schedule note.
+>
+> **Worked with the learner so far:** TCP-as-bookkeeping (numbering + ack/retransmit) · the handshake
+> (ISN, 3 messages / 1 RTT, two numbering streams) · where layer 4 sits and who reads it.
+>
+> **Written here but NOT yet worked — the open list:**
+>
+> | Gap | The question it answers |
+> |---|---|
+> | **Sequence & ACK numbers concretely** | what an ACK number actually *names* (cumulative — "everything below this") |
+> | **Loss detection** | how the sender *knows* — retransmission timeout vs duplicate ACKs / fast retransmit |
+> | **The receive window** | flow control: how a slow receiver throttles a fast sender without dropping anything |
+> | **Congestion control** | slow start, the congestion window, why loss is read as a *congestion signal*, and why TCP deliberately slows itself |
+> | **Teardown** | FIN / FIN-ACK, `TIME_WAIT`, and why it causes real port-exhaustion incidents |
+> | **Keep-alive & connection reuse** | why HTTP/1.1 keep-alive and connection pools exist — 1 RTT saved per request |
+> | **Head-of-line blocking** | asserted below; never traced through a concrete loss |
+>
+> ⚠️ **Consequence for the rated sprint:** Recall questions **11, 12, 13, 14** sit on this material.
+> Firing them cold now measures *explanation the learner never received*, not decay — the teach/measure
+> split says that rating would be noise. **Either finish the list first, or scope the first rated sprint
+> to questions 1–10d + 1b/11b/16 and add the rest once worked.**
+
 TCP is the layer that turns IP's "best effort, no promises" into something you can build on.
 
 > ⚠️ **TCP is not a delivery mechanism — it is bookkeeping.** *(Framing added Aug 8, 2026; it's the one
