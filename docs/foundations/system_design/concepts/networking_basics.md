@@ -253,6 +253,96 @@ thousands of connections on port 443 — the port isn't consumed, the tuple is.
 router in between allocates anything or agrees to anything. "Establishing a connection" is two machines
 writing down numbers about each other.
 
+### The three port bands
+
+| Range | Name | Who uses it |
+|---|---|---|
+| **0–1023** | **well-known** | HTTP 80 · HTTPS 443 · DNS 53 · SSH 22 · SMTP 25. **The one band every OS agrees on**, and on Unix-likes **binding here requires root** |
+| 1024–49151 | registered | vendor defaults — Postgres 5432 · MySQL 3306 · Redis 6379 · Kafka 9092 · Mongo 27017 · Elasticsearch 9200 |
+| 49152–65535 | **ephemeral** | throwaway source ports your OS picks per connection. ⚠️ **OS-dependent** — Linux actually uses **32768–60999**, so "49152+" is IANA's recommendation, not a rule |
+
+Two consequences that look like mysteries when you meet them cold:
+
+- **Apps run on 8080 behind a proxy holding 443** because of the root rule — not ceremony. The privileged
+  port is held by the load balancer; the app runs unprivileged behind it.
+- **A machine tops out around 28k outbound connections to a *single* destination** (Linux's ephemeral range
+  is ~28,000 wide) — each needs a distinct source port. A busy gateway hammering one backend hits this and
+  starts failing to connect. **The fix is more source IPs or a wider range, not a bigger machine.**
+
+## 🏠 Private vs public addressing, and NAT
+
+*Added Aug 8, 2026 — this was missing from the card entirely and came up immediately on first contact.*
+
+**Every device on your network has its own address, but a *private* one** — `192.168.1.5`, `192.168.1.6`.
+Unique inside that network, meaningless outside it, and the same numbers exist in millions of homes at once.
+The whole network shares **one public address**, held by the router. **The router is a member of both
+networks — that is the only reason it can pass traffic between them.**
+
+```
+        HOME NETWORK (private)                    │        INTERNET (public)
+ ┌────────────────────┐                           │
+ │ Laptop             │                           │
+ │ 192.168.1.5 :51204 │───────────┐               │
+ └─────────┬──────────┘           │               │
+           │ local traffic        ▼               │
+           │ (AirDrop, casting)  ┌──────────────────┐
+           │ never leaves the    │     ROUTER       │
+           │ house               │ priv 192.168.1.1 │
+ ┌─────────┴──────────┐          │ pub  203.0.113.9 │───┼──▶ 93.184.216.34:443
+ │ Phone              │──────────▶     NAT table    │   │
+ │ 192.168.1.6 :52117 │          │ .1.5:51204⇄:62311│   │
+ └─────────┬──────────┘          │ .1.6:52117⇄:62312│   │
+ ┌─────────┴──────────┐          └──────────────────┘   │
+ │ Smart TV           │───────────▲                     │
+ │ 192.168.1.7 :58330 │───────────┘                     │
+ └────────────────────┘                                 │
+```
+
+**Why the split exists — two reasons, and both still matter:**
+
+1. **Scarcity.** IPv4 has ~4.3 billion addresses, fewer than there are devices. Private ranges let a whole
+   household consume **one** public address.
+2. **Nothing on the internet can address your laptop directly.** It has no globally routable address, so
+   unsolicited inbound traffic reaches the router and has nowhere to go. A firewall for free, as a side
+   effect of the addressing. *(IPv6 removes reason 1; reason 2 is valuable enough that the boundary usually
+   stays.)*
+
+### Follow one packet — only the SOURCE changes
+
+```
+ ① laptop ──▶ router      SRC 192.168.1.5:51204    DST 93.184.216.34:443
+ ② router ──▶ internet    SRC 203.0.113.9:62311    DST 93.184.216.34:443   ← NAT rewrote SRC
+ ③ server ──▶ back        SRC 93.184.216.34:443    DST 203.0.113.9:62311   ← reply swaps halves
+ ④ router ──▶ laptop      SRC 93.184.216.34:443    DST 192.168.1.5:51204   ← NAT reversed it
+```
+
+> **The two ends disagree about what the connection is — and nothing breaks.** The server's 4-tuple names
+> `203.0.113.9:62311`; the laptop's names `192.168.1.5:51204`. Each end only has to be self-consistent.
+> That is spine fact 3 (*a connection is state at its two endpoints*) doing real work, and it is the same
+> permission that lets a load balancer terminate TLS and re-originate the request.
+
+**NAT rewrites the port, not just the IP, and it must.** Two devices can easily pick the same ephemeral
+source port; if only the IP were swapped, both connections would look identical from outside and the
+replies would be indistinguishable. **The public port is the disambiguator.**
+
+### The NAT table is state, and it expires
+
+One row per active connection, written on the first outbound packet, read on every reply. **It is the only
+thing in existence linking the internal device to the traffic the server sees** — lose it and every open
+connection dies at once, with neither end told.
+
+⚠️ **Rows are evicted after an idle timeout, often just a few minutes.** A silent connection has its row
+dropped and the next packet is discarded. **This is why long-lived connections (WebSockets, DB pools) send
+keepalives** — not to check liveness, but to stop a middlebox forgetting they exist. Debugging "the
+connection works, then dies after five idle minutes" starts here.
+
+### Why this is not just home-network trivia
+
+**A VPC (Virtual Private Cloud) is the same shape.** App servers hold private addresses, talk to each other
+directly with no NAT and no public exposure, and only the load balancer has a public address. *"Inside the
+VPC"* means exactly what *"inside the house"* means above — which is why TLS termination at the LB with
+plain HTTP to the backend is the common, cheap choice.
+
 ## 🤝 What TCP actually guarantees (and what it doesn't)
 
 TCP is the layer that turns IP's "best effort, no promises" into something you can build on.
@@ -364,9 +454,15 @@ GET when following 301/302. If the method must survive, use **308** (permanent) 
 ## 🃏 Recall Card (the rep)
 *Answer each from memory before unfolding. Miss one → it's not 🟢.*
 
-> ⚠️ **Covers the Aug 3 session only.** The remaining HTTP clusters (`304`/`ETag`/`Cache-Control`,
-> method idempotency, 429-vs-503-vs-500) are not yet written and are **not** on this card. Extend it
-> when they land.
+> ⚠️ **Covers the Aug 3 session + the Aug 8 addressing/NAT section.** The remaining HTTP clusters
+> (`304`/`ETag`/`Cache-Control`, method idempotency, 429-vs-503-vs-500) are not yet written and are
+> **not** on this card. Extend it when they land.
+>
+> 🛑 **This card has NOT been measured.** Aug 8's session was **teaching, unrated** — the learner asked to
+> stop the blind sprint after Q1 (*"I'm a complete novice at this"*), which was the right call: rating a
+> sprint on never-bootstrapped material measures the explanation, not retention. **The rated sprint needs
+> a real gap after the teaching finishes.** Do not log a comfort rating off a session where the material
+> was explained the same day.
 
 <details><summary><b>1. Name the three layers of a normal web request and what each one is responsible for.</b></summary>
 
@@ -426,6 +522,25 @@ Not always-60 because short TTLs mean constant re-queries: more load, more cache
 <details><summary><b>10. What identifies a TCP connection, and why can one server hold 100k connections on port 443?</b></summary>
 
 The **4-tuple**: `(source IP, source port, dest IP, dest port)` — plus sequence-number state at each end, and nothing in the middle. The port isn't consumed; the *tuple* is, so distinct source ports make distinct connections.
+</details>
+
+<details><summary><b>10b. Name the three port bands. Which is the one every OS agrees on, and what does binding there require?</b></summary>
+
+**0–1023 well-known** (HTTP 80 · HTTPS 443 · DNS 53 · SSH 22) — the universally agreed band; **on Unix-likes, binding requires root**. **1024–49151 registered** — vendor defaults (Postgres 5432, Redis 6379, Kafka 9092). **49152–65535 ephemeral** — throwaway source ports, but **OS-dependent**: Linux really uses 32768–60999.
+Two consequences: apps run on **8080 behind a proxy holding 443** because of the root rule; and a machine tops out near **28k outbound connections to one destination**, since each needs its own source port.
+</details>
+
+<details><summary><b>10c. Your laptop is 192.168.1.5. What does the web server think your address is, and what single thing connects the two views?</b></summary>
+
+The server sees the **router's public address and a public port it invented** — `203.0.113.9:62311`. Your laptop's own view is `192.168.1.5:51204`. **The two ends disagree about the connection's identity and nothing breaks**, because each end only has to be self-consistent (spine fact 3).
+The **NAT table** in the router is the only record linking them: one row per connection, written outbound, read on every reply.
+**NAT rewrites the port as well as the IP, and must** — two devices can pick the same ephemeral source port, so the public port is the disambiguator.
+</details>
+
+<details><summary><b>10d. A WebSocket sits idle for ten minutes and then stops working, with no error at either end. Why?</b></summary>
+
+A **NAT (or firewall) table row was evicted on an idle timeout** — often just a few minutes. The mapping is gone, the next packet has nowhere to go, and it's discarded silently; neither end is told.
+**That's why long-lived connections send keepalives** — not to test liveness, but to stop a middlebox forgetting they exist.
 </details>
 
 <details><summary><b>11. What does TCP guarantee — and name three things it does NOT.</b></summary>

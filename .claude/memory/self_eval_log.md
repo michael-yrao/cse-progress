@@ -295,3 +295,31 @@ disease as everything in Cluster A. It is now item 2 of the SessionStart hook's 
   it. And the near-miss is the scary part — the only reason this was caught is that the hook echoes
   the rewritten table into context and the changed dates were noticed by eye. Status:
   `consolidated→source fix in update_review_dates.load_config + glyph keys in cse.config.yml`.
+
+- **2026-08-08 [P2] — fired a RATED 15-question blind sprint on a topic the learner had never
+  bootstrapped, and had to be stopped twice.** Networking's row was 🔴 with **no attempt dates**, and I
+  read that as "owed a measurement." It was owed a *measurement* only in the sense that the card had been
+  **written**; the learner's own study guide defines stage 1 as **Bootstrap — "watch a good explainer,
+  recall from memory, check gaps. No cold whiteboarding yet"** — and that stage had never run. The learner
+  stopped it after Q1 (*"I have no idea"*, then *"I'm a complete novice"*), which was the correct call.
+  **Root cause: "the note exists" was treated as "the learner has been taught."** Writing the card on
+  Aug 3 was *me* producing material. The card even carried the line *"the card was taught, not measured"* —
+  I read "taught" as a property of the learner when it was a property of the document. §2a's whole point is
+  that a 🔴 has two causes and **never-encoded needs teaching, not re-measuring**; I had the evidence in
+  hand and misread which cause applied.
+  **Second correction, same session:** offered derive-the-design as the fallback (§7a's top-ranked format)
+  and the learner rejected the whole approach. **Refinement, not a one-off:** derive-the-design asks the
+  learner to *invent* a mechanism, which requires an existing model to reason from. At **true zero
+  foundation there is nothing to derive from and it degrades into guessing** — the learner's *"I don't
+  like this direction"* came right after a question they could not begin. §7a's ranking is by *how much the
+  learner produces*, and that ranking is right **once a foundation exists**; below that, spine-first + the
+  learner pulling is the correct opening. Recorded in [[feedback_interactive_learning]].
+  **What worked:** offering four concrete approaches and letting the learner choose. They picked
+  *spine first, then you pull*, and it produced a long, genuinely productive session — IP → packets →
+  headers → private/public → NAT → ports → the 4-tuple → DNS → scheme-derives-443 — driven entirely by
+  their questions, with several sharp catches (spotting that `:4988` was outside the ephemeral range I had
+  just defined).
+  **Process fix to consider at the meta-review (rung 3, not a memory file):** before scheduling any
+  *rated* sprint, check whether the topic has a **Bootstrap** on record, not merely a note on disk. A row
+  with no attempt dates plus a note authored by the coach is the exact signature of "written but never
+  learned." Status: `open`.
