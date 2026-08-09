@@ -59,11 +59,11 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/dsa/mastery/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **101** problems &nbsp;·&nbsp; **110** solutions &nbsp;·&nbsp; **419** attempts
+> **101** problems &nbsp;·&nbsp; **110** solutions &nbsp;·&nbsp; **420** attempts
 
 | | 🏆 Retired | 🎓 Graduated | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|:---:|
-| **Solutions** | 0 | 5 | 86 | 19 | 0 |
+| **Solutions** | 0 | 6 | 85 | 19 | 0 |
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Attempt Date | Attempt Dates |
 |---|---|---|---|---|---|---|
@@ -73,6 +73,7 @@ Notes for future agents:
 | Easy | [20. Valid Parentheses](https://leetcode.com/problems/valid-parentheses/) | 🟢 | 2 | 2026-10-07 | 2026-08-08 | 2026-05-19, 2026-05-21, 2026-06-30, 2026-07-09, 2026-08-08 |
 | Easy | [100. Same Tree](https://leetcode.com/problems/same-tree/) | 🎓 | 3 | 2027-02-04 | 2026-08-08 | 2026-05-01, 2026-06-05, 2026-08-08 |
 | Easy | [88. Merge Sorted Array](https://leetcode.com/problems/merge-sorted-array/) | 🎓 | 3 | 2027-02-04 | 2026-08-08 | 2026-01-10, 2026-04-03, 2026-06-04, 2026-08-08 |
+| Easy | [21. Merge Two Sorted Lists (Iterative)](https://leetcode.com/problems/merge-two-sorted-lists/) | 🎓 | 3 | 2027-02-04 | 2026-08-08 | 2026-04-26, 2026-06-12, 2026-08-08 |
 | Medium | [19. Remove Nth Node From End of List (Postorder Recursion)](https://leetcode.com/problems/remove-nth-node-from-end-of-list/) | 🟡 | 0 | 2026-08-17 | 2026-08-07 | 2026-05-18, 2026-05-21, 2026-06-18, 2026-06-28, 2026-07-08, 2026-07-18, 2026-07-28, 2026-08-07 |
 | Hard | [42. Trapping Rain Water (Array)](https://leetcode.com/problems/trapping-rain-water/) | 🟢 | 2 | 2026-10-06 | 2026-08-07 | 2026-04-15, 2026-06-29, 2026-07-08, 2026-08-07 |
 | Medium | [973. K Closest Points to Origin](https://leetcode.com/problems/k-closest-points-to-origin/) | 🟢 | 2 | 2026-10-06 | 2026-08-07 | 2026-06-23, 2026-07-03, 2026-08-07 |
@@ -174,7 +175,6 @@ Notes for future agents:
 | Easy | [14. Longest Common Prefix](https://leetcode.com/problems/longest-common-prefix/) | 🟢 | 1 | 2026-07-15 | 2026-06-15 | 2026-01-03, 2026-03-27, 2026-06-05, 2026-06-15 |
 | Easy | [680. Valid Palindrome II](https://leetcode.com/problems/valid-palindrome-ii/) | 🟢 | 1 | 2026-07-12 | 2026-06-12 | 2026-01-19, 2026-04-05, 2026-05-28, 2026-05-30, 2026-06-12 |
 | Medium | [572. Subtree Of Another Tree](https://leetcode.com/problems/subtree-of-another-tree/) | 🟢 | 1 | 2026-07-12 | 2026-06-12 | 2026-05-02, 2026-06-12 |
-| Easy | [21. Merge Two Sorted Lists (Iterative)](https://leetcode.com/problems/merge-two-sorted-lists/) | 🟢 | 1 | 2026-07-12 | 2026-06-12 | 2026-04-26, 2026-06-12 |
 | Medium | [1011. Capacity To Ship Packages Within D Days](https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/) | 🟢 | 1 | 2026-07-12 | 2026-06-12 | 2026-05-03, 2026-06-12 |
 | Medium | [133. Clone Graph](https://leetcode.com/problems/clone-graph/) | 🟢 | 1 | 2026-07-07 | 2026-06-07 | 2026-06-04, 2026-06-05, 2026-06-07 |
 

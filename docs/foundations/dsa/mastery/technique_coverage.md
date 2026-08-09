@@ -62,7 +62,7 @@
 | Floyd's Cycle / Midpoint | linked_list | 2 (141, 143) | 🟢 | ✅ | — | — |
 | HashMap + Doubly Linked List (LRU) | linked_list | 1 (146) | 🟢 | ✅ | — | — |
 | Linked List Arithmetic | linked_list | 1 (2) | 🟢 | ✅ | — | — |
-| Linked List Merge | linked_list | 2 (21, 21) | 🟢 | ✅ | Iterative ×1 · Recursion ×1 | — |
+| Linked List Merge | linked_list | 2 (21, 21) | 🎓 | ✅ | Iterative ×1 · Recursion ×1 | — |
 | Linked List Reversal | linked_list | 2 (206, 206) | 🟢 | ✅ | Iterative ×1 · Recursion ×1 | — |
 | Remove Nth From End | linked_list | 2 (19, 19) | 🟢 | ✅ | Iterative ×1 · Postorder Recursion ×1 · ~~Preorder Recursion~~ *(queued: `expansion — parked Jul 9`)* | — |
 | Kadane | prefix_sum | 1 (53) | 🟢 | ✅ | — | — |
