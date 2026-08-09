@@ -50,6 +50,44 @@ deep a middlebox looks:
 - **L7 load balancer** — reads the HTTP request. Can route by path/header/cookie, retry a failed
   request, and terminate TLS.
 
+## 🛣 How IP actually delivers — nobody knows the route
+
+*Added Aug 8, 2026. The card asserted "IP moves packets, best-effort" without ever saying **how**, and
+"why can't it tell you it failed?" is unanswerable until you see the mechanism.*
+
+**No machine knows the route — not the sender, not any router on the path.** Each router knows only
+*"for destinations that look like this, hand it to that neighbour."* That list is its **routing table**.
+
+```
+ laptop      "not on my network → give it to my default gateway"   → router
+ router      "not local → give it to my ISP"                       → ISP edge
+ ISP router  "142.250.x.x → that neighbour"                        → backbone
+ backbone    "→ that neighbour"                                    → … (~10–20 hops)
+ last hop    "142.250.80.46 is mine → hand it over"                → the server
+```
+
+Every hop does the identical three steps: **read the destination, look it up, forward one step, forget it
+happened.** No hop holds a plan and no hop keeps a record. The packet arrives because a chain of small
+local tables each happen to point roughly the right way.
+
+**Three properties fall straight out of that, and they are the entire justification for TCP:**
+
+| Because… | You get |
+|---|---|
+| nothing pins a packet to a path, and tables change mid-transfer | **reordering** — packet 5 can beat packet 4 |
+| a router with a full buffer discards and moves on | **loss** |
+| **a hop that keeps no state cannot report failure** — there is nobody to report to | **silence** |
+
+> **"Best effort" is not laziness, it is the scaling property.** Statelessness at each hop is what lets
+> the middle of the internet carry billions of conversations it remembers nothing about. The price is
+> that every guarantee has to be rebuilt at the two ends — which is exactly what TCP is.
+
+**IP is the protocol, not the table.** IP defines how addresses are written, what the header holds, and
+the one rule *"forward toward the destination."* The routing table is each router's private data for
+obeying that rule — millions of different tables, one IP. *(Tables are built automatically from
+neighbour-to-neighbour reachability gossip; between large networks that's **BGP**, which is below the
+interview-ROI line and deliberately not covered here.)*
+
 ## 👁 What the middle can see
 
 **"Stateless about you" ≠ "can't read you."** A router keeps no memory of your connection, but the
@@ -182,6 +220,62 @@ you ──▶ recursive resolver ──▶ root server        "who handles .com?
                           ──▶ authoritative NS    "what is example.com?"  → 93.184.216.34
         ◀── answer ───────
 ```
+
+### The name is a tree, read right to left
+
+```
+        google.com.
+        ▲      ▲  ▲
+        │      │  └── the root — an invisible trailing dot, always there
+        │      └───── the TLD:  .com
+        └──────────── the domain: google, inside .com
+```
+
+The dots **are** the tree levels, so the walk isn't three arbitrary hops — it is **descending the name**,
+one question per level, because each level knows only who owns the level beneath it.
+
+### Only three roles exist (root and TLD are not a separate species)
+
+| Role | What it does | Examples |
+|---|---|---|
+| **Stub resolver** | the client in your OS. Cannot walk the tree; asks one server and waits | your laptop |
+| **Recursive resolver** | does the walking, caches the results | `8.8.8.8`, `1.1.1.1`, your ISP's |
+| **Authoritative** | holds the real records for **one zone**, answers only for that zone | root · `.com` TLD · `ns1.google.com` |
+
+⚠️ **Root, TLD and `ns1.google.com` are all the same role at different tree levels** — authoritative for
+the root zone, the `.com` zone, and the `google.com` zone respectively. They *look* different only because
+the upper zones contain nothing but delegations, so their answers are always "ask someone else." Listing
+them as separate kinds is a common miscount (made and corrected in this repo on Aug 8).
+
+Two variants: a **forwarder** is a resolver that doesn't recurse, just passes the question on and caches —
+**that's your home router**. A **secondary** is a read-only copy of an authoritative zone, which is why
+domains list `ns1`/`ns2`/`ns3`: lose one machine and the domain must not vanish.
+
+### Glue records — how the referral avoids infinite regress
+
+The root's answer isn't an address, it's *another name* (`a.gtld-servers.net`). Resolving **that** would
+need DNS, which is what you're already doing. The fix: the referral ships name **and** address together.
+
+```
+ ROOT ──▶  NS  a.gtld-servers.net       ← the name
+           A   192.5.6.30               ← the glue: its address, in the same response
+```
+
+Same one level down — `.com`'s referral to `ns1.google.com` carries glue, which matters because the
+nameserver for a zone usually **lives inside the zone it serves.** The root servers are the base case:
+their addresses are **hardcoded** into every resolver as a *root hints* file. It is the one place DNS
+cannot bootstrap itself, so the answer ships in the software.
+
+### ⚠️ DNS never returns a port
+
+An A record maps a name to an **address and nothing else**. The port comes from the URL scheme, decided
+locally on your machine (`https://` → 443). DNS answers *"where is this name?"*; the client decides
+*"which door do I knock on?"*
+
+**Consequence:** you cannot relocate a public service to a different port via DNS. Move the web server to
+8443 and every browser still tries 443 — there is no way to tell them otherwise. Much of why 80 and 443
+are so entrenched. *(**SRV** records do carry a port — SIP, XMPP, Kubernetes service discovery — but
+browsers don't use them for HTTP.)*
 
 - **Root servers** (13 logical, anycast to hundreds of physical) know only where the TLDs are.
 - **TLD (Top-Level Domain) servers** — `.com`, `.org`, `.io` — know which nameserver is authoritative
@@ -347,6 +441,19 @@ plain HTTP to the backend is the common, cheap choice.
 
 TCP is the layer that turns IP's "best effort, no promises" into something you can build on.
 
+> ⚠️ **TCP is not a delivery mechanism — it is bookkeeping.** *(Framing added Aug 8, 2026; it's the one
+> that made this click.)* **IP delivers; TCP delivers nothing.** It adds no ability to move data
+> whatsoever. Every TCP packet still travels by IP and can still be dropped — TCP just *notices* and
+> retries. The entire protocol is **two mechanisms**:
+>
+> 1. **Every byte is numbered** → reordering and duplicates are solved by *counting*.
+> 2. **The receiver acknowledges what arrived; the sender keeps a copy until acknowledged and resends if
+>    it isn't** → loss is solved by *remembering and retrying*.
+>
+> The handshake, flow control, congestion control, head-of-line blocking, and the reason HTTP/3 abandoned
+> TCP are all consequences of those two. And the records live **only at the two endpoints** — no router
+> keeps a copy or knows TCP exists, which is spine fact 3 again.
+
 | Guarantee | How | Consequence |
 |---|---|---|
 | **Delivery** | receiver ACKs each byte range; sender retransmits what isn't ACKed | a lost packet costs you a *timeout*, not an error |
@@ -379,6 +486,17 @@ can advance independently.
 
 **UDP (User Datagram Protocol) is IP with ports bolted on and nothing else.** No handshake, no
 retransmission, no ordering, no congestion control. You hand it a datagram; it tries once.
+
+> ⚠️ **"UDP is faster" is the wrong model, and it's the one everyone arrives with.** A UDP packet and a
+> TCP packet carrying the same bytes cross the same routers in the same time — **there is no speed dial.**
+> What UDP avoids is **waiting**, in exactly three places: the handshake before any data can be sent · the
+> retransmission of a lost packet · head-of-line blocking behind an earlier packet.
+> So the trade is **reliability for not-waiting**, not reliability for speed — which is why the decision
+> rule below is about whether a *late* packet is worth anything, and not about throughput at all.
+>
+> And UDP doesn't *prevent* reliability, it **declines to provide** it. **QUIC is UDP with reliability
+> rebuilt on top**, per-stream instead of per-connection. HTTP/3 didn't pick UDP for speed; it picked UDP
+> to escape TCP's rules and write its own.
 
 | | TCP | UDP |
 |---|---|---|
