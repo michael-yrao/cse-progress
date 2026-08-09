@@ -481,10 +481,18 @@ plain HTTP to the backend is the common, cheap choice.
 > *Flagged by the learner, Aug 8, 2026: **"I don't think I have fact 2 done, I want to dive deeper when
 > I have spare time."*** Correct, and worth stating in the card rather than in a schedule note.
 >
-> **Worked with the learner so far:** TCP-as-bookkeeping (numbering + ack/retransmit) · the handshake
-> (ISN, 3 messages / 1 RTT, two numbering streams) · where layer 4 sits and who reads it.
+> ⚠️ **Assume ZERO retention on ALL of fact 2, including the parts logged as covered.** Learner's
+> standing instruction, same day: *"when I say that, you can assume worst case scenario that I kept 0 of
+> the knowledge."* So **TCP-as-bookkeeping and the handshake are re-opened too** — what I recorded is
+> what was *said in the room*, which is evidence about the teaching, not about the retention.
+> **Re-teach fact 2 from the first fact**, moving fast through whatever they confirm. See
+> [[feedback_self_reported_zero]].
 >
-> **Written here but NOT yet worked — the open list:**
+> **Covered in session (treat as unretained until they say otherwise):** TCP-as-bookkeeping (numbering +
+> ack/retransmit) · the handshake (ISN, 3 messages / 1 RTT, two numbering streams) · where layer 4 sits
+> and who reads it.
+>
+> **Never worked at all — written here and nothing more:**
 >
 > | Gap | The question it answers |
 > |---|---|
