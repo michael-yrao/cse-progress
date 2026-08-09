@@ -50,6 +50,44 @@ deep a middlebox looks:
 - **L7 load balancer** — reads the HTTP request. Can route by path/header/cookie, retry a failed
   request, and terminate TLS.
 
+## 🪜 The two layer models — and the link layer you never see
+
+*Added Aug 8, 2026 (session 3). The card used OSI numbers and TCP/IP names interchangeably, which is
+how everyone talks and is genuinely confusing the first time. Both models, side by side, once.*
+
+**There are two models and the industry mixes them in the same sentence.** OSI is the 7-layer teaching
+diagram the *numbers* come from; TCP/IP is the 4-layer model the internet was actually built to. Nothing
+real implements OSI layers 5 and 6.
+
+| TCP/IP layer | Protocol | Moves data between | Addressed by | OSI # |
+|---|---|---|---|---|
+| **Application** | HTTP, DNS, TLS | programs, semantically | URLs, names | 5–7 |
+| **Transport** | **TCP / UDP** | one *program* and another | **ports** | **4** |
+| **Internet** | **IP** | any two *machines* on Earth | **IP addresses** | **3** |
+| **Link** | Ethernet, Wi-Fi | this machine and **the next box on the same physical network** | **MAC addresses** | **1–2** |
+
+**The link layer is the one that never comes up and quietly does half the work.** Your laptop cannot
+put a packet on a wire addressed to a server in Virginia — it can only hand it to something it is
+*physically attached to*: your router, over Wi-Fi. That handoff is the link layer, and it uses a
+completely different address type. A **MAC address** (Media Access Control) is burned into the network
+card and is **meaningful only on the local network** — it does not route, it does not travel, and no
+machine outside your Wi-Fi has ever heard of yours.
+
+> **The division of labour, in one line: IP says where it is ultimately going; link says who is holding
+> it right now.**
+
+**This is the missing half of hop-by-hop delivery.** At every hop the **IP header is unchanged** the
+whole way — same source, same destination, your laptop to Virginia — while the **link header is stripped
+off and rebuilt from scratch at every single hop**, because "the next box" is a different box each time.
+Two headers, two lifetimes: one end-to-end, one per-hop.
+
+### Why the jargon is worth keeping straight
+
+"L4" and "L7" are **OSI numbers**, and they survive in practice for exactly one purpose: **naming how deep
+a middlebox reads.** So when someone says *"put an L7 load balancer in front"*, they are making a claim
+about which headers that box is allowed to open — nothing more. The numbers are useless as architecture
+and indispensable as vocabulary.
+
 ## 🛣 How IP actually delivers — nobody knows the route
 
 *Added Aug 8, 2026. The card asserted "IP moves packets, best-effort" without ever saying **how**, and
@@ -454,6 +492,31 @@ TCP is the layer that turns IP's "best effort, no promises" into something you c
 > TCP are all consequences of those two. And the records live **only at the two endpoints** — no router
 > keeps a copy or knows TCP exists, which is spine fact 3 again.
 
+### 🤝 The handshake — how the two ends agree where the counting starts
+
+*Added Aug 8, 2026 (session 3). This is the first mechanical consequence of "every byte is numbered."*
+
+If the bookkeeping is byte numbers, the two ends must **agree on where the numbering begins** before a
+single byte of your request can move — an ACK for "byte 400" is meaningless if the two ends disagree
+about which byte was 400. That agreement is the handshake:
+
+| # | Message | Direction | Says |
+|---|---|---|---|
+| 1 | **SYN** (synchronize) | client → server | *"Opening a connection. My numbering starts at 4,912,336."* |
+| 2 | **SYN-ACK** | server → client | *"I acknowledge 4,912,336. My own numbering starts at 88,201,714."* |
+| 3 | **ACK** (acknowledge) | client → server | *"I acknowledge 88,201,714."* |
+
+That starting value is the **ISN** (initial sequence number) and it is **random, not zero** — a predictable
+ISN would let an off-path attacker forge packets that land inside the window.
+
+**Two consequences worth carrying:**
+
+- **Three messages, but only ONE round trip of delay** before data flows — the client can bundle its
+  request with message 3. That is the "1 RTT handshake" line in the cold-start ladder above; it is not
+  1.5 RTTs in the sense that matters to a latency budget.
+- **Two independent numbering streams, one per direction.** TCP is bidirectional and each direction is
+  counted separately — which is why both sides declare an ISN rather than sharing one.
+
 | Guarantee | How | Consequence |
 |---|---|---|
 | **Delivery** | receiver ACKs each byte range; sender retransmits what isn't ACKed | a lost packet costs you a *timeout*, not an error |
@@ -541,6 +604,53 @@ So every protocol on top of TCP must frame itself. HTTP does it twice:
 
 ---
 
+## 🧵 One URL, end to end — every layer in order
+
+*Added Aug 8, 2026 (session 3). Everything above, assembled once on a single request:
+`https://google.com` → search for cat pictures.*
+
+### Three separate transactions happen before one pixel moves
+
+| # | Transaction | Layer used | Note |
+|---|---|---|---|
+| 1 | **DNS**: `google.com` → `142.250.72.14` | UDP (transport) | its own request/response; must finish first — **you cannot open a connection to a name** |
+| 2 | **TCP handshake** to `142.250.72.14:443` | TCP (transport) | 1 RTT. **Port 443 came from the `https://` scheme, not from DNS** |
+| 3 | **TLS handshake** | on top of TCP | ~1 RTT (TLS 1.3). Only possible once bytes flow reliably |
+
+Only then does `GET /search?q=cat+pictures` get sent. That is the cold-start ladder, restated as
+transactions rather than as a latency count.
+
+### Going down your stack — each layer wraps the one above
+
+| Layer | Adds | Now addressed to |
+|---|---|---|
+| Application | the HTTP text | *(nothing yet — it's just bytes)* |
+| *(TLS)* | encryption | opaque ciphertext |
+| **Transport** | TCP header: **src port 51514, dst port 443**, sequence number | a **program** |
+| **Internet** | IP header: **src 192.168.1.20, dst 142.250.72.14** | a **machine** |
+| **Link** | Wi-Fi header: **dst = your router's MAC** | **the next box** |
+
+Each layer treats the one above as opaque payload it must not read. That is spine fact 1, concretely.
+
+### Travelling — what changes at each hop, and what doesn't
+
+1. **Your router** receives it → **strips the link header** → reads the IP destination → picks a next hop
+   → **writes a brand-new link header** for that hop. Being NAT, it also rewrites the **IP source** to its
+   public address and the **TCP source port** to one it invents, recording the mapping in its table.
+2. **Every subsequent router repeats the strip-and-rebuild.** Nobody opens the TCP header. Nobody can open
+   the TLS payload. **The IP header is the only thing consulted**, and it is the only header that survives
+   the journey unchanged.
+3. **At Google the stack unwinds in reverse:** link off → IP checked → **TCP reassembles the numbered bytes
+   into a stream** → TLS decrypts → HTTP request handed to the application.
+
+> ### The asymmetry to remember
+> **Layers 1–3 are touched by many machines along the path. Layer 4 is read only by the two endpoints.**
+> No router opens a TCP header — ports and sequence numbers mean nothing to it. **That is spine fact 3
+> restated: the connection is state at the two ends, not a thing in the network.**
+>
+> And it is the same fact that makes an **L7 load balancer** possible at all: reading layer 7 means
+> *becoming* an endpoint, which is what "TLS termination" means.
+
 # HTTP semantics — the four clusters that change an architecture
 
 *Admitted to this card under one rule: **only if picking it differently changes an architecture.***
@@ -572,7 +682,9 @@ GET when following 301/302. If the method must survive, use **308** (permanent) 
 ## 🃏 Recall Card (the rep)
 *Answer each from memory before unfolding. Miss one → it's not 🟢.*
 
-> ⚠️ **Covers the Aug 3 session + the Aug 8 addressing/NAT section.** The remaining HTTP clusters
+> ⚠️ **Covers the Aug 3 session + all three Aug 8 sessions** (addressing/NAT · DNS + IP delivery + TCP-as-
+> bookkeeping · the layer models, the handshake, and the end-to-end walk — questions 1b, 11b, 16).
+> The remaining HTTP clusters
 > (`304`/`ETag`/`Cache-Control`, method idempotency, 429-vs-503-vs-500) are not yet written and are
 > **not** on this card. Extend it when they land.
 >
@@ -588,6 +700,14 @@ GET when following 301/302. If the method must survive, use **308** (permanent) 
 **TCP** — on top of IP, between *ports*; adds back delivery, ordering, dedup, flow and congestion control.
 **HTTP** — text riding inside; assumes a working byte stream and says nothing about delivery.
 Each layer treats the one above as opaque payload.
+</details>
+
+<details><summary><b>1b. The internet runs a 4-layer model, not OSI's 7. Name the four — and the one that never comes up in design conversations.</b></summary>
+
+**Application** (HTTP/DNS/TLS) · **Transport** (TCP/UDP, between *ports*) · **Internet** (IP, between *machines*) · **Link** (Ethernet/Wi-Fi, between **this machine and the next box on the same physical network**).
+**Link is the invisible one.** It addresses by **MAC address** — burned into the network card, meaningful *only* on the local network, never routed, never travelling. Your laptop can't address a packet to Virginia; it can only hand it to your router.
+**The split:** IP says where it's ultimately going; link says who's holding it right now. So the **IP header is unchanged end to end** while the **link header is stripped and rebuilt at every hop**.
+OSI numbers survive only as jargon for how deep a middlebox reads (L3 = IP, L4 = ports, L7 = HTTP).
 </details>
 
 <details><summary><b>2. Over <code>https://example.com/secret</code>, what can a middlebox on the path see, and what can't it?</b></summary>
@@ -667,6 +787,15 @@ A **NAT (or firewall) table row was evicted on an idle timeout** — often just 
 **Does not:** that the *application processed* it (an ACK means it reached the OS buffer — app-level acks are yours to design) · message boundaries · timeliness (it will retransmit for 30s rather than fail) · security.
 </details>
 
+<details><summary><b>11b. TCP numbers every byte. What has to happen before byte one can be sent — and why is the handshake three messages but only one RTT of delay?</b></summary>
+
+The two ends must **agree where the numbering starts**, or an ACK for "byte 400" is meaningless.
+**SYN** (client: *"my numbering starts at 4,912,336"*) → **SYN-ACK** (server: *"acknowledged; mine starts at 88,201,714"* — one message, two jobs) → **ACK** (client acknowledges the server's).
+That start value is the **ISN** (initial sequence number) and it is **random, not zero** — a predictable ISN lets an off-path attacker forge packets that land inside the window.
+**Three messages, one RTT of delay:** the client bundles its request with message 3, so only one there-and-back completes before data flows.
+**Two independent numbering streams**, one per direction — TCP is bidirectional and each direction counts separately, which is why both ends declare an ISN.
+</details>
+
 <details><summary><b>12. What is head-of-line blocking, and why did HTTP/3 abandon TCP?</b></summary>
 
 Ordering means a lost packet #2 blocks already-arrived packets #3–10 from being delivered — handing them over would break the ordering promise. One loss stalls everything behind it.
@@ -687,4 +816,13 @@ Two mechanisms: headers end at the first blank line (`\r\n\r\n`) — a **delimit
 <details><summary><b>15. 301 vs 302 — which lets you keep click analytics, and why? What's the trap with the other one?</b></summary>
 
 **302** (temporary) — not cached, so every click comes back through your server, which is the only reason a click-event log can exist. **301** (permanent) is cached by the client, often indefinitely, so later clicks bypass you entirely: cheap and fast, but blind and **effectively impossible to retract** — no deploy reaches a browser cache. Ship 302 first, harden to 301 only when certain. Use **307/308** if the HTTP method must be preserved.
+</details>
+
+<details><summary><b>16. Walk <code>https://google.com</code> end to end. Three transactions before any data; then what changes at each hop and what doesn't.</b></summary>
+
+**Three transactions first:** **DNS** (`google.com` → IP, over UDP — you can't connect to a name) → **TCP handshake** to `IP:443` (port from the `https://` *scheme*, not from DNS) → **TLS handshake**. Only then does `GET /search?q=...` leave.
+**Down the stack, each layer wrapping the last:** HTTP text → TLS encrypts → TCP header (src port 51514, dst 443, seq) = addressed to a *program* → IP header (src/dst addresses) = addressed to a *machine* → link header (dst = router's MAC) = addressed to *the next box*.
+**At each hop:** link header **stripped and rebuilt**; IP header **unchanged the whole way**; nobody opens TCP; nobody can open TLS. Your NAT router additionally rewrites the IP source and TCP source port on the way out.
+**At the far end it unwinds in reverse:** link off → IP checked → TCP reassembles the byte stream → TLS decrypts → HTTP handed to the app.
+**The asymmetry:** layers 1–3 are touched by *many* machines; **layer 4 only ever by the two endpoints** — spine fact 3, and the reason an L7 LB has to *become* an endpoint to read a path.
 </details>

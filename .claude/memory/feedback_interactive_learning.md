@@ -61,3 +61,42 @@ derive from** — switch to spine-then-pull immediately rather than reaching for
 ⚠️ **And check Bootstrap before assuming a topic has been taught at all.** *"A note exists"* is not
 *"the learner has been taught"* — writing the card is the coach producing, not the learner learning. See
 the Aug 8 entry in [[self_eval_log]] and [[feedback_spine_first]].
+
+## ⚠️⚠️ Correction, same day (Aug 8, 2026, session 3): spine-then-pull is the learner's STANDING FORMAT, not a zero-state fallback
+
+The floor rule above was written too narrowly and **immediately licensed the exact mistake it was meant
+to prevent.** Having taught the TCP spine earlier in the day, I reasoned *"a model now exists, so the
+ladder says derive-the-design is available again"* and opened the next segment with a derivation prompt.
+The learner stopped it:
+
+> *"I'm not a fan of teaching like this, let's go back to how we were doing this before. You give me
+> small bits and I learn by asking questions about exactly how the small bits work, this should expand
+> both the breadth and depth."*
+
+**So the trigger is not the learner's knowledge level — it is the learner's preference, and it is
+standing.** The ranking at the top of this file is a general default; **for this learner, on conceptual
+SD/networking material, spine-then-pull is the format**, whether they are at zero or holding a partial
+model. Do not "graduate" them back to derive-the-design because the prerequisite now exists.
+
+**The format, precisely as they described it:**
+
+1. **Give one small bit** — one mechanism, a few lines, complete in itself. Not a lecture, not a table,
+   not the next three consequences pre-empted.
+2. **Stop.** Do not ask them a quiz question and do not chain into the next bit.
+3. **They ask about that bit.** Their question sets the direction — depth (*how does that actually
+   work*) or breadth (*what about X*). Answer exactly what was asked, at the size it was asked.
+4. Repeat.
+
+**Why it works, in their words:** *"this should expand both the breadth and depth."* The pull direction
+is theirs, so the session tracks what they can't yet see rather than what I predicted they'd need —
+which is why it beat two attempts at derivation and produced the best SD session in weeks.
+
+**The distinction that matters:** a Socratic question asks them to *produce the answer*; this format asks
+them to *produce the question*. They are still doing the cognitive work — they own the direction, the
+gap-finding, and the depth — but they are never asked to invent a mechanism they have no basis to invent.
+Do not read "no derivation" as "back to explanation dumps": [[feedback_spine_first]] and
+[[feedback_turn_economy]] still bind. **One bit per turn, then stop.**
+
+**Where derive-the-design still belongs:** DSA reps and *design* sessions (lane ③), where the learner is
+building the thing rather than learning what the thing is. This carve-out is about conceptual/plumbing
+material.
