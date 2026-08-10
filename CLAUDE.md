@@ -208,6 +208,25 @@ Notes for whoever maintains this:
 
 After any problem discussion (solving, reviewing, or mentioning a problem by number or name):
 
+0. **Run the recognition gate — BEFORE they write any solution code.** Have them state
+   **shape → technique → the one feature that picks it** over the nearest neighbour (*weighted* edges →
+   Dijkstra not BFS; marking *edges* visited not nodes → Eulerian not Hamiltonian). If they already
+   wrote a pre-code comment, that comment **is** the call — confirm or correct it before they code.
+   Reference: [`recognition_gotchas.md`](docs/foundations/dsa/mastery/recognition_gotchas.md) and
+   `.claude/memory/feedback_recognition_gate.md`.
+   - **Then log the call either way — hit AND miss — one dated line in the miss ledger.** A ledger that
+     records only misses has **no denominator**: "no entries" and "never asked" look identical, so the
+     recognition axis of phase exit ends up judged on the *absence* of evidence. (Found Aug 9, 2026: two
+     entries in six weeks, with no way to tell a clean streak from an unfired gate.)
+   - **This is the front-gate; step 1 is the back-gate.** They were written as a pair and only one of
+     them was ever promoted into this list — which is exactly the lapse the complexity gate's own note
+     describes. Recognition is what the interview grades in its first two minutes, and solving a problem
+     you were *told the name of* never trains it.
+   - ⚠️ **A retry half-spoils this** — the tracker row names the method and the file sits in a
+     pattern-named folder. The *measured* recognition reps are **new problems**, **weekly probes**
+     (`.claude/memory/project_recognition_probes.md`), and **cold cues** where the statement is fired
+     with its method label stripped. Fire the gate on retries anyway — the habit is worth the rep — but
+     don't read a retry hit as evidence for phase exit.
 1. **Run the complexity gate — FIRST, before any rating is proposed.** Ask for **time AND space, each
    with an itemized why-clause** ("O(1), one fixed 26-array" — not a bare "O(1)"), and don't move on
    until they've answered or explicitly passed. Full rules, the freebie ledger, and the trigger→cue map:
@@ -365,6 +384,28 @@ keeps this from rotting the way the method parentheticals did (44 of 108 rows ta
 - `docs/foundations/system_design/technologies/<tech>.md` — per-technology note + Recall Card (the blind-sprint rep)
 - `docs/foundations/system_design/components/<block>.md` — per-building-block note, written when a design hits it cold (lane ②)
 - `docs/foundations/system_design/concepts/<concept>.md` — per-concept note + Recall Card for the *quantitative/probabilistic foundations* (Zipf, Little's Law, percentiles, quorum math, sketches …). These are **not** building blocks and the pull queue can't catch them — lane ② drills these when its pull queue is empty. Each card opens with a "You'll want this when…" trigger line so it also works as a symptom-indexed lookup mid-design.
+
+### End of every SD teaching session: log the coverage gaps (adopted Aug 9, 2026)
+
+Conceptual SD material is taught **spine-then-pull** — the learner's questions set the direction (see
+`.claude/memory/feedback_interactive_learning.md`). That format's one structural hole is that coverage is
+bounded by what the learner can already see is missing. So **close every teaching session by writing the
+gaps into the card**, as a numbered step, not a remembered intention:
+
+1. Append to `## ❓ Open — not yet asked` at the bottom of the card (beside the Recall Card) everything
+   interview-relevant the session did **not** reach. Bound it by the **L6 ROI line**
+   (`.claude/memory/project_sd_roi_line.md`) — not by completeness, or the list becomes noise and stops
+   being read.
+2. Write each gap as a **bare open question, never a summary of the answer.** The same list is then both
+   the coverage report *and* the mock-interview bank, and reading it doesn't spoil it.
+3. **Ask the learner whether to answer any of them now or leave them for the mock.** Their call each time,
+   based on how much more they can take that session — never assume either way.
+4. Items close when a later session's questions reach them. When a card's list is drained to the
+   interview-relevant floor, that is the **repo-evaluable trigger** for a mock interview drawn from the
+   accumulated questions (never a date — see [[feedback_gate_on_internal_state]]).
+
+⚠️ **End of session only.** Surfacing a gap mid-session pre-empts the learner's next question, which is the
+rep the format exists to produce.
 
 ## Token discipline (efficiency by default)
 

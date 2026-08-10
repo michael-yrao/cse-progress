@@ -65,8 +65,35 @@ class Node:
         self.val = val
         self.neighbors = neighbors if neighbors is not None else []
 
+import collections
 from typing import Optional
 class Solution:
+
+    # ── Attempt · 2026-08-09 ──────────────
+    def cloneGraph_20260809(self, node: Optional['Node']) -> Optional['Node']:
+        # we know this is connected, so we can do one node at a time
+        # use either BFS or DFS and create one node at a time where we have an old to new map
+
+        if not node:
+            return None
+
+        oldToNewMap = {}
+        queue = collections.deque()
+        queue.append(node)
+        newNode = Node(node.val)
+        oldToNewMap[node] = newNode
+
+        while queue:
+            oldNode = queue.popleft()
+            for neighbor in oldNode.neighbors:
+                if neighbor not in oldToNewMap:
+                    newNeighborNode = Node(neighbor.val)
+                    oldToNewMap[neighbor] = newNeighborNode
+                    queue.append(neighbor)
+                oldToNewMap[oldNode].neighbors.append(oldToNewMap[neighbor])
+
+        return newNode
+
     def cloneGraph(self, node: Optional['Node']) -> Optional['Node']:
         # ok so to do a deep copy, we need to do completely new nodes of each
         # and then after we do copy with newNode = Node(old.val, old.neighbors)

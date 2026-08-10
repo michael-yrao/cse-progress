@@ -35,7 +35,7 @@ Notes for future agents:
     * 🟢 Clean  — every card answered cold, correctly.            +30d (streak2 +60, retire@3 +180)
     * 🟡 Shaky  — got most, needed a nudge or missed a follow-up. +10d, streak → 0
     * 🔴 Blank  — couldn't recall the shape of it.                +2d,  streak → 0
-- To log a rep: set Comfort, add today's date to Attempt Dates + Latest Attempt Date,
+- To log a rep: set Comfort, add today's date to Rep Dates + Latest Rep Date,
   then stage this file and commit (or run the script) — Next Review Date recomputes.
 - Undrilled technologies sit in the backlog with empty dates until their first sprint.
 -->
@@ -43,7 +43,7 @@ Notes for future agents:
 > **Auto-refresh note:** regenerated when this file is staged for commit, or when
 > `python scripts/update_review_dates.py --tracker docs/foundations/system_design/mastery/design_progress.md` runs.
 
-| Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Attempt Date | Attempt Dates |
+| Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Rep Date | Rep Dates |
 |---|---|---|---|---|---|---|
 | Cache | [Redis](../technologies/redis.md) | 🟡 | 0 | 2026-08-15 | 2026-08-05 | 2026-07-13, 2026-07-19, 2026-07-21, 2026-08-05 |
 | SQL DB | [PostgreSQL](../technologies/postgresql.md) | 🔴 | 0 |  |  |  |

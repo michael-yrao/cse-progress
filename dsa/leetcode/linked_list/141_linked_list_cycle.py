@@ -41,6 +41,19 @@ class ListNode:
         self.next = None
 
 class Solution:
+
+    # ── Attempt · 2026-08-09 ──────────────
+    def hasCycle_20260809(self, head: Optional[ListNode]) -> bool:
+        slow, fast = head, head
+
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+            if slow == fast:
+                return True
+        
+        return False
+
     def hasCycle(self, head: Optional[ListNode]) -> bool:
         # floyd's cycle detection algorithm
         slow = fast = head

@@ -100,3 +100,25 @@ Do not read "no derivation" as "back to explanation dumps": [[feedback_spine_fir
 **Where derive-the-design still belongs:** DSA reps and *design* sessions (lane ③), where the learner is
 building the thing rather than learning what the thing is. This carve-out is about conceptual/plumbing
 material.
+
+## ✅ Confirmed by the learner Aug 9, 2026 — and the dependence on their questions is the POINT
+
+Unprompted, next session: *"I quite like how we did networking yesterday. It is a lot more dependent on
+the user's willingness to learn and ask questions but that should be the point as well since during an
+interview and during actual design on the job, we should be asking a lot of questions."*
+
+Two things follow, and the second is the one that changes behavior:
+
+1. **The format is settled.** Spine-then-pull is confirmed by the learner after a full session under it.
+   No further re-litigating, no drifting back to derivation on conceptual material.
+2. **Its one apparent weakness — "it only works if they ask" — is a feature, not a risk to engineer
+   around.** Requirement-gathering *is* the graded skill in an SD interview and the actual job. So the
+   learner driving with questions is **rep on the interview skill itself**, running underneath the
+   networking/SD content. Do not "de-risk" the format by pre-empting their questions, front-loading what
+   they'd probably ask next, or filling a pause with more material — that removes the rep.
+
+**How to apply:** when a pull stalls, hold the silence a beat rather than volunteering the next bit; if it
+stays stalled, offer the *menu of directions* (breadth vs depth, two or three named branches) instead of
+picking one and explaining it. A menu keeps the choice theirs. And treat the quality of their questions as
+observable signal worth naming when it's good — the same way a strong clarifying question would land with
+an interviewer.

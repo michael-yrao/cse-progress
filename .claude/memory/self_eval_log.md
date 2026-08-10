@@ -345,3 +345,28 @@ disease as everything in Cluster A. It is now item 2 of the SessionStart hook's 
   and an explicit *"do not graduate them back to derivation once the prerequisite exists."*
   Derive-the-design keeps a carve-out for DSA and lane-③ design sessions, where they build rather than
   learn-what-it-is. Status: `consolidated→feedback_interactive_learning (2nd revision, same day)`.
+
+- **2026-08-09 · [P1] · Recognition gate not fired on 105 — hours after promoting it to step 0.**
+  Added the recognition front-gate to CLAUDE.md's numbered workflow this session (rung 3, mirroring the
+  complexity gate), including the new rule that **every firing gets logged, hit or miss, to give the
+  ledger a denominator**. Then restated the day's board, the learner opened 105, coded it, and reported
+  back with a complexity answer — and the gate had never been fired.
+  **Root cause — the promotion fixed the *placement* but not the *trigger*.** The workflow reads "before
+  they write any solution code," which silently assumes a moment where the learner announces they are
+  starting. There is no such moment: they open the file and go. The step was in the list and still had
+  nothing to hook on to. Compare 721, where it fired *only* because the learner volunteered a pre-code
+  comment — i.e. the one clean firing so far was the learner's doing, not the workflow's.
+  **Caught by the very instrument added this session** — the call log's "not fired" row exists precisely
+  so an unfired gate stops being indistinguishable from a clean streak. That is the denominator earning
+  its keep on day one, which is mild evidence the instrument is right even though the rule around it
+  wasn't.
+  **Generalizable lesson:** promoting a rule up the intervention ladder fixes *where it lives*, not
+  *when it fires*. A step whose trigger is an event the learner is not obliged to produce is still a
+  paragraph wearing a number. Ask of any newly promoted step: **what observable thing makes this fire,
+  and is that thing guaranteed to happen?**
+  **Fix (rung 3, tightened trigger):** the gate fires when the *board is restated or a problem is
+  handed over* — the coach's own action, always present — not when the learner announces a start. Noted
+  in `recognition_gotchas.md`'s call log. **Rung-2 candidate for the meta-review:** a hook on the edit of
+  any `dsa/leetcode/**.py` dated stub that checks whether a call was logged for that problem today.
+  Status: `open` — the tightened trigger is untested, and this root cause (a step with no guaranteed
+  firing event) has now appeared once.

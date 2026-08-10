@@ -29,4 +29,23 @@ The tell that I'm rationalizing: I list the substantive things I taught, and *th
 
 Under-rating a fresh 🔴 as 🟡 isn't a harmless rounding: it sets the next review at +10 days instead of +2, so a technique that hasn't stuck at all gets two weeks to evaporate. The interval **is** the consequence of the rating.
 
+## ⌨️ The learner codes without autocomplete, deliberately (Aug 9, 2026)
+
+They write solutions **in the LeetCode editor with no autocomplete**, on purpose: *"it's easy to miss these
+things as there is no auto complete, fits better with the google doc style interviews."* That is a
+**deliberate fidelity choice**, the same instinct as whiteboard fidelity ([[feedback_whiteboard_fidelity]])
+— practise under the conditions the interview actually imposes.
+
+**What follows for rating:** when a flagged defect is a **transcription slip** — a duplicated line from a
+copy-paste, a mistyped variable, a `>` for a `<` — the learner may reasonably read it as cosmetic and hold
+🟢, and that is a defensible call rather than a soft one. **Still flag it plainly and still name it in the
+proposal** (honesty over agreeableness is unchanged); just don't treat a typo as automatically equivalent
+to a conceptual miss when they override.
+
+**The distinction to actually apply:** did the error come from *not knowing the thing*, or from *typing the
+thing*? A wrong loop bound derived from a wrong mental model is the former. Line 721:115 — `>` copy-pasted
+where `<` belonged, in a union-by-rank block whose logic they could state correctly on sight — was the
+latter. **Don't stretch this**: a slip that survives *because they never traced the branch* is a
+verification gap, not a typo, and the tell is whether they recognize it instantly when shown.
+
 Honesty matters more than agreeableness here: if they claim 🟢 but I supplied a real fix they missed, say so plainly (see the 355 and 36 exchanges) — then defer to their call. Related: [[feedback_no_spoilers]], [[feedback_phase_gated_blanks]] (which is the *one* case where a 🔴 doesn't get the +2 loop — an un-taught technique, not a just-taught one).

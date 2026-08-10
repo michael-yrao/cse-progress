@@ -1572,3 +1572,26 @@ Space given as `O(c)`; it is **`O(1)`** — lowercase-only means `V ≤ 26`, `E 
 exist), and #4 is the same edge-set bookkeeping flagged as the open gap after Jul 29. That is now two
 consecutive reps failing on edge bookkeeping — a teach signal by the 540/19 rule. #2 was closed by
 explanation this session (why Kahn's needs no `visited`), so the next rep measures whether that took.
+
+## 2026-08-09 · 133 Clone Graph (BFS) — 🟢 s1 → 🟡
+
+**Sticking point (one bug):** the edge append lived *inside* the `if neighbor not in oldToNewMap` guard,
+so an edge was only recorded the first time its far end was met. In an **undirected** graph every edge is
+met twice, once from each side, and the second meeting always finds the far node already cloned — so
+**every edge's second appearance was silently dropped**. Two-node graph `1—2` cloned to `1' → 2'` with
+`2'.neighbors == []`.
+
+**The framing that fixed it:** the guard's real job is *don't clone twice, don't enqueue twice* (it exists
+to terminate on cycles). **Node identity and edge recording are separate concerns** and were fused —
+"have I made this node?" is a different question from "have I recorded this edge?". Same shape as 721's
+redundant `find` guard earlier the same day: a mechanism doing more jobs than its condition justifies.
+
+**Also of note:** first **BFS** solve of this problem; the three prior attempts were DFS. `techniques.yml`
+names the technique *"Graph Clone (DFS + Hash Map)"*, which the learner spotted as over-specified — the
+map-as-clone-identity idea is traversal-agnostic. **Vocabulary item for the Aug 10 build**, alongside the
+721-is-not-pure-Union-Find finding from the same session.
+
+**Complexity:** said `O(n)` time; actual **`O(V+E)`** — the inner neighbour loop runs 2E times and `E` is
+not bounded by `V`. **Mirror image of the Aug 5 323 miss** (there: `O(E)`, dropped the `V`). Freebie spent.
+Cue to carry: *a graph traversal touches two things, so its bound almost always has two terms — a one-term
+answer means something was dropped.*

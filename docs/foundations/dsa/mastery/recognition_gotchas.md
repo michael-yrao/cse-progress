@@ -71,6 +71,28 @@ the assumptions, not four loops.
 > covered (127/994 BFS · 743/778 Dijkstra · 787 Bellman-Ford). **Now scheduled, not parked** —
 > LC 1334 was promoted into the Advanced Graphs phase (Jul 26), which runs to Aug 9.
 
+## Call log — hits AND misses (the denominator)
+
+*Started Aug 9, 2026. **Every fired gate gets a line here, whether or not it was a miss.*** A ledger
+that records only misses has no denominator: "no entries" and "never asked" produce an identical file,
+so the recognition axis of phase exit ends up judged on absent evidence. Detailed write-ups of misses
+stay in the section below; this is the tally.
+
+⚠️ **`R` marks a retry** — the tracker row names the method and the file sits in a pattern-named folder,
+so a retry hit is *half-spoiled* and is **not** phase-exit evidence. Only new problems, weekly probes
+([[project_recognition_probes]]), and label-stripped cold cues count toward the axis.
+
+| Date | Problem | Call | Result |
+|---|---|---|---|
+| 2026-07-28 | 332 Reconstruct Itinerary | "BFS with directed edges" | ❌ miss ×2 (see below) |
+| 2026-08-04 | 143 Reorder List | "Boyer-Moore" for the midpoint scan | ❌ name-only miss |
+| 2026-08-09 | 721 Accounts Merge `R` | Union-Find over **account indices**, keyed by an email→index map; names rejected as keys because they repeat | ✅ hit |
+| 2026-08-09 | 105 Construct Tree from Pre+In `R` | — | ⚠️ **gate not fired** — coach's miss, on the same day the gate became step 0. Learner opened the file and coded; no announcement to hook on. **Fire it when the board is restated, not only when they say "starting X."** |
+| 2026-08-09 | 621 Task Scheduler `R` | "task with the most freq is the bottleneck → freqMap + maxHeap; n intervals means n+1 unique tasks per cycle, so do min(#tasks, n+1) at a time" | ✅ hit, **pre-code** — bottleneck identified before any structure was chosen, which is the right order |
+| 2026-08-09 | 1011 Capacity to Ship `R` | "similar to koko eating banana; max is sum(weights) always works, so binary search max→sum for the min boundary" | ✅ hit, **pre-code** — and named the **sibling problem (875)** unprompted, which is the transfer the consolidation-rep model is built to produce. Bounds derived, not recalled |
+| 2026-08-09 | 133 Clone Graph `R` | "connected, so one node at a time; BFS or DFS with an old→new map" | ✅ hit, **pre-code** — first firing under the tightened trigger (gate fired on handover). Traversal + the clone-identity map both named before any code |
+| 2026-08-09 | 141 Linked List Cycle `R` | "basic tortoise and hare" | ✅ hit, but **stated after coding, not before** — gate was fired on the handover and the answer arrived with the finished solution. Counts as a hit (correct, and correctly *named*, which is where 143 slipped on Aug 4); doesn't test pre-code recognition |
+
 ## Miss ledger
 
 *(dated line per miss: problem · what they called · correct call · the picking feature they missed)*

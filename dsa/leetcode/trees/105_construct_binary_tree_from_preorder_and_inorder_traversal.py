@@ -30,6 +30,29 @@ class TreeNode:
         self.left = left
         self.right = right
 class Solution:
+
+    # ── Attempt · 2026-08-09 ──────────────
+    def buildTree_20260809(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
+        # if no nodes to parse, None
+        if not preorder and not inorder:
+            return None
+        
+        rootVal = preorder[0]
+        root = TreeNode(rootVal)
+        # now in inorder, everything left of root value is left tree, and right is right tree
+        # now what about preorder, we can maybe pass the length of inorder left/right
+        # and we can then recursively get the answer from here
+        inorderRootIndex = inorder.index(rootVal)
+        inorderLeftTree = inorder[:inorderRootIndex]
+        inorderRightTree = inorder[inorderRootIndex+1:]
+        leftTreeSize = len(inorderLeftTree)
+        rightTreeSize = len(inorderRightTree)
+        preorderLeftTree = preorder[1:1+leftTreeSize]
+        preorderRightTree = preorder[1+leftTreeSize:]
+        root.left = self.buildTree_20260809(preorderLeftTree, inorderLeftTree)
+        root.right = self.buildTree_20260809(preorderRightTree, inorderRightTree)
+        return root
+
     def buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
         # preorder = root, left, right
         # inorder = left, root, right
