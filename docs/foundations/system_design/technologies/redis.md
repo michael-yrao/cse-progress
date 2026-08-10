@@ -21,6 +21,36 @@ Redis (**RE**mote **DI**ctionary **S**erver) is a **shared, in-RAM dictionary** 
 
 ## 🎯 Recall log — blind sprints
 
+**Aug 10, 2026 — TEACH session (UNRATED). All four stuck cards cleared.** The teach trigger fired Aug 5
+after cards 7/8/9/11 missed three consecutive sprints; per the teach/measure split this session **teaches
+and is not rated**, and **Sat Aug 15 is the rated measure** with a deliberate 5-day gap to forget in.
+Format was **derive-the-design** throughout — the learner produced the mechanism from a constraint and the
+name was supplied afterwards. Written up inline: [card 9](#-card-9-derived--aug-10-2026-teach-unrated) ·
+[card 11](#-card-11-derived--aug-10-2026-teach-unrated) · [card 8](#-card-8-derived--aug-10-2026-teach-unrated) ·
+[card 7](#-card-7-derived--aug-10-2026-teach-unrated).
+
+| Card | Derived cold | Supplied |
+|---|---|---|
+| **9** scale out ≠ up | both migration scenarios correct first try (**cores vs bytes**); **sharding named unprompted** once asked whether every instance needs every user's counter | only the ~100ns-vs-~500µs network figure |
+| **11** `volatile-*` footgun | the consequence, once the prefix/suffix split was given; **`allkeys-lru` for a pure cache, unprompted** | the prefix/suffix split itself — the misconception ("volatile-lru ignores TTL") was stated explicitly and had to be corrected |
+| **8** the score is the mechanism | ZSet named; **"member is the primary key"** was the learner's own analogy; applied it correctly to a *third* case (5-most-recently-active) including the overwrite behaviour | why fixed-window fails; member/score assignment; the commands |
+| **7** SPOF | **named SPOF unprompted**; fail-open/closed *and* the choosing criterion, unprompted | replication (known, but omitted); **timeout + circuit breaker — entirely new** |
+
+- ⚠️ **Card 7's beat 1 is the thing to watch on Aug 15.** The learner's first instinct was still to jump
+  straight to the mitigation (fail-open/closed) without naming the risk — the exact Jul 21 failure. They
+  named SPOF only when asked "what do you call a component like that?" **It has never yet been volunteered
+  first.**
+- ⚠️ **Beat 3 (timeout + circuit breaker) was never-encoded, not decayed.** It is new material taught
+  today, so Aug 15 measures ~5 days of retention on it, not a re-test.
+- **Instrument note:** the rated sprint on Aug 15 uses the twelve-node thread rebuilt Aug 5, so **it is
+  still not comparable to the Jul 13–Aug 5 trend line.** Aug 15 is the first point on the new instrument.
+- **Learner feedback on delivery, mid-session** (*"I have trouble with Opus model's explanation sometimes,
+  it feels very foreign"*): the principle was being named before the mechanics were shown, with
+  why-this-matters framing around every step. Fixed by showing literal values first and naming after.
+  ⚠️ **Also: on "I don't understand," ASK WHICH LINK BROKE** — a numbered menu of candidate gaps unblocked
+  four items in a few turns after one re-explanation had gone to the wrong link entirely. Promoted to
+  [[feedback_explanation_register]].
+
 **Aug 5, 2026 — rated blind sprint → 🟡 Shaky** (7 of 12 clean; +10 → Aug 15). **Flat against Jul 21, and the shape is the finding, not the count.** **Clean cold:** 1, 2, 3, 5 (still zero token-bucket fusion — that fix has held 2 sprints), 6, and **7 stronger than the note** (RDB-vs-AOF framed as a restore-speed / data-loss trade, replication unprompted). **First-time win: card 3b/4 — `EVAL` + Lua recalled correctly**, having been a cold miss when added Jul 26; gap is that the *fix* came without the *principle* (atomicity is **per command, not across commands**).
 - ⚠️ **All three Jul-21 drill targets missed again — third sprint running.** Card 8 (the score *is* the mechanism; sliding window not reached at all) · card 9 (scale-out still absent; **new error: claimed RAM can't scale vertically either** — single-threading caps cores, not memory) · card 11 (footgun still inverted — described LRU evicting a long-TTL key, which is normal `allkeys-lru` behaviour, not the `volatile-*`-immortal-key trap).
 - ⚠️ **Card 7 REGRESSED to blank** ("still hangs here, hard to answer on the fly"). Jul 21 had the entire mitigation chain correct and only missed the *word* SPOF; this time nothing came back. Second-order note: on Jul 19 the root cause was phrase-parsing ("on the request path"), which was fixed — so this is retention, not comprehension.
@@ -149,6 +179,41 @@ Atomicity is what you buy; here's the bill. Volunteering it is the senior signal
 - **Scale out, not up.** More cores don't help one instance. You add **instances** (sharding / Redis Cluster) or **replicas** for reads.
 - **Footnote for accuracy:** modern Redis uses extra threads for socket I/O and lazy-freeing big objects. **Command execution is still one thread** — the invariant that buys atomicity is intact.
 
+#### 🎓 Card 9, derived — Aug 10, 2026 teach (unrated)
+
+*Missed three sprints running (Jul 19 · Jul 21 · Aug 5), so it was taught instead of re-sprinted. Derived
+cold by the learner from two migration scenarios; only the last fact was supplied.*
+
+**1. Single-threading caps CORES, not BYTES.** The Aug 5 error was claiming Redis can't scale vertically
+*at all*. Split the two resources and it disappears:
+
+| You are out of… | Buy a bigger box? | Why |
+|---|---|---|
+| **CPU** (1 core pinned, 15 idle) | ❌ **useless** | Redis executes on one thread. 63 of your 64 new cores are dead weight |
+| **RAM** (63 GB of 64 used, refusing writes) | ✅ **works** | Memory has nothing to do with the execution model. Vertical scaling is fine on this axis |
+
+**2. Replicas and shards are different axes — this is where the answer usually collapses.** The intuitive
+reach is "leader + followers," and on a rate limiter (essentially 100% `INCR`, i.e. writes) that buys
+**nothing**: every write still lands on the leader, and each follower *replays the same write* to stay in
+sync.
+
+| Arrangement | Splits | Scales |
+|---|---|---|
+| **Leader / follower** | nothing — every node holds the whole dataset | **reads** only |
+| **Sharding (Redis Cluster)** | the **keyspace**, into 16,384 hash slots; each key hashes to one slot on one shard | **writes**, capacity, total CPU |
+
+The unlock question: *"user 4,812,003 sends a request — does every instance need to know about every
+user's counter?"* No. Nothing else on the box is relevant to that request, so the keyspace can be cut.
+**Each shard is still single-threaded — you didn't beat single-threading, you bought more of it.**
+
+**3. And it barely matters anyway.** A `GET` is ~100 ns of CPU; the network round trip is ~500 µs — about
+**5,000×**. The one thread is idle on sockets almost all the time. *This is the fact that makes the other
+two tolerable, and it's the one to volunteer unprompted.*
+
+> ⚠️ **Category error to keep killing:** *"it lives in RAM so it's volatile"* is **not** a cost of
+> single-threading. Volatility is the **storage medium**; single-threading is the **execution model**.
+> Offered as a third cost on Aug 5 — an interviewer hears the conflation immediately.
+
 ## ⏳ TTL / expiry — and how it differs from eviction
 Any key can auto-delete: `EXPIRE key 60` or `SET key val EX 60`. For a fixed-window limiter this *is* the window — `INCR` the key, `EXPIRE` it 60s; it self-destructs and the next request starts fresh. No cleanup job.
 
@@ -169,6 +234,34 @@ Policies worth naming: `noeviction` (default — writes error out when full), `a
 
 **Precision note:** Redis's LRU is **approximate** — it samples a few keys (default 5) and evicts the oldest *of the sample*. True LRU would need a pointer per key; the memory overhead isn't worth it. Same for LFU. Knowing it's sampled, not exact, is a nice "why."
 
+#### 🎓 Card 11, derived — Aug 10, 2026 teach (unrated)
+
+*Missed three sprints running and **inverted the same way each time** — described `volatile-lru` as "ignore
+TTL, just do LRU." The paragraph above already said otherwise, which is why this was taught rather than
+re-read: the fact was on the page and the wrong model kept winning.*
+
+**Read the policy name as two independent parts. That's the whole card.**
+
+| Part | Question it answers | Options |
+|---|---|---|
+| **prefix** `volatile-` / `allkeys-` | **which keys are even candidates?** | `volatile-` = only keys **that have a TTL**; `allkeys-` = every key |
+| **suffix** `-lru` / `-lfu` / `-random` / `-ttl` | **among the candidates, which one dies?** | least-recently-used · least-frequently-used · random · soonest-to-expire |
+
+**A TTL is the admission ticket to the eviction pool, not the ordering.** `volatile-lru` means *"among keys
+that have a TTL, evict the least recently used"* — so a key written with plain `SET` is **never a
+candidate**, no matter how cold. Fill the box with un-TTL'd keys and the eligible set is **empty**: Redis
+frees nothing and errors the incoming write, while sitting on gigabytes it isn't allowed to touch.
+
+> **Why it's a footgun and not just a gotcha:** `volatile-lru` *sounds* like the cautious setting — "only
+> evict things that were meant to expire anyway" — and it is the one that bricks the instance. The
+> reckless-sounding policy is the safe one.
+
+**The actionable half:** a **pure cache** (everything regenerable from the database, nothing authoritative,
+must never refuse a write) takes **`allkeys-lru`** — every key is a candidate, so space can always be
+freed. Reserve `volatile-*` for an instance deliberately mixing cache entries with keys that must survive,
+and then *the un-TTL'd keys are the survivors by construction* — which is the only reading under which the
+policy makes sense.
+
 ## 🧰 Data types (why it's more than a dict)
 Values can be whole structures, each with atomic ops:
 
@@ -180,9 +273,147 @@ Values can be whole structures, each with atomic ops:
 | Set | unique members | dedup, "seen?" checks |
 | **Sorted Set (ZSet)** | members ordered by score | **leaderboards**, **sliding-window** rate limiting (timestamps as scores) |
 
+### 🎓 Card 8, derived — Aug 10, 2026 teach (unrated)
+
+*Missed three sprints running; the sliding-window half was **never reached at all** in any of them. Jul 21
+produced "ordering + uniqueness," which is the **what** and not the **how**.*
+
+#### A ZSet is a two-column table
+
+```
+member     score          ← Redis keeps it sorted by score, always
+------------------
+req-a        0
+req-b        1
+req-c        2
+```
+
+**`member` is the primary key. `score` is an indexed sortable column.** Redis dedupes on member; scores
+repeat freely. `ZADD key <score> <member>` — **score first, member second**, which reads backwards from the
+table and is the usual slip.
+
+**Re-adding an existing member UPDATES its score instead of adding a row.** This single rule cuts both ways
+and that is the thing to actually remember:
+
+| You want | Member | Effect of the overwrite rule |
+|---|---|---|
+| one row **per event** (rate limiter) | must be **unique per request** (UUID, or timestamp+suffix) | ⚠️ **breaks you** — timestamp-as-member means two requests in the same ms collapse into one row, `ZCARD` undercounts, always in the attacker's favour |
+| one row **per entity** (last-seen, leaderboard) | the **entity id** (userID, player) | ✅ **works for you** — "last seen" stays exactly one current row per user, no cleanup |
+
+#### The commands, decoded
+
+`Z` = sorted set. `CARD` = cardinality. `REM` = remove.
+
+| Command | Does |
+|---|---|
+| `ZADD key <score> <member>` | add a row |
+| `ZCARD key` | count the rows |
+| `ZREM key <member>` | delete named members (targeted) |
+| `ZREMRANGEBYSCORE key <min> <max>` | delete rows in a **score** span |
+| `ZREMRANGEBYRANK key <start> <stop>` | delete rows in a **position** span (0 = lowest, -1 = highest) |
+
+**Level distinction:** `EXPIRE` acts on the **whole key**; the `ZREM*` family acts on **rows inside** it.
+`EXPIRE` cannot delete rows.
+
+#### The sliding-window limiter, per request
+
+```
+ZREMRANGEBYSCORE  user:42   0   (now - 60)     # drop everything older than the window
+ZCARD             user:42                       # count what's left → allow / deny
+ZADD              user:42   now   <unique-id>   # record this request
+EXPIRE            user:42   60                  # janitorial ONLY — not the rate limiting
+```
+
+⚠️ **`ZREMRANGEBYSCORE` is the real expiry mechanism, not the TTL.** A TTL deletes a whole key at a moment;
+it cannot express "drop entries older than 60s but keep the rest." `EXPIRE` is only there so an idle user's
+key doesn't leak. *(This is the fourth crossing of the TTL wire — see the Jul 13/15/19 token-bucket
+fusions. The distinction to hold: TTL acts on keys, range-delete acts on rows.)*
+
+**Why fixed-window fails, in numbers** (limit 3 per 10s):
+
+```
+t=9    3 requests  → window t=0–9   counter = 3   ✅ allowed
+t=10   3 requests  → window t=10–19 counter = 3   ✅ allowed
+                     6 requests in 2 seconds, neither window ever violated
+```
+
+The counter was correct; the **blocks were in the wrong place**. Any fixed boundary can be straddled, so
+moving or shrinking it fixes nothing. A sliding window has no boundary to hide behind — at `t=10` it asks
+*"how many since t=0?"* → 6 → denied.
+
+#### 🔑 The card's actual claim: **the score IS the mechanism**
+
+Same data type every time. The score decides which question is a cheap range:
+
+| Problem | member | score | The cheap range |
+|---|---|---|---|
+| Sliding-window rate limit | unique request id | **timestamp** | `ZREMRANGEBYSCORE 0 (now-60)` — old rows sit together at the bottom |
+| Leaderboard | player | **points** | `ZREVRANGE 0 9` — top 10 |
+| 5 most recently active users | **userID** | last-access timestamp | `ZREVRANGE 0 4` — and member-overwrite keeps one current row per user |
+
+**So "use a ZSet" answers nothing.** The follow-up is always *"what's the score?"*, and that is where the
+design decision lives. **You picked the score to make your question a range.**
+
 ## 🚨 Failure modes interviewers probe
 - **"You said RAM — what on restart?"** Redis *can* persist: **RDB** (periodic snapshots) + **AOF** (append-only write log). For a rate limiter you often skip it on purpose (losing counters just resets windows).
 - **"What if Redis dies?"** It's now a **single point of failure** on the request path. Answers: **replication** (a follower takes over) and a **fail-open vs fail-closed** policy (Redis down → let requests through, or block them?). Volunteering this tradeoff is a senior signal.
+
+### 🎓 Card 7, derived — Aug 10, 2026 teach (unrated)
+
+*Jul 19 🔴 (root cause: couldn't parse "on the request path" — fixed). Jul 21: **entire mitigation chain
+correct, never said the words "single point of failure."** Aug 5: **regressed to blank.** Taught rather
+than sprinted a fourth time.*
+
+#### Answer in four beats, in this order
+
+| # | Beat | Say |
+|---|---|---|
+| **1** | **Name the risk** | *"Redis is on the request path, so it's a **SPOF** (single point of failure)."* |
+| **2** | **Reduce the chance** | **Replication** — leader/follower with failover, so one box dying isn't total |
+| **3** | **Find out fast** | **Short timeout** (~50ms, not the library default) + **circuit breaker** |
+| **4** | **Decide the behavior** | **Fail open** vs **fail closed**, chosen by what Redis is protecting |
+
+⚠️ **Beat 1 is the whole card.** Jul 21 delivered beats 2–4 correctly and scored a miss anyway, because
+mitigations without a named risk read as a recited checklist. **Naming it first shows you diagnosed before
+you treated.** The learner produced beats 1 and 4 unprompted on Aug 10, skipped 2 (which they'd already
+used in card 9 minutes earlier), and had never encountered 3.
+
+#### Why "on the request path" is the load-bearing phrase
+
+```
+client  →  API server  →  ask Redis "how many requests has user 42 made?"
+                       →  Redis answers
+                       →  serve or reject
+```
+
+Every request makes that call. It is a **mandatory synchronous stop**, so its failure is **total and
+immediate** — that is what upgrades "a dependency is down" to "a SPOF."
+
+#### The default behaviour, which is worse than it looks
+
+| Failure mode | What happens with no policy written |
+|---|---|
+| **Connection refused** (process dead) | client library raises → uncaught → **500 Internal Server Error**, not a clean `429`. Users see a crash; dashboards show a server fault, not a rate-limit rejection |
+| **Wedged box / network partition** | nothing is refused — the call **blocks** for the full connection timeout (~5s). Every request holds a thread that whole time → **thread pool exhausted → endpoints unrelated to rate limiting stop responding** |
+
+The second is the severe one and it is the case people forget: *the limiter takes down the API it was
+protecting.*
+
+#### Beat 3, derived — timeout + circuit breaker
+
+**Fail-open/closed only helps once you KNOW Redis is down.** In the wedged case the policy works perfectly
+and every request still costs 5 seconds. Two fixes, and they stack:
+
+```
+default timeout (5s):   wait 5000ms → then apply policy
+50ms timeout:           wait   50ms → then apply policy      (100× faster, same outcome)
++ circuit breaker:      after 5 consecutive failures, skip the call entirely for 30s → 0ms
+                        then one test request: back? resume : wait another 30s
+```
+
+Redis normally answers in **under 1ms**, so a 50ms non-answer already means something is wrong — the tight
+timeout costs nothing in the healthy case. **Circuit breaker** = open (given up, not calling), closed
+(traffic flowing), like a real breaker.
 
 ## ⚖️ Decision rationale
 - **Choose Redis when:** shared, hot, mutable state at microsecond latency (counters/sessions/cache).
@@ -452,3 +683,37 @@ a cold *"tell me about Redis"* would reach that this note currently cannot:
 **Sequencing, so this doesn't become a course:** the four stuck cards (8, 9, 10, 12) are the **teach trigger
 already fired** and come first. The gap list above is a *second* teach, and it should be split across at
 least two slots. Neither is rated on the day it's taught.
+
+> ✅ **Sequencing updated Aug 10, 2026 — the first teach is DONE.** All four stuck cards (7, 8, 9, 11) were
+> taught this session. **The gap table above is now next in line**, still needing ≥2 slots, and it is
+> **not slotted** — see build-agenda item #7 in the Aug 10 schedule.
+
+## ❓ Open — not yet asked
+
+> ✅ **Aug 10, 2026 — learner elected to leave all 10 for the mock.** Asked at the close-out per the
+> standing step; answer is on the record so the list isn't quietly re-litigated at the next build.
+
+*Surfaced by the Aug 10 teach and deliberately left unanswered. Bare questions, never summaries — this list
+is both the coverage report and the mock-interview bank, so reading it must not spoil it. Bounded by the L6
+ROI line ([[project_sd_roi_line]]), not by completeness. Items close when a later session's questions reach
+them; when this drains to the interview-relevant floor, that is the trigger for a mock drawn from it.*
+
+**From card 8 (the ZSet limiter):**
+- The ZSet stores **one row per request**. At 10k requests/sec, what is that costing you in memory, and how
+  does it compare to the single integer a fixed-window limiter needs?
+- Given that cost, when would you *deliberately* choose the fixed window you just saw defeated?
+- Is there a middle option between "one counter" and "one row per request"?
+- Those four commands are four separate network round trips. What breaks if two arrive interleaved for the
+  same user, and what would you do about it?
+
+**From card 7 (SPOF):**
+- Where does the circuit breaker actually live — in the app, the client library, or a sidecar?
+- Replication is **asynchronous**. On failover, what did you just lose, and what does that mean for a
+  limiter's counts?
+- You now have a fail-open policy. How would you find out, in production, that it is currently firing?
+
+**From card 9 (scale out):**
+- Under Redis Cluster, what happens to a command that touches two keys in different hash slots?
+- What has to happen to live traffic during a resharding?
+- You picked `user:42` as the key. At 10M users, what does that key design cost you, and what would make
+  you choose differently?
