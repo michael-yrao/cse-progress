@@ -413,3 +413,23 @@ disease as everything in Cluster A. It is now item 2 of the SessionStart hook's 
   **Rung-1 candidate for the meta-review:** `technique_coverage.py` (or a sibling) could emit a
   `phase status` line — for each phase whose window contains today, how many of its problems have tracker
   rows. That is a computed answer to a question currently answered by remembering to look. Status: `open`.
+
+- **2026-08-10 · [P2] · Deleted a solution file the learner was actively working in.**
+  Scaffolded probe #1 as **977 Squares of a Sorted Array**, then — on the learner's *"pull from the
+  interview list"* — swapped to **202 Happy Number** and ran `rm dsa/probes/977_squares_of_a_sorted_array.py`
+  in the same command as the new scaffold. The learner had already started 977. Nothing on disk survived;
+  recovery depended entirely on the unsaved VS Code buffer, which was luck, not design.
+  **Root cause — treated "I replaced my own suggestion" as license to delete, when the file had already
+  changed hands.** The moment a scaffold is presented, it stops being my artifact and becomes the learner's
+  workspace. A swap is *additive* to that workspace; the old file's fate is the learner's call, not a
+  tidiness decision folded into an unrelated command. Compounding: the `rm` was **chained into the same
+  Bash call** as the grep and the scaffold, so it never surfaced as its own reviewable action.
+  **Also note the near-miss that made it worse:** `dsa/probes/` is outside `solutions.roots` and the file
+  was untracked, so git had no copy — the very design that keeps probes off the tracker also removes the
+  safety net every other solution file has.
+  **Immediate fix:** told the learner plainly, checked disk + VS Code local history, gave the Cmd+S buffer
+  recovery path before doing anything else.
+  **Rung-1/2 candidates for the meta-review:** (a) never chain a destructive op into a compound Bash call —
+  it must stand alone to be reviewable; (b) a superseded scaffold gets **left in place** and mentioned, never
+  removed — an unused blank stub in `dsa/probes/` costs nothing and creates no tracker row *by design*;
+  (c) if removal is genuinely wanted, ask. Related: [[feedback_verify_terminal_actions]]. Status: `open`.

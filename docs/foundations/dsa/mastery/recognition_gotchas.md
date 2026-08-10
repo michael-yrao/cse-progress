@@ -92,6 +92,29 @@ so a retry hit is *half-spoiled* and is **not** phase-exit evidence. Only new pr
 | 2026-08-09 | 1011 Capacity to Ship `R` | "similar to koko eating banana; max is sum(weights) always works, so binary search max→sum for the min boundary" | ✅ hit, **pre-code** — and named the **sibling problem (875)** unprompted, which is the transfer the consolidation-rep model is built to produce. Bounds derived, not recalled |
 | 2026-08-09 | 133 Clone Graph `R` | "connected, so one node at a time; BFS or DFS with an old→new map" | ✅ hit, **pre-code** — first firing under the tightened trigger (gate fired on handover). Traversal + the clone-identity map both named before any code |
 | 2026-08-09 | 141 Linked List Cycle `R` | "basic tortoise and hare" | ✅ hit, but **stated after coding, not before** — gate was fired on the handover and the answer arrived with the finished solution. Counts as a hit (correct, and correctly *named*, which is where 143 slipped on Aug 4); doesn't test pre-code recognition |
+| 2026-08-10 | **977 Squares of a Sorted Array** 🎯 **PROBE #1** | "squaring and sort is trivial → use two pointers, one at left and one at right, we can easily tell what is the next biggest number" | ✅ hit, **pre-code and unprompted** — written as a comment before any code, with no gate having been fired first. Full phase-exit evidence: unseen problem, label stripped, scaffolded outside `dsa/leetcode/`. 🟢, so **no tracker row** |
+
+### Probe #1 — what it actually measured (Aug 10, 2026)
+
+**The call had all three parts without being asked for them:** the nearest alternative was *named and
+priced* (`squaring and sort is trivial` — i.e. correct but O(n log n)), the technique was named
+(converging two pointers), and the **picking feature** was stated operationally — *the ends tell you the
+next biggest*. That third clause is the one that matters and the one that is usually missing; a call that
+stops at "two pointers" is a label, not a recognition.
+
+**What makes it real evidence, unlike a retry:** nothing named the technique in advance. The folder was
+`dsa/probes/`, the header said *"you name it"*, and no neighbouring problem was mentioned. Compare the
+`R`-marked rows above, which are all half-spoiled by a pattern-named folder and a method-named tracker row.
+
+**Complexity, itemized without a nudge:** O(n) time as *two* passes named separately (the two-pointer
+sweep **and** the `reverse`), O(1) space **with the convention stated** (`we don't count result`) rather
+than asserted. Stating the convention is the senior form — the exclusion is safe here specifically because
+the output is mandatory and write-only, so it carries no information about the algorithm.
+
+⚠️ **Sourcing note.** 977 was picked from the coach's own recall of the LC catalogue, not from the
+interview-frequency pool. On the learner's correction (*"pull from the list we discussed from interviews"*)
+probe #2 (202 Happy Number) was drawn via `scripts/pull_interview.py` instead. **Future probes come from
+the tool** — it excludes tracked problems and gates on learned patterns, which recall cannot guarantee.
 
 ## Miss ledger
 
