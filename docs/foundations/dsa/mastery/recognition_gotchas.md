@@ -94,6 +94,8 @@ so a retry hit is *half-spoiled* and is **not** phase-exit evidence. Only new pr
 | 2026-08-09 | 141 Linked List Cycle `R` | "basic tortoise and hare" | ✅ hit, but **stated after coding, not before** — gate was fired on the handover and the answer arrived with the finished solution. Counts as a hit (correct, and correctly *named*, which is where 143 slipped on Aug 4); doesn't test pre-code recognition |
 | 2026-08-10 | **977 Squares of a Sorted Array** 🎯 **PROBE #1** | "squaring and sort is trivial → use two pointers, one at left and one at right, we can easily tell what is the next biggest number" | ✅ hit, **pre-code and unprompted** — written as a comment before any code, with no gate having been fired first. Full phase-exit evidence: unseen problem, label stripped, scaffolded outside `dsa/leetcode/`. 🟢, so **no tracker row** |
 
+| 2026-08-10 | 503 Next Greater Element II `R` | "next greater element = monotonic stack; decreasing, so when something is increasing it *is* the next greater; store the index; circular = go through the array twice" | ✅ hit, **pre-code** — technique, the invariant's *purpose*, index-not-value, and the circularity reduction all named before any code |
+
 ### Probe #1 — what it actually measured (Aug 10, 2026)
 
 **The call had all three parts without being asked for them:** the nearest alternative was *named and
