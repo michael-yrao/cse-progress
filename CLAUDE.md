@@ -181,6 +181,13 @@ Notes for whoever maintains this:
   happened to be identical, so nothing crashed — the bad case. The scaffold banner already asks for a
   dated helper (`TrieNode_20260802`); the banner is prose and was skipped, so the check reads the merge
   instead. Non-fatal by design: the paste is correct and the rename is the learner's code to change.
+- **The un-attempted guard now ignores scaffold method signatures inside a dated *class* attempt
+  (fixed Aug 10, 2026).** `attempt_has_body` counted any non-`pass` line as work — so a design
+  problem's own `def __init__(...)` / `def add(...)`, written by `new_problem.py`, made **every
+  multi-method scaffold look attempted**. Restore would then paste the prior solution back before
+  the rep ran, which is precisely the spoiler the extract exists to prevent. Found on 703, whose
+  stub is `class KthLargest_20260810`. Single-method (`def <name>_<stamp>`) scaffolds were never
+  affected — their body really is just `pass`.
 - The stash is a **`.txt`**, deliberately: it never matches the `*.py` source glob, so the tracker's
   discovery (`scripts/update_review_dates.py`) ignores it and no phantom problem row appears. If you
   ever add `.txt` to `source_globs`, exclude `.history/` there.
