@@ -370,3 +370,26 @@ disease as everything in Cluster A. It is now item 2 of the SessionStart hook's 
   any `dsa/leetcode/**.py` dated stub that checks whether a call was logged for that problem today.
   Status: `open` — the tightened trigger is untested, and this root cause (a step with no guaranteed
   firing event) has now appeared once.
+
+- **2026-08-09 · [P1] · Carried an intake freeze into the weekly build without re-deriving its premise.**
+  The Aug 10 build scheduled **zero new problems** and gave no reason for it. The learner asked *"how come
+  we don't have any new problems this week?"* — and the honest answer was that last week's freeze
+  (*"surplus −9.6 ⟹ no consolidation reps, no application pulls"*) had been carried forward while **the
+  surplus had gone positive in the same build I was writing.** I had computed and written up the deficit
+  closing, in that very file, and still applied the rule the deficit used to justify.
+  **Root cause — a deferral justified by a NUMBER expires silently when the number moves.** Nothing watches
+  it. The item simply keeps not being scheduled while its stated reason is no longer true, and because the
+  schedule looks complete, nothing surfaces the contradiction. This is **the bare-date failure mode wearing
+  different clothes** — the §5 rule already says never defer on a bare date because a date expires
+  silently; a surplus threshold has exactly the same property and was not covered by the rule.
+  **Generalizable lesson:** *"trigger vocabulary must be checkable"* is not sufficient — a trigger must also
+  be **re-evaluated at the build that could fire it**. `surplus>=n` is a legal trigger *and* a silent-expiry
+  hazard when used as a **reason to hold** rather than a condition to fire. Deferrals should be phrased as
+  the **state that must exist before the item is useful** (`green:Dijkstra`), not the capacity that was
+  missing when it was parked.
+  **Fix (in-build):** 1631 and 1514 moved to the ⏳ Waiting Room with trigger **`green:Dijkstra`** — a state
+  condition tied to *why the reps aren't useful yet* (Dijkstra has 3 problems and 0×🟢, so consolidating it
+  is premature) rather than to capacity. Written into the Aug 10 schedule with the reasoning, plus an
+  explicit "evaluate at the Aug 17 build" instruction.
+  **Rung-3 candidate for the meta-review:** add to §9a step 0 — *"any item deferred at a previous build for
+  a NUMERIC reason must have that number recomputed before the deferral is renewed."* Status: `open`.
