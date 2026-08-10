@@ -64,6 +64,94 @@ from typing import List, Optional
 
 
 class Solution:
+
+    # ── Attempt · 2026-08-09 ──────────────
+    def accountsMerge_20260809(self, accounts: List[List[str]]) -> List[List[str]]:
+        # this is an union find problem. we are saying names with one or more shared email is one component
+        # so each email is a node, but we also need to know who the email belongs
+        # which brings us to the question of union and find, if we are able to union two emails
+        # we can consider everything under that account to be part of the same component
+        # so find should return us the account, not the emails
+        # since names can be the same, we can't use name as a key, we should use index
+        # this would be the same for the union, we use the emails to find the components to join on, which will be based on the accounts and not the emails so we are using emails to find the accounts to union
+        # so it seems like we need an email to account index map
+        # this makes it easy for us to union
+        # think we are good to begin with these details
+
+        # email to indices list
+        emailToAccountMap = collections.defaultdict(list)
+
+        for i in range(len(accounts)):
+            account = accounts[i][0]
+            numOfEmails = len(accounts[i])
+            for j in range(1,numOfEmails):
+                email = accounts[i][j]
+                emailToAccountMap[email].append(i)
+        
+        # now that we have the map constructed, let's do our union find
+        rankMap = {}
+        parentMap = {}
+
+        # start each account as its own component
+        # start each account with rank of 0
+        for i in range(len(accounts)):
+            rankMap[i] = 0
+            parentMap[i] = i
+        
+        # path compression / union by rank
+        def find(node):
+            if parentMap[node] != node:
+                parentMap[node] = find(parentMap[node])
+            return parentMap[node]
+        
+        def union(n1,n2):
+            n1p = find(n1)
+            n2p = find(n2)
+            # same parent, thus we form a cycle
+            if n1p == n2p:
+                return False
+            if rankMap[n1p] > rankMap[n2p]:
+                parentMap[n2p] = n1p
+            elif rankMap[n1p] < rankMap[n2p]:
+                parentMap[n1p] = n2p
+            else:
+                parentMap[n2p] = n1p
+                rankMap[n1p]+=1
+            return True
+        
+        # now let's go through the map we created and let's union the ones that have more than one value in the list
+        for email in emailToAccountMap:
+            # we will loop from 1 onwards to auto skip emails with only one parent
+            for i in range(1,len(emailToAccountMap[email])):
+                account1 = emailToAccountMap[email][i-1]
+                account2 = emailToAccountMap[email][i]
+                # if we haven't unioned them yet, let's union them
+                union(account1,account2)
+        
+        # parentAccount -> list of emails
+        resultMap = collections.defaultdict(set)
+        # now that all the accounts that need to be unioned are unioned, we generate the list of results to a map first
+        for i in range(len(accounts)):
+            parentAccount = find(i)
+            for j in range(1,len(accounts[i])):
+                email = accounts[i][j]
+                resultMap[parentAccount].add(email)
+
+        result = []
+        # now let's create the result from resultMap
+        for accountIndex, emails in resultMap.items():
+            resultArray = []
+            # create account, email1, email2 result array
+            account = accounts[accountIndex][0]
+            resultArray.append(account)
+            sortedEmails = list(emails)
+            sortedEmails.sort()
+            resultArray.extend(sortedEmails)
+            # add resultArray to result
+            result.append(resultArray)
+        
+        return result
+
     # ── Attempt 1 · 2026-07-30 ────────────────────────────────────────────
     def accountsMerge(self, accounts: List[List[str]]) -> List[List[str]]:
         # ok, we are looking for components here

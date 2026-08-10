@@ -59,6 +59,27 @@ how everyone talks and is genuinely confusing the first time. Both models, side 
 diagram the *numbers* come from; TCP/IP is the 4-layer model the internet was actually built to. Nothing
 real implements OSI layers 5 and 6.
 
+> **The distinction in one line (Aug 9, 2026):** **7 is a reference model designed *before* the protocols;
+> 4 is a description written *after* them.**
+
+⚠️ **"OSI is theoretical" is the right instinct with the wrong word.** OSI was not a thought experiment —
+it was a **complete protocol suite from ISO**, with real implementations, shipping products, and
+government procurement mandates behind it in the US and UK in the late 1980s. **It was built, and it lost
+to TCP/IP in the market.** Theoretical is how it *ended up*, not what it was for.
+
+That history is what explains the shape of each model:
+
+| | **OSI (7)** | **TCP/IP (4)** |
+|---|---|---|
+| Written | **before** the protocols, top-down | **after** the protocols already worked |
+| Method | designed as a complete, symmetric taxonomy | described what had been built |
+| Result | tidy slots (session, presentation) nothing turned out to need | no slot exists unless something fills it |
+| Survives as | **the numbers** — L3/L4/L7 vocabulary | **the actual stack** |
+
+So OSI has layers 5 and 6 for the same reason a designed-up-front schema has columns nobody writes to:
+they were reasoned into existence rather than discovered. TCP/IP couldn't have an unused layer, because
+every layer was named after a protocol that already existed.
+
 | TCP/IP layer | Protocol | Moves data between | Addressed by | OSI # |
 |---|---|---|---|---|
 | **Application** | HTTP, DNS, TLS | programs, semantically | URLs, names | 5–7 |
@@ -725,6 +746,26 @@ GET when following 301/302. If the method must survive, use **308** (permanent) 
 > sprint on never-bootstrapped material measures the explanation, not retention. **The rated sprint needs
 > a real gap after the teaching finishes.** Do not log a comfort rating off a session where the material
 > was explained the same day.
+>
+> ## 🔁 TCP is rolled back to UNTAUGHT (learner's call, Aug 9, 2026)
+>
+> > *"let's say we didn't talk about TCP yet since I don't feel I actually maintained it at all due to it
+> > being so late in the day."*
+>
+> The TCP material below **is written but was not retained** — it landed in session 3 at the end of a long
+> day. Per the standing rule, a self-reported zero means **assume zero kept** and re-teach from the first
+> fact; a "covered" list is evidence about what the coach *said*, not what the learner holds
+> (`.claude/memory/feedback_self_reported_zero.md`).
+>
+> **Out of scope for the sprint until re-taught:** **11, 11b, 12, 13, 14** entirely, and the TCP legs of
+> **1, 1b, 6, 10, 16** (the transport layer, the handshake RTT, the 4-tuple, the "TCP reassembles" step).
+> **Still in scope — these stand:** IP delivery and the link layer, private/public addressing and NAT
+> (10c, 10d), ports and the three bands (10b), all of DNS (8, 9), TLS termination (4, 5), what a middlebox
+> can see (2, 3), latency/bandwidth/RTT (7), 301-vs-302 (15).
+>
+> ⚠️ The boundary is drawn wide on purpose: re-covering something retained costs seconds, building on an
+> absent foundation costs the session. **Ports/NAT are kept in scope as *addressing*, not as TCP** — if
+> the 4-tuple went with the TCP rollback, say so and 10/10b/10c move out too.
 
 <details><summary><b>1. Name the three layers of a normal web request and what each one is responsible for.</b></summary>
 
@@ -858,3 +899,133 @@ Two mechanisms: headers end at the first blank line (`\r\n\r\n`) — a **delimit
 **At the far end it unwinds in reverse:** link off → IP checked → TCP reassembles the byte stream → TLS decrypts → HTTP handed to the app.
 **The asymmetry:** layers 1–3 are touched by *many* machines; **layer 4 only ever by the two endpoints** — spine fact 3, and the reason an L7 LB has to *become* an endpoint to read a path.
 </details>
+
+---
+
+# ❓ Open — not yet asked
+
+*Backfilled Aug 9, 2026, covering the Aug 3 + Aug 8 sessions. This card is taught **spine-then-pull** — the
+learner's questions set the direction, which is the point, but it means coverage is bounded by what they
+could already see was missing. This section records where the pull didn't go.*
+
+**Rules for this section** (full version in `.claude/memory/feedback_coverage_gap_ledger.md`):
+- Every item is a **bare open question, never a summary of the answer** — so this list is simultaneously the
+  coverage report and the **mock-interview bank**, and reading it doesn't spoil it.
+- Scoped by the **L6 interview-ROI line**, not by completeness. Things deliberately left off are listed at
+  the bottom *with their reason*, so a judgment call is never mistaken for an oversight.
+- Items are struck through when a later session's questions reach them. **When this list is drained to the
+  floor, that is the trigger for the mock** — not a date.
+
+## 🔁 Not a gap — taught but rolled back to zero
+
+**TCP, in full.** Written into this card, not retained (see the Recall Card banner). Re-teach from the
+first fact; it does not belong on the list below, because the list is *never asked*, and this was asked
+and answered. It is simply owed again.
+
+## 🪜 The two layer models — half-covered, flagged by the learner (Aug 9)
+
+The existing [layer-models section](#-the-two-layer-models--and-the-link-layer-you-never-see) gives the
+**TCP/IP 4-layer model in full** and maps it to OSI *numbers* — but it collapses OSI into ranges (`5–7`,
+`1–2`) and **never names the seven layers individually or says what the collapsed ones were for.**
+
+⚠️ **Naming, because this is the exact confusion the section exists to fix:** there is no "4-layer OSI
+model." **OSI is the 7-layer one; the 4-layer one is TCP/IP.** Two different models from two different
+efforts — and OSI was a *competing protocol suite* that lost, not merely a diagram drawn about the winner.
+Calling it "the 4 OSI layers" is the tell that they've blurred together.
+
+- **N23.** Name all seven OSI layers in order, and the two that no real internet stack implements.
+- **N24.** Layers 5 and 6 were meant to do a job. What job — and where did that work actually end up in a
+  modern HTTPS request?
+- **N25.** This card treats OSI 1–2 as one row. What is the actual split, and what does a device operating
+  at each one look like on a real network?
+- **N26.** If the internet only ever needed four layers, why does the entire industry still count to seven?
+
+## 🔌 Connection lifecycle — the biggest hole
+
+The card counts the 3-RTT cold start but never asks what happens to the connection afterwards, which is
+where most of the design leverage sits.
+
+- **N1.** A page loads 40 assets from one host. Does that cost 40 TCP handshakes? What changed between
+  HTTP/1.0, HTTP/1.1 and HTTP/2 in the answer?
+- **N2.** Your service makes 5k outbound calls/sec to one internal API. Why does a connection *pool* exist,
+  and what breaks when it's sized wrong in each direction?
+- **N3.** What is `TIME_WAIT`, why does it exist, and how does it interact with the ~28k outbound-connection
+  ceiling already on this card (10b)?
+- **N4.** TLS costs an RTT on every new connection. What are the two mechanisms that make a *repeat* visit
+  cheaper, and what does the aggressive one give up?
+
+## ⏱ Timeouts and retries — the card's own trigger line points here
+
+> The header of this card says *"you'll want this when … you add a retry."* The sessions never reached it.
+
+- **N5.** Name the distinct timeouts on one HTTP call. Which one fires when the server is *slow* vs when it
+  is *gone*, and why is a single "timeout: 30s" setting a bug?
+- **N6.** TCP will retransmit for ~30 seconds rather than fail (Q11). What does that imply about where your
+  timeout has to live?
+- **N7.** Which HTTP methods are safe to retry blindly, and what does the network layer *not* tell you about
+  whether the first attempt landed? (Pairs with [`retry_storms_and_stampedes.md`](retry_storms_and_stampedes.md).)
+
+## 🔐 TLS trust — termination is covered, trust is not
+
+Q4/Q5 cover *terminating* TLS. Nothing covers how the client decides the certificate is legitimate.
+
+- **N8.** The LB "holds the cert." What makes a browser believe it? Walk the chain.
+- **N9.** What is **mTLS** (mutual TLS) and what does it buy in service-to-service traffic that plain TLS
+  doesn't? When is it worth the operational cost?
+- **N10.** SNI is sent in the clear (Q2). What does that leak, and what is being done about it?
+
+## 🌍 DNS as a traffic-steering tool
+
+The resolution walk, glue and TTL are solid. DNS as an *architectural lever* is untouched.
+
+- **N11.** Name the record types you'd actually put in a design, and the one that cannot legally sit at the
+  apex of a domain. What's the workaround?
+- **N12.** Two mechanisms send users in different regions to different servers — one at the DNS layer, one at
+  the routing layer. Name both and state which failure they handle *badly*.
+
+## 🔁 Proxies and client identity
+
+- **N13.** You rate-limit by client IP behind a load balancer. Why does every request appear to come from
+  one address, and what's the fix — plus the security trap in the fix?
+- **N14.** Forward proxy vs reverse proxy: same machine in the middle, so what actually distinguishes them?
+
+## 📡 Push — the transport question every real-time design opens with
+
+WebSockets appear once on this card, only as a NAT-timeout victim (10d).
+
+- **N15.** Three ways a server pushes to a browser. State the tradeoff that picks between them, and which one
+  is *not* a separate protocol at all.
+- **N16.** What does a long-lived connection per user cost the server side, and how does that change a
+  capacity estimate?
+
+## 🚦 TCP behaviour beyond the guarantee list — *for after the re-teach*
+
+Q11 names congestion control and flow control in a list and never opens either.
+
+- **N17.** Two brand-new connections, same bandwidth, same RTT: why is a large transfer slow at the start?
+  What is the sender waiting to learn?
+- **N18.** Flow control and congestion control both throttle the sender. What is each one protecting, and how
+  does a receiver signal its limit?
+- **N19.** Why can a fat, long-distance link sit mostly idle on a single connection, and what's the lever?
+
+## 🧾 HTTP semantics — already flagged unwritten on the Recall Card
+
+- **N20.** How does a client avoid re-downloading an unchanged asset — and what's the difference between the
+  two headers that do it?
+- **N21.** `429` vs `503` vs `500`: what does each tell the *caller* to do differently?
+- ~~**N22.** Idempotency: what makes a method idempotent, why does it not mean "safe"?~~ ✅ **CLOSED Aug 9,
+  2026**, pulled in by the URL-shortener design — safe vs idempotent, and why GET is cacheable/prefetchable/
+  retryable while POST is none of those. **Still open:** how do you make a `POST` retryable anyway
+  (idempotency keys)? Raised and parked at the write path.
+
+## 🧊 Deliberately below the line (judgment call, not an oversight)
+
+| Left off | Reason |
+|---|---|
+| MTU, fragmentation, MSS clamping | Sub-HLD; surfaces in VPN/overlay debugging, never in a 45-min design |
+| Nagle's algorithm, delayed ACK | Same — a latency micro-optimization, not an architecture decision |
+| BGP internals, routing protocols | "Nobody knows the whole route" (this card) is the design-relevant fact; the protocol isn't |
+| Full IPv6 addressing | Beyond *"AAAA exists, dual-stack exists"*, it changes no design at this level |
+| TLS cipher suites, key exchange math | Cryptographic detail; the trust chain (N8) is the part that decides architecture |
+
+*Promote anything here the moment a real design needs it — the line is a judgment, not a verdict.*

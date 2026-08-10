@@ -45,6 +45,35 @@ Constraints:
 from typing import List
 
 class Solution:
+
+    # ── Attempt · 2026-08-09 ──────────────
+    def shipWithinDays_20260809(self, weights: List[int], days: int) -> int:
+        # this is similar to koko eating banana
+        # we can say our maximum is sum(weights), this is a condition that we can always finish
+        # so we will do binary search on max -> sum to find min boundary
+        l, r = max(weights), sum(weights)
+        def canShip(capacity):
+            dayCounter = 1
+            currentCapacity = capacity
+            # for each weight, check if we can carry it today still
+            for weight in weights:
+                # if carrying this brings us over the current capacity, go to next day
+                if currentCapacity - weight < 0:
+                    dayCounter+=1
+                    currentCapacity = capacity
+                currentCapacity-=weight
+            return dayCounter <= days
+
+        while l < r:
+            m = (l+r)//2
+            # if we are able to shift in m, we keep it as an answer
+            if canShip(m):
+                r = m
+            else:
+                l = m + 1
+        
+        return l
+
     def shipWithinDays(self, weights: List[int], days: int) -> int:
         # ordering matters, so can't sort
         # seems like what we are doing is getting the min boundary for each day

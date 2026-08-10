@@ -149,8 +149,17 @@ CONFIG = load_config()
 
 MARKDOWN_PATH = Path("docs/foundations/dsa/mastery/dsa_progress.md")
 SOURCE_ROOT = Path(CONFIG["source_root"])
-TABLE_HEADER = "| Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Attempt Date | Attempt Dates |"
+TABLE_HEADER = "| Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Rep Date | Rep Dates |"
+# "Attempt" → "Rep" rename, Aug 9, 2026 (see build_summary_lines). Both older spellings stay RECOGNIZED
+# so an un-migrated tracker still parses; the migration block near the end of rewrite_table() upgrades
+# whichever it finds to TABLE_HEADER. Never drop these — a header this function can't match makes the
+# whole table invisible, and the pre-commit hook would then rewrite the file without it.
+TABLE_HEADER_ATTEMPT_ERA = "| Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Attempt Date | Attempt Dates |"
 TABLE_HEADER_LEGACY = "| Difficulty | Problem | Comfort | Next Review Date | Latest Attempt Date | Attempt Dates |"
+# Every header spelling that carries a Streak column (i.e. everything except the 6-column legacy form).
+TABLE_HEADERS_CURRENT = (TABLE_HEADER, TABLE_HEADER_ATTEMPT_ERA)
+# Every header spelling this parser accepts, in any era.
+TABLE_HEADERS_ALL = (TABLE_HEADER, TABLE_HEADER_ATTEMPT_ERA, TABLE_HEADER_LEGACY)
 ROW_SEPARATOR = "|---|---|---|---|---|---|---|"
 ROW_SEPARATOR_LEGACY = "|---|---|---|---|---|---|"
 
@@ -296,7 +305,11 @@ def build_summary_lines(table_rows: list[dict], retired: int = 0) -> list[str]:
     )
     return [
         "",
-        f"> **{unique_problems}** problems &nbsp;·&nbsp; **{solutions_done}** solutions &nbsp;·&nbsp; **{total_attempts}** attempts",
+        # "reps", not "attempts" (renamed Aug 9, 2026 at the learner's request): an *attempt* connotes
+        # trying and possibly failing, and the code gets written every time — what varies is the rating,
+        # not whether a solution happened. "Rep" is also the vocabulary the rest of the system already
+        # uses. Only the label changed; the count is still one per dated entry in `Attempt Dates`.
+        f"> **{unique_problems}** problems &nbsp;·&nbsp; **{solutions_done}** solutions &nbsp;·&nbsp; **{total_attempts}** reps",
         "",
         f"| | {COMFORT_RETIRED} Retired | {COMFORT_GRADUATED} Graduated | {COMFORT_CLEAN} Clean | {COMFORT_SHAKY} Shaky | {COMFORT_BLANK} Blank |",
         "|:---|:---:|:---:|:---:|:---:|:---:|",
@@ -581,7 +594,7 @@ def recompute_simple(tracker_path: Path) -> None:
     for line in lines:
         if not in_table:
             prefix_lines.append(line)
-            if line.strip() in (TABLE_HEADER, TABLE_HEADER_LEGACY):
+            if line.strip() in TABLE_HEADERS_ALL:
                 in_table = header_seen = True
             continue
         if not separator_seen:
@@ -643,7 +656,7 @@ def main() -> None:
     for line in lines:
         if not in_table:
             prefix_lines.append(line)
-            if line.strip() == TABLE_HEADER:
+            if line.strip() in TABLE_HEADERS_CURRENT:
                 in_table = True
                 table_header_seen = True
             elif line.strip() == TABLE_HEADER_LEGACY:
@@ -787,7 +800,7 @@ def main() -> None:
     try:
         header_index = next(
             i for i, line in enumerate(prefix_lines)
-            if line.strip() in (TABLE_HEADER, TABLE_HEADER_LEGACY)
+            if line.strip() in TABLE_HEADERS_ALL
         )
     except StopIteration:
         header_index = len(prefix_lines)
@@ -831,7 +844,7 @@ def main() -> None:
     # Replace legacy header/separator with new format
     header_and_after = []
     for line in prefix_lines[header_index:]:
-        if line.strip() == TABLE_HEADER_LEGACY:
+        if line.strip() in (TABLE_HEADER_LEGACY, TABLE_HEADER_ATTEMPT_ERA):
             header_and_after.append(TABLE_HEADER)
         elif line.strip() == ROW_SEPARATOR_LEGACY:
             header_and_after.append(ROW_SEPARATOR)

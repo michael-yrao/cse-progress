@@ -45,6 +45,50 @@ import heapq
 from typing import List
 
 class Solution:
+
+    # ── Attempt · 2026-08-09 ──────────────
+    def leastInterval_20260809(self, tasks: List[str], n: int) -> int:
+        # we know the task with the most freq is the bottleneck
+        # freq, so we need a freqMap
+        # n intervals, so that means we can do n+1 unique tasks before we repeat anything
+        # so we do maxHeap and do min(# tasks, n + 1) tasks at a time
+
+        freqMap = Counter(tasks)
+
+        maxHeap = []
+
+        for task, freq in freqMap.items():
+            heapq.heappush(maxHeap,(-freq, task))
+
+        # we can do n + 1 tasks per cycle as mentioned above
+        tasksPerCycle = n + 1
+        # now that we have our tasks set, let's go through them
+        # keep a counter of total intervals
+        intervals = 0
+        # while we still has tasks to do
+        while maxHeap:
+            # get number of unique tasks we can do
+            numUniqueTasks = len(maxHeap)
+            maxAllotedTasks = min(tasksPerCycle, numUniqueTasks)
+            tasksLeft = []
+            for _ in range(maxAllotedTasks):
+                # do the current task
+                currentTaskFreq, currentTask = heapq.heappop(maxHeap)
+                # increment it and if it is not zero, put it back into a list to add to the heap later
+                currentTaskFreq+=1
+                if currentTaskFreq != 0:
+                    tasksLeft.append((currentTaskFreq,currentTask))
+            # add the leftover tasks back into the heap
+            for taskFreq, task in tasksLeft:
+                heapq.heappush(maxHeap,(taskFreq,task))
+            # count the intervals spent
+            if maxHeap:
+                intervals+=tasksPerCycle
+            else:
+                intervals+=maxAllotedTasks
+        
+        return intervals
+
     def leastInterval(self, tasks: List[str], n: int) -> int:
         # minimizing number of intervals needed
         # try a greedy approach but what does that mean in this context
@@ -125,8 +169,8 @@ class Solution:
                 # increment cpu time for the task and also increment if we had to idle
                 interval+=1
                 # for any tasks left over, add to set
-                if currentTaskCounter != 0:
-                    taskSet.add((currentTaskCounter, currentTask))
+                if currentTaskCounter != 0: # type: ignore
+                    taskSet.add((currentTaskCounter, currentTask)) # type: ignore
             # add taskSet back to heap
             for task in taskSet:
                 heapq.heappush(maxHeap, task)

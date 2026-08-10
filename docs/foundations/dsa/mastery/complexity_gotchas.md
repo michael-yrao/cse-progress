@@ -40,6 +40,7 @@ Jul 29 (235), where **time** was the wrong one and space was right — see the t
 | **Tree height (time *and* space)** | walking down one path of a tree — BST descent, insert, search | *"balanced, or is a chain also legal here?"* | **O(h)** — `O(log n)` **only if balanced**, `O(n)` degenerate. "It's a BST" does not give you balance; a chain like `1→2→3→4` (all right children) is a legal BST — *a sorted list in tree form*. Balance is an **assumption you state**, not a freebie |
 | **Branching factor (time)** | a `for child in node.children` that **recurses**, sitting next to a branch that recurses on **one** child | *"at this character, how many children do you step into — one, or all of them?"* | **O(b^d · L)** where `b` = fan-out, `d` = how many times you fan out. Fan-out **does not accumulate across the walk** — a step that picks one child collapses the paths back to one. Only *consecutive* fan-outs compound. Read `d` off the **constraints**, not off `L` |
 | **Sequential fan-out (space)** | same `for`-loop recursion as above | *"how many of those paths are alive at once?"* | **O(depth), not O(b^d)** — DFS walks one path to the bottom, returns, and **reuses the frames**. Explored-sequentially branching is a *time* cost only. You'd pay it in space only by holding all paths simultaneously (BFS with a queue) |
+| **Binary search on the ANSWER (time)** *(added Aug 9, 2026, via 1011)* | `l, r = <smallest feasible>, <largest feasible>` ranging over **values**, with a feasibility check called inside the loop | *"what are you halving — the array, or the space of possible answers?"* | **O(n · log(hi − lo))**, **not** `O(n log n)`. The `log` is over the **value range**, read off the constraints; `n` enters only through the feasibility scan. The two are **independent quantities**: on 1011, `log(sum(weights)) ≈ 25` against `log n ≈ 16`, and with values to 10⁹ against a 10-element array they diverge completely. `log n` is only right when you binary-search **indices** |
 
 **⚠ Consistency check — the two bounds must agree.** On a single downward walk, the recursion stack's
 depth **is** the number of steps taken, so time and space are the *same* bound. Answering `O(log n)`
@@ -58,6 +59,23 @@ come out different, one of them is wrong** — check before you say it out loud.
 > `O(log n)` (too tight). Both are the one missing habit — **say `O(h)` first, then say what `h` is on the
 > shape you were actually promised.** Reach for `O(h)` as the default phrasing on any tree descent; it is
 > correct before you know anything about balance, and it makes the assumption a separate, visible sentence.
+
+> ## ⚠️⚠️ Structural finding (Aug 9, 2026): the per-problem freebie **cannot catch a category that hops problems**
+>
+> Fixed-alphabet is the **most repeated miss in this file** — 242, 567, 424, 269 (×3), and now 621 — and
+> the 🟡 cap has fired for it exactly once, on 269, the only problem where it recurred *on the same
+> problem*. Every other occurrence landed on a **fresh** problem and therefore spent a fresh freebie.
+>
+> **So the enforcement mechanism is blind to precisely the failure mode it most needs to catch.** A gap
+> that recurs on one problem is *decay*; a gap that recurs across five different problems is a **missing
+> transfer**, which is worse and is the thing the "Recurring categories" table above exists to fix. The
+> freebie is keyed to the wrong unit.
+>
+> **Do not silently start capping on category** — that changes rating semantics and is the learner's call.
+> **Raise it at the Aug 10 build as a menu item.** Options worth putting up: (a) leave as-is and rely on the
+> cue table; (b) a *category* freebie in addition to the per-problem one, so the 3rd occurrence of a family
+> caps regardless of which problem it lands on; (c) fire the category cue **proactively** whenever a
+> problem's constraints name a bounded alphabet, treating it as teaching rather than testing.
 
 **Space-contributors checklist (run before answering):**
 (a) extra data structures — bounded by *input* or by a *constant alphabet*?
@@ -108,6 +126,10 @@ A problem in this table has used its one free complexity miss. The **next** miss
 | 104 Max Depth of Binary Tree | full-traversal vs search (**time**) | O(log n) → **O(n)** — recursing into *both* children never discards a subtree; O(log n) requires each step to *throw half away* (binary search, BST descent). Computing a property **of the whole tree** ≠ searching **for a node** | 2026-07-27 | spent |
 | 269 Alien Dictionary | fixed-alphabet graph (**time + space**) | time "no idea" → **O(C)** (C = total chars; the graph work is O(1)); space O(V+E) → **O(1)** — `V ≤ 26`, `E ≤ 26² = 676` by the lowercase-only constraint, so both collapse to constants. *Same fixed-alphabet family as 242/567/424, first time it appeared on a **graph** rather than a freq array* | 2026-07-27 | **spent → REPEAT ×2: 2026-07-29 and 2026-08-07 (each capped its rep at 🟡)** |
 | 323 Connected Components (BFS) | graph traversal (**time**) — *dropped-term variant* | O(E) → **O(V + E)**. Space `O(V+E)` was correct; time lost the `V` entirely. Reasoning given: *"if they are not connected, it is a constant time run"* — true **per iteration** of `for node in range(n)`, but there are `V` such iterations, so the constant-work scan is still `O(V)` in total | 2026-08-05 | spent |
+| 621 Task Scheduler | **fixed-alphabet (space AND time)** — *5th of this family* | Space O(n) → **O(1)**; time "O(min(k,i)·n log n)" → **O(N)**. `tasks[i] is an uppercase English letter` ⟹ `k ≤ 26`, so `freqMap`, `maxHeap` and `tasksLeft` are all constant-sized and every `log k` is `log 26`. Total pops across the whole run = `N` (one per task instance), giving `O(N · log 26) = O(N)`. **New disguise for an old family** — 242/567/424 were freq *arrays*, 269 was a *graph*, this is a *heap* | 2026-08-09 | spent |
+| 1011 Capacity to Ship | **binary search on the answer (time)** — *new category, see above* | O(n log n) → **O(n · log(sum − max))**. Justification given was *"binary is log n"* — but the search runs over the **capacity range** `[max(weights), sum(weights)]`, not over the array. `n` appears only in `canShip`. Code was otherwise clean: correct bounds, correct lower-bound template, no off-by-one | 2026-08-09 | spent |
+| 133 Clone Graph (BFS) | graph traversal (**time**) — *dropped-term variant, mirror of 323* | O(n) → **O(V + E)**. Justification given was *"traverse all nodes"* — true, and it accounts for the outer `while` only. The inner `for neighbor in oldNode.neighbors` runs **2E times in total** across the whole traversal, and `E` is not bounded by `V` (a dense graph has `E ≈ V²/2`). **Space O(V) was fine** as *auxiliary* (map + queue); say which you mean, since counting the constructed clone's adjacency lists makes it O(V+E) | 2026-08-09 | spent |
+| 105 Construct Tree from Pre+In | **retained slices + per-node scan (time AND space)** | O(n)/O(n) → **O(n²)/O(n²) worst case** (O(n log n)/O(n) balanced). Two independent costs, both invisible as written: `inorder.index(rootVal)` is a **linear scan re-run at every node**, and the four slices per frame are **copies**, alive while recursing. Skewed tree ⟹ `n + (n-1) + (n-2) + …` for both | 2026-08-09 | spent |
 
 **⚠️ 269's repeat miss (Jul 29) took a specific shape worth naming, because it is the shape this whole
 category takes.** The learner correctly derived *"`rankMap` holds at most 26 keys"* — the load-bearing
