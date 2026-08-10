@@ -275,6 +275,19 @@ After any problem discussion (solving, reviewing, or mentioning a problem by num
    - Minimum contents: capacity/surplus arithmetic · per-day load row · daily table · protected reps ·
      backlog/slip list (nothing dropped without a date or an explicit "no date exists") · SD lanes ·
      end-of-week targets · next-week preview.
+   - **⚠️ Every day with NO SD slot carries at least one UNSEEN problem** — new intake from the active
+     phase, or a recognition probe. Place these **before** any 🟢 backlog. *Why:* a problem seen 3+ times
+     measures retention of that problem's solution, not the technique; unseen problems are the only test
+     of recognition and transfer. Full rule + the intake-cap interaction:
+     `.claude/memory/feedback_unseen_on_non_sd_days.md`.
+   - **⚠️ Recompute any NUMERIC reason before renewing a deferral.** An item held because *"surplus is
+     −9.6"* or *"the board is full"* **expires silently the moment the number moves** — exactly the bare-date
+     failure the Waiting Room rule forbids. Re-derive it, or restate the hold as a **state** condition
+     (`green:Dijkstra`, `graduates:210`). Missed Aug 9, 2026: the build carried an intake freeze while
+     documenting, in the same file, that the deficit had closed.
+   - **⚠️ Check every active phase has reps on the board.** Found Aug 9, 2026: `Sliding Window + Stack`
+     opened Aug 3 and sat a full week with **zero** of its 8 problems in the tracker — invisible because
+     the board was full of legitimate review work. Nothing else in the repo surfaces an empty active phase.
 8. **Do not commit per problem — batch.** Make the edits (tracker row, `stuck_log.md`, schedule strike) and move on; commit + push **once** at session end. Every commit fires the pre-commit hook, which rewrites the tracker and causes ~70 lines of it to be re-injected into context; at one commit per problem that is a large, avoidable token cost. Commit early only if the user is about to switch machines (unpushed work would strand them) or the session ends unexpectedly.
 
 ## Comfort-Based Spaced Repetition

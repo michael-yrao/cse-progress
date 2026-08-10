@@ -393,3 +393,23 @@ disease as everything in Cluster A. It is now item 2 of the SessionStart hook's 
   explicit "evaluate at the Aug 17 build" instruction.
   **Rung-3 candidate for the meta-review:** add to §9a step 0 — *"any item deferred at a previous build for
   a NUMERIC reason must have that number recomputed before the deferral is renewed."* Status: `open`.
+
+- **2026-08-09 · [P1] · An ACTIVE PHASE had been open a full week with zero problems scheduled.**
+  Pulling on the learner's *"how come we don't have any new problems this week?"* surfaced that
+  **`Sliding Window (finish) + Stack` opened Aug 3** and had **none of its 8 problems** (239, 155, 150,
+  22, 739, 853, 84, 76) in the tracker — a third of the way through a three-week phase.
+  **Root cause — nothing in the repo surfaces an empty active phase, and a full board hides it.** Every
+  weekly check is *demand*-driven: due reviews, overdue counts, surplus. All of those were healthy, and the
+  board was full of legitimate work, so no signal fired. The phase table in `study_guide.md` carries dates
+  but nothing reconciles it against the tracker. **This is the mirror image of the technique-coverage
+  finding (Jul 28):** the tracker is keyed by *problem*, so it cannot answer *"is this phase started?"* any
+  more than it could answer *"do I know topological sort?"*
+  **Compounding factor:** the intake freeze (logged above) meant the *absence* of new problems looked
+  intentional, so the empty phase read as a consequence of a decision rather than as a gap.
+  **Fix (rung 3):** added to CLAUDE.md's weekly-build minimum contents — *"check every active phase has
+  reps on the board."* Also added the learner's standing rule that every non-SD day carries an unseen
+  problem, which makes an empty phase impossible to miss: the build cannot fill those days without asking
+  *"why is there nothing new to pull?"*
+  **Rung-1 candidate for the meta-review:** `technique_coverage.py` (or a sibling) could emit a
+  `phase status` line — for each phase whose window contains today, how many of its problems have tracker
+  rows. That is a computed answer to a question currently answered by remembering to look. Status: `open`.
