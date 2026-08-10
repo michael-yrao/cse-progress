@@ -1,0 +1,81 @@
+    # ── Attempt · 2026-07-31 ──────────────
+    def nextGreaterElements_20260731(self, nums: List[int]) -> List[int]:
+        # next greater is classic monotonic stack things
+        # twist here is that we have a circular array, so the way we simulate that
+        # is that we go through the array twice via modular arithmetic
+        # we start with a next greater array of size -math.inf
+        # keep a monotonically decreasing array so that when we get the next greater element
+        # we mark it for all prior nodes
+        # we store the index in the stack, not the value so we can track where it was
+
+        decreasingStack = []
+        greater = [-math.inf] * len(nums)
+
+        for i in range(len(nums)*2):
+            actualIndex = i%len(nums)
+            currentNumber = nums[actualIndex]
+            while decreasingStack and currentNumber > nums[decreasingStack[-1]]:
+                prevNode = decreasingStack.pop()
+                # if we have not calculated it yet, mark it
+                if greater[prevNode] == -math.inf:
+                    greater[prevNode] = currentNumber
+            # now that we are no longer greater, add i%2 in there
+            decreasingStack.append(actualIndex)
+        
+        # we will have -inf leftover that had no greater elements
+        for i in range(len(greater)):
+            if greater[i] == -math.inf:
+                greater[i] = -1
+
+        return greater # type: ignore
+
+    # ── Attempt · 2026-07-21 ──────────────
+    def nextGreaterElements_20260721(self, nums: List[int]) -> List[int]:
+        # so in the first variation of this problem
+        # we just go through the array and set next value accordingly using a stack
+        # if we are circular, we just need to circle back by duplicating the data
+        # and we just fill result[index%len]
+        # [1,2,1,1,2,1]
+        # if currentNumber > minStack, put it as minStack.pop's next biggest
+        # so we need to put (value, index) in minStack
+        length = len(nums)
+        decreasingStack = []
+        result = [-1] * length
+
+        # simulate circular by looping through twice
+        for i in range(length*2):
+            # if stack is not empty and nums[i] > decreasingStack[-1], pop it
+            # and assign if not assigned
+            while decreasingStack and nums[i%length] > decreasingStack[-1][0]:
+                priorNode = decreasingStack.pop()
+                priorValue, priorIndex = priorNode[0], priorNode[1]
+                if result[priorIndex%length] == -1:
+                    result[priorIndex%length] = nums[i%length]
+            # now that we are no longer increasing, add nums[i] to the stack
+            decreasingStack.append((nums[i%length],i%length))
+        
+        return result
+
+    def nextGreaterElements_20260711(self, nums: List[int]) -> List[int]:
+        # circular array, what does this mean exactly?
+        # looking at the example, index 2's next greater is index 1
+        # initial idea is to double nums so we can simulate going through it twice
+        # but a better idea is to actually just do i in range(len(nums)*2)
+        # and then use modular arithmetic to get the mapping
+        # so like other next greater problems, we use a map to map num -> next greater
+        # and do a monotonic decreasing stack so when we see a greater number, we know that is the next greater
+
+        result = [-1] * len(nums)
+        decreasingStack = []
+        numSize = len(nums)
+
+        for i in range(2*numSize):
+            currentNumberIndex = i%numSize
+            while decreasingStack and nums[currentNumberIndex] > nums[decreasingStack[-1]]:
+                priorNumberIndex = decreasingStack.pop()
+                if result[priorNumberIndex] == -1:
+                    result[priorNumberIndex] = nums[currentNumberIndex]
+            # now that we are decreasing, insert current number into stack
+            decreasingStack.append(currentNumberIndex)
+        
+        return result

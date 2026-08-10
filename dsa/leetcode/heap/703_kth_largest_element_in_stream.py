@@ -54,46 +54,14 @@ Constraints:
 import heapq
 from typing import List
 
-class KthLargest:
-    
-    def __init__(self, k: int, nums: List[int]):
-        self.k = k
-        self.heap = []
-        # heap by default is minheap so what we should do is create a minheap
-        # of size k so that the smallest value is our return value
-        for n in nums:
-            heapq.heappush(self.heap,n)
-            while len(self.heap) > self.k:
-                heapq.heappop(self.heap)
 
-    def add(self, val: int) -> int:
-        # adds a value to nums and returns kth largest
-        heapq.heappush(self.heap, val)
-        if len(self.heap) > self.k:
-            heapq.heappop(self.heap)
-        return self.heap[0]
-
-# Your KthLargest object will be instantiated and called as such:
-# obj = KthLargest(k, nums)
-# param_1 = obj.add(val)
-
-class KthLargest_20260702:
+# ── Attempt · 2026-08-10 ──────────────
+class KthLargest_20260810:
 
     def __init__(self, k: int, nums: List[int]):
-        self.k = k
-        self.heap = []
-        # since we want the k largest, we are basically going to keep a min heap of size k
-        for num in nums:
-            heapq.heappush(self.heap,num)
-            if len(self.heap) > k:
-                heapq.heappop(self.heap)
+        pass
 
     def add(self, val: int) -> int:
-        heapq.heappush(self.heap, val)
-        if len(self.heap) > self.k:
-            heapq.heappop(self.heap)
-        return self.heap[0]
+        pass
 
-# Your KthLargest object will be instantiated and called as such:
-# obj = KthLargest(k, nums)
-# param_1 = obj.add(val)
+# ⤵ prior attempts stashed in dsa/leetcode/.history/703_kth_largest_element_in_stream.txt — restored at session end (python scripts/restore_history.py)

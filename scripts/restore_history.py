@@ -42,6 +42,9 @@ from new_problem import (
 DATED_ATTEMPT = r"^\s*(?:def\s+\w+_{stamp}\s*\(|class\s+\w+_{stamp}\b)"
 # The banner new_problem.py writes above a dated stub; not code, never counts as a body.
 BANNER = re.compile(r"^\s*#\s*──.*Attempt")
+# Inside a dated *class* attempt these are scaffold new_problem.py wrote, not the learner's work.
+DEF_HEAD = re.compile(r"^\s*(?:async\s+)?def\s+\w+\s*\(")
+DECORATOR = re.compile(r"^\s*@\w")
 
 
 def indent_of(line: str) -> int:
@@ -49,19 +52,35 @@ def indent_of(line: str) -> int:
 
 
 def attempt_has_body(lines: list[str], stamp: str) -> bool:
-    """True if the dated attempt contains anything beyond `pass` / comments / blanks."""
+    """True if the dated attempt contains anything beyond `pass` / comments / blanks.
+
+    A dated *class* attempt (a design problem — `class KthLargest_20260810:`) carries its own
+    method signatures, which new_problem.py wrote as part of the scaffold. Those are not the
+    learner's work, so they must not count as a body: treating them as one made every
+    multi-method scaffold look attempted, and the guard would then paste the prior solution
+    back into the file before the rep had run — the exact spoiler the extract exists to
+    prevent. Found Aug 10, 2026 on 703.
+    """
     head = re.compile(DATED_ATTEMPT.format(stamp=re.escape(stamp)))
     start = next((i for i, ln in enumerate(lines) if head.match(ln)), None)
     if start is None:
         return False
 
+    is_class_attempt = lines[start].lstrip().startswith("class")
     base = indent_of(lines[start])
+    in_signature = False
     for line in lines[start + 1:]:
         if not line.strip():
             continue
         if indent_of(line) <= base and not line.lstrip().startswith("#"):
             break
         stripped = line.strip()
+        if in_signature:
+            in_signature = not stripped.endswith(":")
+            continue
+        if is_class_attempt and (DECORATOR.match(line) or DEF_HEAD.match(line)):
+            in_signature = not stripped.endswith(":")
+            continue
         if stripped in ("pass", "..."):
             continue
         if stripped.startswith("#") or BANNER.match(line):
