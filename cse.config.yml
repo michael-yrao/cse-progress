@@ -51,7 +51,22 @@ effort_budget:
 
   # An SD lane slot costs this much against the day's budget. Sunday is where
   # over-scheduling has been flagged twice, and the design session is real work.
-  sd_lane_units: 2.0
+  #
+  # ⚠️ RAISED 2.0 -> 3.0 on Aug 9, 2026 by the learner: "SD typically tire me out more."
+  # This adds NO work — it corrects the price of work already being scheduled. At 2.0 an
+  # SD day measured ~7 while feeling like ~8+, so the budget was quietly under-reporting
+  # exactly the days that ran hardest, and the correction was being made in prose the way
+  # the problem COUNT used to be (see the note at the top of this block — same failure,
+  # one level down).
+  #
+  # The mechanical effect is the point: an SD slot now consumes a third of the ceiling, so
+  # the scheduler fits FEWER DSA problems alongside it. SD days get lighter in DSA terms
+  # without anyone having to remember to make them lighter.
+  #
+  # Calibration evidence: Sun Aug 9 priced 8.5/9 and ended with the learner too tired to
+  # finish step 4 of the design. At 3.0 that same day prices 9.5 — over ceiling, which is
+  # the honest reading of what happened.
+  sd_lane_units: 3.0
 system_design:
   # three_weekly from the Jul 20 week (raised from twice_weekly on Jul 14, 2026).
   # Each lane owns a slot — never let two bid for the same one:
