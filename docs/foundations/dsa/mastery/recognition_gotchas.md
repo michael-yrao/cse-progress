@@ -71,6 +71,80 @@ the assumptions, not four loops.
 > covered (127/994 BFS · 743/778 Dijkstra · 787 Bellman-Ford). **Now scheduled, not parked** —
 > LC 1334 was promoted into the Advanced Graphs phase (Jul 26), which runs to Aug 9.
 
+## ⚡ Counter semantics in layered BFS — TEACH, Aug 10, 2026 (unrated)
+
+*Written at the teach, per the Aug 10 schedule. Triggered by **127's second consecutive identical
+off-by-one** (Jul 18 · Jul 21 · Aug 3, same break each time). Three reps did not fix it, which is a
+teaching signal and not a repetition signal — same 540/19 rule that moved the Redis cards to a teach.
+**Measured by 127 on Thu Aug 13**; the 3-day gap is deliberate.*
+
+**⚠️ The lesson is NOT BFS.** 994 was flawless the same day 127 broke. The traversal is fine; the
+**counter** is the gap.
+
+### Decision 1 — where does the counter START?
+
+Same path, three defensible answers, and nothing in the graph picks between them:
+
+```
+A —— B —— C
+
+3   nodes total          (A, B, C)
+2   edges / steps
+1   node in between      (B)
+```
+
+**Only the question decides.** Start at **0** → you are counting **edges/steps**. Start at **1** → you are
+counting **nodes**. Read it off the problem statement before writing the loop.
+
+### Decision 2 — when does it INCREMENT?
+
+**Once per layer drained. Never per node popped.**
+
+```
+    A                 layers:  {A} → {B, C} → {D}
+   / \                true distance A→D = 2
+  B   C
+   \ /                per-node counting: pop A, B, C → 3 (or 4 counting D's own pop)
+    D
+```
+
+**Per-node counting measures how WIDE the graph is. Distance is how DEEP it is.** Put five nodes in that
+middle layer and the real distance is still 2, while a per-node counter says 5. Width is irrelevant to
+distance, so it must never touch the counter.
+
+The structural fix — snapshot the layer size *before* draining it:
+
+```python
+while queue:
+    for _ in range(len(queue)):     # len() captured FIRST = exactly this layer
+        node = queue.popleft()
+        ...push neighbours...        # these land in the NEXT layer, not this one
+    steps += 1                       # once per layer, OUTSIDE the inner loop
+```
+
+### 🔑 Why this survived three reps — the diagnostic that matters
+
+**"Nodes visited" and "distance" are equal only when every layer holds exactly one node.**
+
+```
+LINE                          BRANCHING
+A —— B —— C —— D                  A
+                                 / \
+                                B   C
+                                 \ /
+                                  D
+visited before D:  3          visited before D:  3
+distance to D:     3          distance to D:     2
+        ↑ AGREE                       ↑ DIVERGE
+```
+
+**When you hand-trace, you draw a line** — and a line makes the broken version produce the correct answer.
+The trace passes, the code ships wrong, and the next rep repeats it. **The test case that catches it is any
+graph with two nodes in one layer.** Trace a branch, not a line.
+
+*(Learner's own closing statement of it, unprompted: "the counter increments upon finishing a layer, not
+upon visiting a node.")*
+
 ## Call log — hits AND misses (the denominator)
 
 *Started Aug 9, 2026. **Every fired gate gets a line here, whether or not it was a miss.*** A ledger
@@ -95,6 +169,9 @@ so a retry hit is *half-spoiled* and is **not** phase-exit evidence. Only new pr
 | 2026-08-10 | **977 Squares of a Sorted Array** 🎯 **PROBE #1** | "squaring and sort is trivial → use two pointers, one at left and one at right, we can easily tell what is the next biggest number" | ✅ hit, **pre-code and unprompted** — written as a comment before any code, with no gate having been fired first. Full phase-exit evidence: unseen problem, label stripped, scaffolded outside `dsa/leetcode/`. 🟢, so **no tracker row** |
 
 | 2026-08-10 | 503 Next Greater Element II `R` | "next greater element = monotonic stack; decreasing, so when something is increasing it *is* the next greater; store the index; circular = go through the array twice" | ✅ hit, **pre-code** — technique, the invariant's *purpose*, index-not-value, and the circularity reduction all named before any code |
+
+| 2026-08-10 | 703 Kth Largest in Stream `R` | "kth largest means a minHeap of size k" | ✅ hit, **pre-code** — and the *size-k* clause is the load-bearing half; it's what makes space O(k) and what the complexity miss then failed to apply to the time bound |
+| 2026-08-10 | 66 Plus One `R` | "only special case is the 9s — if 999, change each 9 to a 0 and put a 1 in front; otherwise just add 1" | ✅ hit, **pre-code** — the *entire* problem is the carry case, and it was isolated before any code |
 
 ### Probe #1 — what it actually measured (Aug 10, 2026)
 

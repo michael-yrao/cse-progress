@@ -48,6 +48,70 @@ class Solution:
 
     # ── Attempt · 2026-08-10 ──────────────
     def plusOneSolution1_20260810(self, digits: List[int]) -> List[int]:
-        pass
+        # only special case here is if the values are 9s
+        # so if 999, we change each 9 to a 0 and put a 1 in front
+        # otherwise we just add 1
 
-# ⤵ prior attempts stashed in dsa/leetcode/.history/66_plus_one.txt — restored at session end (python scripts/restore_history.py)
+        for i in range(len(digits)-1,-1,-1):
+            if digits[i] == 9:
+                digits[i] = 0
+            else:
+                digits[i]+=1
+                return digits
+        
+        return [1] + digits
+
+    def plusOneSolution1(self, digits: List[int]) -> List[int]:
+        # iterate from last number in list
+        # if digit is 9, set to 0 and continue
+        # otherwise, add 1 and return
+        # if we are out of loop without returning, it means it was all 9s
+        # thus we add 1 in front of list
+
+        # range(start, end, increment)
+        for i in range(len(digits)-1,-1,-1):
+            if digits[i] != 9:
+                digits[i] += 1
+                return digits
+            digits[i] = 0
+
+        return [1] + digits
+
+    def plusOne_20260622(self, digits: List[int]) -> List[int]:
+        # only special case is if all numbers are 9
+        # otherwise, we just increment by 1 starting from the end
+        # since we do addition from the end
+
+        for i in range(len(digits)-1,-1,-1):
+            if digits[i] != 9:
+                digits[i]+=1
+                # no carryforward needed, just return
+                return digits
+            # otherwise, we need to carry over which makes current number 0
+            digits[i] = 0
+        return [1] + digits
+
+    def plusOne_20260701(self, digits: List[int]) -> List[int]:
+        # adding one is really easy, except for when we have to carry forward
+        # so only one real case here
+        # start from the end, if not equal to 9. add 1, return
+        # if equal, set to 0 and continue
+
+        for i in range(len(digits)-1,-1,-1):
+            if digits[i] != 9:
+                digits[i]+=1
+                return digits
+            digits[i] = 0
+        return [1] + digits
+
+class UnitTest(unittest.TestCase):
+    test1 = [4,3,2,1]
+    output1 = [4,3,2,2]
+    test2 = [1,2,3]
+    output2 = [1,2,4]
+
+    def test1PlusOneSolution1(self):
+        result = Solution().plusOneSolution1(self.test1)
+        self.assertEqual(self.output1, result)
+        
+unittest.main()

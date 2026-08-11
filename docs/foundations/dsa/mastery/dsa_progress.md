@@ -64,7 +64,7 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/dsa/mastery/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **101** problems &nbsp;·&nbsp; **110** solutions &nbsp;·&nbsp; **427** reps
+> **101** problems &nbsp;·&nbsp; **110** solutions &nbsp;·&nbsp; **429** reps
 
 | | 🏆 Retired | 🎓 Graduated | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|:---:|
@@ -73,6 +73,8 @@ Notes for future agents:
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Rep Date | Rep Dates |
 |---|---|---|---|---|---|---|
 | Medium | [503. Next Greater Element II](https://leetcode.com/problems/next-greater-element-ii/) | 🟢 | 1 | 2026-09-09 | 2026-08-10 | 2026-07-11, 2026-07-21, 2026-07-31, 2026-08-10 |
+| Easy | [66. Plus One](https://leetcode.com/problems/plus-one/) | 🟢 | 2 | 2026-10-09 | 2026-08-10 | 2026-01-02, 2026-03-25, 2026-06-22, 2026-07-01, 2026-08-10 |
+| Easy | [703. Kth Largest Element in a Stream](https://leetcode.com/problems/kth-largest-element-in-a-stream/) | 🟢 | 2 | 2026-10-09 | 2026-08-10 | 2026-06-22, 2026-07-02, 2026-08-10 |
 | Medium | [721. Accounts Merge (Union-Find)](https://leetcode.com/problems/accounts-merge/) | 🟢 | 1 | 2026-09-08 | 2026-08-09 | 2026-07-30, 2026-08-09 |
 | Easy | [141. Linked List Cycle](https://leetcode.com/problems/linked-list-cycle/) | 🟢 | 2 | 2026-10-08 | 2026-08-09 | 2026-04-26, 2026-07-01, 2026-07-10, 2026-08-09 |
 | Medium | [621. Task Scheduler](https://leetcode.com/problems/task-scheduler/) | 🟢 | 2 | 2026-10-08 | 2026-08-09 | 2026-06-30, 2026-07-01, 2026-07-10, 2026-08-09 |
@@ -170,8 +172,6 @@ Notes for future agents:
 | Medium | [36. Valid Sudoku](https://leetcode.com/problems/valid-sudoku/) | 🟢 | 1 | 2026-08-08 | 2026-07-09 | 2026-01-25, 2026-05-22, 2026-06-30, 2026-07-09 |
 | Medium | [19. Remove Nth Node From End of List (Iterative)](https://leetcode.com/problems/remove-nth-node-from-end-of-list/) | 🟢 | 1 | 2026-08-08 | 2026-07-09 | 2026-04-29, 2026-05-18, 2026-06-30, 2026-07-09 |
 | Medium | [33. Search in Rotated Sorted Array](https://leetcode.com/problems/search-in-rotated-sorted-array/) | 🟢 | 1 | 2026-08-03 | 2026-07-04 | 2026-04-13, 2026-05-29, 2026-06-15, 2026-06-25, 2026-07-04 |
-| Easy | [703. Kth Largest Element in a Stream](https://leetcode.com/problems/kth-largest-element-in-a-stream/) | 🟢 | 1 | 2026-08-01 | 2026-07-02 | 2026-06-22, 2026-07-02 |
-| Easy | [66. Plus One](https://leetcode.com/problems/plus-one/) | 🟢 | 1 | 2026-07-31 | 2026-07-01 | 2026-01-02, 2026-03-25, 2026-06-22, 2026-07-01 |
 | Medium | [684. Redundant Connection (Union-Find)](https://leetcode.com/problems/redundant-connection/) | 🟢 | 1 | 2026-07-31 | 2026-07-01 | 2026-06-18, 2026-06-22, 2026-07-01 |
 | Medium | [153. Find Minimum in Rotated Sorted Array](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/) | 🟢 | 2 | 2026-08-30 | 2026-07-01 | 2026-04-21, 2026-07-01 |
 | Medium | [323. Number of Connected Components (Union-Find)](https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/) | 🟢 | 1 | 2026-07-29 | 2026-06-29 | 2026-06-19, 2026-06-29 |
