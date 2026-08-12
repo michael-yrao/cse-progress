@@ -15,6 +15,7 @@ Each thing now has exactly one owner, and everything else **links** rather than 
 | **State** — comfort, streak, next review, for every tech · concept · component · design | [`mastery/design_progress.md`](mastery/design_progress.md) | link to it; never restate a status in prose |
 | **The plan** — L6 ROI triage of all 55 designs, phases + exit gates, the 7-point rubric, tech order, prereq-tech gate | [`senior_ramp.md`](senior_ramp.md) | link to it; never keep a second design list |
 | **The mechanics** — cadence & the three lanes, session formats, the framework, fork drills, template usage | **this file** | — |
+| **The syllabus** — what topics exist and where each one lives (the SD analogue of `techniques.yml`) | [`coverage_map.md`](coverage_map.md) | link to it; never keep a second topic list |
 
 ⚠️ **A status written in prose is a status that will be wrong in three weeks.** Every stale thing found in
 this reconciliation was a hand-written date or ✅ duplicating something the tracker already computes
@@ -276,6 +277,13 @@ Current file state:
   order, the prereq-tech gate, and the 🔁 overflow block. *(Called "the L5 ramp" here until Aug 8 — stale
   since the Aug 6 re-aim.)*
 - **this file** ✅ — **the mechanics.** Cadence & the three lanes, session formats, fork drills, templates.
+
+**The three owners** *(now four — see the table at the top)*
+- [`coverage_map.md`](coverage_map.md) ✅ — **the syllabus.** The four-pillar cross-walk against
+  HelloInterview's *System Design in a Hurry* (Core Concepts · Key Technologies · Patterns · Delivery),
+  written Aug 11, 2026. Answers *"is the subject covered"*, which no other file could — the tracker
+  answers *"is it retained."* **Headline: Delivery is already `framework.md`; Key Technologies all have
+  rows; Core Concepts is 2 of 9; Patterns is 0 of 8.**
 
 **Material**
 - [`framework.md`](framework.md) ✅ — the delivery framework, step by step. Reread before any
