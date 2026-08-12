@@ -4,6 +4,10 @@
 > [HelloInterview's *System Design in a Hurry*](https://www.hellointerview.com/learn/system-design/in-a-hurry/core-concepts)
 > structure into this repo. Answer: **three of its four pillars are already here under different names.**
 > The fourth is entirely absent. This file is that mapping.
+>
+> **"HelloInterview" is written out in full everywhere below, deliberately.** The first draft abbreviated it
+> to *"HI"* — an abbreviation invented here, expanded nowhere, in a file meant to be reread cold weeks later.
+> That is the acronym rule failing in its most avoidable form. See [[feedback_expand_acronyms]].
 
 ## 🧭 What this file owns (read before editing)
 
@@ -32,10 +36,10 @@ appears here only as *none yet* (a routing fact, not a progress claim).
 ## Pillar 1 — Delivery ✅ already adopted
 
 **HelloInterview's *Delivery* is [`framework.md`](framework.md).** Not "similar to" — the same six steps,
-the same time allocations, and it already carries HI's distinctive estimation stance (don't front-load a
+the same time allocations, and it already carries HelloInterview's distinctive estimation stance (don't front-load a
 wall of math; do the arithmetic at the box where a number changes a decision).
 
-| HI step | budget | `framework.md` |
+| HelloInterview step | budget | `framework.md` |
 |---|---|---|
 | Requirements (functional · non-functional · capacity) | ~5 min | §1 |
 | Core Entities | ~2 min | §2 |
@@ -51,9 +55,9 @@ shortener, Sun Aug 16). **No action.**
 
 ## Pillar 2 — Key Technologies ✅ structurally present, ⚠️ mostly unbuilt, and mislabelled
 
-All ten HI technologies have a home. **Only one is drilled.**
+All ten HelloInterview technologies have a home. **Only one is drilled.**
 
-| HI technology | This repo | File |
+| HelloInterview technology | This repo | File |
 |---|---|---|
 | Relational Database | `PostgreSQL` row | [`technologies/postgresql.md`](technologies/postgresql.md) |
 | NoSQL Database | `Cassandra` + `DynamoDB` rows | none yet |
@@ -71,7 +75,7 @@ All ten HI technologies have a home. **Only one is drilled.**
 **1. Blob storage is missing outright**, and it is load-bearing for Dropbox, YouTube, Instagram — three
 designs already on the board. Any design that moves a file larger than a row hits it immediately.
 
-**2. ⭐ HI names technologies by ROLE; this repo names them by PRODUCT — and HI's framing is the better
+**2. ⭐ HelloInterview names technologies by ROLE; this repo names them by PRODUCT — and HelloInterview's framing is the better
 interview instrument.** *Queue · Distributed Lock · Distributed Cache · Search Optimized Database* are
 **jobs**; *Kafka · ZooKeeper · Redis · Elasticsearch* are **answers**. In an interview you reach for the
 job first (*"I need to decouple this write path"*) and name the product second, and the product is
@@ -90,10 +94,10 @@ the Aug 17 build.**
 
 ## Pillar 3 — Core Concepts ⚠️ 2 of 9
 
-| HI core concept | This repo | Status of the mapping |
+| HelloInterview core concept | This repo | Status of the mapping |
 |---|---|---|
 | Networking Essentials | [`concepts/networking_basics.md`](concepts/networking_basics.md) | ✅ mapped (re-teach scheduled Thu Aug 13) |
-| Caching | [`components/caching.md`](components/caching.md) | ✅ mapped, and deeper than HI's version |
+| Caching | [`components/caching.md`](components/caching.md) | ✅ mapped, and deeper than HelloInterview's version |
 | **API Design** | — | ❌ **gap** |
 | **Data Modeling** | — | ❌ **gap** |
 | **Database Indexing** | — | ❌ **gap** (checked: `postgresql.md` covers ACID, replication, replica lag — *not* indexing) |
@@ -102,9 +106,9 @@ the Aug 17 build.**
 | **CAP Theorem** | — | ❌ **gap** ([`quorum_math.md`](concepts/quorum_math.md) is adjacent — R+W>N is a *consequence* of the CAP position, not a statement of it) |
 | **Numbers to Know** | — | ❌ **gap** (percentiles and Little's Law are adjacent; neither is the latency/throughput cheat sheet) |
 
-### ⚠️ Do NOT collapse `concepts/` into HI's Core Concepts — they are different axes
+### ⚠️ Do NOT collapse `concepts/` into HelloInterview's Core Concepts — they are different axes
 
-Seven of the nine files in `concepts/` map to **nothing** in HI: Little's Law · percentiles & tail latency ·
+Seven of the nine files in `concepts/` map to **nothing** in HelloInterview: Little's Law · percentiles & tail latency ·
 utilization & queueing · probabilistic sketches · retry storms & stampedes · Zipfian · Bloom filter.
 
 That is not redundancy to prune — it is the **quantitative-foundations lane**, added deliberately because
@@ -117,13 +121,13 @@ Deleting or merging that lane would re-open the exact hole it was built to close
 | | |
 |---|---|
 | **Quantitative foundations** (existing 9) | facts needed mid-sentence to defend a number. No natural design trigger ⟹ must be front-loaded |
-| **HI Core Concepts** (the 7 gaps) | structural techniques every design touches. **These *do* have natural triggers** ⟹ let designs and patterns pull them |
+| **HelloInterview Core Concepts** (the 7 gaps) | structural techniques every design touches. **These *do* have natural triggers** ⟹ let designs and patterns pull them |
 
 ---
 
 ## Pillar 4 — Patterns ❌ 0 of 8 — the actual hole
 
-| HI pattern | This repo |
+| HelloInterview pattern | This repo |
 |---|---|
 | Pushing Realtime Updates | ❌ |
 | Managing Long-Running Tasks | ❌ |
