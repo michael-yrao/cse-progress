@@ -433,3 +433,17 @@ disease as everything in Cluster A. It is now item 2 of the SessionStart hook's 
   it must stand alone to be reviewable; (b) a superseded scaffold gets **left in place** and mentioned, never
   removed — an unused blank stub in `dsa/probes/` costs nothing and creates no tracker row *by design*;
   (c) if removal is genuinely wanted, ask. Related: [[feedback_verify_terminal_actions]]. Status: `open`.
+
+- **2026-08-11 [P1] — invented an acronym and never expanded it.** Wrote `coverage_map.md` using
+  **"HI"** for HelloInterview throughout (7 occurrences, plus 4 table headers), never expanded once.
+  Learner had to ask *"what is HI"*. Two aggravating factors over an ordinary acronym lapse: (1) the
+  abbreviation was **coined by me**, not inherited from the source, so there was no chance of the reader
+  having met it before; (2) it went into a **written note**, which is the artifact reread cold weeks later
+  with nobody to ask — exactly the case the rule names as the reason it also applies to notes and not just
+  chat. Fixed same turn: all occurrences expanded, and a standing line added to the file's header saying
+  why the full name is used. *Root cause candidate: the acronym rule is currently a memory file + a
+  CLAUDE.md paragraph — a **paragraph**, per the intervention ladder. It fires reliably for inherited
+  acronyms (TCP, QPS, CDN) and did not fire at all for one I created mid-document, which suggests the
+  trigger I actually run is "recognise a known acronym" rather than "check every capitalised short form."*
+  `open` — one occurrence; re-examine at the meta-review, and if it recurs the rung-2 fix is a Stop-hook
+  flagging 2–3 letter all-caps tokens in staged `.md` that never appear adjacent to an expansion.
