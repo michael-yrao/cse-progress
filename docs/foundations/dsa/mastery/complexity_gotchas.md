@@ -42,6 +42,7 @@ Jul 29 (235), where **time** was the wrong one and space was right — see the t
 | **Sequential fan-out (space)** | same `for`-loop recursion as above | *"how many of those paths are alive at once?"* | **O(depth), not O(b^d)** — DFS walks one path to the bottom, returns, and **reuses the frames**. Explored-sequentially branching is a *time* cost only. You'd pay it in space only by holding all paths simultaneously (BFS with a queue) |
 | **Size-capped heap (time)** *(added Aug 10, 2026, via 703 — 3rd occurrence)* | a heap with an explicit trim: `if len(heap) > CAP: heappop`, where CAP is `k`, a constant, or a fixed-alphabet bound | *"how big does that heap actually get? then what's the log over?"* | **`log CAP`, not `log n`.** The trim means the heap **never holds n**, so each push/pop is `log CAP` and a loop over n costs `O(n log CAP)`. Seen three times on three different problems: **355** (capped at 10 → `O(1)`/op), **621** (capped at 26 → `log 26` = `O(1)`), **703** (capped at `k` → `O(n log k)`). ⚠️ **The trim line is the whole tell** — it's one line, easy to skim past, and it changes the bound |
 | **Re-pushed stack bound (space)** *(added Aug 10, 2026, via 503)* | a monotonic stack under a **two-pass / circular** loop (`for i in range(len(nums)*2)`) that pushes on **every** iteration | *"can an index get pushed more than once? then what's the real ceiling?"* | **Not `n`.** Each index is pushed once per pass, so the stack can hold **n+1**. Concrete witness on 503: `[5,4,3,2,1]` — pass 1 fills it to 5, the first pass-2 element drains it to 2, then four more pushes rebuild it to **6**. Still **O(n)**, so the *bound* survives; what fails is the itemization, and "at most n" is exactly the clause an interviewer probes. **Cue: a per-iteration push over a `2n` loop cannot be bounded by `n` without an argument for why things leave** |
+| **Bounded state space (time)** *(added Aug 11, 2026, via 202)* | a `while`/recursion that repeatedly applies a **function to a value** (not a walk over the input) with a `seen` set as the halt condition — no `n` anywhere in the loop body | *"after one step, how big can this value still be? and after two?"* | **Constant iterations — the loop count stops depending on `n`.** Compute the collapse: on 202 one step gives ≤ `10·9² = 810`, the next ≤ `3·9² = 243`, so the walk is trapped in 243 values and pigeonhole caps it at 243 steps. What's left is whatever work still scales — the **first digit split**, `O(log n)`. ⚠️ **Same family as 229/269/621** (a constraint collapses a term to a constant) **but inverted**: there the bound was handed to you in the constraints, here you have to *derive it from the operation*. **Cue: say the collapse before quoting the number** — "O(1)" alone reads as hand-waving; "it drops to ≤243 after two steps, so O(1)" reads as reasoning |
 | **Binary search on the ANSWER (time)** *(added Aug 9, 2026, via 1011)* | `l, r = <smallest feasible>, <largest feasible>` ranging over **values**, with a feasibility check called inside the loop | *"what are you halving — the array, or the space of possible answers?"* | **O(n · log(hi − lo))**, **not** `O(n log n)`. The `log` is over the **value range**, read off the constraints; `n` enters only through the feasibility scan. The two are **independent quantities**: on 1011, `log(sum(weights)) ≈ 25` against `log n ≈ 16`, and with values to 10⁹ against a 10-element array they diverge completely. `log n` is only right when you binary-search **indices** |
 
 **⚠ Consistency check — the two bounds must agree.** On a single downward walk, the recursion stack's
@@ -130,9 +131,47 @@ A problem in this table has used its one free complexity miss. The **next** miss
 | 323 Connected Components (BFS) | graph traversal (**time**) — *dropped-term variant* | O(E) → **O(V + E)**. Space `O(V+E)` was correct; time lost the `V` entirely. Reasoning given: *"if they are not connected, it is a constant time run"* — true **per iteration** of `for node in range(n)`, but there are `V` such iterations, so the constant-work scan is still `O(V)` in total | 2026-08-05 | spent |
 | 621 Task Scheduler | **fixed-alphabet (space AND time)** — *5th of this family* | Space O(n) → **O(1)**; time "O(min(k,i)·n log n)" → **O(N)**. `tasks[i] is an uppercase English letter` ⟹ `k ≤ 26`, so `freqMap`, `maxHeap` and `tasksLeft` are all constant-sized and every `log k` is `log 26`. Total pops across the whole run = `N` (one per task instance), giving `O(N · log 26) = O(N)`. **New disguise for an old family** — 242/567/424 were freq *arrays*, 269 was a *graph*, this is a *heap* | 2026-08-09 | spent |
 | 1011 Capacity to Ship | **binary search on the answer (time)** — *new category, see above* | O(n log n) → **O(n · log(sum − max))**. Justification given was *"binary is log n"* — but the search runs over the **capacity range** `[max(weights), sum(weights)]`, not over the array. `n` appears only in `canShip`. Code was otherwise clean: correct bounds, correct lower-bound template, no off-by-one | 2026-08-09 | spent |
+| ↳ **✅ TRANSFERRED — 875 Koko, 2026-08-11** | *(not a miss; recorded because a carded cue actually firing on a **different problem** is the outcome this ledger exists to produce)* | **O(n log k), k = max(piles)**, volunteered unprompted with `k` named. The 1011 miss was *"binary is log n"* — the log is over the **value range**, not the array. Two days later, on the sibling problem, the right form came out first try. **This is the freebie ledger working as intended: the unit that decays is the *category*, not the problem** — which is also the open question in build-agenda item #2, pointing the other way | 2026-08-11 | — |
 | 133 Clone Graph (BFS) | graph traversal (**time**) — *dropped-term variant, mirror of 323* | O(n) → **O(V + E)**. Justification given was *"traverse all nodes"* — true, and it accounts for the outer `while` only. The inner `for neighbor in oldNode.neighbors` runs **2E times in total** across the whole traversal, and `E` is not bounded by `V` (a dense graph has `E ≈ V²/2`). **Space O(V) was fine** as *auxiliary* (map + queue); say which you mean, since counting the constructed clone's adjacency lists makes it O(V+E) | 2026-08-09 | spent |
 | 703 Kth Largest in Stream | **size-capped heap (time)** — *3rd of this family, 3rd different problem* | `__init__` O(n log n) → **O(n log k)**. The learner's own `if len(minHeap) > k: heappop` caps the heap at k, so every push/pop costs `log k` and the heap **never holds n**. With k=3, n=10⁴ that is ~1.6·10⁴ ops, not ~1.3·10⁵. *(Space O(k) was correct — and correct **because** the trim happens inside the init loop; the common wrong version pushes all n first and drains after, which is O(n).)* Separately, "heapify makes it O(n)" doesn't land: heapify builds a heap of **all n**, so you still extract down to k and hold O(n) space — best variant is max-heapify + k pops = **O(n + k log n) time, O(n) space**, a space-for-time trade rather than a free win | 2026-08-10 | spent |
+| 323 Connected Components (DFS) | graph traversal (**time**) — *multiply-instead-of-add variant* | O(V·E) → **O(V+E)**. **REPEAT on 323** (BFS row, Aug 5, dropped-term variant) — so the rule says this rep caps at 🟡. ⚠️ **CAP WAIVED BY LEARNER OVERRIDE, recorded not silent** (see the note under the table). Needed the full aggregate-counting walkthrough: each node clears the `visited` guard **once ever**, so `Σ deg(u) = 2E` across the whole run and the outer loop adds `V` — nesting only multiplies when the inner loop restarts fresh each time | 2026-08-11 | n/a — repeat |
+| 202 Happy Number | **bounded state space (time)** — *new category, see below* | O(1) → **O(log n)**. Space O(1) was right and for the right reason. The bound was supplied, not derived: after one step the value is ≤ 10·9² = **810** whatever `n` was, and anything ≤ 810 has ≤ 3 digits so from step two on it is ≤ 3·9² = **243** — 243 possible values, so the seen-set forces a halt within 243 steps by pigeonhole. What survives that collapse is the **first digit split**, which costs one unit per digit = `log₁₀(n)`. **New problem ⟹ double freebie; no cap.** *Same family as 229/269/621 (a constraint collapses a term to a constant) but inverted — there the alphabet was given in the constraints, here the bound has to be **computed from the operation itself*** | 2026-08-11 | spent |
 | 105 Construct Tree from Pre+In | **retained slices + per-node scan (time AND space)** | O(n)/O(n) → **O(n²)/O(n²) worst case** (O(n log n)/O(n) balanced). Two independent costs, both invisible as written: `inorder.index(rootVal)` is a **linear scan re-run at every node**, and the four slices per frame are **copies**, alive while recursing. Skewed tree ⟹ `n + (n-1) + (n-2) + …` for both | 2026-08-09 | spent |
+
+### 📌 RECORDED OVERRIDE — 323 DFS, Aug 11, 2026: the 🟡 cap was waived by the learner
+
+The rule fired correctly (repeat miss on 323, first miss Aug 5) and the learner **overrode it to 🟢**, with
+a reason worth preserving because it is an argument *from the engine's own logic*, not a plea:
+
+> *"I just want more practice on recognizing it on the other problems, redoing this in 10 days won't really
+> help much there."*
+
+**The case for the override.** The unit that failed is the **category**, not the problem — and the category
+is re-tested three times inside twelve days on *different* problems (**261 DFS Aug 16 · 133 Aug 19 ·
+210 Aug 23**). A fourth rep of 323 itself would measure recall of 323's solution, which was never in doubt;
+the code was clean and unhinted. This is the same reasoning as the fast-track's coverage gate — *stop
+testing the technique at its weakest instance while harder ones keep doing the work* — and the same
+reasoning as per-algorithm phase exit.
+
+**The cost, stated plainly:** 323-DFS was 🟢 s1, so 🟢 makes it **s2 → +60 → Oct 10.** It leaves the board
+for two months. That is only safe *if* the category actually gets fired cold on 261/133/210 — so **fire
+the complexity gate cold on 261 (Aug 16)**; that rep is now carrying this one's weight.
+
+⚠️ **This is exactly build-agenda item #2 and should be read as evidence for it, not as an exception to
+it.** A per-problem freebie could not see the pattern below; a category freebie would have capped the
+Aug 5 rep and there would have been nothing to override.
+
+| date | problem | said | actual |
+|---|---|---|---|
+| Jul 24 | 210 Course Schedule II | **O(V·E)** | O(V+E) |
+| Aug 5 | 323 (BFS) | O(E) | O(V+E) |
+| Aug 9 | 133 Clone Graph (BFS) | O(n) | O(V+E) |
+| Aug 11 | 323 (DFS) | **O(V·E)** | O(V+E) |
+
+**Four misses, three problems, one category, one cap fired** — and it fired only because the category
+happened to land on the same problem twice. **Second independent instance of the structural hole**
+(fixed-alphabet was the first: 5 misses / 5 problems / 1 cap). Two categories showing it is a much stronger
+case than one.
 
 **⚠️ 269's repeat miss (Jul 29) took a specific shape worth naming, because it is the shape this whole
 category takes.** The learner correctly derived *"`rankMap` holds at most 26 keys"* — the load-bearing

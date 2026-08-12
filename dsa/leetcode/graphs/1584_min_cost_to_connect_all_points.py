@@ -33,6 +33,50 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-08-11 ──────────────
+    def minCostConnectPoints_20260811(self, points: List[List[int]]) -> int:
+        # Minimum Spanning Tree, built via Prim's Algorithm
+        # Idea is that we are expanding our component to the nearest node that is not yet part of the component
+        # So we start with a distance array and relax against the our candidate to be absorbed
+        # Visited set will hold nodes that are already part of the component
+        # we will use the index as our key here
+
+        distance = [math.inf] * len(points)
+        # set our starting point to have distance of 0
+        distance[0] = 0
+
+        visited = set()
+
+        def getCandidate():
+            candidate = math.inf
+            candidateValue = math.inf
+            for i in range(len(distance)):
+                if i not in visited:
+                    if distance[i] < candidateValue:
+                        candidate = i
+                        candidateValue = distance[i]
+            return candidate
+
+        # relax all unvisited nodes relative to candidate
+        def relax(candidate):
+            for i in range(len(distance)):
+                if i not in visited:
+                    # calculate distance from i to candidate
+                    manhattanDistance = abs(points[candidate][0] - points[i][0]) + abs(points[candidate][1] - points[i][1])
+                    distance[i] = min(distance[i], manhattanDistance)
+
+        # while we have not connected all nodes yet
+        while len(visited) != len(points):
+            # get our candidate to insert into the component
+            candidate = getCandidate()
+            # add candidate to the visited
+            visited.add(candidate)
+            # relax distance of all nodes in relation to visited
+            relax(candidate)
+
+        # return sum of distance
+        return sum(distance) # type: ignore
+
     # ── Attempt · 2026-08-01 ──────────────
     def minCostConnectPoints_20260801(self, points: List[List[int]]) -> int:
         # connecting all points with minimum cost, min spanning tree

@@ -19,6 +19,42 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🟡 150. Evaluate Reverse Polish Notation — 2026-08-11 *(first exposure; phase intake)*
+**Sticking point**: **not the stack — the spec.** The algorithm was in hand within a minute of
+understanding the notation; all three bugs were places where *the problem statement disagreed with a
+language default and it went unnoticed.* (1) **Operand order** — `numsArray[0]` is the *first pop*, which
+is the **right-hand** operand, so `13 5 /` computed `5/13`; matters only for `-` and `/`, so it hides
+behind `+`/`*`. (2) **`//` floors, the spec truncates toward zero** — they differ only when the quotient
+is negative, so examples 1 and 2 pass and example 3 (already in the docstring) is the one that fails:
+`6 // -132 = -1`, wanted `0`. ⚠️ **This one took two rounds** — flagged, not fixed, and then `6 // -132`
+was still read as `0` when asked directly. (3) `["5"]` — a single operand is valid input, the loop never
+runs an operator, and the early return meant the function fell off the end.
+**The fix was theirs and is better than the usual one:** switching `//` → `/` leaves a float on the stack,
+and since every pop already goes through `int()`, the truncation-toward-zero happens for free — no
+`int(a/b)` special-case needed.
+**Cue: when a problem's statement bothers to *specify* an arithmetic behaviour (rounding direction, overflow,
+tie-breaks), that is a warning that your language's default is the other one. Go check it, don't assume.**
+*(Complexity was fine — O(n)/O(n), no freebie spent. One framing correction: `n/2` **is** O(n), not "O(n)
+for simplicity" — big-O discards constant factors by definition. The nice itemization is "at most ~n/2,
+since a valid RPN with k operands has exactly k−1 operators.")*
+*(⚠️ Recognition was NOT measurable here — the scaffold path `stack/` and the docstring's `Pattern: stack`
+named the technique, and the coach then walked the notation. Logged as not-evidence.)*
+
+---
+
+## 🟡 202. Happy Number — 2026-08-11 *(🎯 recognition probe #2; first exposure)*
+**Sticking point**: **shared mutable state — `seen` was declared as a class attribute**, so it was created
+once at import and survived across calls. `Solution().isHappy(19)` then a *brand-new* `Solution().isHappy(82)`
+returns False, and 82 is happy. Not self-caught; the failing pair was supplied. First instinct on the fix was
+also the wrong direction — *"it should have lived outside the class"* — which is the same lifetime, just
+wider. Landed correctly on a local + closure once the scope ladder (module → class → instance → local) was laid out.
+**Cue: a container holding the working state of ONE question must be born and die with that question. If it
+sits at class or module level it outlives the answer, and the second caller inherits the first caller's set.**
+*(Secondary: the recognition call never fired cold — see `recognition_gotchas.md` probe #2 write-up. The
+pre-code comment stated a sub-goal, not a technique.)*
+
+---
+
 ## 🟡 1334. Find the City (Floyd-Warshall) — 2026-08-05 *(2nd attempt; measurement half of the Jul 31 teach)*
 **Sticking point**: **the teach took on recognition, not on the data structure.** Named Floyd-Warshall cold
 from "all pairs + n ≤ 100" before writing a line, and stated the relaxation premise correctly in the pre-code

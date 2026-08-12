@@ -35,6 +35,34 @@ from typing import List
 
 class Solution:
 
+    # ── Attempt · 2026-08-11 ──────────────
+    def countComponents_20260811(self, n: int, edges: List[List[int]]) -> int:
+        # doing DFS today
+        # construct an adjMap, add a visited set
+        # loop on n, DFS to mark visited
+        numberOfComponents = 0
+        visited = set()
+        adjMap = collections.defaultdict(list)
+        for n1, n2 in edges:
+            adjMap[n1].append(n2)
+            adjMap[n2].append(n1)
+        
+        def dfs(node):
+            if node in visited:
+                return 0
+            visited.add(node)
+            # mark neighbors as visited
+            for neighbor in adjMap[node]:
+                dfs(neighbor)
+            return 1
+
+        # now let's go through n and mark as visited as we go
+        for node in range(n):
+            if node not in visited:
+                numberOfComponents+=dfs(node)
+        
+        return numberOfComponents
+
     # ── Attempt · 2026-08-05 ──────────────
     def countComponents_20260805(self, n: int, edges: List[List[int]]) -> int:
         # requirement was to do this via BFS today

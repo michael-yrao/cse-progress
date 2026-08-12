@@ -35,4 +35,17 @@ from typing import List, Optional
 class Solution:
     # ── Attempt 1 · 2026-08-10 ────────────────────────────────────────────
     def isHappy(self, n: int) -> bool:
-        pass
+        seen = set()
+        def happy(n):
+          # we need to define an end point for both success and failure
+          if n == 1:
+              return True
+          if n in seen:
+            return False
+          
+          seen.add(n)
+          happyNumber = 0
+          for digit in str(n):
+              happyNumber+=int(digit)**2
+          return happy(happyNumber)
+        return happy(n)

@@ -187,6 +187,16 @@ techniques:
     problems:
       - {number: 20}
 
+  # The base rung of the expression-evaluator family. RPN is the easy form because
+  # the notation has already resolved precedence and parens — 224/227/772 are the
+  # same stack with those two problems added back, and are the reason this rung
+  # exists at all. Added Aug 11, 2026 via 150.
+  - name: Stack (expression evaluation)
+    family: stack
+    min_problems: 2
+    problems:
+      - {number: 150}
+
   - name: Monotonic Stack
     family: stack
     problems:
@@ -347,6 +357,19 @@ techniques:
     min_problems: 1
     problems:
       - {number: 261, method: DFS}
+
+  # Distinct from the graph flavour above: there is no adjacency list and no
+  # explicit graph. A function maps each value to exactly one successor, so the
+  # walk is a rho shape (tail into a loop) and the only question is whether the
+  # loop contains the target. Added Aug 11, 2026 via probe #2.
+  - name: Cycle Detection in an Iterated Sequence
+    family: graphs
+    min_problems: 2
+    variants:
+      - {name: Seen-Set}
+      - {name: Floyd Fast/Slow, queued: "rated:202"}
+    problems:
+      - {number: 202, method: Seen-Set}
 
   - name: Connected Components
     family: graphs
