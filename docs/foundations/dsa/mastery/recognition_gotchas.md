@@ -71,6 +71,32 @@ the assumptions, not four loops.
 > covered (127/994 BFS · 743/778 Dijkstra · 787 Bellman-Ford). **Now scheduled, not parked** —
 > LC 1334 was promoted into the Advanced Graphs phase (Jul 26), which runs to Aug 9.
 
+### Sparse vs dense — the *second* question, after the technique is picked (added Aug 11, 2026)
+
+Picking Dijkstra or Prim's doesn't finish the job: **both have two implementations, and the graph's
+density picks between them.** Came up on 1584 (Aug 11) — the array version was written, correctly, and
+the reasoning behind it was only articulated when asked.
+
+| | Edge count | Prim's / Dijkstra cost | Wins when |
+|---|---|---|---|
+| **Sparse** | E ≈ V (a few neighbors each, no matter how big V gets) | **heap** — O(E log V) | almost always in practice |
+| **Dense** | E ≈ V² (near every pair connected) | **array scan** — O(V²) | E is large enough that `log V` is pure overhead |
+
+**Concretely, at V = 1000 (1584's cap):** complete graph → E ≈ 500k, so heap = 500k · ~10 ≈ **5M** vs
+array = **1M**. The array version wins by 5×. Flip to a sparse graph with E = 4V: heap = 4k · 10 = **40k**
+vs array = still **1M**. The array version loses by 25×.
+
+**Real-world handles:** road map is sparse (a million intersections, ~4 roads each). Social graph is
+sparse (billions of people, hundreds of friends). **A geometry problem where any point can connect to
+any other point is dense** — that's 1584, and it's the tell that the array version is right.
+
+⚠️ **The complexity-statement trap this creates.** On a complete graph E = Θ(V²), so `O(V²)` and `O(E)`
+are the same number and both "check out." **State it as O(V²) anyway.** `O(E)` claims the cost scales
+with edge count — but the array implementation does V rounds of a V-wide scan and never touches an edge
+list, so it stays O(V²) on a sparse graph too. The labels agree here by coincidence; only O(V²) survives
+the follow-up *"so it's fast on a sparse graph, then?"* **Cue: name the bound after what the loops
+actually do, not after what the graph happens to contain.**
+
 ## ⚡ Counter semantics in layered BFS — TEACH, Aug 10, 2026 (unrated)
 
 *Written at the teach, per the Aug 10 schedule. Triggered by **127's second consecutive identical
@@ -169,9 +195,13 @@ so a retry hit is *half-spoiled* and is **not** phase-exit evidence. Only new pr
 | 2026-08-10 | **977 Squares of a Sorted Array** 🎯 **PROBE #1** | "squaring and sort is trivial → use two pointers, one at left and one at right, we can easily tell what is the next biggest number" | ✅ hit, **pre-code and unprompted** — written as a comment before any code, with no gate having been fired first. Full phase-exit evidence: unseen problem, label stripped, scaffolded outside `dsa/leetcode/`. 🟢, so **no tracker row** |
 
 | 2026-08-10 | 503 Next Greater Element II `R` | "next greater element = monotonic stack; decreasing, so when something is increasing it *is* the next greater; store the index; circular = go through the array twice" | ✅ hit, **pre-code** — technique, the invariant's *purpose*, index-not-value, and the circularity reduction all named before any code |
-
 | 2026-08-10 | 703 Kth Largest in Stream `R` | "kth largest means a minHeap of size k" | ✅ hit, **pre-code** — and the *size-k* clause is the load-bearing half; it's what makes space O(k) and what the complexity miss then failed to apply to the time bound |
 | 2026-08-10 | 66 Plus One `R` | "only special case is the 9s — if 999, change each 9 to a 0 and put a 1 in front; otherwise just add 1" | ✅ hit, **pre-code** — the *entire* problem is the carry case, and it was isolated before any code |
+| 2026-08-11 | 1584 Min Cost to Connect All Points `R` | "Minimum Spanning Tree, built via Prim's. Expand the component to the nearest node not yet in it; distance array relaxed against the absorbed candidate; visited set holds what's already in the component; index as the key" | ✅ hit, **pre-code** — the comment was the call, written before any code. Named the technique *and* the invariant (`distance[i]` = cheapest edge from the tree to `i`), which is the part that actually decides whether the code comes out right. See the density note below |
+| 2026-08-11 | 323 Connected Components (DFS) `R` | "construct an adjMap, add a visited set, loop on n, DFS to mark visited" | ✅ hit, **pre-code** — though heavily half-spoiled even by retry standards: the tracker row names the method *and* today's rep was announced as the DFS one. Recognition was never in question here; the miss was on the **cost** of the traversal, not its identity |
+| 2026-08-11 | 875 Koko Eating Bananas `R` | "h ≥ len(piles) so we can always finish; max(piles) always works; we need at least 1 banana/hr — so the range is 1 to max(piles), min-boundary binary search" | ✅ hit, **pre-code** — and the good part is that the **bounds were derived, not recalled**: both ends were justified from the constraints in the comment before any code. That derivation is what made the complexity answer right too (see the 1011 transfer note in `complexity_gotchas.md`) |
+| 2026-08-11 | 150 Evaluate RPN (**new**) | "push when we see a number, pop two when we see an operator" | ⚠️ **not evidence — pre-spoiled.** The scaffold path is `dsa/leetcode/stack/` and the docstring header reads `Pattern: stack`, so the technique was named before the learner opened the file; the coach then walked the RPN notation, which is most of the mechanism. **A new problem is only recognition evidence if nothing named the technique** — logging it as a hit would inflate the denominator with a freebie. This is the `<pattern>/` scaffold-path defect ([[project_upstream_candidates]]) showing up on a *new* problem rather than a retry |
+| 2026-08-11 | **202 Happy Number** 🎯 **PROBE #2** | pre-code comment was *"we need to define an end point for both success and failure"* — a plan, not a technique. Correct call (**cycle detection → seen-set**) arrived only after the coach challenged the termination condition | ⚠️ **partial — did not fire cold.** See the write-up below. 🟡, so it **earns a tracker row** |
 
 ### Probe #1 — what it actually measured (Aug 10, 2026)
 
@@ -194,6 +224,50 @@ the output is mandatory and write-only, so it carries no information about the a
 interview-frequency pool. On the learner's correction (*"pull from the list we discussed from interviews"*)
 probe #2 (202 Happy Number) was drawn via `scripts/pull_interview.py` instead. **Future probes come from
 the tool** — it excludes tracked problems and gates on learned patterns, which recall cannot guarantee.
+
+### Probe #2 — what it actually measured (Aug 11, 2026)
+
+**Result: 🟡 Shaky, and the first probe to earn a tracker row.**
+
+**The gate did not fire cold, and that is the finding.** The pre-code comment was *"we need to define an
+end point for both success and failure"* — a **statement of the sub-goal, not a technique**. Compare 977's
+call, which named the alternative, the technique, and the picking feature before any code. A plan-shaped
+comment is the failure mode to watch for: it *looks* like a recognition call sitting in the right place in
+the file, so it passes a glance, but it commits to no technique and therefore can't be right or wrong.
+
+**Cue: if the comment would still be true for a different algorithm, it isn't a call.** "Define an end
+point" is true of every terminating loop ever written.
+
+**What did work — the correction came from being asked to defend, not from being told.** The first draft
+terminated on *"a single digit that isn't 1 ⟹ unhappy."* Challenged with *"convince me that's true"*, the
+learner immediately abandoned it for **"we need to check if we've seen this number before"** — the real
+technique, self-generated. **Keep that move**: challenging the learner's own line produced the insight,
+where naming the technique would have spent it.
+
+> 🧾 **Footnote worth keeping, because the first draft was not actually wrong.** *"Single digit ≠ 1 ⟹
+> unhappy"* is **true in base 10** — the only cycle is 4 → 16 → 37 → 58 → 89 → 145 → 42 → 20 → 4, and it
+> passes through 4, so every unhappy chain does hit a single digit. It was abandoned because it was
+> **undefendable, not because it was incorrect** — it rests on a number-theoretic fact you'd have to
+> already know. That is the right call in an interview: a correct answer you cannot justify reads as a
+> memorized trick, and the general mechanism (cycle detection) costs nothing extra here.
+
+**Complexity — new problem, so the double freebie applies; no cap fired.** Called it O(1)/O(1). Space is
+right. **Time is O(log n)** — the first digit split is proportional to the digit count, and it is the only
+n-dependent work in the whole algorithm. The bounding argument was coach-supplied on request:
+
+> after one step the value is ≤ 10 × 9² = **810** regardless of how large `n` was; anything ≤ 810 has ≤ 3
+> digits so from step two onward it is ≤ 3 × 9² = **243**. The walk is therefore confined to 243 possible
+> values and the seen-set forces a halt within 243 steps by pigeonhole — **constant, independent of n.**
+
+**Generalizable, and this is the keeper:** *when the state space is bounded by the problem's own
+arithmetic, the loop count is constant even though the input isn't.* **Say the collapse before quoting the
+number** — "O(1)" alone sounds like hand-waving; "it collapses to ≤243 after two steps, so O(1)" is
+visibly reasoned.
+
+⚠️ **Cadence note for the Aug 17 build.** Two probes run, one row created. The standing exception —
+*probes bypass the surplus gate because a 🟢 probe costs nothing forever* — is priced on a low
+row-creation rate. 202 bills ~73 units/year. **One 🟡 in two is not a trend; it is a data point with a
+number attached.** Re-derive the rate at the build rather than renewing or killing the exception on feel.
 
 ## Miss ledger
 

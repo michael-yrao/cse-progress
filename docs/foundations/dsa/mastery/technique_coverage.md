@@ -6,7 +6,7 @@
 
 > The tracker is keyed by **problem**; this is keyed by **technique**. Use it at the weekly build to decide what to pull, and at phase exit to check the per-algorithm bar (recognition + execution, ≥1 🟢 each).
 
-> **49** techniques &nbsp;·&nbsp; **10** with no 🟢 &nbsp;·&nbsp; **4** thin &nbsp;·&nbsp; **0** unqueued variant gaps
+> **51** techniques &nbsp;·&nbsp; **11** with no 🟢 &nbsp;·&nbsp; **6** thin &nbsp;·&nbsp; **0** unqueued variant gaps
 
 ## ⚠️ Action list
 
@@ -14,6 +14,7 @@
 
 - **BFS on Implicit Graph** (graphs) — best 🟡 across 127
 - **Bellman-Ford** (advanced_graphs) — best 🟡 across 787
+- **Cycle Detection in an Iterated Sequence** (graphs) — best 🟡 across 202
 - **Deep Copy via Hash Map** (linked_list) — best 🟡 across 138
 - **Dijkstra** (advanced_graphs) — best 🟡 across 743, 778
 - **Floyd-Warshall (all-pairs shortest path)** (advanced_graphs) — best 🟡 across 1334
@@ -21,12 +22,14 @@
 - **Graph Cycle Detection (DFS)** (graphs) — best 🟡 across 261
 - **Hierholzer (Eulerian path)** (advanced_graphs) — best 🟡 across 332
 - **Length-Prefix Encoding** (arrays_and_hash) — best 🟡 across 271
-- **Prim's MST** (advanced_graphs) — best 🟡 across 1584
+- **Stack (expression evaluation)** (stack) — best 🟡 across 150
 
 **Thin — fewer than the 3–4 surface forms a technique needs.** One instance trains recall of that problem, not the skill.
 
 - **Bellman-Ford** (advanced_graphs) — 1/3: 787
+- **Cycle Detection in an Iterated Sequence** (graphs) — 1/2: 202
 - **Divide & Conquer / Sorting** (sorting) — 1/2: 912
+- **Stack (expression evaluation)** (stack) — 1/2: 150
 - **Dijkstra** (advanced_graphs) — 2/3: 743, 778
 - **Grid DFS** (graphs) — 2/3: 200, 695
 
@@ -38,7 +41,7 @@
 | Dijkstra | advanced_graphs | 2 (743, 778) | 🟡 | ❌ | — | **no-green** · thin (2/3) |
 | Floyd-Warshall (all-pairs shortest path) | advanced_graphs | 1 (1334) | 🟡 | ❌ | — | **no-green** |
 | Hierholzer (Eulerian path) | advanced_graphs | 1 (332) | 🟡 | ❌ | — | **no-green** |
-| Prim's MST | advanced_graphs | 1 (1584) | 🟡 | ❌ | — | **no-green** |
+| Prim's MST | advanced_graphs | 1 (1584) | 🟢 | ✅ | — | — |
 | Array/String Fundamentals | arrays_and_hash | 3 (14, 66, 1929) | 🟢 | ✅ | — | — |
 | Boyer-Moore Voting | arrays_and_hash | 2 (169, 229) | 🟢 | ✅ | — | — |
 | Frequency Counting | arrays_and_hash | 2 (49, 242) | 🟢 | ✅ | — | — |
@@ -51,6 +54,7 @@
 | Binary Search on Answer | binary_search | 2 (875, 1011) | 🟢 | ✅ | — | — |
 | BFS on Implicit Graph | graphs | 1 (127) | 🟡 | ❌ | — | **no-green** |
 | Connected Components | graphs | 3 (323, 323, 323) | 🟢 | ✅ | DFS ×1 · BFS ×1 · Union-Find ×1 | — |
+| Cycle Detection in an Iterated Sequence | graphs | 1 (202) | 🟡 | ❌ | Seen-Set ×1 · ~~Floyd Fast/Slow~~ *(queued: `rated:202`)* | **no-green** · thin (1/2) |
 | Graph Clone (DFS + Hash Map) | graphs | 1 (133) | 🟡 | ❌ | — | **no-green** |
 | Graph Cycle Detection (DFS) | graphs | 1 (261) | 🟡 | ❌ | — | **no-green** |
 | Grid BFS | graphs | 4 (130, 200, 417, 733) | 🎓 | ✅ | — | — |
@@ -72,6 +76,7 @@
 | Sliding Window | sliding_window | 4 (3, 121, 424, 567) | 🟢 | ✅ | — | — |
 | Divide & Conquer / Sorting | sorting | 1 (912) | 🟢 | ✅ | Merge Sort ×1 · ~~Quick Sort~~ *(queued: `expansion — sorting deep-dive`)* · ~~Radix Sort~~ *(queued: `expansion — sorting deep-dive`)* · ~~Counting Sort~~ *(queued: `expansion — sorting deep-dive`)* · ~~Timsort~~ *(queued: `expansion — sorting deep-dive`)* · ~~D&C on 53~~ *(queued: `rated:912 + surplus>=1`)* | thin (1/2) |
 | Monotonic Stack | stack | 3 (496, 503, 901) | 🟢 | ✅ | — | — |
+| Stack (expression evaluation) | stack | 1 (150) | 🟡 | ❌ | — | **no-green** · thin (1/2) |
 | Stack (matching) | stack | 1 (20) | 🟢 | ✅ | — | — |
 | BST Descent | trees | 2 (98, 235) | 🟢 | ✅ | — | — |
 | Tree BFS (level order) | trees | 2 (102, 199) | 🟢 | ✅ | — | — |
