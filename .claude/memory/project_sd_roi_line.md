@@ -1,98 +1,63 @@
 ---
 name: project_sd_roi_line
-description: All 55 systemdesign.io questions are triaged against an L6 big-tech ROI line in senior_ramp.md; read it before adding or declining any SD design
+description: The L6 big-tech ROI bar for SD questions and how to apply it — the board is now HelloInterview's 35 questions (Aug 13, 2026); the old systemdesign.io triage survives only as a compressed decline list
 metadata:
   type: project
 ---
 
-**Aug 8, 2026** — SD designs now have the same structure DSA has had all along: a numbered tier stack with
-**one explicit Interview-ROI Line**, calibrated to **L6 at big tech** (not fintech, not generalist senior).
-Lives in [`docs/foundations/system_design/senior_ramp.md`](../../docs/foundations/system_design/senior_ramp.md)
-→ *The L6 Interview-ROI Line*. All 55 systemdesign.io questions are placed:
-
-| | Count | Where |
-|---|---|---|
-| Core canonical set | 20 | the 7-column review table in `mastery/design_progress.md` |
-| ⏳ Tier 1 advanced | 10 | SD Waiting Room (plain table, no review load), trigger `phase:B` + extended design off 🔴 |
-| 🧊 Tier 2 platform/real-world/domain | 20 | below the line, one reason each — **all triggerable** |
-| 🧊 Tier 3 off-target | 5 | declined — **no trigger exists and none can**; that IS the tier's definition |
-
-⚠️ **Tier 2 vs Tier 3 is about whether a trigger can exist, not about quality.** Corrected the same day it
-was written: the two **fintech** designs (Credit-Card #32, Wire Transfer #47) were filed in Tier 3 beside
-IoC/DI and Botnet, and the learner challenged it. They are *the right thing aimed at the wrong employer* —
-a state with a real trigger (`waypoint_loop:fintech`) — while off-altitude declines can never fire. Merging
-them is the anti-void failure the two-bin rule exists to stop. **If you want to write a trigger on a Tier-3
-item, it is misfiled.**
-
-**🔁 There is also an SD overflow block** (end of the ROI-line section): the three low-ceiling Easy designs
-plus four Tier-2 easies, pullable when a Sunday finishes early. **Below the line means "never worth
-displacing a Sunday for", not "never do this"** — say that plainly whenever the learner asks why they can't
-just do the easy ones. ⚠️ An overflow design earns a tracker row **only at 🟡/🔴** (disposable rep,
-[[project_library_carrying_capacity]]), which is what keeps it free.
-
-**The argument that settles "why not do the easy ones anyway", worth reusing verbatim:** the instinct is
-right (Phase A orders designs easiest-framework-rep first on purpose), but (1) **8 easy framework reps are
-already above the line**, (2) **one design = one session ≈ one Sunday**, so an easy design is a *displaced*
-canonical one rather than extra practice, and (3) **the Phase A gate is not a count** — it is *skeleton
-clean on 3+ designs*, standing at 0 of 3, and the fastest route there is canonical designs that must be
-done anyway. *"It's still good to know"* is true and is not the test: **the line rations Sundays, not
-knowledge.**
+⚠️ **Superseded in part, Aug 13, 2026.** The board is no longer systemdesign.io — SD is now mock
+interviews on **HelloInterview's 35 questions** ([[project_sd_mock_model]]). The *bar* below still governs
+every add/decline; the 55-question triage is now a compressed decline table at the bottom of
+`senior_ramp.md`. **Do not re-derive that catalog.**
 
 **The bar, verbatim:** *would a strong L6 candidate at Meta/Apple/Netflix/Google/Amazon be expected to
 handle this in a 45-minute round?* Three consequences do most of the sorting: **depth over breadth**
 (redundancy is the most common decline, not difficulty) · **distributed-systems altitude only** (an LLD
 question rehearses [[feedback_hld_altitude]], the learner's known failure) · **no domain weighting**
-(fintech is a waypoint per [[project_interview_goal]], so payments designs sit below the line even when
-hard and famous).
+(fintech is a waypoint per [[project_interview_goal]], so Payment System and Robinhood sit off the
+rotation behind `waypoint_loop:fintech` even though HelloInterview rates them Hard).
 
-**Why:** the Aug 6 reseed picked 21 of 55 and recorded nothing about the other 34, which breaks
-[[feedback_roi_promotes_to_curriculum]] — *"say what you did NOT promote and why; the bar only means
-something applied in both directions."* Applied one-way, "curated by ROI" is indistinguishable from
-"picked some and stopped," and a wrong decline stays invisible until you need the depth material. SD also
-had no equivalent of DSA's two deferral bins, so a declined design and an unread one looked identical.
+⚠️ **Two deferral bins, and the distinction is whether a trigger CAN exist** — not quality. Corrected the
+day it was written: the two fintech designs were filed beside IoC/DI and Botnet, and the learner
+challenged it. They are *the right thing aimed at the wrong employer* — a state with a real trigger —
+while off-altitude declines can never fire. **If you want to write a trigger on a declined item, it is
+misfiled.**
+
+**Still live under the new board:** the designs HelloInterview does not cover are parked in
+`design_progress.md` with trigger `board:hard-tier-open` — typeahead · key-value store · Google Calendar ·
+distributed tracing · A/B testing · **data migration** (rubric #7 as an entire design; protect it) ·
+stream-processing. Twitter and Pastebin were declined outright as redundant.
+
+**The "why not just do the easy ones" argument, worth reusing verbatim:** the instinct is right (Phase A
+orders questions easiest-framework-rep first on purpose), but one question = one session ≈ one Sunday, so
+an easy question is a *displaced* canonical one rather than extra practice, and **the Phase A gate is not
+a count** — it is *#1–4 passing on 3+ questions*. *"It's still good to know"* is true and is not the test:
+**the line rations Sundays, not knowledge.**
 
 **How to apply:**
-- **Before adding any SD design, read the triage** — it may already be placed, with a reason. Do not
-  re-derive the catalog.
-- **Before declining one, write the reason in the same edit** and put it in a tier. A dateless, reasonless
-  decline is the failure this fixed.
-- **Evaluate the Tier-1 triggers at every weekly build** — fired means slotted that week or re-deferred
-  *in writing* ([[feedback_gate_on_internal_state]]: the trigger is repo-evaluable, never an interview outcome).
-- **Never report the count as progress.** 30 above-the-line designs is a menu; the gate is a handful
-  defended 2–3 levels deep including rubric #7.
-- **Coach's calls, learner-overridable.** Borderline items are flagged as borderline in the doc
-  (#42 burgers, #34 control plane, #19 RabbitMQ, #21 sorting).
+- **Before adding an SD question, check it isn't already placed** — the HelloInterview board is the menu,
+  and the parked list carries triggers.
+- **Before declining one, write the reason in the same edit.** A dateless, reasonless decline is the
+  failure this exists to fix ([[feedback_roi_promotes_to_curriculum]]: the bar only means something
+  applied in both directions).
+- **Evaluate triggers at every weekly build** — fired means slotted that week or re-deferred *in writing*
+  ([[feedback_gate_on_internal_state]]).
+- **Never report row count as progress.** 35 rows is a menu; the gate is a handful defended 2–3 levels
+  deep including rubric #7, plus one 🟢 on a no-write-up question.
 
-## Aug 8 follow-up — the three SD files now have ONE owner each
+## The ownership rule (Aug 8) — still in force, and the reason for it survived the rework
 
-The triage exposed that `study_guide.md`, `senior_ramp.md` and `design_progress.md` held **three competing
-design lists** and two stale status tables, while `study_guide.md` still claimed to be *"the single source
-of truth."* Reconciled the same session; the ownership table is now at the **top of `study_guide.md`**:
+`study_guide.md`, `senior_ramp.md` and `design_progress.md` had held **three competing design lists** and
+two stale status tables. Each thing now has exactly one owner: **state** → `mastery/design_progress.md` ·
+**the plan** (order, phases, gates, 7-point rubric) → `senior_ramp.md` · **the mechanics** (the split, the
+slots, the mock protocol, the debrief) → `study_guide.md` · **the syllabus** → HelloInterview, with
+`coverage_map.md` as the pattern→question cross-walk.
 
-| Thing | Owner |
-|---|---|
-| **State** (comfort/streak/next review — techs, concepts, components, designs) | `mastery/design_progress.md` |
-| **The plan** (ROI triage, phases, exit gates, 7-pt rubric, tech order, prereq gate, overflow block) | `senior_ramp.md` |
-| **The mechanics** (cadence & 3 lanes, session formats, fork drills, templates) | `study_guide.md` |
+⚠️ **If the engine can compute it, do not write it down in prose.** Every stale item found in that
+reconciliation was a hand-written date or ✅ duplicating tracker state. Deleting the duplicate beats
+remembering to update it — [[feedback_self_evaluation]]'s ladder: **source fix over reminder.**
 
-**The rule that prevents the regression — apply it beyond SD:** ⚠️ **if the engine can compute it, do not
-write it down in prose.** Every stale item found was a hand-written date or ✅ duplicating tracker state
-(*"Mastery ⏳ Sun Jul 19"*, *"Bootstrap ⏳ Jul 20 wk"*, *"Redis ✅"* on a row that is 🟡, `senior_ramp`
-described as *"the L5 ramp"* after the Aug 6 re-aim to L6). Deleting the duplicates beats remembering to
-update them — [[feedback_self_evaluation]]'s intervention ladder: **source fix over reminder.**
-
-**Also fixed Aug 8 — components are now measured.** Building blocks were the last SD category with notes
-but **no review rows**, so they could not decay. `Component` is now a role in the tracker (Caching, Load
-Balancer). ⚠️ **Rate limiter deliberately gets no Component row** — it is already tracked as
-`Design (Hard) API Rate Limiter` and the component note carries that arc's drill targets. One rep, one row.
-
-**Two designs have no catalog home and are parked with triggers, not dates:** *LLM chat assistant*
-(`phase:ai_bootstrap`, capstone for the AI track) and *distributed cache* (absent from systemdesign.io
-entirely — needs another source).
-
-**Two structural gaps recorded there, worth not rediscovering:**
-1. **"Distributed cache" is not in the systemdesign.io catalog at all** — a *source* gap. Needs another
-   source or a self-directed session; Redis's tech note is not a substitute (using ≠ designing).
-2. **Google Docs was never missing** — catalog #37 bundles Wikipedia/Notion/Google Docs into one question,
-   and the tracker row's title had dropped "Google Docs". Renamed. ⚠️ The row must be rated on the
-   **collaborative-editing** half (OT/CRDT, presence, conflict resolution), not document CRUD.
+**One finding worth not rediscovering:** *distributed cache* was absent from systemdesign.io entirely, and
+that source gap is now closed — HelloInterview has it as a Medium. Designing a cache is a different rep
+from using one (consistent hashing, eviction, replication, invalidation), which is why a Redis note was
+never a substitute.

@@ -6,29 +6,29 @@
 # solution file under a configured root) is staged: recomputes review dates and
 # re-sorts the table. Pillars and paths are read from cse.config.yml by the script.
 STAGED=$(git diff --cached --name-only --diff-filter=ACM)
-if echo "$STAGED" | grep -qE "(dsa_progress|design_progress|ai_progress)\.md$|^dsa/leetcode/.*\.(py|java|ts|js|cpp)$"; then
+if echo "$STAGED" | grep -qE "(dsa_progress|design_progress)\.md$|^dsa/leetcode/.*\.(py|java|ts|js|cpp)$"; then
   echo "Auto-updating spaced-repetition tracker(s)..."
   # DSA runs the full engine (--staged-only, source discovery); the System Design
-  # and AI trackers are recomputed + re-sorted via --tracker (no discovery).
+  # tracker is recomputed + re-sorted via --tracker (no discovery).
   # recompute_simple() no-ops if a tracker file doesn't exist yet.
+  # (The AI tracker was removed with the AI track on Aug 13, 2026.)
   SD="docs/foundations/system_design/mastery/design_progress.md"
-  AI="docs/foundations/ai_engineering/mastery/ai_progress.md"
   if command -v py >/dev/null 2>&1; then
-    py scripts/update_review_dates.py --staged-only --tracker "$SD" --tracker "$AI"
+    py scripts/update_review_dates.py --staged-only --tracker "$SD"
   elif command -v python >/dev/null 2>&1; then
-    python scripts/update_review_dates.py --staged-only --tracker "$SD" --tracker "$AI"
+    python scripts/update_review_dates.py --staged-only --tracker "$SD"
   elif command -v python3 >/dev/null 2>&1; then
-    python3 scripts/update_review_dates.py --staged-only --tracker "$SD" --tracker "$AI"
+    python3 scripts/update_review_dates.py --staged-only --tracker "$SD"
   else
     echo "Error: Python not found. Install Python to enable the auto-updater." >&2
     exit 1
   fi
   # Re-stage only the trackers that exist. A single `git add` listing a missing
-  # path (e.g. the AI tracker before that track starts) aborts the whole command
-  # and stages nothing — silently, leaving the regeneration uncommitted (a
-  # one-commit lag). Add each individually so one absent file can't abort the rest.
+  # path aborts the whole command and stages nothing — silently, leaving the
+  # regeneration uncommitted (a one-commit lag). Add each individually so one
+  # absent file can't abort the rest.
   DSA="docs/foundations/dsa/mastery/dsa_progress.md"
-  for tracker in "$DSA" "$SD" "$AI"; do
+  for tracker in "$DSA" "$SD"; do
     [ -f "$tracker" ] && git add "$tracker"
   done
 fi

@@ -350,11 +350,16 @@ After logging any problem result, check its computed next review date and add it
 
 ## Study Guide Files
 
-Layout: each **track** owns a folder under `docs/foundations/` (`dsa/`, `system_design/`,
-`ai_engineering/`) with the same shape — `study_guide.md`, `mastery/` (its tracker), `templates/`,
-plus its own reference material. **`schedules/` is cross-track and sits beside them**, not inside
-`dsa/`: one weekly file plans the DSA warmups/active block *and* the SD slots *and* AI builds. Its
-per-track trackers stay in each track's `mastery/`.
+Layout: each **track** owns a folder under `docs/foundations/` (`dsa/`, `system_design/`) with the same
+shape — `study_guide.md`, `mastery/` (its tracker), `templates/`, plus its own reference material.
+**`schedules/` is cross-track and sits beside them**, not inside `dsa/`: one weekly file plans the DSA
+warmups/active block *and* the SD slots. Its per-track trackers stay in each track's `mastery/`.
+
+*(There were three tracks until Aug 13, 2026. **AI System Engineering was removed** — it was never
+started, never had a session, and its guide + tracker were a plan nobody had executed. It is not
+deferred and there is no trigger; if it comes back it gets rebuilt from the mock model, not restored.
+The one AI-flavoured design that mattered survives as a board row: **ChatGPT**, on HelloInterview's
+Hard tier.)*
 
 **Cross-track (shared)**
 
@@ -398,35 +403,49 @@ keeps this from rotting the way the method parentheticals did (44 of 108 rows ta
 `(Dijkstra)` vs `(Dijkstra / Min-Heap)` already forked). **After logging a new problem, add it to
 `techniques.yml` in the same edit** — same rule as re-slotting a deferred problem.
 
-**System design track**
+**System design track — the learner studies, you interview (rebuilt Aug 13, 2026)**
 
-- `docs/foundations/system_design/mastery/design_progress.md` — technology-fluency tracker; same 7-column table and same interval math as DSA, same script (`update_review_dates.py --tracker …`), rows added by hand
-- `docs/foundations/system_design/study_guide.md` — mission, Interview-ROI line, tiers
-- `docs/foundations/system_design/technologies/<tech>.md` — per-technology note + Recall Card (the blind-sprint rep)
-- `docs/foundations/system_design/components/<block>.md` — per-building-block note, written when a design hits it cold (lane ②)
-- `docs/foundations/system_design/concepts/<concept>.md` — per-concept note + Recall Card for the *quantitative/probabilistic foundations* (Zipf, Little's Law, percentiles, quorum math, sketches …). These are **not** building blocks and the pull queue can't catch them — lane ② drills these when its pull queue is empty. Each card opens with a "You'll want this when…" trigger line so it also works as a symptom-indexed lookup mid-design.
+**The split:** the learner learns system design on their own via
+[HelloInterview](https://www.hellointerview.com/learn/system-design/in-a-hurry/introduction). **Your
+entire job is running cold mock interviews on HelloInterview's questions and scoring them.** Nothing on
+the schedule is "read about X"; no lanes, no note-building reps, no blind sprints, no Bootstrap →
+Transition → Mastery arc. Teaching happens **on request only**, off-schedule and unrated.
 
-### End of every SD teaching session: log the coverage gaps (adopted Aug 9, 2026)
+- `docs/foundations/system_design/study_guide.md` — **the mechanics**: the split, the two slots, the mock protocol, the debrief. Read before running one.
+- `docs/foundations/system_design/senior_ramp.md` — **the plan**: question order, phases + gates, and the **7-point rubric** a mock is scored on
+- `docs/foundations/system_design/mastery/design_progress.md` — **the state**: 35 rows, HelloInterview's board at their tiers; same 7-column table, same interval math, same script (`update_review_dates.py --tracker …`), rows by hand
+- `docs/foundations/system_design/mocks/<YYYYMMDD>_<slug>.md` — **one debrief per mock** (template in `templates/mock_debrief_template.md`); its `❓ Open probes` section is the deep-dive round's material
+- `docs/foundations/system_design/coverage_map.md` — pattern → question map; answers *"which moves has the sequence never rehearsed"*
+- `docs/foundations/system_design/framework.md` — the delivery framework (= HelloInterview's Delivery); the mock is timed against it
+- `technologies/` · `components/` · `concepts/` — **frozen reference**, off the review engine. Point at them in a debrief; do not schedule them.
 
-Conceptual SD material is taught **spine-then-pull** — the learner's questions set the direction (see
-`.claude/memory/feedback_interactive_learning.md`). That format's one structural hole is that coverage is
-bounded by what the learner can already see is missing. So **close every teaching session by writing the
-gaps into the card**, as a numbered step, not a remembered intention:
+### Running a mock — the numbered steps
 
-1. Append to `## ❓ Open — not yet asked` at the bottom of the card (beside the Recall Card) everything
-   interview-relevant the session did **not** reach. Bound it by the **L6 ROI line**
-   (`.claude/memory/project_sd_roi_line.md`) — not by completeness, or the list becomes noise and stops
-   being read.
-2. Write each gap as a **bare open question, never a summary of the answer.** The same list is then both
-   the coverage report *and* the mock-interview bank, and reading it doesn't spoil it.
-3. **Ask the learner whether to answer any of them now or leave them for the mock.** Their call each time,
-   based on how much more they can take that session — never assume either way.
-4. Items close when a later session's questions reach them. When a card's list is drained to the
-   interview-relevant floor, that is the **repo-evaluable trigger** for a mock interview drawn from the
-   accumulated questions (never a date — see [[feedback_gate_on_internal_state]]).
+1. **Name the question at the start of the session, never in the weekly schedule file.** Writing it down
+   in advance lets it be read up, which destroys the only thing the mock measures. Same reason the
+   recognition probe's problem is never written down.
+2. **Ask whether they've read that question's HelloInterview breakdown. A prepared mock caps at 🟡** —
+   ask *before*, not after; a rating revised downward later is worth less than an honest cap. Studying
+   the core concepts/technologies/patterns never disqualifies anything.
+3. **Run it as the interviewer, not the coach** — no hints, no leading questions, no supplying a box.
+   Time called at each framework boundary (~5 requirements · 2 entities · 5 API · 10–15 HLD · 10 deep
+   dives). Hold HLD altitude through steps 1–4; push on every bare adjective and every undefended choice.
+4. **Throw one curveball around minute 30** — a non-functional requirement change that invalidates part
+   of the design. Mandatory at L6; graded under rubric #7.
+5. **Debrief in the same session:** score all seven checkpoints pass/fail **with the evidence for each**,
+   then propose the comfort rating and confirm it (same protocol as DSA — you infer and propose, their
+   call is final, honesty over agreeableness).
+6. **Write the debrief file** from the template, including `❓ Open probes` — **bare questions, never
+   summaries of the answer.** They are both the coverage report and the next deep-dive round's material,
+   and an answered probe is a spent probe. *(This replaces the Aug 9 teaching-session gap ledger; a mock
+   produces the same thing more honestly — what you couldn't answer under time, not what a conversation
+   happened not to reach.)*
+7. **Log the row** in `design_progress.md`, and slot the computed next review date into a schedule file
+   like any other rep.
 
-⚠️ **End of session only.** Surfacing a gap mid-session pre-empts the learner's next question, which is the
-rep the format exists to produce.
+⚠️ **A design never spreads across sittings.** One question = one row = one cold mock = one rating. If it
+overruns, finish at whatever depth it reached and rate what happened — a resumed design cannot be rated
+cold, and an unratable rep silently leaves the engine while looking like progress.
 
 ## Token discipline (efficiency by default)
 

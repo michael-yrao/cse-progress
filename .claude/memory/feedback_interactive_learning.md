@@ -16,7 +16,7 @@ for interactive methods (Jul 14 2026) after an explanation-only Redis thread lef
    talk that interviewers actually probe. Strongest signal generator.
 3. **Socratic pushback** — they explain it back; assistant plays the skeptical interviewer and asks
    the next "why" until it bottoms out. Exposes memorized-vs-understood instantly.
-4. **Cold blind sprint** (the existing Recall Card) — keep. It *measures*; it doesn't teach.
+4. ~~**Cold blind sprint** (Recall Card)~~ — **retired Aug 13, 2026** with the study lanes. What measures SD now is a cold mock ([[project_sd_mock_model]]); the ladder above still governs **requested** teaching, which is the only teaching left on the SD track.
 
 **What does NOT work (stop doing):**
 - Escalating explanation essays. Correct detail without a skeleton = noise. See [[feedback-spine-first]].

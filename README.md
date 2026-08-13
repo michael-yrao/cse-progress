@@ -18,15 +18,14 @@ cse-progress/
 │       │   ├── patterns/           # the pattern library (see below)
 │       │   ├── mastery/            # spaced-rep record: dsa_progress.md + stuck_log.md
 │       │   └── templates/          # solution-file scaffold
-│       ├── system_design/
-│       │   ├── study_guide.md      # mission, Interview-ROI line, tiers
-│       │   ├── fundamentals/       # concept notes
-│       │   ├── technologies/       # per-technology notes + Recall Cards
-│       │   ├── mastery/            # spaced-rep record: design_progress.md
-│       │   └── templates/          # blank scaffolds to fill during practice
-│       └── ai_engineering/
-│           ├── study_guide.md
-│           └── templates/
+│       └── system_design/          # mock-interview track (study is via HelloInterview)
+│           ├── study_guide.md      # the mock mechanics: slots, protocol, debrief
+│           ├── senior_ramp.md      # question order, phases + gates, the 7-point rubric
+│           ├── mocks/              # one debrief per mock + the open-probe bank
+│           ├── concepts/           # quantitative reference cards (Little's Law, percentiles, …)
+│           ├── technologies/       # frozen reference notes
+│           ├── mastery/            # spaced-rep record: design_progress.md
+│           └── templates/          # mock_debrief_template.md
 ├── scripts/update_review_dates.py  # recomputes review dates + sorts the tracker
 ├── .githooks/pre-commit            # auto-runs the script on commit (version-controlled)
 ├── CLAUDE.md                       # working conventions for the AI pair-partner (Claude Code)

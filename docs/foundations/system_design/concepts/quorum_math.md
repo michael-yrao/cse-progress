@@ -1,5 +1,10 @@
 # Quorum Math (R + W > N)
 
+> 🧊 **Frozen reference (Aug 13, 2026).** The SD track is now mock interviews on HelloInterview's
+> board; this card is no longer drilled and has no tracker row. Any "owed a sprint / next lane"
+> language below is historical. Use it as lookup when a mock debrief points here.
+> See [`../study_guide.md`](../study_guide.md).
+
 > **Role:** Replication tuning — *one inequality that generates consistency-vs-latency on demand* · **Filed under:** SD concepts (underpins Cassandra/DynamoDB, replication deep-dives, CAP in practice).
 > **You'll want this when:** you're asked **"how do you keep replicas consistent?"** or **"what happens if a replica is down?"** — or you're setting a consistency level on a Dynamo-style store.
 > **Drill:** answer the [Recall Card](#-recall-card-the-rep) cold, then unfold to check.

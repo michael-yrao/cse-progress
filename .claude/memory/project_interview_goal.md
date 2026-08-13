@@ -20,7 +20,7 @@ Aug 6, 2026.
 - **Capacity (Aug 6):** `daily_cap` 5 → 7; **new-problem intake stays capped.** The +2/day is review/backlog
   throughput → funds DSA (incl. DP) **and** the SD ramp in parallel. Supersedes the "free the DSA block at
   Aug 16" trigger.
-- **SD is the binding constraint & top priority**, depth-over-breadth. Designs from **systemdesign.io** +
+- **SD is the binding constraint & top priority**, depth-over-breadth. ⚠️ **Aug 13, 2026: SD is now mock interviews on HelloInterview's board** ([[project_sd_mock_model]]) — the learner studies, the coach interviews. ~~Designs from **systemdesign.io** +~~
   **prereq-tech gate at off 🔴** (Redis 🟡 · Postgres note-built/undrilled · Vitess none). Execution plan:
   [`system_design/senior_ramp.md`](../../docs/foundations/system_design/senior_ramp.md).
 - **Apply trigger = a repo-evaluable gate**, never an offer/interview outcome — see `career_strategy.md` §4,

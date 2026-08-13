@@ -20,10 +20,13 @@ had already ambushed a session (Zipf, Bloom filter) — an ambush log, not a pla
 on bloom filters — *"small; fold into the design that needs them"* — is precisely what caused the
 ambush, and that phrasing is the tell to watch for if it reappears for another concept.
 
-**How to apply:** the cards themselves stay repo-side — cse-coach ships templates and guides, never
-filled notes, so a new concept card written here is *not* a port owed unless it changes the model.
-When writing one, lead with the **"You'll want this when…" trigger line** naming the symptom; these
-get reached for mid-panic far more than read in advance. Six cards are live and unrated (🔴,
-Streak 0) in `design_progress.md` under role `Concept`. Related:
-[[project-sd-three-lane-structure]], [[project-curriculum-additions-pending]] (the opposite
-direction: cse-coach → cse-progress, still open).
+⚠️ **Lane ② no longer exists (Aug 13, 2026)** — the three-lane study model was replaced by mock
+interviews ([[project_sd_mock_model]]) and the `Concept` rows came off the review engine. **The finding
+above is why the nine cards were kept anyway**: seven of them map to nothing in HelloInterview, whose
+core concepts are structural (sharding, CAP, consistent hashing) rather than numeric. They are the
+quantitative lane, and a mock is exactly where a missing number ambushes you mid-sentence.
+
+**How to apply:** the cards stay repo-side and stay **frozen reference** — nothing schedules them. When a
+mock debrief shows a number could not be defended, point at the card. When writing a new one, lead with
+the **"You'll want this when…" trigger line** naming the symptom; these get reached for mid-panic far
+more than read in advance. Related: [[project_sd_mock_model]], [[project_curriculum_additions_pending]].

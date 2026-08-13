@@ -1,5 +1,10 @@
 # Rate Limiter
 
+> 🧊 **Frozen reference (Aug 13, 2026).** The SD track is now mock interviews on HelloInterview's
+> board; this card is no longer drilled and has no tracker row. Any "owed a sprint / next lane"
+> language below is historical. Use it as lookup when a mock debrief points here.
+> See [`../study_guide.md`](../study_guide.md).
+
 > **Stage: Mastery attempted 🟡 — arc NOT closed** (Bootstrap Jul 5 ✅ · Transition Jul 12 ✅ · Mastery Jul 26 → 🟡). Next: **Mastery re-rep**, and per teach-then-measure it needs a **forgetting gap** — two mechanisms were taught mid-mock, so measuring them inside a few days measures the conversation, not retention. **Target: ~Aug 2–4.**
 
 ## 🎯 Mastery result (Jul 26) — read this before the re-rep

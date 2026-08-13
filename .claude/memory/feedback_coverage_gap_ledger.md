@@ -1,48 +1,48 @@
 ---
-name: feedback-coverage-gap-ledger
-description: End every SD teaching session by logging what the learner's questions did NOT reach, as bare open questions in the card — the accumulated list is later the mock-interview bank
+name: feedback_coverage_gap_ledger
+description: Log what a session did NOT reach as bare open questions — since Aug 13, 2026 this lives in the mock debrief's "Open probes" section, and it is what the midweek deep-dive round runs on
 metadata:
   type: feedback
 ---
 
-**Set by the learner Aug 9, 2026**, one turn after they confirmed spine-then-pull as the standing format
-for conceptual SD material ([[feedback_interactive_learning]]).
+**Set by the learner Aug 9, 2026:**
 
 > *"the questions I ask might not cover everything that we want to learn about a technology or concept so
 > I want you to flag what are the facts and details that are still missing or not addressed after each
 > teaching and learning session and then after the appropriate learning sessions are done, we do mock
 > interviews that test based on the questions we accumulated."*
 
-**The hole it patches.** Under spine-then-pull the learner's questions set the direction, which is the
-whole value — but it means coverage is bounded by what they can already see is missing. A genuine blank
-spot generates no question *by definition*. Same structural argument as the `concepts/` lane
-([[project_concepts_lane_port_pending]]): a missing box is visible in a design; a missing **fact** only
-surfaces once you're already stuck. The pull format cannot self-audit; something outside it has to.
+⚠️ **Where this lives changed Aug 13, 2026** ([[project_sd_mock_model]]). It was a
+`## ❓ Open — not yet asked` section at the bottom of a technology/concept card, written at the end of a
+teaching session. **Teaching sessions are no longer scheduled**, so the ledger moved to the place that
+now generates the same thing: the **`❓ Open probes`** section of each mock debrief in
+`system_design/mocks/`.
 
-**The procedure (now a numbered step in CLAUDE.md's System-design-track section — not left as a paragraph
-here, per the [[feedback_self_evaluation]] intervention ladder):**
+**The move is an upgrade, not a relocation.** The card version recorded *what a conversation happened not
+to reach* — bounded by what the learner could already see was missing, which is the hole it was patching
+in the first place. The debrief version records **what they could not answer under time pressure when an
+interviewer pushed.** That is the same coverage report with a harder instrument behind it.
 
-1. At **end of session**, append to `## ❓ Open — not yet asked` at the bottom of the tech/concept/component
-   card everything interview-relevant the session did not reach.
-2. Bound it by the **L6 ROI line** ([[project_sd_roi_line]]). Every technology has infinite unasked detail;
-   an unbounded list becomes noise and stops being read — the exact rot the `queued:` marker prevents in
-   `technique_coverage.md`.
-3. Each gap is a **bare open question, never a summary of the answer.** Writing "we never covered congestion
-   control — it works by…" spoils the item and kills the mock. Written as a question, one artifact serves as
-   both the coverage report and the mock bank.
-4. **Ask whether to answer any of them now, or hold them for the mock — every session, both directions
-   genuinely open.** The learner's explicit reason: *"depends on the availability of the user and how much
-   more learning the user can still take honestly."* So this is a capacity question, and only they can
-   answer it. Do not default to answering (turns every session into an appended lecture) and do not default
-   to deferring (they may have room and want it closed while it's warm).
-5. Items close when a later session's questions reach them. A card drained to the interview-relevant floor
-   is the **repo-evaluable trigger** for a mock interview drawn from the accumulated questions — never a
-   date, never an external event ([[feedback_gate_on_internal_state]]).
+**The procedure (a numbered step in CLAUDE.md's SD section — not left as a paragraph here, per the
+[[feedback_self_evaluation]] intervention ladder):**
 
-⚠️ **End of session only.** Surfacing a gap mid-session pre-empts the learner's next question, which is the
-rep the whole format exists to produce — and requirement-gathering is itself the graded interview skill
-([[feedback_interactive_learning]]).
+1. At the **end of the mock**, in the debrief, list everything interview-relevant the mock exposed and
+   did not resolve.
+2. Bound it by the **L6 ROI line** ([[project_sd_roi_line]]). An unbounded list becomes noise and stops
+   being read.
+3. Each is a **bare open question, never a summary of the answer.** "We never covered how the queue
+   handles poison messages — it works by…" spoils the item and kills the probe. Written as a question,
+   one artifact is both the coverage report and the next deep-dive round's material.
+4. **Ask whether to answer any of them now or hold them for the deep-dive round — every time, both
+   directions genuinely open.** The learner's reason: *"depends on the availability of the user and how
+   much more learning the user can still take honestly."* Only they can answer that. Do not default
+   either way.
+5. **A design with an empty probe bank has nothing left to push on** — that is the repo-evaluable trigger
+   for the midweek slot going to the next question instead ([[feedback_gate_on_internal_state]]).
 
-**Why this matters beyond bookkeeping:** it makes the pull format's weakness ("it only covers what they
-think to ask") measurable instead of invisible, without taking the wheel back from the learner. They still
-drive; the ledger just records where they didn't go, and the mock is what converts that record into a rep.
+⚠️ **End of session only.** Surfacing a gap mid-mock is a hint, which is the one thing the interviewer
+role forbids.
+
+**Still applies verbatim to requested teaching.** When the learner asks to be taught something
+off-schedule, spine-then-pull still governs the format ([[feedback_interactive_learning]]) and closing
+with the unreached questions still applies — write them into the relevant reference card.

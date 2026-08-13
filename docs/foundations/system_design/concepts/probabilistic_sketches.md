@@ -1,5 +1,10 @@
 # Probabilistic Sketches — HyperLogLog & Count-Min
 
+> 🧊 **Frozen reference (Aug 13, 2026).** The SD track is now mock interviews on HelloInterview's
+> board; this card is no longer drilled and has no tracker row. Any "owed a sprint / next lane"
+> language below is historical. Use it as lookup when a mock debrief points here.
+> See [`../study_guide.md`](../study_guide.md).
+
 > **Role:** Approximate counting in tiny, fixed memory · **Family sibling:** [Bloom filter](bloom_filter.md) (membership) — same trade, different question.
 > **You'll want this when:** the design needs **"how many unique X"** or **"which X are trending"** at a scale where an exact map obviously won't fit in RAM.
 > **Drill:** answer the [Recall Card](#-recall-card-the-rep) cold, then unfold to check.

@@ -31,8 +31,8 @@ At the **start of each week's first session** (or whenever `open` entries reach 
 of the 9 rules promoted to a memory file with ≥10 days of exposure, **7 recurred anyway** —
 `feedback_no_spoilers` five times, `feedback_read_before_asserting` four. Meanwhile **4/4 entries closed
 `fixed-at-source` never recurred**, and the two memory promotions that held (`feedback_infer_comfort`,
-`project_sd_three_lane_structure`) held because they are *not really paragraphs*: one is a numbered step
-in CLAUDE.md's workflow, the other is encoded in the shape of the schedule files.
+the SD lane structure — now [[project_sd_mock_model]]) held because they are *not really paragraphs*: one
+is a numbered step in CLAUDE.md's workflow, the other is encoded in the shape of the schedule files.
 
 Rank the options; take the strongest one that applies:
 

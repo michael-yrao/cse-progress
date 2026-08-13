@@ -27,12 +27,18 @@ these do **NOT** auto-sync. Fold each in when its lane builds:
     conflict resolution), not on document CRUD + versioning, or the fold is cosmetic. See
     [[project_sd_roi_line]].
 
-**AI Engineering** (`cse-coach/curriculum/ai_engineering/tier1_core.yml`) — capture at **AI-track
-bootstrap** (gated on SD Tier-1 majority retired; track not set up yet):
-- **Model adaptation & decisioning** topic — RAG vs fine-tune vs prompt-eng framework, LoRA/PEFT,
-  cost/latency tradeoff. **Highest-value AI-infra interview question — prioritize.**
-- **Eval & guardrails** additions — prompt injection & jailbreak defense, tool-use/data-exfil safety.
-- **Multimodal** topic — tagged *emerging, watch, don't front-load*.
+⚠️ **The SD half changed shape Aug 13, 2026** ([[project_sd_mock_model]]): building-block notes are no
+longer written on a schedule, so *"still owed as building-block notes"* above no longer means a slot. It
+means **the learner's own HelloInterview study**, and the mock is where a missing one shows up. The
+Distributed Tracing and Data Migration designs are parked with trigger `board:hard-tier-open` in
+`design_progress.md`, since HelloInterview's board does not carry them.
+
+~~**AI Engineering**~~ — **VOID Aug 13, 2026.** The AI System Engineering track was removed from
+cse-progress (never started, no sessions, no restore trigger), so the RAG-vs-fine-tune, prompt-injection
+and multimodal additions have nowhere to fold into. They remain in **cse-coach's** curriculum, which is
+correct — cse-coach ships a curriculum for any learner, and one learner declining a track is not a reason
+to delete it upstream. **Do not re-add them here.** The one interview-relevant piece survives as the
+**ChatGPT** row on the SD board.
 
 **DSA additions from the same pass are already synced** (recognition catalog +
 tree-DP/design-O(1) core-fill in `dsa_progress.md`) — see [[project_dandc_coding_gap]] neighbors.
