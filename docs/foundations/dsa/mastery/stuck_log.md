@@ -90,6 +90,121 @@ table now in [`patterns/README.md`](../../patterns/README.md).)*
 
 ---
 
+## 🔴 155. Min Stack — 2026-08-12 *(1st attempt, NEW)*
+
+**Where stuck:** getting `getMin()` to O(1). `push`/`pop`/`top` were never in question.
+
+**Path taken.** (1) Proposed a **deque with the min at the left** — then diagnosed its own flaw
+unprompted: LIFO removal from a sorted structure is O(n), because the element leaving is at neither end.
+(2) Proposed a **single `min` variable** — correct for `push`, dies on `pop`, and they identified that too
+once asked where `-2` comes back from. (3) Asked to be walked through the algorithm.
+
+**Core realization — COACH-SUPPLIED, which is why this is 🔴.** Pops are LIFO, so the *history of minima*
+is also LIFO. Store a pair per element: `(value, min of everything at or below it)`. `getMin` reads the top
+pair's second field. Deleting the top pair uncovers the previous answer with no recomputation.
+
+```python
+def push(self, value):
+    currentMin = self.stack[-1][1] if self.stack else value
+    self.stack.append((value, min(currentMin, value)))
+```
+
+**Then three index bugs, none self-caught:** `self.stack[0]` used in `push`, `top` and `getMin`. Python's
+`append`/`pop` operate on the END, so the top is `[-1]`. One fact fixed all three. The `push` case was the
+non-obvious one — `stack[0][1]` is always just the first value ever pushed, so `push(5), push(1), push(3)`
+stored `(3,3)` instead of `(3,1)`.
+
+**Complexity:** time O(1) all five methods, correct. Space answered "O(1) per method" — true for
+*incremental* per call, but the structure is **O(n)** (n pairs). New problem, 2 freebies, 1 spent.
+
+**Verified:** LC examples plus 2000 randomized op-sequences against a reference list.
+
+**Next rep (+2, Aug 14) is measuring whether the teaching stuck, not retention** — the design was handed
+over, so a 🟢 there is the first real evidence. Recognition was **not measurable**: scaffold path is
+`dsa/leetcode/stack/` and the docstring says `Pattern: stack` — the same pre-spoiling defect logged for 150
+on Aug 11 ([[project_upstream_candidates]]).
+
+## 🟡 271. Encode and Decode Strings — 2026-08-12 *(6th attempt)*
+
+**The code was not the problem.** Correct first pass, zero hints, written fast. Length-prefix framing
+(`len#str`) named in the pre-code comment. Verified: 10 hand-picked cases (empty list, empty strings,
+payloads containing `#`, all-`#` strings, the self-referential `"4#hi"`, digit-only words) plus 3000
+randomized round-trips over an alphabet including `#` and quotes — all pass. The `j = i + 1` start is
+safe: the first character of a length is always a digit, never the separator.
+
+**Sticking point: unit of work, three times in one gate.** Every first answer counted *containers*
+where the work is per *character inside* them:
+
+| Asked | First answer | Correct |
+|---|---|---|
+| `encode` time | `O(n)`, n = number of strings | **`O(L)`** — `"".join` copies every character |
+| `encode` space | `O(1)` — *"we don't count result"* | **`O(n)` extra** — `result` is a **midpoint**, not the output |
+| `decode` time | `O(n)`, then `O(n·w)` | **`O(L)`** — slicing copies; and words partition the input, so `Σ` not `×` |
+| `decode` space | `O(1)`, wobbled to `O(w)`, settled `O(1)` | **`O(1)` extra** ✅ — `result` here *is* the output |
+
+**The one they got right is the interesting one.** `encode` and `decode` both build a list called
+`result`, and the correct accounting differs: encode's is a midpoint (counts), decode's is the return
+value (free). The learner drew that distinction themselves and pushed back correctly when challenged —
+*"but result is the actual result, it doesn't count."* Same name, different accounting.
+
+**The `O(n·w)` step was the multiply-vs-add trap**, which they have solved before: 721 on Jul 30, where
+they raised `O(N · E log E)` unprompted and resolved it with `Σkᵢ = E`. Counterexample that killed it
+here: `["a"*1000] + 25 single-char words` → `n·w = 26,000` against a true `L = 1,025`.
+
+**Category status: unit-of-work is now the dominant recurring miss** — 721 (Jul 30), 271 (Aug 2 ×2),
+271 (today ×3). 271's freebies were spent Aug 2, hence the 🟡. Each correction landed after a single
+cue, which is faster than Aug 2, but the *first* answer was containers-not-characters every time.
+**Cue to fire cold next rep: before naming `n`, ask what one unit of work touches.**
+
+## 🟡 778. Swim in Rising Water — 2026-08-12 *(3rd attempt)*
+
+**Sticking point: the return check was hung on the wrong event.** Structure was right first pass —
+min-heap keyed on elevation, `visited` marked at pop, no adjacency map. But the destination check sat in
+the *neighbour-discovery* loop (`return time` at push). Discovery of a cell happens a fixed number of
+times, once per adjacent neighbour, and **early**; enterability happens **later**, when the water rises to
+it. On `[[0,2],[1,3]]` that returned 1 instead of 3.
+
+**The instructive part is the first fix, which was reasonable and still wrong.** Adding
+`grid[nr][nc] <= time` to the discovery check made the condition correct but left it on the wrong event:
+the destination's two discoveries both happen at t=1 and t=2, and by t=3 — when it finally *is* enterable —
+there is no discovery event left to fire. It gets popped as an ordinary node, the heap drains, `time += 1`
+runs once more, and it falls out returning 4. Fixed by moving the check to the **pop**, which is the moment
+a cell becomes enterable and is exactly why `visited` is marked there.
+
+**Cue to carry:** *when a check misfires, ask whether the condition is wrong or the **event** is wrong.*
+Two rounds were spent sharpening a condition that was already right.
+
+**Complexity — passed, not missed** (same call as 721 Jul 30): gave heap time `O(V log V)` and space `O(V)`
+unprompted and correct, then said outright they didn't understand the `time += 1` term rather than guessing.
+Taught: the outer loop is bounded by the **value range**, not the grid — `O(V)` only because the constraints
+say `grid[i][j] < n²`. Under `< 10^9` it is 10^9 iterations on a 2×2 grid. Textbook Dijkstra avoids it by
+setting `time = max(time, currentNodeValue)` at each pop. **Ask this one cold next rep.**
+
+**Verified** against both examples, `n=1`, and 300 random grids cross-checked against a brute-force
+lowest-`t` flood fill — 0 mismatches.
+
+## 🟡 211. Design Add and Search Words Data Structure — 2026-08-12 *(6th attempt)*
+
+**Code was not the sticking point** — written clean from a blank page, zero hints, all four of this
+problem's standard failure modes handled (no fall-through after the `.` branch, indices not substrings,
+hit propagated out of the recursion, and `return trieNode.isWord` rather than a bare `True`).
+
+**Sticking point: recursion *space*.** Gave the search stack as `O(26^d)`, then `O(26)` — both are the
+**fan-out at a node**, not the **depth of the stack**. The `for child in children.values()` loop is
+sequential (call, wait, return, next), so siblings are pending loop iterations, never simultaneous frames;
+the stack is one root-to-current path, `O(c)`. Freebie for 211 was already spent Aug 2, so this capped the
+rep at 🟡 — the learner declined to override, reasoning that unlike 323 (whose category gets three more
+cold shots on 261/133/210) the trie-wildcard version has no other rep to test it. Correct on the substance:
+208 is the only other trie problem and it has no wildcard.
+
+**The pattern worth watching is bigger than this rep.** Fourth recursion-space miss in three weeks —
+235 (Jul 29, height read as balanced) · 332 (Aug 4, depth = nodes not edges) · 261 (Aug 6, stack omitted
+entirely) · 211 (today, fan-out read as depth). Four different surface forms, one underlying question:
+*what is on the stack at a single instant?*
+
+**Note the mirror.** Aug 2 on this same problem: space right, time wrong (`O(n·N)`). Today: time right
+(`O(c·26^d) → O(c)`, unprompted — a genuine correction of that miss), space wrong.
+
 ## 🟡 211. Design Add and Search Words Data Structure — 2026-08-02 *(5th attempt; provisional 🟢 lock-down — failed)*
 **Sticking point**: the whole trie + wildcard-DFS structure came out clean from a blank page — `addWord`, the
 fan-out over `node.children.values()` on `'.'`, the `i + 1` recursion, the early `return False` on a dead

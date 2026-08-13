@@ -4,7 +4,7 @@
 > into every session's context (~850 est. tokens/turn). The rules that must fire *unprompted* stayed
 > in `CLAUDE.md`; this is the setup mechanics only.
 
-Three one-time steps. Do all three on a fresh clone.
+Four one-time steps. Do all four on a fresh clone.
 
 ## 1. Git hooks path
 
@@ -58,7 +58,44 @@ commands that merely *mentioned* the script. Tightened because **a hook that cri
 agent to skim past it** — which costs precisely the reliability that makes a hook stronger than a
 written rule.
 
-## 3. The session-start memory hook
+## 3. The problem-link Stop hook
+
+`.claude/hooks/problem_link_reminder.py`, wired the same way — script tracked, wiring not. Merge into
+the same `hooks` block:
+
+```json
+"Stop": [
+  {
+    "hooks": [
+      { "type": "command",
+        "command": "python \"${CLAUDE_PROJECT_DIR:-.}/.claude/hooks/problem_link_reminder.py\"",
+        "timeout": 10 }
+    ]
+  }
+]
+```
+
+**What §2 cannot reach, and why this exists.** The scaffold hook and `new_problem.py`'s own `LINKS:`
+line both key off a *tool invocation*, so they cover the moment a file is created and nothing else.
+The dominant remaining failure is the **mid-session restate** — *"next is 778"*, *"still on the board:
+271, 155"*, a hand-over, a *"what's next"*. No tool runs, so nothing fires, and the rule falls back to
+recall. It has lapsed **nine times** that way (Jul 20/21/23/30/31, Aug 3, Aug 5, Aug 6, Aug 12, 2026);
+the Aug 6 entry in `.claude/memory/feedback_kickoff_table_links.md` named this exact hook as the fix
+and it sat unbuilt for six days, through one more lapse. That gap is the point: *a candidate fix
+recorded in prose is still prose.*
+
+At Stop it reads the last assistant message and blocks once if a problem-looking number appears
+outside any markdown link, naming the offending numbers. Three guards keep it quiet, all for the
+cry-wolf reason in §2: the turn must carry a problem cue word (so complexity talk about `26` children
+or `10^4` calls never trips it); a number linked *anywhere* in the turn counts as linked for the whole
+turn; and `stop_hook_active` short-circuits so it can never loop.
+
+⚠️ **It restates the spoiler exception rather than assuming it away.** In a *selection menu* where the
+learner has not picked yet, an unscaffolded retry's file link opens their prior solution — there, LC/NC
+only is correct and the block should be answered by saying so, not by adding file links. A hook that
+demanded links unconditionally would automate a spoiler.
+
+## 4. The session-start memory hook
 
 Same deal: the script (`.claude/hooks/session_start_memory.py`) is version-controlled, the wiring is
 not. Merge this into the same `hooks` block:

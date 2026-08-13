@@ -6,7 +6,7 @@
 
 > The tracker is keyed by **problem**; this is keyed by **technique**. Use it at the weekly build to decide what to pull, and at phase exit to check the per-algorithm bar (recognition + execution, ≥1 🟢 each).
 
-> **51** techniques &nbsp;·&nbsp; **11** with no 🟢 &nbsp;·&nbsp; **6** thin &nbsp;·&nbsp; **0** unqueued variant gaps
+> **52** techniques &nbsp;·&nbsp; **12** with no 🟢 &nbsp;·&nbsp; **7** thin &nbsp;·&nbsp; **0** unqueued variant gaps
 
 ## ⚠️ Action list
 
@@ -22,6 +22,7 @@
 - **Graph Cycle Detection (DFS)** (graphs) — best 🟡 across 261
 - **Hierholzer (Eulerian path)** (advanced_graphs) — best 🟡 across 332
 - **Length-Prefix Encoding** (arrays_and_hash) — best 🟡 across 271
+- **Stack (augmented entries)** (stack) — best 🔴 across 155
 - **Stack (expression evaluation)** (stack) — best 🟡 across 150
 
 **Thin — fewer than the 3–4 surface forms a technique needs.** One instance trains recall of that problem, not the skill.
@@ -29,6 +30,7 @@
 - **Bellman-Ford** (advanced_graphs) — 1/3: 787
 - **Cycle Detection in an Iterated Sequence** (graphs) — 1/2: 202
 - **Divide & Conquer / Sorting** (sorting) — 1/2: 912
+- **Stack (augmented entries)** (stack) — 1/2: 155
 - **Stack (expression evaluation)** (stack) — 1/2: 150
 - **Dijkstra** (advanced_graphs) — 2/3: 743, 778
 - **Grid DFS** (graphs) — 2/3: 200, 695
@@ -76,6 +78,7 @@
 | Sliding Window | sliding_window | 4 (3, 121, 424, 567) | 🟢 | ✅ | — | — |
 | Divide & Conquer / Sorting | sorting | 1 (912) | 🟢 | ✅ | Merge Sort ×1 · ~~Quick Sort~~ *(queued: `expansion — sorting deep-dive`)* · ~~Radix Sort~~ *(queued: `expansion — sorting deep-dive`)* · ~~Counting Sort~~ *(queued: `expansion — sorting deep-dive`)* · ~~Timsort~~ *(queued: `expansion — sorting deep-dive`)* · ~~D&C on 53~~ *(queued: `rated:912 + surplus>=1`)* | thin (1/2) |
 | Monotonic Stack | stack | 3 (496, 503, 901) | 🟢 | ✅ | — | — |
+| Stack (augmented entries) | stack | 1 (155) | 🔴 | ❌ | — | **no-green** · thin (1/2) |
 | Stack (expression evaluation) | stack | 1 (150) | 🟡 | ❌ | — | **no-green** · thin (1/2) |
 | Stack (matching) | stack | 1 (20) | 🟢 | ✅ | — | — |
 | BST Descent | trees | 2 (98, 235) | 🟢 | ✅ | — | — |

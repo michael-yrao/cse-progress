@@ -447,3 +447,106 @@ disease as everything in Cluster A. It is now item 2 of the SessionStart hook's 
   trigger I actually run is "recognise a known acronym" rather than "check every capitalised short form."*
   `open` — one occurrence; re-examine at the meta-review, and if it recurs the rung-2 fix is a Stop-hook
   flagging 2–3 letter all-caps tokens in staged `.md` that never appear adjacent to an expansion.
+
+- **2026-08-12 [P1] — scaffolded three files wrong, self-caught, and the script let every mistake through
+  silently.** At the Wed Aug 12 kickoff, 211 · 271 · 155 all scaffolded malformed. Immediate cause was my
+  own misuse: `--method` is **comma-separated** (`--method encode,decode`) while the adjacent `--signature`
+  is `action="append"`, and I repeated `--method` for both. Argparse kept only the **last** value.
+  **The damage was not cosmetic.** On 271 the collapse to one method routed the retry down the
+  *single-method* branch, which slipped past the dated-sibling-class guard and left **all three prior
+  attempts visible in the file** — precisely the spoiler the extract exists to prevent, and precisely the
+  case that guard was written for. Caught by reading the file after the scaffold rather than trusting the
+  success line; reverted, re-extracted by hand, learner never saw it.
+  **Root cause, and why it is the script's and not only mine:** four separate silent-wrong-output paths,
+  every one of which printed a confident success line —
+  (a) repeated `--method` silently discarding all but the last;
+  (b) the sibling-class guard testing *presence* of `--method` rather than **coverage**, so `--method decode`
+      alone on 271 leaks exactly as naming nothing would;
+  (c) the NEW-problem path emitting `methods[0]` alone under a hardcoded `class Solution` — 155 came out as
+      a lone `getMin()`;
+  (d) `--signature` padding a **partial** list, so one skipped signature shifts every later one onto the
+      wrong method and produces a plausible, wrong scaffold.
+  **Fixed at source, all four** (`--method` now accumulates across both spellings; guard checks the full
+  declared interface and names what is missing; new-problem path builds the real class, named from the title
+  when `__init__` is declared; partial `--signature` lists are a hard error). 12 cases run in a scratchpad
+  sandbox on copies from `HEAD` — including regressions for single-method retries, approach-collection files
+  (238), and new single-method problems. Also added 271's NeetCode slug to `NEETCODE_RENAMES`; the derived
+  slug disagreed with the link the weekly schedules have used all along.
+  **The transferable lesson is (b), not (a).** My misuse was the trigger; the guard failing *open* on an
+  under-specified interface is the defect, and it had been sitting there since the guard was written —
+  it only ever tested `not args.method`, never whether the named set covered the file. A guard whose whole
+  purpose is preventing a spoiler must fail **closed**. Related: [[feedback_verify_terminal_actions]] —
+  the success line said "Inserted attempt … stashed →" on a run that had leaked the entire solution history.
+  Status: `closed at source` (rung 1). No behavioral rule proposed: the script now refuses instead of
+  guessing, which is the correct rung for a mistake this easy to repeat.
+
+- **2026-08-12 [P1] — 9th lapse of the problem-link rule, and the fix for it had been named six days
+  earlier and left unbuilt.** Closed a turn with *"Next on the board is **778 Swim in Rising Water** … Want
+  it now, or 271 first?"* — two bare numbers, neither carrying the standing `[file] · [LC/NC]` pair. Learner:
+  *"this is the 5th+ time I've had to remind the agent."* Their count is if anything low; the ledger in
+  `feedback_kickoff_table_links.md` has it at nine (Jul 20/21/23/30/31, Aug 3, Aug 5, Aug 6, today).
+  **Root cause is NOT recall, and treating it as recall is what kept it alive.** The scaffold case was fixed
+  at source on Aug 3 (`new_problem.py` prints `LINKS:`) and has not lapsed since. Every lapse after that has
+  been the **mid-session restate** — hand-over, "still on the board", "what's next" — where no tool runs, so
+  neither the source fix nor the `PostToolUse` hook can reach it. That failure mode was correctly diagnosed
+  in the Aug 6 entry, which named the remedy exactly: *"Candidate rung-2 fix (raise at meta-review): a
+  Stop-hook flagging an assistant turn with a bare LC number outside a markdown link."*
+  **The actual defect worth logging is what happened to that sentence.** The remedy for a prose rule that
+  keeps failing was itself filed as prose, deferred to a future meeting, and the rule lapsed again while it
+  waited. This repo's own stated principle (CLAUDE.md) is that a rule which keeps lapsing needs to become a
+  step or a mechanism rather than a better paragraph — and a *candidate fix* recorded in a memory file is
+  still a paragraph. **Standing correction: when a rung-2 fix is identified precisely enough to describe, it
+  gets built in that turn, not scheduled.** Deferral is only honest when the fix is genuinely unclear.
+  **Fixed this turn:** built `.claude/hooks/problem_link_reminder.py` (Stop hook — reads the last assistant
+  message, blocks once naming any problem-looking number that sits outside a markdown link), registered it in
+  the gitignored `.claude/settings.json`, and documented the paste in `docs/SETUP.md` §3 so it reaches the
+  other machine. Tested on both real lapse transcripts (today's and Aug 6's), on correctly-linked turns, on
+  a complexity discussion full of bare numbers (`26`, `676`) which must stay silent, and on the loop guard.
+  Three deliberate quiet-guards, for the cry-wolf reason already recorded in `scaffold_links_reminder.py`.
+  **Known limits, recorded rather than assumed away:** it fires at Stop, so it corrects rather than prevents;
+  it needs a problem cue word in the turn, so a bare *"778 next?"* slips through; and the **selection-menu
+  spoiler exception** survives — the block message says to answer by naming the exception, never by adding a
+  file link to an unscaffolded retry. Status: `closed at source` (rung 2) — reopen if a 10th lapse gets past
+  the hook, which would mean the cue-word guard is too tight.
+
+- **2026-08-12 [P2] — dramatized a 🟡 into a setback, against a written policy quoted in the same turn.**
+  After logging 778, framed the result as *"the week's stated goal took a hit"* and *"Friday's 743 is now
+  carrying real weight"* — then, one sentence later, correctly cited the schedule's own standing policy:
+  *"Aug 16 is a checkpoint, not a deadline… report which algorithms have no 🟢 and let that drive the
+  schedule — never frame the date as a countdown."* Learner: *"it's really not a big deal, if it failed, it
+  failed… we are doing this structure specifically so we can learn to minimize mistakes."*
+  **Root cause is not ignorance of the rule — I recited it accurately in the same breath.** The failure is
+  that the *state report* and the *emotional framing* were produced as one act, so quoting the policy
+  sanitized the paragraph without changing it. Reporting "Dijkstra has zero 🟢, one chance left Friday" is
+  the required output; "carrying real weight" is editorializing bolted onto it, and the policy exists
+  precisely because that editorializing is what converts a checkpoint into a deadline.
+  **The learner's framing is the correct one and worth keeping verbatim:** the structure exists *so that*
+  misses happen cheaply and get scheduled. A 🟡 on a Hard, recognized cold, lost to one misplaced check, is
+  the mechanism working — treating it as a shortfall argues against the spaced-repetition model the whole
+  repo is built on. Cf. [[feedback_phase_dates_are_advisory]], which this is a soft violation of.
+  **Apply:** state phase status as bare facts (which algorithms have no 🟢, which reps remain, what triggers
+  have/haven't fired) and stop there. No "only", no "last chance", no weight adjectives. If a genuine
+  scheduling consequence exists, it is an item for the weekly build, not a mood in the session.
+  Note the schedule/tracker entries themselves were fine — factual state, no urgency language; the lapse was
+  chat-only. Status: `open` — one occurrence; watch at the next 🟡 on a protected rep.
+
+- **2026-08-12 [P2] — over-answered a one-line question, ~40 minutes after the learner set the "no fluff"
+  rule.** Asked *"why is this solution wrong?"* on 155. The answer needed one fact: a Python list stack
+  peeks at `[-1]`, not `[0]`. Delivered that, then added a verification against their own example, then a
+  second failing trace for the subtler `push` case. Learner: *"you could've simplified your answer to 'peek
+  for a stack is stack[-1] and not stack[0]'."*
+  **Root cause is that my own written self-check was too permissive.** The rule I had just recorded said to
+  delete any sentence not carrying "a fact, a number, a mechanism, or a question" — and every extra sentence
+  here *did* carry a fact. Passing that filter is not the bar. The operative test is **necessity**: does the
+  learner need this sentence to take the next action? They did not; they fixed all three sites from the one
+  fact, as any competent reader would.
+  **Specific pattern to watch: one fact fixing N call sites.** The instinct to enumerate the sites, verify
+  the claim, and pre-empt the follow-up is exactly the decoration the rule targets, disguised as thoroughness.
+  State the fact once; offer the trace only if they return.
+  **Also note where this sits against the opposite failure.** Two turns earlier the learner said *"walk me
+  through the algorithm"* and a long, fully worked table was correct there — that was a request for the
+  procedure, and `feedback_procedure_first` requires it. The register rule is not "always short"; it is
+  "length is set by what the learner asked for", and a *why-is-this-wrong* question asks for a cause, not a
+  lesson. Getting the first one right does not license the second.
+  Fixed in `feedback_explanation_register.md` — the self-check now tests necessity, not factuality.
+  Status: `open` — 2nd register correction today (cf. the Aug 12 [P2] dramatization entry); watch the rate.

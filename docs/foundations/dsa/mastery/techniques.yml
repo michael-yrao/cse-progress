@@ -197,6 +197,16 @@ techniques:
     problems:
       - {number: 150}
 
+  # Not a monotonic stack and not expression evaluation: the stack stores AUGMENTED
+  # entries so a query that would otherwise be a scan becomes a read of the top. The
+  # transferable idea is "carry the answer-so-far alongside each element", which is what
+  # makes O(1) getMin survive a LIFO pop. Added Aug 12, 2026 via 155.
+  - name: Stack (augmented entries)
+    family: stack
+    min_problems: 2
+    problems:
+      - {number: 155, method: Pair with Min-So-Far}
+
   - name: Monotonic Stack
     family: stack
     problems:
