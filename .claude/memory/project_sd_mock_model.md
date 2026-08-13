@@ -41,6 +41,30 @@ schedule is "read about X". Teaching happens on request, off-schedule, unrated.
 - **Cost, already accounted:** every day without an SD slot carries an unseen DSA problem, which is now
   all seven; intake caps bind before that rule does, so probes fill the remainder.
 
+### ⭐ Depth: a HIGH ceiling, a SENIOR bar — they are different things
+
+The learner corrected the first framing (*"interview depth and no deeper"*) the same day:
+
+> *"there is a staff engineer system design section that is worth exploring after this initially
+> junior/senior level system design is done so we can have a high ceiling during the mocks but not
+> exceptional depth is expected."*
+
+- **Ceiling = how far a probe may go: high.** Keep pushing until the answer runs out; that is how the
+  edge gets found, and an interviewer who stops at the bar never locates it.
+- **Bar = the depth a checkpoint must reach to pass: junior/senior.** Exceptional depth does not gate 🟢.
+- **So a probe that runs past the bar costs NOTHING on the rating.** Record it under `❓ Open probes` and
+  mark it *above the current bar* — that distinction is what later lets someone tell "didn't know it"
+  from "wasn't expected to yet."
+- **The rubric is unchanged.** #5 forks / #6 failure modes / #7 evolve-operate are **habits of reasoning,
+  not exotic knowledge**; a senior candidate has them. Staff material later deepens a single deep dive,
+  it does not add checkpoints.
+- **Sequence:** core at senior depth → mocks → **then** the staff tier, which **raises the ceiling, not
+  the bar**. ⏳ Its source is not yet pinned — HelloInterview's *in a hurry* pages carry no staff section;
+  their level-keyed material looks like the company guides (`/guides/meta/e3`…). **Ask for the link; do
+  not guess a URL.**
+- ⚠️ **When the bar moves, ratings stop being comparable across the move** — same failure as rewriting a
+  Recall Card mid-series. Date the change in `study_guide.md` and read earlier 🟢s as "🟢 at the senior bar."
+
 **What was retired, so it doesn't creep back:** lanes ①/②/③ · note-building as a scheduled rep ·
 Recall-Card blind sprints · the Bootstrap→Transition→Mastery arc · designs-pull-blocks and its pull queue
 · the prerequisite-tech gate · the technology/concept/component tracker rows (now frozen reference cards,

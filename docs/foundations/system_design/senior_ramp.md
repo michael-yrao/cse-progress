@@ -62,9 +62,14 @@ for state. Order within a phase is *what it teaches*, not alphabetical.
 ### Phase 0 — study mode (current, from Aug 13, 2026)
 
 **No SD slot is scheduled.** The learner is working through HelloInterview's Core Concepts and Key
-Technologies, and **Phase A begins on their signal** — see [`study_guide.md`](study_guide.md). The next
-SD session is a **restructure session** that scopes those two pillars to interview depth and no deeper;
-they call it.
+Technologies at **junior/senior depth**, and **Phase A begins on their signal** — see
+[`study_guide.md`](study_guide.md). The next SD session is a **restructure session** that scopes those
+two pillars to a workable depth; they call it.
+
+⚠️ **"Scoped" means a senior *bar*, not a low ceiling** — the mocks probe as deep as the design allows,
+and a probe that runs past the bar costs nothing on the rating. **A staff-level tier follows the core**
+and raises the ceiling rather than the bar. Both rules, and the caveat about ratings not being comparable
+across a bar change, are in [`study_guide.md`](study_guide.md) → *Depth*.
 
 **Nothing else waits on it.** DSA runs at full capacity, and every day without an SD slot carries an
 unseen problem.
