@@ -171,6 +171,51 @@ graph with two nodes in one layer.** Trace a branch, not a line.
 *(Learner's own closing statement of it, unprompted: "the counter increments upon finishing a layer, not
 upon visiting a node.")*
 
+## ⚡ Edge-set / node-set bookkeeping — TEACH, Aug 12, 2026 (unrated)
+
+**Trigger:** two consecutive reps lost to set construction, per the 540/19 rule — 269 (Aug 7, bugs #1
+and #4) and 133 (Aug 9). Flagged at the Aug 10 build, run Aug 12. **Measured by 269 on Aug 17** — the
+5-day gap is deliberate, and 269 was never opened during the teach.
+
+**Both decisions derived by the learner on throwaway graphs.**
+
+### Decision 1 — the node set comes from the INPUT, not from the edge map
+
+```python
+adjMap = {"a": ["b"], "b": ["c"]}
+for node in adjMap:      # visits a, b — never c
+```
+
+A map keyed by source only contains nodes with **outgoing** edges. Sinks are invisible in it. Build the
+node set in its own pass over the input universe.
+
+*This is 269 bug #1: the Kahn's queue was seeded from `adjMap`, so `["ac","ab"]` dropped `a` entirely.*
+
+### Decision 2 — node identity and edge recording are SEPARATE guards
+
+```python
+if neighbor not in seen:
+    seen[neighbor] = Node(neighbor.val)
+    queue.append(neighbor)
+    clone.neighbors.append(seen[neighbor])   # WRONG — inside the guard
+```
+
+An undirected edge is discovered **twice**, once from each end; a node is created **once**. The guard's
+job is *don't clone twice, don't enqueue twice* — it exists to terminate on cycles. Edge recording must
+sit outside it, or every edge's second appearance is silently dropped (`1—2` clones to `2'.neighbors == []`).
+
+*This is 133's single bug, and the same shape as 721's redundant `find` guard: one mechanism doing more
+jobs than its condition justifies.*
+
+### The test to apply
+
+> **"Have I made this node?" and "Have I recorded this edge?" are different questions. One `if` cannot
+> answer both.**
+
+Related, from the same 269 rep (bug #4) — the mirror failure, *over*-recording rather than under: only the
+**first** differing position between two words carries an edge. Continuing past it recorded `a→b` *and*
+`b→a` from `["ab","ba"]`, a self-invented cycle. Same category: be deliberate about which edges exist.
+
 ## Call log — hits AND misses (the denominator)
 
 *Started Aug 9, 2026. **Every fired gate gets a line here, whether or not it was a miss.*** A ledger
@@ -202,6 +247,10 @@ so a retry hit is *half-spoiled* and is **not** phase-exit evidence. Only new pr
 | 2026-08-11 | 875 Koko Eating Bananas `R` | "h ≥ len(piles) so we can always finish; max(piles) always works; we need at least 1 banana/hr — so the range is 1 to max(piles), min-boundary binary search" | ✅ hit, **pre-code** — and the good part is that the **bounds were derived, not recalled**: both ends were justified from the constraints in the comment before any code. That derivation is what made the complexity answer right too (see the 1011 transfer note in `complexity_gotchas.md`) |
 | 2026-08-11 | 150 Evaluate RPN (**new**) | "push when we see a number, pop two when we see an operator" | ⚠️ **not evidence — pre-spoiled.** The scaffold path is `dsa/leetcode/stack/` and the docstring header reads `Pattern: stack`, so the technique was named before the learner opened the file; the coach then walked the RPN notation, which is most of the mechanism. **A new problem is only recognition evidence if nothing named the technique** — logging it as a hit would inflate the denominator with a freebie. This is the `<pattern>/` scaffold-path defect ([[project_upstream_candidates]]) showing up on a *new* problem rather than a retry |
 | 2026-08-11 | **202 Happy Number** 🎯 **PROBE #2** | pre-code comment was *"we need to define an end point for both success and failure"* — a plan, not a technique. Correct call (**cycle detection → seen-set**) arrived only after the coach challenged the termination condition | ⚠️ **partial — did not fire cold.** See the write-up below. 🟡, so it **earns a tracker row** |
+| 2026-08-12 | 211 Add and Search Words `R` | "Word Data Structure is Trie… searching without wildcard is trivial; with wildcard we skip the current node and look at every child; substring adds complexity so use indices" | ✅ hit, **pre-code** — the comment named the structure, the branching feature `.` forces, *and* the index-not-substring decision. Half-spoiled (retry, folder `trie/`), so **not phase-exit evidence**; the non-obvious half — fan out over `children.values()` rather than index one — was the learner's own |
+| 2026-08-12 | 778 Swim in Rising Water `R` | "Dijkstra at a glance because we have an end goal destination… minHeap instead of queue, visited set; no adj map since we just look at the closest 4; we do need to keep track of time vs our min node in the heap" | ✅ hit, **pre-code** — and the last clause is the good part: it names the *tension the problem actually turns on* (water level vs heap minimum) before any code. The bug that followed was event-placement, not recognition. Half-spoiled (retry; tracker row reads *Dijkstra / Min-Heap*) |
+| 2026-08-12 | 271 Encode and Decode Strings `R` | "prefix length framing / `len#str`" | ✅ hit, **pre-code** — terse but complete: it names the scheme *and* the frame format, which is the whole design decision. Half-spoiled (retry). The follow-through was the real evidence: slicing by count rather than scanning for the delimiter is what makes a `#` inside the payload a non-issue, and that was never discussed |
+| 2026-08-12 | 155 Min Stack (**new**) | — | ⚠️ **not measurable — pre-spoiled.** Scaffold path is `dsa/leetcode/stack/` and the docstring header reads `Pattern: stack`, so the technique was named before the file was opened. Second occurrence of this defect on a *new* problem (150, Aug 11). The un-spoiled half — O(1) `getMin` — was gated separately and **not** solved: deque, then single variable, then asked to be walked through |
 
 ### Probe #1 — what it actually measured (Aug 10, 2026)
 

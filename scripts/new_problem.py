@@ -49,6 +49,11 @@ import session_date
 # grows. Keyed by the LeetCode slug.
 NEETCODE_RENAMES = {
     "alien-dictionary": "foreign-dictionary",
+    # NeetCode words this one the other way round from LeetCode. The derived slug
+    # ("encode-and-decode-string") is what the script printed for 271 on 2026-08-12,
+    # disagreeing with the link the weekly schedules have used all along.
+    "encode-and-decode-string": "string-encode-and-decode",
+    "encode-and-decode-strings": "string-encode-and-decode",
 }
 
 LEETCODE_GRAPHQL = "https://leetcode.com/graphql"
@@ -101,6 +106,14 @@ def camel(title: str) -> str:
     if not parts:
         return "solve"
     return parts[0].lower() + "".join(p.capitalize() for p in parts[1:])
+
+
+def pascal(title: str) -> str:
+    """"Min Stack" -> "MinStack". The class name a NEW design problem's scaffold uses,
+    mirroring what `design_class_base` reads off disk on a retry so the two paths agree.
+    """
+    parts = [p for p in re.split(r"[^0-9a-zA-Z]+", title.strip()) if p]
+    return "".join(p[:1].upper() + p[1:] for p in parts) or "Solution"
 
 
 def parse_signature(spec: str) -> tuple[str, str]:
@@ -593,11 +606,12 @@ def main() -> None:
     ap.add_argument("--title", required=True)
     ap.add_argument("--pattern", required=True, help="category folder, e.g. arrays_and_hash")
     ap.add_argument("--url", default="")
-    ap.add_argument("--method", default="",
-                    help="method name; comma-separate for a multi-method problem "
-                         "(e.g. --method encode,decode), which scaffolds a dated "
-                         "sibling class instead of dated methods — mirroring the "
-                         "existing class name and its __init__ on a retry")
+    ap.add_argument("--method", action="append", default=[],
+                    help="method name; for a multi-method problem either comma-separate "
+                         "(--method encode,decode) or repeat the flag (--method encode "
+                         "--method decode) — both spellings accumulate, in order. "
+                         "Scaffolds a dated sibling class instead of dated methods, "
+                         "mirroring the existing class name and its __init__ on a retry")
     ap.add_argument("--signature", action="append", default=[],
                     help="the method's real signature, e.g. "
                          "--signature \"times: List[List[int]], n: int, k: int -> int\". "
@@ -628,10 +642,31 @@ def main() -> None:
     today = session_date.resolve(args.date)
     stamp = session_date.resolve(args.date, fmt="%Y%m%d", announce=False)
     name = snake(args.title)
-    methods = [m.strip() for m in args.method.split(",") if m.strip()] or [camel(args.title)]
+    # --method accumulates across BOTH spellings: repeated flags and comma-separated
+    # values. It used to be a plain scalar, so a repeated flag silently kept only the
+    # LAST value — and because the adjacent --signature *is* action="append", repeating
+    # --method is the natural mistake to make. The failure was not cosmetic: on a
+    # multi-method file it collapsed the request to one method, which slipped past the
+    # dated-sibling-class guard below and took the single-method branch, leaving every
+    # prior attempt visible in the file. That is the exact 271 spoiler the guard exists
+    # to prevent (hit 2026-08-12 on 211, 271 and 155).
+    named_methods = [m.strip() for part in args.method for m in part.split(",") if m.strip()]
+    methods = named_methods or [camel(args.title)]
     method = methods[0]
     # Aligned with `methods` by position; a method with no --signature falls back to (self).
     signatures = [parse_signature(s) for s in args.signature]
+    # Pairing is POSITIONAL, so a partial list silently shifts every signature onto the
+    # wrong method and scaffolds something that looks plausible and is wrong (155:
+    # --method __init__ with no signature of its own slid push's onto __init__, pop's
+    # onto push, and left getMin bare — 2026-08-12). Supplying none is the normal case
+    # (a retry reads them off disk); supplying SOME is always a usage error.
+    if args.signature and len(signatures) != len(methods):
+        ap.error(
+            f"--signature is paired positionally with --method: got {len(methods)} "
+            f"method(s) ({', '.join(methods)}) but {len(signatures)} signature(s). "
+            f"Pass one per method in the same order (use \"\" for a bare (self), e.g. "
+            f"__init__), or none at all."
+        )
     signatures += [("self", "")] * (len(methods) - len(signatures))
     slug = name.replace("_", "-")
     if args.url:
@@ -679,6 +714,29 @@ def main() -> None:
             .replace("{ret}", f" {signatures[0][1]}" if signatures[0][1] else "")
             .replace("{statement}", STATEMENT_STUB)
         )
+        # The template holds ONE method under `class Solution` — correct for the common
+        # case, silently wrong for a multi-method problem, where it emitted methods[0]
+        # alone and dropped the rest (155 Min Stack scaffolded as a lone `getMin`,
+        # 2026-08-12). Rebuild the class block with every named member instead.
+        # Class name: a declared `__init__` is what marks a DESIGN problem, so it takes
+        # the problem's own name (MinStack, LRUCache, Twitter); without one the members
+        # are plain solution methods and `Solution` is right (271 encode/decode). This
+        # mirrors what design_class_base() reads off disk on the retry path.
+        if len(methods) > 1:
+            cls_name = pascal(args.title) if "__init__" in methods else "Solution"
+            members = []
+            for name_, (params, ret) in zip(methods, signatures):
+                members += [
+                    "",
+                    f"    def {name_}({params})" + (f" {ret}" if ret else "") + ":",
+                    "        pass",
+                ]
+            block = [
+                f"class {cls_name}:",
+                f"    # ── Attempt 1 · {today} ────────────────────────────────────────────",
+            ] + members[1:]
+            head = body.split("class Solution:")[0]
+            body = head + "\n".join(block) + "\n"
         path.write_text(body, encoding="utf-8")
         print(f"Created {path} (Attempt 1 · {today}).")
     else:
@@ -722,21 +780,29 @@ def main() -> None:
         # dated sibling class, so it correctly falls through to the single-method path (stub
         # at top, every method stashed below — no spoiler). Named design classes (Twitter,
         # LRUCache) have design_class_base != None and are handled by the else-branch guard.
-        if (not args.method.strip() and design_class_base(lines, args.title) is None
-                and has_dated_sibling_class(lines)):
+        # An UNDER-NAMED interface is the same bug wearing a disguise. `--method decode`
+        # alone on 271 makes len(methods) == 1, which routes to the single-method branch
+        # and leaks the sibling classes exactly as naming nothing would. So the guard
+        # checks COVERAGE, not merely presence: refuse unless every public member the file
+        # already declares was named. (Naming a method the file has never seen is fine —
+        # that is how a genuinely new member gets added.)
+        if design_class_base(lines, args.title) is None and has_dated_sibling_class(lines):
             pubs = solution_interface_methods(lines)
-            suffix = f" (e.g. --method {','.join(pubs)})" if len(pubs) > 1 else ""
-            ap.error(
-                f"{args.number} stores prior attempts as dated sibling classes "
-                f"(multi-method layout); its retry stub needs the interface named. Re-run "
-                f"with --method{suffix} — without it the sibling classes are left visible "
-                f"or a bogus method is invented."
-            )
+            missing = [m for m in pubs if m not in methods] if named_methods else pubs
+            if missing:
+                suffix = f" (e.g. --method {','.join(pubs)})" if len(pubs) > 1 else ""
+                unnamed = f"; not named: {', '.join(missing)}" if named_methods else ""
+                ap.error(
+                    f"{args.number} stores prior attempts as dated sibling classes "
+                    f"(multi-method layout); its retry stub needs the FULL interface named"
+                    f"{unnamed}. Re-run with --method{suffix} — otherwise the sibling "
+                    f"classes are left visible or a bogus method is invented."
+                )
 
         # No --method on a retry: discover the name from the file rather than guessing
         # camel(title). The two usually differ (levelOrder vs binaryTreeLevelOrderTraversal),
         # and a wrong guess both mis-names the stub and misses the signature lookup.
-        if not args.method.strip() and cls is not None and len(methods) == 1:
+        if not named_methods and cls is not None and len(methods) == 1:
             discovered = existing_method_name(lines, cls)
             if discovered:
                 method = methods[0] = discovered
@@ -763,7 +829,7 @@ def main() -> None:
             # invents a bogus method (`lRUCache()`) that isn't part of the class. Fail loud
             # with guidance instead of scaffolding garbage. (`Solution`-only files keep the
             # camel fallback: a single-method legacy file is a reasonable guess.)
-            if base != "Solution" and not args.method.strip():
+            if base != "Solution" and not named_methods:
                 ap.error(
                     f"{args.number} is a design/multi-method problem (class {base}); its "
                     f"retry stub needs the public interface named. Re-run with --method "

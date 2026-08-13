@@ -64,14 +64,18 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/dsa/mastery/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **103** problems &nbsp;·&nbsp; **112** solutions &nbsp;·&nbsp; **434** reps
+> **104** problems &nbsp;·&nbsp; **113** solutions &nbsp;·&nbsp; **438** reps
 
 | | 🏆 Retired | 🎓 Graduated | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|:---:|
-| **Solutions** | 0 | 6 | 88 | 18 | 0 |
+| **Solutions** | 0 | 6 | 88 | 18 | 1 |
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Rep Date | Rep Dates |
 |---|---|---|---|---|---|---|
+| Medium | [155. Min Stack (Pair with Min-So-Far)](https://leetcode.com/problems/min-stack/) | 🔴 | 0 | 2026-08-14 | 2026-08-12 | 2026-08-12 |
+| Hard | [778. Swim in Rising Water (Dijkstra / Min-Heap)](https://leetcode.com/problems/swim-in-rising-water/) | 🟡 | 0 | 2026-08-22 | 2026-08-12 | 2026-07-23, 2026-08-02, 2026-08-12 |
+| Medium | [211. Design Add and Search Words Data Structure](https://leetcode.com/problems/design-add-and-search-words-data-structure/) | 🟡 | 0 | 2026-08-22 | 2026-08-12 | 2026-07-09, 2026-07-11, 2026-07-21, 2026-07-23, 2026-08-02, 2026-08-12 |
+| Medium | [271. Encode and Decode Strings](https://leetcode.com/problems/encode-and-decode-strings/) | 🟡 | 0 | 2026-08-22 | 2026-08-12 | 2026-07-01, 2026-07-03, 2026-07-13, 2026-07-23, 2026-08-02, 2026-08-12 |
 | Medium | [875. Koko Eating Bananas](https://leetcode.com/problems/koko-eating-bananas/) | 🟢 | 1 | 2026-09-10 | 2026-08-11 | 2026-04-22, 2026-07-03, 2026-07-13, 2026-07-23, 2026-08-02, 2026-08-11 |
 | Medium | [1584. Min Cost to Connect All Points (Prim's MST)](https://leetcode.com/problems/min-cost-to-connect-all-points/) | 🟢 | 1 | 2026-09-10 | 2026-08-11 | 2026-07-16, 2026-07-18, 2026-07-20, 2026-08-01, 2026-08-11 |
 | Medium | [323. Number of Connected Components (DFS)](https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/) | 🟢 | 2 | 2026-10-10 | 2026-08-11 | 2026-07-02, 2026-07-12, 2026-08-11 |
@@ -123,9 +127,6 @@ Notes for future agents:
 | Medium | [994. Rotting Oranges](https://leetcode.com/problems/rotting-oranges/) | 🟢 | 2 | 2026-10-02 | 2026-08-03 | 2026-06-06, 2026-06-15, 2026-06-25, 2026-07-04, 2026-08-03 |
 | Easy | [219. Contains Duplicate II](https://leetcode.com/problems/contains-duplicate-ii/) | 🟢 | 2 | 2026-10-02 | 2026-08-03 | 2026-03-22, 2026-04-14, 2026-06-25, 2026-07-04, 2026-08-03 |
 | Medium | [229. Majority Element II](https://leetcode.com/problems/majority-element-ii/) | 🟢 | 1 | 2026-09-02 | 2026-08-03 | 2026-01-30, 2026-04-14, 2026-06-27, 2026-06-29, 2026-07-12, 2026-07-24, 2026-08-03 |
-| Hard | [778. Swim in Rising Water (Dijkstra / Min-Heap)](https://leetcode.com/problems/swim-in-rising-water/) | 🟡 | 0 | 2026-08-12 | 2026-08-02 | 2026-07-23, 2026-08-02 |
-| Medium | [211. Design Add and Search Words Data Structure](https://leetcode.com/problems/design-add-and-search-words-data-structure/) | 🟡 | 0 | 2026-08-12 | 2026-08-02 | 2026-07-09, 2026-07-11, 2026-07-21, 2026-07-23, 2026-08-02 |
-| Medium | [271. Encode and Decode Strings](https://leetcode.com/problems/encode-and-decode-strings/) | 🟡 | 0 | 2026-08-12 | 2026-08-02 | 2026-07-01, 2026-07-03, 2026-07-13, 2026-07-23, 2026-08-02 |
 | Medium | [261. Graph Valid Tree (Union-Find)](https://leetcode.com/problems/graph-valid-tree/) | 🟢 | 1 | 2026-08-31 | 2026-08-01 | 2026-06-19, 2026-06-29, 2026-07-09, 2026-07-18, 2026-08-01 |
 | Easy | [543. Diameter of Binary Tree](https://leetcode.com/problems/diameter-of-binary-tree/) | 🟢 | 1 | 2026-08-30 | 2026-07-31 | 2026-04-30, 2026-06-02, 2026-06-12, 2026-06-14, 2026-06-24, 2026-06-26, 2026-07-20, 2026-07-31 |
 | Medium | [417. Pacific Atlantic Water Flow (BFS)](https://leetcode.com/problems/pacific-atlantic-water-flow/) | 🟢 | 1 | 2026-08-30 | 2026-07-31 | 2026-06-11, 2026-07-19, 2026-07-31 |

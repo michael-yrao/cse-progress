@@ -2,9 +2,10 @@
 
 ## Repo Setup (one-time per machine/clone)
 
-**Three one-time steps on a fresh clone — see [`docs/SETUP.md`](docs/SETUP.md):** the git hooks path,
-the scaffold-links agent hook, and the session-start memory hook. The last two need a manual paste into
-`.claude/settings.json`, which is **gitignored** and therefore does not sync between machines.
+**Four one-time steps on a fresh clone — see [`docs/SETUP.md`](docs/SETUP.md):** the git hooks path,
+the scaffold-links agent hook, the problem-link Stop hook, and the session-start memory hook. The last
+three need a manual paste into `.claude/settings.json`, which is **gitignored** and therefore does not
+sync between machines.
 
 *(Moved out of this file Aug 3, 2026 — it is read once per machine, ever, but was loading into every
 session. The rule below stayed, because it is not setup.)*

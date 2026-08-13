@@ -40,6 +40,47 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-08-12 ──────────────
+    def swimInWater_20260812(self, grid: List[List[int]]) -> int:
+        # this is Dijkstra at a glance because we have an end goal destination
+        # we also are trying to pick the shortest path from our current node
+        # add nodes onto minHeap instead of queue for normal BFS, visited set
+        # we don't need adj map since we just look at the closest 4 nodes
+        # we do need to keep track of time vs our min node in the heap
+
+        rows, cols = len(grid), len(grid[0])
+
+        time = 0
+        minHeap = []
+        visited = set()
+        heapq.heappush(minHeap,(grid[0][0],0,0))
+
+        neighbors = [[1,0],[-1,0],[0,1],[0,-1]]
+
+        # while we have nodes to traverse
+        while minHeap:
+            # while we are able to traverse all nodes within our current time
+            # traverse them all
+            while minHeap and minHeap[0][0] <= time:
+                currentNodeValue, cr, cc = heapq.heappop(minHeap)
+                # check if we already visited this
+                if (cr, cc) in visited:
+                    continue
+                # if we reached the end, return
+                if cr == rows - 1 and cc == cols - 1:
+                    return time
+                # mark node as visited
+                visited.add((cr,cc))
+                # add neighbors to the minHeap
+                for ir, ic in neighbors:
+                    nr, nc = cr + ir, cc + ic
+                    if nr >= 0 and nr < rows and nc >= 0 and nc < cols and (nr,nc) not in visited:
+                        heapq.heappush(minHeap,(grid[nr][nc], nr, nc)) 
+            # increment time
+            time+=1
+        
+        return time
+
     # ── Attempt · 2026-08-02 ──────────────
     def swimInWater_20260802(self, grid: List[List[int]]) -> int:
         # from our starting point, it seems like we go in the direction that has the min

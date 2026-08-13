@@ -70,8 +70,31 @@ recall-bound restate case (no `new_problem.py` run → source fix can't reach it
 **dominant remaining failure mode**: kickoff table, "still on the board", "your call on what's
 next". **Rule of thumb: any turn that names a problem number — restate, hand-over, or "what's
 next" — carries the full `[file] · [LC/NC]` pair.** Silence is not lighter, it's a lapse.
-Candidate rung-2 fix (raise at meta-review): a Stop-hook flagging an assistant turn with a bare
-LC number outside a markdown link. Occurrence dates: Jul 20/21/23/30/31, Aug 3, Aug 5, **Aug 6**.
+~~Candidate rung-2 fix (raise at meta-review): a Stop-hook flagging an assistant turn with a bare
+LC number outside a markdown link.~~ **BUILT — Aug 12, 2026 (see below).** Occurrence dates:
+Jul 20/21/23/30/31, Aug 3, Aug 5, **Aug 6**, **Aug 12**.
+
+**⚠️ 9th lapse, Aug 12, 2026 — the "what's next" hand-over, and the candidate fix had been sitting
+unbuilt for six days.** Closed a turn with *"Next on the board is **778 Swim in Rising Water**… Want
+it now, or 271 first?"* — two bare numbers, no pair on either. Learner: *"this is the 5th+ time I've
+had to remind the agent."* Same restate case as Aug 6.
+
+**ENFORCED AT SOURCE (Aug 12, 2026) — `.claude/hooks/problem_link_reminder.py`, a `Stop` hook.**
+Reads the last assistant message; blocks once, naming the offending numbers, if a problem-looking
+number appears outside any markdown link. Setup: [`docs/SETUP.md`](../../docs/SETUP.md) §3.
+
+**The lesson is not "remember harder", it is about where the fix lived.** The Aug 6 entry identified
+the correct fix precisely and filed it as a *candidate to raise at the meta-review* — so the remedy
+for a prose rule that keeps failing was itself parked in prose, and the rule lapsed once more while it
+waited. **A named rung-2 fix should be built when it is named, not scheduled.** Compare the scaffold
+case: moved into `new_problem.py` on Aug 3 and it has not lapsed since.
+
+**What this hook still cannot do**, stated so nobody assumes it away: it fires at *Stop*, so it
+catches the turn after it is written rather than preventing it, and it is deliberately quiet — it
+needs a problem cue word in the turn, so a terse *"778 next?"* with no surrounding context slips
+through. That is the accepted trade against crying wolf. And in a **selection menu** the file link is
+a spoiler (see the caveat below), so the block's own message says to answer by *stating that*, never
+by adding file links.
 
 **CAVEAT — a retry's file link is a spoiler until scaffolded.** File links are safe in the
 **kickoff** table because those items are scaffolded first (blank stub, prior attempts

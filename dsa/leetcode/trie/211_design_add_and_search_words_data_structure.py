@@ -23,6 +23,56 @@ Constraints:
 """
 
 
+# ── Attempt · 2026-08-12 ──────────────
+# NOTE: suffix any helper class you write (Node, TrieNode, …) with _20260812 too — an undated helper collides with the restored canonical one.
+# Word Data Structure is Trie, so create TrieNode class to start
+
+class TrieNode_20260812:
+    # trie nodes has children: char -> TrieNode
+    # and whether or not this node is the end of a word
+    def __init__(self):
+        self.children = {}
+        self.isWord = False
+
+class WordDictionary_20260812:
+    def __init__(self):
+        # create root of the trie
+        self.root = TrieNode_20260812()
+
+    def addWord(self, word: str) -> None:
+        traversal = self.root
+        for char in word:
+            if char not in traversal.children:
+                traversal.children[char] = TrieNode_20260812()
+            traversal = traversal.children[char]
+        traversal.isWord = True
+
+    def search(self, word: str) -> bool:
+        # searching without wildcard is trivial
+        # with wildcard, we skip the current node and look at every children it has
+        # when we skip a node, we also skip the current char, so we need to adjust as such
+        # if we do substring, we are adding additional complexity, so we should use indices
+        traversal = self.root
+        def trieSearch(trieNode, startingIndex):
+            for i in range(startingIndex, len(word)):
+                currentChar = word[i]
+                if currentChar == '.':
+                    # if wildcard, skip this index and search all trieNode's children
+                    for childNode in trieNode.children.values():
+                        # if we found a word, return True
+                        if trieSearch(childNode, i+1):
+                            return True
+                    # if we went through all children and didn't find anything, return False
+                    return False
+                elif currentChar in trieNode.children:
+                    trieNode = trieNode.children[currentChar]
+                # not a wildcard nor is it part of the Trie, return False
+                else:
+                    return False
+            # return whether or not this is a word
+            return trieNode.isWord
+        return trieSearch(traversal, 0)
+
 # ── Attempt · 2026-08-02 ──────────────
 # NOTE: suffix any helper class you write (Node, TrieNode, …) with _20260802 too — an undated helper collides with the restored canonical one.
 class TrieNode_20260802:
