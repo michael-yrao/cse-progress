@@ -430,6 +430,11 @@ Transition → Mastery arc. Teaching happens **on request only**, off-schedule a
 3. **Run it as the interviewer, not the coach** — no hints, no leading questions, no supplying a box.
    Time called at each framework boundary (~5 requirements · 2 entities · 5 API · 10–15 HLD · 10 deep
    dives). Hold HLD altitude through steps 1–4; push on every bare adjective and every undefended choice.
+   - ⚠️ **High ceiling, senior bar.** Probe as deep as the design allows — that is how the edge gets
+     found — but **a probe that runs past the bar costs nothing on the rating.** Log it in the debrief's
+     *above the current bar* section, not as a gap.
+   - **Ask "why is this needed" before "what else could you add."** A simpler design, defended, outscores
+     a sophisticated one that was never justified.
 4. **Throw one curveball around minute 30** — a non-functional requirement change that invalidates part
    of the design. Mandatory at L6; graded under rubric #7.
 5. **Debrief in the same session:** score all seven checkpoints pass/fail **with the evidence for each**,

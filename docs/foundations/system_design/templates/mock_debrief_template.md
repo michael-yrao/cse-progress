@@ -26,6 +26,27 @@
 **Evidence, not impressions.** "Named the celebrity hot-key before being asked" is evidence; "seemed
 comfortable with fan-out" is not.
 
+### Staff signals — observed, not scored
+
+Not an eighth checkpoint. Noted because they are the difference between a correct design and a senior
+one, and because they are invisible unless written down at the time
+([the post](https://www.hellointerview.com/blog/staff-level-system-design)).
+
+| Signal | Observed? | Note |
+|---|---|---|
+| Peer-level — didn't explain the 101 unprompted | | |
+| Triaged what's hard vs routine, early | | |
+| Justified complexity / reached for the simpler design | | |
+| Transferred something actually operated before | | |
+| **Decided, rather than listing options** | | |
+
+### ⬆️ Probes that went above the current bar
+
+Listed separately from the score **on purpose**: these cost nothing on the rating. Without this section a
+later reading cannot tell *didn't know it* from *wasn't expected to yet*.
+
+-
+
 ## The design that came out
 
 <Mermaid diagram or a 5-line prose description of the boxes and arrows. Enough to make the next

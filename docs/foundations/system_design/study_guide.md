@@ -64,22 +64,45 @@ can tell "didn't know it" from "wasn't expected to yet."
 
 **The rubric does not change with the bar.** All seven checkpoints are still scored on every mock,
 including #5 forks / #6 failure modes / #7 evolve-operate — those are **habits of reasoning, not exotic
-knowledge**, and a senior candidate is expected to have them. What the staff material later changes is
-how deep a single deep dive can go, not whether a checkpoint gets touched.
+knowledge**, and a senior candidate is expected to have them.
 
-⚠️ **When the bar moves, ratings stop being comparable across the move** — same problem the Redis card
-had when it was rewritten mid-series. **Record the date the bar was raised in this file**, and read any
-🟢 earned before it as "🟢 at the senior bar."
+⚠️ **Nothing is queued that will raise the bar later.** The staff material turned out to be one blog post
+about behaviour (below), so there is no second curriculum waiting. **The bar moves when the learner says
+it moves** — and if it does, date it here, because ratings stop being comparable across the change (same
+problem the Redis card had when it was rewritten mid-series). Read any 🟢 earned before such a change as
+"🟢 at the senior bar."
 
-### The staff tier — after the core, and it raises the ceiling, not the bar
+### The staff signal — [one blog post](https://www.hellointerview.com/blog/staff-level-system-design), and it is about behaviour, not depth
 
-**Sequence:** lock down Core Concepts + Key Technologies at senior depth → run mocks → *then* explore the
-staff-level material. **Trigger:** the learner opens it, same as everything else on this track.
+**Pinned Aug 13, 2026.** The "staff engineer system design section" turned out to be a single
+HelloInterview blog post, not a curriculum. **That resolves the tier question by dissolving it:** there is
+no body of staff *material* to study later, so nothing is waiting to raise the ceiling. The ceiling gets
+raised by mocks and by the technology deep-dives, not by a separate track.
 
-**⏳ The exact source is not yet pinned.** HelloInterview's *System Design in a Hurry* pages carry no
-staff-labelled section; their level-keyed material appears to live in the company guides
-(`/guides/meta/e3` and siblings). **Fill this in with the real link before the tier opens** — a tier
-pointing at a guessed URL is worse than one that says it doesn't know yet.
+**What the post actually says — five signals, and staff is described as *qualitatively different*, not
+"senior done better":**
+
+| # | Signal | What it means in a mock |
+|---|---|---|
+| 1 | **Peer-level communication** | Don't explain the 101 curriculum unprompted. Over-explaining basics is a **negative** signal, not neutral filler |
+| 2 | **Problem triage** | Say out loud which parts are hard and which are routine, early — then attack the hard parts, rather than walking the design sequentially |
+| 3 | **Ruthless simplification** | Question whether the sophistication is needed. Ask the clarifying question that justifies the *simpler* design ("how many, how often?") |
+| 4 | **Depth through experience** | Connect something you have actually operated to the novel problem |
+| 5 | **Decisiveness** | **Make the call. Don't present a menu of options.** Judgment is what's being read, not analytical range |
+
+**Read it whenever — it costs ten minutes and it is not depth material.** The learner's plan was to
+explore staff content after the core, which was right for a curriculum and does not apply to a post about
+how to behave in the room. Sequencing it late buys nothing.
+
+⚠️ **Signal 5 vs. the fork drill, because they look contradictory and are not.** The fork table below
+lists *options* so the deciding question can be memorized. In the room, the output is the **fusion
+sentence** — one choice, its trigger, its cost, its breaking point — never *"we could do A or B or C."*
+Naming the alternative you rejected and why is decisiveness; enumerating three live candidates and
+waiting is the thing the post calls out.
+
+⚠️ **Signal 3 constrains the interviewer too.** Pushing a candidate toward more machinery is not the same
+as pushing them to defend what they have. **A simpler design, defended, outscores a sophisticated one
+that was never justified** — so a probe should ask *why this is needed*, not *what else could be added*.
 
 ## Cadence — two slots, and one of them is conditional
 
@@ -138,7 +161,11 @@ Interviewer, not coach. Specifically:
   requirement that invalidates part of the design ("now it has to be multi-region", "now the write rate
   is 50×"). How the design bends is a graded checkpoint, not a bonus.
 - **Deep-dive probes are drawn from the bank** — the previous debriefs' open questions, plus the standing
-  probe list at the bottom of this file.
+  probe list at the bottom of this file. **Ask "why is this needed" before "what else could you add"**
+  (staff signal 3).
+- **Watch the five staff signals while it runs** — over-explaining basics, no triage of what's hard,
+  unjustified sophistication, no experience transfer, options-presented-instead-of-decided. They are
+  noted in the debrief and they inform #5, but they are **not an eighth checkpoint.**
 
 ### After — the debrief
 
