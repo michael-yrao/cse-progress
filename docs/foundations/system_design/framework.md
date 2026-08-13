@@ -26,9 +26,8 @@ top 2–3 things they do?"* — then *"how big, how fast, how consistent?"*
 
 - **Functional (FRs)** — the verbs. *Users can shorten a URL; users can follow a short URL.* Keep it to the
   **core 2–3.** Explicitly de-scope the rest out loud ("I'll leave analytics/auth out unless you want them").
-- **Non-functional (NFRs)** — the *qualities*, and the thing that actually drives the design: **scale,
-  latency, availability, consistency, read/write ratio, durability.** *"100:1 read-heavy, <100ms redirect,
-  HA, eventual consistency OK."*
+- **Non-functional (NFRs)** — the *qualities*. Eight axes, recalled as **SCALD → ESC** (full table below).
+  *"100:1 read-heavy, <100ms redirect, HA, eventual consistency OK."*
 
 **The #1 mistake:** rushing this or listing FRs without NFRs. **The NFRs are what force every later fork** —
 a "read-heavy, eventual-consistency-OK" system and a "write-heavy, strongly-consistent" system with the same
@@ -40,6 +39,71 @@ QPS when you're deciding whether one DB can take the write load; compute 5-yr st
 SQL vs NoSQL). A number that doesn't change a decision is theater. If the interviewer explicitly wants
 upfront estimation, give it — otherwise defer it to where it earns its place. *(The guide's old step-2
 "Estimation" box is folded into this rule.)*
+
+### The 8 NFRs — **SCALD**, then **ESC**
+
+Source: [HelloInterview → Delivery → Non-functional requirements](https://www.hellointerview.com/learn/system-design/in-a-hurry/delivery#2-non-functional-requirements).
+Their eight are a flat list; **the list is the wrong shape to memorize** — five of them force design forks
+and three are constraints you inherit and usually de-scope in one line. Split accordingly:
+
+**SCALD — the five that force forks.** Every one of these, answered differently, produces a different diagram.
+
+| | Axis | The question | A good answer looks like (quantified) |
+|---|---|---|---|
+| **S** | **Scalability** | how big, and *growing how*? | "100M DAU, 100:1 read:write → ~100k read QPS / ~1k write QPS; 900 GB @ 5 yr" |
+| **C** | **Consistency** (HI's *CAP*) | when C and A conflict, which do you drop? | "eventual is fine — a 2s-stale redirect is harmless; inventory would force strong" |
+| **A** | **Availability / fault tolerance** (HI splits these; same axis) | what happens when a component dies? | "99.9% (≈43 min/mo down); a dead cache degrades to DB, a dead DB fails the write" |
+| **L** | **Latency** | how fast, *at which percentile*, for *which call*? | "p99 < 100ms on redirect; writes can take 500ms" |
+| **D** | **Durability** | what happens if this data is lost? | "zero loss on the URL mapping; click analytics can lose a minute" |
+
+**ESC — the three you inherit.** Rarely design-forcing, always worth *naming*. Saying "no compliance
+constraints here, no PII beyond email" scores; silence reads as not having considered it.
+
+| | Axis | The question | Typical one-liner |
+|---|---|---|---|
+| **E** | **Environment** | where does this run, and what's scarce there? | "mobile clients on flaky networks → offline queue + retry"; "embedded → 64 MB RAM" |
+| **S** | **Security** | who can see/do what, and what's the sensitive data? | "authz per-object, TLS in transit, encryption at rest for PII" |
+| **C** | **Compliance** | any legal/regulatory constraint? | "GDPR → EU data residency + hard delete"; or "none — de-scoping" |
+
+**Two things about the split that are load-bearing:**
+- **The A is the missing bullet in HI's own list.** They fold availability into "CAP theorem" and then list
+  "fault tolerance" separately. Both are *"how does it behave when things break"* — one axis, one letter.
+  Their phrasing is a valid checklist and a poor memory structure; SCALD is the same eight regrouped.
+- **`read:write ratio` lives under S**, not as a ninth axis. It's the input that turns "100M DAU" into two
+  different QPS numbers, which is what actually sizes the design.
+
+**The failure mode is not forgetting the word.** Eight words stick after two readings. What breaks in the
+interview is (a) skipping the three that "didn't apply" rather than de-scoping them out loud, and (b)
+producing the bare adjective — *"it should be fast"* — instead of the number. Both are fixed by the drill,
+not by rereading the list. See [Quantify & Qualify](#quantify--qualify--the-habit-that-turns-a-claim-into-an-answer).
+
+### The drill — 90 seconds, one prompt
+
+Retrieval beats rereading, and it has to be **generative** (produce the list cold) and **varied** (a
+different system each time), or you memorize the URL-shortener answers instead of the axes.
+
+1. **Pick a prompt** — any unstarted **`Design (…)`** row in
+   [`mastery/design_progress.md`](mastery/design_progress.md). **19 of them**; that's the prompt bank, no
+   extra work needed.
+   ⚠️ **Not "any unstarted row".** That tracker's 40 rows are half designs and half *technologies, concepts
+   and components* (Cassandra, Zipf's law, API gateway) — 19 unstarted of each. There is no system being
+   designed in the second group, so S-C-A-L-D has nothing to bind to. Filter on the `Design (…)` tier in
+   column 1. The 10 extra prompts in the **SD Waiting Room** table lower down are excluded on purpose:
+   they sit above the L6 ROI line.
+2. **Write `S C A L D / E S C` down the left margin from memory, *before* thinking about the system.**
+   Letters first. If you think about the system first you'll only recall the axes that system makes obvious —
+   which is exactly the interview failure.
+3. **One line each — a quantified requirement OR an explicit de-scope with a reason.** Never a blank.
+   *"Compliance — none, no regulated data"* counts; leaving it empty does not.
+4. **Score two things:** how many of 8 you produced, and how many got a **number** rather than an adjective.
+   The second number is the one that moves.
+
+**Dosage:** 5 prompts on 5 different days, 90s each — ~8 minutes total. Then stop drilling it standalone; it
+rides on the Sunday design, which opens with these eight anyway.
+
+**Predict your own misses:** it will be **E**nvironment and **C**ompliance (they rarely apply, so nothing
+reinforces them) and **D**urability (easy to conflate with availability). Knowing the miss set in advance is
+most of the fix — those three are precisely why step 3 forbids a blank.
 
 ## 2. Core Entities — *the nouns*
 
