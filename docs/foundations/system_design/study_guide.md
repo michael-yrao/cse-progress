@@ -42,6 +42,45 @@ start when they say so.** Until that signal:
 only sense that matters here ([[feedback_gate_on_internal_state]]): it is their call about their own
 readiness, never an external event or a calendar.
 
+## Depth — a high ceiling, a senior bar (set Aug 13, 2026)
+
+**The two are different things and the earlier "interview depth and no deeper" framing collapsed them.**
+The learner's correction:
+
+> *"there is a staff engineer system design section that is worth exploring after this initially
+> junior/senior level system design is done so we can have a high ceiling during the mocks but not
+> exceptional depth is expected."*
+
+| | |
+|---|---|
+| **The ceiling** — how far a probe is allowed to go | **high, and deliberately so.** The interviewer keeps pushing until the answer runs out. That is how the edge of what they know gets found, and an interviewer who stops at the bar never locates it |
+| **The bar** — the depth a checkpoint must reach to pass | **junior/senior level, for now.** Exceptional depth is not expected and does not gate a 🟢 |
+
+**What this changes in a mock:** nothing about how hard the pushback goes. What it changes is **what a
+failed probe costs.** When a probe goes past the bar and the answer runs out, that is the ceiling doing
+its job — record it in the debrief under `❓ Open probes` and **do not let it pull the rating down**. The
+debrief marks such a probe explicitly as *above the current bar* rather than as a gap, so a later reading
+can tell "didn't know it" from "wasn't expected to yet."
+
+**The rubric does not change with the bar.** All seven checkpoints are still scored on every mock,
+including #5 forks / #6 failure modes / #7 evolve-operate — those are **habits of reasoning, not exotic
+knowledge**, and a senior candidate is expected to have them. What the staff material later changes is
+how deep a single deep dive can go, not whether a checkpoint gets touched.
+
+⚠️ **When the bar moves, ratings stop being comparable across the move** — same problem the Redis card
+had when it was rewritten mid-series. **Record the date the bar was raised in this file**, and read any
+🟢 earned before it as "🟢 at the senior bar."
+
+### The staff tier — after the core, and it raises the ceiling, not the bar
+
+**Sequence:** lock down Core Concepts + Key Technologies at senior depth → run mocks → *then* explore the
+staff-level material. **Trigger:** the learner opens it, same as everything else on this track.
+
+**⏳ The exact source is not yet pinned.** HelloInterview's *System Design in a Hurry* pages carry no
+staff-labelled section; their level-keyed material appears to live in the company guides
+(`/guides/meta/e3` and siblings). **Fill this in with the real link before the tier opens** — a tier
+pointing at a guessed URL is worse than one that says it doesn't know yet.
+
 ## Cadence — two slots, and one of them is conditional
 
 | Slot | Shape | Cost | Runs when |
