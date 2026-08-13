@@ -58,12 +58,28 @@ The learner corrected the first framing (*"interview depth and no deeper"*) the 
 - **The rubric is unchanged.** #5 forks / #6 failure modes / #7 evolve-operate are **habits of reasoning,
   not exotic knowledge**; a senior candidate has them. Staff material later deepens a single deep dive,
   it does not add checkpoints.
-- **Sequence:** core at senior depth → mocks → **then** the staff tier, which **raises the ceiling, not
-  the bar**. ⏳ Its source is not yet pinned — HelloInterview's *in a hurry* pages carry no staff section;
-  their level-keyed material looks like the company guides (`/guides/meta/e3`…). **Ask for the link; do
-  not guess a URL.**
 - ⚠️ **When the bar moves, ratings stop being comparable across the move** — same failure as rewriting a
   Recall Card mid-series. Date the change in `study_guide.md` and read earlier 🟢s as "🟢 at the senior bar."
+
+**⭐ The "staff tier" dissolved on inspection (pinned Aug 13).** It is
+[one blog post](https://www.hellointerview.com/blog/staff-level-system-design), not a curriculum — so
+**nothing is queued that will later raise the ceiling or the bar**, and the plan to sequence it after the
+core doesn't apply to a 10-minute read about how to behave in the room. Its five signals, which staff
+describes as *qualitatively different* from senior rather than "senior done better":
+
+1. **Peer-level communication** — explaining the 101 curriculum unprompted is a **negative** signal.
+2. **Problem triage** — say which parts are hard early; attack those, don't walk the design sequentially.
+3. **Ruthless simplification** — ask the clarifying question that justifies the *simpler* design.
+4. **Depth through experience** — transfer something actually operated to the new problem.
+5. **Decisiveness** — *"make the decision, don't just outline options."*
+
+**How to apply as the interviewer:** signal 3 constrains *you* — probe *"why is this needed"*, not
+*"what else could you add"*; pushing toward more machinery is not the same as pushing them to defend what
+they have. Signal 5 is **not** in tension with the fork drill: the fork table lists options so the
+deciding question can be memorized, but the in-room output is the **fusion sentence** — one choice, its
+trigger, its cost, its breaking point. Naming a rejected alternative is decisive; leaving three live
+candidates on the table is what the post calls out. The five are **observed in the debrief, never an
+eighth checkpoint.**
 
 **What was retired, so it doesn't creep back:** lanes ①/②/③ · note-building as a scheduled rep ·
 Recall-Card blind sprints · the Bootstrap→Transition→Mastery arc · designs-pull-blocks and its pull queue
