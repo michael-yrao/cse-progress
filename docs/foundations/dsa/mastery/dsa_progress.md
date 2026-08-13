@@ -294,10 +294,16 @@ thinnest graph technique on the board.
 **They are held, and the precedent is this repo's own:** 1631/1514 sit behind `green:Dijkstra` because
 *consolidation deepens a technique, it cannot substitute for proving one.* Same shape here.
 
+⭐ **Worth knowing beyond these two rows: HelloInterview has a full DSA section** at
+`/learn/code/<category>/<slug>`, 16 categories, and the learner has premium. **That is a third mirror for
+paywalled LeetCode problems**, alongside the NeetCode one — and a better-maintained one than the
+hand-curated `NEETCODE_RENAMES` map in `new_problem.py`, which only grows when a link is found broken.
+Reach for it whenever a premium problem's link cannot be resolved, and pass it with `--url`.
+
 | Difficulty | Problem | Trigger | Notes |
 |---|---|---|---|
 | Hard | [815. Bus Routes](https://leetcode.com/problems/bus-routes/) | `solved:127` | The better of the two: its content is the **modeling call** — are the nodes stops, or routes? — which is the recognition axis nothing else on the board tests. **127 is on Thu Aug 13's board**, so this trigger has a live chance immediately |
-| Medium | [1197. Minimum Knight Moves](https://leetcode.com/problems/minimum-knight-moves/) | `solved:127` | ⚠️ **LeetCode premium**, and NeetCode has no mirror — verify the link resolves before scheduling, or substitute an equivalent unbounded-grid BFS |
+| Medium | [1197. Minimum Knight Moves](https://www.hellointerview.com/learn/code/breadth-first-search/minimum-knight-moves) | `solved:127` | ✅ **Source resolved Aug 13: HelloInterview premium**, which the learner has — it sits under their Breadth-First Search section. The row links there, **not** to the paywalled LeetCode page, and NeetCode has no mirror. ⚠️ **Scaffold with `--url` explicitly:** `new_problem.py`'s link check only knows LeetCode GraphQL and the NeetCode rename map, so left to itself it will flag this as premium and point at a NeetCode slug that does not exist. The unbounded grid is the interesting half — BFS with no bounds means the visited set is the only thing stopping it, and symmetry folding is what keeps it finite |
 
 ---
 
