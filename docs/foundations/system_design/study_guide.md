@@ -86,7 +86,7 @@ raised by mocks and by the technology deep-dives, not by a separate track.
 |---|---|---|
 | 1 | **Peer-level communication** | Don't explain the 101 curriculum unprompted. Over-explaining basics is a **negative** signal, not neutral filler |
 | 2 | **Problem triage** | Say out loud which parts are hard and which are routine, early — then attack the hard parts, rather than walking the design sequentially |
-| 3 | **Ruthless simplification** | Question whether the sophistication is needed. Ask the clarifying question that justifies the *simpler* design ("how many, how often?") |
+| 3 | **Ruthless simplification** | Question whether the sophistication is *needed* — ask "how many, how often?" and let the answer decide. **Necessity-driven, not minimalism** (see the boundary below) |
 | 4 | **Depth through experience** | Connect something you have actually operated to the novel problem |
 | 5 | **Decisiveness** | **Make the call. Don't present a menu of options.** Judgment is what's being read, not analytical range |
 
@@ -100,9 +100,31 @@ sentence** — one choice, its trigger, its cost, its breaking point — never *
 Naming the alternative you rejected and why is decisiveness; enumerating three live candidates and
 waiting is the thing the post calls out.
 
-⚠️ **Signal 3 constrains the interviewer too.** Pushing a candidate toward more machinery is not the same
-as pushing them to defend what they have. **A simpler design, defended, outscores a sophisticated one
-that was never justified** — so a probe should ask *why this is needed*, not *what else could be added*.
+### ⚠️ The boundary on signal 3 — simplification is floored by the requirements
+
+**Set by the learner Aug 13, 2026:** *"i wouldn't oversimplify things, an interviewer wouldn't let an
+extremely simple design pass."* Correct, and the earlier wording here invited exactly that error.
+
+**The requirements set a floor, and "defended" does not lift a design over it.** If the pinned
+non-functional requirements say 100k QPS and multi-region, a single-server design is wrong no matter how
+articulately it is justified — an interviewer will not accept it, and neither does this rubric: #4
+architecture and #5 forks both fail against numbers the design cannot meet. What signal 3 kills is
+**unjustified** sophistication — a queue nobody needed, a shard count with no arithmetic behind it — not
+the machinery the requirements actually demand.
+
+**Watch the dodge, because it is the cheap way to a simple design:** scoping the requirements down at
+step 1 so the design gets easy. That fails at #1 and #2 rather than #4, and the interviewer's move is to
+push the numbers back up. Simplification is only a signal when it happens **against a scale that was
+honestly pinned.**
+
+**So a probe runs in both directions**, and the second one is what stops under-design:
+
+| Against over-design | Against under-design |
+|---|---|
+| *"Why do you need this? What breaks if you drop it?"* | *"Does this meet the number you pinned? Show me at 10×."* |
+
+Pushing a candidate toward more machinery is not the same as pushing them to defend what they have — and
+neither is letting a design stand that the requirements already invalidate.
 
 ## Cadence — two slots, and one of them is conditional
 
@@ -161,8 +183,9 @@ Interviewer, not coach. Specifically:
   requirement that invalidates part of the design ("now it has to be multi-region", "now the write rate
   is 50×"). How the design bends is a graded checkpoint, not a bonus.
 - **Deep-dive probes are drawn from the bank** — the previous debriefs' open questions, plus the standing
-  probe list at the bottom of this file. **Ask "why is this needed" before "what else could you add"**
-  (staff signal 3).
+  probe list at the bottom of this file. **Probe both directions** — *"why do you need this?"* against
+  over-design, *"does this meet the number you pinned?"* against under-design (staff signal 3 and its
+  boundary).
 - **Watch the five staff signals while it runs** — over-explaining basics, no triage of what's hard,
   unjustified sophistication, no experience transfer, options-presented-instead-of-decided. They are
   noted in the debrief and they inform #5, but they are **not an eighth checkpoint.**

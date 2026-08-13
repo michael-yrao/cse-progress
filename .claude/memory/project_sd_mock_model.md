@@ -69,13 +69,25 @@ describes as *qualitatively different* from senior rather than "senior done bett
 
 1. **Peer-level communication** — explaining the 101 curriculum unprompted is a **negative** signal.
 2. **Problem triage** — say which parts are hard early; attack those, don't walk the design sequentially.
-3. **Ruthless simplification** — ask the clarifying question that justifies the *simpler* design.
+3. **Ruthless simplification** — necessity-driven; ask "how many, how often?" and let the answer decide.
+   ⚠️ **Bounded — see below.**
 4. **Depth through experience** — transfer something actually operated to the new problem.
 5. **Decisiveness** — *"make the decision, don't just outline options."*
 
-**How to apply as the interviewer:** signal 3 constrains *you* — probe *"why is this needed"*, not
-*"what else could you add"*; pushing toward more machinery is not the same as pushing them to defend what
-they have. Signal 5 is **not** in tension with the fork drill: the fork table lists options so the
+⚠️ **The boundary on signal 3, set by the learner the same day:** *"i wouldn't oversimplify things, an
+interviewer wouldn't let an extremely simple design pass."* **The requirements are a FLOOR and being
+well-defended does not lift a design over it** — if the pinned non-functional requirements say 100k QPS
+and multi-region, a single-server design fails #4 and #5 however articulate the justification. Signal 3
+kills *unjustified* sophistication (a queue nobody needed), not the machinery the requirements demand.
+**Watch the dodge:** scoping requirements down at step 1 to make the design easy — that fails #1/#2, and
+the move is to push the numbers back up.
+
+**How to apply as the interviewer: probe BOTH directions.** Against over-design — *"why do you need this,
+what breaks if you drop it?"* Against under-design — *"does this meet the number you pinned? Show me at
+10×."* Pushing toward more machinery is not the same as pushing them to defend what they have, and
+neither is letting a design stand that the requirements already invalidate.
+
+Signal 5 is **not** in tension with the fork drill: the fork table lists options so the
 deciding question can be memorized, but the in-room output is the **fusion sentence** — one choice, its
 trigger, its cost, its breaking point. Naming a rejected alternative is decisive; leaving three live
 candidates on the table is what the post calls out. The five are **observed in the debrief, never an
