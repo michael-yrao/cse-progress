@@ -433,8 +433,12 @@ Transition → Mastery arc. Teaching happens **on request only**, off-schedule a
    - ⚠️ **High ceiling, senior bar.** Probe as deep as the design allows — that is how the edge gets
      found — but **a probe that runs past the bar costs nothing on the rating.** Log it in the debrief's
      *above the current bar* section, not as a gap.
-   - **Ask "why is this needed" before "what else could you add."** A simpler design, defended, outscores
-     a sophisticated one that was never justified.
+   - **Probe in both directions.** Against over-design: *"why do you need this, what breaks if you drop
+     it?"* Against under-design: *"does this meet the number you pinned — show me at 10×."* ⚠️ **The
+     requirements are a floor and being well-defended does not lift a design over it** — a design that
+     cannot meet the pinned non-functional requirements fails #4 and #5 however articulate it is. Watch
+     for the dodge of scoping requirements down at step 1 to make the design easy; that fails #1/#2, and
+     the move is to push the numbers back up.
 4. **Throw one curveball around minute 30** — a non-functional requirement change that invalidates part
    of the design. Mandatory at L6; graded under rubric #7.
 5. **Debrief in the same session:** score all seven checkpoints pass/fail **with the evidence for each**,

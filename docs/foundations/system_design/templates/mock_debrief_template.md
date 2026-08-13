@@ -36,7 +36,7 @@ one, and because they are invisible unless written down at the time
 |---|---|---|
 | Peer-level — didn't explain the 101 unprompted | | |
 | Triaged what's hard vs routine, early | | |
-| Justified complexity / reached for the simpler design | | |
+| Justified the complexity it carried — ⚠️ **and the design still meets the pinned NFRs** (non-functional requirements) | | |
 | Transferred something actually operated before | | |
 | **Decided, rather than listing options** | | |
 
