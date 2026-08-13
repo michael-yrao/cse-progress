@@ -116,13 +116,15 @@ If you finish an active block problem in under 15 minutes, don't move on to a ne
 
 ---
 
-## Daily Structure: Design & AI Phase (Blocks 5–8)
+## Daily Structure: Design Phase (Blocks 5–7)
 *Use this structure from Week 17 onward to protect your DSA knowledge.*
 
-> **📍 SD source of truth = [`senior_ramp.md`](../system_design/senior_ramp.md)** (created Aug 6, 2026).
-> The design list, sourcing (systemdesign.io), the prerequisite-tech gate, the scored-mock rubric, and the
-> phase/exit gates live there — this study-guide section is kept for the daily-loop mechanics and the
-> company-targeting strategy, not as a second design plan. Where the two differ, the ramp wins.
+> **📍 SD source of truth = [`senior_ramp.md`](../system_design/senior_ramp.md)** (question order, phases,
+> exit gates, the 7-point rubric) and [`study_guide.md`](../system_design/study_guide.md) (the mock
+> mechanics). **Rebuilt Aug 13, 2026: SD is now mock interviews on HelloInterview's question board** —
+> the learner studies independently, the coach interviews. This section is kept for the daily-loop
+> mechanics and the company-targeting strategy, not as a second design plan. Where they differ, the SD
+> files win.
 *   **00:00–00:15 | DSA Maintenance Flashcard**: Look at a random past LeetCode prompt. Explain the data structure pattern and optimal Time/Space complexity out loud.
 *   **00:15–01:00 | Architecture Deep Dive**: Spend 45 minutes on system design practice using the weekly loop below.
 
@@ -163,18 +165,16 @@ reasoning and the apply gates are in `career_strategy.md`.
 
 Don't pull from a company you're actively interviewing at that week — keep those problems as genuine unknowns.
 
-### 🔁 Design reps — one design, one session (weekly-loop RETIRED Aug 6, 2026)
+### 🔁 Design reps — one question, one cold mock, one rating
 
-> **Superseded.** The old "spend a full week on one design, Mon→Fri" loop is retired — it split a single
-> topic across days, which the learner explicitly doesn't want. **New model: one systemdesign.io problem =
-> one tracked row = one ~45–60-min session, done in a single sitting** (only a genuinely huge design becomes
-> a named 2-parter, never a smeared week). Same depth-over-breadth principle, just not fragmented.
+**One HelloInterview question = one tracked row = one ~45-min cold mock, in a single sitting.** A design
+spread across sittings cannot be rated cold. The full framework runs *within* the session: **Requirements
+→ Estimation → API/data model → High-level → Deep-dive forks → Failure modes → Evolve/operate.**
 
-The full framework still runs *within* the one session: **Requirements → Estimation → API/data model →
-High-level → Deep-dive forks → Failure modes → Evolve/operate.** Scoring, tier order, and the design list
-live in [`../system_design/senior_ramp.md`](../system_design/senior_ramp.md); the trackable rows are the
-`Design (tier)` entries in [`../system_design/mastery/design_progress.md`](../system_design/mastery/design_progress.md),
-sourced from **systemdesign.io**.
+Mechanics (the split, the two slots, the protocol, the debrief) →
+[`../system_design/study_guide.md`](../system_design/study_guide.md). Question order, phases and the
+7-point rubric → [`../system_design/senior_ramp.md`](../system_design/senior_ramp.md). Rows →
+[`../system_design/mastery/design_progress.md`](../system_design/mastery/design_progress.md).
 
 ### 🔄 Phase 2 DSA Hybrid Rule
 
@@ -194,16 +194,14 @@ The Saturday randomized DSA sprint covers the pattern recognition gap regardless
 > Do not maintain a second order here (the old fintech-first list was retired Aug 6, 2026 with the re-aim
 > to big tech).
 
-**Source: [systemdesign.io](https://systemdesign.io/)** — pull one design per session, weighted to the
-**canonical big-tech set** (news feed, chat/messenger, YouTube/video, typeahead, web crawler, Google Docs,
-rate limiter, URL shortener, distributed cache, notification, proximity, ad-click aggregation). **No
-fintech weighting** — big tech/MANGA is the end goal, so payment/ledger is one design among many (useful
-for a fintech *waypoint* loop, not prioritized).
+**Source: [HelloInterview](https://www.hellointerview.com/learn/system-design/in-a-hurry/problem-breakdowns)**
+— their 31 question breakdowns plus 4 no-write-up practice questions, at their own tiers. **No fintech
+weighting**: Payment System and Robinhood sit off the rotation behind `waypoint_loop:fintech`.
 
-**Prerequisite-tech gate (bar: off 🔴):** before a design needs a core tech not yet drilled (Redis,
-Postgres, Vitess, …), cover that tech first. Phase ordering (A: framework + data-store trio → B: senior
-signals → C: simulation), the scored-mock rubric (#5 forks / #6 failure modes / #7 evolve-operate), and the
-apply trigger are all in the ramp.
+**The prerequisite-tech gate is gone** (Aug 13, 2026) along with the study lanes — the learner studies
+ahead of the board on HelloInterview, so a mock that lands on unfamiliar technology is information, not a
+wasted session. Phase ordering (A: framework fluency → B: senior signals → C: simulation), the 7-point
+rubric, and the apply trigger are all in the ramp.
 
 **Still walk in talking tradeoffs, not diagrams** — the narration rule below is unchanged.
 
@@ -669,28 +667,19 @@ ledgers** that disposable reps write into.
 *   **Block 7: Communication & Streaming (Weeks 23–25)**
     *   *Core Concepts*: HTTP vs WebSockets, Message Queues (Kafka), API Rate Limiting.
 
-### Phase 3: AI System Engineering & Infrastructure (Weeks 26–29)
-> Full pillar guide (ROI-line tiers, cadence, practice backlog, templates): [`../ai_engineering/study_guide.md`](../ai_engineering/study_guide.md). Prerequisite: System Design Tier 1 largely retired.
-*   **Block 8: AI Infrastructure & Retrieval (Weeks 26–29)**
-    *   *Core Concepts*: 
-        *   **Vector Search Foundations**: Text chunking strategies, embeddings pipelines, and index methods (HNSW/IVF) in vector databases like Pinecone.
-        *   **Context Window & Token Management**: Context ranking, prompt compression, and semantic caching architectures to limit LLM latency and API costs.
-        *   **Agentic Orchestration & Tool Use**: Connecting LLMs deterministically to functions/APIs, structuring predictable JSON outputs, and state tracking.
-        *   **Evaluation & Guardrail Architecture**: Programmatic evaluation layers, hallucination checks, and safety proxy layers filtering unsafe input/outputs.
+*(Phase 3 — AI System Engineering & Infrastructure — was removed Aug 13, 2026. It was never started and
+had no sessions. LLM-serving content is not gone from the plan: **ChatGPT** is a Hard row on the SD
+board and covers token streaming, context-window management, batching and quotas as a design.)*
 
 ---
 
 ## Reference Materials
 
-### 🌐 System Design Resources (Months 5-6)
-1. **The Core Blueprint**: Read the open-source [System Design Primer on GitHub by Donne Martin](https://github.com). It is the absolute best free textbook for web fundamentals, performance trade-offs, and database scaling.
-2. **Visual & Structural Breakdowns**: Check out Alex Xu's [ByteByteGo Platform](https://bytebytego.com) for bite-sized, highly scannable visual architectural designs.
-3. **Real-World Scale Case Studies**: Read the [Netflix Tech Blog](https://netflixtechblog.com) and [Uber Engineering Blog](https://uber.com) specifically searching for terms like *"Distributed Caching"*, *"Kafka Streaming"*, or *"Rate Limiters"* to see how your current block topics look in production.
+### 🌐 System Design Resources
+1. **The syllabus, and the only one that matters for the board**: [HelloInterview — System Design in a Hurry](https://www.hellointerview.com/learn/system-design/in-a-hurry/introduction). Core Concepts · Key Technologies · Patterns · the question breakdowns. Study this ahead of the mocks; the breakdown for the *next* question is the one thing to leave unread.
+2. **Depth, when a mock exposes a real gap**: Alex Xu's [ByteByteGo](https://bytebytego.com) for visual architectural breakdowns; the [System Design Primer](https://github.com/donnemartin/system-design-primer) for fundamentals.
+3. **Real-world scale**: the [Netflix Tech Blog](https://netflixtechblog.com) and Uber Engineering, searched for the specific thing you just got pushed on — *"distributed caching"*, *"Kafka streaming"*, *"rate limiters"*.
 
-### 🤖 AI Engineering & Infrastructure Resources (Month 7)
-1. **Practical Code & Frameworks**: Use the short courses on [DeepLearning.AI](https://deeplearning.ai). Focus specifically on their specialized micro-courses covering *LangChain for LLM Application Development*, *Vector Databases*, and *Evaluating LLM Applications*.
-2. **Production AI Case Studies**: Read the [Pinecone Engineering Blog](https://pinecone.io) to deep-dive into high-performance vector search architecture and production-grade RAG pipelines.
-3. **Architectural Frameworks**: Browse the documentation of production orchestration libraries like [LlamaIndex Architecture Guides](https://llamaindex.ai) to learn how data ingestion pipelines operate under the hood.
 
 ---
 

@@ -66,19 +66,32 @@ effort_budget:
   # Calibration evidence: Sun Aug 9 priced 8.5/9 and ended with the learner too tired to
   # finish step 4 of the design. At 3.0 that same day prices 9.5 — over ceiling, which is
   # the honest reading of what happened.
+  # The Sunday MOCK costs this. Unchanged at 3.0 through the Aug 13 rework — a cold 45-min
+  # mock is at least as tiring as the design session this price was calibrated on.
   sd_lane_units: 3.0
+
+  # The midweek DEEP-DIVE ROUND costs this. Shorter (~25 min) and narrower (rubric #5/#6/#7
+  # on an already-mocked design, no framework walk), so it prices below a full mock.
+  # ⚠️ Not read by effort_budget.py, which only knows --sd. Price a deep-dive day by hand
+  # as +2.0, or pass --sd and subtract 1.0.
+  sd_deep_dive_units: 2.0
+
 system_design:
-  # three_weekly from the Jul 20 week (raised from twice_weekly on Jul 14, 2026).
-  # Each lane owns a slot — never let two bid for the same one:
-  #   ① tech fluency    → light midweek (ONE 15-min warmup): blind sprint vs a Recall Card
-  #   ② blocks & probes → fuller midweek (BOTH warmups, ~30m): the note for whatever block
-  #                       the last design hit cold, then probe questions
-  #   ③ designs         → Sunday (45–60m): one staged session, full framework
-  # Lane ② is why this is three and not two: "designs pull the blocks" needs somewhere to
-  # PUT the cold-hit note, or it eats the tech-fluency rep and the pull model starves.
-  # Midweek slots are WARMUP swaps — never the 45-min DSA active block. Cost lands on the
-  # 🟢 Clean backlog. See docs/foundations/system_design/study_guide.md.
-  cadence: three_weekly
+  # ⚠️ REBUILT Aug 13, 2026 — the three-lane study model is retired. The learner studies
+  # system design independently on HelloInterview; the coach runs cold mock interviews on
+  # HelloInterview's 35-question board and scores them on the 7-point rubric.
+  #
+  #   Sunday          → THE MOCK: one cold ~45-min mock on the next question + ~15 min
+  #                     debrief written to system_design/mocks/. 3.0 units.
+  #   One midweek     → THE DEEP-DIVE ROUND: ~25 min of pushback on a design already
+  #                     mocked, drawn from that debrief's open-probe bank. 2.0 units.
+  #                     CONDITIONAL — it does not exist until something is banked, and the
+  #                     slot returns to DSA warmups when the probe bank is empty.
+  #
+  # Lanes ①/②/③ are gone, and so are note-building reps, Recall-Card blind sprints, the
+  # Bootstrap→Transition→Mastery arc, the designs-pull-blocks queue and the prereq-tech
+  # gate. Why, and what replaced each: docs/foundations/system_design/study_guide.md.
+  cadence: mock_plus_deep_dive
 
 solutions:
   roots: ["dsa/leetcode"]

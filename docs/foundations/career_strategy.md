@@ -86,5 +86,8 @@ lost holding applications until SD is real.
 ---
 
 *Execution lives elsewhere, by design:* DSA study mechanics → [`dsa/study_guide.md`](dsa/study_guide.md) ·
-SD roadmap → [`system_design/senior_ramp.md`](system_design/senior_ramp.md) · SD study mechanics →
-[`system_design/study_guide.md`](system_design/study_guide.md) · AI → [`ai_engineering/study_guide.md`](ai_engineering/study_guide.md).
+SD roadmap → [`system_design/senior_ramp.md`](system_design/senior_ramp.md) · SD mock mechanics →
+[`system_design/study_guide.md`](system_design/study_guide.md).
+
+*(The AI System Engineering track was removed Aug 13, 2026 — never started, no sessions, no trigger to
+restore it. Its one interview-relevant design survives as the **ChatGPT** row on the SD board.)*

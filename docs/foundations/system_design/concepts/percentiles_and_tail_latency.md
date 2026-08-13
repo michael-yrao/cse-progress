@@ -1,5 +1,10 @@
 # Percentiles & Tail Latency
 
+> 🧊 **Frozen reference (Aug 13, 2026).** The SD track is now mock interviews on HelloInterview's
+> board; this card is no longer drilled and has no tracker row. Any "owed a sprint / next lane"
+> language below is historical. Use it as lookup when a mock debrief points here.
+> See [`../study_guide.md`](../study_guide.md).
+
 > **Role:** Measurement foundation — *how to state a latency number without lying* · **Filed under:** SD concepts (underpins SLOs, fan-out design, load testing).
 > **You'll want this when:** you just said "average latency is 50ms" and the interviewer asked "and p99?" — or you're designing anything that **fans out** to many services and can't explain why it's slow.
 > **Drill:** answer the [Recall Card](#-recall-card-the-rep) cold, then unfold to check.

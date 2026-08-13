@@ -39,8 +39,7 @@ cse-progress/
 │   ├── foundations/
 │   │   ├── schedules/                # weekly day-by-day plans, ALL tracks (+ archive/)
 │   │   ├── dsa/                      # study_guide.md, fundamentals/, patterns/, mastery/, templates/, images/
-│   │   ├── system_design/            # study_guide.md, fundamentals/, components/, technologies/, mastery/, templates/
-│   │   └── ai_engineering/           # study_guide.md, templates/
+│   │   └── system_design/            # study_guide.md, senior_ramp.md, mocks/, components/, technologies/, concepts/, mastery/, templates/
 │   ├── archive/2022/                 # legacy .tex notes (LaTeX)
 │   ├── cse-coach/                    # the cse-coach ↔ cse-progress seam (ROADMAP.md)
 │   └── STYLE_GUIDE.md                # markdown conventions for cheatsheet docs

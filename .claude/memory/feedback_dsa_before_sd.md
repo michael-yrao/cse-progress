@@ -38,6 +38,14 @@ learner declined it: *"no we do them all. I have to keep myself to a high standa
 9.0 is a board that gets done — offer the yield decision **once**, at kickoff, and then drop it. Do not
 re-raise it mid-day, and never pre-emptively shrink a legal board to buy comfort margin.
 
+⚠️⚠️ **Restated harder Aug 13, 2026 and now a standing build instruction:** *"i want to go as close to 9
+if possible, go over if needed."* **Build every day at 9.0**, and when freed units appear (that day the
+three SD lanes went away), backfill rather than bank them. **Spend them on the 🟢 backlog and due
+reviews, never on extra new intake** — that distinction is what keeps this from colliding with
+"headroom is not a mandate to fill": a rushed *new* problem lands 🟡 and bills ~12× forever, while an
+overdue 🟢 is demand already on the board at 0.5–1.0 units, the cheapest and safest thing to add.
+Intake stays at the difficulty-tier caps regardless of how much room exists.
+
 ## 🚫 SD does not get pushed to the next day (same conversation, Aug 9, 2026)
 
 > *"let's try not to push SD to the next day unless the user asks especially if it's already started."*
