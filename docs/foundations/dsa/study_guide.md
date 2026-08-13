@@ -10,6 +10,10 @@ But depth has diminishing returns *for interviews specifically*. So everything i
 
 **Above the line (serves BOTH goals — do this first, in order):**
 1. **NC150 core** — the scheduled roadmap. Non-negotiable interview foundation.
+1b. **Grind 75 fill** — the **13 Grind-75 problems NC150 does not contain** (diffed Aug 13, 2026;
+    4 more were already tracked). Not enrichment and not advanced: **should-knows that NC150 simply
+    omits.** Sits above the expansion queue and takes the first filler slot at ≤2/week. List and
+    per-row reasons: [`mastery/dsa_progress.md`](mastery/dsa_progress.md) → *Grind 75 Fill*.
 2. **Framework lenses** — knapsack / interval / LIS / space-compression (folded into the DP blocks), taught as unifying patterns.
 3. **Pattern docs** (`docs/foundations/dsa/patterns/`) — cross-cutting techniques (sliding window, monotonic stack/deque, prefix sum, fast/slow, union-find, topo sort, binary-search boundaries, backtracking, …).
 4. **Tier 1 advanced** (Knowledge Expansion Queue) — segment tree, Fenwick, KMP, XOR trie, Manacher's, matrix expo, Tarjan's, meet-in-the-middle, reservoir sampling, difference array, number theory. Advanced, but still shows up in *hard* interviews. This is the top of the ROI curve.
@@ -485,11 +489,18 @@ puts around Oct–Dec 2026 — *while two phases are still open*.
 | Measured surplus | Fill with, in order |
 |---|---|
 | **≤ 0** (over-subscribed) | Nothing. Reviews only; hold intake at the tier cap and let the backlog drain |
-| **1–5 slots** | **Consolidation reps** — techniques at 🟡+ that have fewer than 3 problems |
-| **6–12 slots** | Consolidation reps, **then** application pulls (`pull_interview.py`, gated on learned patterns) |
+| **1–5 slots** | **Grind 75 fill** (≤2/wk), then **consolidation reps** — techniques at 🟡+ with fewer than 3 problems |
+| **6–12 slots** | The above, **then** application pulls (`pull_interview.py`, gated on learned patterns) |
 | **13+ slots** | The above, **then** open Tier 1 advanced expansion early — don't wait for NC150 to formally close |
 
-**Consolidation reps are the first filler for a reason:** the backlog is large (NC150 supplies 1–2
+⭐ **Grind 75 fill takes the first filler slot (added Aug 13, 2026)** — the 13 Grind-75 problems NC150
+does not contain, listed in [`mastery/dsa_progress.md`](mastery/dsa_progress.md) → *Grind 75 Fill*.
+**Ahead of consolidation because they are should-knows rather than depth**, and because two of them are
+aimed at named gaps (438 at the fixed-alphabet complexity miss, 224 at the no-🟢 expression-stack
+technique). **≤2/week, and never displacing active-phase intake** — the phase is time-boxed, this set
+is not.
+
+**Consolidation reps are the next filler for a reason:** the backlog is large (NC150 supplies 1–2
 problems per technique where 3–4 are needed), it is directly aimed at the phase-exit standard, and it
 is higher-ROI than reaching for Tier 2 material early. Reach past it only once that queue is genuinely
 short.

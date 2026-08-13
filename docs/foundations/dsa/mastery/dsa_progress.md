@@ -234,6 +234,73 @@ note is the failure mode this section exists to prevent.
 
 ---
 
+## 📌 Grind 75 Fill — the should-know set (added Aug 13, 2026)
+
+**These sit ABOVE the Knowledge Expansion Queue on purpose.** They are not enrichment and not advanced —
+they are problems a candidate is simply expected to have seen, which **NC150 happens not to contain.**
+The learner's call: *"13/17 that are not there can be slotted in… above expansion since these are should
+knows."*
+
+**Where they came from.** Diffed [Grind 75](https://www.techinterviewhandbook.org/grind75/) against
+NC150 (Aug 13, 2026): **17 of Grind 75's problems are not in NC150**, and 4 of those are already tracked
+here (169 · 733 · 75 · 721 — the last two arrived as ad-hoc additions, which is itself evidence the gap
+is real). **The remaining 13 are below.**
+
+**This is a tier, not a queue with a trigger.** Every row enters normal new-problem intake; what rations
+them is capacity, not a condition — so they are read at the weekly build like phase intake, **not** like
+the Waiting Room. Three rules keep that from becoming a void:
+
+1. **≤2 per week**, and **never displacing active-phase intake.** A phase is time-boxed and does not get
+   done later for free; this set has no deadline. It is the *first* filler after phase intake, ahead of
+   consolidation reps and ahead of the 🟢 backlog.
+2. **Order is by what each closes**, not by difficulty — the ⭐ rows first.
+3. **Rows with a real gate carry one** in the standard vocabulary; the rest are ungated and schedulable
+   the moment there is room.
+
+| | Difficulty | Problem | Technique / what it closes | Gate |
+|---|---|---|---|---|
+| ⭐ | Medium | [438. Find All Anagrams in a String](https://leetcode.com/problems/find-all-anagrams-in-a-string/) | Sliding window + **fixed alphabet** — aimed squarely at the repo's **most repeated complexity miss** (5 occurrences across 242, 567, 424, 269×3, 621, capped once). Here the fixed-alphabet argument *is* the complexity answer | — ready |
+| ⭐ | Hard | [224. Basic Calculator](https://leetcode.com/problems/basic-calculator/) | `Stack (expression evaluation)` — **no-🟢 and thin (1/2)**. Also settles the open Aug 11 objection that 150 had no value: its defence was *"it's the base rung under 224/227/772"*, which only holds if something above it is scheduled | `rated:150` *(retry Aug 21)* |
+| | Medium | [236. Lowest Common Ancestor of a Binary Tree](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/) | The general-tree LCA. 235 (BST) is tracked at 🟡; 236 is the more commonly asked of the pair and cannot use the BST ordering shortcut | — ready |
+| | Medium | [542. 01 Matrix](https://leetcode.com/problems/01-matrix/) | Multi-source BFS — consolidation against 994 (🟢) | — ready |
+| | Medium | [310. Minimum Height Trees](https://leetcode.com/problems/minimum-height-trees/) | Leaf-peeling on an undirected graph — a genuinely different shape from the three Kahn's reps (207, 210, 269) | — ready |
+| | Medium | [8. String to Integer (atoi)](https://leetcode.com/problems/string-to-integer-atoi/) | No algorithm — pure **spec-reading**, which is exactly the rep 150 turned out to deliver (all three of its bugs were spec-vs-language-default) | — ready |
+| | Hard | [1235. Maximum Profit in Job Scheduling](https://leetcode.com/problems/maximum-profit-in-job-scheduling/) | Weighted interval scheduling: sort + binary search + DP. A real new shape, and the only row here that needs a foundation first | `phase:1D-DP` *(Oct 12)* |
+| | Easy | [67. Add Binary](https://leetcode.com/problems/add-binary/) | Bit/string carry arithmetic | — ready |
+| | Easy | [232. Implement Queue using Stacks](https://leetcode.com/problems/implement-queue-using-stacks/) | Amortized two-stack queue — the amortization argument is the rep, not the code | — ready |
+| | Easy | [278. First Bad Version](https://leetcode.com/problems/first-bad-version/) | Binary search on a predicate (🎓 Binary Search — pure application) | — ready |
+| | Easy | [383. Ransom Note](https://leetcode.com/problems/ransom-note/) | Frequency counting (🟢 — pure application) | — ready |
+| | Easy | [409. Longest Palindrome](https://leetcode.com/problems/longest-palindrome/) | Counting + parity | — ready |
+| | Easy | [876. Middle of the Linked List](https://leetcode.com/problems/middle-of-the-linked-list/) | Fast/slow pointer (🎓 — pure application) | — ready |
+
+**The cost, stated rather than discovered later.** Intake is **33.0 units one-time** (6 Easy × 1.5 +
+5 Medium × 3.0 + 2 Hard × 4.5), and **13 new rows bill roughly 0.5 slots/week forever** once mature
+([[project_library_carrying_capacity]]). At ≤2/week that is ~7 weeks of the filler slot. **The SD rework
+is what pays for it** — retiring the three SD lanes freed ~9 units/week, and this is a better use of them
+than deeper backlog sweeps, because six of these techniques are already 🟢/🎓 here and the reps are
+cheap application rather than blank-tax.
+
+⚠️ **Six of the Easy rows are near-certain 🟢s.** That is the point (they are should-knows, and a 🟢
+confirms transfer) — but it means **they buy permanent review load for little information.** If the first
+three come back 🟢 with no hesitation, consider running the rest as **disposable probes with no tracker
+row**, the same valve the recognition probes use.
+
+### Not from Grind 75 — the two that prompted this, held behind a technique gate
+
+**Minimum Knight Moves (1197)** and **Bus Routes (815)** are in **Grind 169**, not Grind 75. Both are
+**BFS on implicit graph**, which `technique_coverage.md` reports as **1 problem (127), 🟡, no 🟢** — the
+thinnest graph technique on the board.
+
+**They are held, and the precedent is this repo's own:** 1631/1514 sit behind `green:Dijkstra` because
+*consolidation deepens a technique, it cannot substitute for proving one.* Same shape here.
+
+| Difficulty | Problem | Trigger | Notes |
+|---|---|---|---|
+| Hard | [815. Bus Routes](https://leetcode.com/problems/bus-routes/) | `solved:127` | The better of the two: its content is the **modeling call** — are the nodes stops, or routes? — which is the recognition axis nothing else on the board tests. **127 is on Thu Aug 13's board**, so this trigger has a live chance immediately |
+| Medium | [1197. Minimum Knight Moves](https://leetcode.com/problems/minimum-knight-moves/) | `solved:127` | ⚠️ **LeetCode premium**, and NeetCode has no mirror — verify the link resolves before scheduling, or substitute an equivalent unbounded-grid BFS |
+
+---
+
 ## 🧊 Knowledge Expansion Queue — post-NC150 / below the ROI line
 
 **Genuinely parked.** Depth and enrichment that is *deliberately* deferred — no trigger needed
