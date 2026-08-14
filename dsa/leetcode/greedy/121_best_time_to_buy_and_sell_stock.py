@@ -28,6 +28,19 @@ import math
 from typing import List
 class Solution:
 
+    # ── Attempt · 2026-08-13 ──────────────
+    def maxProfit_20260813(self, prices: List[int]) -> int:
+        # two pointer
+        # left moves if and only if right is smaller
+        profit = 0
+        l = r = 0
+        while r < len(prices):
+            if prices[r] < prices[l]:
+                l = r
+            profit = max(profit, prices[r] - prices[l])
+            r+=1
+        return profit
+
     # ── Attempt · 2026-07-14 ──────────────
     def maxProfit_20260714(self, prices: List[int]) -> int:
         # two pointer

@@ -28,6 +28,28 @@ Constraints:
 """
 
 class Solution:
+
+    # ── Attempt · 2026-08-13 ──────────────
+    def validPalindrome_20260813(self, s: str) -> bool:
+        # deleting single element just means we check again after skipping this current unmatched
+        # so standard valid palindrome, but if its false, check both sides
+        l, r = 0, len(s) - 1
+
+        def isPalindrome(left,right):
+            while left < right:
+                if s[left] != s[right]:
+                    return False
+                left+=1
+                right-=1
+            return True
+
+        while l < r:
+            if s[l] != s[r]:
+                return isPalindrome(l+1,r) or isPalindrome(l,r-1)
+            l+=1
+            r-=1
+        return True
+
     def validPalindrome(self, s: str) -> bool:
         l, r = 0, len(s) - 1
         while l < r:

@@ -1746,3 +1746,23 @@ map-as-clone-identity idea is traversal-agnostic. **Vocabulary item for the Aug 
 not bounded by `V`. **Mirror image of the Aug 5 323 miss** (there: `O(E)`, dropped the `V`). Freebie spent.
 Cue to carry: *a graph traversal touches two things, so its bound almost always has two terms — a one-term
 answer means something was dropped.*
+
+---
+
+## 901. Online Stock Span — 🟡 Shaky (2026-08-13)
+
+**Sticking point:** had the right structure unprompted (*"stack of tuples… decreasing stack where each value holds its own span"*) and had even performed **one** absorption correctly by hand — `(70, 2)`, taking the popped `60`'s span with it — but read the pop as a **single check rather than a loop**, so `75 → 4` looked unreachable. Unstuck by being handed the stack state at `75` and asked to apply *their own* rule repeatedly. **The rule was theirs; the iteration was coach-supplied.**
+
+**Cue to carry:** *if you can do the step once, ask what stops you doing it again* — a monotonic stack's pop is always `while`, never `if`, because the element you just uncovered gets the same question as the one you removed.
+
+---
+
+## 127. Word Ladder — 🟡 Shaky (2026-08-13)
+
+**Sticking point:** ⭐ **not the code — the code was 🟢-grade.** Blank page, zero hints, correct first pass, and **Monday's counter teach held cold across the deliberate 3-day gap**, including the `return depth + 1` at *discovery* that had broken on all three prior reps (Jul 18 · Jul 21 · Aug 3).
+
+**What capped it was complexity, and it took three corrections.** The build phase was priced correctly and unprompted — `O(C·L)`, with the slicing cost named — and the learner then **volunteered the fixed-alphabet collapse** (a `.it` bucket holds ≤26 words, so the `E` term dies). Then the same string cost was dropped twice: the BFS loop re-slices identically to the build loop (so the phases **tie** at `O(V·L²)`, neither dominates), and `adjMap` holds `V·L` keys **of length L** (so space is `O(V·L²)`, not `O(V·L)`). Separately, `L` was held symbolic for time then collapsed via `L ≤ 10` for space — mixed conventions in one answer.
+
+**Cue to carry:** *a string is not O(1)* — slicing, hashing, comparing and **storing** one all cost `O(L)`. And the free check that would have caught it unaided: **build-and-store is one loop doing one kind of work, so time and space should come out equal.** A space answer a factor of `L` cheaper than the time answer is the tell.
+
+**Learner's own read, and it is scheduled:** *"this is a very hard problem to knock down for Big O, we should definitely practice it more."* Carried to the Aug 17 build as a complexity-drill item.

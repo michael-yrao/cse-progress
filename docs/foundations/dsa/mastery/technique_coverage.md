@@ -6,7 +6,7 @@
 
 > The tracker is keyed by **problem**; this is keyed by **technique**. Use it at the weekly build to decide what to pull, and at phase exit to check the per-algorithm bar (recognition + execution, ≥1 🟢 each).
 
-> **52** techniques &nbsp;·&nbsp; **12** with no 🟢 &nbsp;·&nbsp; **7** thin &nbsp;·&nbsp; **0** unqueued variant gaps
+> **52** techniques &nbsp;·&nbsp; **11** with no 🟢 &nbsp;·&nbsp; **7** thin &nbsp;·&nbsp; **0** unqueued variant gaps
 
 ## ⚠️ Action list
 
@@ -15,7 +15,6 @@
 - **BFS on Implicit Graph** (graphs) — best 🟡 across 127
 - **Bellman-Ford** (advanced_graphs) — best 🟡 across 787
 - **Cycle Detection in an Iterated Sequence** (graphs) — best 🟡 across 202
-- **Deep Copy via Hash Map** (linked_list) — best 🟡 across 138
 - **Dijkstra** (advanced_graphs) — best 🟡 across 743, 778
 - **Floyd-Warshall (all-pairs shortest path)** (advanced_graphs) — best 🟡 across 1334
 - **Graph Clone (DFS + Hash Map)** (graphs) — best 🟡 across 133
@@ -65,7 +64,7 @@
 | Topological Sort | graphs | 3 (207, 210, 269) | 🟢 | ✅ | Kahn's (BFS) ×3 · ~~DFS postorder~~ *(queued: `graduates:210`)* | — |
 | Union-Find | graphs | 4 (130, 261, 684, 721) | 🟢 | ✅ | — | — |
 | Heap / Priority Queue | heap | 6 (347, 355, 621, 703, 973, 1046) | 🟢 | ✅ | — | — |
-| Deep Copy via Hash Map | linked_list | 1 (138) | 🟡 | ❌ | — | **no-green** |
+| Deep Copy via Hash Map | linked_list | 1 (138) | 🟢 | ✅ | — | — |
 | Floyd's Cycle / Midpoint | linked_list | 2 (141, 143) | 🟢 | ✅ | — | — |
 | HashMap + Doubly Linked List (LRU) | linked_list | 1 (146) | 🟢 | ✅ | — | — |
 | Linked List Arithmetic | linked_list | 1 (2) | 🟢 | ✅ | — | — |

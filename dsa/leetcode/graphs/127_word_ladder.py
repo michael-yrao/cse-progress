@@ -39,6 +39,51 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-08-13 ──────────────
+    def ladderLength_20260813(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
+        # this is just BFS with an extra step of creating the adjMap based on wildcard
+        # we are given beginWord and wordList as our actual list, so let's add beginWord in there
+        wordSet = set(wordList)
+        wordSet.add(beginWord)
+        # moving one character at a time means a word like hit can be .it, h.t or hi.
+        # so we will create an adjacency map based on the wildcards
+        adjMap = collections.defaultdict(list)
+
+        for word in wordSet:
+            for i in range(len(word)):
+                pre = word[:i]
+                post = word[i+1:]
+                wildcard = pre + '.' + post
+                adjMap[wildcard].append(word)
+        
+        # with our adjacency map set, we need a queue and visited
+        queue = collections.deque()
+        visited = set()
+        queue.append(beginWord)
+        visited.add(beginWord)
+        # result is how many cycles we've gone through in the BFS, so depth counter
+        depth = 1
+        while queue:
+            lenQueue = len(queue)
+            for _ in range(lenQueue):
+                currentWord = queue.popleft()
+                for i in range(len(currentWord)):
+                    pre = currentWord[:i]
+                    post = currentWord[i+1:]
+                    wildcard = pre + '.' + post
+                    for neighbor in adjMap[wildcard]:
+                        # if we are reaching end word here, return depth + 1
+                        if neighbor == endWord:
+                            return depth + 1
+                        # otherwise, add neighbor to the queue and mark as visited
+                        if neighbor not in visited:
+                            queue.append(neighbor)
+                            visited.add(neighbor)
+            depth+=1
+        
+        # if we reached the end without seeing endWord, it doesn't exist
+        return 0
+
     # ── Attempt · 2026-08-03 ──────────────
     def ladderLength_20260803(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
         # this builds off of the trie problem we had with the wildcard
