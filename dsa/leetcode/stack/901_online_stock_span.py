@@ -36,6 +36,23 @@ Constraints:
 """
 
 
+# ── Attempt · 2026-08-13 ──────────────
+class StockSpanner_20260813:
+    # we can have a stack of tuples here
+    # we will have a decreasing stack where each value holds its own span
+    def __init__(self):
+        self.stack = []    
+
+    def next(self, price: int) -> int:
+        # span defaults to 1
+        priceSpan = 1
+        # while we are not having a decreasing stack
+        while self.stack and price >= self.stack[-1][0]:
+            priorElement, priorElementSpan = self.stack.pop()
+            priceSpan+=priorElementSpan
+        self.stack.append((price, priceSpan))
+        return priceSpan
+
 # ── Attempt · 2026-07-14 ──────────────
 class StockSpanner_20260714:
 # [7,2,1,2,4]

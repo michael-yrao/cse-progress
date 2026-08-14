@@ -47,6 +47,31 @@ class Node:
 
 class Solution:
 
+    # ── Attempt · 2026-08-13 ──────────────
+    def copyRandomList_20260813(self, head: 'Optional[Node]') -> 'Optional[Node]':
+        if not head:
+            return None
+        # deep copy, so we do a old to new map
+        oldToNewMap = {}
+        traversal = head
+        while traversal:
+            newNode = Node(traversal.val)
+            oldToNewMap[traversal] = newNode
+            traversal = traversal.next
+
+        # now that we got the mapping going, let's connect the new nodes
+        traversal = head
+        while traversal:
+            newNode = oldToNewMap[traversal]
+            if traversal.random:
+                random = oldToNewMap[traversal.random]
+                newNode.random = random
+            if traversal.next:
+                nextNode = oldToNewMap[traversal.next]
+                newNode.next = nextNode
+            traversal = traversal.next
+        return oldToNewMap[head]
+
     # ── Attempt · 2026-08-04 ──────────────
     def copyRandomList_20260804(self, head: 'Optional[Node]') -> 'Optional[Node]':
         # to perform a deep copy, we need to create a map of old to new

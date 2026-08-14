@@ -39,6 +39,71 @@ Constraints:
 from typing import Optional
 
 
+# ── Attempt · 2026-08-13 ──────────────
+# NOTE: suffix any helper class you write (Node, TrieNode, …) with _20260813 too — an undated helper collides with the restored canonical one.
+class ListNode_20260813:
+    def __init__(self, key, value):
+        self.key = key
+        self.value = value
+        self.next = None
+        self.prev = None
+
+class LRUCache_20260813:
+# for LRU cache, we need to have a doubly linked list
+# one side to keep track of MRU, the other LRU
+# so that is two dummy nodes
+# we do have a capacity here, so we need a way to keep track of size
+# so let's do a map of key to node
+
+    def __init__(self, capacity: int):
+        self.capacity = capacity
+        self.map = {}
+        self.head = ListNode_20260813(-1,-1)
+        self.tail = ListNode_20260813(-1,-1)
+        self.head.next = self.tail # type: ignore
+        self.head.prev = None
+        self.tail.next = None
+        self.tail.prev = self.head # type: ignore
+
+# we need insert/delete for LRU helpers
+
+    def insert(self, node):
+        oldNext = self.head.next
+        self.head.next = node
+        node.prev = self.head
+        node.next = oldNext
+        oldNext.prev = node # type: ignore
+
+    def delete(self, node):
+        nodePrev = node.prev
+        nodeNext = node.next
+        nodePrev.next = nodeNext
+        nodeNext.prev = nodePrev
+
+    def get(self, key: int) -> int:
+        if key in self.map:
+            node = self.map[key]
+            self.delete(node)
+            self.insert(node)
+            return node.value
+        return -1
+
+    def put(self, key: int, value: int) -> None:
+        # if it already exists, we update it
+        if key in self.map:
+            node = self.map[key]
+            node.value = value
+            self.delete(node)
+            self.insert(node)
+        # if it is not existing, insert it and add to map
+        else:
+            newNode = ListNode_20260813(key,value)
+            self.insert(newNode)
+            self.map[key] = newNode
+        while len(self.map) > self.capacity:
+            del self.map[self.tail.prev.key] # type: ignore
+            self.delete(self.tail.prev)
+
 # ── Attempt · 2026-07-16 ──────────────
 class ListNode:
 
