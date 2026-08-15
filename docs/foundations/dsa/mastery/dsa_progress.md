@@ -64,21 +64,24 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/dsa/mastery/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **104** problems &nbsp;·&nbsp; **113** solutions &nbsp;·&nbsp; **442** reps
+> **105** problems &nbsp;·&nbsp; **114** solutions &nbsp;·&nbsp; **446** reps
 
 | | 🏆 Retired | 🎓 Graduated | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|:---:|
-| **Solutions** | 0 | 6 | 88 | 18 | 1 |
+| **Solutions** | 0 | 6 | 89 | 19 | 0 |
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Rep Date | Rep Dates |
 |---|---|---|---|---|---|---|
+| Medium | [743. Network Delay Time (Dijkstra)](https://leetcode.com/problems/network-delay-time/) | 🟡 | 0 | 2026-08-24 | 2026-08-14 | 2026-07-13, 2026-07-15, 2026-07-25, 2026-08-04, 2026-08-14 |
+| Medium | [739. Daily Temperatures](https://leetcode.com/problems/daily-temperatures/) | 🟡 | 0 | 2026-08-24 | 2026-08-14 | 2026-08-14 |
+| Medium | [503. Next Greater Element II](https://leetcode.com/problems/next-greater-element-ii/) | 🟢 | 2 | 2026-10-13 | 2026-08-14 | 2026-07-11, 2026-07-21, 2026-07-31, 2026-08-10, 2026-08-14 |
+| Medium | [155. Min Stack (Pair with Min-So-Far)](https://leetcode.com/problems/min-stack/) | 🟢 | 0 | 2026-08-24 | 2026-08-14 | 2026-08-12, 2026-08-14 |
 | Medium | [138. Copy List with Random Pointer](https://leetcode.com/problems/copy-list-with-random-pointer/) | 🟢 | 1 | 2026-09-12 | 2026-08-13 | 2026-07-03, 2026-07-05, 2026-08-04, 2026-08-13 |
 | Hard | [127. Word Ladder (BFS)](https://leetcode.com/problems/word-ladder/) | 🟡 | 0 | 2026-08-23 | 2026-08-13 | 2026-07-18, 2026-07-21, 2026-08-03, 2026-08-13 |
 | Medium | [146. LRU Cache](https://leetcode.com/problems/lru-cache/) | 🟢 | 2 | 2026-10-12 | 2026-08-13 | 2026-07-04, 2026-07-07, 2026-07-16, 2026-08-13 |
 | Medium | [901. Online Stock Span](https://leetcode.com/problems/online-stock-span/) | 🟡 | 0 | 2026-08-23 | 2026-08-13 | 2026-07-12, 2026-07-14, 2026-08-13 |
 | Easy | [121. Best Time to Buy and Sell Stock](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/) | 🟢 | 2 | 2026-10-12 | 2026-08-13 | 2026-04-15, 2026-06-25, 2026-07-03, 2026-07-14, 2026-08-13 |
 | Easy | [680. Valid Palindrome II](https://leetcode.com/problems/valid-palindrome-ii/) | 🟢 | 2 | 2026-10-12 | 2026-08-13 | 2026-04-05, 2026-05-28, 2026-05-30, 2026-06-12, 2026-08-13 |
-| Medium | [155. Min Stack (Pair with Min-So-Far)](https://leetcode.com/problems/min-stack/) | 🔴 | 0 | 2026-08-14 | 2026-08-12 | 2026-08-12 |
 | Hard | [778. Swim in Rising Water (Dijkstra / Min-Heap)](https://leetcode.com/problems/swim-in-rising-water/) | 🟡 | 0 | 2026-08-22 | 2026-08-12 | 2026-07-23, 2026-08-02, 2026-08-12 |
 | Medium | [211. Design Add and Search Words Data Structure](https://leetcode.com/problems/design-add-and-search-words-data-structure/) | 🟡 | 0 | 2026-08-22 | 2026-08-12 | 2026-07-09, 2026-07-11, 2026-07-21, 2026-07-23, 2026-08-02, 2026-08-12 |
 | Medium | [271. Encode and Decode Strings](https://leetcode.com/problems/encode-and-decode-strings/) | 🟡 | 0 | 2026-08-22 | 2026-08-12 | 2026-07-01, 2026-07-03, 2026-07-13, 2026-07-23, 2026-08-02, 2026-08-12 |
@@ -87,7 +90,6 @@ Notes for future agents:
 | Medium | [323. Number of Connected Components (DFS)](https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/) | 🟢 | 2 | 2026-10-10 | 2026-08-11 | 2026-07-02, 2026-07-12, 2026-08-11 |
 | Easy | [202. Happy Number (Seen-Set)](https://leetcode.com/problems/happy-number/) | 🟡 | 0 | 2026-08-21 | 2026-08-11 | 2026-08-11 |
 | Medium | [150. Evaluate Reverse Polish Notation](https://leetcode.com/problems/evaluate-reverse-polish-notation/) | 🟡 | 0 | 2026-08-21 | 2026-08-11 | 2026-08-11 |
-| Medium | [503. Next Greater Element II](https://leetcode.com/problems/next-greater-element-ii/) | 🟢 | 1 | 2026-09-09 | 2026-08-10 | 2026-07-11, 2026-07-21, 2026-07-31, 2026-08-10 |
 | Easy | [66. Plus One](https://leetcode.com/problems/plus-one/) | 🟢 | 2 | 2026-10-09 | 2026-08-10 | 2026-01-02, 2026-03-25, 2026-06-22, 2026-07-01, 2026-08-10 |
 | Easy | [703. Kth Largest Element in a Stream](https://leetcode.com/problems/kth-largest-element-in-a-stream/) | 🟢 | 2 | 2026-10-09 | 2026-08-10 | 2026-06-22, 2026-07-02, 2026-08-10 |
 | Medium | [721. Accounts Merge (Union-Find)](https://leetcode.com/problems/accounts-merge/) | 🟢 | 1 | 2026-09-08 | 2026-08-09 | 2026-07-30, 2026-08-09 |
@@ -125,7 +127,6 @@ Notes for future agents:
 | Easy | [217. Contains Duplicate](https://leetcode.com/problems/contains-duplicate/) | 🟢 | 2 | 2026-10-04 | 2026-08-05 | 2026-01-01, 2026-03-25, 2026-08-05 |
 | Easy | [26. Remove Duplicates from Sorted Array](https://leetcode.com/problems/remove-duplicates-from-sorted-array/) | 🟢 | 2 | 2026-10-04 | 2026-08-05 | 2026-01-09, 2026-04-02, 2026-08-05 |
 | Medium | [143. Reorder List](https://leetcode.com/problems/reorder-list/) | 🟢 | 1 | 2026-09-03 | 2026-08-04 | 2026-04-26, 2026-07-06, 2026-07-15, 2026-07-25, 2026-08-04 |
-| Medium | [743. Network Delay Time (Dijkstra)](https://leetcode.com/problems/network-delay-time/) | 🟡 | 0 | 2026-08-14 | 2026-08-04 | 2026-07-13, 2026-07-15, 2026-07-25, 2026-08-04 |
 | Hard | [332. Reconstruct Itinerary (Hierholzer)](https://leetcode.com/problems/reconstruct-itinerary/) | 🟡 | 0 | 2026-08-14 | 2026-08-04 | 2026-07-22, 2026-07-28, 2026-08-04 |
 | Medium | [2. Add Two Numbers](https://leetcode.com/problems/add-two-numbers/) | 🟢 | 2 | 2026-10-03 | 2026-08-04 | 2026-07-05, 2026-08-04 |
 | Medium | [994. Rotting Oranges](https://leetcode.com/problems/rotting-oranges/) | 🟢 | 2 | 2026-10-02 | 2026-08-03 | 2026-06-06, 2026-06-15, 2026-06-25, 2026-07-04, 2026-08-03 |

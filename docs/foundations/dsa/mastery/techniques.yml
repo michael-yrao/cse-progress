@@ -213,6 +213,7 @@ techniques:
       - {number: 496}
       - {number: 503}
       - {number: 901}
+      - {number: 739}
 
   # ── Linked list ─────────────────────────────────────────────────────────────
   - name: Linked List Reversal

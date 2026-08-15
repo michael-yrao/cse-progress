@@ -72,7 +72,9 @@ next". **Rule of thumb: any turn that names a problem number — restate, hand-o
 next" — carries the full `[file] · [LC/NC]` pair.** Silence is not lighter, it's a lapse.
 ~~Candidate rung-2 fix (raise at meta-review): a Stop-hook flagging an assistant turn with a bare
 LC number outside a markdown link.~~ **BUILT — Aug 12, 2026 (see below).** Occurrence dates:
-Jul 20/21/23/30/31, Aug 3, Aug 5, **Aug 6**, **Aug 12**.
+Jul 20/21/23/30/31, Aug 3, Aug 5, **Aug 6**, **Aug 12**, **Aug 14**.
+
+⚠️ **Aug 14 is the 10th, and it got past the Stop hook because the hook was shipped `DISABLED`** — written and disabled the same day (Aug 12) over a transcript-parsing bug, with its own fix left in a comment. Rebuilt and re-enabled Aug 14; run `python .claude/hooks/problem_link_reminder.py --selftest <a real transcript .jsonl>` before trusting it again.
 
 **⚠️ 9th lapse, Aug 12, 2026 — the "what's next" hand-over, and the candidate fix had been sitting
 unbuilt for six days.** Closed a turn with *"Next on the board is **778 Swim in Rising Water**… Want
@@ -95,6 +97,29 @@ needs a problem cue word in the turn, so a terse *"778 next?"* with no surroundi
 through. That is the accepted trade against crying wolf. And in a **selection menu** the file link is
 a spoiler (see the caveat below), so the block's own message says to answer by *stating that*, never
 by adding file links.
+
+**⚠️ SCOPE LIMIT — set by the learner Aug 14/15, 2026: "if they are not in today's todo list,
+don't populate the links."** The pair is for **actionable items on today's board** — kickoff,
+hand-over, restate, "what's next". It is **not** for problems named as *context*: coverage lists
+("Monotonic Stack now holds 496/503/901/739"), regression comparisons, technique roll-ups, waiting-room
+mentions. Those stay as bare names.
+
+**Why it is a correctness rule and not a formatting preference.** Linking an off-board problem does two
+harmful things at once: it **advertises** a problem that is not due — and on the same night this was
+set, that is exactly how 503 (🟢, due Sep 9) got pulled 26 days early while a 🟡 and a
+🔴 sat undone — and, for an unscaffolded retry, the file link is the **spoiler** the caveat
+below already forbids. A link is an invitation. Reserve it for what you are actually inviting them to do.
+
+**How to apply:** before adding a pair, ask *is this problem on today's list?* If no, name it plainly with
+no link, or better, ask whether it should be raised at all. Corollary: **a debrief that quotes another
+problem's pre-code call has spoiled that problem's next rep** — see the Aug 14 entry in
+`self_eval_log.md`.
+
+⚠️ **This conflicts with `problem_link_reminder.py` as currently written**, which blocks on *any*
+problem-looking number outside a markdown link, regardless of whether it is on the board. Tonight it
+forced links onto pure-context mentions three turns running. **Raise at the next meta-review:** either
+teach the hook the day's board, or let a turn satisfy it by stating that the mention is context-only —
+the same escape the selection-menu case already has.
 
 **CAVEAT — a retry's file link is a spoiler until scaffolded.** File links are safe in the
 **kickoff** table because those items are scaffolded first (blank stub, prior attempts

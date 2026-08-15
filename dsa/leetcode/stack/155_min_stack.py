@@ -31,6 +31,29 @@ Constraints:
 from typing import List, Optional
 
 
+# ── Attempt · 2026-08-14 ──────────────
+class MinStack_20260814:
+# we keep the min value at each insert
+
+    def __init__(self):
+        self.stack = []
+
+    def push(self, value: int) -> None:
+        if not self.stack:
+            self.stack.append((value,value))
+        else:
+            minValue = min(self.stack[-1][1], value)
+            self.stack.append((value, minValue))
+
+    def pop(self) -> None:
+        self.stack.pop()
+
+    def top(self) -> int:
+        return self.stack[-1][0]
+
+    def getMin(self) -> int:
+        return self.stack[-1][1]
+
 # ── Attempt 1 · 2026-08-12 ────────────────────────────────────────────
 class MinStack:
 # we store (value, min(stack)) at each value in the stack

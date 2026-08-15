@@ -19,6 +19,25 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🟡 739. Daily Temperatures — 2026-08-14 *(first exposure; phase intake)*
+**Sticking point**: **the stack held values, not indices.** Technique was named unaided pre-code
+(monotonic stack, right-to-left) and the loop was written correctly first run — but the answer is a
+**distance between days**, and a temperature cannot say which day it came from. Stalled on *"by the time
+I get to 71 the only thing in the stack is 69"* — the stack was three deep (`[76, 72, 69]`) and popping
+69 reveals the answer; both the *store indices* insight and the literal `answer[i] = stack[-1] - i` were
+coach-supplied, which is what capped this at 🟡.
+**Cue: when the answer array holds a COUNT/DISTANCE rather than a value, the stack stores indices.**
+Pre-code comments named the invariant only by direction-dependent label (*"monotonically increasing"* and
+*"incrementing when the number goes down"* — both true, read bottom→top vs top→bottom, and neither
+codeable). The label is noise; **the invariant is "every element below the top is warmer than the one
+above it"**, and that is the sentence that tells you when to pop.
+*(Complexity clean and unaided: O(n) time with the correct amortization why-clause — each index pushed
+once and popped at most once, so the nested `while` is not O(n²). O(n) space, worst case named as the
+never-popping stack, e.g. `[30,40,50,60]`.)*
+
+## 🟡 743. Network Delay Time (Dijkstra) — 2026-08-14
+**Sticking point**: **the settle-on-pop invariant, again** — `visited` was added at **push** time, which fixes the first distance discovered rather than the smallest, so a cheaper multi-hop path can never overwrite an expensive direct one. Coach-supplied counterexample (`[[1,2,10],[1,3,1],[3,2,1]]` → returns 10, answer is 2). Compounded by the heap tuple being `(node, weight)`, so the heap ordered by **node id** and the algorithm was not Dijkstra at all. ⚠️ **This is the exact gap Jul 13’s 🔴 entry recorded as taught** (*"why a node is marked settled on pop, not on push"*) and Aug 4 recorded as **correct** — it regressed. Complexity: gave `O(E + V log V)`, the **Fibonacci-heap** bound; `heapq` has no decrease-key, so the pushes are per **edge**, not per vertex → `O(E log V)`. Space `O(V + E)` unaided and correct.
+
 ## 🟡 150. Evaluate Reverse Polish Notation — 2026-08-11 *(first exposure; phase intake)*
 **Sticking point**: **not the stack — the spec.** The algorithm was in hand within a minute of
 understanding the notation; all three bugs were places where *the problem statement disagreed with a
