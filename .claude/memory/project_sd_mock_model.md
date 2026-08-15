@@ -20,7 +20,7 @@ schedule is "read about X". Teaching happens on request, off-schedule, unrated.
 | **Board** | HelloInterview's 31 question breakdowns + 4 no-write-up practice questions = **35 rows**, at their tiers |
 | **Cadence** | `mock_plus_deep_dive` — Sunday cold mock (3.0 units) + one **conditional** midweek deep-dive round (2.0), which does not exist until a design is banked with open probes |
 | **Rating** | 🟢 needs #1–4 **and** #5 forks / #6 failure modes / #7 evolve-operate. **A prepared mock (breakdown already read) caps at 🟡** — ask before, not after |
-| **Artifacts** | one debrief per mock in `system_design/mocks/`, whose `❓ Open probes` section is the deep-dive round's material |
+| **Artifacts** | one debrief per mock in [`sd-progress`](https://github.com/michael-yrao/sd-progress) `mocks/`, whose `❓ Open probes` section is the deep-dive round's material |
 
 ## ⏸️ Current state: STUDY MODE — no SD slot goes on the board (set Aug 13, 2026, same session)
 
@@ -106,7 +106,8 @@ open-ended work with no exit condition, and it competed for the same slots as th
 HelloInterview is a finished textbook. **The repo keeps the two jobs it is better at than a website:
 measurement over time, and the adversarial half you cannot do alone.**
 
-**How to apply.** Read `system_design/study_guide.md` (mechanics) before running a mock and
+**How to apply.** ⚠️ The SD track moved to the private [`sd-progress`](https://github.com/michael-yrao/sd-progress) repo on Aug 15, 2026 —
+read **`sd-progress/CLAUDE.md`** and `sd-progress/study_guide.md` (mechanics) before running a mock and
 `senior_ramp.md` (order, phases, rubric) before proposing one. **Never write the question into the weekly
 schedule file** — that lets its breakdown be read in advance, which caps the mock. Name it at the session,
 same discipline as [[project_recognition_probes]]. Previously attempting a design is *not* "prepared";

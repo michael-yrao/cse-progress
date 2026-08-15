@@ -350,10 +350,21 @@ After logging any problem result, check its computed next review date and add it
 
 ## Study Guide Files
 
-Layout: each **track** owns a folder under `docs/foundations/` (`dsa/`, `system_design/`) with the same
-shape — `study_guide.md`, `mastery/` (its tracker), `templates/`, plus its own reference material.
-**`schedules/` is cross-track and sits beside them**, not inside `dsa/`: one weekly file plans the DSA
-warmups/active block *and* the SD slots. Its per-track trackers stay in each track's `mastery/`.
+Layout: the **DSA track** owns `docs/foundations/dsa/` — `study_guide.md`, `mastery/` (its tracker),
+`templates/`, plus its own reference material. **`schedules/` is cross-track and sits beside it**, not
+inside `dsa/`: one weekly file plans the DSA warmups/active block *and* the SD slots.
+
+⚠️ **The System Design track left this repo on Aug 15, 2026.** It lives in the private
+**[sd-progress](https://github.com/michael-yrao/sd-progress)**, cloned beside this one in the workspace.
+HelloInterview is paid content and the mock debriefs are where excerpts of it get pasted, so the
+boundary is a repo boundary rather than a directory anyone has to remember. **Never copy content from
+sd-progress into this repo — link to it.** Every SD reference here is a link or an attribution, and that
+is the invariant to preserve.
+
+**What deliberately did NOT move:** `schedules/`, `effort_budget` and `system_design.cadence` in
+`cse.config.yml`. They plan and price a whole **day/week across both tracks**. So the SD slot is
+**scheduled here and executed there** — the debrief, the rating and the tracker row land in sd-progress,
+and the computed next-review date comes back to a schedule file here like any other rep.
 
 *(There were three tracks until Aug 13, 2026. **AI System Engineering was removed** — it was never
 started, never had a session, and its guide + tracker were a plan nobody had executed. It is not
@@ -411,50 +422,19 @@ entire job is running cold mock interviews on HelloInterview's questions and sco
 the schedule is "read about X"; no lanes, no note-building reps, no blind sprints, no Bootstrap →
 Transition → Mastery arc. Teaching happens **on request only**, off-schedule and unrated.
 
-- `docs/foundations/system_design/study_guide.md` — **the mechanics**: the split, the two slots, the mock protocol, the debrief. Read before running one.
-- `docs/foundations/system_design/senior_ramp.md` — **the plan**: question order, phases + gates, and the **7-point rubric** a mock is scored on
-- `docs/foundations/system_design/mastery/design_progress.md` — **the state**: 35 rows, HelloInterview's board at their tiers; same 7-column table, same interval math, same script (`update_review_dates.py --tracker …`), rows by hand
-- `docs/foundations/system_design/mocks/<YYYYMMDD>_<slug>.md` — **one debrief per mock** (template in `templates/mock_debrief_template.md`); its `❓ Open probes` section is the deep-dive round's material
-- `docs/foundations/system_design/coverage_map.md` — pattern → question map; answers *"which moves has the sequence never rehearsed"*
-- `docs/foundations/system_design/framework.md` — the delivery framework (= HelloInterview's Delivery); the mock is timed against it
-- `technologies/` · `components/` · `concepts/` — **frozen reference**, off the review engine. Point at them in a debrief; do not schedule them.
+⚠️ **The mechanics, the board and the mock protocol are all in
+[sd-progress](https://github.com/michael-yrao/sd-progress)** (cloned beside this repo), not here —
+`study_guide.md` · `senior_ramp.md` · `mastery/design_progress.md` · `mocks/` · `coverage_map.md` ·
+`framework.md` · the frozen `technologies/` · `components/` · `concepts/` reference.
 
-### Running a mock — the numbered steps
+**Before running a mock, read `sd-progress/CLAUDE.md`** — it carries the seven numbered steps, the
+premium-content rule, and the comfort engine. They are deliberately **not duplicated here**: two copies
+of a protocol drift, and the one that drifts is always the copy nobody executes from.
 
-1. **Name the question at the start of the session, never in the weekly schedule file.** Writing it down
-   in advance lets it be read up, which destroys the only thing the mock measures. Same reason the
-   recognition probe's problem is never written down.
-2. **Ask whether they've read that question's HelloInterview breakdown. A prepared mock caps at 🟡** —
-   ask *before*, not after; a rating revised downward later is worth less than an honest cap. Studying
-   the core concepts/technologies/patterns never disqualifies anything.
-3. **Run it as the interviewer, not the coach** — no hints, no leading questions, no supplying a box.
-   Time called at each framework boundary (~5 requirements · 2 entities · 5 API · 10–15 HLD · 10 deep
-   dives). Hold HLD altitude through steps 1–4; push on every bare adjective and every undefended choice.
-   - ⚠️ **High ceiling, senior bar.** Probe as deep as the design allows — that is how the edge gets
-     found — but **a probe that runs past the bar costs nothing on the rating.** Log it in the debrief's
-     *above the current bar* section, not as a gap.
-   - **Probe in both directions.** Against over-design: *"why do you need this, what breaks if you drop
-     it?"* Against under-design: *"does this meet the number you pinned — show me at 10×."* ⚠️ **The
-     requirements are a floor and being well-defended does not lift a design over it** — a design that
-     cannot meet the pinned non-functional requirements fails #4 and #5 however articulate it is. Watch
-     for the dodge of scoping requirements down at step 1 to make the design easy; that fails #1/#2, and
-     the move is to push the numbers back up.
-4. **Throw one curveball around minute 30** — a non-functional requirement change that invalidates part
-   of the design. Mandatory at L6; graded under rubric #7.
-5. **Debrief in the same session:** score all seven checkpoints pass/fail **with the evidence for each**,
-   then propose the comfort rating and confirm it (same protocol as DSA — you infer and propose, their
-   call is final, honesty over agreeableness).
-6. **Write the debrief file** from the template, including `❓ Open probes` — **bare questions, never
-   summaries of the answer.** They are both the coverage report and the next deep-dive round's material,
-   and an answered probe is a spent probe. *(This replaces the Aug 9 teaching-session gap ledger; a mock
-   produces the same thing more honestly — what you couldn't answer under time, not what a conversation
-   happened not to reach.)*
-7. **Log the row** in `design_progress.md`, and slot the computed next review date into a schedule file
-   like any other rep.
-
-⚠️ **A design never spreads across sittings.** One question = one row = one cold mock = one rating. If it
-overruns, finish at whatever depth it reached and rate what happened — a resumed design cannot be rated
-cold, and an unratable rep silently leaves the engine while looking like progress.
+**What this repo still owns for SD:** the *slot*. The weekly schedule file plans it, `effort_budget`
+prices it (`sd_lane_units: 3.0`), and `system_design.cadence` decides how many a week gets. When a mock
+is done in sd-progress, **its computed next-review date comes back to a schedule file here** — that is
+the schedule-integrity rule, and the repo split does not exempt it.
 
 ## Token discipline (efficiency by default)
 

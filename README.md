@@ -12,20 +12,12 @@ cse-progress/
 ├── docs/
 │   └── foundations/
 │       ├── schedules/              # weekly day-by-day plans, ALL tracks (+ archive/)
-│       ├── dsa/
-│       │   ├── study_guide.md      # master plan, phases, pace, ROI line
-│       │   ├── fundamentals/       # concept references (e.g. big_o.md)
-│       │   ├── patterns/           # the pattern library (see below)
-│       │   ├── mastery/            # spaced-rep record: dsa_progress.md + stuck_log.md
-│       │   └── templates/          # solution-file scaffold
-│       └── system_design/          # mock-interview track (study is via HelloInterview)
-│           ├── study_guide.md      # the mock mechanics: slots, protocol, debrief
-│           ├── senior_ramp.md      # question order, phases + gates, the 7-point rubric
-│           ├── mocks/              # one debrief per mock + the open-probe bank
-│           ├── concepts/           # quantitative reference cards (Little's Law, percentiles, …)
-│           ├── technologies/       # frozen reference notes
-│           ├── mastery/            # spaced-rep record: design_progress.md
-│           └── templates/          # mock_debrief_template.md
+│       └── dsa/
+│           ├── study_guide.md      # master plan, phases, pace, ROI line
+│           ├── fundamentals/       # concept references (e.g. big_o.md)
+│           ├── patterns/           # the pattern library (see below)
+│           ├── mastery/            # spaced-rep record: dsa_progress.md + stuck_log.md
+│           └── templates/          # solution-file scaffold
 ├── scripts/update_review_dates.py  # recomputes review dates + sorts the tracker
 ├── .githooks/pre-commit            # auto-runs the script on commit (version-controlled)
 ├── CLAUDE.md                       # working conventions for the AI pair-partner (Claude Code)
@@ -43,6 +35,17 @@ Every problem is logged in `docs/foundations/dsa/mastery/dsa_progress.md` with a
 | 🔴 Blank | couldn't recall the approach | +2 days |
 
 Weekly `schedules/` are built from those due dates. Non-Clean attempts get an entry in `stuck_log.md` (full write-up for Blank, one-liner for Shaky) so retries are rebuilds, not cold starts.
+
+## System Design lives in another repo
+
+The SD track moved to the private **[sd-progress](https://github.com/michael-yrao/sd-progress)** on
+Aug 15, 2026. HelloInterview is paid content and the mock debriefs are where excerpts of it get pasted,
+so the boundary is a repo boundary rather than a directory to remember. **Link to it from here; never
+copy content back.**
+
+`schedules/` stayed — a weekly file is cross-track by design, planning DSA warmups, the DSA active block
+*and* the SD slots against one effort budget (`sd_lane_units: 3.0` in `cse.config.yml`). **The SD slot is
+scheduled here and executed there**, and the mock's next-review date comes back to a schedule file here.
 
 ## The pattern library
 

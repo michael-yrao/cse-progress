@@ -82,7 +82,7 @@ system_design:
   # HelloInterview's 35-question board and scores them on the 7-point rubric.
   #
   #   Sunday          → THE MOCK: one cold ~45-min mock on the next question + ~15 min
-  #                     debrief written to system_design/mocks/. 3.0 units.
+  #                     debrief written to sd-progress/mocks/. 3.0 units.
   #   One midweek     → THE DEEP-DIVE ROUND: ~25 min of pushback on a design already
   #                     mocked, drawn from that debrief's open-probe bank. 2.0 units.
   #                     CONDITIONAL — it does not exist until something is banked, and the
@@ -90,7 +90,18 @@ system_design:
   #
   # Lanes ①/②/③ are gone, and so are note-building reps, Recall-Card blind sprints, the
   # Bootstrap→Transition→Mastery arc, the designs-pull-blocks queue and the prereq-tech
-  # gate. Why, and what replaced each: docs/foundations/system_design/study_guide.md.
+  # gate. Why, and what replaced each: sd-progress/study_guide.md.
+  #
+  # ⚠️ MOVED Aug 15, 2026 — the SD track itself now lives in the private repo
+  # https://github.com/michael-yrao/sd-progress (HelloInterview is paid content and its
+  # debriefs are where excerpts land). This key STAYED because it decides how many slots a
+  # WEEK gets, and the week is built here, in docs/foundations/schedules/ — one cross-track
+  # table that plans DSA warmups, the DSA active block and the SD slots against one budget.
+  # `effort_budget.sd_lane_units` above stays for the same reason: it prices a whole DAY.
+  #
+  # So: the SD slot is SCHEDULED here and EXECUTED there. The mock's debrief, its rating and
+  # its tracker row land in sd-progress; the computed next-review date comes back to a
+  # schedule file here, same as any other rep.
   cadence: mock_plus_deep_dive
 
 solutions:
