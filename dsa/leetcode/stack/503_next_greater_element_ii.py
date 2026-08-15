@@ -26,6 +26,29 @@ from typing import List
 
 class Solution:
 
+    # ── Attempt · 2026-08-14 ──────────────
+    def nextGreaterElements_20260814(self, nums: List[int]) -> List[int]:
+        # next greater = monotonically decreasing stack
+        # so we keep the index in the stack so we can set the next greater for prior index
+        # circular means we need to through twice, store only real indices
+
+        decreasingStack = []
+        result = [-1] * len(nums)
+
+        for i in range(len(nums)*2):
+            actualIndex = i % len(nums)
+            # when we hit something that breaks the decreasing stack
+            # we mark it on our result
+            while decreasingStack and nums[actualIndex] > nums[decreasingStack[-1]]:
+                priorIndex = decreasingStack.pop()
+                # if we haven't filled in next greater yet
+                if result[priorIndex] == -1:
+                    result[priorIndex] = nums[actualIndex]
+            # now we add actual index to the stack
+            decreasingStack.append(actualIndex)
+        
+        return result
+
     # ── Attempt · 2026-08-10 ──────────────
     def nextGreaterElements_20260810(self, nums: List[int]) -> List[int]:
         # next greater element = monotonic stack

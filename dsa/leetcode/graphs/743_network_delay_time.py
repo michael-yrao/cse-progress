@@ -41,6 +41,43 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-08-14 ──────────────
+    def networkDelayTime_20260814(self, times: List[List[int]], n: int, k: int) -> int:
+        # Dijkstra's Algorithm
+        # Differences between Dijkstra and BFS
+        # Dijkstra: Min Heap, adjMap, add to visited set when node comes off the heap 
+        # since first pop is the shortest, thus greedy shortest path algorithm
+        # BFS: Queue, adjMap, add to visited set when node enters the queue
+        # min time to reach all means total
+        totalTime = 0
+
+        adjMap = collections.defaultdict(list)
+
+        for src, dst, weight in times:
+            adjMap[src].append((dst,weight))
+        
+        # weight to starting node is zero
+        minHeap = []
+        heapq.heappush(minHeap, (0, k))
+        visited = set()
+            
+        # while we are still able to visit nodes, let's visit them
+        while minHeap:
+            currentCumulativeWeight, currentNode = heapq.heappop(minHeap)
+            if currentNode in visited:
+                continue
+            totalTime = currentCumulativeWeight
+            visited.add(currentNode)
+            # let's visit currentNode's neighbors
+            for neighbor, neighborWeight in adjMap[currentNode]:
+                if neighbor not in visited:
+                    newCumulativeWeight = currentCumulativeWeight + neighborWeight
+                    heapq.heappush(minHeap,(newCumulativeWeight, neighbor))
+        
+        if len(visited) == n:
+            return totalTime
+        return -1
+
     # ── Attempt · 2026-08-04 ──────────────
     def networkDelayTime_20260804(self, times: List[List[int]], n: int, k: int) -> int:
         # k is our starting node
