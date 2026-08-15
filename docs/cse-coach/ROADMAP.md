@@ -8,7 +8,7 @@
 |------------------------------------|------------------------|
 | `patterns/` (techniques, hubs, cheatsheet) | `mastery/dsa_progress.md` rows |
 | `fundamentals/big_o.md` | `mastery/stuck_log.md` entries |
-| `system_design/` guides + templates | `schedules/` (my weeks) |
+| ~~`system_design/` guides + templates~~ *(moved to sd-progress, Aug 15, 2026)* | `schedules/` (my weeks) |
 | `scripts/update_review_dates.py` | `dsa/leetcode/**` (my solutions) |
 | `.githooks/pre-commit` | study_guide phase dates/goals |
 | the comfort/spaced-rep *mechanism* | study_guide's *specific* NC150 plan |
@@ -42,7 +42,7 @@ The framework transfers as-is; the data needs a blank-slate path.
 
 ### Phase 5 — Polish
 - [ ] Screenshots / a short walkthrough of a logging cycle.
-- [ ] Sample filled-out design (YouTube/LLM) as a worked `system_design/case_studies/` example.
+- [ ] Sample filled-out design (YouTube/LLM) as a worked `case_studies/` example — now in [`sd-progress`](https://github.com/michael-yrao/sd-progress).
 - [ ] Consider a lightweight docs landing page.
 
 ---

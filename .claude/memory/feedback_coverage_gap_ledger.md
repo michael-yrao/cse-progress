@@ -16,7 +16,7 @@ metadata:
 `## ❓ Open — not yet asked` section at the bottom of a technology/concept card, written at the end of a
 teaching session. **Teaching sessions are no longer scheduled**, so the ledger moved to the place that
 now generates the same thing: the **`❓ Open probes`** section of each mock debrief in
-`system_design/mocks/`.
+[`sd-progress`](https://github.com/michael-yrao/sd-progress) `mocks/` (the SD track left this repo Aug 15, 2026).
 
 **The move is an upgrade, not a relocation.** The card version recorded *what a conversation happened not
 to reach* — bounded by what the learner could already see was missing, which is the hole it was patching

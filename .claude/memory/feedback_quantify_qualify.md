@@ -22,6 +22,6 @@ grade.
 scalable, heavy, read-heavy) or a bare choice, **push for the number and the condition** before moving
 on. Coach them toward the fusion template: *"I'll use [choice] because [quantified pressure]; it trades
 [X for Y] and holds while [condition] — it breaks at [scale], where I'd move to [alternative]."* Full
-per-step targets + examples live in [`framework.md`](../../docs/foundations/system_design/framework.md)
+per-step targets + examples live in [`framework.md`](https://github.com/michael-yrao/sd-progress/blob/main/framework.md)
 ("Quantify & Qualify" section). Pairs with [[feedback_hld_altitude]] — altitude keeps them in the right
 step, quantify/qualify makes each step's answer defensible.

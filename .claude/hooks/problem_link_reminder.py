@@ -92,7 +92,9 @@ IGNORE = {
 REPO_ROOT = Path(__file__).resolve().parents[2]
 TRACKERS = (
     REPO_ROOT / "docs" / "foundations" / "dsa" / "mastery" / "dsa_progress.md",
-    REPO_ROOT / "docs" / "foundations" / "system_design" / "mastery" / "design_progress.md",
+    # The SD tracker left with the SD track on Aug 15, 2026 (private sd-progress repo).
+    # Not re-pointed across repos on purpose: this hook guards THIS repo's links, and a
+    # path into a sibling clone would silently no-op on any machine that lacks it.
 )
 SCHEDULE_DIR = REPO_ROOT / "docs" / "foundations" / "schedules"
 

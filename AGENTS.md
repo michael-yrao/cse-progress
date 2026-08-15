@@ -30,5 +30,5 @@ problem statements, no recaps. Rules unchanged — only verbosity drops.
 - `cse.config.yml` — engine settings
 - `scripts/update_review_dates.py` — Comfort→interval engine (runs on commit)
 - `docs/foundations/dsa/mastery/dsa_progress.md` — the DSA tracker
-- `docs/foundations/system_design/mastery/design_progress.md` — the SD tracker (same engine)
+- the SD tracker moved Aug 15, 2026 → [`sd-progress`](https://github.com/michael-yrao/sd-progress) `mastery/design_progress.md` (same engine, its own copy)
 - `docs/foundations/schedules/<YYYYMMDD>_schedule.md` — the week's plan (all tracks)
