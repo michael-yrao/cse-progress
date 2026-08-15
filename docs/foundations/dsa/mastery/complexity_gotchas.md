@@ -260,7 +260,42 @@ characters). **Cue: before naming `n`, ask "what does one unit of work touch?"**
 | 271 Encode and Decode Strings | **unit of work ×3** (the problem's own category, repeating) | `encode` time `O(n)` → **`O(L)`** (`join` copies every char); `encode` space `O(1)` *"we don't count result"* → **`O(n)` extra**, since that list is a **midpoint**, not the return value; `decode` time `O(n)` → `O(n·w)` → **`O(L)`** (slicing copies, and words partition the input so `Σ` not `×` — counterexample `["a"*1000] + 25 singles` gives `n·w = 26,000` vs `L = 1,025`). ✅ **`decode` space was RIGHT and defended under challenge** — `O(1)` extra, because *there* `result` is the output. Same variable name, different accounting, and the learner drew the line themselves | 2026-08-12 | **freebies spent 2026-08-02 → capped this rep at 🟡** |
 | 155 Min Stack (**new**) | **structure space vs per-call space** | Time `O(1)` for all five methods, correct. Space given as *"O(1) for each method"* — true for the **incremental** cost of one call, but "space of MinStack" means the structure: **`O(n)`**, holding n pairs. Learner defended the per-call reading (*"n calls meaning having O(n) means O(1) across n calls"*), which is coherent — the fix is to **state which question you are answering**, same convention rule as the output-counting row | 2026-08-12 | **1 of 2** *(new-problem double freebie)* |
 | 235 LCA of a BST | **"BST" read as "balanced"** (time *and* space, inconsistently) | Gave `O(n)` space for the recursion stack but `O(log n)` time — the two **contradict**, since stack depth *is* the number of steps walked down. `log n` needs *balance*, which the constraints never promise. Counterexample: `1→2→3→4` all as right children is a legal BST; the mental image is **a sorted list in tree form**. True bound is **O(h)** — `O(log n)` balanced, `O(n)` degenerate | 2026-07-29 | spent · **REPEATED 2026-08-08 → capped that rep at 🟡** |
-| 332 Reconstruct Itinerary | **recursion depth = nodes, not edges (space)** | Gave recursion stack as **O(V)**. Wrong unit: airports are **revisited** (`JFK→A→JFK→A…`), so the stack follows the Euler **path** (E edges deep), not the distinct-node count. Depth is **O(E)**; total space **O(E)** (map + stack). The tell: whenever a node can be re-entered, "stack = O(V)" is unsafe — bound the stack by the **longest descent**, which here is every edge. Time was right: **O(E log E)** (heap push/pop per edge) | 2026-08-04 | spent |
+| 332 Reconstruct Itinerary | **recursion depth = nodes, not edges (space)** | Gave recursion stack as **O(V)**. Wrong unit: airports are **revisited** (`JFK→A→JFK→A…`), so the stack follows the Euler **path** (E edges deep), not the distinct-node count. Depth is **O(E)**; total space **O(E)** (map + stack). The tell: whenever a node can be re-entered, "stack = O(V)" is unsafe — bound the stack by the **longest descent**, which here is every edge. Time was right: **O(E log E)** (heap push/pop per edge) | 2026-08-04 | spent · ⭐ **HALF-TRANSFERRED 2026-08-14 — see below** |
+
+> ### ⭐ 332, Aug 14, 2026 — the number transferred and the reasoning did not
+>
+> **Unrated rep** (the session was converted to a teach, §2a), so **no freebie spent and no cap applied.**
+> Logged anyway, because the *shape* of this one is the argument for the itemized-why-clause rule.
+>
+> | | Aug 4 | Aug 14 |
+> |---|---|---|
+> | **Time** | O(E log E) ✅ | O(E log E) ✅ |
+> | **Space — the number** | **O(V)** ❌ | **O(E)** ✅ |
+> | **Space — the why-clause** | *(the miss)* | *"since we are working on **nodes** and using a heap"* ❌ |
+>
+> **The Aug 4 correction landed on the answer and not on the explanation.** The word `nodes` — the exact
+> error corrected ten days earlier — is still sitting underneath a now-correct `O(E)`, and the two
+> contributors named are wrong in both directions:
+>
+> - **The heap is not a space term at all.** The heaps *are* the adjacency lists (heapified in place);
+>   there is no second structure. Naming it inflates the itemization with something that costs nothing.
+> - **The recursion stack was never named** — and it is the one that actually costs O(E). The walk
+>   consumes tickets and only unwinds once it strands, so the first descent can be *every* edge deep.
+>
+> ⚠️ **This is why the gate asks for contributors, not a number.** A right number over wrong reasoning is
+> indistinguishable from understanding *on this problem*, and fails on the next one in the family —
+> reasoning is the half that travels. Had the answer been graded on the number alone, this would have
+> read as a clean transfer and the live error would have shipped forward invisibly.
+>
+> ⭐ **The cross-reference worth carrying:** *"visited holds edges not nodes"* was this learner's own
+> pre-code recognition call on the **same rep, two hours earlier** — and is quoted as the model
+> picking-feature call in `recognition_gotchas.md`. **The unit that makes the algorithm correct is the
+> unit that prices it**, and it did not survive the trip from the recognition gate to the complexity
+> gate. That sentence is the durable cue for this problem; fire it cold on the Aug 18 rated rep.
+>
+> **Also fires build-agenda item #1** (the learner-pinned recursion space/time refresher). The
+> recursion-stack family now reads `206 · 235 · 332 ×2 · 261 · 211 · 778 · 104 · 105` — the largest
+> cluster in this file, and the only one the learner has asked for by name.
 | 261 Graph Valid Tree (DFS) | **omitted the recursion stack (space)** + under-itemized time | Gave space as `adjMap` = O(V+E) only; **missed the DFS call stack**, which on a **path graph** (`0–1–2–…`) is **O(V) deep**. Full space **O(V+E)** (map O(V+E) + stack O(V) + visited O(V)). Time given as `O(E)`; correct is **O(V+E)** — the `for i in range(n)` node loop is the dropped V-term. Both happen to collapse to the same order here only because the `len(edges)!=n-1` guard forces `E=V-1`. Cross-ref the standing rule: **any recursion ⟹ the depth is a space term.** | 2026-08-06 | spent |
 | 973 K Closest Points to Origin | **loose bound where the tight one is the algorithm's whole point** (time *and* space) + **"bounded by construction" misread as "average case"** | Gave `O(n log n)` time / `O(n)` space for a heap the code caps at `k` (`while len(heap) > k: heappop`). Both are *true* (`k ≤ n`) and both are **self-defeating**: `O(n log n)` is exactly what sorting all points and slicing gives, so reporting it makes the size-k heap invisible. Tight bounds **`O(n log k)` / `O(k)`**. Then, when pushed, defended it as *"worst case `O(n log n)`, average `O(n log k)`"* — **no.** The cap is structural, not data-dependent: every input does exactly n pushes and n−k pops on a heap never larger than k+1, so `O(n log k)` **is** the worst case. What that intuition was actually reaching for is `k = n`, which is a **parameter value, not a case** — case analysis ranges over *inputs*, and `k` is a given. Contrast quicksort, where the input genuinely decides. | 2026-08-07 | spent |
 
