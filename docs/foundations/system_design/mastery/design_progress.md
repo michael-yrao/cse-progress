@@ -37,10 +37,10 @@ Notes for future agents:
 ⚠️ **The board is entirely 🔴 and inert on purpose (Aug 13, 2026).** Rate Limiter's three 2026-07 reps
 were cleared with the rest of the old apparatus at the learner's request: those were staged sessions
 against a different rubric on a different source, and carrying a 🟡 forward would have priced a re-mock
-against a rating no mock produced. **The arc note ([`../components/rate_limiter.md`](../components/rate_limiter.md))
+against a rating no mock produced. **The arc note ([`../components/rate_limiter.md`](https://github.com/michael-yrao/sd-progress/blob/main/components/rate_limiter.md))
 keeps the content.** Nothing on this board bills review load until its first mock runs.
 
-**The board is HelloInterview's own list: [31 question breakdowns](https://www.hellointerview.com/learn/system-design/in-a-hurry/problem-breakdowns) + the 4 *More Practice* questions that ship without a write-up — 35 rows, at HelloInterview's own tiers** (4 Easy · 18 Medium · 13 Hard). Order of attack, and the few that are trigger-gated rather than in the rotation, are owned by [`../senior_ramp.md`](../senior_ramp.md).
+**The board is HelloInterview's own list: [31 question breakdowns](https://www.hellointerview.com/learn/system-design/in-a-hurry/problem-breakdowns) + the 4 *More Practice* questions that ship without a write-up — 35 rows, at HelloInterview's own tiers** (4 Easy · 18 Medium · 13 Hard). Order of attack, and the few that are trigger-gated rather than in the rotation, are owned by [`../senior_ramp.md`](https://github.com/michael-yrao/sd-progress/blob/main/senior_ramp.md).
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Rep Date | Rep Dates |
 |---|---|---|---|---|---|---|
@@ -91,7 +91,7 @@ link they carry because they have no page of their own.
 ⚠️ **Three rows are trigger-gated, not queued** — Payment System and Robinhood on
 `waypoint_loop:fintech`, Online Chess as the lowest-ceiling Hard on the board. They hold rows because
 they are on HelloInterview's list and a row costs nothing at 🔴; they are **not** in the rotation.
-Reasons in [`../senior_ramp.md`](../senior_ramp.md).
+Reasons in [`../senior_ramp.md`](https://github.com/michael-yrao/sd-progress/blob/main/senior_ramp.md).
 
 ---
 
@@ -110,10 +110,10 @@ on it.
 
 | Card | Last rating before retirement | Rep dates |
 |---|---|---|
-| [Redis](../technologies/redis.md) | 🟡 (teach Aug 10, rated sprint was scheduled Aug 15) | 2026-07-13, 2026-07-19, 2026-07-21, 2026-08-05 |
-| [PostgreSQL](../technologies/postgresql.md) | never drilled | — |
-| [Caching](../components/caching.md) · [Load balancer](../components/load_balancer.md) · [Rate limiter](../components/rate_limiter.md) | never drilled (rate limiter's arc is the design row above) | — |
-| [Networking basics](../concepts/networking_basics.md) · [Percentiles & tail latency](../concepts/percentiles_and_tail_latency.md) · [Little's Law](../concepts/littles_law.md) · [Utilization & queueing](../concepts/utilization_and_queueing.md) · [Probabilistic sketches](../concepts/probabilistic_sketches.md) · [Retry storms & stampedes](../concepts/retry_storms_and_stampedes.md) · [Quorum math](../concepts/quorum_math.md) · [Zipfian distribution](../concepts/zipfian_distribution.md) · [Bloom filter](../concepts/bloom_filter.md) | never drilled | — |
+| [Redis](https://github.com/michael-yrao/sd-progress/blob/main/technologies/redis.md) | 🟡 (teach Aug 10, rated sprint was scheduled Aug 15) | 2026-07-13, 2026-07-19, 2026-07-21, 2026-08-05 |
+| [PostgreSQL](https://github.com/michael-yrao/sd-progress/blob/main/technologies/postgresql.md) | never drilled | — |
+| [Caching](https://github.com/michael-yrao/sd-progress/blob/main/components/caching.md) · [Load balancer](https://github.com/michael-yrao/sd-progress/blob/main/components/load_balancer.md) · [Rate limiter](https://github.com/michael-yrao/sd-progress/blob/main/components/rate_limiter.md) | never drilled (rate limiter's arc is the design row above) | — |
+| [Networking basics](https://github.com/michael-yrao/sd-progress/blob/main/concepts/networking_basics.md) · [Percentiles & tail latency](https://github.com/michael-yrao/sd-progress/blob/main/concepts/percentiles_and_tail_latency.md) · [Little's Law](https://github.com/michael-yrao/sd-progress/blob/main/concepts/littles_law.md) · [Utilization & queueing](https://github.com/michael-yrao/sd-progress/blob/main/concepts/utilization_and_queueing.md) · [Probabilistic sketches](https://github.com/michael-yrao/sd-progress/blob/main/concepts/probabilistic_sketches.md) · [Retry storms & stampedes](https://github.com/michael-yrao/sd-progress/blob/main/concepts/retry_storms_and_stampedes.md) · [Quorum math](https://github.com/michael-yrao/sd-progress/blob/main/concepts/quorum_math.md) · [Zipfian distribution](https://github.com/michael-yrao/sd-progress/blob/main/concepts/zipfian_distribution.md) · [Bloom filter](https://github.com/michael-yrao/sd-progress/blob/main/concepts/bloom_filter.md) | never drilled | — |
 
 **The nine `concepts/` cards are the one part of the old apparatus worth actively keeping.** They are
 the *quantitative* foundations — Little's Law, percentiles, queueing, Zipf, quorum math — and
@@ -146,5 +146,5 @@ here with a trigger rather than deleted — schedule-integrity rule: nothing lea
 | Twitter · Pastebin | Declined, not parked — Instagram + FB News Feed cover the first, Bitly covers the second | none; redundant |
 
 **Everything below the old ROI line stays below it.** The 25 systemdesign.io questions triaged out on
-Aug 8 keep their written reasons in [`../senior_ramp.md`](../senior_ramp.md); reseeding the board did
+Aug 8 keep their written reasons in [`../senior_ramp.md`](https://github.com/michael-yrao/sd-progress/blob/main/senior_ramp.md); reseeding the board did
 not re-open them.

@@ -1,7 +1,7 @@
 # System Design Study Guide — the mock-interview model
 
 > **📍 Overarching career goal & apply strategy → [`career_strategy.md`](https://github.com/michael-yrao/cse-progress/blob/main/docs/foundations/career_strategy.md).**
-> SD *sequence, rubric and phase gates* → [`senior_ramp.md`](senior_ramp.md).
+> SD *sequence, rubric and phase gates* → [`senior_ramp.md`](https://github.com/michael-yrao/sd-progress/blob/main/senior_ramp.md).
 > This guide is the SD *mechanics*: how a mock runs, how it is scored, what gets written down.
 
 ## The split — study is yours, the interview is mine
@@ -148,7 +148,7 @@ or a second mock. An empty deep-dive queue means the board needs mocks, not more
 
 ### Before
 
-- **The question comes from [`senior_ramp.md`](senior_ramp.md)'s order**, one per session. It is named at
+- **The question comes from [`senior_ramp.md`](https://github.com/michael-yrao/sd-progress/blob/main/senior_ramp.md)'s order**, one per session. It is named at
   the start of the session, not in the weekly schedule — see the cold rule below.
 - **The mock must be cold on that question.** Cold means *you have not read that question's
   HelloInterview breakdown.* Studying the core concepts, technologies and patterns is the whole point of
@@ -195,11 +195,11 @@ Interviewer, not coach. Specifically:
 **The debrief is where the artifacts come from, and it is not optional.** Immediately after the mock,
 in the same session:
 
-1. **Score the seven rubric checkpoints pass/fail** ([`senior_ramp.md`](senior_ramp.md)), out loud, with
+1. **Score the seven rubric checkpoints pass/fail** ([`senior_ramp.md`](https://github.com/michael-yrao/sd-progress/blob/main/senior_ramp.md)), out loud, with
    the evidence for each — not a summary impression.
 2. **Propose the comfort rating and confirm it with the learner** (same protocol as DSA: the coach infers
    it from what happened and proposes; the learner's call is final; honesty over agreeableness).
-3. **Write [`mocks/<YYYYMMDD>_<slug>.md`](https://github.com/michael-yrao/sd-progress/blob/main/mocks/)** from [`templates/mock_debrief_template.md`](templates/mock_debrief_template.md): the score line, what the design ended up being, the
+3. **Write [`mocks/<YYYYMMDD>_<slug>.md`](https://github.com/michael-yrao/sd-progress/blob/main/mocks/)** from [`templates/mock_debrief_template.md`](https://github.com/michael-yrao/sd-progress/blob/main/templates/mock_debrief_template.md): the score line, what the design ended up being, the
    curveball and how it went, and — the part that gets reused — **the open probes.**
 4. **Log the row** in [`mastery/design_progress.md`](mastery/design_progress.md) and let the interval
    engine set the next date.
@@ -212,7 +212,7 @@ time pressure, rather than the topics the session happened not to reach.
 
 ## Rating
 
-Full rubric and the reasoning behind it: [`senior_ramp.md`](senior_ramp.md). In brief:
+Full rubric and the reasoning behind it: [`senior_ramp.md`](https://github.com/michael-yrao/sd-progress/blob/main/senior_ramp.md). In brief:
 
 | | |
 |---|---|
@@ -289,7 +289,7 @@ move to [alternative]."*
 - **Networking / TCP.** Rolled back to untaught Aug 9 at the learner's request (*"I don't feel I actually
   maintained it at all"*). Now a HelloInterview study item —
   [Networking Essentials](https://www.hellointerview.com/learn/system-design/core-concepts/networking-essentials).
-  The local card ([`concepts/networking_basics.md`](concepts/networking_basics.md)) stays as reference.
+  The local card ([`concepts/networking_basics.md`](https://github.com/michael-yrao/sd-progress/blob/main/concepts/networking_basics.md)) stays as reference.
 
 ## Below the interview-ROI line — after all this, not during
 
@@ -305,14 +305,14 @@ Spanner, Chubby, Kafka, Raft).
 | Thing | Owner |
 |---|---|
 | **State** — comfort, streak, next review per question | [`mastery/design_progress.md`](mastery/design_progress.md) |
-| **The plan** — question order, the 7-point rubric, phases + exit gates | [`senior_ramp.md`](senior_ramp.md) |
+| **The plan** — question order, the 7-point rubric, phases + exit gates | [`senior_ramp.md`](https://github.com/michael-yrao/sd-progress/blob/main/senior_ramp.md) |
 | **The mechanics** — this file |
-| **The syllabus** — what topics exist | **HelloInterview.** The local cross-walk is [`coverage_map.md`](coverage_map.md) |
+| **The syllabus** — what topics exist | **HelloInterview.** The local cross-walk is [`coverage_map.md`](https://github.com/michael-yrao/sd-progress/blob/main/coverage_map.md) |
 | **The delivery framework** — the six steps and their budgets | [`framework.md`](https://github.com/michael-yrao/sd-progress/blob/main/framework.md) |
 | **Mock debriefs** — one per mock, the open-probe bank | [`mocks/`](https://github.com/michael-yrao/sd-progress/blob/main/mocks/) |
 
-**Reference material, frozen:** [`technologies/`](technologies/) (2 cards) ·
-[`components/`](components/) (3) · [`concepts/`](concepts/) (9) ·
+**Reference material, frozen:** [`technologies/`](https://github.com/michael-yrao/sd-progress/blob/main/technologies/) (2 cards) ·
+[`components/`](https://github.com/michael-yrao/sd-progress/blob/main/components/) (3) · [`concepts/`](https://github.com/michael-yrao/sd-progress/blob/main/concepts/) (9) ·
 [`case_studies/url_shortener.md`](https://github.com/michael-yrao/sd-progress/blob/main/case_studies/url_shortener.md) (superseded by the Bitly mock) ·
 [`archive/`](https://github.com/michael-yrao/sd-progress/blob/main/archive/).
 
