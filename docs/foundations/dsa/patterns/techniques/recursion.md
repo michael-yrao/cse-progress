@@ -142,3 +142,37 @@ def maxDepthTail(self, root: TreeNode) -> int:
  │  Step 2: Recursive Call │          │ Step 2: Recursive Return │
  └─────────────────────────┘          └──────────────────────────┘
 ```
+
+---
+
+## When recursion depth is the problem — and the ROI of rewriting it
+
+**Settled Aug 16, 2026** after 261 threw `RecursionError` at `n = 2000`, which is inside
+LeetCode's own constraint. Python's default limit is 1000.
+
+**Three options, in the order you should reach for them:**
+
+| | When |
+|---|---|
+| **1. Use BFS instead** | You only need *reachability* — connectivity, flood fill, unweighted shortest path. A queue has no depth limit. This covers most cases, including 261 |
+| **2. `sys.setrecursionlimit(10**6)`** | You need DFS's semantics and depth is the only issue. One line; no interviewer objects |
+| **3. Explicit stack (iterative DFS)** | Only when recursion is genuinely unavailable |
+
+**BFS cannot substitute when you need either of these — and then it is DFS or nothing:**
+
+- **Post-order output.** Hierholzer's append-on-the-way-out, DFS-based topological sort.
+  A queue cannot produce it.
+- **"Am I on the current path?"** Directed-graph cycle detection needs the recursion
+  stack (the gray/black distinction). BFS has no concept of a current path.
+
+⚠️ **The ROI of option 3 is near-zero as something to type cold, and non-zero as
+something to say.** *"This recurses O(V) deep and n goes to 2000, so I'd raise the limit
+or convert to an explicit stack"* is a complete answer in five seconds, and it is what an
+interviewer is checking. The repo's own state agrees: it tracks three `(Iterative)`
+variants and all three are **linked-list** problems (21, 206, 19), where
+iterative-vs-recursive is a common ask. **Zero** iterative graph or tree DFS variants.
+
+**Depth is a space term, always.** See
+[`../../fundamentals/complexity/big_o.md`](../../fundamentals/complexity/big_o.md) —
+`O(h)` for a tree descent, `O(V)` for a path graph, and it is the number this note is
+about.
