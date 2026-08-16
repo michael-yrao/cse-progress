@@ -7,7 +7,7 @@ less useful; every card here exists because a session stalled without it.
 | Card | Answers | Earned on |
 |---|---|---|
 | [big_o.md](big_o.md) | growth rates, per-technique costs | — |
-| [tree_characterization.md](tree_characterization.md) | why `n−1` edges + connected ⟹ acyclic | 261, Aug 16 |
+| [circuit_rank.md](circuit_rank.md) | `E − V + C` = independent cycles; the rank-0 case is the tree rule | 261, Aug 16 |
 | [degree_and_parity.md](degree_and_parity.md) | why a walk strands where it does; Eulerian conditions | 332 / Hierholzer |
 | [amortized_analysis.md](amortized_analysis.md) | why one O(n) call can still be O(1) amortized | 901 · 739 · 503 |
 
