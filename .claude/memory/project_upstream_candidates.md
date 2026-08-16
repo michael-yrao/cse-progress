@@ -81,6 +81,40 @@ what the learner can already see is missing, and cannot self-audit. That is not 
 **The specific half is:** it was built around this learner's spine-then-pull preference.
 **Evidence needed:** does the bank get used, or does it rot like an untended backlog?
 
+### 8. `problem_link_reminder.py` — a Stop hook that enforces the link rule
+
+cse-coach ships `scaffold_links_reminder.py` (fires after a scaffold) but **nothing that checks the
+coach's own prose**. That gap is measurable here: the rule *"every problem mention carries
+`[file] · [LC/NC]`"* has lapsed **16+ times**, seven of them on Aug 15–16, 2026 alone — including
+once in the very reply explaining why it kept happening.
+
+**The failure mode is specific and worth shipping with the hook:** the coach reliably links problems
+inside **tables and hand-off lists**, where the format prompts it, and misses them in **prose** —
+overwhelmingly a trailing scheduling sentence (*"853 is now unrated"*). Every one of the seven was a
+bare number in a sentence, never one in a table. A written rule does not fix this, because the lapse
+is reflexive rather than considered; that is precisely the CLAUDE.md thesis that a rule which must
+fire unprompted has to be **a step in an executable list, not a paragraph**.
+
+**Two design details this repo learned the hard way, both of which should travel with it:**
+- **Scope it to TODAY'S BOARD only.** An off-board problem must *not* be linked — a link is an
+  invitation, and linking a problem that is not due advertises a rep the learner should not start.
+  The hook resolves the day's board from the tracker's due dates plus the current schedule file.
+- **Ask for the links alone, never a re-send.** The original remedy text said *"re-send the turn"*,
+  which duplicates the entire message to fix one missing link — worst on the longest and most
+  valuable turns. On Aug 15 a full algorithm teach was emitted twice for a single bare number.
+  Changed Aug 16 to request only the missing pairs.
+
+⚠️ **One open question before this can ship:** the hook needs the SELECTION-MENU exception, where an
+unscaffolded retry's *file* link is itself a spoiler and only LC/NC may be given. That is implemented
+here but has never been exercised against a second learner's layout, so it is the part most likely to
+be over-fitted to this repo's paths.
+
+**Classification: a defect, not an instrument.** Nothing about it is idiosyncratic — any adopter whose
+coach names problems in prose has the same hole, and the cost (a manual file hunt, every time) is
+identical for all of them.
+
+---
+
 ---
 
 ## 🧊 Deliberately NOT upstreaming — the bar cuts both ways
