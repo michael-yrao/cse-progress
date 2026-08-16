@@ -13,6 +13,34 @@
 # reading this file, never a value a script consumed).
 daily_cap: 7
 
+# Review intervals — made EXPLICIT Aug 16, 2026. These are the script's own defaults
+# written out, so the numbers are visible here instead of living only in
+# scripts/update_review_dates.py's DEFAULT_CONFIG. Behaviour is unchanged: verified by
+# re-running the tracker and diffing (no rows moved).
+#
+# Why bother: CLAUDE.md documents `clean_provisional` as "configurable in cse.config.yml",
+# and until now that knob did not exist in this file — the value was only reachable by
+# editing the script. sd-progress already carries the explicit block; this closes the gap
+# between the two repos.
+#
+# ⚠️ Read the glyph warning on `effort_budget` below before adding any word-keyed block
+# to this file. The Aug 7, 2026 incident was an effort-budget draft keyed by
+# blank/shaky/... being scraped as THESE values (Shaky 10 -> 2 days, Graduated 180 -> 0).
+# A real `intervals:` block is the safe place for those words; nowhere else is.
+intervals:
+  clean:
+    provisional: 10   # a 🟢 directly after a 🔴 — Streak 0, lock-down check
+    streak1: 30
+    streak2: 60
+    graduated: 180    # 🎓 streak-3 tier, recurring spot check
+  shaky: 10
+  blank: 2
+
+# Streak at which a 🟢 row becomes 🎓 Graduated. `retire_at_streak` is accepted as an
+# alias by the script (Jul 26, 2026 rename); cse-coach's example config still uses that
+# older spelling.
+graduate_at_streak: 3
+
 # The effort budget — replaces the problem COUNT cap with a cost-weighted one.
 # Full rationale, calibration and the decision log: docs/foundations/effort_budget.md
 #
