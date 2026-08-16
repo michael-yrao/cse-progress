@@ -64,14 +64,15 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/dsa/mastery/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **106** problems &nbsp;·&nbsp; **115** solutions &nbsp;·&nbsp; **451** reps
+> **106** problems &nbsp;·&nbsp; **115** solutions &nbsp;·&nbsp; **452** reps
 
 | | 🏆 Retired | 🎓 Graduated | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|:---:|
-| **Solutions** | 0 | 6 | 89 | 19 | 1 |
+| **Solutions** | 0 | 6 | 90 | 18 | 1 |
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Rep Date | Rep Dates |
 |---|---|---|---|---|---|---|
+| Medium | [261. Graph Valid Tree (DFS)](https://neetcode.io/problems/valid-tree) | 🟢 | 1 | 2026-09-15 | 2026-08-16 | 2026-06-15, 2026-06-17, 2026-06-21, 2026-06-23, 2026-08-06, 2026-08-16 |
 | Medium | [787. Cheapest Flights Within K Stops (Bellman-Ford)](https://leetcode.com/problems/cheapest-flights-within-k-stops/) | 🟢 | 1 | 2026-09-14 | 2026-08-15 | 2026-07-14, 2026-07-16, 2026-07-26, 2026-08-05, 2026-08-15 |
 | Medium | [572. Subtree Of Another Tree](https://leetcode.com/problems/subtree-of-another-tree/) | 🟡 | 0 | 2026-08-25 | 2026-08-15 | 2026-05-02, 2026-06-12, 2026-08-15 |
 | Medium | [1334. Find the City With the Smallest Number of Neighbors at a Threshold Distance (Floyd-Warshall)](https://leetcode.com/problems/find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance/) | 🟡 | 0 | 2026-08-25 | 2026-08-15 | 2026-07-31, 2026-08-05, 2026-08-15 |
@@ -121,7 +122,6 @@ Notes for future agents:
 | Medium | [540. Single Element in a Sorted Array](https://leetcode.com/problems/single-element-in-a-sorted-array/) | 🟢 | 1 | 2026-09-05 | 2026-08-06 | 2026-05-02, 2026-06-12, 2026-06-13, 2026-07-17, 2026-07-27, 2026-08-06 |
 | Easy | [496. Next Greater Element I](https://leetcode.com/problems/next-greater-element-i/) | 🟡 | 0 | 2026-08-16 | 2026-08-06 | 2026-07-04, 2026-07-06, 2026-08-06 |
 | Easy | [27. Remove Element](https://leetcode.com/problems/remove-element/) | 🟢 | 2 | 2026-10-05 | 2026-08-06 | 2026-01-05, 2026-03-28, 2026-05-27, 2026-06-26, 2026-07-05, 2026-08-06 |
-| Medium | [261. Graph Valid Tree (DFS)](https://neetcode.io/problems/valid-tree) | 🟡 | 0 | 2026-08-16 | 2026-08-06 | 2026-06-15, 2026-06-17, 2026-06-21, 2026-06-23, 2026-08-06 |
 | Easy | [1768. Merge Strings Alternately](https://leetcode.com/problems/merge-strings-alternately/) | 🟢 | 2 | 2026-10-05 | 2026-08-06 | 2026-01-21, 2026-04-10, 2026-08-06 |
 | Easy | [125. Valid Palindrome](https://leetcode.com/problems/valid-palindrome/) | 🟢 | 2 | 2026-10-05 | 2026-08-06 | 2026-01-15, 2026-04-05, 2026-08-06 |
 | Easy | [344. Reverse String](https://leetcode.com/problems/reverse-string/) | 🟢 | 2 | 2026-10-05 | 2026-08-06 | 2026-01-15, 2026-04-04, 2026-08-06 |
