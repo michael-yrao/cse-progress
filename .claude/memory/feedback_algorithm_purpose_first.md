@@ -31,3 +31,6 @@ is the problem and the broken assumption, not the loop. Compatible with
 still leads — but purpose is one sentence *before* it, not an optional epilogue. Ties to
 [[feedback_recognition_gate]]: "what problem does this solve" and "why is this the technique here"
 are the same question asked from opposite ends.
+
+⚠️ **Promoted to a scheduled event Aug 16, 2026 — see [[feedback_concept_primer]].** This rule is correct and was still not enough, because it only fires *while you are already explaining*, which in practice means after a rep has gone wrong. The primer moves the front half of it — the object, its name, and the discriminator — **before the first attempt**, as a weekly-build step. 332 is the worked example: five sessions, because its first attempt was the introduction to Eulerian paths.
+

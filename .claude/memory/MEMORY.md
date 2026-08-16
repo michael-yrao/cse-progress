@@ -1,5 +1,6 @@
 # Memory Index
 
+- [Concept primer before a first algorithm](feedback_concept_primer.md) — teach the OBJECT and its NAME before the first rep; 332 cost 5 sessions because the first attempt was the introduction
 - [Operating principles (READ FIRST)](feedback_operating_principles.md) — north star: (1) close the loop completely & proactively, never make the user catch a gap; (2) user owns thinking + code, you coach. All other feedbacks are instances of these.
 - [Self-evaluation loop](feedback_self_evaluation.md) — on any correction, append to self_eval_log.md **in the same turn** (a sentence in chat is not a fix); meta-review weekly. **⚠️ Carries the INTERVENTION LADDER (Aug 2): a memory file is the *weakest* fix — 7 of 9 promoted rules recurred anyway, while 4/4 source fixes held. Rank: source fix > hook > numbered CLAUDE.md step > memory file.** Ask of any lapsing rule: *step in an executable list, or merely a paragraph?*
 - [Self-eval log](self_eval_log.md) — append-only running log of corrections (data for the meta-review)

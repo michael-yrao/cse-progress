@@ -282,7 +282,22 @@ After any problem discussion (solving, reviewing, or mentioning a problem by num
      off the previous week's assumptions.
    - Minimum contents: capacity/surplus arithmetic · per-day load row · daily table · protected reps ·
      backlog/slip list (nothing dropped without a date or an explicit "no date exists") · SD lanes ·
-     end-of-week targets · next-week preview.
+     end-of-week targets · next-week preview · **concept primers** (below).
+   - **⚠️ Does the week contain a FIRST exposure to a named algorithm? Then it carries a CONCEPT
+     PRIMER, scheduled before that problem.** ~15 min, unrated, no tracker row, ~1.0 unit. It covers
+     **the object being found and its name**, **the nearest neighbouring object and the one feature
+     that separates them**, and **why the obvious approach is not enough** — and it stops there. The
+     procedure is the first rep; the proof is later and only on request.
+     - **The first attempt lands at least a day later**, exactly like a teach: a primer measured in
+       the same sitting measures nothing. What measures it is whether the recognition call fires.
+     - *Why this is a build step and not a coaching habit:* [[feedback_algorithm_purpose_first]] and
+       the `patterns/README.md` name index both already say the right thing and are both **passive** —
+       one fires while you are already explaining (i.e. after a rep went wrong), the other is a lookup
+       you must know to go read. **332 cost five sessions and three `stuck_log` entries because its
+       first attempt WAS the introduction to Eulerian paths.** Full rationale:
+       `.claude/memory/feedback_concept_primer.md`.
+     - **Trialled on Intervals + Greedy (opens Aug 24, 2026), so the primer belongs in the Aug 17
+       build.** DP (Oct–Nov) is the case it has to work for.
    - **⚠️ Every day with NO SD slot carries at least one UNSEEN problem** — new intake from the active
      phase, or a recognition probe. Place these **before** any 🟢 backlog. *Why:* a problem seen 3+ times
      measures retention of that problem's solution, not the technique; unseen problems are the only test
