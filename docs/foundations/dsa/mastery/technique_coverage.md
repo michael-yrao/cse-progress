@@ -6,7 +6,7 @@
 
 > The tracker is keyed by **problem**; this is keyed by **technique**. Use it at the weekly build to decide what to pull, and at phase exit to check the per-algorithm bar (recognition + execution, ≥1 🟢 each).
 
-> **52** techniques &nbsp;·&nbsp; **9** with no 🟢 &nbsp;·&nbsp; **10** thin &nbsp;·&nbsp; **0** unqueued variant gaps
+> **52** techniques &nbsp;·&nbsp; **9** with no 🟢 &nbsp;·&nbsp; **17** thin &nbsp;·&nbsp; **0** unqueued variant gaps
 
 ## ⚠️ Action list
 
@@ -26,14 +26,21 @@
 
 - **Bellman-Ford** (advanced_graphs) — 1/3: 787
 - **Cycle Detection in an Iterated Sequence** (graphs) — 1/2: 202
-- **Divide & Conquer / Sorting** (sorting) — 1/2: 912
+- **Divide & Conquer / Sorting** (sorting) — 1/3: 912
 - **Floyd-Warshall (all-pairs shortest path)** (advanced_graphs) — 1/3: 1334
+- **HashMap + Doubly Linked List (LRU)** (linked_list) — 1/3: 146
 - **Hierholzer (Eulerian path)** (advanced_graphs) — 1/3: 332
+- **Multi-source BFS** (graphs) — 1/3: 994
 - **Prim's MST** (advanced_graphs) — 1/3: 1584
 - **Stack (augmented entries)** (stack) — 1/2: 155
 - **Stack (expression evaluation)** (stack) — 1/2: 150
+- **Binary Search on Answer** (binary_search) — 2/3: 875, 1011
 - **Dijkstra** (advanced_graphs) — 2/3: 743, 778
+- **Floyd's Cycle / Midpoint** (linked_list) — 2/3: 141, 143
 - **Grid DFS** (graphs) — 2/3: 200, 695
+- **Prefix Sum** (prefix_sum) — 2/3: 560, 53
+- **Tree BFS (level order)** (trees) — 2/3: 102, 199
+- **Trie** (tries) — 2/3: 208, 211
 
 ## Coverage
 
@@ -53,7 +60,7 @@
 | Length-Prefix Encoding | arrays_and_hash | 1 (271) | 🟡 | ❌ | — | **no-green** |
 | Prefix/Suffix Products | arrays_and_hash | 1 (238) | 🟢 | ✅ | — | — |
 | Binary Search | binary_search | 7 (33, 74, 153, 162, 540, 704, 2300) | 🎓 | ✅ | — | — |
-| Binary Search on Answer | binary_search | 2 (875, 1011) | 🟢 | ✅ | — | — |
+| Binary Search on Answer | binary_search | 2 (875, 1011) | 🟢 | ✅ | — | thin (2/3) |
 | BFS on Implicit Graph | graphs | 1 (127) | 🟡 | ❌ | — | **no-green** |
 | Connected Components | graphs | 3 (323, 323, 323) | 🟢 | ✅ | DFS ×1 · BFS ×1 · Union-Find ×1 | — |
 | Cycle Detection in an Iterated Sequence | graphs | 1 (202) | 🟡 | ❌ | Seen-Set ×1 · ~~Floyd Fast/Slow~~ *(queued: `rated:202`)* | **no-green** · thin (1/2) |
@@ -61,32 +68,32 @@
 | Graph Cycle Detection (DFS) | graphs | 1 (261) | 🟡 | ❌ | — | **no-green** |
 | Grid BFS | graphs | 4 (130, 200, 417, 733) | 🎓 | ✅ | — | — |
 | Grid DFS | graphs | 2 (200, 695) | 🟢 | ✅ | — | thin (2/3) |
-| Multi-source BFS | graphs | 1 (994) | 🟢 | ✅ | — | — |
+| Multi-source BFS | graphs | 1 (994) | 🟢 | ✅ | — | thin (1/3) |
 | Topological Sort | graphs | 3 (207, 210, 269) | 🟢 | ✅ | Kahn's (BFS) ×3 · ~~DFS postorder~~ *(queued: `graduates:210`)* | — |
 | Union-Find | graphs | 4 (130, 261, 684, 721) | 🟢 | ✅ | — | — |
 | Heap / Priority Queue | heap | 6 (347, 355, 621, 703, 973, 1046) | 🟢 | ✅ | — | — |
 | Deep Copy via Hash Map | linked_list | 1 (138) | 🟢 | ✅ | — | — |
-| Floyd's Cycle / Midpoint | linked_list | 2 (141, 143) | 🟢 | ✅ | — | — |
-| HashMap + Doubly Linked List (LRU) | linked_list | 1 (146) | 🟢 | ✅ | — | — |
+| Floyd's Cycle / Midpoint | linked_list | 2 (141, 143) | 🟢 | ✅ | — | thin (2/3) |
+| HashMap + Doubly Linked List (LRU) | linked_list | 1 (146) | 🟢 | ✅ | — | thin (1/3) |
 | Linked List Arithmetic | linked_list | 1 (2) | 🟢 | ✅ | — | — |
 | Linked List Merge | linked_list | 2 (21, 21) | 🎓 | ✅ | Iterative ×1 · Recursion ×1 | — |
 | Linked List Reversal | linked_list | 2 (206, 206) | 🟢 | ✅ | Iterative ×1 · Recursion ×1 | — |
 | Remove Nth From End | linked_list | 2 (19, 19) | 🟢 | ✅ | Iterative ×1 · Postorder Recursion ×1 · ~~Preorder Recursion~~ *(queued: `expansion — parked Jul 9`)* | — |
 | Kadane | prefix_sum | 1 (53) | 🟢 | ✅ | — | — |
-| Prefix Sum | prefix_sum | 2 (53, 560) | 🟢 | ✅ | — | — |
+| Prefix Sum | prefix_sum | 2 (53, 560) | 🟢 | ✅ | — | thin (2/3) |
 | Greedy (single pass) | sliding_window | 1 (122) | 🟢 | ✅ | — | — |
 | Sliding Window | sliding_window | 4 (3, 121, 424, 567) | 🟢 | ✅ | — | — |
-| Divide & Conquer / Sorting | sorting | 1 (912) | 🟢 | ✅ | Merge Sort ×1 · ~~Quick Sort~~ *(queued: `expansion — sorting deep-dive`)* · ~~Radix Sort~~ *(queued: `expansion — sorting deep-dive`)* · ~~Counting Sort~~ *(queued: `expansion — sorting deep-dive`)* · ~~Timsort~~ *(queued: `expansion — sorting deep-dive`)* · ~~D&C on 53~~ *(queued: `rated:912 + surplus>=1`)* | thin (1/2) |
+| Divide & Conquer / Sorting | sorting | 1 (912) | 🟢 | ✅ | Merge Sort ×1 · ~~Quick Sort~~ *(queued: `expansion — sorting deep-dive`)* · ~~Radix Sort~~ *(queued: `expansion — sorting deep-dive`)* · ~~Counting Sort~~ *(queued: `expansion — sorting deep-dive`)* · ~~Timsort~~ *(queued: `expansion — sorting deep-dive`)* · ~~D&C on 53~~ *(queued: `rated:912 + surplus>=1`)* | thin (1/3) |
 | Monotonic Stack | stack | 5 (496, 503, 739, 853, 901) | 🟢 | ✅ | — | — |
 | Stack (augmented entries) | stack | 1 (155) | 🟢 | ✅ | — | thin (1/2) |
 | Stack (expression evaluation) | stack | 1 (150) | 🟡 | ❌ | — | **no-green** · thin (1/2) |
 | Stack (matching) | stack | 1 (20) | 🟢 | ✅ | — | — |
 | BST Descent | trees | 2 (98, 235) | 🟢 | ✅ | — | — |
-| Tree BFS (level order) | trees | 2 (102, 199) | 🟢 | ✅ | — | — |
+| Tree BFS (level order) | trees | 2 (102, 199) | 🟢 | ✅ | — | thin (2/3) |
 | Tree Construction (Divide & Conquer) | trees | 1 (105) | 🟢 | ✅ | — | — |
 | Tree DFS (recursive) | trees | 6 (100, 104, 110, 226, 572, 1448) | 🎓 | ✅ | — | — |
 | Tree DFS with Postorder Return | trees | 2 (124, 543) | 🟢 | ✅ | — | — |
-| Trie | tries | 2 (208, 211) | 🟢 | ✅ | — | — |
+| Trie | tries | 2 (208, 211) | 🟢 | ✅ | — | thin (2/3) |
 | Dutch National Flag | two_pointers | 1 (75) | 🟢 | ✅ | — | — |
 | Fast/Slow In-Place Write | two_pointers | 4 (26, 27, 80, 283) | 🟢 | ✅ | — | — |
 | Prefix/Suffix Max | two_pointers | 1 (42) | 🟢 | ✅ | Array ×1 · ~~Two Pointer~~ *(queued: `graduates:42`)* | — |
