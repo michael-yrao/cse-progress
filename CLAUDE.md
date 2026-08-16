@@ -354,17 +354,31 @@ Layout: the **DSA track** owns `docs/foundations/dsa/` — `study_guide.md`, `ma
 `templates/`, plus its own reference material. **`schedules/` is cross-track and sits beside it**, not
 inside `dsa/`: one weekly file plans the DSA warmups/active block *and* the SD slots.
 
-⚠️ **The System Design track left this repo on Aug 15, 2026.** It lives in the private
-**[sd-progress](https://github.com/michael-yrao/sd-progress)**, cloned beside this one in the workspace.
-HelloInterview is paid content and the mock debriefs are where excerpts of it get pasted, so the
-boundary is a repo boundary rather than a directory anyone has to remember. **Never copy content from
-sd-progress into this repo — link to it.** Every SD reference here is a link or an attribution, and that
-is the invariant to preserve.
+⚠️ **The System Design boundary is CONTENT, not the whole track (settled Aug 16, 2026).** The track
+left on Aug 15 and came back the next day, minus one thing. The constraint was only ever *"I don't want
+premium HelloInterview details on a public repo"* — and the material that carries those excerpts is
+**the mock debriefs**, not the reference notes, not the rubric, and not a tracker of question names.
+Question names and tiers are on HelloInterview's free listing; the paid part is the breakdowns.
 
-**What deliberately did NOT move:** `schedules/`, `effort_budget` and `system_design.cadence` in
-`cse.config.yml`. They plan and price a whole **day/week across both tracks**. So the SD slot is
-**scheduled here and executed there** — the debrief, the rating and the tracker row land in sd-progress,
-and the computed next-review date comes back to a schedule file here like any other rep.
+**Here, in `docs/foundations/system_design/`:** `study_guide.md` (mock mechanics) · `senior_ramp.md`
+(question order, phases, the 7-point rubric) · `coverage_map.md` · `mastery/design_progress.md` ·
+`concepts/` · `components/` · `technologies/` · `templates/`. The concept cards are generic
+distributed-systems theory — Little's law, quorum math, Zipfian, tail latency — with no HelloInterview
+IP in them at all.
+
+**In private [sd-progress](https://github.com/michael-yrao/sd-progress):** `mocks/` (the debriefs, which
+is the actual risk surface), `case_studies/`, `archive/`, and `framework.md` — the last kept private by
+the learner's call, conservatively, since its spine mirrors HelloInterview's Delivery framework.
+
+**Never paste sd-progress content into this repo — link to it.** That invariant is unchanged and is now
+the *whole* of the rule, since nothing else has to be remembered.
+
+⭐ **The existing anti-spoiler rule already enforces this for free:** the mock question is named at the
+session and *never* in the weekly schedule file, so the public schedule never carries one. That rule was
+written to stop the breakdown being read in advance; it happens to keep the privacy boundary clean too.
+
+**What is scheduled here and always was:** `schedules/`, `effort_budget` and `system_design.cadence` in
+`cse.config.yml` plan and price a whole **day/week across both tracks**
 
 *(There were three tracks until Aug 13, 2026. **AI System Engineering was removed** — it was never
 started, never had a session, and its guide + tracker were a plan nobody had executed. It is not
