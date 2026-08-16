@@ -34,6 +34,45 @@ class TreeNode:
         self.left = left
         self.right = right
 class Solution:
+
+    # ── Attempt · 2026-08-15 ──────────────
+    def isSubtree_20260815(self, root: Optional[TreeNode], subRoot: Optional[TreeNode]) -> bool:
+        # subtree means there should be a tree in root such that it is exactly same as subroot
+        # we start matching by checking before we go down recursively
+        # so we are checking current value of each
+        # so this is preorder DFS
+        # find where root.val == subroot.val, then recursively go down
+
+        # if both are None at the same time, assume True
+        if not root and not subRoot:
+            return True
+        
+        # if one and not the other, return False
+        if not root or not subRoot:
+            return False
+
+        def isSameTree(root, subRoot):
+            # if both are None at the same time, assume True
+            if not root and not subRoot:
+                return True
+            
+            # if one and not the other, return False
+            if not root or not subRoot:
+                return False
+
+            if root.val != subRoot.val:
+                return False
+            return isSameTree(root.left, subRoot.left) and isSameTree(root.right, subRoot.right)
+
+        # if we are at a potential starting node, check equality
+        if root.val == subRoot.val:
+            # if this current match works, we are finished
+            # if not, we continue on
+            if isSameTree(root, subRoot):
+                return True
+        # if we are not at a potential starting node, check left or right of root
+        return self.isSubtree_20260815(root.left, subRoot) or self.isSubtree_20260815(root.right, subRoot)
+
     def isSubtree(self, root: Optional[TreeNode], subRoot: Optional[TreeNode]) -> bool:
         # so this is like a combo problem
         # we want to find if the root of subRoot is in root

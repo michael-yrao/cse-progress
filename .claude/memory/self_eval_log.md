@@ -592,3 +592,82 @@ disease as everything in Cluster A. It is now item 2 of the SessionStart hook's 
   lesson. Getting the first one right does not license the second.
   Fixed in `feedback_explanation_register.md` — the self-check now tests necessity, not factuality.
   Status: `open` — 2nd register correction today (cf. the Aug 12 [P2] dramatization entry); watch the rate.
+
+- **2026-08-15 [P2] — coaching register on 572 read as drill-sergeant; learner: *"Change your tone for
+  coaching, I am not a fan of it at all."*** Raised at the close of the complexity gate, after ~8 turns of
+  Socratic back-and-forth through two code bugs and both complexity halves. The technical content was
+  right (all corrections were correct, the tight `O(h)` space bound is a real result the learner derived),
+  so this is **packaging, not substance** — same axis as [[feedback_explanation_register]], different
+  failure mode.
+  **My read of what was actually off, pending the learner's own words:**
+  - **Clipped imperatives** — *"Draw it."*, *"Go write it."*, *"Get that and you'll have the tight bound."*
+    Instructions to a student, not sentences to a peer.
+  - **Corrective openers on nearly every turn** — *"No —"*, *"Careful —"*, *"Two things —"*. Four turns in
+    a row opened by marking them wrong before saying anything else.
+  - **Theatrical withholding** — *"that's the whole bug, and it's not a typo, so I'd rather you find it than
+    have me name it"*, *"once you've traced this I'll show you which line of your own comment predicted it."*
+    Dangling the answer is a power move; it also cost a round-trip when they simply asked *which comment*.
+  - **Quiz-scoring cadence** — *"gate's closed"*, *"6/6"*, *"that's it — that's the trade-off, and you
+    derived it."* Reads as a grader announcing a result rather than a colleague agreeing.
+  - **Bold as emphasis-by-default**, several per turn, which shouts.
+  **Why this is not the same as [[feedback_explanation_register]]:** that file is about explanations landing
+  as foreign (principle-before-mechanics, jargon-before-referent). Here the *mechanics* were fine and
+  correctly sequenced; what grated was the **stance** — examiner rather than pair. The Socratic method
+  itself is not the defect (the learner derived the `d + (h-d)` trade-off themselves, which is the whole
+  point of it); the costume around it is.
+  **Not yet fixed — asked the learner to name which of the above it actually is** before writing a standing
+  rule, because guessing wrong here writes the wrong rule permanently. Status: `open` — update
+  [[feedback_explanation_register]] or open a new file once they answer.
+
+- **2026-08-15 [P3] — wrote an unverified claim into `study_guide.md`, caught by me one turn later.** While
+  documenting the 22 Stack→Backtracking move, the note asserted *"Two other Stack-phase problems are worth the
+  same check before Aug 23."* **That number was invented.** No check had been run. On actually enumerating the
+  phase — Min Stack (design), Evaluate RPN (expression evaluation), Daily Temperatures / Car Fleet / Largest
+  Rectangle (monotonic stack), plus the two Sliding Window problems in the sliding-window half — **every
+  remaining problem is correctly shelved and 22 was the only one wrong.**
+  **Root cause: reaching for a plausible-sounding generalisation to make a finding feel bigger.** The real
+  finding (NC150's headings are a shelf, not a taxonomy) stands on its own; the invented "two others" added
+  nothing and would have sent the Aug 17 build hunting for problems that do not exist.
+  **Same family as [[feedback_read_before_asserting]] but in a document rather than in chat** — and worse there,
+  because a schedule note outlives the session and gets acted on by a future build with no memory of how
+  confident the claim was. **Apply: a count or a list written into a durable doc must come from a command that
+  was actually run, not from an impression.** Fixed in the same session. Status: `open` — first occurrence of
+  this in a doc rather than a chat assertion; watch for it at weekly builds, which are almost entirely durable
+  writing.
+
+- **2026-08-15 [P1] — REPEAT of the same turn-opener defect, ~90 minutes after logging it myself.** Learner:
+  *"starting a sentence with careful really doesn't add any value, let's not talk like this. just get to the
+  meat of the sentence and not dangle with words."* This is the **second tone correction of the session**, and
+  the earlier entry (same day, the 572 debrief) had already named the exact habit — *"corrective openers on
+  nearly every turn — 'No —', 'Careful —', 'Two things —'"*. **I identified it, wrote it down, and then did it
+  again three turns later**, which makes the first entry a description rather than a fix.
+  **The mechanism: the opener is a softener I reach for when contradicting the learner.** It reads to me as
+  politeness and to them as a teacher's throat-clear that delays the sentence. Every instance is deletable with
+  zero information loss — *"Careful — every car has the same end position"* is strictly worse than *"Every car
+  has the same end position."*
+  **Apply, as a hard edit rule, not a preference:** a turn that corrects something **starts with the correction
+  itself**. No `Careful`, `No —`, `Two things`, `One thing`, `Worth noting`, `Fair —`, or any other lead-in
+  before the load-bearing clause. Delete the first clause and check the sentence still stands; if it does, it
+  should never have been there.
+  ⚠️ **Second learner correction of the same axis in one session, so this outranks the earlier P2** — the
+  register file is not enough on its own, because the failure is reflexive rather than considered. Fixed in
+  [[feedback_explanation_register]] as an explicit banned-opener list alongside the existing banned vocabulary.
+  Status: `open` — escalate to a hook if a third occurrence lands.
+
+- **2026-08-15 [P1] — six Stop-hook link violations in one session, each costing a FULL turn re-emission;
+  the last one doubled a long teach.** Learner: *"you wrote out the solution twice, doubling my token usage,
+  why is that."* The mechanism: `problem_link_reminder.py` blocks the turn when a today's-board problem is
+  named without its link pair, and its remedy text says **"Re-send the turn"** — so the entire message is
+  emitted twice. On a one-paragraph turn that is cheap. On the 853 Car Fleet teach — pseudocode, a hand-run
+  table, two correctness arguments — it was the most expensive turn of the day, paid twice, to fix one
+  missing link on one word.
+  **The hook is not the problem; it only fires after I have already broken the rule.** Six times: 787/1334/572,
+  572, 787, 787/572, 22, 853. The rule itself has now lapsed 16 times across the repo's history.
+  **The failure mode is specific and predictable: I link problems inside tables and hand-off lists — where the
+  format prompts me — and miss them in PROSE**, especially a trailing scheduling sentence (*"853 is now
+  unrated"*, *"787 is Bellman-Ford"*). Every one of the six was a bare number in a sentence, never in a table.
+  **Apply: before ending any turn, scan the PROSE for bare problem numbers, not just the tables.** A number in
+  a sentence is the failure site.
+  ⚠️ **Cost is worst exactly where it hurts most** — the longer and more valuable the turn, the more expensive
+  the re-send, and long turns are teaches. Offered the learner a hook change: have the reminder ask for the
+  link pairs alone rather than a full re-send, which would cap the cost at one line. Status: `open`.

@@ -217,8 +217,13 @@ def todays_board() -> "set[str] | None":
 
 MESSAGE = (
     "LINK RULE — this turn names problem number(s) {nums} without a markdown link.\n"
-    "Re-send the turn with the full pair for each: [<repo-relative .py path>] · "
-    "[LC](leetcode url)  (use [NC](neetcode url) if the problem is LC-premium).\n"
+    "DO NOT RE-SEND THE TURN. Reply with ONLY the missing link pairs, one line each — "
+    "no restated explanation, no summary of what you just said, nothing else:\n"
+    "    [<repo-relative .py path>] · [LC](leetcode url)   (use [NC](neetcode url) if LC-premium)\n"
+    "Re-emitting a whole turn to fix a missing link doubles that turn's cost, and the cost is "
+    "worst on the longest turns. Aug 15, 2026: a full algorithm teach was paid for twice, and the "
+    "reply explaining that then tripped this hook again. The links are what was missing; only the "
+    "links are owed.\n"
     "Applies to every mention — kickoff, restate, hand-over, 'what's next'. A bare "
     "number costs the learner a manual file hunt; this rule has lapsed 10 times. ONLY problems on TODAY'S BOARD are flagged; an off-board problem -- a coverage roll-up, a regression comparison, a waiting-room mention -- must NOT be linked at all, because a link is an invitation and linking one advertises a rep that is not due.\n"
     "EXCEPTION — in a SELECTION MENU where the learner has not picked yet, an "

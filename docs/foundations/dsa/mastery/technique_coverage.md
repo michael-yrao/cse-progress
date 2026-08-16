@@ -6,14 +6,13 @@
 
 > The tracker is keyed by **problem**; this is keyed by **technique**. Use it at the weekly build to decide what to pull, and at phase exit to check the per-algorithm bar (recognition + execution, ≥1 🟢 each).
 
-> **52** techniques &nbsp;·&nbsp; **10** with no 🟢 &nbsp;·&nbsp; **7** thin &nbsp;·&nbsp; **0** unqueued variant gaps
+> **52** techniques &nbsp;·&nbsp; **9** with no 🟢 &nbsp;·&nbsp; **10** thin &nbsp;·&nbsp; **0** unqueued variant gaps
 
 ## ⚠️ Action list
 
 **No 🟢 — blocks per-algorithm phase exit.** Execution is unproven.
 
 - **BFS on Implicit Graph** (graphs) — best 🟡 across 127
-- **Bellman-Ford** (advanced_graphs) — best 🟡 across 787
 - **Cycle Detection in an Iterated Sequence** (graphs) — best 🟡 across 202
 - **Dijkstra** (advanced_graphs) — best 🟡 across 743, 778
 - **Floyd-Warshall (all-pairs shortest path)** (advanced_graphs) — best 🟡 across 1334
@@ -28,6 +27,9 @@
 - **Bellman-Ford** (advanced_graphs) — 1/3: 787
 - **Cycle Detection in an Iterated Sequence** (graphs) — 1/2: 202
 - **Divide & Conquer / Sorting** (sorting) — 1/2: 912
+- **Floyd-Warshall (all-pairs shortest path)** (advanced_graphs) — 1/3: 1334
+- **Hierholzer (Eulerian path)** (advanced_graphs) — 1/3: 332
+- **Prim's MST** (advanced_graphs) — 1/3: 1584
 - **Stack (augmented entries)** (stack) — 1/2: 155
 - **Stack (expression evaluation)** (stack) — 1/2: 150
 - **Dijkstra** (advanced_graphs) — 2/3: 743, 778
@@ -37,11 +39,11 @@
 
 | Technique | Family | Problems | Best | 🟢 | Variants | Gaps |
 |---|---|---:|:---:|:---:|---|---|
-| Bellman-Ford | advanced_graphs | 1 (787) | 🟡 | ❌ | Standard ×1 · ~~Contrast rep on 743~~ *(queued: `graduates:743`)* | **no-green** · thin (1/3) |
+| Bellman-Ford | advanced_graphs | 1 (787) | 🟢 | ✅ | Standard ×1 · ~~Contrast rep on 743~~ *(queued: `graduates:743`)* | thin (1/3) |
 | Dijkstra | advanced_graphs | 2 (743, 778) | 🟡 | ❌ | — | **no-green** · thin (2/3) |
-| Floyd-Warshall (all-pairs shortest path) | advanced_graphs | 1 (1334) | 🟡 | ❌ | — | **no-green** |
-| Hierholzer (Eulerian path) | advanced_graphs | 1 (332) | 🟡 | ❌ | — | **no-green** |
-| Prim's MST | advanced_graphs | 1 (1584) | 🟢 | ✅ | — | — |
+| Floyd-Warshall (all-pairs shortest path) | advanced_graphs | 1 (1334) | 🟡 | ❌ | — | **no-green** · thin (1/3) |
+| Hierholzer (Eulerian path) | advanced_graphs | 1 (332) | 🟡 | ❌ | — | **no-green** · thin (1/3) |
+| Prim's MST | advanced_graphs | 1 (1584) | 🟢 | ✅ | Prim's MST ×1 · ~~Kruskal's MST~~ *(queued: `expansion — edge-first MST; Aug 17 week`)* | thin (1/3) |
 | Array/String Fundamentals | arrays_and_hash | 3 (14, 66, 1929) | 🟢 | ✅ | — | — |
 | Boyer-Moore Voting | arrays_and_hash | 2 (169, 229) | 🟢 | ✅ | — | — |
 | Frequency Counting | arrays_and_hash | 2 (49, 242) | 🟢 | ✅ | — | — |
@@ -75,7 +77,7 @@
 | Greedy (single pass) | sliding_window | 1 (122) | 🟢 | ✅ | — | — |
 | Sliding Window | sliding_window | 4 (3, 121, 424, 567) | 🟢 | ✅ | — | — |
 | Divide & Conquer / Sorting | sorting | 1 (912) | 🟢 | ✅ | Merge Sort ×1 · ~~Quick Sort~~ *(queued: `expansion — sorting deep-dive`)* · ~~Radix Sort~~ *(queued: `expansion — sorting deep-dive`)* · ~~Counting Sort~~ *(queued: `expansion — sorting deep-dive`)* · ~~Timsort~~ *(queued: `expansion — sorting deep-dive`)* · ~~D&C on 53~~ *(queued: `rated:912 + surplus>=1`)* | thin (1/2) |
-| Monotonic Stack | stack | 4 (496, 503, 739, 901) | 🟢 | ✅ | — | — |
+| Monotonic Stack | stack | 5 (496, 503, 739, 853, 901) | 🟢 | ✅ | — | — |
 | Stack (augmented entries) | stack | 1 (155) | 🟢 | ✅ | — | thin (1/2) |
 | Stack (expression evaluation) | stack | 1 (150) | 🟡 | ❌ | — | **no-green** · thin (1/2) |
 | Stack (matching) | stack | 1 (20) | 🟢 | ✅ | — | — |
@@ -89,4 +91,10 @@
 | Fast/Slow In-Place Write | two_pointers | 4 (26, 27, 80, 283) | 🟢 | ✅ | — | — |
 | Prefix/Suffix Max | two_pointers | 1 (42) | 🟢 | ✅ | Array ×1 · ~~Two Pointer~~ *(queued: `graduates:42`)* | — |
 | Two Pointers (converging) | two_pointers | 9 (11, 15, 18, 88, 125, 167, 344, 680, 1768) | 🎓 | ✅ | — | — |
+
+## Vocabulary maintenance
+
+**Declared but not in the tracker (1)** — the YAML names a problem with no matching row. Either it is unsolved, or the method string drifted.
+
+- 695 (BFS)
 
