@@ -24,7 +24,7 @@ Queue in [`../mastery/dsa_progress.md`](../mastery/dsa_progress.md)).
 | [1595. Minimum Cost to Connect Two Groups of Points](https://leetcode.com/problems/minimum-cost-to-connect-two-groups-of-points/) | bitmask DP / min-cost matching | Assignment-flavored; bridges matching and DP. |
 | [1820. Maximum Number of Accepted Invitations](https://leetcode.com/problems/maximum-number-of-accepted-invitations/) | bipartite matching | Hungarian / Hopcroft-Karp entry point. |
 | [1697. Checking Existence of Edge Length Limited Paths](https://leetcode.com/problems/checking-existence-of-edge-length-limited-paths/) | offline queries + union-find | Sort edges & queries, answer offline. |
-| [1489. Find Critical and Pseudo-Critical Edges in MST](https://leetcode.com/problems/find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree/) | MST + edge classification | Kruskal with include/exclude probing. |
+*(1489 promoted to the Waiting Room in `dsa_progress.md` on Aug 16, 2026 — it acquired a real trigger (`rated:1584-kruskal`) as MST's 3rd problem, and the Waiting Room is where triggered items live. Removed here to avoid two homes.)*
 
 ## Trees & LCA
 
