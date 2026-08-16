@@ -215,6 +215,14 @@ def _todays_schedule_numbers(known: "set[str]", today: str) -> "set[str]":
             continue
         if DAY_BANNER.search(line) and not label.search(line):
             break
+        # A DONE problem is not actionable, so it is not on the board. The table marks
+        # completion by striking the problem link (`~~[261 ...]~~`) -- the same signal a
+        # human reads. Without this the hook goes on demanding links for reps finished
+        # hours ago, and a link is an INVITATION, which is the very thing this rule
+        # exists to prevent. (Learner, Aug 16: "you linked 261 but we are already done
+        # with 261.")
+        if "~~" in line:
+            continue
         for stem, titled in SCHEDULE_REF.findall(line):
             number = stem or titled
             if number in known:
