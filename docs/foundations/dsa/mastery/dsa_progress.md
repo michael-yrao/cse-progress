@@ -121,7 +121,7 @@ Notes for future agents:
 | Medium | [540. Single Element in a Sorted Array](https://leetcode.com/problems/single-element-in-a-sorted-array/) | 🟢 | 1 | 2026-09-05 | 2026-08-06 | 2026-05-02, 2026-06-12, 2026-06-13, 2026-07-17, 2026-07-27, 2026-08-06 |
 | Easy | [496. Next Greater Element I](https://leetcode.com/problems/next-greater-element-i/) | 🟡 | 0 | 2026-08-16 | 2026-08-06 | 2026-07-04, 2026-07-06, 2026-08-06 |
 | Easy | [27. Remove Element](https://leetcode.com/problems/remove-element/) | 🟢 | 2 | 2026-10-05 | 2026-08-06 | 2026-01-05, 2026-03-28, 2026-05-27, 2026-06-26, 2026-07-05, 2026-08-06 |
-| Medium | [261. Graph Valid Tree (DFS)](https://leetcode.com/problems/graph-valid-tree/) | 🟡 | 0 | 2026-08-16 | 2026-08-06 | 2026-06-15, 2026-06-17, 2026-06-21, 2026-06-23, 2026-08-06 |
+| Medium | [261. Graph Valid Tree (DFS)](https://neetcode.io/problems/valid-tree) | 🟡 | 0 | 2026-08-16 | 2026-08-06 | 2026-06-15, 2026-06-17, 2026-06-21, 2026-06-23, 2026-08-06 |
 | Easy | [1768. Merge Strings Alternately](https://leetcode.com/problems/merge-strings-alternately/) | 🟢 | 2 | 2026-10-05 | 2026-08-06 | 2026-01-21, 2026-04-10, 2026-08-06 |
 | Easy | [125. Valid Palindrome](https://leetcode.com/problems/valid-palindrome/) | 🟢 | 2 | 2026-10-05 | 2026-08-06 | 2026-01-15, 2026-04-05, 2026-08-06 |
 | Easy | [344. Reverse String](https://leetcode.com/problems/reverse-string/) | 🟢 | 2 | 2026-10-05 | 2026-08-06 | 2026-01-15, 2026-04-04, 2026-08-06 |
@@ -135,7 +135,7 @@ Notes for future agents:
 | Medium | [994. Rotting Oranges](https://leetcode.com/problems/rotting-oranges/) | 🟢 | 2 | 2026-10-02 | 2026-08-03 | 2026-06-06, 2026-06-15, 2026-06-25, 2026-07-04, 2026-08-03 |
 | Easy | [219. Contains Duplicate II](https://leetcode.com/problems/contains-duplicate-ii/) | 🟢 | 2 | 2026-10-02 | 2026-08-03 | 2026-03-22, 2026-04-14, 2026-06-25, 2026-07-04, 2026-08-03 |
 | Medium | [229. Majority Element II](https://leetcode.com/problems/majority-element-ii/) | 🟢 | 1 | 2026-09-02 | 2026-08-03 | 2026-01-30, 2026-04-14, 2026-06-27, 2026-06-29, 2026-07-12, 2026-07-24, 2026-08-03 |
-| Medium | [261. Graph Valid Tree (Union-Find)](https://leetcode.com/problems/graph-valid-tree/) | 🟢 | 1 | 2026-08-31 | 2026-08-01 | 2026-06-19, 2026-06-29, 2026-07-09, 2026-07-18, 2026-08-01 |
+| Medium | [261. Graph Valid Tree (Union-Find)](https://neetcode.io/problems/valid-tree) | 🟢 | 1 | 2026-08-31 | 2026-08-01 | 2026-06-19, 2026-06-29, 2026-07-09, 2026-07-18, 2026-08-01 |
 | Easy | [543. Diameter of Binary Tree](https://leetcode.com/problems/diameter-of-binary-tree/) | 🟢 | 1 | 2026-08-30 | 2026-07-31 | 2026-04-30, 2026-06-02, 2026-06-12, 2026-06-14, 2026-06-24, 2026-06-26, 2026-07-20, 2026-07-31 |
 | Medium | [417. Pacific Atlantic Water Flow (BFS)](https://leetcode.com/problems/pacific-atlantic-water-flow/) | 🟢 | 1 | 2026-08-30 | 2026-07-31 | 2026-06-11, 2026-07-19, 2026-07-31 |
 | Medium | [128. Longest Consecutive Sequence](https://leetcode.com/problems/longest-consecutive-sequence/) | 🟢 | 2 | 2026-09-27 | 2026-07-29 | 2026-01-26, 2026-04-14, 2026-06-27, 2026-06-29, 2026-07-29 |

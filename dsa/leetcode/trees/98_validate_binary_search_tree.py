@@ -35,8 +35,8 @@ class TreeNode:
         self.right = right
 class Solution:
 
-    # ── Attempt · 2026-08-10 ──────────────
-    def isValidBST_iterativeDFS_20260810(self, root: Optional[TreeNode]) -> bool:
+    # ── Attempt · 2026-08-16 ──────────────
+    def isValidBST_iterativeDFS_20260816(self, root: Optional[TreeNode]) -> bool:
         pass
 
 # ⤵ prior attempts stashed in dsa/leetcode/.history/98_validate_binary_search_tree.txt — restored at session end (python scripts/restore_history.py)

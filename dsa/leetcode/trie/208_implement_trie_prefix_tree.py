@@ -33,133 +33,20 @@ Constraints:
 """
 
 
-# ── Attempt · 2026-07-17 ──────────────
-class TrieNode_20260717:
-    def __init__(self):
-        self.children = {}
-        self.isWord = False
-
-class Trie_20260717:
-# Tries are trees, they don't have values on nodes
-# they have values on edges, thus we will have a children map of char -> TrieNode
-# we also need to know if this is a word
+# ── Attempt · 2026-08-16 ──────────────
+# NOTE: suffix any helper class you write (Node, TrieNode, …) with _20260816 too — an undated helper collides with the restored canonical one.
+class Trie_20260816:
 
     def __init__(self):
-        self.root = TrieNode_20260717()
+        pass
 
     def insert(self, word: str) -> None:
-        traversal = self.root
-        for char in word:
-            if char not in traversal.children:
-                newNode = TrieNode_20260717()
-                traversal.children[char] = newNode
-            traversal = traversal.children[char]
-        traversal.isWord = True
+        pass
 
     def search(self, word: str) -> bool:
-        traversal = self.root
-        for char in word:
-            if char not in traversal.children:
-                return False
-            traversal = traversal.children[char]
-        return traversal.isWord
-        
-    def startsWith(self, prefix: str) -> bool:
-        traversal = self.root
-        for char in prefix:
-            if char not in traversal.children:
-                return False
-            traversal = traversal.children[char]
-        return True
-
-class TrieNode:
-    def __init__(self):
-        # char -> TrieNode map
-        self.children = {}
-        # does a word end here
-        self.isEnd = False
-
-class Trie:
-    def __init__(self):
-        self.root = TrieNode()
-
-    def insert(self, word: str) -> None:
-        inc = self.root
-        for char in word:
-            # if we haven't seen this char yet
-            # append to inc.children as a new child
-            if char not in inc.children:
-                inc.children[char] = TrieNode()
-            # when we are here, the char is guaranteed in the Trie so we go down the trie
-            inc = inc.children[char]
-        # when we finish, mark inc.isEnd as True
-        inc.isEnd = True
-
-    def search(self, word: str) -> bool:
-        inc = self.root
-        for char in word:
-            if char not in inc.children:
-                return False
-            # if it is, we step down the inc
-            inc = inc.children[char]
-        return inc.isEnd
+        pass
 
     def startsWith(self, prefix: str) -> bool:
-        inc = self.root
-        for char in prefix:
-            if char not in inc.children:
-                return False
-            # if it is, we step down the inc
-            inc = inc.children[char]
-        return True
+        pass
 
-# Your Trie object will be instantiated and called as such:
-# obj = Trie()
-# obj.insert(word)
-# param_2 = obj.search(word)
-# param_3 = obj.startsWith(prefix)
-
-class TrieNode_20260708:
-    
-    def __init__(self):
-        # string -> Node mapping
-        self.children = {}
-        self.isWord = False
-
-class Trie_20260708:
-    def __init__(self):
-        self.root = TrieNode_20260708()
-
-    def insert(self, word: str) -> None:
-        traversal = self.root
-        for char in word:
-            # the way tries work is that the value technically lives on the edge not the node
-            # so when we set the children[char] to new TrieNode, we are saying from this node
-            # the value to the new node is char
-            if char not in traversal.children:
-                traversal.children[char] = TrieNode_20260708()
-            traversal = traversal.children[char]
-        traversal.isWord = True
-
-    def search(self, word: str) -> bool:
-        traversal = self.root
-        for char in word:
-            if char not in traversal.children:
-                return False
-            traversal = traversal.children[char]
-        return traversal.isWord
-
-    def startsWith(self, prefix: str) -> bool:
-        traversal = self.root
-        for char in prefix:
-            if char not in traversal.children:
-                return False
-            traversal = traversal.children[char]
-        return True
-
-
-# Your Trie object will be instantiated and called as such:
-# obj = Trie()
-# obj.insert(word)
-# param_2 = obj.search(word)
-# param_3 = obj.startsWith(prefix)
+# ⤵ prior attempts stashed in dsa/leetcode/.history/208_implement_trie_prefix_tree.txt — restored at session end (python scripts/restore_history.py)
