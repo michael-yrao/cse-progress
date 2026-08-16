@@ -187,7 +187,17 @@ def fetch_csv(repo: str, branch: str, company: str, window: str) -> str:
 
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--company", help="company folder in the source repo (e.g. Google)")
+    ap.add_argument("--company",
+                    help="company folder(s) in the source repo, comma-separated (e.g. Google,Amazon). "
+                         "Multiple companies are UNIONED and de-duplicated by problem, keeping the "
+                         "highest frequency seen and noting which companies asked it.")
+    ap.add_argument("--technique", action="append", metavar="TOPIC",
+                    help="filter to a LeetCode topic tag, e.g. --technique 'Monotonic Stack'. "
+                         "Repeatable; a row matches if it carries ANY of them. Case-insensitive. "
+                         "NOTE this is FINER than the gate: the gate works on the 11 broad learned "
+                         "CATEGORIES (Arrays & Hashing, Graphs, ...), while techniques.yml names 52 "
+                         "techniques. Without this flag you can ask for 'a Graphs problem' but not "
+                         "for 'one that fills Multi-source BFS'.")
     ap.add_argument("--window", choices=WINDOWS, default="all")
     ap.add_argument("--difficulty", choices=["EASY", "MEDIUM", "HARD"])
     ap.add_argument("--limit", type=int, default=20)
@@ -201,35 +211,55 @@ def main() -> None:
     known, cats = learned_topics()
     solved, _ = read_tracker()
 
+    want_topics = {x.strip().lower() for x in (args.technique or []) if x.strip()}
+
+    # (text, label, company) tuples — one per source fetched.
+    sources: list[tuple[str, str]] = []
     if args.local:
-        text = Path(args.local).read_text(encoding="utf-8")
+        sources.append((Path(args.local).read_text(encoding="utf-8"), args.local))
         label = args.local
     else:
         if not args.company:
             ap.error("--company is required (or use --local). ~470 companies available.")
-        try:
-            text = fetch_csv(args.repo, args.branch, args.company, args.window)
-        except Exception as e:  # pragma: no cover
-            ap.error(f"could not fetch {args.company} from {args.repo}: {e}")
-        label = f"{args.company} - {WINDOWS[args.window]}"
+        companies = [c.strip() for c in args.company.split(",") if c.strip()]
+        for c in companies:
+            try:
+                sources.append((fetch_csv(args.repo, args.branch, c, args.window), c))
+            except Exception as e:  # pragma: no cover
+                print(f"  ! skipping {c}: {e}", file=sys.stderr)
+        if not sources:
+            ap.error("no company list could be fetched")
+        label = f"{', '.join(c for _, c in sources)} - {WINDOWS[args.window]}"
 
-    rows = list(csv.DictReader(io.StringIO(text)))
-    candidates = []
-    for row in rows:
-        topics = {t.strip() for t in (row.get("Topics") or "").split(",") if t.strip()}
-        if slug_from_link(row.get("Link", "")) in solved:
-            continue
-        if args.difficulty and (row.get("Difficulty", "").upper() != args.difficulty):
-            continue
-        matched = topics & known
-        if not args.no_gate and not matched:
-            continue
-        try:
-            freq = float(row.get("Frequency") or 0)
-        except ValueError:
-            freq = 0.0
-        candidates.append((freq, row, matched))
+    # Union across companies, de-duplicated by problem slug. A problem asked by
+    # several targets is a stronger signal, so keep the max frequency and record
+    # every company that asked it.
+    merged: dict[str, tuple[float, dict, set, set]] = {}
+    for text, company in sources:
+        for row in csv.DictReader(io.StringIO(text)):
+            topics = {t.strip() for t in (row.get("Topics") or "").split(",") if t.strip()}
+            slug = slug_from_link(row.get("Link", ""))
+            if slug in solved:
+                continue
+            if args.difficulty and (row.get("Difficulty", "").upper() != args.difficulty):
+                continue
+            if want_topics and not {tp.lower() for tp in topics} & want_topics:
+                continue
+            matched = topics & known
+            if not args.no_gate and not matched:
+                continue
+            try:
+                freq = float(row.get("Frequency") or 0)
+            except ValueError:
+                freq = 0.0
+            if slug in merged:
+                pf, prow, pm, pc = merged[slug]
+                merged[slug] = (max(pf, freq), prow if pf >= freq else row, pm | matched, pc | {company})
+            else:
+                merged[slug] = (freq, row, matched, {company})
 
+    candidates = [(f, r, m, c) for f, (_, r, m, c) in
+                  ((v[0], v) for v in merged.values())]
     candidates.sort(key=lambda x: x[0], reverse=True)
 
     print(f"\nPull pool - {label}")
@@ -237,12 +267,16 @@ def main() -> None:
         print("  (ungated - all unsolved problems)")
     else:
         print(f"  gated by {len(cats)} learned pattern(s): {', '.join(sorted(cats)) or '(none yet)'}")
+    if want_topics:
+        print(f"  technique filter: {', '.join(sorted(args.technique))}")
     print()
     if not candidates:
         print("  Nothing to pull. Retire more patterns first, or try --no-gate / another company.\n")
         return
-    for freq, row, matched in candidates[: args.limit]:
+    for freq, row, matched, cos in candidates[: args.limit]:
         why = ", ".join(sorted(matched)) if matched else "-"
+        if len(cos) > 1:
+            why += f"   [{len(cos)}x: {','.join(sorted(cos))}]"
         print(f"  [{row.get('Difficulty','?'):<6}] {row.get('Title','?'):<44} "
               f"freq {freq:>5.1f}  <- {why}")
     print(f"\n  {min(len(candidates), args.limit)} shown of {len(candidates)} eligible. "
