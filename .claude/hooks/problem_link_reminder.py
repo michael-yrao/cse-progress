@@ -159,6 +159,9 @@ def _tracker_numbers(today: str) -> "tuple[set[str], set[str]]":
     return known, due
 
 
+DAY_BANNER = re.compile(r"\*\*[A-Za-z]{3}\s+[A-Za-z]{3}\s+\d{1,2}\*\*")
+
+
 def _todays_schedule_numbers(known: "set[str]", today: str) -> "set[str]":
     """Problem numbers in today's row of the current week's schedule file.
 
@@ -184,10 +187,34 @@ def _todays_schedule_numbers(known: "set[str]", today: str) -> "set[str]":
     except OSError:
         return set()
 
+    # The daily table was restructured on Aug 16, 2026: a day is now a BANNER ROW
+    # (`| > **Sun Aug 16** - 8.0 units | | | | |`) followed by one row per problem,
+    # none of which repeat the day label. Scanning single labelled lines therefore
+    # found no problems in the live table at all -- and silently fell through to the
+    # only remaining line that still matched: the pre-Aug-16 row kept verbatim in the
+    # appendix. The hook was reading SUPERSEDED data and flagging problems that had
+    # been taken off the board hours earlier.
+    #
+    # So: stop at the first `## ` heading (the appendix lives below one), find the
+    # banner, then read forward until the next banner or the end of the table.
     found: set[str] = set()
+    started = False
     for line in lines:
-        if not (line.lstrip().startswith("|") and label.search(line)):
+        if line.startswith("## ") and started:
+            break                                  # never walk into the appendix
+        stripped = line.lstrip()
+        is_row = stripped.startswith("|")
+        if not started:
+            if is_row and label.search(line):
+                started = True                     # banner row for today
             continue
+        # inside today's block: another day's banner ends it, as does leaving the table
+        if not is_row:
+            if stripped:
+                break
+            continue
+        if DAY_BANNER.search(line) and not label.search(line):
+            break
         for stem, titled in SCHEDULE_REF.findall(line):
             number = stem or titled
             if number in known:
