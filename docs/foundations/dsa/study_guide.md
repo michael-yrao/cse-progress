@@ -225,13 +225,35 @@ Every design session must be narrated out loud — not written silently. Intervi
 | **Heap / Priority Queue + Linked List catch-up** | Jun 22–Jul 5 | 13 | Kth Largest in Stream, Last Stone Weight, K Closest Points to Origin, Task Scheduler, Design Twitter, Find Median from Data Stream, Merge K Sorted Lists; *catch-up:* Encode and Decode Strings (LC 271), Add Two Numbers (LC 2), Copy List with Random Pointer (LC 138), LRU Cache (LC 146), Find the Duplicate Number (LC 287), Reverse Nodes in K-Group (LC 25) |
 | **Tries + Tree catch-up** | Jul 6–12 | 8 | Implement Trie, Design Add and Search Words, Word Search II; *catch-up:* Construct Binary Tree from Preorder/Inorder (LC 105), Kth Smallest in BST (LC 230), Binary Tree Maximum Path Sum (LC 124), Serialize and Deserialize Binary Tree (LC 297), Median of Two Sorted Arrays (LC 4) |
 | **Advanced Graphs** | Jul 13–**Aug 16** | **11** | Network Delay Time (Dijkstra), Swim in Rising Water, Alien Dictionary, Cheapest Flights Within K Stops, Min Cost to Connect All Points, Reconstruct Itinerary, Word Ladder, **+ 1334 Find the City (Floyd-Warshall), + 721 Accounts Merge** *(new-technique)*, **+ 1631 Path With Minimum Effort, + 1514 Path with Maximum Probability** *(consolidation reps)* |
-| **Sliding Window (finish) + Stack** | Aug 3–23 | 8 | Min Window Substring, Sliding Window Maximum; Min Stack, Evaluate Reverse Polish Notation, Generate Parentheses, Daily Temperatures, Car Fleet, Largest Rectangle in Histogram |
+| **Sliding Window (finish) + Stack** | Aug 3–23 | **7** | Min Window Substring, Sliding Window Maximum; Min Stack, Evaluate Reverse Polish Notation, Daily Temperatures, Car Fleet, Largest Rectangle in Histogram *(**Generate Parentheses moved out Aug 15, 2026** → Backtracking phase; it is a backtracking problem and was only here because NC150 shelves it under Stack — see the note below the table)* |
 | **Intervals + Greedy** | Aug 24–Sep 13 | 14 | Insert Interval, Merge Intervals, Non-overlapping Intervals, Min Interval to Include Each Query, Meeting Rooms I & II; Jump Game I & II, Gas Station, Hand of Straights, Merge Triplets, Partition Labels, Valid Parenthesis String |
-| **Backtracking** | Sep 14–Oct 11 | 9 | Subsets I & II, Combination Sum I & II, Permutations, Word Search, Palindrome Partitioning, Letter Combinations, N-Queens |
+| **Backtracking** | Sep 14–Oct 11 | **10** | Subsets I & II, Combination Sum I & II, Permutations, Word Search, Palindrome Partitioning, Letter Combinations, N-Queens, **+ 22 Generate Parentheses** *(moved from the Stack phase Aug 15, 2026 — take it first, it is the gentlest problem in the set)* |
 | **1D Dynamic Programming** | Oct 12–Nov 8 | 12 | Climbing Stairs, Min Cost Climbing Stairs, House Robber I & II, Longest Palindromic Substring, Palindromic Substrings, Decode Ways, Coin Change, Max Product Subarray, Word Break, Longest Increasing Subsequence, Partition Equal Subset Sum |
 | **2D Dynamic Programming** | Nov 9–Dec 6 | 11 | Unique Paths, Longest Common Subsequence, Stock with Cooldown, Coin Change II, Target Sum, Interleaving String, Longest Increasing Path in Matrix, Distinct Subsequences, Edit Distance, Burst Balloons, Regular Expression Matching |
 | **Bit Manipulation + Math & Geometry** | Dec 7–28 | 15 | Single Number, # of 1 Bits, Counting Bits, Reverse Bits, Missing Number, Sum of Two Integers, Reverse Integer; Rotate Image, Spiral Matrix, Set Matrix Zeroes, Happy Number, Pow(x,n), Multiply Strings, Detect Squares |
 | **Buffer + Final EOY Review** | Dec 29–31 | — | Sweep `dsa_progress.md` for all 🔴 Blank and 🟡 Shaky solutions. Target: ≤ 10 non-Clean by EOY |
+
+> **📌 22 Generate Parentheses moved Stack → Backtracking, Aug 15, 2026.** Raised by the learner mid-session,
+> *before* attempting it: *"isn't 22 a backtracking problem… should this not be reserved for the backtracking
+> section. Is there a stack method that I should be focused on right now?"* Both halves were right. There is
+> **no stack technique** in this problem — the iterative form is the same recursion with an explicit stack, a
+> presentation variant rather than a technique (same axis as the Hierholzer recursive/iterative question
+> earlier that day). It sat in the Stack phase only because **the phase table inherits NC150's shelving**, and
+> nothing had ever re-checked that against the actual technique.
+>
+> ⚠️ **The general lesson for future builds: NC150's section headings are a shelf, not a technique taxonomy.**
+> `techniques.yml` is the taxonomy, and where the two disagree the YAML wins. **The rest of this phase was then
+> checked and is clean** — Min Stack (design), Evaluate RPN (expression evaluation), Daily Temperatures, Car Fleet
+> and Largest Rectangle (monotonic stack) are all genuinely stack techniques, and the two Sliding Window problems
+> sit in the sliding-window half correctly. **22 was the only mis-shelved problem in the phase**; the lesson is for
+> future phases, not a pending backlog here.
+>
+> **Why it was not simply done early:** the learner's reason is the correct one and worth keeping —
+> *"I'd rather not forget everything in a month if I do backtracking early."* A rep taken four weeks before its
+> phase decays before the phase can build on it, and per the repo's own rule a Blank on an untaught technique
+> is a **premature attempt**, not a measurement. **853 Car Fleet took the slot** at the same 3.0 price: a real
+> monotonic-stack problem, in the phase that is actually open, which also removes 3.0 units from the
+> over-committed Aug 17 week.
 
 > **🏖️ TWO NOVEMBER BREAKS — flagged Aug 6, 2026; the Oct/Nov weekly builds MUST sequence DP around
 > these** (see [[project_november_breaks]]). ~1 week at **start of Nov (~Nov 1–7)** and ~1 week at **end

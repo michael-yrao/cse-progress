@@ -51,6 +51,48 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-08-15 ──────────────
+    def findTheCity_20260815(self, n: int, edges: List[List[int]], distanceThreshold: int) -> int:
+        # smallest number of cities and distanceThreshold tells me we should use shortest path
+        # we can have at max 100 nodes for n so this opens up the O(n^3) algorithm of Floyd Warshall
+        # Floyd Warshall says to get from A to B, can we go through C to get to B faster
+        
+        # we need to have a 2D distance array that tells us from A to B, this is the shortest path so far
+        distances = []
+        # initialize the distance to infinity
+        for i in range(n):
+            distances.append([math.inf] * n)
+            distances[i][i] = 0
+        
+        # set the distance based on edges
+        for n1, n2, weight in edges:
+            distances[n1][n2] = weight
+            distances[n2][n1] = weight
+        
+        for middle in range(n):
+            for source in range(n):
+                for destination in range(n):
+                    # get source to middle distance
+                    sourceToMiddle = distances[source][middle]
+                    middleToDestination = distances[middle][destination]
+                    # compare if source -> middle + middle -> dst < source - > dst
+                    if sourceToMiddle + middleToDestination < distances[source][destination]:
+                        distances[source][destination] = sourceToMiddle + middleToDestination
+        
+        minCity = -1
+        minCityCounter = math.inf
+        for i in range(n):
+            currentCityCounter = 0
+            for j in range(n):
+                # count how many cities we've reached with distanceThreshold
+                if distances[i][j] <= distanceThreshold:
+                    currentCityCounter+=1
+            if currentCityCounter <= minCityCounter:
+                minCityCounter = currentCityCounter
+                minCity = i
+        
+        return minCity
+
     # ── Attempt · 2026-08-05 ──────────────
     def findTheCity_20260805(self, n: int, edges: List[List[int]], distanceThreshold: int) -> int:
         # from all cities, we want the one with the smallest amount of connections under the distance threshold

@@ -19,6 +19,25 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🟡 1334. Find the City With the Smallest Number of Neighbors at a Threshold Distance — 2026-08-15
+**Sticking point**: **`distances` was declared 1-D (`[math.inf] * n`) when Floyd-Warshall runs on a
+V×V matrix.** Everything else about the algorithm was in hand and written unaided — `middle` as the
+outermost loop (its classic trap), `distances[i][i] = 0`, both directions seeded for an undirected
+graph, the relaxation body, and `<=` on the tie-break so the greatest index wins. The block was purely
+the **representation**: the learner's own pre-code comment said *"source → middle + middle → dst"*, an
+expression that needs two indices, and they had allocated one. Their three reported symptoms were all
+correct diagnoses of that single cause — *"adjMap doesn't feel super impactful"* (nothing in the triple
+loop can read an adjacency list), *"distances feel a bit weird"* (the shape mismatch itself), and *"I'm
+not checking how many nodes I go through"* (787 residue — the threshold bounds **distance**, not hops).
+Unblocked by being pointed back at their own comment and asked what shape it required. Two further
+coached points: the 2-D construction syntax (twice — `distances[i].append(...)` on an empty list), and
+that the count is a **post-pass over one row**, not something inside the triple loop.
+⭐ Not a bug, worth knowing: line 88 counts `j == i`, so every city's total is inflated by exactly one —
+uniform across all cities, so the argmin is unaffected. **The answer is right by cancellation, not by
+design**, which is exactly the sort of thing an interviewer probes.
+Complexity was clean and unprompted both halves: O(n³) time (triple loop dominates the n² count pass),
+O(n²) space (the matrix).
+
 ## 🟡 739. Daily Temperatures — 2026-08-14 *(first exposure; phase intake)*
 **Sticking point**: **the stack held values, not indices.** Technique was named unaided pre-code
 (monotonic stack, right-to-left) and the loop was written correctly first run — but the answer is a

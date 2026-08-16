@@ -33,6 +33,39 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-08-15 ──────────────
+    def findCheapestPrice_20260815(self, n: int, flights: List[List[int]], src: int, dst: int, k: int) -> int:
+        # this is bellman ford since we are looking for the shortest path 
+        # and we are limiting number of steps
+        # we do not use a visited set as we want to check if we can go faster each time
+        # neither do we need an adjacency map here since flights is our adjacency map
+        # bellman ford's algorithm, especially if we are limiting steps is that we need a copy
+        # of the solution
+
+        # we start with a price array and use a working copy for current step's work
+        prices = [math.inf] * n
+        # starting point costs nothing
+        prices[src] = 0
+
+        # k means number of nodes in between, but we are traversing edges
+        # so we need to go to k + 1
+        for _ in range(k+1):
+            # make copy of current iteration
+            workingPrices = prices.copy()
+            for source, destination, price in flights:
+                # if starting point has not been reached, no point in trying to iterate
+                if prices[source] == math.inf:
+                    continue
+                # otherwise, let's see if we can get to workingPrices[dst] faster
+                # we use workingPrices in case there are multiple paths to it this iteration
+                if prices[source] + price < workingPrices[destination]:
+                    workingPrices[destination] = prices[source] + price
+            # update prices to workingPrices
+            prices = workingPrices
+        if prices[dst] == math.inf:
+            return -1
+        return prices[dst] # type: ignore
+
     # ── Attempt · 2026-08-05 ──────────────
     def findCheapestPrice_20260805(self, n: int, flights: List[List[int]], src: int, dst: int, k: int) -> int:
         # looking for cheapest within k means we need to limit the amount of iterations

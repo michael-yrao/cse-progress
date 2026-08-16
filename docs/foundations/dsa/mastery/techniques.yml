@@ -214,6 +214,10 @@ techniques:
       - {number: 503}
       - {number: 901}
       - {number: 739}
+      # 853 taught unrated Aug 15, 2026 (row logged 🔴, rated rep Mon Aug 17).
+      # Mapped now so coverage does not drift; the 🔴 keeps it out of the green count
+      # on its own, which is the correct signal until Monday.
+      - {number: 853}
 
   # ── Linked list ─────────────────────────────────────────────────────────────
   - name: Linked List Reversal
@@ -341,6 +345,11 @@ techniques:
     problems:
       - {number: 200, method: BFS}
       - {number: 130, method: BFS}
+      # 695 solved BFS on Aug 15, 2026 (previously DFS-only). Same dual-credit
+      # convention as 200 above: it keeps its Grid DFS entry AND gains one here.
+      # The row title still reads "(DFS)" — that parenthetical is legacy and stale;
+      # this file is the taxonomy, so it wins.
+      - {number: 695, method: BFS}
       - {number: 733, method: BFS}
       # 417 is BFS-only by decision (Jul 28, 2026) — DO NOT re-open this.
       # The file also holds an earlier undated DFS attempt, so it HAS been solved both
@@ -432,21 +441,36 @@ techniques:
     problems:
       - {number: 787, method: Bellman-Ford, variant: Standard}
 
+  # min_problems dropped Aug 15, 2026 so this inherits the default of 3.
+  # Learner: "I want more practice with floyd warshall… this applies for all the harder
+  # algorithms, we should have more than just one problem tackling it."
+  #   queued: 1462 Course Schedule IV (Medium) — transitive closure. Same triple loop,
+  #           boolean instead of additive; teaches F-W as a PATTERN, not a distance algorithm.
+  #   queued: 2642 Design Graph With Shortest Path Calculator (Hard) — F-W under edge insertion.
   - name: Floyd-Warshall (all-pairs shortest path)
     family: advanced_graphs
-    min_problems: 1
     problems:
       - {number: 1334, method: Floyd-Warshall}
 
+  # Learner self-reported 50:50 on execution (Aug 15) while recognition is the
+  # strongest call in the ledger. LeetCode has only three Eulerian problems total;
+  # all three are wanted, so min_problems is the full set.
+  #   queued: 2097 Valid Arrangement of Pairs (Hard) — purest Hierholzer, start node
+  #           must be derived from out-in degree; 332 hands the start over for free.
+  #   queued: 753 Cracking the Safe (Hard) — de Bruijn via Eulerian circuit.
+  # Both slotted in the Aug 17 week, AFTER the Aug 18 rated rep on 332.
   - name: Hierholzer (Eulerian path)
     family: advanced_graphs
-    min_problems: 1
+    min_problems: 3
     problems:
       - {number: 332, method: Hierholzer}
 
+  # min_problems dropped Aug 15, 2026 — same rule as Floyd-Warshall above.
   - name: Prim's MST
     family: advanced_graphs
-    min_problems: 1
+    variants:
+      - {name: Prim's MST}
+      - {name: Kruskal's MST, queued: "expansion — edge-first MST; Aug 17 week"}
     problems:
       - {number: 1584, method: Prim's MST}
 

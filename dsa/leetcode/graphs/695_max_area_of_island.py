@@ -31,9 +31,51 @@ Constraints:
     grid[i][j] is either 0 or 1.
 """
 
+import collections
 from typing import List
 
 class Solution:
+
+    # ── Attempt · 2026-08-15 ──────────────
+    def maxAreaOfIsland_20260815(self, grid: List[List[int]]) -> int:
+        # basic bfs/dfs problem
+        # we hold a maxArea variable
+        # go through the grid, if we find land, get that land's area and update maxArea
+        # let's do BFS today
+        # so that is queue and visited, adjMap is defaulted in these 2D grids
+
+        maxArea = 0
+
+        rows, cols = len(grid), len(grid[0])
+
+        queue = collections.deque()
+        visited = set()
+
+        for row in range(rows):
+            for col in range(cols):
+                # if new grid, update maxArea
+                if grid[row][col] == 1 and (row, col) not in visited:
+                    # mark currentNode as visited
+                    visited.add((row,col))
+                    # start at 1 for currentNode
+                    currentArea = 1
+                    # add to queue
+                    queue.append((row,col))
+                    neighbors = [[1,0],[-1,0],[0,1],[0,-1]]
+                    while queue:
+                        cr, cc = queue.popleft()
+                        # visit neighbors of cr, cc
+                        for ir, ic in neighbors:
+                            nr, nc = cr + ir, cc + ic
+                            if nr >= 0 and nr < rows and nc >= 0 and nc < cols and grid[nr][nc] == 1 and (nr, nc) not in visited:
+                                currentArea+=1
+                                visited.add((nr,nc))
+                                queue.append((nr,nc))
+
+                    maxArea = max(maxArea, currentArea)
+        
+        return maxArea
+
     def maxAreaOfIsland(self, grid: List[List[int]]) -> int:
         # ok so this is pretty much identical to number of islands
         # but difference is that we need to keep track of how many nodes are part of the island
