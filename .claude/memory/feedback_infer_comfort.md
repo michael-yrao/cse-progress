@@ -49,3 +49,18 @@ latter. **Don't stretch this**: a slip that survives *because they never traced 
 verification gap, not a typo, and the tell is whether they recognize it instantly when shown.
 
 Honesty matters more than agreeableness here: if they claim 🟢 but I supplied a real fix they missed, say so plainly (see the 355 and 36 exchanges) — then defer to their call. Related: [[feedback_no_spoilers]], [[feedback_phase_gated_blanks]] (which is the *one* case where a 🔴 doesn't get the +2 loop — an un-taught technique, not a just-taught one).
+
+## Local test findings are raised, then weighed — not automatic caps (Aug 16, 2026)
+
+The coach runs a randomized harness against a reference on every rep. It sometimes finds things
+**LeetCode's own test set misses** — Aug 16 produced two: 80 returned `k=2` for a one-element array
+(legal input, `1 <= nums.length`), and 261 recursed 2000 deep (legal input, `n <= 2000`).
+
+**The learner rates on LC pass/fail:** *"I go by LC pass and fail when I test so I will call this a pass."*
+Offered three policies, they chose **keep raising findings and weigh them case by case** — not "stop
+testing", and not "report as interview-prep only".
+
+**How to apply:** report the finding with its evidence and say what it would cost in an interview, propose
+the rating including it, and then **defer without re-arguing** if the learner discounts it. The finding
+still lands in the ledgers as a record; only the comfort number is theirs. Same shape as the standing rule
+in this file — honesty first, their call final.
