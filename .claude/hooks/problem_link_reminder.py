@@ -319,6 +319,48 @@ def last_turn_text(transcript_path: str) -> str:
     return chr(10).join(reversed(chunks))
 
 
+LINK_LOOKBACK_TURNS = 4
+
+
+def recently_linked(transcript_path: str, turns: int = LINK_LOOKBACK_TURNS) -> "set[str]":
+    """Problem numbers already delivered as a link in the last `turns` assistant turns.
+
+    The rule exists to save the learner a manual file hunt. A link handed over three
+    turns ago has already done that, so demanding it again is noise -- and it is noise
+    at exactly the wrong moment, because the problem being re-mentioned is usually the
+    one they currently have OPEN. (Learner, Aug 16, twice: "you did the thing again,
+    added 208 link when it was not necessary.")
+
+    Deliberately narrow: it suppresses the DEMAND, never the rule. A number never linked
+    in the window is still policed, so a genuine hand-over is unaffected.
+    """
+    try:
+        with open(transcript_path, encoding="utf-8") as fh:
+            entries = [json.loads(ln) for ln in fh if ln.strip()]
+    except (OSError, json.JSONDecodeError, ValueError):
+        return set()
+
+    seen_users = 0
+    chunks: list[str] = []
+    for entry in reversed(entries):
+        if _is_real_user_message(entry):
+            seen_users += 1
+            if seen_users > turns:
+                break
+            continue
+        if entry.get("type") != "assistant" or entry.get("isSidechain"):
+            continue
+        content = (entry.get("message") or {}).get("content") or []
+        if not isinstance(content, list):
+            continue
+        for block in content:
+            if isinstance(block, dict) and block.get("type") == "text":
+                chunks.append(block.get("text", ""))
+
+    text = chr(10).join(chunks)
+    return {m.group(1) for m in re.finditer(r"\[(\d{1,4})[ .][^\]]*\]\([^)]+\)", text)}
+
+
 def unlinked_problem_numbers(text: str, board: "set[str] | None" = None) -> list[str]:
     """Problem-looking numbers in `text` that appear nowhere inside a markdown link.
 
@@ -374,6 +416,8 @@ def main() -> None:
         return
 
     nums = unlinked_problem_numbers(text, todays_board())
+    # Already handed over in the last few turns? The file hunt is already saved.
+    nums = [n for n in nums if n not in recently_linked(payload.get("transcript_path", ""))]
     if not nums:
         return
 
