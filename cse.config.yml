@@ -71,7 +71,19 @@ effort_budget:
   # rushed into a 🟡 costs 12× forever. Raising the ceiling to catch up increases
   # future demand. Starting value is a calibrated guess — see the doc for how to
   # settle it from the tracker once there is enough data.
-  ceiling: 9.0
+  # Lowered 9.0 -> 8.0 on Aug 16, 2026 by the learner: "it is getting harder to fit in
+  # SD filling DSA with 9 points each day, so I might want to lax back to 8."
+  #
+  # The underlying finding is that the budget was pricing the wrong universe. SD moved to
+  # a separate repo on Aug 13 and is self-directed study, so it is OFF-BOARD and UNPRICED
+  # while still consuming the same evening. A day the script called 9.0 was really 9.0 plus
+  # whatever SD took. 8.0 is the honest number, not a concession.
+  #
+  # This is the ceiling rule running in the direction it was written for: never RAISE the
+  # ceiling to chase a backlog, because a rep rushed into a shaky costs ~12x forever.
+  # Lowering is cheap by the same logic - demand sets the floor, the ceiling is a quality
+  # judgement.
+  ceiling: 8.0
 
   # "Always do something" minimum. Advisory floor is ceil(demand) ≈ 7 units/day today;
   # this is the hard one beneath it, so a bad day still lands somewhere.

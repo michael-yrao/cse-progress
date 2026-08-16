@@ -66,4 +66,451 @@ class Solution:
         
         return len(visited) == n
 
-# ⤵ prior attempts stashed in dsa/leetcode/.history/261_graph_valid_tree.txt — restored at session end (python scripts/restore_history.py)
+    # ── Attempt · 2026-08-06 ──────────────
+    def validTree_20260806(self, n: int, edges: List[List[int]]) -> bool:
+        # what we are checking here if we circle back at any point
+        # so today we want to solve this using DFS
+        # adjMap, visited, if we already visited the node, we have a cycle
+        # a graph with n nodes must have exactly n - 1 edges to make a tree
+
+        if len(edges) != n - 1:
+            return False
+
+        adjMap = collections.defaultdict(list)
+
+        for n1,n2 in edges:
+            adjMap[n1].append(n2)
+            adjMap[n2].append(n1)
+        
+        visited = set()
+
+        def dfs(currentNode, prevNode):
+            if currentNode in visited:
+                return False
+            
+            visited.add(currentNode)
+
+            for neighbor in adjMap[currentNode]:
+                if neighbor == prevNode:
+                    continue
+                if not dfs(neighbor, currentNode):
+                    return False
+            return True
+
+        for i in range(n):
+            if i not in visited:
+                if not dfs(i,-1):
+                    return False
+        
+        return True
+
+    # ── Attempt · 2026-08-01 ──────────────
+    def validTree_20260801(self, n: int, edges: List[List[int]]) -> bool:
+        # a graph is a tree iff it is acylic and has exact n - 1 edges to its n nodes
+        # we will do a simple comparison between n and len(edges) to check node and edge property
+        # we will use union find to make sure there is no cycle
+
+        if n - 1 != len(edges):
+            return False
+
+        parentMap = {}
+        rankMap = {}
+
+        for i in range(n):
+            parentMap[i] = i
+            rankMap[i] = 0
+        
+        def find(node):
+            # if not at root parent already, find the root parent
+            if parentMap[node] != node:
+                parentMap[node] = find(parentMap[node])
+            return parentMap[node]
+        
+        def union(n1,n2):
+            n1r = find(n1)
+            n2r = find(n2)
+            # if same root, cycle, return False
+            if n1r == n2r:
+                return False
+            if rankMap[n1r] > rankMap[n2r]:
+                parentMap[n2r] = n1r
+            elif rankMap[n1r] < rankMap[n2r]:
+                parentMap[n1r] = n2r
+            else:
+                parentMap[n2r] = n1r
+                rankMap[n1r]+=1
+            return True
+        
+        # now that our basic union find is written out, we just go through edges to make sure no cycle
+        for n1, n2 in edges:
+            if not union(n1,n2):
+                return False
+        
+        return True
+
+    # ── Attempt · 2026-07-18 ──────────────
+    def validTree_20260718(self, n: int, edges: List[List[int]]) -> bool:
+        # a graph can be a tree if number of nodes = number of edges - 1
+        # this is generalized from an acyclic graph with n nodes and c components have n - c edges
+        # so we know n - 1 edges have 1 component for n nodes
+        # so we can just return false immediately if that is not the case
+
+        if len(edges) +1 != n:
+            return False
+        
+        # now, we also need to make sure we connect all nodes
+        # so if not all n nodes are connected, we are still not valid
+        # so let's add a visited set
+
+        rankMap = {}
+        parentMap = {}
+
+        for i in range(n):
+            rankMap[i] = 0
+            parentMap[i] = i
+
+        # find root parent of node
+        def find(node):
+            if parentMap[node] != node:
+                parentMap[node] = find(parentMap[node])
+            return parentMap[node]
+        
+        # union two nodes if we do not make a cycle
+        # if we do make a cycle, we return False, otherwise return True
+        def union(n1,n2):
+            n1r = find(n1)
+            n2r = find(n2)
+            # if same root parent, we will make cycle
+            if n1r == n2r:
+                return False
+            if rankMap[n1r] > rankMap[n2r]:
+                parentMap[n2r] = n1r
+            elif rankMap[n1r] < rankMap[n2r]:    
+                parentMap[n1r] = n2r
+            else:
+                # equal, so pick at random
+                parentMap[n2r] = n1r
+                rankMap[n1r]+=1
+            return True
+        
+        # now we go through the edges and try to connect them
+        # and as we connect them, let's add them to visited
+        for node1, node2 in edges:
+            if not union(node1, node2):
+                return False
+        
+        # because we forced n - 1 edges for the n nodes
+        # we are satisfying n - c edges for c components 
+        # thus, as long as we can prove that this is an acyclic graph, we are done validating whether this is a tree
+        return True
+
+    def validTree(self, n: int, edges: List[List[int]]) -> bool:
+        # so we basically need to return whether or not this has a cycle
+        # [[0,1],[1,2],[2,0]] would be invalid because 2 leads back to 0
+        # so we can have a visited set and do adjacency map based on the input
+        # we also need to verify all nodes are traversed since a disconnected node also means not a tree
+
+        # visited means we have already gone this route 
+        # so we need to dfs on currentNode, parentNode
+        # this way we know which direction we went
+        visited = set()
+        
+        adjMap = collections.defaultdict(list)
+        
+        # notice that this is bidirectional
+        # so we have to do adjMap both ways
+        for firstNode, secondNode in edges:
+            adjMap[firstNode].append(secondNode)
+            adjMap[secondNode].append(firstNode)
+        
+        def dfs(currentNode, parentNode):
+            # if we have seen this node, we are in a cycle thus return False
+            if currentNode in visited:
+                return False
+
+            # if we haven't seen this node yet
+            # let's add it to visited
+            visited.add(currentNode)
+
+            # now let's take a look at its neighbors
+            for neighbor in adjMap[currentNode]:
+                # neighbor will always have the same pair the opposite way
+                # so we need to ignore that one
+                if neighbor == parentNode:
+                    continue
+                if not dfs(neighbor, currentNode):
+                    return False
+            return True
+                    
+        return dfs(0,-1) and len(visited) == n
+    
+    def validTree_20260617(self, n: int, edges: List[List[int]]) -> bool:
+        # a graph is a tree if there is no cycle back to any of the nodes excluding the node it came from
+        # this mean we need to keep track of prior node so it does not accidentally see the prior node as a node we've already visited
+        # so excluding the prior node, if we see a node that has already been visited, we return False
+        # otherwise, we just continue checking rest of the nodes
+        # we also do need to make sure every node from 0 to (n-1) are covered
+        # since it means there is a node just disconnected and making the n nodes not a tree
+        # one big thing to note is undirected edges
+        # this means 0 -> 1 and 1 -> 0
+        # so if we are using adjacency map, we need to do both direction
+        # nodes are always from 0 to (n-1)
+
+        adjMap = collections.defaultdict(list)
+        
+        visited = set()
+
+        for node1, node2 in edges:
+            adjMap[node1].append(node2)
+            adjMap[node2].append(node1)
+        
+        def dfs(currentNode, priorNode):
+            # check if we have visited this node
+            if currentNode in visited:
+                return False
+            
+            # if never visited, mark as visited
+            visited.add(currentNode)
+
+            # check neighbors of this node and see if they were visited
+            for neighbor in adjMap[currentNode]:
+                # ignore path we came from
+                if neighbor == priorNode:
+                    continue
+                # if we've already visited this node before
+                # that means we are in a cycle, so we return false
+                if not dfs(neighbor, currentNode):
+                    return False
+            return True
+
+        return dfs(0,-1) and len(visited) == n
+    
+    def validTree_20260619_UnionFind(self, n: int, edges: List[List[int]]) -> bool:
+        # a tree is non-cyclic and is connected to every node
+        # so we need to make sure we traversed through all nodes
+        # so we should have a counter for how many nodes we've visited
+        # we can actually use union find here
+        # so we need parent map and rank map
+        # from graph theory, we know that given n nodes
+        # there will always be n - 1 edges
+
+        if len(edges) != n - 1:
+            return False
+
+        parentMap = {}
+        rankMap = {}
+
+        # initialization phase
+        # set parent to self
+        # set rank to 0
+        for i in range(n):
+            parentMap[i] = i
+            rankMap[i] = 0
+
+        # find the root of node
+        # this is path compression
+        def find(node):
+            # base case
+            if parentMap[node] == node:
+                return parentMap[node]
+            # if we have an actual parent, let's find the root parent
+            parentMap[node] = find(parentMap[node])
+            return parentMap[node]
+
+        # see if we can merge two nodes without making a cycle
+        def union(node1, node2):
+            # we first find the root parent of both nodes
+            node1Root = find(node1)
+            node2Root = find(node2)
+            # if the root parents are the same, we are in a cycle
+            if node1Root == node2Root:
+                return False
+            # otherwise, we check the rank of each and merge them
+
+            if rankMap[node1Root] > rankMap[node2Root]:
+                parentMap[node2Root] = node1Root
+            elif rankMap[node2Root] > rankMap[node1Root]:
+                parentMap[node1Root] = node2Root
+            else:
+                # if equal rank, then pick a random one to be parent and promote rank
+                parentMap[node2Root] = node1Root
+                rankMap[node1Root] += 1
+            return True
+
+        for node1, node2 in edges:
+            if not union(node1,node2):
+                return False
+        
+        return True    
+
+    def validTree_20260621(self, n: int, edges: List[List[int]]) -> bool:
+        # graph theory states a tree is a connected graph with no cycles
+        # and n nodes require n - 1 edges to make a tree
+        # so we can do that basic check first
+        # then we do something like an adjacency map
+        # since these are undirected edges, it basically just means bidirectional
+        # we want to do dfs method today
+        # so we do an adjacency map
+
+        # n nodes must have n - 1 edges to make a tree
+        if n - 1 != len(edges):
+            return False
+
+        # classic graph visited set
+        # we need to also consider number of nodes visited in case one is a straggler
+        visited = set()
+
+        adjMap = collections.defaultdict(list)
+
+        for node1, node2 in edges:
+            adjMap[node1].append(node2)
+            adjMap[node2].append(node1)
+
+        def dfs(currentNode, sourceNode):
+            # if we already visited, return False
+            if currentNode in visited:
+                return False
+            
+            # if we never visited, we add to visited list and visit neighbors
+            visited.add(currentNode)
+
+            for neighbor in adjMap[currentNode]:
+                # ignore the one we came from
+                if neighbor == sourceNode:
+                    continue
+                # check other nodes
+                # if already visited, return False
+                # remember we need to check rest of the nodes, so put it in an if statement
+                if not dfs(neighbor, currentNode):
+                    return False
+            return True
+
+        return dfs(0,-1) and len(visited) == n
+
+    def validTree_20260623_DFS(self, n: int, edges: List[List[int]]) -> bool:
+        # graph theory states a tree is a connected graph with no cycles
+        # so we can go through the nodes, perform DFS or BFS
+        # mark them as visited as we go through
+        # undirected, so everything goes in both directions
+        # because of that, we also need to pass a previous node when we do DFS/BFS
+        # this way we don't accidentally consider the edge we came from as a cycle
+        # we also need to consider graph theory n nodes should have n - 1 edges
+        # and there cannot be a node that is disconnected, so keep track of number of nodes we've connected
+
+        if len(edges) != n - 1:
+            return False
+        
+        connectedNodes = 0
+        visited = set()
+
+        adjMap = collections.defaultdict(list)
+
+        for node1, node2 in edges:
+            adjMap[node1].append(node2)
+            adjMap[node2].append(node1)
+        
+        def dfs(currentNode, prevNode):
+            nonlocal connectedNodes
+            # if already visited, return false
+            if currentNode in visited:
+                return False
+            
+            # if not visited, add to visited list
+            visited.add(currentNode)
+            connectedNodes+=1
+
+            # we will traverse neighbors of this currentNode
+            for neighbor in adjMap[currentNode]:
+                # ignore where we came from
+                if neighbor == prevNode:
+                    continue
+                # if one of our dfs returns False, return False
+                if not dfs(neighbor, currentNode):
+                    return False
+            return True
+
+        return dfs(0, -1) and connectedNodes == n
+
+    def validTree_20260629(self, n: int, edges: List[List[int]]) -> bool:
+        # classic union find use case
+        # union find needs parent map and rank map
+        # parent map initially maps each node as its own parent
+        # rank map initially maps each node's rank as 0
+        # we also need to consider graph theory where a tree with n nodes must have n - 1 edges
+
+        if len(edges) + 1 != n:
+            return False 
+        
+        rankMap, parentMap = {}, {}
+
+        for i in range(n):
+            rankMap[i] = 0
+            parentMap[i] = i
+        
+        def findParent(node):
+            if parentMap[node] == node:
+                return parentMap[node]
+            parentMap[node] = findParent(parentMap[node])
+            return parentMap[node]
+        
+        def union(node1, node2):
+            node1Root = findParent(node1)
+            node2Root = findParent(node2)
+            if node1Root == node2Root:
+                return False
+            if rankMap[node1Root] > rankMap[node2Root]:
+                parentMap[node2Root] = node1Root
+            elif rankMap[node1Root] < rankMap[node2Root]:
+                parentMap[node1Root] = node2Root
+            else:
+                # pick at random and promote
+                parentMap[node2Root] = node1Root
+                rankMap[node1Root]+=1
+            return True
+        
+        # go through each edge and check union result
+        for node1, node2 in edges:
+            if not union(node1, node2):
+                return False
+        
+        return True
+    def validTree_20260709(self, n: int, edges: List[List[int]]) -> bool:
+        # in graph theory, if a graph is a tree, # of edges = # of nodes - 1
+        # thus we can do a nice simple check immediately
+        if len(edges) + 1 != n:
+            return False
+        
+        rankMap = {}
+        parentMap = {}
+
+        for i in range(n):
+            rankMap[i] = 0
+            parentMap[i] = i
+
+        # find root parent of node
+        def find(node):
+            if node == parentMap[node]:
+                return parentMap[node]
+            parentMap[node] = find(parentMap[node])
+            return parentMap[node]
+        
+        # see if we can union nodes without creating a cycle
+        def union(n1,n2):
+            n1r = find(n1)
+            n2r = find(n2)
+            if n1r == n2r:
+                return False
+            if rankMap[n1r] > rankMap[n2r]:
+                parentMap[n2r] = n1r
+            elif rankMap[n1r] < rankMap[n2r]:
+                parentMap[n1r] = n2r
+            else:
+                parentMap[n2r] = n1r
+                rankMap[n1r]+=1
+            return True
+        
+        for n1, n2 in edges:
+            if not union(n1,n2):
+                return False
+        
+        return True

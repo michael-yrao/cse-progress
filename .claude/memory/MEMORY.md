@@ -41,7 +41,7 @@
 - [Recognition gate](feedback_recognition_gate.md) — FRONT-gate (Jul 25): before coding, learner states shape→technique+why (their pasted pre-code comment); complexity gate still fires at end. Ledger: [recognition_gotchas.md](../../docs/foundations/dsa/mastery/recognition_gotchas.md)
 - [Provisional Clean](feedback_provisional_clean.md) — a 🟢 directly after a 🔴 is logged Streak 0 → +10 lock-down (not +30); survives → Streak 1 → +30; only Blank→Clean is provisional; never "fix" 🟢/Streak-0 to Streak 1
 - [Git commit checklist](feedback_git_commit.md) — always run git status before committing to catch unstaged solution files
-- [Batch commits](feedback_batch_commits.md) — don't commit per problem; accumulate and commit once at session end (each commit re-injects ~70 lines of the tracker into context)
+- [Commits: ASK FIRST, always](feedback_batch_commits.md) — never commit or push unasked; batching alone failed (31 commits in one session via the “natural breakpoint” loophole)
 - [Proactive scheduling](feedback_proactive_scheduling.md) — after logging any result, scan tracker for problems due within 7 days and slot them immediately
 - [Schedule mistake handling](feedback_schedule_mistakes.md) — when user does a problem out of order, detect the swap and fix both sides without waiting for user to catch it
 - [Daily problem cap](feedback_daily_cap.md) — max 5 problems per day; push extras (lowest priority first) to next available slot and note in preview
