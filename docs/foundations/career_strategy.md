@@ -18,7 +18,7 @@ the plan optimizes for the big-tech end goal and never bends toward them.
 **Binding constraint = System Design.** DSA is on track but **not done** — DP (1D Oct 12–Nov 8, 2D Nov 9–
 Dec 6) is the back half of NC150 and DSA reaches maintenance ~Dec, not at the Advanced Graphs close. SD is
 the weak lane and the top priority; L6 emphasis is **depth over breadth**. SD execution plan lives in
-[`system_design/senior_ramp.md`](https://github.com/michael-yrao/sd-progress/blob/main/senior_ramp.md).
+[`system_design/senior_ramp.md`](../../docs/foundations/system_design/senior_ramp.md).
 
 ## 2. The route — company tiers (the path to the end goal)
 
@@ -29,7 +29,7 @@ the next actual hop, big tech = where the route terminates.
 |------|-----------|------|------|
 | **Fintech** | Stripe, Robinhood, Citadel, Bloomberg, Goldman Sachs, JPMorgan | **Calibration** — interview to practice, not to land | Interview *first*, apply ~mid-Sept 2026. First: Bloomberg, Stripe, Citadel. The reconciliation/ledger moat carries these loops — the safe place to burn early reps |
 | **Data platform / infra** | **Snowflake**, Databricks, **Datadog** (entry point), Confluent, MongoDB | **Next hop** toward big tech (decided Jul 26, 2026) | Apply once at-scale SD reaches Transition/Mastery, ~2–3 months behind fintech. SD is distributed-storage flavored (query engines, partitioning, columnar storage, consistency), not social-feed |
-| **Big tech / MANGA** ⭐ | Google, Amazon, Meta, Microsoft, Apple, Netflix | **THE END GOAL** | Where the hops above lead. The plan optimizes for **here**; SD readiness driven by [`senior_ramp.md`](https://github.com/michael-yrao/sd-progress/blob/main/senior_ramp.md), gated not dated |
+| **Big tech / MANGA** ⭐ | Google, Amazon, Meta, Microsoft, Apple, Netflix | **THE END GOAL** | Where the hops above lead. The plan optimizes for **here**; SD readiness driven by [`senior_ramp.md`](../../docs/foundations/system_design/senior_ramp.md), gated not dated |
 | **Supplementary** | Uber, Airbnb, DoorDash, LinkedIn | Pattern variety only | Rotate in for problem coverage; not an interview target this cycle |
 
 **SD design prep is general big-tech, not fintech-weighted** — payment/ledger is one design among many
@@ -78,7 +78,7 @@ lost holding applications until SD is real.
   at-scale distributed-data SD at Transition/Mastery — ingestion, time-series/columnar storage, partitioning,
   consistency. The weak lane sets the date, not the calendar. Burning Snowflake on an unprepped design round
   is the expensive failure — no third tier behind it this cycle.
-- **Gate 3 — big tech / end goal.** The [`senior_ramp.md`](https://github.com/michael-yrao/sd-progress/blob/main/senior_ramp.md) **Phase-C apply
+- **Gate 3 — big tech / end goal.** The [`senior_ramp.md`](../../docs/foundations/system_design/senior_ramp.md) **Phase-C apply
   gate**: a handful of designs defended 2–3 levels deep under pushback (incl. rubric #7 evolve/operate), all
   Tier-1 core techs off 🔴, and a clean cold 45-min mock. Plus DSA fully in maintenance (DP done). The ramp
   owns the SD gate mechanics; this file owns the *decision to apply* that consumes them.
@@ -86,8 +86,8 @@ lost holding applications until SD is real.
 ---
 
 *Execution lives elsewhere, by design:* DSA study mechanics → [`dsa/study_guide.md`](dsa/study_guide.md) ·
-SD roadmap → [`system_design/senior_ramp.md`](https://github.com/michael-yrao/sd-progress/blob/main/senior_ramp.md) · SD mock mechanics →
-[`system_design/study_guide.md`](https://github.com/michael-yrao/sd-progress/blob/main/study_guide.md).
+SD roadmap → [`system_design/senior_ramp.md`](../../docs/foundations/system_design/senior_ramp.md) · SD mock mechanics →
+[`system_design/study_guide.md`](../../docs/foundations/system_design/study_guide.md).
 
 *(The AI System Engineering track was removed Aug 13, 2026 — never started, no sessions, no trigger to
 restore it. Its one interview-relevant design survives as the **ChatGPT** row on the SD board.)*

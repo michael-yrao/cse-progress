@@ -1,0 +1,1036 @@
+# Networking Fundamentals (IP · TCP · TLS · DNS · HTTP)
+
+> 🧊 **Frozen reference (Aug 13, 2026).** The SD track is now mock interviews on HelloInterview's
+> board; this card is no longer drilled and has no tracker row. Any "owed a sprint / next lane"
+> language below is historical. Use it as lookup when a mock debrief points here.
+> See [`../study_guide.md`](../study_guide.md).
+
+> **Role:** Prerequisite plumbing — *the layer every other SD answer silently stands on* · **Filed under:** SD concepts (underpins load balancers, CDNs, TLS termination, timeouts, retries).
+> **You'll want this when:** you say "the load balancer terminates TLS" or "we'll keep the connection alive" or "add a retry" — and someone asks *what actually happens on the wire*. Also whenever a design's latency budget needs RTTs counted.
+> **Drill:** answer the [Recall Card](#-recall-card-the-rep) cold, then unfold to check.
+
+## 🦴 The spine — everything else derives from this
+
+> **Layers nest like envelopes. Each layer knows only its own job and treats everything above it as
+> opaque payload it must not read.**
+
+Three facts. Everything below is a consequence of one of them.
+
+| Fact | What it means | What it buys you |
+|---|---|---|
+| **IP** moves packets between **machines**, best-effort | may drop, duplicate, reorder, and never tells you | it is *allowed* to fail silently — every guarantee above is built on this admission |
+| **TCP** runs on top of IP, between **ports**, and adds back what IP lacks | ordering, delivery, dedup, flow control | "reliable byte stream" is software at the two ends, not a property of the network |
+| A **connection** is *state at both endpoints*, not a wire | nothing in the middle is obliged to remember it | this is why a proxy can terminate, pool, and re-originate connections at all |
+
+## 🔤 The acronyms, expanded
+
+Kept at the top on purpose — these get used unexpanded everywhere, and half of them are named after
+something other than what they do.
+
+| | Stands for | What it actually is |
+|---|---|---|
+| **IP** | **I**nternet **P**rotocol | addresses + routing between *machines*. Best-effort: may drop/dupe/reorder |
+| **TCP** | **T**ransmission **C**ontrol **P**rotocol | reliable ordered byte stream between *ports*, built on top of IP |
+| **UDP** | **U**ser **D**atagram **P**rotocol | the no-guarantees alternative to TCP — fire and forget |
+| **TLS** | **T**ransport **L**ayer **S**ecurity | encryption + server identity, between TCP and HTTP. Formerly **SSL** (**S**ecure **S**ockets **L**ayer) — you'll still hear "SSL" for TLS everywhere |
+| **HTTP** | **H**yper**T**ext **T**ransfer **P**rotocol | the request/response text format: method, path, headers, body |
+| **HTTPS** | HTTP **S**ecure | *not a separate protocol* — it is plain HTTP running inside a TLS tunnel |
+| **DNS** | **D**omain **N**ame **S**ystem | name → IP address lookup. A distributed database, queried before you can connect at all |
+| **SNI** | **S**erver **N**ame **I**ndication | a TLS handshake field naming the host you want, sent **in the clear** |
+| **RTT** | **R**ound-**T**rip **T**ime | one there-and-back trip. The unit latency budgets are actually counted in |
+| **CDN** | **C**ontent **D**elivery **N**etwork | caches placed near users, mostly to cut RTTs |
+| **L3 / L4 / L7** | **L**ayer 3 / 4 / 7 of the OSI model | shorthand for *which header a box reads*: L3 = IP, L4 = TCP/UDP ports, L7 = HTTP itself |
+| **OSI** | **O**pen **S**ystems **I**nterconnection (model) | the 7-layer teaching diagram the layer numbers come from |
+| **LB** | **L**oad **B**alancer | the box spreading requests across backends |
+| **VPC** | **V**irtual **P**rivate **C**loud | your isolated private network inside a cloud provider. Servers get private addresses unreachable from the internet; only what you expose (usually the LB) faces outward. "Inside the VPC" = on the trusted side |
+| **QPS** | **Q**ueries **P**er **S**econd | request rate. (Also seen: RPS, requests per second) |
+| **TTL** | **T**ime **T**o **L**ive | how long a cached answer stays valid — used by DNS records and HTTP caches alike |
+
+**On "L7":** the OSI model is a 7-layer teaching diagram from the 1980s that the real internet never
+matched. Almost nobody uses layers 5 and 6. In practice the numbers survive only as jargon for how
+deep a middlebox looks:
+
+- **L3 switch/router** — reads IP addresses. Picks a next hop.
+- **L4 load balancer** — reads TCP ports. Can balance connections, but has no idea what a URL is.
+- **L7 load balancer** — reads the HTTP request. Can route by path/header/cookie, retry a failed
+  request, and terminate TLS.
+
+## 🪜 The two layer models — and the link layer you never see
+
+*Added Aug 8, 2026 (session 3). The card used OSI numbers and TCP/IP names interchangeably, which is
+how everyone talks and is genuinely confusing the first time. Both models, side by side, once.*
+
+**There are two models and the industry mixes them in the same sentence.** OSI is the 7-layer teaching
+diagram the *numbers* come from; TCP/IP is the 4-layer model the internet was actually built to. Nothing
+real implements OSI layers 5 and 6.
+
+> **The distinction in one line (Aug 9, 2026):** **7 is a reference model designed *before* the protocols;
+> 4 is a description written *after* them.**
+
+⚠️ **"OSI is theoretical" is the right instinct with the wrong word.** OSI was not a thought experiment —
+it was a **complete protocol suite from ISO**, with real implementations, shipping products, and
+government procurement mandates behind it in the US and UK in the late 1980s. **It was built, and it lost
+to TCP/IP in the market.** Theoretical is how it *ended up*, not what it was for.
+
+That history is what explains the shape of each model:
+
+| | **OSI (7)** | **TCP/IP (4)** |
+|---|---|---|
+| Written | **before** the protocols, top-down | **after** the protocols already worked |
+| Method | designed as a complete, symmetric taxonomy | described what had been built |
+| Result | tidy slots (session, presentation) nothing turned out to need | no slot exists unless something fills it |
+| Survives as | **the numbers** — L3/L4/L7 vocabulary | **the actual stack** |
+
+So OSI has layers 5 and 6 for the same reason a designed-up-front schema has columns nobody writes to:
+they were reasoned into existence rather than discovered. TCP/IP couldn't have an unused layer, because
+every layer was named after a protocol that already existed.
+
+| TCP/IP layer | Protocol | Moves data between | Addressed by | OSI # |
+|---|---|---|---|---|
+| **Application** | HTTP, DNS, TLS | programs, semantically | URLs, names | 5–7 |
+| **Transport** | **TCP / UDP** | one *program* and another | **ports** | **4** |
+| **Internet** | **IP** | any two *machines* on Earth | **IP addresses** | **3** |
+| **Link** | Ethernet, Wi-Fi | this machine and **the next box on the same physical network** | **MAC addresses** | **1–2** |
+
+**The link layer is the one that never comes up and quietly does half the work.** Your laptop cannot
+put a packet on a wire addressed to a server in Virginia — it can only hand it to something it is
+*physically attached to*: your router, over Wi-Fi. That handoff is the link layer, and it uses a
+completely different address type. A **MAC address** (Media Access Control) is burned into the network
+card and is **meaningful only on the local network** — it does not route, it does not travel, and no
+machine outside your Wi-Fi has ever heard of yours.
+
+> **The division of labour, in one line: IP says where it is ultimately going; link says who is holding
+> it right now.**
+
+**This is the missing half of hop-by-hop delivery.** At every hop the **IP header is unchanged** the
+whole way — same source, same destination, your laptop to Virginia — while the **link header is stripped
+off and rebuilt from scratch at every single hop**, because "the next box" is a different box each time.
+Two headers, two lifetimes: one end-to-end, one per-hop.
+
+### Why the jargon is worth keeping straight
+
+"L4" and "L7" are **OSI numbers**, and they survive in practice for exactly one purpose: **naming how deep
+a middlebox reads.** So when someone says *"put an L7 load balancer in front"*, they are making a claim
+about which headers that box is allowed to open — nothing more. The numbers are useless as architecture
+and indispensable as vocabulary.
+
+## 🛣 How IP actually delivers — nobody knows the route
+
+*Added Aug 8, 2026. The card asserted "IP moves packets, best-effort" without ever saying **how**, and
+"why can't it tell you it failed?" is unanswerable until you see the mechanism.*
+
+**No machine knows the route — not the sender, not any router on the path.** Each router knows only
+*"for destinations that look like this, hand it to that neighbour."* That list is its **routing table**.
+
+```
+ laptop      "not on my network → give it to my default gateway"   → router
+ router      "not local → give it to my ISP"                       → ISP edge
+ ISP router  "142.250.x.x → that neighbour"                        → backbone
+ backbone    "→ that neighbour"                                    → … (~10–20 hops)
+ last hop    "142.250.80.46 is mine → hand it over"                → the server
+```
+
+Every hop does the identical three steps: **read the destination, look it up, forward one step, forget it
+happened.** No hop holds a plan and no hop keeps a record. The packet arrives because a chain of small
+local tables each happen to point roughly the right way.
+
+**Three properties fall straight out of that, and they are the entire justification for TCP:**
+
+| Because… | You get |
+|---|---|
+| nothing pins a packet to a path, and tables change mid-transfer | **reordering** — packet 5 can beat packet 4 |
+| a router with a full buffer discards and moves on | **loss** |
+| **a hop that keeps no state cannot report failure** — there is nobody to report to | **silence** |
+
+> **"Best effort" is not laziness, it is the scaling property.** Statelessness at each hop is what lets
+> the middle of the internet carry billions of conversations it remembers nothing about. The price is
+> that every guarantee has to be rebuilt at the two ends — which is exactly what TCP is.
+
+**IP is the protocol, not the table.** IP defines how addresses are written, what the header holds, and
+the one rule *"forward toward the destination."* The routing table is each router's private data for
+obeying that rule — millions of different tables, one IP. *(Tables are built automatically from
+neighbour-to-neighbour reachability gossip; between large networks that's **BGP**, which is below the
+interview-ROI line and deliberately not covered here.)*
+
+## 👁 What the middle can see
+
+**"Stateless about you" ≠ "can't read you."** A router keeps no memory of your connection, but the
+packet is in its buffer and it may read as deep as it likes. It stops at the IP header because that
+is its *job*, not because of any barrier.
+
+| Over | A middlebox can read | It cannot read |
+|---|---|---|
+| `http://` | everything — method, path, headers, body, cookies | *(nothing — it's all plaintext)* |
+| `https://` | IP addresses, ports, packet sizes/timing, **the hostname via TLS SNI** | method, **path**, headers, body, cookies |
+
+Two consequences that come up constantly in design:
+
+- **Deep reading is a feature, not just a threat.** An **L7 load balancer** routing `/api` to one pool
+  and `/images` to another is doing exactly this on purpose. So is a CDN keying its cache on the URL.
+- **HTTPS hides the path, not the destination.** `https://example.com/secret-report` leaks
+  `example.com` to anyone on the path (SNI is sent in the clear during the handshake, and the DNS
+  lookup leaked it a moment earlier). It does *not* leak `/secret-report`. ECH and DNS-over-HTTPS
+  close those two gaps respectively; assume neither unless told otherwise.
+
+## 🔐 TLS termination — the word that confuses everyone
+
+**"Terminate" does not mean "stop using TLS." It means "be one of the two ends."**
+
+The apparent paradox: an L7 load balancer routes by URL path, but under HTTPS the path is encrypted.
+Resolution — the client is not talking *through* the LB, it is talking **to** it:
+
+```
+client ──── TLS session #1 ────▶ load balancer ──── connection #2 ────▶ backend
+       (LB holds the cert +                    (separate connection,
+        private key for the domain;             LB re-sends the request)
+        to the client, the LB *is* example.com)
+```
+
+The LB completes the handshake, decrypts, and holds plaintext HTTP — so it can route on path, retry,
+add headers, and log. This is only possible because **a connection is state at its two endpoints**
+(spine fact 3): anything holding the keys is allowed to *be* an endpoint.
+
+**The second hop is a separate decision**, and it's the one people forget:
+
+| Second hop | What it means | When |
+|---|---|---|
+| **Terminate** (plain HTTP to backend) | LB→backend is unencrypted | inside a trusted VPC; cheapest, most common |
+| **Re-encrypt** (a.k.a. TLS bridging) | LB decrypts, then opens its own TLS to the backend | regulated data, zero-trust networks |
+| **Passthrough** | LB does *not* decrypt; forwards TCP bytes | end-to-end encryption required — but then it is an **L4** balancer and **cannot** route by path |
+
+> **The tradeoff to say out loud in an interview:** you cannot have both end-to-end encryption *and*
+> path-based routing at the same box. Passthrough buys secrecy and costs you L7 features. That is a
+> real fork, not a detail.
+
+## ⏱ The cold-start ladder — what one URL actually costs
+
+**Nothing about HTTP has happened yet.** Before the first byte of `GET /foo` can leave your machine,
+three separate conversations must complete, each costing at least one **RTT (round-trip time)**.
+
+| # | Step | Cost | What it's doing |
+|---|---|---|---|
+| 1 | **DNS lookup** | ~1 RTT (cached) · up to 4 (cold) | `example.com` → `93.184.216.34`. You cannot open a socket to a name |
+| 2 | **TCP handshake** | **1 RTT** | SYN → SYN-ACK → ACK. Both ends agree on starting sequence numbers. *This is the moment the "connection" (state at both ends) comes into existence* |
+| 3 | **TLS handshake** | **1 RTT** (TLS 1.3) · **2 RTT** (TLS 1.2) | agree on ciphers, server proves it owns the certificate, derive session keys |
+| 4 | **HTTP request finally sent** | 1 RTT to first byte back | `GET /foo HTTP/1.1` |
+
+**Cold start on TLS 1.3 ≈ 3 RTTs before you have even asked for anything**, then a 4th to get it.
+
+### Run it with real numbers
+
+RTT is dominated by physical distance — light in fibre is ~200,000 km/s, and packets don't travel in
+straight lines.
+
+| Path | Typical RTT | Cold start (3 RTT) | + first byte |
+|---|---|---|---|
+| Same datacenter | ~0.5 ms | ~1.5 ms | ~2 ms |
+| Same city | ~5 ms | 15 ms | 20 ms |
+| US coast to coast | ~70 ms | 210 ms | **280 ms** |
+| US → Europe | ~100 ms | 300 ms | **400 ms** |
+| US → Australia | ~200 ms | 600 ms | **800 ms** |
+
+> **The punchline:** for a user in Sydney hitting a server in Virginia, roughly *three quarters of a
+> second* elapses before a single byte of your page arrives — and your server code hasn't run yet.
+> None of that is your application's fault, and none of it is fixable by making the server faster.
+
+### Latency vs bandwidth vs RTT — the distinction that decides the fix
+
+| Term | What it measures | Analogy |
+|---|---|---|
+| **Latency** | delay for data to travel one way | how long the truck takes to arrive |
+| **RTT** | there *and back* — roughly 2× latency | round trip of the truck |
+| **Bandwidth** | how much data per second once flowing | how big the truck is |
+
+**They are independent, and this is the single most useful consequence in the whole card:**
+
+- **Bandwidth cannot fix RTT.** A 10 Gbps link between Sydney and Virginia still has ~200 ms RTT. The
+  handshakes above take exactly as long on a fat pipe as a thin one — they're waiting on *distance*.
+- So for **many small requests**, you are latency-bound → the fix is *fewer round trips* or *shorter
+  distance*: connection reuse, HTTP/2 multiplexing, a **CDN (Content Delivery Network)** that moves
+  the endpoint near the user.
+- For **few large transfers**, you are bandwidth-bound → the fix is compression, a smaller payload,
+  or a fatter pipe.
+- Diagnosing one as the other is the classic wrong turn: buying bandwidth to fix a chatty API does
+  nothing at all.
+
+### Design consequences
+
+- **Keep-alive / connection pooling is not a micro-optimisation.** Reusing a warm connection skips
+  steps 1–3 entirely — that's 3 RTTs saved *per request*. This is why every HTTP client library
+  pools, and why creating a new client per request is a real bug.
+- **A CDN's main product is fewer milliseconds of distance**, not just caching. Terminating TLS at an
+  edge node 5 ms away turns a 300 ms cold start into 15 ms even on a cache miss.
+- **TLS 1.3 removed a full round trip** vs 1.2, and its 0-RTT resumption can send data on the *first*
+  packet to a previously-visited server (at the cost of replay risk — not for non-idempotent requests).
+- **DNS TTL (time to live) is a failover lever.** A 60-second TTL means clients re-resolve quickly
+  when you move an IP; a 24-hour TTL means some clients keep hitting a dead address all day.
+
+## 🧭 DNS — you make one query; someone else makes four
+
+**You parse the URL locally.** `https://example.com/foo` → scheme `https`, host `example.com`, path
+`/foo`. **Only the host is looked up.** The path never leaves your machine until the HTTP request
+itself — which is exactly why TLS protects the path but not the hostname.
+
+**Your machine asks exactly one server: a recursive resolver.** Default is your **ISP (Internet
+Service Provider)**'s; you can point at a public one (`8.8.8.8` Google, `1.1.1.1` Cloudflare). Your
+home router usually just *forwards* to it, which is why it looks like the router answered.
+
+If the resolver has the answer cached, that's your ~1 RTT and you're done. If not, **it** does the
+walking — you still made only one query:
+
+```
+you ──▶ recursive resolver ──▶ root server        "who handles .com?"
+                          ──▶ .com TLD server     "who handles example.com?"
+                          ──▶ authoritative NS    "what is example.com?"  → 93.184.216.34
+        ◀── answer ───────
+```
+
+### The name is a tree, read right to left
+
+```
+        google.com.
+        ▲      ▲  ▲
+        │      │  └── the root — an invisible trailing dot, always there
+        │      └───── the TLD:  .com
+        └──────────── the domain: google, inside .com
+```
+
+The dots **are** the tree levels, so the walk isn't three arbitrary hops — it is **descending the name**,
+one question per level, because each level knows only who owns the level beneath it.
+
+### Only three roles exist (root and TLD are not a separate species)
+
+| Role | What it does | Examples |
+|---|---|---|
+| **Stub resolver** | the client in your OS. Cannot walk the tree; asks one server and waits | your laptop |
+| **Recursive resolver** | does the walking, caches the results | `8.8.8.8`, `1.1.1.1`, your ISP's |
+| **Authoritative** | holds the real records for **one zone**, answers only for that zone | root · `.com` TLD · `ns1.google.com` |
+
+⚠️ **Root, TLD and `ns1.google.com` are all the same role at different tree levels** — authoritative for
+the root zone, the `.com` zone, and the `google.com` zone respectively. They *look* different only because
+the upper zones contain nothing but delegations, so their answers are always "ask someone else." Listing
+them as separate kinds is a common miscount (made and corrected in this repo on Aug 8).
+
+Two variants: a **forwarder** is a resolver that doesn't recurse, just passes the question on and caches —
+**that's your home router**. A **secondary** is a read-only copy of an authoritative zone, which is why
+domains list `ns1`/`ns2`/`ns3`: lose one machine and the domain must not vanish.
+
+### Glue records — how the referral avoids infinite regress
+
+The root's answer isn't an address, it's *another name* (`a.gtld-servers.net`). Resolving **that** would
+need DNS, which is what you're already doing. The fix: the referral ships name **and** address together.
+
+```
+ ROOT ──▶  NS  a.gtld-servers.net       ← the name
+           A   192.5.6.30               ← the glue: its address, in the same response
+```
+
+Same one level down — `.com`'s referral to `ns1.google.com` carries glue, which matters because the
+nameserver for a zone usually **lives inside the zone it serves.** The root servers are the base case:
+their addresses are **hardcoded** into every resolver as a *root hints* file. It is the one place DNS
+cannot bootstrap itself, so the answer ships in the software.
+
+### ⚠️ DNS never returns a port
+
+An A record maps a name to an **address and nothing else**. The port comes from the URL scheme, decided
+locally on your machine (`https://` → 443). DNS answers *"where is this name?"*; the client decides
+*"which door do I knock on?"*
+
+**Consequence:** you cannot relocate a public service to a different port via DNS. Move the web server to
+8443 and every browser still tries 443 — there is no way to tell them otherwise. Much of why 80 and 443
+are so entrenched. *(**SRV** records do carry a port — SIP, XMPP, Kubernetes service discovery — but
+browsers don't use them for HTTP.)*
+
+- **Root servers** (13 logical, anycast to hundreds of physical) know only where the TLDs are.
+- **TLD (Top-Level Domain) servers** — `.com`, `.org`, `.io` — know which nameserver is authoritative
+  for each domain under them.
+- **Authoritative nameserver** — the one you configure when you buy a domain — holds the real record.
+
+**Every level caches, governed by TTL (time to live).** In practice roots and TLDs are almost always
+cached, so a cold lookup is 1–2 RTTs, not 4.
+
+### Design consequences
+
+- **TTL is your failover speed.** See the box below — this is the one people get bitten by.
+- **DNS is a load-balancing layer.** Returning different IPs per region (GeoDNS) is how a CDN sends
+  you to a nearby edge. It's coarse — DNS can't see health or load mid-connection — so it's usually
+  paired with a real load balancer behind it.
+- **DNS is plaintext by default** (UDP port 53), so your ISP and anyone on the path sees every
+  hostname you resolve. DoH (DNS over HTTPS) and DoT (DNS over TLS) close that.
+- **A failed resolve looks like a total outage to users** while your servers sit perfectly healthy.
+  DNS is a genuine single point of failure and belongs on your dependency list.
+
+### ⏳ TTL, concretely — why your DNS change "didn't work"
+
+**TTL (time to live) is a permission slip attached to the answer:** *"you may reuse this for N seconds
+before asking me again."* The authoritative server doesn't just return `example.com → 1.1.1.1`; it
+returns `example.com → 1.1.1.1, TTL 3600`. Every resolver that sees it serves from memory for an hour.
+
+```
+10:00  resolver asks, gets 1.1.1.1 with TTL 3600  → caches until 11:00
+10:15  you change the record to 2.2.2.2 at your registrar
+10:16  user asks their resolver → still cached    → gets 1.1.1.1   ✗
+10:59  still 1.1.1.1                                                ✗
+11:00  cache expires; next query re-asks          → gets 2.2.2.2   ✓
+```
+
+Your change was live and correct at 10:15 and made **no difference** to those users for 45 minutes.
+If the old IP is dead, that is 45 minutes of outage you cannot shorten by fixing anything on your
+side — you are waiting on caches you do not control to expire.
+
+**So the migration procedure is three steps, not one:**
+
+1. **A day ahead**, lower the TTL 3600 → 60. *(You must wait out the old 3600 for this to take hold
+   everywhere — that's why it's a day ahead, not an hour.)*
+2. **Then** flip the IP. Clients pick it up within a minute.
+3. Raise the TTL back once it's settled.
+
+**Why not just leave TTL at 60 permanently?** Resolvers then re-ask constantly: more DNS load, more
+cache misses, and a DNS round trip added back onto requests that could have skipped it. It is the
+ordinary cache trade — **freshness vs. traffic** — and DNS is just a cache like any other.
+
+## 🔌 Ports, and what a "connection" actually is
+
+**IP gets you to the machine. The port gets you to the program on it.** One server at one IP runs a
+web server on 443, SSH on 22, and Postgres on 5432 — same address, three doors.
+
+A TCP connection is identified by a **4-tuple**:
+
+```
+(source IP, source port, destination IP, destination port)
+```
+
+Your browser opens three tabs to the same site: same destination IP and port, but three *different*
+source ports, so they're three distinct connections. This is also why one server can hold hundreds of
+thousands of connections on port 443 — the port isn't consumed, the tuple is.
+
+> **Well-known ports:** 80 HTTP · 443 HTTPS · 53 DNS · 22 SSH. The `https://` in a URL is what implies
+> 443; `https://example.com:8443/foo` overrides it.
+
+**The connection is that 4-tuple plus the sequence-number state at each end — and nothing else.** No
+router in between allocates anything or agrees to anything. "Establishing a connection" is two machines
+writing down numbers about each other.
+
+### The three port bands
+
+| Range | Name | Who uses it |
+|---|---|---|
+| **0–1023** | **well-known** | HTTP 80 · HTTPS 443 · DNS 53 · SSH 22 · SMTP 25. **The one band every OS agrees on**, and on Unix-likes **binding here requires root** |
+| 1024–49151 | registered | vendor defaults — Postgres 5432 · MySQL 3306 · Redis 6379 · Kafka 9092 · Mongo 27017 · Elasticsearch 9200 |
+| 49152–65535 | **ephemeral** | throwaway source ports your OS picks per connection. ⚠️ **OS-dependent** — Linux actually uses **32768–60999**, so "49152+" is IANA's recommendation, not a rule |
+
+Two consequences that look like mysteries when you meet them cold:
+
+- **Apps run on 8080 behind a proxy holding 443** because of the root rule — not ceremony. The privileged
+  port is held by the load balancer; the app runs unprivileged behind it.
+- **A machine tops out around 28k outbound connections to a *single* destination** (Linux's ephemeral range
+  is ~28,000 wide) — each needs a distinct source port. A busy gateway hammering one backend hits this and
+  starts failing to connect. **The fix is more source IPs or a wider range, not a bigger machine.**
+
+## 🏠 Private vs public addressing, and NAT
+
+*Added Aug 8, 2026 — this was missing from the card entirely and came up immediately on first contact.*
+
+**Every device on your network has its own address, but a *private* one** — `192.168.1.5`, `192.168.1.6`.
+Unique inside that network, meaningless outside it, and the same numbers exist in millions of homes at once.
+The whole network shares **one public address**, held by the router. **The router is a member of both
+networks — that is the only reason it can pass traffic between them.**
+
+```
+        HOME NETWORK (private)                    │        INTERNET (public)
+ ┌────────────────────┐                           │
+ │ Laptop             │                           │
+ │ 192.168.1.5 :51204 │───────────┐               │
+ └─────────┬──────────┘           │               │
+           │ local traffic        ▼               │
+           │ (AirDrop, casting)  ┌──────────────────┐
+           │ never leaves the    │     ROUTER       │
+           │ house               │ priv 192.168.1.1 │
+ ┌─────────┴──────────┐          │ pub  203.0.113.9 │───┼──▶ 93.184.216.34:443
+ │ Phone              │──────────▶     NAT table    │   │
+ │ 192.168.1.6 :52117 │          │ .1.5:51204⇄:62311│   │
+ └─────────┬──────────┘          │ .1.6:52117⇄:62312│   │
+ ┌─────────┴──────────┐          └──────────────────┘   │
+ │ Smart TV           │───────────▲                     │
+ │ 192.168.1.7 :58330 │───────────┘                     │
+ └────────────────────┘                                 │
+```
+
+**Why the split exists — two reasons, and both still matter:**
+
+1. **Scarcity.** IPv4 has ~4.3 billion addresses, fewer than there are devices. Private ranges let a whole
+   household consume **one** public address.
+2. **Nothing on the internet can address your laptop directly.** It has no globally routable address, so
+   unsolicited inbound traffic reaches the router and has nowhere to go. A firewall for free, as a side
+   effect of the addressing. *(IPv6 removes reason 1; reason 2 is valuable enough that the boundary usually
+   stays.)*
+
+### Follow one packet — only the SOURCE changes
+
+```
+ ① laptop ──▶ router      SRC 192.168.1.5:51204    DST 93.184.216.34:443
+ ② router ──▶ internet    SRC 203.0.113.9:62311    DST 93.184.216.34:443   ← NAT rewrote SRC
+ ③ server ──▶ back        SRC 93.184.216.34:443    DST 203.0.113.9:62311   ← reply swaps halves
+ ④ router ──▶ laptop      SRC 93.184.216.34:443    DST 192.168.1.5:51204   ← NAT reversed it
+```
+
+> **The two ends disagree about what the connection is — and nothing breaks.** The server's 4-tuple names
+> `203.0.113.9:62311`; the laptop's names `192.168.1.5:51204`. Each end only has to be self-consistent.
+> That is spine fact 3 (*a connection is state at its two endpoints*) doing real work, and it is the same
+> permission that lets a load balancer terminate TLS and re-originate the request.
+
+**NAT rewrites the port, not just the IP, and it must.** Two devices can easily pick the same ephemeral
+source port; if only the IP were swapped, both connections would look identical from outside and the
+replies would be indistinguishable. **The public port is the disambiguator.**
+
+### The NAT table is state, and it expires
+
+One row per active connection, written on the first outbound packet, read on every reply. **It is the only
+thing in existence linking the internal device to the traffic the server sees** — lose it and every open
+connection dies at once, with neither end told.
+
+⚠️ **Rows are evicted after an idle timeout, often just a few minutes.** A silent connection has its row
+dropped and the next packet is discarded. **This is why long-lived connections (WebSockets, DB pools) send
+keepalives** — not to check liveness, but to stop a middlebox forgetting they exist. Debugging "the
+connection works, then dies after five idle minutes" starts here.
+
+### Why this is not just home-network trivia
+
+**A VPC (Virtual Private Cloud) is the same shape.** App servers hold private addresses, talk to each other
+directly with no NAT and no public exposure, and only the load balancer has a public address. *"Inside the
+VPC"* means exactly what *"inside the house"* means above — which is why TLS termination at the LB with
+plain HTTP to the backend is the common, cheap choice.
+
+## 🤝 What TCP actually guarantees (and what it doesn't)
+
+> ### ⏳ Fact 2 is NOT finished — read this before drilling the TCP questions
+> *Flagged by the learner, Aug 8, 2026: **"I don't think I have fact 2 done, I want to dive deeper when
+> I have spare time."*** Correct, and worth stating in the card rather than in a schedule note.
+>
+> ⚠️ **Assume ZERO retention on ALL of fact 2, including the parts logged as covered.** Learner's
+> standing instruction, same day: *"when I say that, you can assume worst case scenario that I kept 0 of
+> the knowledge."* So **TCP-as-bookkeeping and the handshake are re-opened too** — what I recorded is
+> what was *said in the room*, which is evidence about the teaching, not about the retention.
+> **Re-teach fact 2 from the first fact**, moving fast through whatever they confirm. See
+> [[feedback_self_reported_zero]].
+>
+> **Covered in session (treat as unretained until they say otherwise):** TCP-as-bookkeeping (numbering +
+> ack/retransmit) · the handshake (ISN, 3 messages / 1 RTT, two numbering streams) · where layer 4 sits
+> and who reads it.
+>
+> **Never worked at all — written here and nothing more:**
+>
+> | Gap | The question it answers |
+> |---|---|
+> | **Sequence & ACK numbers concretely** | what an ACK number actually *names* (cumulative — "everything below this") |
+> | **Loss detection** | how the sender *knows* — retransmission timeout vs duplicate ACKs / fast retransmit |
+> | **The receive window** | flow control: how a slow receiver throttles a fast sender without dropping anything |
+> | **Congestion control** | slow start, the congestion window, why loss is read as a *congestion signal*, and why TCP deliberately slows itself |
+> | **Teardown** | FIN / FIN-ACK, `TIME_WAIT`, and why it causes real port-exhaustion incidents |
+> | **Keep-alive & connection reuse** | why HTTP/1.1 keep-alive and connection pools exist — 1 RTT saved per request |
+> | **Head-of-line blocking** | asserted below; never traced through a concrete loss |
+>
+> ⚠️ **Consequence for the rated sprint:** Recall questions **11, 12, 13, 14** sit on this material.
+> Firing them cold now measures *explanation the learner never received*, not decay — the teach/measure
+> split says that rating would be noise. **Either finish the list first, or scope the first rated sprint
+> to questions 1–10d + 1b/11b/16 and add the rest once worked.**
+
+TCP is the layer that turns IP's "best effort, no promises" into something you can build on.
+
+> ⚠️ **TCP is not a delivery mechanism — it is bookkeeping.** *(Framing added Aug 8, 2026; it's the one
+> that made this click.)* **IP delivers; TCP delivers nothing.** It adds no ability to move data
+> whatsoever. Every TCP packet still travels by IP and can still be dropped — TCP just *notices* and
+> retries. The entire protocol is **two mechanisms**:
+>
+> 1. **Every byte is numbered** → reordering and duplicates are solved by *counting*.
+> 2. **The receiver acknowledges what arrived; the sender keeps a copy until acknowledged and resends if
+>    it isn't** → loss is solved by *remembering and retrying*.
+>
+> The handshake, flow control, congestion control, head-of-line blocking, and the reason HTTP/3 abandoned
+> TCP are all consequences of those two. And the records live **only at the two endpoints** — no router
+> keeps a copy or knows TCP exists, which is spine fact 3 again.
+
+### 🤝 The handshake — how the two ends agree where the counting starts
+
+*Added Aug 8, 2026 (session 3). This is the first mechanical consequence of "every byte is numbered."*
+
+If the bookkeeping is byte numbers, the two ends must **agree on where the numbering begins** before a
+single byte of your request can move — an ACK for "byte 400" is meaningless if the two ends disagree
+about which byte was 400. That agreement is the handshake:
+
+| # | Message | Direction | Says |
+|---|---|---|---|
+| 1 | **SYN** (synchronize) | client → server | *"Opening a connection. My numbering starts at 4,912,336."* |
+| 2 | **SYN-ACK** | server → client | *"I acknowledge 4,912,336. My own numbering starts at 88,201,714."* |
+| 3 | **ACK** (acknowledge) | client → server | *"I acknowledge 88,201,714."* |
+
+That starting value is the **ISN** (initial sequence number) and it is **random, not zero** — a predictable
+ISN would let an off-path attacker forge packets that land inside the window.
+
+**Two consequences worth carrying:**
+
+- **Three messages, but only ONE round trip of delay** before data flows — the client can bundle its
+  request with message 3. That is the "1 RTT handshake" line in the cold-start ladder above; it is not
+  1.5 RTTs in the sense that matters to a latency budget.
+- **Two independent numbering streams, one per direction.** TCP is bidirectional and each direction is
+  counted separately — which is why both sides declare an ISN rather than sharing one.
+
+| Guarantee | How | Consequence |
+|---|---|---|
+| **Delivery** | receiver ACKs each byte range; sender retransmits what isn't ACKed | a lost packet costs you a *timeout*, not an error |
+| **Ordering** | every byte has a sequence number; receiver reassembles | you never see data out of order — you just wait |
+| **No duplicates** | sequence numbers let the receiver discard repeats | IP may duplicate freely; you never notice |
+| **Flow control** | receiver advertises a *window* = "I have room for N more bytes" | a fast sender can't drown a slow receiver |
+| **Congestion control** | sender backs off on packet loss (loss ≈ congestion signal) | TCP is *polite* — it deliberately slows down under strain |
+
+**What TCP does NOT give you — each of these is a real design trap:**
+
+- **Not "the other side processed it."** An ACK means the bytes reached the receiver's OS buffer. The
+  application may crash before reading them. **Application-level acknowledgement is a separate thing
+  you must design**, which is the whole reason message queues have explicit acks.
+- **Not message boundaries.** See framing below.
+- **Not timeliness.** TCP will happily spend 30 seconds retransmitting. Reliability is bought *with
+  latency* — which is exactly the trade the next section is about.
+- **Not security.** Anyone on the path reads it. That's TLS's job, not TCP's.
+
+### ⚠️ Head-of-line blocking — the cost of ordering
+
+Ordering is a guarantee with a bill. If packet #2 of 10 is lost, packets #3–10 may have already
+arrived — but TCP **cannot** hand them to your application, because that would break ordering. They
+sit in a buffer until #2 is retransmitted. **One lost packet stalls everything behind it.**
+
+This is why HTTP/2, which multiplexes many requests over one TCP connection, still stalls *all* of
+them on a single lost packet — and why **HTTP/3 abandoned TCP for QUIC on top of UDP**, so each stream
+can advance independently.
+
+## ⚖️ TCP vs UDP — the question is "is a late packet still worth anything?"
+
+**UDP (User Datagram Protocol) is IP with ports bolted on and nothing else.** No handshake, no
+retransmission, no ordering, no congestion control. You hand it a datagram; it tries once.
+
+> ⚠️ **"UDP is faster" is the wrong model, and it's the one everyone arrives with.** A UDP packet and a
+> TCP packet carrying the same bytes cross the same routers in the same time — **there is no speed dial.**
+> What UDP avoids is **waiting**, in exactly three places: the handshake before any data can be sent · the
+> retransmission of a lost packet · head-of-line blocking behind an earlier packet.
+> So the trade is **reliability for not-waiting**, not reliability for speed — which is why the decision
+> rule below is about whether a *late* packet is worth anything, and not about throughput at all.
+>
+> And UDP doesn't *prevent* reliability, it **declines to provide** it. **QUIC is UDP with reliability
+> rebuilt on top**, per-stream instead of per-connection. HTTP/3 didn't pick UDP for speed; it picked UDP
+> to escape TCP's rules and write its own.
+
+| | TCP | UDP |
+|---|---|---|
+| Setup cost | 1 RTT handshake | **zero** — first packet carries data |
+| Lost data | retransmitted (adds latency) | **gone**, silently |
+| Order | guaranteed | not guaranteed |
+| Head-of-line blocking | yes | no |
+| Congestion control | built in | you build it or you don't |
+| Message boundaries | none (stream) | preserved (datagrams) |
+
+**The decision rule, and it's one sentence:**
+
+> **Ask whether a late packet is still valuable.** If yes → TCP; retransmission is a gift. If a late
+> packet is *worthless* → UDP; the retransmission would arrive after you needed it and cost you
+> latency for nothing.
+
+- **Voice/video call** — a 200 ms-late audio frame is garbage; the conversation moved on. Drop it and
+  keep going. UDP.
+- **Live game state** — position update #47 is obsolete the moment #48 arrives. UDP.
+- **File download, API call, database query** — every byte matters whenever it lands. TCP.
+- **DNS** — one small request, one small answer, retrying is trivial and cheaper than a handshake. UDP
+  (falls back to TCP for large responses).
+- **QUIC / HTTP/3** — UDP underneath, then rebuilds reliability *per stream* in userspace, keeping
+  TCP's guarantees without its head-of-line blocking. The point wasn't "UDP is faster"; it was
+  "we want to choose our own reliability rules."
+
+## 📏 Framing — TCP gives you a stream, not messages
+
+TCP delivers an **ordered byte stream with no message boundaries**. `send()` calls do not map 1:1 to
+`recv()` calls: one request can arrive split across three packets, and two requests can arrive in one.
+So every protocol on top of TCP must frame itself. HTTP does it twice:
+
+- **Headers** end at the first blank line (`\r\n\r\n`) — a *delimiter*.
+- **Body** length comes from `Content-Length: N` — a **length prefix**, exactly the trick in
+  [271 Encode and Decode Strings](https://github.com/michael-yrao/cse-progress/blob/main/dsa/leetcode/arrays_and_hash/271_encode_and_decode_string.py).
+  When the length isn't known up front (streaming), `Transfer-Encoding: chunked` sends a length prefix
+  per chunk and a `0` chunk to terminate.
+
+> **Why it matters in design:** "the request is slow" and "the request never framed" look identical to
+> a client. A truncated body with no `Content-Length` hangs until timeout rather than erroring — which
+> is why timeouts are mandatory, not optional, on every network call.
+
+---
+
+## 🧵 One URL, end to end — every layer in order
+
+*Added Aug 8, 2026 (session 3). Everything above, assembled once on a single request:
+`https://google.com` → search for cat pictures.*
+
+### Three separate transactions happen before one pixel moves
+
+| # | Transaction | Layer used | Note |
+|---|---|---|---|
+| 1 | **DNS**: `google.com` → `142.250.72.14` | UDP (transport) | its own request/response; must finish first — **you cannot open a connection to a name** |
+| 2 | **TCP handshake** to `142.250.72.14:443` | TCP (transport) | 1 RTT. **Port 443 came from the `https://` scheme, not from DNS** |
+| 3 | **TLS handshake** | on top of TCP | ~1 RTT (TLS 1.3). Only possible once bytes flow reliably |
+
+Only then does `GET /search?q=cat+pictures` get sent. That is the cold-start ladder, restated as
+transactions rather than as a latency count.
+
+### Going down your stack — each layer wraps the one above
+
+| Layer | Adds | Now addressed to |
+|---|---|---|
+| Application | the HTTP text | *(nothing yet — it's just bytes)* |
+| *(TLS)* | encryption | opaque ciphertext |
+| **Transport** | TCP header: **src port 51514, dst port 443**, sequence number | a **program** |
+| **Internet** | IP header: **src 192.168.1.20, dst 142.250.72.14** | a **machine** |
+| **Link** | Wi-Fi header: **dst = your router's MAC** | **the next box** |
+
+Each layer treats the one above as opaque payload it must not read. That is spine fact 1, concretely.
+
+### Travelling — what changes at each hop, and what doesn't
+
+1. **Your router** receives it → **strips the link header** → reads the IP destination → picks a next hop
+   → **writes a brand-new link header** for that hop. Being NAT, it also rewrites the **IP source** to its
+   public address and the **TCP source port** to one it invents, recording the mapping in its table.
+2. **Every subsequent router repeats the strip-and-rebuild.** Nobody opens the TCP header. Nobody can open
+   the TLS payload. **The IP header is the only thing consulted**, and it is the only header that survives
+   the journey unchanged.
+3. **At Google the stack unwinds in reverse:** link off → IP checked → **TCP reassembles the numbered bytes
+   into a stream** → TLS decrypts → HTTP request handed to the application.
+
+> ### The asymmetry to remember
+> **Layers 1–3 are touched by many machines along the path. Layer 4 is read only by the two endpoints.**
+> No router opens a TCP header — ports and sequence numbers mean nothing to it. **That is spine fact 3
+> restated: the connection is state at the two ends, not a thing in the network.**
+>
+> And it is the same fact that makes an **L7 load balancer** possible at all: reading layer 7 means
+> *becoming* an endpoint, which is what "TLS termination" means.
+
+# HTTP semantics — the four clusters that change an architecture
+
+*Admitted to this card under one rule: **only if picking it differently changes an architecture.***
+
+## ↪️ 301 vs 302 — who remembers the redirect
+
+Both say "it's at a different URL." The difference is **who caches that fact.**
+
+| | **301** Moved Permanently | **302** Found (temporary) |
+|---|---|---|
+| Client caches it | **yes — often indefinitely** | no |
+| Your server sees later requests | **no — it's bypassed** | yes, every one |
+| Load / latency after first hit | ~zero | one hop through you, always |
+| Change the destination later | **effectively impossible** | instantly |
+| Analytics on later clicks | blind | full |
+
+> **This is not a detail — it decides whether a subsystem exists.** In a URL shortener, 301 means
+> clicks bypass you and there is *nothing to log*; 302 means every click is a request you serve, which
+> is the only reason a `ClickEvent` table can exist. Same product, different data model, because of a
+> three-digit number.
+
+⚠️ **A 301 is nearly impossible to retract.** It lives in browser caches you don't control; no deploy
+reaches it. **Ship 302 first, confirm the target, harden to 301 only when certain.**
+
+**Method preservation (the historical wart):** clients have long been allowed to turn a POST into a
+GET when following 301/302. If the method must survive, use **308** (permanent) or **307** (temporary)
+— same caching semantics, method preserved.
+
+## 🃏 Recall Card (the rep)
+*Answer each from memory before unfolding. Miss one → it's not 🟢.*
+
+> ⚠️ **Covers the Aug 3 session + all three Aug 8 sessions** (addressing/NAT · DNS + IP delivery + TCP-as-
+> bookkeeping · the layer models, the handshake, and the end-to-end walk — questions 1b, 11b, 16).
+> The remaining HTTP clusters
+> (`304`/`ETag`/`Cache-Control`, method idempotency, 429-vs-503-vs-500) are not yet written and are
+> **not** on this card. Extend it when they land.
+>
+> 🛑 **This card has NOT been measured.** Aug 8's session was **teaching, unrated** — the learner asked to
+> stop the blind sprint after Q1 (*"I'm a complete novice at this"*), which was the right call: rating a
+> sprint on never-bootstrapped material measures the explanation, not retention. **The rated sprint needs
+> a real gap after the teaching finishes.** Do not log a comfort rating off a session where the material
+> was explained the same day.
+>
+> ## 🔁 TCP is rolled back to UNTAUGHT (learner's call, Aug 9, 2026)
+>
+> > *"let's say we didn't talk about TCP yet since I don't feel I actually maintained it at all due to it
+> > being so late in the day."*
+>
+> The TCP material below **is written but was not retained** — it landed in session 3 at the end of a long
+> day. Per the standing rule, a self-reported zero means **assume zero kept** and re-teach from the first
+> fact; a "covered" list is evidence about what the coach *said*, not what the learner holds
+> (`.claude/memory/feedback_self_reported_zero.md`).
+>
+> **Out of scope for the sprint until re-taught:** **11, 11b, 12, 13, 14** entirely, and the TCP legs of
+> **1, 1b, 6, 10, 16** (the transport layer, the handshake RTT, the 4-tuple, the "TCP reassembles" step).
+> **Still in scope — these stand:** IP delivery and the link layer, private/public addressing and NAT
+> (10c, 10d), ports and the three bands (10b), all of DNS (8, 9), TLS termination (4, 5), what a middlebox
+> can see (2, 3), latency/bandwidth/RTT (7), 301-vs-302 (15).
+>
+> ⚠️ The boundary is drawn wide on purpose: re-covering something retained costs seconds, building on an
+> absent foundation costs the session. **Ports/NAT are kept in scope as *addressing*, not as TCP** — if
+> the 4-tuple went with the TCP rollback, say so and 10/10b/10c move out too.
+
+<details><summary><b>1. Name the three layers of a normal web request and what each one is responsible for.</b></summary>
+
+**IP** — gets packets to the right *machine*; best-effort, may drop/duplicate/reorder and never says so.
+**TCP** — on top of IP, between *ports*; adds back delivery, ordering, dedup, flow and congestion control.
+**HTTP** — text riding inside; assumes a working byte stream and says nothing about delivery.
+Each layer treats the one above as opaque payload.
+</details>
+
+<details><summary><b>1b. The internet runs a 4-layer model, not OSI's 7. Name the four — and the one that never comes up in design conversations.</b></summary>
+
+**Application** (HTTP/DNS/TLS) · **Transport** (TCP/UDP, between *ports*) · **Internet** (IP, between *machines*) · **Link** (Ethernet/Wi-Fi, between **this machine and the next box on the same physical network**).
+**Link is the invisible one.** It addresses by **MAC address** — burned into the network card, meaningful *only* on the local network, never routed, never travelling. Your laptop can't address a packet to Virginia; it can only hand it to your router.
+**The split:** IP says where it's ultimately going; link says who's holding it right now. So the **IP header is unchanged end to end** while the **link header is stripped and rebuilt at every hop**.
+OSI numbers survive only as jargon for how deep a middlebox reads (L3 = IP, L4 = ports, L7 = HTTP).
+</details>
+
+<details><summary><b>2. Over <code>https://example.com/secret</code>, what can a middlebox on the path see, and what can't it?</b></summary>
+
+**Can see:** IP addresses, ports, packet sizes and timing, and **the hostname** (`example.com`) via TLS SNI, sent in the clear during the handshake. The DNS lookup leaked it a moment earlier too.
+**Cannot see:** method, **path**, headers, body, cookies.
+So HTTPS hides *what you asked for*, not *who you're talking to*.
+</details>
+
+<details><summary><b>3. "Stateless" vs "can't read" — why doesn't a router act on your URL path?</b></summary>
+
+Because reading the IP header is its *job*, not because it's unable. Over plain HTTP the request text is in its buffer in the clear. Middleboxes read deeper all the time when you want them to — that's exactly what an L7 load balancer does.
+</details>
+
+<details><summary><b>4. What does "TLS termination" mean, and how can an L7 load balancer route by path if the path is encrypted?</b></summary>
+
+**Terminate = be one of the two ends**, not "stop using TLS." The LB holds the cert and private key for the domain, so the client's TLS session ends *at the LB*. It decrypts, reads plaintext HTTP, routes on path, then opens a **separate** connection to the backend. Possible only because a connection is state at its two endpoints — anything with the keys can be an endpoint.
+</details>
+
+<details><summary><b>5. Name the three options for the LB→backend hop, and the tradeoff you must state out loud.</b></summary>
+
+**Terminate** (plain HTTP inside a trusted VPC — cheapest, most common) · **Re-encrypt / bridging** (LB opens its own TLS to the backend — regulated or zero-trust) · **Passthrough** (LB never decrypts).
+**The tradeoff:** passthrough gives end-to-end encryption but makes the box an **L4** balancer — it *cannot* route by path. You can't have both at the same box.
+</details>
+
+<details><summary><b>6. Cold start on <code>https://</code>: how many round trips before the first byte of HTTP leaves? Name them.</b></summary>
+
+**3 RTTs** (TLS 1.3): DNS lookup (1) → TCP handshake (1) → TLS handshake (1). A 4th to get the first byte back. TLS 1.2 adds one more.
+At 200 ms RTT (Sydney→Virginia) that's ~800 ms before any page content arrives, with your server code not yet run.
+</details>
+
+<details><summary><b>7. Latency vs bandwidth vs RTT — and why can't buying bandwidth fix a chatty API?</b></summary>
+
+**Latency** = one-way delay · **RTT** = there and back (~2× latency) · **Bandwidth** = data per second once flowing.
+They're independent. Handshakes wait on *distance*, not pipe width — a 10 Gbps link between Sydney and Virginia still has ~200 ms RTT. Many small requests = latency-bound → fix with fewer round trips (connection reuse, HTTP/2) or less distance (CDN). Few large transfers = bandwidth-bound → compress or shrink.
+</details>
+
+<details><summary><b>8. You ask one DNS question. Who does the walking, and what are the three tiers?</b></summary>
+
+Your **recursive resolver** (ISP's by default, or `8.8.8.8`/`1.1.1.1`) does it. **Root** servers know where each TLD lives → **TLD servers** (`.com`) know which nameserver owns each domain → the **authoritative nameserver** holds the record. Every tier caches, so a real lookup is usually 1–2 RTTs, not 4.
+</details>
+
+<details><summary><b>9. You changed your DNS record 45 minutes ago and users still hit the old server. Why — and what's the correct migration procedure?</b></summary>
+
+The old answer was cached with its **TTL** (say 3600s). Resolvers serve from memory until it expires; your change is live and irrelevant to them until then.
+**Procedure:** (1) a day ahead, lower TTL 3600→60 — you must wait out the *old* TTL for that to take hold; (2) then flip the IP; (3) raise TTL back after.
+Not always-60 because short TTLs mean constant re-queries: more load, more cache misses, a DNS RTT added back. Freshness vs traffic.
+</details>
+
+<details><summary><b>10. What identifies a TCP connection, and why can one server hold 100k connections on port 443?</b></summary>
+
+The **4-tuple**: `(source IP, source port, dest IP, dest port)` — plus sequence-number state at each end, and nothing in the middle. The port isn't consumed; the *tuple* is, so distinct source ports make distinct connections.
+</details>
+
+<details><summary><b>10b. Name the three port bands. Which is the one every OS agrees on, and what does binding there require?</b></summary>
+
+**0–1023 well-known** (HTTP 80 · HTTPS 443 · DNS 53 · SSH 22) — the universally agreed band; **on Unix-likes, binding requires root**. **1024–49151 registered** — vendor defaults (Postgres 5432, Redis 6379, Kafka 9092). **49152–65535 ephemeral** — throwaway source ports, but **OS-dependent**: Linux really uses 32768–60999.
+Two consequences: apps run on **8080 behind a proxy holding 443** because of the root rule; and a machine tops out near **28k outbound connections to one destination**, since each needs its own source port.
+</details>
+
+<details><summary><b>10c. Your laptop is 192.168.1.5. What does the web server think your address is, and what single thing connects the two views?</b></summary>
+
+The server sees the **router's public address and a public port it invented** — `203.0.113.9:62311`. Your laptop's own view is `192.168.1.5:51204`. **The two ends disagree about the connection's identity and nothing breaks**, because each end only has to be self-consistent (spine fact 3).
+The **NAT table** in the router is the only record linking them: one row per connection, written outbound, read on every reply.
+**NAT rewrites the port as well as the IP, and must** — two devices can pick the same ephemeral source port, so the public port is the disambiguator.
+</details>
+
+<details><summary><b>10d. A WebSocket sits idle for ten minutes and then stops working, with no error at either end. Why?</b></summary>
+
+A **NAT (or firewall) table row was evicted on an idle timeout** — often just a few minutes. The mapping is gone, the next packet has nowhere to go, and it's discarded silently; neither end is told.
+**That's why long-lived connections send keepalives** — not to test liveness, but to stop a middlebox forgetting they exist.
+</details>
+
+<details><summary><b>11. What does TCP guarantee — and name three things it does NOT.</b></summary>
+
+**Guarantees:** delivery (retransmit un-ACKed), ordering (sequence numbers), no duplicates, flow control (receiver window), congestion control.
+**Does not:** that the *application processed* it (an ACK means it reached the OS buffer — app-level acks are yours to design) · message boundaries · timeliness (it will retransmit for 30s rather than fail) · security.
+</details>
+
+<details><summary><b>11b. TCP numbers every byte. What has to happen before byte one can be sent — and why is the handshake three messages but only one RTT of delay?</b></summary>
+
+The two ends must **agree where the numbering starts**, or an ACK for "byte 400" is meaningless.
+**SYN** (client: *"my numbering starts at 4,912,336"*) → **SYN-ACK** (server: *"acknowledged; mine starts at 88,201,714"* — one message, two jobs) → **ACK** (client acknowledges the server's).
+That start value is the **ISN** (initial sequence number) and it is **random, not zero** — a predictable ISN lets an off-path attacker forge packets that land inside the window.
+**Three messages, one RTT of delay:** the client bundles its request with message 3, so only one there-and-back completes before data flows.
+**Two independent numbering streams**, one per direction — TCP is bidirectional and each direction counts separately, which is why both ends declare an ISN.
+</details>
+
+<details><summary><b>12. What is head-of-line blocking, and why did HTTP/3 abandon TCP?</b></summary>
+
+Ordering means a lost packet #2 blocks already-arrived packets #3–10 from being delivered — handing them over would break the ordering promise. One loss stalls everything behind it.
+HTTP/2 multiplexes many requests over one TCP connection, so one lost packet stalls *all* of them. HTTP/3 runs QUIC on **UDP** and rebuilds reliability per-stream, so streams advance independently.
+</details>
+
+<details><summary><b>13. TCP or UDP — state the decision rule in one sentence, with an example each way.</b></summary>
+
+**Is a late packet still worth anything?** Yes → TCP (retransmission is a gift). No → UDP (the retransmission arrives after you needed it, and you paid latency for nothing).
+Voice/video, live game state → UDP. File download, API call, DB query → TCP. DNS → UDP (small, retry is cheaper than a handshake).
+</details>
+
+<details><summary><b>14. TCP hands you a byte stream with no message boundaries. How does HTTP know where a message ends?</b></summary>
+
+Two mechanisms: headers end at the first blank line (`\r\n\r\n`) — a **delimiter**; the body length comes from `Content-Length: N` — a **length prefix** (same trick as LC 271). When the length isn't known up front, `Transfer-Encoding: chunked` sends a length prefix per chunk and a `0` chunk to end.
+</details>
+
+<details><summary><b>15. 301 vs 302 — which lets you keep click analytics, and why? What's the trap with the other one?</b></summary>
+
+**302** (temporary) — not cached, so every click comes back through your server, which is the only reason a click-event log can exist. **301** (permanent) is cached by the client, often indefinitely, so later clicks bypass you entirely: cheap and fast, but blind and **effectively impossible to retract** — no deploy reaches a browser cache. Ship 302 first, harden to 301 only when certain. Use **307/308** if the HTTP method must be preserved.
+</details>
+
+<details><summary><b>16. Walk <code>https://google.com</code> end to end. Three transactions before any data; then what changes at each hop and what doesn't.</b></summary>
+
+**Three transactions first:** **DNS** (`google.com` → IP, over UDP — you can't connect to a name) → **TCP handshake** to `IP:443` (port from the `https://` *scheme*, not from DNS) → **TLS handshake**. Only then does `GET /search?q=...` leave.
+**Down the stack, each layer wrapping the last:** HTTP text → TLS encrypts → TCP header (src port 51514, dst 443, seq) = addressed to a *program* → IP header (src/dst addresses) = addressed to a *machine* → link header (dst = router's MAC) = addressed to *the next box*.
+**At each hop:** link header **stripped and rebuilt**; IP header **unchanged the whole way**; nobody opens TCP; nobody can open TLS. Your NAT router additionally rewrites the IP source and TCP source port on the way out.
+**At the far end it unwinds in reverse:** link off → IP checked → TCP reassembles the byte stream → TLS decrypts → HTTP handed to the app.
+**The asymmetry:** layers 1–3 are touched by *many* machines; **layer 4 only ever by the two endpoints** — spine fact 3, and the reason an L7 LB has to *become* an endpoint to read a path.
+</details>
+
+---
+
+# ❓ Open — not yet asked
+
+*Backfilled Aug 9, 2026, covering the Aug 3 + Aug 8 sessions. This card is taught **spine-then-pull** — the
+learner's questions set the direction, which is the point, but it means coverage is bounded by what they
+could already see was missing. This section records where the pull didn't go.*
+
+**Rules for this section** (full version in `.claude/memory/feedback_coverage_gap_ledger.md`):
+- Every item is a **bare open question, never a summary of the answer** — so this list is simultaneously the
+  coverage report and the **mock-interview bank**, and reading it doesn't spoil it.
+- Scoped by the **L6 interview-ROI line**, not by completeness. Things deliberately left off are listed at
+  the bottom *with their reason*, so a judgment call is never mistaken for an oversight.
+- Items are struck through when a later session's questions reach them. **When this list is drained to the
+  floor, that is the trigger for the mock** — not a date.
+
+## 🔁 Not a gap — taught but rolled back to zero
+
+**TCP, in full.** Written into this card, not retained (see the Recall Card banner). Re-teach from the
+first fact; it does not belong on the list below, because the list is *never asked*, and this was asked
+and answered. It is simply owed again.
+
+## 🪜 The two layer models — half-covered, flagged by the learner (Aug 9)
+
+The existing [layer-models section](#-the-two-layer-models--and-the-link-layer-you-never-see) gives the
+**TCP/IP 4-layer model in full** and maps it to OSI *numbers* — but it collapses OSI into ranges (`5–7`,
+`1–2`) and **never names the seven layers individually or says what the collapsed ones were for.**
+
+⚠️ **Naming, because this is the exact confusion the section exists to fix:** there is no "4-layer OSI
+model." **OSI is the 7-layer one; the 4-layer one is TCP/IP.** Two different models from two different
+efforts — and OSI was a *competing protocol suite* that lost, not merely a diagram drawn about the winner.
+Calling it "the 4 OSI layers" is the tell that they've blurred together.
+
+- **N23.** Name all seven OSI layers in order, and the two that no real internet stack implements.
+- **N24.** Layers 5 and 6 were meant to do a job. What job — and where did that work actually end up in a
+  modern HTTPS request?
+- **N25.** This card treats OSI 1–2 as one row. What is the actual split, and what does a device operating
+  at each one look like on a real network?
+- **N26.** If the internet only ever needed four layers, why does the entire industry still count to seven?
+
+## 🔌 Connection lifecycle — the biggest hole
+
+The card counts the 3-RTT cold start but never asks what happens to the connection afterwards, which is
+where most of the design leverage sits.
+
+- **N1.** A page loads 40 assets from one host. Does that cost 40 TCP handshakes? What changed between
+  HTTP/1.0, HTTP/1.1 and HTTP/2 in the answer?
+- **N2.** Your service makes 5k outbound calls/sec to one internal API. Why does a connection *pool* exist,
+  and what breaks when it's sized wrong in each direction?
+- **N3.** What is `TIME_WAIT`, why does it exist, and how does it interact with the ~28k outbound-connection
+  ceiling already on this card (10b)?
+- **N4.** TLS costs an RTT on every new connection. What are the two mechanisms that make a *repeat* visit
+  cheaper, and what does the aggressive one give up?
+
+## ⏱ Timeouts and retries — the card's own trigger line points here
+
+> The header of this card says *"you'll want this when … you add a retry."* The sessions never reached it.
+
+- **N5.** Name the distinct timeouts on one HTTP call. Which one fires when the server is *slow* vs when it
+  is *gone*, and why is a single "timeout: 30s" setting a bug?
+- **N6.** TCP will retransmit for ~30 seconds rather than fail (Q11). What does that imply about where your
+  timeout has to live?
+- **N7.** Which HTTP methods are safe to retry blindly, and what does the network layer *not* tell you about
+  whether the first attempt landed? (Pairs with [`retry_storms_and_stampedes.md`](retry_storms_and_stampedes.md).)
+
+## 🔐 TLS trust — termination is covered, trust is not
+
+Q4/Q5 cover *terminating* TLS. Nothing covers how the client decides the certificate is legitimate.
+
+- **N8.** The LB "holds the cert." What makes a browser believe it? Walk the chain.
+- **N9.** What is **mTLS** (mutual TLS) and what does it buy in service-to-service traffic that plain TLS
+  doesn't? When is it worth the operational cost?
+- **N10.** SNI is sent in the clear (Q2). What does that leak, and what is being done about it?
+
+## 🌍 DNS as a traffic-steering tool
+
+The resolution walk, glue and TTL are solid. DNS as an *architectural lever* is untouched.
+
+- **N11.** Name the record types you'd actually put in a design, and the one that cannot legally sit at the
+  apex of a domain. What's the workaround?
+- **N12.** Two mechanisms send users in different regions to different servers — one at the DNS layer, one at
+  the routing layer. Name both and state which failure they handle *badly*.
+
+## 🔁 Proxies and client identity
+
+- **N13.** You rate-limit by client IP behind a load balancer. Why does every request appear to come from
+  one address, and what's the fix — plus the security trap in the fix?
+- **N14.** Forward proxy vs reverse proxy: same machine in the middle, so what actually distinguishes them?
+
+## 📡 Push — the transport question every real-time design opens with
+
+WebSockets appear once on this card, only as a NAT-timeout victim (10d).
+
+- **N15.** Three ways a server pushes to a browser. State the tradeoff that picks between them, and which one
+  is *not* a separate protocol at all.
+- **N16.** What does a long-lived connection per user cost the server side, and how does that change a
+  capacity estimate?
+
+## 🚦 TCP behaviour beyond the guarantee list — *for after the re-teach*
+
+Q11 names congestion control and flow control in a list and never opens either.
+
+- **N17.** Two brand-new connections, same bandwidth, same RTT: why is a large transfer slow at the start?
+  What is the sender waiting to learn?
+- **N18.** Flow control and congestion control both throttle the sender. What is each one protecting, and how
+  does a receiver signal its limit?
+- **N19.** Why can a fat, long-distance link sit mostly idle on a single connection, and what's the lever?
+
+## 🧾 HTTP semantics — already flagged unwritten on the Recall Card
+
+- **N20.** How does a client avoid re-downloading an unchanged asset — and what's the difference between the
+  two headers that do it?
+- **N21.** `429` vs `503` vs `500`: what does each tell the *caller* to do differently?
+- ~~**N22.** Idempotency: what makes a method idempotent, why does it not mean "safe"?~~ ✅ **CLOSED Aug 9,
+  2026**, pulled in by the URL-shortener design — safe vs idempotent, and why GET is cacheable/prefetchable/
+  retryable while POST is none of those. **Still open:** how do you make a `POST` retryable anyway
+  (idempotency keys)? Raised and parked at the write path.
+
+## 🧊 Deliberately below the line (judgment call, not an oversight)
+
+| Left off | Reason |
+|---|---|
+| MTU, fragmentation, MSS clamping | Sub-HLD; surfaces in VPN/overlay debugging, never in a 45-min design |
+| Nagle's algorithm, delayed ACK | Same — a latency micro-optimization, not an architecture decision |
+| BGP internals, routing protocols | "Nobody knows the whole route" (this card) is the design-relevant fact; the protocol isn't |
+| Full IPv6 addressing | Beyond *"AAAA exists, dual-stack exists"*, it changes no design at this level |
+| TLS cipher suites, key exchange math | Cryptographic detail; the trust chain (N8) is the part that decides architecture |
+
+*Promote anything here the moment a real design needs it — the line is a judgment, not a verdict.*

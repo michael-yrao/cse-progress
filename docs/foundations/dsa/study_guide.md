@@ -123,8 +123,8 @@ If you finish an active block problem in under 15 minutes, don't move on to a ne
 ## Daily Structure: Design Phase (Blocks 5–7)
 *Use this structure from Week 17 onward to protect your DSA knowledge.*
 
-> **📍 SD source of truth = [`senior_ramp.md`](https://github.com/michael-yrao/sd-progress/blob/main/senior_ramp.md)** (question order, phases,
-> exit gates, the 7-point rubric) and [`study_guide.md`](https://github.com/michael-yrao/sd-progress/blob/main/study_guide.md) (the mock
+> **📍 SD source of truth = [`senior_ramp.md`](../../../docs/foundations/system_design/senior_ramp.md)** (question order, phases,
+> exit gates, the 7-point rubric) and [`study_guide.md`](../../../docs/foundations/system_design/study_guide.md) (the mock
 > mechanics). **Rebuilt Aug 13, 2026: SD is now mock interviews on HelloInterview's question board** —
 > the learner studies independently, the coach interviews. This section is kept for the daily-loop
 > mechanics and the company-targeting strategy, not as a second design plan. Where they differ, the SD
@@ -176,9 +176,9 @@ spread across sittings cannot be rated cold. The full framework runs *within* th
 → Estimation → API/data model → High-level → Deep-dive forks → Failure modes → Evolve/operate.**
 
 Mechanics (the split, the two slots, the protocol, the debrief) →
-[`../system_design/study_guide.md`](https://github.com/michael-yrao/sd-progress/blob/main/study_guide.md). Question order, phases and the
-7-point rubric → [`../system_design/senior_ramp.md`](https://github.com/michael-yrao/sd-progress/blob/main/senior_ramp.md). Rows →
-[`../system_design/mastery/design_progress.md`](https://github.com/michael-yrao/sd-progress/blob/main/mastery/design_progress.md).
+[`../system_design/study_guide.md`](../../../docs/foundations/system_design/study_guide.md). Question order, phases and the
+7-point rubric → [`../system_design/senior_ramp.md`](../../../docs/foundations/system_design/senior_ramp.md). Rows →
+[`../system_design/mastery/design_progress.md`](../../../docs/foundations/system_design/mastery/design_progress.md).
 
 ### 🔄 Phase 2 DSA Hybrid Rule
 
@@ -194,7 +194,7 @@ The Saturday randomized DSA sprint covers the pattern recognition gap regardless
 
 ### 📋 Design Question Order — see the ramp
 
-> **The design list, order, and exit gates now live in [`senior_ramp.md`](https://github.com/michael-yrao/sd-progress/blob/main/senior_ramp.md).**
+> **The design list, order, and exit gates now live in [`senior_ramp.md`](../../../docs/foundations/system_design/senior_ramp.md).**
 > Do not maintain a second order here (the old fintech-first list was retired Aug 6, 2026 with the re-aim
 > to big tech).
 

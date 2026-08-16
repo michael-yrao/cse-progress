@@ -7,8 +7,9 @@
 # Paths are read from cse.config.yml by the script.
 #
 # (The AI tracker was removed with the AI track on Aug 13, 2026. The System Design tracker
-# left on Aug 15, 2026 with the whole SD track — it lives in the private sd-progress repo
-# now, driven by its own copy of this hook. Nothing here should reach for design_progress.md.)
+# left on Aug 15, 2026 and CAME BACK on Aug 16 — only HelloInterview-excerpt material stayed
+# private, and a tracker of question names + comfort + dates is not that. It is handled by the
+# second block below, with --tracker rather than source discovery: there are no SD source files.)
 STAGED=$(git diff --cached --name-only --diff-filter=ACM)
 if echo "$STAGED" | grep -qE "dsa_progress\.md$|^dsa/leetcode/.*\.(py|java|ts|js|cpp)$"; then
   echo "Auto-updating the DSA spaced-repetition tracker..."
@@ -24,6 +25,24 @@ if echo "$STAGED" | grep -qE "dsa_progress\.md$|^dsa/leetcode/.*\.(py|java|ts|js
   fi
   DSA="docs/foundations/dsa/mastery/dsa_progress.md"
   [ -f "$DSA" ] && git add "$DSA"
+fi
+
+# System Design tracker. Same 7-column table and the same interval math as the DSA one, but
+# --tracker instead of --staged-only: rows are added by hand and there is nothing to discover.
+if echo "$STAGED" | grep -qE "design_progress\.md$"; then
+  echo "Auto-updating the System Design tracker..."
+  SD="docs/foundations/system_design/mastery/design_progress.md"
+  if command -v py >/dev/null 2>&1; then
+    py scripts/update_review_dates.py --tracker "$SD"
+  elif command -v python >/dev/null 2>&1; then
+    python scripts/update_review_dates.py --tracker "$SD"
+  elif command -v python3 >/dev/null 2>&1; then
+    python3 scripts/update_review_dates.py --tracker "$SD"
+  else
+    echo "Error: Python not found. Install Python to enable the auto-updater." >&2
+    exit 1
+  fi
+  [ -f "$SD" ] && git add "$SD"
 fi
 
 # Technique coverage. Keyed by TECHNIQUE rather than by problem, so it answers "is
