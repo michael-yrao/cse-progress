@@ -148,9 +148,10 @@ techniques:
       - {number: 122}
 
   # ── Prefix sum ──────────────────────────────────────────────────────────────
+  # Bar raised to the file default of 3 on Aug 16, 2026 (tier A/B of the
+  # coverage review: a LeetCode topic tag exists that can actually source it).
   - name: Prefix Sum
     family: prefix_sum
-    min_problems: 2
     problems:
       - {number: 560}
       - {number: 53, method: Prefix Sum}
@@ -173,9 +174,10 @@ techniques:
       - {number: 540}
       - {number: 2300}
 
+  # Bar raised to the file default of 3 on Aug 16, 2026 (tier A/B of the
+  # coverage review: a LeetCode topic tag exists that can actually source it).
   - name: Binary Search on Answer
     family: binary_search
-    min_problems: 2
     problems:
       - {number: 875}
       - {number: 1011}
@@ -251,9 +253,10 @@ techniques:
       - {number: 19, method: Iterative}
       - {number: 19, method: Postorder Recursion}
 
+  # Bar raised to the file default of 3 on Aug 16, 2026 (tier A/B of the
+  # coverage review: a LeetCode topic tag exists that can actually source it).
   - name: Floyd's Cycle / Midpoint
     family: linked_list
-    min_problems: 2
     problems:
       - {number: 141}
       - {number: 143}
@@ -270,9 +273,10 @@ techniques:
     problems:
       - {number: 138}
 
+  # Bar raised to the file default of 3 on Aug 16, 2026 (tier A/B of the
+  # coverage review: a LeetCode topic tag exists that can actually source it).
   - name: HashMap + Doubly Linked List (LRU)
     family: linked_list
-    min_problems: 1
     problems:
       - {number: 146}
 
@@ -294,9 +298,10 @@ techniques:
       - {number: 543}
       - {number: 124}
 
+  # Bar raised to the file default of 3 on Aug 16, 2026 (tier A/B of the
+  # coverage review: a LeetCode topic tag exists that can actually source it).
   - name: Tree BFS (level order)
     family: trees
-    min_problems: 2
     problems:
       - {number: 102}
       - {number: 199}
@@ -315,9 +320,10 @@ techniques:
       - {number: 105}
 
   # ── Tries ───────────────────────────────────────────────────────────────────
+  # Bar raised to the file default of 3 on Aug 16, 2026 (tier A/B of the
+  # coverage review: a LeetCode topic tag exists that can actually source it).
   - name: Trie
     family: tries
-    min_problems: 2
     problems:
       - {number: 208, method: Prefix Tree}
       - {number: 211}
@@ -360,9 +366,10 @@ techniques:
       # paper over by re-crediting 417.
       - {number: 417, method: BFS}
 
+  # Bar raised to the file default of 3 on Aug 16, 2026 (tier A/B of the
+  # coverage review: a LeetCode topic tag exists that can actually source it).
   - name: Multi-source BFS
     family: graphs
-    min_problems: 1
     problems:
       - {number: 994}
 
@@ -475,9 +482,10 @@ techniques:
       - {number: 1584, method: Prim's MST}
 
   # ── Sorting & divide and conquer ────────────────────────────────────────────
+  # Bar raised to the file default of 3 on Aug 16, 2026 (tier A/B of the
+  # coverage review: a LeetCode topic tag exists that can actually source it).
   - name: Divide & Conquer / Sorting
     family: sorting
-    min_problems: 2
     variants:
       - {name: Merge Sort}
       - {name: Quick Sort, queued: "expansion — sorting deep-dive"}
