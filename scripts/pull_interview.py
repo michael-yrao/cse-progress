@@ -176,6 +176,73 @@ def learned_topics() -> tuple[set[str], set[str]]:
     return topics, cats
 
 
+# ── Roadmap awareness ────────────────────────────────────────────────────────
+# read_tracker() only knows problems that have a TRACKER ROW, i.e. ones already
+# attempted. A problem sitting in the phase plan, the Waiting Room or the
+# Expansion Queue has no row yet, so without this the pull keeps re-suggesting
+# work that is already scheduled. Found Aug 16, 2026: "Largest Rectangle in
+# Histogram" came back as a fresh candidate while sitting in the Aug 3-23 phase.
+#
+# Two different confidences, deliberately handled differently:
+#   * a LINK gives a slug -> exact, safe to EXCLUDE outright.
+#   * a phase-table NAME is prose ("Min Window Substring" vs "Minimum Window
+#     Substring") -> fuzzy, so it only FLAGS. A false exclusion silently hides a
+#     valid candidate, which is worse than showing one you have to skip.
+# Archived schedules are deliberately not scanned: a problem mentioned there and
+# never attempted was dropped, and is fair to resurface.
+PLANNING_DOCS = [
+    ROOT / "docs" / "foundations" / "dsa" / "study_guide.md",
+    ROOT / "docs" / "foundations" / "dsa" / "mastery" / "dsa_progress.md",
+]
+
+
+def roadmap_slugs() -> set[str]:
+    """Slugs linked anywhere in the live planning docs or the current schedules."""
+    import glob
+    out: set[str] = set()
+    paths = [p for p in PLANNING_DOCS if p.exists()]
+    sched = ROOT / "docs" / "foundations" / "schedules"
+    if sched.is_dir():
+        paths += [q for q in sched.glob("*.md")]   # current weeks only, not archive/
+    for q in paths:
+        text = q.read_text(encoding="utf-8", errors="replace")
+        for m in re.finditer(r"(?:leetcode\.com|neetcode\.io)/problems/([a-z0-9-]+)", text):
+            out.add(m.group(1))
+    return out
+
+
+def _norm(s: str) -> str:
+    return re.sub(r"[^a-z0-9]+", " ", s.lower()).strip()
+
+
+def roadmap_phase_text() -> str:
+    """The phase-plan table's Categories column, normalised into one blob.
+
+    Deliberately NOT parsed into individual names. Two earlier attempts split the
+    cell on commas and then tried to recover base names from "Subsets I & II" —
+    both lost entries to editorial asides, roman numerals and length floors. The
+    cell is prose; a containment test against the whole blob cannot have that
+    class of bug, and a false positive here only over-flags a candidate.
+    """
+    sg = ROOT / "docs" / "foundations" / "dsa" / "study_guide.md"
+    if not sg.exists():
+        return ""
+    out, col = [], None
+    for line in sg.read_text(encoding="utf-8", errors="replace").splitlines():
+        cells = [c.strip() for c in line.split("|")]
+        if col is None:
+            if line.startswith("|") and "Categories" in line and "Phase" in line:
+                col = cells.index("Categories")
+            continue
+        if not line.startswith("|"):
+            if out:
+                break
+            continue
+        if len(cells) > col:
+            out.append(cells[col])
+    return _norm(" ".join(out))
+
+
 def fetch_csv(repo: str, branch: str, company: str, window: str) -> str:
     fname = WINDOWS[window]
     url = (f"https://raw.githubusercontent.com/{repo}/{branch}/"
@@ -210,6 +277,8 @@ def main() -> None:
 
     known, cats = learned_topics()
     solved, _ = read_tracker()
+    planned = roadmap_slugs()
+    phase_text = roadmap_phase_text()
 
     want_topics = {x.strip().lower() for x in (args.technique or []) if x.strip()}
 
@@ -239,7 +308,7 @@ def main() -> None:
         for row in csv.DictReader(io.StringIO(text)):
             topics = {t.strip() for t in (row.get("Topics") or "").split(",") if t.strip()}
             slug = slug_from_link(row.get("Link", ""))
-            if slug in solved:
+            if slug in solved or slug in planned:
                 continue
             if args.difficulty and (row.get("Difficulty", "").upper() != args.difficulty):
                 continue
@@ -269,6 +338,7 @@ def main() -> None:
         print(f"  gated by {len(cats)} learned pattern(s): {', '.join(sorted(cats)) or '(none yet)'}")
     if want_topics:
         print(f"  technique filter: {', '.join(sorted(args.technique))}")
+    print(f"  excluding {len(solved)} tracked + {len(planned)} already-scheduled problem(s)")
     print()
     if not candidates:
         print("  Nothing to pull. Retire more patterns first, or try --no-gate / another company.\n")
@@ -277,6 +347,9 @@ def main() -> None:
         why = ", ".join(sorted(matched)) if matched else "-"
         if len(cos) > 1:
             why += f"   [{len(cos)}x: {','.join(sorted(cos))}]"
+        _title = _norm(row.get("Title", ""))
+        if len(_title) > 6 and _title in phase_text:
+            why += "   ⚠ already in the phase plan"
         print(f"  [{row.get('Difficulty','?'):<6}] {row.get('Title','?'):<44} "
               f"freq {freq:>5.1f}  <- {why}")
     print(f"\n  {min(len(candidates), args.limit)} shown of {len(candidates)} eligible. "
