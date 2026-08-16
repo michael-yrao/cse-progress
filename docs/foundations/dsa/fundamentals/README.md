@@ -19,6 +19,7 @@ becoming a textbook:
 |---|---|---|
 | [big_o.md](complexity/big_o.md) | growth rates, per-technique costs | — |
 | [amortized_analysis.md](complexity/amortized_analysis.md) | why one O(n) call can still be O(1) amortized | 901 · 739 · 503 |
+| [bound_tightness.md](complexity/bound_tightness.md) | attainable ≠ representative; pick the parameter that shows what the structure buys | 496 · 208, Aug 16 |
 
 ## Not yet written — waiting for a rep to demand them
 
