@@ -14,7 +14,9 @@ cse-progress/
 │       ├── schedules/              # weekly day-by-day plans, ALL tracks (+ archive/)
 │       └── dsa/
 │           ├── study_guide.md      # master plan, phases, pace, ROI line
-│           ├── fundamentals/       # concept references (e.g. big_o.md)
+│           ├── fundamentals/       # maths under the techniques, by subject
+│           │   ├── graph_theory/   # circuit rank, degree & parity
+│           │   └── complexity/    # big-O, amortized analysis
 │           ├── patterns/           # the pattern library (see below)
 │           ├── mastery/            # spaced-rep record: dsa_progress.md + stuck_log.md
 │           └── templates/          # solution-file scaffold
@@ -53,7 +55,7 @@ scheduled here and executed there**, and the mock's next-review date comes back 
 - **`techniques/`** — one atomic technique per file (sliding window, monotonic stack, union-find, …): recognition → template → practice ladder → pitfalls.
 - **`data-structures/`** — hub pages mapping a data shape to the techniques you reach for.
 - **`intuition_cheatsheet.md`** — fast problem-signal → technique triage.
-- **`../fundamentals/big_o.md`** — complexity of every technique + data structure.
+- **`../fundamentals/complexity/big_o.md`** — complexity of every technique + data structure.
 
 Start at [`patterns/README.md`](docs/foundations/dsa/patterns/README.md).
 

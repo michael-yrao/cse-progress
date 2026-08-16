@@ -7,7 +7,7 @@
 | Already reusable (the *framework*) | Personal (the *data*) |
 |------------------------------------|------------------------|
 | `patterns/` (techniques, hubs, cheatsheet) | `mastery/dsa_progress.md` rows |
-| `fundamentals/big_o.md` | `mastery/stuck_log.md` entries |
+| `fundamentals/complexity/big_o.md` | `mastery/stuck_log.md` entries |
 | ~~`system_design/` guides + templates~~ *(moved to sd-progress, Aug 15, 2026)* | `schedules/` (my weeks) |
 | `scripts/update_review_dates.py` | `dsa/leetcode/**` (my solutions) |
 | `.githooks/pre-commit` | study_guide phase dates/goals |
