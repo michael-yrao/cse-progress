@@ -689,3 +689,22 @@ disease as everything in Cluster A. It is now item 2 of the SessionStart hook's 
   "hook: struck rows now skipped" that was untrue, and only the follow-up test caught it. Same family as
   [[feedback_verify_terminal_actions]] — verify against the visible state, never against the intent.
   Status: `open` — 3rd occurrence, and the first two were already noted in-session without changing method.
+
+- **2026-08-16 [P2] — charged a complexity freebie on two claims that did not hold; learner asked for it back
+  and was right.** On 208 the coach marked the freebie spent for (a) refining `search` from O(n) to **O(h)**,
+  called "backwards", and (b) not producing the object footprint after a cue.
+  **(a) was simply wrong.** `search` iterates the word but returns early on a missing child, so steps =
+  `min(n, h)`. **O(h) bounds it always**, and is *tighter* than O(n) whenever queries run longer than the trie
+  is deep. O(n) is the convention, not the only valid answer. The coach asserted a bound was invalid without
+  checking the early-exit path — the same read-before-asserting failure as [[feedback_read_before_asserting]],
+  applied to a claim about mathematics rather than about the learner's file.
+  **(b) was too harsh.** The learner produced the **fixed-alphabet** half unprompted (Σ = 26 is bounded by the
+  constraints, so per node is O(1)), asked a real question about how prefix sharing interacts with a total, and
+  then **rejected the coach's own `O(N·L)`** as "almost never the case" — driving out the exact `O(P)` form.
+  That is reasoning toward the number, not missing it.
+  **Apply: a freebie is for a WRONG ANSWER, not for an answer that arrived through questions.** The gate exists
+  to catch a bound the learner would have shipped; if the exchange ends with them correcting *you*, nothing was
+  missed. And check a complexity claim against the code path before calling it invalid — an early return
+  changes the bound.
+  Status: `open` — first freebie refund. Watch whether the gate is being run as a scoring exercise rather than
+  a diagnostic.
