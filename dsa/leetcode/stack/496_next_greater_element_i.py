@@ -40,6 +40,32 @@ class Solution:
 
     # ── Attempt · 2026-08-16 ──────────────
     def nextGreaterElement_20260816(self, nums1: List[int], nums2: List[int]) -> List[int]:
-        pass
+        # next greater element = monotonic stack
+        # next greater = decreasing stack and we update greater based on top item in stack
+        # we are checking next greater of nums1 based on ordering in nums2
+        # so multiple steps here
+        # 1. find next greater of all values in nums2
+        # 2. all values are given as unique, so we can do map of value -> next greater
+        # we should store index here in the stack 
+
+        decreasingStack = []
+        greaterMap = {}
+
+        for i in range(len(nums2)):
+            # if nums2[i] > top of stack, set its next greater
+            while decreasingStack and nums2[i] > nums2[decreasingStack[-1]]:
+                priorItemIndex = decreasingStack.pop()
+                greaterMap[nums2[priorItemIndex]] = nums2[i]
+            # add i to stack
+            decreasingStack.append(i)
+        
+        result = [-1] * len(nums1)
+        
+        # populate result based on map
+        for i in range(len(nums1)):
+            if nums1[i] in greaterMap:
+                result[i] = greaterMap[nums1[i]]
+        
+        return result
 
 # ⤵ prior attempts stashed in dsa/leetcode/.history/496_next_greater_element_i.txt — restored at session end (python scripts/restore_history.py)

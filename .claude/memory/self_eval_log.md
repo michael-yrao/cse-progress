@@ -671,3 +671,21 @@ disease as everything in Cluster A. It is now item 2 of the SessionStart hook's 
   ⚠️ **Cost is worst exactly where it hurts most** — the longer and more valuable the turn, the more expensive
   the re-send, and long turns are teaches. Offered the learner a hook change: have the reminder ask for the
   link pairs alone rather than a full re-send, which would cap the cost at one line. Status: `open`.
+
+- **2026-08-16 [P2] — THIRD partially-applied edit script in one session; flagged twice, behaviour unchanged.**
+  Pattern: a script edits several files, asserts its anchor immediately before each write, and dies partway.
+  The files before the failure are already written, so the repo is left in a **half-edited state that looks
+  like success** unless the traceback is read carefully.
+  Occurrences today: (1) the hook fix asserted on a schedule row first, failed, and **never reached the hook
+  edit — which I then reported as fixed and had to be corrected by the test**; (2) the 75 row inserted into
+  Monday's block after the wrong anchor; (3) the 496 log wrote the tracker and the recognition ledger, then
+  failed on the schedule row and left the board stale.
+  **Root cause is ordering, not carelessness: validate-then-write, interleaved.** Every anchor sits next to
+  its own write, so a late failure cannot roll back the early ones.
+  **Apply: resolve and assert EVERY anchor first, then perform all writes.** No write until the last anchor
+  has been checked. For a genuinely multi-file edit, read all files, compute all replacements, assert the
+  whole set, then write in one pass.
+  ⚠️ **The dangerous half is not the failure, it is the false report.** Occurrence (1) produced a confident
+  "hook: struck rows now skipped" that was untrue, and only the follow-up test caught it. Same family as
+  [[feedback_verify_terminal_actions]] — verify against the visible state, never against the intent.
+  Status: `open` — 3rd occurrence, and the first two were already noted in-session without changing method.
