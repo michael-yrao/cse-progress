@@ -19,6 +19,20 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🟡 572. Subtree of Another Tree — 2026-08-15
+**Sticking point**: **both jobs implemented with one function.** 572 is 100 Same Tree plus an outer search,
+and one function can only answer one of those questions. Broke twice for that single reason: first it
+committed to the identity check on any value match and returned early (**self-caught from a counterexample**
+— *"I'm returning the second I find the first match"*); then the match arm called the *search* function on
+the children, so `[3,4,5,1,null,2]` vs `[3,1,2]` matched values across different branches. The two-function
+decomposition was **coach-supplied**, and for this problem that structure is the algorithm — which is what
+carried the 🟡 rather than the bugs themselves.
+⭐ The gap in the pre-code comment is *verbatim* the gap in the code: it named both jobs
+(*"there should be a tree in root"* = search, *"exactly same as subRoot"* = identity) without noticing they
+were two questions.
+📌 Expansion-queue item raised off the back of it: the **O(m+n) serialize + KMP** version, parked behind
+learning KMP on 28 first.
+
 ## 🟡 1334. Find the City With the Smallest Number of Neighbors at a Threshold Distance — 2026-08-15
 **Sticking point**: **`distances` was declared 1-D (`[math.inf] * n`) when Floyd-Warshall runs on a
 V×V matrix.** Everything else about the algorithm was in hand and written unaided — `middle` as the
