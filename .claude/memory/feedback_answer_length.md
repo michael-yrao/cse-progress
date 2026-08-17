@@ -19,9 +19,18 @@ CLAUDE.md token-discipline rule already said "be lean", and answers stayed long.
 dispositions; this one is a hard limit with a fixed escape hatch, which is the difference between a
 rule that fires and a paragraph.
 
+⚠️ **The cap is on ANSWERING, not on EXPLAINING WHAT YOU DID** (learner, same day, after I got it
+backwards): *"explaining what you did should not require a prompt from users. answering the users
+should."* The first application of this rule truncated a **work report** and then closed with "want me
+to expand on any of…" — withholding the account of work that had already happened *and* charging a
+turn to retrieve it. A work report is delivered in full, unprompted; only a question's overflow is
+offered.
+
 **How to apply:**
 - **Answering a question** → one small paragraph. Then **ask** which part to expand, and expand only
   that. Never pre-empt the next three follow-ups.
+- **Explaining what you did** → state it plainly and completely, unprompted. What changed, what broke,
+  what is still unfinished. Never gate it behind a question.
 - **NOT capped**, because these were never the problem: the comfort-rating rationale (propose + why),
   concept explanations when stuck or asked, `stuck_log`/debrief/memory writing, and reporting that an
   action may have gone wrong or a finding that changes what to do next — state it, then stop.

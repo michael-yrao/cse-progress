@@ -553,10 +553,22 @@ Be lean: answer the thing, skip preamble, and don't restate what I can already s
 
 ### ⚠️ A HARD CAP: an answer to a question is ONE SMALL PARAGRAPH (adopted Aug 17, 2026)
 
-**Answering a question — not doing work, not reporting a rep — is capped at a small paragraph.
-Everything else is offered, not delivered:** end with a question asking which part they want expanded,
-and expand only what they pick. No preamble, no findings tables, no "two things worth knowing", no
-pre-empting the next three follow-ups.
+**The cap applies to ANSWERING A QUESTION. It does not apply to EXPLAINING WHAT YOU DID.**
+
+| | |
+|---|---|
+| **Answering a question** | one small paragraph, then **stop** and ask which part to expand. Expand only what they pick |
+| **Explaining what you did** | **state it, unprompted and in full.** Never make the learner ask for an account of work that already happened |
+
+⚠️ **Do not offer to explain your own work — just explain it (added Aug 17, 2026, same day, after
+getting this backwards).** The first version of this rule was applied to a work report: the report was
+truncated *and* closed with "want me to expand on any of…". That is the worst of both — it withholds
+what was actually done and bills the learner a turn to get it. **They asked for readable answers, not
+for a gate in front of the record of the work.** What changed, what broke, and what is still unfinished
+are owed on delivery.
+
+Within an answer: no preamble, no findings tables, no "two things worth knowing", no pre-empting the
+next three follow-ups.
 
 **Why it is a cap and not a preference.** The rule above already said "be lean" and the one below
 already said "one job per turn", and answers kept arriving as multi-section reports with tables and
