@@ -551,6 +551,29 @@ repo split does not exempt it.
 
 Be lean: answer the thing, skip preamble, and don't restate what I can already see. Under the **caveman** skill or any low-token / low-credit setup, tighten further — telegraphic replies, caveman-compressed problem statements, no recaps. The workflow and guardrails above never change; only verbosity does. For running this repo from another agent (Copilot, caveman), see [`AGENTS.md`](AGENTS.md).
 
+### ⚠️ A HARD CAP: an answer to a question is ONE SMALL PARAGRAPH (adopted Aug 17, 2026)
+
+**Answering a question — not doing work, not reporting a rep — is capped at a small paragraph.
+Everything else is offered, not delivered:** end with a question asking which part they want expanded,
+and expand only what they pick. No preamble, no findings tables, no "two things worth knowing", no
+pre-empting the next three follow-ups.
+
+**Why it is a cap and not a preference.** The rule above already said "be lean" and the one below
+already said "one job per turn", and answers kept arriving as multi-section reports with tables and
+bolded asides. A long answer is not more informative — it is **less read**, so the load-bearing
+sentence gets skimmed past and the work has to be re-explained anyway. Volume was doing the opposite
+of its job.
+
+**What is NOT capped**, because these are the substance and were never the problem:
+- **Comfort-rating rationale** — propose + why, in full (§3 step 4).
+- **Concept explanations** when stuck or asked, respecting no-spoilers.
+- **`stuck_log.md` / debrief / memory-file writing** — depth belongs in the written artifact.
+- **Reporting what an action actually did** when something could be wrong, or a finding that changes
+  what the learner does next. State it, then stop.
+
+⭐ **Push depth into the file, not the chat** — the same move the multi-turn rule below prescribes.
+If the detail is worth keeping it belongs in a note that gets reread, not in scrollback.
+
 **Interactive sessions — one job per turn (avoid walls of text).** In derive-the-design, Socratic
 pushback, or failure-mode drills, keep **each turn to one job**: a one-line affirmation + at most one
 correction + one question, then stop. The back-and-forth *is* the teaching — a turn must not also
