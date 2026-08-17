@@ -1,5 +1,8 @@
 # Stuck Log
 
+<!-- single-source-ok: a dated per-rep log. An entry recording "this cost +2 days" is the
+     history of that rep, not a restatement of the current interval. Never back-date it. -->
+
 Log every non-Clean result. Add new entries at the top. Format is proportional to severity:
 
 **🔴 Blank** — full entry (conceptual gap worth documenting):

@@ -1,5 +1,8 @@
 # Self-Evaluation Log
 
+<!-- single-source-ok: an append-only dated log. Entries state what a value WAS at the time,
+     which is the point of a log — they must never be back-dated to match today's config. -->
+
 Append-only log of corrections. Governed by [[feedback_self_evaluation]]. Newest at top. Meta-review promotes recurring root causes into rules; entries are never deleted, only re-statused.
 
 ---

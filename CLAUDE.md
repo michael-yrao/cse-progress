@@ -46,9 +46,10 @@ before batching the rest.
 inert:
 
 - **Discovery plants phantom rows.** `update_review_dates.py` auto-adds any problem file it finds
-  with no tracker row as **🔴 Blank / streak 0 / attempt date = today / next review = +2**
-  (`discover_source_problems`). Commit a scaffold for a problem that was never attempted and the
-  tracker gains a Blank that never happened, plus a +2 rep to service it. This collides head-on
+  with no tracker row as **🔴 Blank / streak 0 / attempt date = today / next review = the Blank
+  interval** (`discover_source_problems`). Commit a scaffold for a problem that was never attempted
+  and the tracker gains a Blank that never happened, plus a near-term rep to service it — the Blank
+  interval is the shortest in the ladder, so it lands almost immediately. This collides head-on
   with the end-of-session `git status` sweep, whose whole job is to catch unstaged solution files.
 - **Retry scaffolds move history out of the file.** Scaffolding a retry the learner didn't ask for
   stashes their prior attempts to `.history/`. `restore_history.py` correctly declines to restore
@@ -313,39 +314,96 @@ After any problem discussion (solving, reviewing, or mentioning a problem by num
      the board was full of legitimate review work. Nothing else in the repo surfaces an empty active phase.
 8. **Do not commit per problem — batch.** Make the edits (tracker row, `stuck_log.md`, schedule strike) and move on; commit + push **once** at session end. Every commit fires the pre-commit hook, which rewrites the tracker and causes ~70 lines of it to be re-injected into context; at one commit per problem that is a large, avoidable token cost. Commit early only if the user is about to switch machines (unpushed work would strand them) or the session ends unexpectedly.
 
+## Single source of truth for tuned values
+
+**Every tuned number in the engine — review intervals, the effort ceiling and floor, the comfort and
+difficulty weights, `graduate_at_streak` — is stated in [`cse.config.yml`](cse.config.yml) and
+NOWHERE else. Prose points at it; prose never copies it.**
+
+⚠️ **This is a correctness rule, not tidiness.** By Aug 17, 2026 every one of those knobs existed in
+three places — the config, a script's `DEFAULT_CONFIG`, and CLAUDE.md prose — with nothing checking
+that they agreed. They did not:
+
+- The effort ceiling was lowered on Aug 16. The config got it; CLAUDE.md said the old number for a
+  day, and **a budget check run off the stale copy passed two days that were actually over.**
+- The SD lane slot was simultaneously priced at one number in `effort_budget.md`, a different one in
+  the config and CLAUDE.md, and *not priced at all* by the config's own ceiling note. **Three live
+  answers, and no way to tell which was current short of reading the git log.**
+
+**The failure is always silent, and it is always the copy nobody executes from that rots** — the
+executable copy gets corrected the first time it produces a wrong answer.
+
+### The rule, operationally
+
+| | |
+|---|---|
+| **Changing a value** | edit `cse.config.yml`, and **nothing else**. If you find yourself updating a second file, that file was already a bug |
+| **Writing prose** | name the key and point at the config (`the ceiling — see `effort_budget.ceiling`). Never write the number |
+| **Writing code** | read the config. A `DEFAULT_CONFIG` fallback is allowed **only** where the tool must run before a config exists, and it must announce loudly when it fires |
+| **Recording history** | a dated entry stating what a number *was* is correct and must not be back-dated — mark it `single-source-ok` so the checker skips it |
+
+### It is enforced, not remembered
+
+```sh
+python scripts/check_single_source.py           # report
+python scripts/check_single_source.py --check   # exit 1 on drift
+```
+
+It runs from the pre-commit hook. Two checks, because the two kinds of copy fail differently:
+**script defaults vs config** is an exact comparison and is a hard finding (it changes what the engine
+*computes*); **prose restating a value** is heuristic and advisory (it misleads the reader, which is
+how the ceiling incident happened).
+
+⭐ **Why a script and not this paragraph:** the intervention ladder — source fix > hook > workflow
+step > written rule. A written rule against duplication is itself just another copy of a rule, and
+this repo's own history says prose loses. The checker is the only version that fires unprompted.
+
 ## Comfort-Based Spaced Repetition
 
-Next review intervals (set in `docs/foundations/dsa/mastery/dsa_progress.md` and computed by `scripts/update_review_dates.py`):
+**The values live in [`cse.config.yml`](cse.config.yml) under `intervals:` — read them there, or run
+`python scripts/update_review_dates.py`, which computes every date.** They are deliberately not
+reprinted here; see [Single source of truth](#single-source-of-truth-for-tuned-values) for why.
 
-| Comfort | Next Review |
+The **ladder**, which is the part that does not change:
+
+| Comfort | Next review |
 |---------|-------------|
-| Clean — **provisional** (Streak 0: first Clean directly after a 🔴 Blank) | **+10 days** (lock-down check) |
-| Clean — Streak 1 | +30 days |
-| Clean — Streak 2 | +60 days |
-| Clean — Retired (Streak 3+) | +180 days (spot check) |
-| Shaky   | +10 days    |
-| Blank   | +2 days     |
+| Clean — **provisional** (Streak 0: first Clean directly after a 🔴 Blank) | shortest Clean interval — a lock-down check |
+| Clean — Streak 1 | longer |
+| Clean — Streak 2 | longer still |
+| 🎓 Graduated (`graduate_at_streak`+) | longest — a recurring spot check |
+| Shaky | short |
+| Blank | shortest of all |
 
 **Provisional Clean (added Jul 18, 2026):** a 🟢 that *directly follows a 🔴* is logged with **Streak 0**
-(not 1) → it earns only a **+10 lock-down** to verify the Blank→Clean stuck, before the normal +30. Survives
-(Clean again) → log Streak 1 (→ +30); slips → resets as usual. Only **Blank→Clean** is provisional — a 🟢
-after a 🟡 is a normal Streak-1 Clean. Rationale: one Clean right after a Blank may be recall of fresh
-teaching, not durable retention (same logic as the SD teach/measure split). Interval configurable via
-`clean_provisional` in `cse.config.yml`.
+(not 1), so it earns only a lock-down interval to verify the Blank→Clean stuck, before the normal
+Streak-1 one. Survives (Clean again) → log Streak 1; slips → resets as usual. Only **Blank→Clean** is
+provisional — a 🟢 after a 🟡 is a normal Streak-1 Clean. Rationale: one Clean right after a Blank may
+be recall of fresh teaching, not durable retention (same logic as the SD teach/measure split).
 
 ## Daily load is an EFFORT BUDGET, not a problem count (adopted Aug 7, 2026)
 
-`daily_cap: 7` is superseded. A day is budgeted in **units**, not problems:
-`units = comfort_base × difficulty` (🔴 3.0 / 🟡 2.0 / 🟢 1.0 / 🎓 0.5, × Easy 0.5 / Medium 1.0 /
-Hard 1.5), **ceiling 8.0/day**, hard floor 3.0. Weights in `cse.config.yml`; rationale and
-calibration in [`docs/foundations/effort_budget.md`](docs/foundations/effort_budget.md).
+`daily_cap` is superseded. A day is budgeted in **units**, not problems:
+`units = comfort_base × difficulty` — a worse comfort and a harder problem each cost more, so a day of
+five 🟢 Easies and a day of five 🔴 Hards are not the same day.
 
-⚠️ **SD IS NOT PRICED (Aug 16, 2026) — the budget is DSA-only.** The ceiling dropped 9.0 → 8.0
-*because* SD moved off-board: 8.0 is the honest DSA number, deliberately sized so **the leftover
-evening is SD's**. Do not add an SD slot to a day's total — the lowered ceiling already accounts for
-it, and charging both bills it twice. `system_design.cadence` still decides how many SD slots a week
-gets (the week is built here); only the cost is gone. `sd_lane_units` / `sd_deep_dive_units` are
-retired, and `effort_budget.py --sd` now adds 0 and says so.
+**The weights, the ceiling and the floor live in [`cse.config.yml`](cse.config.yml) under
+`effort_budget:`. Don't reprint them and don't hand-compute — run the script**, which reads them:
+
+```sh
+python scripts/effort_budget.py                          # demand · floor · ceiling · overdue cost
+python scripts/effort_budget.py --day 560 912 235 88 100 20    # price a specific day
+```
+
+Rationale and calibration: [`docs/foundations/effort_budget.md`](docs/foundations/effort_budget.md)
+(a dated derivation — read it for the *why*, never for the *values*).
+
+⚠️ **SD IS NOT PRICED (Aug 16, 2026) — the budget is DSA-only.** The ceiling was lowered *because* SD
+moved off-board: it is now the honest DSA-only number, deliberately sized so **the leftover evening is
+SD's**. Do not add an SD slot to a day's total — the lowered ceiling already accounts for it, and
+charging both bills it twice. `system_design.cadence` still decides how many SD slots a week gets (the
+week is built here); only the cost is gone. `sd_lane_units` / `sd_deep_dive_units` are retired, and
+`effort_budget.py --sd` now adds 0 and says so.
 
 ⚠️ **`cse.config.yml` is the authority on these numbers, not this paragraph** — and stale numbers
 here have already caused a bad call. The ceiling sat at 9.0 in this file for a day after the change,

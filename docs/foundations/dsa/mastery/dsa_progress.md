@@ -10,16 +10,18 @@ Notes for future agents:
   The in-file `# ── Attempt · <date> ──` banners in solution files were deliberately **not** renamed.
 - `Streak` tracks consecutive Clean results. Increments on Clean, resets to 0 on Shaky or Blank.
 - `Rep Dates` is a collapsed summary of the original Attempt 1–5 columns.
-- Set `Next Review Date` as a computed value based on Comfort and Streak:
-  - 🟢 Clean, **Streak 0 (provisional — first Clean directly after a 🔴 Blank): +10 days** (lock-down check; not yet trusted)
-  - 🟢 Clean, Streak 1: +30 days
-  - 🟢 Clean, Streak 2: +60 days
-  - 🎓 Graduated (Streak 3+): +180 days (recurring spot check)
-  - 🟡 Shaky (any streak): +10 days, reset Streak to 0
-  - 🔴 Blank (any streak): +2 days, reset Streak to 0
+- `Next Review Date` is **computed, never typed** — the pre-commit hook runs
+  `scripts/update_review_dates.py`, which reads the intervals from `cse.config.yml`. **The numbers are
+  stated there and nowhere else** (see *Single source of truth* in `CLAUDE.md`); this legend gives the
+  ladder, not the values:
+  - 🟢 Clean, **Streak 0 (provisional — first Clean directly after a 🔴 Blank)**: shortest Clean interval, a lock-down check; not yet trusted
+  - 🟢 Clean, Streak 1 → longer · Streak 2 → longer still
+  - 🎓 Graduated (`graduate_at_streak`+): longest, a recurring spot check
+  - 🟡 Shaky (any streak): short, reset Streak to 0
+  - 🔴 Blank (any streak): shortest of all, reset Streak to 0
 - **Provisional Clean (🟢 + Streak 0):** log a 🟢 that *directly follows a 🔴* with **Streak 0**, not 1 — it
-  gets a short +10 lock-down to verify the Blank→Clean actually stuck. If it survives (Clean again), log it
-  Streak 1 (→ +30) and it rejoins the normal ladder; if it slips to 🟡/🔴, it resets as usual. A 🟢 after a
+  gets a short lock-down to verify the Blank→Clean actually stuck. If it survives (Clean again), log it
+  Streak 1 and it rejoins the normal ladder; if it slips to 🟡/🔴, it resets as usual. A 🟢 after a
   🟡 (not a 🔴) is logged Streak 1 as normal — only Blank→Clean is provisional. Do NOT "fix" a 🟢/Streak-0 to
   Streak 1; that silently removes the lock-down.
 - ⚠️ NAMES SWAPPED Jul 26, 2026 — you GRADUATE, then you RETIRE. 🎓 Graduated is the streak-3 tier

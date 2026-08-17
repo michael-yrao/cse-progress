@@ -64,4 +64,24 @@ if [ -n "$COVERAGE_TRIGGER" ]; then
   # `technique_coverage.py --check` reports that.
   [ -f "$COVERAGE" ] && git add "$COVERAGE"
 fi
+
+# Single source of truth for tuned values (see CLAUDE.md). Fires when the config, a script
+# that carries defaults, or a rules document is staged — i.e. exactly the three places a
+# value can be copied to. Reports; never blocks.
+#
+# ⚠️ WARN-ONLY ON PURPOSE. The prose half of this check is heuristic (it cannot tell
+# "+2 days" as a rule from "+2 days" inside a dated log entry), and a heuristic that can
+# block a commit gets disabled within a week — at which point the check exists and never
+# fires, which is the failure it was written to prevent. The exact half (script defaults vs
+# config) is loud enough to act on: it prints ❌ and names both files.
+SSOT_TRIGGER=$(echo "$STAGED" | grep -E "cse\.config\.yml$|^scripts/.*\.py$|CLAUDE\.md$|^docs/foundations/.*\.md$")
+if [ -n "$SSOT_TRIGGER" ]; then
+  if command -v py >/dev/null 2>&1; then
+    py scripts/check_single_source.py || true
+  elif command -v python >/dev/null 2>&1; then
+    python scripts/check_single_source.py || true
+  elif command -v python3 >/dev/null 2>&1; then
+    python3 scripts/check_single_source.py || true
+  fi
+fi
 exit 0
