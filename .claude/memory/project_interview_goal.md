@@ -17,7 +17,8 @@ Aug 6, 2026.
   notifications, proximity, ad-click). Route: fintech calibration → data-platform (next hop) → big tech.
 - **DSA is NOT done — DP still ahead** (1D Oct 12–Nov 8, 2D Nov 9–Dec 6); maintenance ~Dec, not at the
   Advanced Graphs close. Corrects the earlier "DSA at bar" premise.
-- **Capacity (Aug 6):** `daily_cap` 5 → 7; **new-problem intake stays capped.** The +2/day is review/backlog
+- **Capacity (Aug 6, superseded the next day):** the daily problem count went 5 → 7 — then the count
+  itself was replaced by the **effort budget** (units) on Aug 7; **new-problem intake stays capped.** The extra throughput is review/backlog
   throughput → funds DSA (incl. DP) **and** the SD ramp in parallel. Supersedes the "free the DSA block at
   Aug 16" trigger.
 - **SD is the binding constraint & top priority**, depth-over-breadth. ⚠️ **Aug 13, 2026: SD is now mock interviews on HelloInterview's board** ([[project_sd_mock_model]]) — the learner studies, the coach interviews. ~~Designs from **systemdesign.io** +~~

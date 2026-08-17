@@ -1,17 +1,34 @@
 ---
 name: feedback_daily_cap
-description: Cap daily problems at 5 max; push extras to next available slot without removing them
+description: SUPERSEDED Aug 7, 2026 — the daily problem COUNT was replaced by the effort budget (units). Do not schedule from this file.
 metadata:
   type: feedback
 ---
 
-Never schedule more than 5 problems in a single day. If a day would exceed 5, push the lowest-priority extras to the nearest available future slot and note them in the current week's schedule preview section.
+# ⚠️ SUPERSEDED — do not schedule from this file
 
-**Why:** 7+ problems per day was overwhelming the user and unsustainable for daily practice.
+**A day is budgeted in UNITS, not problems.** `units = comfort_base × difficulty`, against a ceiling.
+**The rule is in `CLAUDE.md` ("Daily load is an EFFORT BUDGET, not a problem count"); the numbers are
+in `cse.config.yml` under `effort_budget:` and nowhere else.** Price a day with:
 
-**How to apply:**
-- The active block is never cut — it always stays. The 5-problem cap applies to morning + evening warmup slots only (max 4 warmup problems combined).
-- Priority for cutting from warmups: 🟢 Clean no-code reviews and blind sprints first; keep 🔴 Blank retries and April vintage backlog
-- Always add pushed items explicitly to the preview section of the current week's schedule so they get picked up when building the next week
-- When the user finishes their warmups + active block (5 total), do not prompt for more — just note what's available if they want to continue
-- **Sunday is the release valve for overflow.** Its active block is the system-design sprint (not a DSA problem), and it typically carries only one warmup, so it has spare warmup capacity. When another day exceeds 5, prefer shifting a low-priority 🟡/🟢 there before deferring further out — accept the small spaced-rep delay in exchange for balance. Never shift a 🔴 retry off its +2 due date to balance.
+```sh
+python scripts/effort_budget.py --day 560 912 235 88 100 20
+```
+
+**Why this file is retired rather than deleted:** other memory files still link `[[feedback_daily_cap]]`,
+and a dangling link that silently resolves to nothing is worse than a redirect. What it used to say —
+*"never more than 5 problems a day"* — is not merely out of date, it is **actively wrong in three ways**
+and would produce bad schedules if followed:
+
+- **A count cannot tell a five-minute 🟢 Easy from a 🔴 Hard.** That is the whole reason the budget
+  replaced it: three consecutive weeks were each "7 problems" and measured 5.5, 8.0 and 10.5 units.
+- **It routed overflow to "Sunday's system-design sprint"**, which was retired Aug 13, 2026. SD is now
+  a mock interview, lives in a separate repo, and since Aug 16 is **not priced against the day at all**.
+- **It named a hard number (5)** while `cse.config.yml` said 7 and the effort budget said neither —
+  three live answers, which is exactly the failure the *Single source of truth* rule now forbids.
+
+**The one idea worth keeping**, and it survives in CLAUDE.md's schedule-integrity rule: *an item pushed
+off a day must land on a named future slot in the same edit* — never dropped, never left dateless.
+
+⚠️ **Never raise the ceiling to catch up on a backlog.** A rep rushed into a 🟡 costs far more, forever,
+than the slot it saved. Demand sets the floor; the ceiling is a quality judgment and stays put.

@@ -75,8 +75,13 @@ was asked for.
 
 Consequence, stated plainly: coding is the only path to 🟢, so scaffolding a 🟡/🟢 warmup **raises**
 its ceiling from the no-code cap (🟡) to a real 🟢. Warmups are still 15-min slots — if they'd rather
-blueprint one verbally, the file just goes unused that day; nothing is lost. Blind sprints (SD/AI
-recall reps) remain the one exception: those get **nothing**, because leaving it blank *is* the rep.
+blueprint one verbally, the file just goes unused that day; nothing is lost.
+
+*(This once carried an exception for "blind sprints (SD/AI recall reps)" — reps that got no scaffold
+because leaving the page blank **was** the rep. Both referents are gone: SD blind sprints were retired
+with the three-lane model on Aug 13, 2026, and the AI track was removed the same day. The nearest
+live equivalent is a **recognition probe**, which does get a file — just at a neutral path that does
+not name the technique. See `dsa/probes/README.md`.)*
 
 ```sh
 python scripts/new_problem.py --number 743 --title "Network Delay Time" --pattern graphs \
@@ -282,8 +287,8 @@ After any problem discussion (solving, reviewing, or mentioning a problem by num
      `technique_coverage.md` is read to pick conversion reps. Skipping it means the next week runs
      off the previous week's assumptions.
    - Minimum contents: capacity/surplus arithmetic · per-day load row · daily table · protected reps ·
-     backlog/slip list (nothing dropped without a date or an explicit "no date exists") · SD lanes ·
-     end-of-week targets · next-week preview · **concept primers** (below).
+     backlog/slip list (nothing dropped without a date or an explicit "no date exists") · SD slots
+     (placed, never priced) · end-of-week targets · next-week preview · **concept primers** (below).
    - **⚠️ Does the week contain a FIRST exposure to a named algorithm? Then it carries a CONCEPT
      PRIMER, scheduled before that problem.** ~15 min, unrated, no tracker row, ~1.0 unit. It covers
      **the object being found and its name**, **the nearest neighbouring object and the one feature

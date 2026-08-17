@@ -1,5 +1,8 @@
 # The effort budget — replacing the daily problem cap
 
+<!-- single-source-ok: the Aug 7 derivation of the effort budget. It states the values as they
+     were WHEN THE MODEL WAS BUILT and must not be back-dated; see the banner below. -->
+
 **Status: ADOPTED Aug 7, 2026.** Live in `cse.config.yml` under `effort_budget`; `daily_cap: 7` is kept
 only as a fallback and nothing reads it. Computed by [`scripts/effort_budget.py`](../../scripts/effort_budget.py).
 
