@@ -9,7 +9,8 @@ When the learner finishes a scheduled problem **early**, it vacates that problem
 striking it drops that future day **below the daily target of 5**, **ask the user whether to backfill
 the freed slot with another problem** — don't silently leave the day short, and don't silently fill it.
 
-**Why:** the daily cap ([[feedback_daily_cap]]) is a ceiling *and* the day's target is a floor — an
+**Why:** the day's **effort budget** has a ceiling *and* a floor (units, not a problem count — the rule
+is in `CLAUDE.md`, the numbers in `cse.config.yml`; [[feedback_daily_cap]] is the superseded count) — an
 early completion shouldn't quietly reduce a future day's throughput. But what to backfill (or whether
 to bank the lighter day) is the learner's call, so surface it as a question rather than deciding for them.
 

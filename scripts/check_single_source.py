@@ -133,6 +133,67 @@ def forms_for(dotted: str) -> tuple[str, ...]:
     return (r"[:=]\s*{n}\b",)
 
 
+#: Vocabulary that was RETIRED, and what replaced it. A rule file still speaking a dead
+#: dialect is worse than one that is merely out of date: it reads as current, and the agent
+#: cannot tell which of two contradicting files to obey without checking the git log.
+#:
+#: Found the hard way — `feedback_daily_cap.md` still said "never more than 5 problems a day"
+#: and routed overflow to "Sunday's system-design sprint" a week after the effort budget
+#: replaced the count and four days after that SD slot stopped existing. Nothing surfaced it.
+#:
+#: ⚠️ Dated logs legitimately speak the old dialect (that IS the history), so the same
+#: file-level `single-source-ok` marker exempts them.
+RETIRED_TERMS = (
+    ("daily_cap", "the effort budget — units, not a problem count (CLAUDE.md + effort_budget:)"),
+    ("sd_lane_units", "nothing — SD is off-board and unpriced since Aug 16, 2026"),
+    ("sd_deep_dive_units", "nothing — SD is off-board and unpriced since Aug 16, 2026"),
+    ("SD lane", "the SD mock slot; it is scheduled here, executed in sd-progress, and NOT priced"),
+    ("blind sprint", "nothing — retired with the three-lane SD model, Aug 13, 2026"),
+    ("Bootstrap → Transition", "nothing — the SD arc was retired Aug 13, 2026"),
+    ("ai_progress", "nothing — the AI System Engineering track was removed Aug 13, 2026"),
+)
+
+
+def check_retired(files: list[Path]) -> list[str]:
+    findings = []
+    for path in files:
+        rel = path.relative_to(REPO).as_posix()
+        try:
+            lines = path.read_text(encoding="utf-8").splitlines()
+        except OSError:
+            continue
+        if any(OPT_OUT in ln.lower() for ln in lines[:5]):
+            continue
+        # A memory file's YAML frontmatter carries its own `name:` — a redirect stub for a
+        # retired rule would otherwise be flagged for being named after the thing it retires.
+        body_starts = 0
+        if lines and lines[0].strip() == "---":
+            end = next((i for i, ln in enumerate(lines[1:], 1) if ln.strip() == "---"), 0)
+            body_starts = end
+        for n, line in enumerate(lines, 1):
+            if n <= body_starts:
+                continue
+            low = line.lower()
+            # A line that says the thing is GONE is the fix, not the bug. Naming a retired
+            # concept in order to retire it ("no blind sprints", "the SD lane was priced
+            # at...") must not be flagged, or the report punishes the documentation that
+            # does its job and the signal drowns.
+            if any(w in low for w in (OPT_OUT, "superseded", "retired", "no longer",
+                                      "not priced", "removed", "used to", "was simultaneously",
+                                      "are gone", "is gone", "referents are gone", "once carried")):
+                continue
+            for term, replacement in RETIRED_TERMS:
+                t = term.lower()
+                if t not in low:
+                    continue
+                before = low[:low.index(t)]
+                if re.search(r"(?:\bno|\bnot|\bnever|\bzero)\s+\S*\s*$", before):
+                    continue  # "no blind sprints", "never an SD lane"
+                findings.append(f"{rel}:{n}: `{term}` is retired -> {replacement}")
+                break
+    return findings
+
+
 def load_yaml() -> dict:
     try:
         import yaml  # noqa: PLC0415
@@ -292,6 +353,7 @@ def main() -> None:
     cfg = load_yaml()
     hard = check_script_defaults(cfg)
     soft = check_prose(cfg)
+    dead = check_retired(prose_files())
 
     if hard:
         print(f"\n❌ SCRIPT DEFAULTS DISAGREE WITH cse.config.yml ({len(hard)})")
@@ -306,10 +368,17 @@ def main() -> None:
         print(f"   history with `{OPT_OUT}` in a comment on the line or its heading.")
         for f in soft:
             print(f"   {f}")
-    if not hard and not soft:
+    if dead:
+        print(f"\n🪦 RETIRED VOCABULARY STILL IN RULE FILES ({len(dead)})")
+        print("   These read as current and contradict the live rule. Rewrite as a redirect, "
+              "or mark the")
+        print(f"   file `{OPT_OUT}` if it is a dated log.")
+        for f in dead:
+            print(f"   {f}")
+    if not hard and not soft and not dead:
         print("✅ every tracked value is stated in exactly one place")
 
-    if args.check and (hard or soft):
+    if args.check and (hard or dead):
         sys.exit(1)
 
 
