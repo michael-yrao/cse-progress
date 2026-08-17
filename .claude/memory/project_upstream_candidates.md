@@ -123,7 +123,7 @@ identical for all of them.
 |---|---|
 | **Spine-then-pull as the standing format** | Explicitly this learner's stated preference. The skill already ships derive-the-design as default *with a documented floor*, which is the right general shape |
 | **DSA-first day ordering** | Preference. The general half — *the item with no natural stopping point goes last* — is already implied by existing lane rules |
-| **`sd_lane_units: 3.0`** | A calibration, not a rule. The skill ships a value and says calibrate from your own data; that is working as intended |
+| ~~**`sd_lane_units: 3.0`**~~ **MOOT — retired Aug 16, 2026** | Was declined as "a calibration, not a rule". The key no longer exists: SD went off-board and the ceiling was lowered instead, so the SD evening is charged once on every day rather than per SD slot. Nothing to promote |
 | **"Unseen problem on every non-SD day"** | The *principle* is general (a problem seen 3+ times measures retention of that problem's solution, not the technique). The *formulation* is welded to this learner's SD cadence. If it goes up, it goes as the principle |
 | **No-autocomplete typo weighting** | Depends entirely on how a given learner practises |
 | **"attempts" → "reps"** | Cosmetic. Defensible as a default, not worth a PR on its own |

@@ -458,8 +458,12 @@ day. Maturing a problem doesn't just mark it mastered — it **removes it from t
 | 🟢 streak 2 | +60 | 0.017 /day | ×3 |
 | 🎓 Graduated | +180 | 0.006 /day | ×1 |
 
-**Weekly capacity ≈ 28 problem-slots**: 7 days × 2 warmup slots × ~2 problems (≈28) − ~6 consumed by
-the three SD lanes + ~6 active blocks (Sunday is SD).
+⚠️ **SUPERSEDED Aug 7, 2026 — capacity is UNITS, not problem-slots.** It read *"≈ 28 problem-slots:
+7 days × 2 warmup slots × ~2 problems − ~6 consumed by the three SD lanes + ~6 active blocks"*, and
+every input has since gone: the problem count was replaced by the effort budget, the three SD lanes
+were retired Aug 13, and SD stopped being charged against the day on Aug 16. **Weekly capacity is
+7 × the ceiling in `cse.config.yml`. Run `python scripts/effort_budget.py`** — it prints demand and
+capacity together and is the only place this arithmetic should be done.
 
 **Calibration, Jul 26, 2026:** 69 streak-1 + 17 streak-2 + 19 🟡 + 1 🔴 ≈ **35.6/wk demand vs 28
 capacity → −8 over-subscribed.** That deficit *is* the 23-item stale 🟢 pile; it isn't neglect, it's
@@ -490,16 +494,16 @@ puts around Oct–Dec 2026 — *while two phases are still open*.
 ×7, compare to 28.
 
 > **⚠️ Then check the per-day distribution — the surplus measures the WEEK, not the DAY.**
-> A negative weekly surplus does **not** mean every day is full. SD lanes and doubled warmups land
-> unevenly, so a −7 week routinely contains days sitting at 1–2 problems against a cap of 5. Slipping
+> A negative weekly surplus does **not** mean every day is full. The SD slot and doubled warmups land
+> unevenly, so a deficit week routinely contains days sitting well under the ceiling. Slipping
 > reviews off a week that still has slack days is a **false shortage**, and it costs real reps.
 >
 > **Before accepting any slip list, write the per-day row:**
 >
 > | | Mon | Tue | Wed | Thu | Fri | Sat | Sun |
 > |---|---|---|---|---|---|---|---|
-> | DSA problems | | | | | | | |
-> | Other (SD lanes, one-offs) | | | | | | | |
+> | DSA units | | | | | | | |
+> | Other (SD slot, one-offs) | | | | | | | |
 >
 > Any day under the cap absorbs items back off the slip list — **prefer ones already due that day**,
 > since those aren't being pulled forward at all, they simply stop slipping. Only then is the slip
