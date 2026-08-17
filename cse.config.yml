@@ -89,6 +89,20 @@ effort_budget:
   # this is the hard one beneath it, so a bad day still lands somewhere.
   floor_min: 3.0
 
+  # ⚠️ RETIRED Aug 16, 2026 — SD IS NO LONGER PRICED. Both keys below are commented out
+  # rather than left as live data, because a live key gets read back.
+  #
+  # The model changed and these did not: the ceiling drop 9.0 -> 8.0 (see its note above)
+  # made 8.0 the honest **DSA-only** number, sized so SD fits the leftover evening. Charging
+  # an SD slot against that same lowered ceiling would bill it twice. `system_design.cadence`
+  # below STAYS — it decides how many SD slots a week gets, and the week is still built here;
+  # only the *pricing* is gone. So: SD is scheduled here, unpriced, and executed in
+  # sd-progress.
+  #
+  # The calibration history is kept below because it is the record of how the number was
+  # settled, not because the number is live.
+  #
+  # --- retired ------------------------------------------------------------------------
   # An SD lane slot costs this much against the day's budget. Sunday is where
   # over-scheduling has been flagged twice, and the design session is real work.
   #
@@ -108,13 +122,12 @@ effort_budget:
   # the honest reading of what happened.
   # The Sunday MOCK costs this. Unchanged at 3.0 through the Aug 13 rework — a cold 45-min
   # mock is at least as tiring as the design session this price was calibrated on.
-  sd_lane_units: 3.0
-
+  #   sd_lane_units: 3.0
+  #
   # The midweek DEEP-DIVE ROUND costs this. Shorter (~25 min) and narrower (rubric #5/#6/#7
   # on an already-mocked design, no framework walk), so it prices below a full mock.
-  # ⚠️ Not read by effort_budget.py, which only knows --sd. Price a deep-dive day by hand
-  # as +2.0, or pass --sd and subtract 1.0.
-  sd_deep_dive_units: 2.0
+  #   sd_deep_dive_units: 2.0
+  # --- end retired --------------------------------------------------------------------
 
 system_design:
   # ⚠️ REBUILT Aug 13, 2026 — the three-lane study model is retired. The learner studies
@@ -137,7 +150,9 @@ system_design:
   # debriefs are where excerpts land). This key STAYED because it decides how many slots a
   # WEEK gets, and the week is built here, in docs/foundations/schedules/ — one cross-track
   # table that plans DSA warmups, the DSA active block and the SD slots against one budget.
-  # `effort_budget.sd_lane_units` above stays for the same reason: it prices a whole DAY.
+  # ⚠️ The rest of that Aug 15 note said `sd_lane_units` stayed for the same reason. That was
+  # superseded the NEXT DAY by the ceiling drop — SD is off-board and unpriced; this key
+  # decides SLOT COUNT only, never cost. See the retired block above.
   #
   # So: the SD slot is SCHEDULED here and EXECUTED there. The mock's debrief, its rating and
   # its tracker row land in sd-progress; the computed next-review date comes back to a

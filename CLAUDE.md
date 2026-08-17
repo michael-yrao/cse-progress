@@ -337,13 +337,20 @@ teaching, not durable retention (same logic as the SD teach/measure split). Inte
 
 `daily_cap: 7` is superseded. A day is budgeted in **units**, not problems:
 `units = comfort_base × difficulty` (🔴 3.0 / 🟡 2.0 / 🟢 1.0 / 🎓 0.5, × Easy 0.5 / Medium 1.0 /
-Hard 1.5), **ceiling 8.0/day**, hard floor 3.0, an SD lane slot costs 3.0. Weights in
-`cse.config.yml`; rationale and calibration in [`docs/foundations/effort_budget.md`](docs/foundations/effort_budget.md).
+Hard 1.5), **ceiling 8.0/day**, hard floor 3.0. Weights in `cse.config.yml`; rationale and
+calibration in [`docs/foundations/effort_budget.md`](docs/foundations/effort_budget.md).
 
-⚠️ **`cse.config.yml` is the authority on these numbers, not this paragraph.** Both were stale here
-for a week — the ceiling went 9.0 → 8.0 on Aug 16 and the SD lane 2.0 → 3.0 on Aug 9, and neither
-edit reached this line. A budget check run off the stale ceiling passes days that are actually over.
-**Read the config (or run the script) before pricing anything.**
+⚠️ **SD IS NOT PRICED (Aug 16, 2026) — the budget is DSA-only.** The ceiling dropped 9.0 → 8.0
+*because* SD moved off-board: 8.0 is the honest DSA number, deliberately sized so **the leftover
+evening is SD's**. Do not add an SD slot to a day's total — the lowered ceiling already accounts for
+it, and charging both bills it twice. `system_design.cadence` still decides how many SD slots a week
+gets (the week is built here); only the cost is gone. `sd_lane_units` / `sd_deep_dive_units` are
+retired, and `effort_budget.py --sd` now adds 0 and says so.
+
+⚠️ **`cse.config.yml` is the authority on these numbers, not this paragraph** — and stale numbers
+here have already caused a bad call. The ceiling sat at 9.0 in this file for a day after the change,
+and a budget check run off it passed two days that were actually over. **Read the config, or just run
+the script.**
 
 **Don't hand-compute it — run the script.** At the weekly build and before accepting any overflow pull:
 
@@ -474,7 +481,8 @@ protocol drift, and the one that drifts is always the copy nobody executes from.
 live here in `docs/foundations/system_design/study_guide.md`.
 
 **What this repo owns for SD:** the *slot*, and the *board*. The weekly schedule file plans it,
-`effort_budget` prices it (`sd_lane_units: 3.0`), and `system_design.cadence` decides how many a week
+**`effort_budget` does NOT price it** (unpriced since Aug 16 — the 8.0 DSA-only ceiling leaves the
+evening for it), and `system_design.cadence` decides how many a week
 gets. The tracker `docs/foundations/system_design/mastery/design_progress.md` lives here too and is
 rewritten by the pre-commit hook (its own block, `--tracker` rather than source discovery — there are
 no SD source files). When a mock is run, **the debrief lands in sd-progress and the computed

@@ -6,12 +6,25 @@ only as a fallback and nothing reads it. Computed by [`scripts/effort_budget.py`
 ```sh
 python scripts/effort_budget.py                    # demand, floor, ceiling, overdue cost
 python scripts/effort_budget.py --day 560 912 235 88 100 20   # price a day
-python scripts/effort_budget.py --day 721 105 --sd            # ... plus one SD lane slot
+python scripts/effort_budget.py --day 721 105                  # (--sd retired — SD is unpriced)
 python scripts/effort_budget.py --due 2026-08-14              # everything due by a date, priced
 ```
 
 **Decisions (learner, Aug 7):** `x` = **3.0** hard minimum · SD lane = **2.0** units · `q` = **one
 binding number for every day**, not per-day, starting at **9.0**.
+
+> ⚠️ **Two of those three numbers have since changed. This document is the ORIGINAL Aug 7 record and
+> is deliberately not rewritten** — it is how the model was reasoned out, and back-dating it would
+> destroy the reasoning. The live numbers are in [`cse.config.yml`](../../cse.config.yml):
+>
+> - **`q` = 8.0**, not 9.0 (lowered Aug 16, 2026).
+> - **The SD lane is NOT PRICED AT ALL** (Aug 16, 2026). It went 2.0 → 3.0 on Aug 9 and was then
+>   retired outright: SD moved off-board to a separate repo, so the ceiling was lowered to be the
+>   honest **DSA-only** number and **the leftover evening is SD's**. Pricing SD *and* holding the
+>   lowered ceiling would charge for it twice. `--sd` now adds 0 and says so.
+> - `x` = 3.0 is unchanged.
+>
+> Everything below this line is the Aug 7 derivation. Read it for the *why*, never for the *values*.
 
 **What it replaces:** a single integer, `daily_cap`, counting *problems per day*.
 
@@ -139,6 +152,10 @@ enough data, 9 is a guess anchored to two observations: Thu (5.5 units) went 5�
 
 - **Does the SD lane consume units?** **Yes, flat 2.0.** Sunday is exactly where over-scheduling has
   been flagged twice, and the design session is real work competing for the same evening.
+  - ⚠️ **REVERSED Aug 16, 2026 — SD consumes NO units.** The premise held (SD competes for the same
+    evening); what changed is *where* that gets accounted. Lowering the ceiling 9.0 → 8.0 charges the
+    competition **once, on every day**, instead of only on days carrying an SD slot — which is more
+    honest, since self-directed SD study is not confined to the scheduled slot.
 - **Is `q` one number, or per-day?** **One number, and it binds.** A per-day multiplier is deferred
   until the data shows one rather than assumed up front.
 - **Should the floor bind?** The advisory floor (`ceil(demand)`, 7 u/day today) reports; **`floor_min`

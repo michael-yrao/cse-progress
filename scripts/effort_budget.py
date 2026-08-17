@@ -16,7 +16,7 @@ outranks a rule that asks someone to compute it.
 Usage:
     python scripts/effort_budget.py                     # demand, floor, ceiling, due queue
     python scripts/effort_budget.py --day 19 110 42     # price a specific day
-    python scripts/effort_budget.py --day 269 560 --sd  # ... including one SD lane slot
+    python scripts/effort_budget.py --day 269 560       # (--sd is retired: SD is unpriced)
     python scripts/effort_budget.py --due 2026-08-08    # what is due on a date, priced
 """
 from __future__ import annotations
@@ -57,9 +57,11 @@ def load_config() -> dict:
     defaults = {
         "comfort_units": {"🔴": 3.0, "🟡": 2.0, "🟢": 1.0, "🎓": 0.5},
         "difficulty": {"Easy": 0.5, "Medium": 1.0, "Hard": 1.5},
-        "ceiling": 9.0,
+        # Fallback only — used when PyYAML is missing and cse.config.yml cannot be read.
+        # It must track the config, or a machine without PyYAML silently prices every day
+        # against the wrong ceiling and calls over-full days "ok". Was 9.0 until Aug 16, 2026.
+        "ceiling": 8.0,
         "floor_min": 3.0,
-        "sd_lane_units": 2.0,
     }
     try:
         import yaml  # noqa: PLC0415
@@ -148,8 +150,19 @@ def price_day(nums: list[str], rows: list[dict], cfg: dict, sd: bool) -> None:
         print(f"  {num:>5}  {units(row, cfg):4.1f}  {label(row)}  {row['title'][:44]}")
 
     if sd:
-        total += cfg["sd_lane_units"]
-        print(f"  {'SD':>5}  {cfg['sd_lane_units']:4.1f}  one lane slot")
+        # SD IS NOT PRICED (Aug 16, 2026). The budget used to add an SD slot to the day's
+        # total; the model changed and the flag did not. SD moved to a separate repo, is
+        # self-directed, and is OFF-BOARD — so the ceiling was lowered 9.0 -> 8.0 to be the
+        # honest DSA-only number, and SD takes the leftover evening. Pricing SD into the day
+        # AND holding the lowered ceiling would charge for it twice.
+        #
+        # The flag still parses, and says this, rather than being deleted: silently dropping
+        # 3.0 units from a total someone expected it in is how a day gets over-filled without
+        # anyone noticing. Accepting it and explaining is the only version that cannot
+        # mislead.
+        print("  SD     —    not priced: SD is off-board since Aug 16, 2026. The 8.0 "
+              "ceiling is\n         DSA-only and already sized so SD fits the leftover "
+              "evening. --sd adds nothing.")
 
     ceiling = cfg["ceiling"]
     verdict = "OVER" if total > ceiling else "ok"
@@ -179,7 +192,8 @@ def main() -> None:
     ap.add_argument("--day", nargs="+", metavar="NUM",
                     help="price a day built from these problem numbers")
     ap.add_argument("--sd", action="store_true",
-                    help="with --day: add one SD lane slot to the total")
+                    help="RETIRED — SD is off-board and unpriced since Aug 16, 2026. "
+                         "Accepted so the flag explains itself; adds 0 units")
     ap.add_argument("--due", metavar="YYYY-MM-DD",
                     help="list everything due on or before this date, priced")
     ap.add_argument("--today", metavar="YYYY-MM-DD",
