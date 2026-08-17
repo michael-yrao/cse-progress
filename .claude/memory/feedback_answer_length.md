@@ -31,6 +31,10 @@ offered.
   that. Never pre-empt the next three follow-ups.
 - **Explaining what you did** → state it plainly and completely, unprompted. What changed, what broke,
   what is still unfinished. Never gate it behind a question.
+- ⚠️ **Short ≠ dense. More than ~2 parts → bullets or a small table.** Compressing five items into one
+  paragraph of semicolons is *harder* to read than the long version, which defeats the cap. Structure
+  costs no length. (Learner, same day: *"this was a hard to read paragraph, make it more readable…
+  in either bulletpoints or some other way"*.)
 - **NOT capped**, because these were never the problem: the comfort-rating rationale (propose + why),
   concept explanations when stuck or asked, `stuck_log`/debrief/memory writing, and reporting that an
   action may have gone wrong or a finding that changes what to do next — state it, then stop.
