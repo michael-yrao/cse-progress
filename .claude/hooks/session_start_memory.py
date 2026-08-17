@@ -32,28 +32,36 @@ from pathlib import Path
 
 MEMORY_INDEX = Path("memory") / "MEMORY.md"
 
-# Gates that must fire without being asked for. Kept deliberately short: this is
-# injected every session, and a long list is one nobody reads. Entry criteria —
-# (a) it must fire unprompted, (b) it has actually lapsed before, (c) no other hook
-# already covers it (scaffold links are handled by scaffold_links_reminder.py).
+# Gates that must fire without being asked for.
+#
+# **Keep this list short and keep it earned.** It is injected every single session, so
+# every line costs tokens forever. Entry criteria: (a) it must fire unprompted, (b) it has
+# actually lapsed before, (c) no source fix or other hook already covers it — a rule the
+# tooling now enforces belongs in the script, not here. Scaffold links left on criterion
+# (c) when new_problem.py started printing them; the past-midnight dating gate left on
+# 2026-08-16 for the same reason, once session_date.py had source-fixed it and the gate's
+# own text ("new_problem.py has no --date flag") had gone stale and wrong.
+#
+# Keep this text free of emoji and arrow glyphs — see the note in emit().
 ALWAYS_ON = """\
 ALWAYS-ON GATES — each is bound to a MOMENT, not a topic. Check the trigger, not the mood of the session.
 
-1. About to propose a comfort rating (🟢/🟡/🔴)? → The COMPLEXITY GATE is already overdue. Time AND
-   space, each with an itemized why-clause, from the learner, BEFORE the rating. It fires on the rep,
-   not the ritual: "what's wrong with my code" with no scaffold and no kickoff is still a rep.
+1. About to propose a comfort rating (green/yellow/red)? -> The COMPLEXITY GATE is already overdue.
+   Time AND space, each with an itemized why-clause, from the learner, BEFORE the rating. It fires on
+   the rep, not the ritual: "what's wrong with my code" with no scaffold and no kickoff is still a rep.
    Step 1 of CLAUDE.md's LeetCode Review Workflow. (Skipped entirely 2026-08-02.)
-2. Something you did just got corrected — by the learner OR by you, unprompted? → Append a dated entry
+2. Something you did just got corrected — by the learner OR by you, unprompted? -> Append a dated entry
    to .claude/memory/self_eval_log.md IN THE SAME TURN. A sentence in chat is not a fix; it dies with
    the context window. (Caught-then-not-logged 2026-08-02.)
-3. Past midnight? → Establish the session date from `git log --date=iso` BEFORE scaffolding, dating, or
-   presenting a lineup. Commits from minutes ago mean a live session, not a new day. Every date-touching
-   script defaults to wall clock and `new_problem.py` has no --date flag. (4+ occurrences.)
-4. Asked to close out / commit / push / archive? → Verify it against the visible state of the work
+3. Fixing a recurring miss? -> Climb the intervention ladder: source fix > hook > CLAUDE.md step >
+   memory file. A rule that has already lapsed twice as prose will not be fixed by better prose.
+4. Asked to close out / commit / push / archive? -> Verify it against the visible state of the work
    first, and ASK if they disagree. If any part of a turn contains fabricated tool output, none of that
    turn is evidence. (2 occurrences in one day.)
-5. Handing over a retry? → Problem number and links only. No prior rating, no prior failure category,
+5. Handing over a retry? -> Problem number and links only. No prior rating, no prior failure category,
    no "where the rep lives" — that is stuck_log content and it pre-localizes the rep. (2 occurrences.)
+6. Last session of the week? -> Archive this week's schedule AND generate next week's, before the
+   commit. Both, or neither counts. Step 7 of CLAUDE.md's LeetCode Review Workflow. (Missed 2026-08-02.)
 
 Load the individual memory file before acting on any rule you are unsure about. Index follows.
 """
@@ -74,12 +82,13 @@ def project_root() -> Path:
 def emit(context: str) -> None:
     """Write the hook envelope to stdout.
 
-    ⚠️ Do NOT add `ensure_ascii=False` here. The payload carries emoji (🟢/🟡/🔴, ⚠️)
-    and this hook runs on Windows, where stdout defaults to cp1252 — encoding them
-    raw raises UnicodeEncodeError and the session starts with no rules loaded, the
-    exact failure this hook exists to prevent. `json.dump` escapes them to \\uXXXX by
-    default, so the wire bytes stay pure ASCII and the emoji survive the round trip.
-    Same class of bug as the 2026-07-04 / 2026-07-08 entries in self_eval_log.md.
+    ⚠️ Do NOT add `ensure_ascii=False` here, and keep emoji out of ALWAYS_ON. The memory
+    index carries emoji (the Comfort scale is literally emoji) and this runs on Windows,
+    where stdout defaults to cp1252 — encoding them raw raises UnicodeEncodeError and the
+    session starts with no rules loaded, the exact failure this hook exists to prevent.
+    `json.dump` escapes them to \\uXXXX by default, so the wire bytes stay pure ASCII and
+    the emoji survive the round trip. Same class of bug as the 2026-07-04 / 2026-07-08
+    entries in self_eval_log.md.
     """
     json.dump(
         {

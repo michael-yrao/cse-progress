@@ -6,7 +6,7 @@
 
 > The tracker is keyed by **problem**; this is keyed by **technique**. Use it at the weekly build to decide what to pull, and at phase exit to check the per-algorithm bar (recognition + execution, ≥1 🟢 each).
 
-> **52** techniques &nbsp;·&nbsp; **8** with no 🟢 &nbsp;·&nbsp; **17** thin &nbsp;·&nbsp; **0** unqueued variant gaps
+> **52/52** techniques started &nbsp;·&nbsp; **8** with no 🟢 &nbsp;·&nbsp; **17** thin &nbsp;·&nbsp; **0** unqueued variant gaps
 
 ## ⚠️ Action list
 
@@ -100,7 +100,7 @@
 
 ## Vocabulary maintenance
 
-**Declared but not in the tracker (1)** — the YAML names a problem with no matching row. Either it is unsolved, or the method string drifted.
+**Method drift (1)** — the tracker HAS a row for this problem, but not with the method the vocabulary declares. Either the parenthetical changed or the YAML names the wrong variant; the technique is not being credited.
 
 - 695 (BFS)
 

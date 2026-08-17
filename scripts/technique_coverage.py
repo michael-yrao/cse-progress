@@ -20,7 +20,14 @@ tracker and emits `technique_coverage.md`, one row per technique, with three gap
 
 It also reports **unmapped** tracker rows. That is the anti-drift guard: a newly solved
 problem shows up as unmapped until someone assigns it a technique, so the vocabulary
-cannot silently fall behind the tracker the way the method parentheticals did.
+cannot silently fall behind the tracker the way method parentheticals do.
+
+`techniques.yml` ships as a curriculum-wide vocabulary, so on a young tracker most of the
+problems it names are simply **not solved yet**. That is the expected state, not a
+finding — so an unmatched spec is split two ways: no tracker row for that number at all
+is "not reached yet" (a one-line count), while a row that exists but whose *method*
+string doesn't match is real **drift** and is listed. Without that split a fresh repo
+opens with a hundred-line "problem" list and the report stops being read.
 
 Usage:
     python scripts/technique_coverage.py            # write the report
@@ -42,12 +49,12 @@ def _load_yaml():
 
     This script runs from the daily pre-commit hook, so it cannot assume the
     one-time `bootstrap.py` setup was ever run on this machine — a fresh clone
-    would otherwise fail the coverage step with a bare ImportError traceback.
-    Try the import; if it's missing, pip-install PyYAML (falling back to
-    `--user` for PEP-668 externally-managed environments) and retry once. If
-    the install itself fails (offline, locked-down Python), print one clear
-    line and let the caller decide — the hook already treats this step as
-    non-fatal, so a stale report never blocks committing the day's work.
+    would otherwise fail the coverage step on every commit. Try the import; if
+    it's missing, pip-install PyYAML (falling back to `--user` for PEP-668
+    externally-managed environments) and retry once. If the install itself
+    fails (offline, locked-down Python), print one clear line and exit 0 — the
+    hook already treats this step as non-fatal, so a stale report never blocks
+    committing the day's work.
     """
     try:
         import yaml  # noqa: PLC0415
@@ -123,7 +130,11 @@ class Resolved:
     variant_rows: dict[str, list[Row]] = field(default_factory=dict)
     queued_variants: dict[str, str] = field(default_factory=dict)
     needs_review: list[str] = field(default_factory=list)
-    missing: list[str] = field(default_factory=list)
+    #: Declared, and a tracker row for that NUMBER exists, but the method didn't match.
+    #: That is vocabulary drift and is worth naming.
+    drifted: list[str] = field(default_factory=list)
+    #: Declared and not in the tracker at all — simply not reached yet. Counted, not listed.
+    unreached: list[str] = field(default_factory=list)
 
     @property
     def best_comfort(self) -> str:
@@ -136,7 +147,21 @@ class Resolved:
         return any(r.comfort in GREEN_OR_BETTER for r in self.rows)
 
     @property
+    def is_started(self) -> bool:
+        """Has the learner solved anything under this technique at all?
+
+        Every gap check is gated on this. A technique with zero rows is not weak — it is
+        **ahead of the learner**, and reporting it as no-green + thin + a variant gap
+        turns the whole action list into curriculum the learner already knows is coming.
+        On a young tracker that is the entire report, and a report that is all noise on
+        day one is one nobody opens on day two.
+        """
+        return bool(self.rows)
+
+    @property
     def gaps(self) -> list[str]:
+        if not self.is_started:
+            return ["*not started*"]
         out: list[str] = []
         if not self.has_green:
             out.append("**no-green**")
@@ -193,6 +218,7 @@ def resolve(config: dict, rows: list[Row]) -> tuple[list[Resolved], set[str]]:
     default_min = config.get("defaults", {}).get("min_problems", DEFAULT_MIN_PROBLEMS)
     resolved: list[Resolved] = []
     claimed: set[str] = set()
+    solved_numbers = {r.number for r in rows}
 
     for entry in config.get("techniques", []):
         tech = Resolved(
@@ -209,7 +235,10 @@ def resolve(config: dict, rows: list[Row]) -> tuple[list[Resolved], set[str]]:
             matched = [r for r in rows if _matches(r, spec)]
             if not matched:
                 label = str(spec["number"]) + (f" ({spec['method']})" if spec.get("method") else "")
-                tech.missing.append(label)
+                # A row exists for the number but the method didn't match -> drift.
+                # No row at all -> the learner simply hasn't reached this problem.
+                bucket = tech.drifted if spec["number"] in solved_numbers else tech.unreached
+                bucket.append(label)
                 continue
             for row in matched:
                 tech.rows.append(row)
@@ -243,17 +272,18 @@ def render(resolved: list[Resolved], rows: list[Row], claimed: set[str]) -> str:
     )
     add("")
 
-    blockers = [t for t in resolved if not t.has_green and t.rows]
-    thin = [t for t in resolved if len(t.rows) < t.min_problems]
+    started = [t for t in resolved if t.is_started]
+    blockers = [t for t in started if not t.has_green]
+    thin = [t for t in started if len(t.rows) < t.min_problems]
     variant_gaps = [
         (t, v)
-        for t in resolved
+        for t in started
         for v, vr in t.variant_rows.items()
         if not vr and v not in t.queued_variants
     ]
 
     add(
-        f"> **{len(resolved)}** techniques &nbsp;·&nbsp; "
+        f"> **{len(started)}/{len(resolved)}** techniques started &nbsp;·&nbsp; "
         f"**{len(blockers)}** with no 🟢 &nbsp;·&nbsp; "
         f"**{len(thin)}** thin &nbsp;·&nbsp; "
         f"**{len(variant_gaps)}** unqueued variant gaps"
@@ -315,9 +345,10 @@ def render(resolved: list[Resolved], rows: list[Row], claimed: set[str]) -> str:
 
     unmapped = sorted({r.label for r in rows} - claimed)
     review = sorted({label for t in resolved for label in t.needs_review})
-    missing = sorted({label for t in resolved for label in t.missing})
+    drifted = sorted({label for t in resolved for label in t.drifted})
+    unreached = sorted({label for t in resolved for label in t.unreached})
 
-    if unmapped or review or missing:
+    if unmapped or review or drifted or unreached:
         add("## Vocabulary maintenance")
         add("")
         if unmapped:
@@ -340,14 +371,22 @@ def render(resolved: list[Resolved], rows: list[Row], claimed: set[str]) -> str:
             for label in review:
                 add(f"- {label}")
             add("")
-        if missing:
+        if drifted:
             add(
-                f"**Declared but not in the tracker ({len(missing)})** — the YAML names a problem "
-                "with no matching row. Either it is unsolved, or the method string drifted."
+                f"**Method drift ({len(drifted)})** — the tracker HAS a row for this problem, but "
+                "not with the method the vocabulary declares. Either the parenthetical changed or "
+                "the YAML names the wrong variant; the technique is not being credited."
             )
             add("")
-            for label in missing:
+            for label in drifted:
                 add(f"- {label}")
+            add("")
+        if unreached:
+            add(
+                f"**Not reached yet ({len(unreached)})** — declared in the vocabulary, no tracker "
+                "row. This is the normal state for curriculum ahead of the learner; it is a "
+                "roadmap, not a finding."
+            )
             add("")
 
     return "\n".join(lines) + "\n"
