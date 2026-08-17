@@ -144,6 +144,7 @@ def forms_for(dotted: str) -> tuple[str, ...]:
 #: ⚠️ Dated logs legitimately speak the old dialect (that IS the history), so the same
 #: file-level `single-source-ok` marker exempts them.
 RETIRED_TERMS = (
+    ("daily cap", "the effort budget — units, not a problem count (CLAUDE.md + effort_budget:)"),
     ("daily_cap", "the effort budget — units, not a problem count (CLAUDE.md + effort_budget:)"),
     ("sd_lane_units", "nothing — SD is off-board and unpriced since Aug 16, 2026"),
     ("sd_deep_dive_units", "nothing — SD is off-board and unpriced since Aug 16, 2026"),

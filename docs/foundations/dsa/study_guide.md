@@ -35,9 +35,9 @@ Every Sunday, open `docs/foundations/dsa/mastery/dsa_progress.md` and sweep for 
 1. **Priority 1 (High Risk)**: 🔴 Blank — oldest Latest Attempt Date first.
 2. **Priority 2 (Medium Risk)**: 🟡 Shaky — oldest Latest Attempt Date first.
 3. **Priority 3 (Maintenance)**: 🟢 Clean — due this week. No-code review is allowed, but it **caps at 🟡 Shaky** — to hold or advance 🟢 Clean toward graduation you must code it. Coding your way to 🎓 Graduated is what buys cheap no-code maintenance later.
-4. **Priority 4 (Spot Check)**: 🎓 Graduated — due every 180 days; a flawless no-code blueprint *confirms* retention (stays 🎓). This is the one place a blueprint holds a status.
+4. **Priority 4 (Spot Check)**: 🎓 Graduated — due on the longest interval in the ladder; a flawless no-code blueprint *confirms* retention (stays 🎓). This is the one place a blueprint holds a status.
 
-Daily cap is **5 problems**. The active block is never cut — trim from warmup slots first (max 4 warmup problems across morning + evening combined). When a problem is bumped, slot it to a specific future day in the same edit.
+⚠️ **The day is capped in UNITS, not problems** — this once read *"daily cap is 5 problems"*, which the effort budget superseded on Aug 7, 2026. Price the day with `python scripts/effort_budget.py`; the ceiling lives in `cse.config.yml`. The active block is never cut — trim from warmup slots first. When a problem is bumped, slot it to a specific future day in the same edit.
 
 ---
 
@@ -64,10 +64,12 @@ Log the result in `docs/foundations/dsa/mastery/dsa_progress.md` using the comfo
 
 > **Coding is required for 🟢 Clean.** A no-code blueprint **cannot** log Clean — the best a no-code rep earns is 🟡 Shaky, no matter how flawless. To *reach* or *advance* Clean (increment the streak toward graduation), you must **code it** — in the 45-min active block, or as an Easy problem coded in-warmup. "Mostly remembered it out loud" is not mastery. The one carve-out is below (🎓 Graduated spot checks).
 
-* **Blueprint flawless but not coded** → 🟡 Shaky. Keeps the problem warm (+10 days); code it to restore/advance 🟢.
-* **Needed a nudge or wasn't fully confident** → 🟡 Shaky. Streak resets to 0; next review in +10 days.
-* **Completely forgot the approach** → 🔴 Blank. Streak resets to 0; next review in +2 days.
-* **🎓 Graduated spot check (the carve-out)** → a flawless no-code blueprint on an already-Graduated problem *confirms* it (stays 🎓, +180 days). Graduation — earned by repeated **coded** Cleans — is the one status a blueprint can hold; everything below it needs code to reach or keep 🟢.
+*(Intervals are computed from `cse.config.yml` by `scripts/update_review_dates.py` — named here, never numbered.)*
+
+* **Blueprint flawless but not coded** → 🟡 Shaky. Keeps the problem warm at the Shaky interval; code it to restore/advance 🟢.
+* **Needed a nudge or wasn't fully confident** → 🟡 Shaky. Streak resets to 0; next review at the Shaky interval.
+* **Completely forgot the approach** → 🔴 Blank. Streak resets to 0; next review at the Blank interval — the shortest in the ladder.
+* **🎓 Graduated spot check (the carve-out)** → a flawless no-code blueprint on an already-Graduated problem *confirms* it (stays 🎓, on the Graduated interval). Graduation — earned by repeated **coded** Cleans — is the one status a blueprint can hold; everything below it needs code to reach or keep 🟢.
 
 ### ⚡ Easy Problem Exception
 
@@ -85,7 +87,7 @@ For problems marked **Easy**, the no-code rule is lifted:
     *   *Morning warmup (15 min)*: 1–2 problems due today/tomorrow — no-code blueprint format.
     *   *Evening warmup (15 min)*: 1–2 problems due today/tomorrow — no-code blueprint format.
     *   *Active block (45 min)*: New or current roadmap problem. Never cut this slot.
-    *   **Daily cap: 5 problems total.** Trim from warmup slots first if over cap.
+    *   **Daily ceiling: the effort budget in `cse.config.yml`, measured in units — not a problem count.** Trim from warmup slots first if over.
 *   **Saturday | Blind Code Sprint**:
     *   Pick one problem from the past week's logs. Clear your screen, open a blank file, write the solution from memory.
 *   **Sunday | System Design Sprint (30 min soft target)**:
@@ -271,7 +273,7 @@ Every design session must be narrated out loud — not written silently. Intervi
 
 Once the roadmap completes and NC150 is Clean/retired, the mode shifts from **acquiring patterns** to three ongoing threads that run in parallel — this is the permanent steady state and the on-ramp to the competitive-programmer goal:
 
-1. **Maintenance** — spaced repetition keeps NC150 alive: 🎓 graduated problems spot-check every 180 days; anything that slips to 🟡/🔴 returns to rotation. Never stops.
+1. **Maintenance** — spaced repetition keeps NC150 alive: 🎓 graduated problems spot-check on the longest interval; anything that slips to 🟡/🔴 returns to rotation. Never stops.
 2. **Application — *pull, not push*.** Company frequency lists are a **reference pool, not a checklist.** *Pull* problems from them **gated by patterns/techniques already learned** (NC150 + expansion queue), to build **speed and transfer** on your existing foundation. Never march a company list top-to-bottom — your knowledge drives the selection, not the company's list. Log each pull in the tracker: 🟢 confirms transfer works; 🟡/🔴 is a **diagnostic** pointing at a pattern to refresh (not a cue to learn something ad-hoc). The two curated **pull pools** — interview-sourced (during Tier 1) and competitive-style (after, for Tier 2) — live in [`backlog/`](backlog/README.md). **Pulls are gated on measured review-capacity surplus, not on NC150 being finished** — see "Review capacity math" above; the surplus is expected to open around Oct–Dec 2026, while the roadmap is still running.
 3. **Expansion — keep learning, deliberately.** Continue working the **Knowledge Expansion Queue** (bottom of `dsa_progress.md`): finish Tier 1 advanced (segment tree, KMP, XOR trie, …), then cross the Interview-ROI line into Tier 2 competitive material toward the competitive-programmer goal. New concepts enter **here, in order, deliberately** — never reactively off a company problem.
 
@@ -329,7 +331,7 @@ gated on 778/743 sitting at 🟡+ — which they do.
 **The goal at the end of a phase: every algorithm in it is locked down — recognized *and* executable.**
 
 The old framing, *"phase completion = every associated problem 🎓 Graduated,"* cannot be met and therefore
-gates nothing. 🎓 requires streak 3: a coded 🟢, then +30, then +60 — **90+ days minimum per problem.**
+gates nothing. 🎓 requires `graduate_at_streak` consecutive coded 🟢s, climbing the interval ladder — **months of elapsed time minimum per problem.**
 Advanced Graphs runs Jul 13–Aug 16. Nothing in it *can* be Retired by the exit date, so the rule
 would either stall the roadmap permanently or be quietly ignored. It was being quietly ignored.
 
@@ -409,9 +411,9 @@ editing. A category earns a harder tier when its new problems consistently log �
 
 - **New problems per week (difficulty-tiered, not just phase-dependent)** — per the table above:
   - **Moderate categories** (Standard Graphs / Heap / Tries / Sliding Window / Stack / Intervals+Greedy / Bit-Math): **4–5 per week.** Front-load these easier phases to bank a lead. Fits the 5/day cap (steady-state reviews ~3.5/day + 5 new ≈ 4.1/day).
-  - **Hard, algorithm-dense categories** (**Backtracking**): **4 per week — not 5.** A *new decision-tree pattern per problem*, so the first attempt often logs 🔴, and every 🔴 spawns a +2-day retry that eats a warmup slot. Hold intake at 4 so the blank cascade has room to settle before the next new problem lands.
-  - **Hardest categories** (**Advanced Graphs**, **1D DP** Oct, **2D DP** Nov): **3 per week.** Hardest and slowest, highest blank rate. Advanced Graphs was re-paced Hard→Hardest on Jul 18, 2026: it's a *new algorithm per problem* (Dijkstra, Bellman-Ford, MST/Prim, Eulerian…) **and** proving as blank-heavy as DP — 1584 Prim was still 🔴 after two exposures, and the +2 retry cascade collided with review-saturated weeks (Jul 20–26 was at 27/28 warmup slots on reviews alone). Keep intake at 3 so the blanks settle and it doesn't trip the overdue-backlog rule.
-  - **Rationale — the blank tax.** A new problem is not a 1-slot commitment. A 🔴 costs 1 active slot *plus* ~2–3 follow-up warmup slots over the next fortnight as its +2 retries settle to 🟡. At 5 hard-category new/week, that cascade consumes ~40% of the 28 weekly warmup slots servicing *recent* material, starving the backlog (which is why the 🟢 pile sits at 35 and won't drain). Dropping hard categories to 4 returns roughly one warmup slot/week to genuine review. **Evidence this tier was real:** Advanced Graphs was mis-bucketed as "moderate" (4–5) and produced back-to-back 🔴 on 743 (Dijkstra) and 787 (Bellman-Ford) in one week — reclassified to hard on Jul 14, 2026.
+  - **Hard, algorithm-dense categories** (**Backtracking**): **4 per week — not 5.** A *new decision-tree pattern per problem*, so the first attempt often logs 🔴, and every 🔴 spawns a near-immediate retry that eats a warmup slot. Hold intake at 4 so the blank cascade has room to settle before the next new problem lands.
+  - **Hardest categories** (**Advanced Graphs**, **1D DP** Oct, **2D DP** Nov): **3 per week.** Hardest and slowest, highest blank rate. Advanced Graphs was re-paced Hard→Hardest on Jul 18, 2026: it's a *new algorithm per problem* (Dijkstra, Bellman-Ford, MST/Prim, Eulerian…) **and** proving as blank-heavy as DP — 1584 Prim was still 🔴 after two exposures, and the Blank-interval retry cascade collided with review-saturated weeks (Jul 20–26 was at 27/28 warmup slots on reviews alone). Keep intake at 3 so the blanks settle and it doesn't trip the overdue-backlog rule.
+  - **Rationale — the blank tax.** A new problem is not a 1-slot commitment. A 🔴 costs 1 active slot *plus* ~2–3 follow-up warmup slots over the next fortnight as its Blank-interval retries settle to 🟡. At 5 hard-category new/week, that cascade consumes ~40% of the 28 weekly warmup slots servicing *recent* material, starving the backlog (which is why the 🟢 pile sits at 35 and won't drain). Dropping hard categories to 4 returns roughly one warmup slot/week to genuine review. **Evidence this tier was real:** Advanced Graphs was mis-bucketed as "moderate" (4–5) and produced back-to-back 🔴 on 743 (Dijkstra) and 787 (Bellman-Ford) in one week — reclassified to hard on Jul 14, 2026.
   - **Net effect on the roadmap:** ~late-November NC150 completion holds, with far less Blank-pileup risk than 5/week through the hard blocks.
 ### Two kinds of new problem — the cap only governs one (added Jul 26, 2026)
 
@@ -449,6 +451,11 @@ problem is Hard, a generous warmup when it isn't.
 
 Review demand is not a headcount, it's a **rate**: each tracked row generates `1 / interval` reps per
 day. Maturing a problem doesn't just mark it mastered — it **removes it from the schedule**.
+
+<!-- single-source-ok: a DERIVATION. The intervals below are the inputs to `1 / interval`, so the
+     table cannot be written without them — the numbers are being computed with, not restated as
+     rules. If the config's intervals change, recompute this table; do not merely edit the labels.
+     `scripts/effort_budget.py` prints the live version of the same arithmetic. -->
 
 | Status | Interval | Demand per row | Relative |
 |---|---|---|---|
@@ -533,6 +540,7 @@ short.
 
 ### Library carrying capacity — graduation and disposable reps (added Jul 26, 2026)
 
+<!-- single-source-ok: carrying-capacity DERIVATION — the interval is an input to the slots/week figure. -->
 **The constraint:** a tracked problem never stops costing. Even fully retired at +180 it bills
 **0.039 slots/week forever.** At 28 slots/week the library has a **carrying capacity of ~500–600
 problems**, past which maintenance eats everything and intake must stop. Sustainable intake *decays*
@@ -549,7 +557,7 @@ Left alone, "keep adding problems" strangles itself in about three years. Two me
 
 #### 🏆 Retirement — the terminal tier, above 🎓
 
-🎓 Graduated still bills a spot check every 180 days, forever. Retirement is the step past it, and
+🎓 Graduated still bills a recurring spot check, forever. Retirement is the step past it, and
 **how many spot checks it takes depends on how the problem reached 🎓:**
 
 | Path to 🎓 | Spot checks needed to retire | Why |
@@ -608,7 +616,7 @@ rather than a recalled algorithm — and **the ladder's only job is to catch dec
 s1 → s2 → s3 on it spends slots for nothing. The stale 🟢 pile is almost entirely this: 1929, 217, 26,
 344, 125, 1768, 88, 100, 14.
 
-**A problem may skip straight to 🎓 Graduated (Streak 3, +180) on its next clean rep when all three hold:**
+**A problem may skip straight to 🎓 Graduated (the Graduated tier) on its next clean rep when all three hold:**
 
 1. It's **🟢 and has been cleaned before** — not a first success.
 2. The learner **declares it over-learned.** Self-reported, like Comfort.
@@ -809,8 +817,8 @@ See [stuck_log.md](stuck_log.md) for the live log. Template for reference:
 ---
 
 ## Core Rules
-1.  **Strict 45-Minute Cap**: If a new problem isn't solved in 45 minutes, stop, look up the solution, and log it 🔴 Blank. It re-appears in 2 days.
+1.  **Strict 45-Minute Cap**: If a new problem isn't solved in 45 minutes, stop, look up the solution, and log it 🔴 Blank. It re-appears on the Blank interval — the shortest in the ladder.
 2.  **Quality > Quantity — Hard Comfort Bar**: Aim for 3–4 deeply understood problems per week. A problem is 🟢 Clean only when you can write the complete solution on a blank page with no hints and state the correct time/space complexity unprompted. "Mostly remembered it" = 🟡 Shaky. Every non-Clean result gets logged in `stuck_log.md`: 🔴 Blank gets a full entry naming the conceptual gap; 🟡 Shaky gets a one-liner naming the specific friction point.
 3.  **Coding Required for Clean**: 🟢 Clean is earned only by **coding** the solution from a blank page. A no-code blueprint caps at 🟡 Shaky and cannot advance the streak toward graduation; the sole carve-out is a flawless spot check *confirming* an already-🎓 Graduated problem.
 4.  **Whiteboard Fidelity**: Write the *full* solution from scratch every time — including any `ListNode` / `TreeNode` / `TrieNode` definitions. No shared boilerplate/data-model module to import; re-deriving the scaffolding is part of the rep, exactly as on an interview whiteboard.
-5.  **5-Problem Daily Cap**: Never exceed 5 problems in a day. Active block is always protected — trim warmup slots first. When a problem is bumped, assign it a specific future slot in the same edit.
+5.  **Daily Effort Ceiling**: Never exceed the ceiling in `cse.config.yml` (units, not problems — price it with `scripts/effort_budget.py`). Active block is always protected — trim warmup slots first. When a problem is bumped, assign it a specific future slot in the same edit.

@@ -27,7 +27,7 @@ built the system precisely so that "not done yet" resolves by continuing, not by
 - **Never present a phase date as a countdown, a risk, or a thing that "closes on an unproven phase."**
   Report the state — *which algorithms have no 🟢* — and let the state drive the schedule. The state is the
   useful fact; the date adds nothing to it.
-- **A slipped phase does not justify cramming.** It does not raise the daily cap ([[feedback-daily-cap]]),
+- **A slipped phase does not justify cramming.** It does not raise the daily effort ceiling ([[feedback_daily_cap]] is the superseded count),
   it does not license extra intake against a negative surplus
   ([[feedback-surplus-triggered-intake]]), and it does not make a protected rep movable.
 - **"Add new problems slowly"** — intake stays gated on surplus and the difficulty tiers

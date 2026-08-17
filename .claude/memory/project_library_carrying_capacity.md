@@ -8,13 +8,14 @@ metadata:
 **Decided Jul 26, 2026**, from the learner's question about running out of problems as intervals
 lengthen. See `docs/foundations/dsa/study_guide.md` → "Library carrying capacity".
 
+<!-- single-source-ok: DERIVATION — the interval is an input to the slots/week arithmetic below. -->
 **The constraint:** even fully retired at +180, a tracked problem bills **0.039 slots/week forever.**
 At ~28 slots/week the library caps out around **500–600 problems**, and sustainable new intake decays
 with size: ~3/week at 190 rows, ~2 at 350, ~1 at 500, **zero at ~700**. Unbounded "keep adding
 problems" self-strangles in roughly three years.
 
 **The tier order is 🏆 Retired > 🎓 Graduated > 🟢 > 🟡 > 🔴.** You **graduate first, then retire** —
-🎓 is the streak-3 tier that still comes back every 180 days; 🏆 is terminal.
+🎓 is the `graduate_at_streak` tier that still comes back on the longest interval; 🏆 is terminal.
 
 **Valve 1 — 🏆 Retirement, the terminal tier above 🎓.** A 🎓 problem that clears its spot checks
 leaves the tracker entirely for a plain-list `## 🏆 Retired` section: no interval, no cost. Re-enters
@@ -26,7 +27,7 @@ elsewhere, and that coverage gate is a **standing** guarantee, not a one-time ch
 does the second check's job.
 
 **Valve 1b — the over-learned fast-track** (added Jul 26, 2026). A 🟢 problem that's been cleaned
-before may skip straight to **🎓 (Streak 3, +180)** on its next clean rep, if the learner declares it
+before may skip straight to **🎓 (the Graduated tier)** on its next clean rep, if the learner declares it
 over-learned **and** the technique appears in ≥1 *harder* tracked problem still on the normal ladder.
 **That coverage gate is the whole rule** — you stop testing the technique at its *easiest instance*
 while harder ones keep doing the work; if no harder representative exists, the easy problem *is* the

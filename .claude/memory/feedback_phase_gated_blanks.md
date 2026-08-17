@@ -1,13 +1,13 @@
 ---
 name: feedback_phase_gated_blanks
-description: A 🔴 Blank on an un-taught technique is a premature attempt — phase-gate it, don't churn it in the +2 retry loop
+description: A 🔴 Blank on an un-taught technique is a premature attempt — phase-gate it, don't churn it in the Blank-interval retry loop
 metadata:
   type: feedback
 ---
 
 Before treating an overdue 🔴 Blank as urgent, check whether its **technique has actually been taught yet** (i.e. whether its phase in `study_guide.md`'s roadmap has happened).
 
-A Blank on a technique with no foundation is a **premature attempt**, not a spaced-repetition failure. The +2-day loop assumes *forgetting* — but there was never any encoding to forget, so retrying just re-blanks it, resets to +2, and churns forever while inflating the backlog signal.
+A Blank on a technique with no foundation is a **premature attempt**, not a spaced-repetition failure. The Blank-interval loop assumes *forgetting* — but there was never any encoding to forget, so retrying just re-blanks it, resets to the Blank interval, and churns forever while inflating the backlog signal.
 
 **Why:** the Jul 12, 2026 backlog audit flagged "5 urgent 🔴s." Two (1216 Valid Palindrome III ×2, attempted May 31) were premature — their phases are Backtracking (Sep 14) and 1D DP (Oct 12). The user caught it: *"they were not re-scheduled since they did not fit the categories we were targeting."* Real 🔴 backlog was 3, not 5.
 

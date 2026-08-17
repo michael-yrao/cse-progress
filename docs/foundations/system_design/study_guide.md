@@ -220,7 +220,7 @@ Full rubric and the reasoning behind it: [`senior_ramp.md`](https://github.com/m
 | 🟡 **Shaky** | skeleton solid, senior half thin. Also the ceiling for any prepared (non-cold) mock |
 | 🔴 **Blank** | couldn't drive the framework cold |
 
-Intervals are the standard engine: +30 / +10 / +2, streak 2 → +60, retired at 3 → +180.
+Intervals are the standard engine ladder — the values live in `cse.config.yml` and are computed by `scripts/update_review_dates.py`.
 
 **A re-mock of the same question is a different rep, not a re-read.** By the time a 🟡 comes back at +10
 days you will have studied the breakdown, so the second run is a *prepared* mock by definition — and it

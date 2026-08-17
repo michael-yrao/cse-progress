@@ -16,7 +16,7 @@ The user's job is to solve problems and report comfort. **Everything else — ke
 3. the weekly schedule (strike through what's done; slot future due dates)
 4. git remote (commit **and** push)
 
-Plus forward-looking maintenance runs automatically: proactively slot upcoming due problems, generate next week's schedule before the week starts, detect and fix out-of-order/displaced problems, respect the daily cap.
+Plus forward-looking maintenance runs automatically: proactively slot upcoming due problems, generate next week's schedule before the week starts, detect and fix out-of-order/displaced problems, respect the daily effort ceiling.
 
 **The test for any action:** "Have I propagated this everywhere it needs to go, and would the user ever have to point out something I missed?" If the user is the one catching the omission, the loop wasn't closed. Nearly every process memory here exists because that happened once — see [[feedback_git_commit]], [[feedback_end_of_session_push]], [[feedback_end_of_week_schedule]], [[feedback_proactive_scheduling]], [[feedback_schedule_mistakes]], [[feedback_daily_cap]]. Sub-rules for getting the propagated artifact *correct*: [[feedback_new_vs_retry]], [[feedback_schedule_markdown]].
 

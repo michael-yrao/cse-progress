@@ -13,7 +13,7 @@ At the end of the last session of the week (or whenever the user closes out a we
 1. The current week's preview section (carries forward shakys, retries, overdue backlog)
 2. `dsa_progress.md` — scan for all problems with `Next Review Date` falling in the coming week
 3. The phase plan (from `study_guide.md`) for active block topics
-4. Daily cap: 4 warmup slots + 1 active block = 5 problems max per day
+4. Daily load: priced in **units** against the ceiling in `cse.config.yml` (`scripts/effort_budget.py`), not as a problem count
 5. Sunday = system design sprint (no active block)
 
 At the same time, archive the current week's schedule by moving it to `docs/foundations/schedules/archive/`. Both happen together — archive current, generate next — in a single commit before pushing.

@@ -14,4 +14,4 @@ Once NC150 is largely retired and the learner enters the knowledge-expansion pha
 
 **Why:** The user specified that the interview pull isn't an ad-hoc tool — it's driven by the same weekly-schedule cadence as everything else, informed by per-pattern comfort, so application practice flows through the identical spaced-repetition engine as NC150.
 
-**How to apply:** During NC150 (milestone phase) there are no interview pulls yet — the roadmap is the work. Once in the expansion phase, at weekly generation: sweep reviews → fill active blocks with expansion techniques → fill remaining slots with comfort-weighted `pull_interview.py` suggestions → log and schedule all of them via the normal comfort system. Respect the daily cap; protect the active block.
+**How to apply:** During NC150 (milestone phase) there are no interview pulls yet — the roadmap is the work. Once in the expansion phase, at weekly generation: sweep reviews → fill active blocks with expansion techniques → fill remaining slots with comfort-weighted `pull_interview.py` suggestions → log and schedule all of them via the normal comfort system. Respect the daily effort ceiling; protect the active block.

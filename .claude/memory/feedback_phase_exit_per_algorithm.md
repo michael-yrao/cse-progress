@@ -21,7 +21,7 @@ Both. Recognition without execution is knowing the thing's name; execution witho
 solution waiting to be told which problem it belongs to. The interview grades recognition in the first
 two minutes and execution for the next thirty.
 
-**Why this replaces "every associated problem 🎓 Graduated":** 🎓 needs streak 3 — a coded 🟢, then +30,
+**Why this replaces "every associated problem 🎓 Graduated":** 🎓 needs `graduate_at_streak` consecutive coded 🟢s, climbing the ladder,
 then +60, so **90+ days minimum per problem**. A phase runs ~3–5 weeks. The old rule was therefore
 unmeetable by construction, which meant it was ignored rather than enforced — and an ignored gate is
 worse than a loose one, because it makes the roadmap look governed when it isn't.

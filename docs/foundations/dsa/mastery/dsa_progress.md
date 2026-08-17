@@ -24,11 +24,11 @@ Notes for future agents:
   Streak 1 and it rejoins the normal ladder; if it slips to 🟡/🔴, it resets as usual. A 🟢 after a
   🟡 (not a 🔴) is logged Streak 1 as normal — only Blank→Clean is provisional. Do NOT "fix" a 🟢/Streak-0 to
   Streak 1; that silently removes the lock-down.
-- ⚠️ NAMES SWAPPED Jul 26, 2026 — you GRADUATE, then you RETIRE. 🎓 Graduated is the streak-3 tier
-  that still comes back every 180 days; 🏆 Retired is TERMINAL. The labels were originally the other
+- ⚠️ NAMES SWAPPED Jul 26, 2026 — you GRADUATE, then you RETIRE. 🎓 Graduated is the `graduate_at_streak` tier
+  that still comes back on the longest interval; 🏆 Retired is TERMINAL. The labels were originally the other
   way round, which read backwards against the ordinary meaning of the words.
-- When a problem reaches Streak 3, change Comfort to 🎓 to graduate it out of regular rotation.
-- Graduated problems return for a spot check every 180 days. Still Clean → stays 🎓 (+180).
+- When a problem reaches `graduate_at_streak` (see `cse.config.yml`), change Comfort to 🎓 to graduate it out of regular rotation.
+- Graduated problems return for a spot check on the longest interval. Still Clean → stays 🎓 at that same interval.
   Shaky/Blank → back to active rotation. A legacy 🏆 row still parses and is treated as 🎓.
 - **🏆 Retirement (added Jul 26, 2026) — the TERMINAL tier, above 🎓.** A 🎓 problem that clears its
   spot checks retires — **two** clean if it climbed the ladder normally, **ONE** if it arrived by the
@@ -228,7 +228,7 @@ note is the failure mode this section exists to prevent.
 | Hard | [472. Concatenated Words](https://leetcode.com/problems/concatenated-words/) | `rated:211` | **Trie's 3rd problem** — from the pull (`Trie` tag, 17 eligible; Word Break and Word Search II were both auto-flagged as already in the phase plan, which is the roadmap filter working). Trie + DFS over the dictionary itself. |
 | Medium | [1472. Design Browser History](https://leetcode.com/problems/design-browser-history/) | `rated:146` | **2nd problem for HashMap + Doubly Linked List** — the technique had exactly one (146 LRU). A design problem where the DLL is the point and there is no eviction policy to hide behind. |
 | Medium | [53. Maximum Subarray (Divide and Conquer)](https://leetcode.com/problems/maximum-subarray/) | `rated:912` + `surplus>=1` | **D&C consolidation rep.** ⚠️ *Original trigger "active block week of Jul 6" **expired unfired** — caught Jul 26, 2026, three weeks stale. A dead stub (`maxSubarrayDivideNConquer`, body `return`) sits in the solution file from that abandoned setup.* **Re-triggered as a condition, not a date: pull once (a) 912 Merge Sort has its RATED rep (Jul 29 — D&C was taught unrated Jul 25, so 912 measures retention first) AND (b) surplus ≥ 1.** Rationale: D&C currently has exactly **one** problem (912) where a technique wants 3–4, and this is the natural second — but running it before 912 is rated would measure the teaching, not the technique. See [[project_dandc_coding_gap]]. |
-| Hard | [42. Trapping Rain Water (Two Pointer)](https://leetcode.com/problems/trapping-rain-water/) | `graduates:42` | O(1) space optimization. **Trigger: pull into rotation when 42 Array GRADUATES (🎓, streak 3).** ⚠️ Wording corrected Aug 7, 2026 — it read "retires (🏆, streak 3)", which predates the Jul 26 label swap; streak 3 is 🎓 Graduated, and 🏆 Retired is the terminal tier well beyond it. Gating on 🏆 would have deferred this variant by ~a year past its intended trigger. **Array method 🟢 streak 2 as of Aug 7 → the NEXT clean rep (due Oct 6) fires this trigger.** |
+| Hard | [42. Trapping Rain Water (Two Pointer)](https://leetcode.com/problems/trapping-rain-water/) | `graduates:42` | O(1) space optimization. **Trigger: pull into rotation when 42 Array GRADUATES (🎓).** ⚠️ Wording corrected Aug 7, 2026 — it read "retires (🏆)", which predates the Jul 26 label swap; the `graduate_at_streak` tier is 🎓 Graduated, and 🏆 Retired is the terminal tier well beyond it. Gating on 🏆 would have deferred this variant by ~a year past its intended trigger. **Array method 🟢 streak 2 as of Aug 7 → the NEXT clean rep (due Oct 6) fires this trigger.** |
 | Medium | [210. Course Schedule II (DFS postorder)](https://leetcode.com/problems/course-schedule-ii/) | `graduates:210` | **Method variant — the only unqueued variant gap in [`technique_coverage.md`](technique_coverage.md).** Topological sort has three problems (207, 210, 269) and **all three are Kahn's**; DFS-topo has never been written once. Gated by the method-variant rule — needs 210 itself at 🎓 (currently 🟢 streak 1, next Aug 23). **Why it earns a rep rather than a footnote:** DFS-topo requires a *three-state* visited (unvisited / in-progress / done) to detect a cycle as a back edge, plus reverse-postorder to emit forward — machinery Kahn's never makes you build, so three Kahn's reps leave it genuinely untrained. Surfaced Jul 28, 2026 by the coverage report. |
 | Hard | Digit DP (technique) — e.g. [233. Number of Digit One](https://leetcode.com/problems/number-of-digit-one/) | `phase:2D-DP` | Technique: counting numbers in a range by digit constraints. Not in NC150; advanced DP. Best learned AFTER the 1D/2D DP blocks (Oct–Dec) once DP foundation is solid. |
 | Medium | [300. Longest Increasing Subsequence (O(n log n))](https://leetcode.com/problems/longest-increasing-subsequence/) | `phase:1D-DP` | DP enrichment: patience-sorting / binary-search LIS. Base O(n²) LIS is NC150; this is the optimized form. Learn after the 1D DP block. |
@@ -446,7 +446,7 @@ standing guarantee, so it already does the second check's job).
 They carry **no interval and no ongoing review cost** — this is the release valve that keeps the
 library under its ~500–600 carrying capacity (see `../study_guide.md` → "Library carrying capacity").
 
-> **You graduate, then you retire.** 🎓 Graduated is the streak-3 tier that still comes back every 180
+> **You graduate, then you retire.** 🎓 Graduated is the `graduate_at_streak` tier that still comes back on the longest
 > days for a spot check; 🏆 Retired is done — never called back. *(Renamed Jul 26, 2026 — the two labels
 > were originally the other way round, which read backwards against the ordinary meaning of the words.)*
 
