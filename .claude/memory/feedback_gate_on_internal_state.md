@@ -24,8 +24,10 @@ financial event that happens to correlate. Correlation is not a gate.
 
 1. When proposing any trigger, ask **"could I evaluate this by reading files in this repo?"** If the
    answer needs a recruiter, a calendar, or someone else's decision, it's the wrong trigger — find the
-   internal proxy. (Example: the readiness *behind* an application date is SD lanes reaching
-   Transition/Mastery; gate on that, and let the date follow.)
+   internal proxy. (Example: the readiness *behind* an application date is **mock scores clearing the
+   7-point rubric bar on the senior_ramp questions**; gate on that, and let the date follow. This once
+   read "SD lanes reaching Transition/Mastery" — that arc was retired Aug 13, 2026, and the mock board
+   in sd-progress is the readable internal state now.)
 2. **The job search still informs *what* is worth learning** — interview ROI is a legitimate input to
    curriculum priority ([[feedback-roi-promotes-to-curriculum]]). It just never determines **when**
    you're ready to move on.

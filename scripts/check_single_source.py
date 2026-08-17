@@ -173,14 +173,23 @@ def check_retired(files: list[Path]) -> list[str]:
         for n, line in enumerate(lines, 1):
             if n <= body_starts:
                 continue
-            low = line.lower()
+            # A [[wiki-link]] to a retired rule is CORRECT — it resolves to the redirect
+            # stub, which is the whole reason the stub is kept instead of deleted. Strip
+            # links before matching so a pointer is never mistaken for a restatement.
+            low = re.sub(r"\[\[[^\]]*\]\]", " ", line.lower())
+            # A wrapped list or paragraph under a "What was retired:" header carries the
+            # exemption on the HEADER line, not on the continuation. Inherit from the two
+            # preceding lines — one is not enough for hard-wrapped prose, which is how this
+            # repo writes.
+            prev = " ".join(ln.lower() for ln in lines[max(0, n - 3):n - 1])
             # A line that says the thing is GONE is the fix, not the bug. Naming a retired
             # concept in order to retire it ("no blind sprints", "the SD lane was priced
             # at...") must not be flagged, or the report punishes the documentation that
             # does its job and the signal drowns.
-            if any(w in low for w in (OPT_OUT, "superseded", "retired", "no longer",
-                                      "not priced", "removed", "used to", "was simultaneously",
-                                      "are gone", "is gone", "referents are gone", "once carried")):
+            skip_words = (OPT_OUT, "superseded", "retired", "no longer", "not priced",
+                          "removed", "retiring", "used to", "was simultaneously", "are gone", "is gone",
+                          "referents are gone", "once carried", "what was retired")
+            if any(w in low for w in skip_words) or any(w in prev for w in skip_words):
                 continue
             for term, replacement in RETIRED_TERMS:
                 t = term.lower()

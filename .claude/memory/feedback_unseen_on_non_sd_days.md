@@ -10,12 +10,21 @@ system design. problems that i have seen more than twice will always be a bit mo
 
 ## The rule
 
-**Every day without an SD lane slot carries at least one *unseen* problem** — either **new intake** from
+**Every day without an SD slot carries at least one *unseen* problem** — either **new intake** from
 the current study-guide phase, or a **recognition probe** ([[project_recognition_probes]]). Either
 satisfies it; they are interchangeable for this purpose.
 
-At `three_weekly` SD cadence that is **4 unseen problems per week** (the four non-SD days). SD days carry
-none — they are already at ~8 units with the lane priced at 3.0 ([[feedback_dsa_before_sd]]).
+⚠️ **The exemption's original basis is GONE (Aug 16, 2026) — re-derive the target, don't assume 4.**
+This rule was written when an SD day was **priced at 3.0 units against the day**, so an SD day was
+mechanically full and carrying no unseen problem followed from arithmetic. SD is now **off-board and
+unpriced**: the whole ceiling was lowered instead, which charges the SD evening **once on every day**
+rather than only on SD days. On a literal reading **all seven days now qualify**.
+
+That is not a licence to schedule seven — it means the number is **a judgement made at the build from
+that week's actual arithmetic, and stated**. The Aug 17 build is the worked example: it found all seven
+qualifying, delivered **3**, and wrote down which four days could not take one and why (three were 100%
+due reviews at the ceiling; the fourth would have displaced the oldest slip). **Short is fine; silent
+is not.** The old `three_weekly` figure of 4/week survives only as a baseline to measure against.
 
 ## Why — the learner's reason, which is the right one
 
@@ -31,7 +40,8 @@ of pure review unless SD is doing the hard work instead."*
 
 ## How to apply at the weekly build
 
-1. Mark the SD days first (lanes ①/②/③).
+1. Mark the SD days first — the Sunday **mock** and, when the probe bank is non-empty, the midweek
+   **deep-dive round**. (This once read "lanes ①/②/③"; the three-lane model was retired Aug 13, 2026.)
 2. **Every remaining day gets an unseen problem before any 🟢 backlog is placed.**
 3. Prefer **new intake from the active phase** — it is time-boxed and does not get done later for free.
    Fall back to a **probe** when phase intake is capped or exhausted.

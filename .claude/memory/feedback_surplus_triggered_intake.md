@@ -12,8 +12,13 @@ intervals lengthen near the end of NC150. It does — and the old date-based rul
 0.10 · 🟢 s1 +30 → 0.033 · 🟢 s2 +60 → 0.017 · 🎓 +180 → 0.006. **A graduated problem generates 1/83rd
 the load of a Blank** — retirement removes a problem from the schedule, it doesn't just label it.
 
-**Capacity ≈ 28 problem-slots/week** (7 × 2 warmup slots × ~2 problems, −6 for the three SD lanes,
-+6 active blocks).
+⚠️ **Capacity is now UNITS, not problem-slots (Aug 7, 2026).** The retired formula was
+*"≈ 28 problem-slots/week — 7 × 2 warmup slots × ~2 problems, −6 for the three SD lanes,
++6 active blocks"*, and all three of its inputs are now gone:
+the problem count was replaced by the effort budget, the three SD lanes were retired Aug 13, and
+SD stopped being charged against the day on Aug 16. **Don't hand-compute it — `scripts/effort_budget.py`
+prints demand and capacity in units** from the config's own ceiling. The demand model below is
+unchanged and is exactly what that script sums.
 
 **Calibrated Jul 26, 2026:** demand ≈ 35.6/wk vs 28 → **−8 over-subscribed.** That deficit *is* the
 23-item stale 🟢 pile. Worth saying to the learner when it comes up: the backlog is **arithmetic, not
@@ -26,11 +31,12 @@ population matures to +60/+180, demand falls to ~7/wk by late 2027 — **75% idl
 
 **How to apply:**
 
-1. **At every weekly schedule build, compute the surplus before slotting anything**: sum `1/interval`
-   across the tracker, ×7, subtract from 28.
+1. **At every weekly schedule build, run `scripts/effort_budget.py` before slotting anything.** It sums
+   `1/interval` across the tracker and prices it against the ceiling — the arithmetic this rule used to
+   describe by hand as "×7, subtract from 28".
 2. **Then write the per-day row — the surplus measures the WEEK, not the DAY.** A negative weekly
-   surplus does *not* mean every day is full; SD lanes and doubled warmups land unevenly, so a −7 week
-   routinely holds days at 1–2 problems against a cap of 5. **Slipping reviews off a week that still
+   surplus does *not* mean every day is full; the SD slot and doubled warmups land unevenly, so a
+   deficit week routinely holds days well under the ceiling. **Slipping reviews off a week that still
    has slack days is a false shortage and costs real reps.** Any under-cap day absorbs items back off
    the slip list, preferring ones **already due that day** (those aren't pulled forward at all — they
    just stop slipping). Only then is the slip list final. *Found Jul 27, 2026: a −7.3 build slipped
