@@ -176,11 +176,38 @@ techniques:
 
   # Bar raised to the file default of 3 on Aug 16, 2026 (tier A/B of the
   # coverage review: a LeetCode topic tag exists that can actually source it).
+  #
+  # ⚠️ Both of these MINIMIZE (smallest k that works). The maximizing form is a separate
+  # technique below — it needs the other mid-bias and it is the one that loops forever if
+  # you get it wrong.
   - name: Binary Search on Answer
     family: binary_search
     problems:
       - {number: 875}
       - {number: 1011}
+
+  # Added Aug 17, 2026. The learner noticed 69 was only their SECOND max-boundary rep and
+  # asked to fill the technique — and nothing in the repo could have surfaced that, because
+  # the vocabulary had no entry for it: 74 sat inside the generic `Binary Search` bucket
+  # among seven problems, and `Binary Search on Answer` holds only minimizing forms.
+  #
+  # What makes it one technique rather than a detail of the others: you are looking for the
+  # LARGEST value that still satisfies a monotone predicate, so the answer lives at `l` on
+  # exit and the midpoint must round UP — `m = (l + r + 1) // 2`. With the ordinary
+  # `(l + r) // 2` the search stalls on a two-element window and loops forever. That single
+  # bias is the whole technique and it is invisible from the minimizing side.
+  #
+  # ⚠️ 69 Sqrt(x) is deliberately NOT listed. It was a 🟢 recognition probe, so by the probe
+  # rule it has no tracker row — declaring it here would report it forever as "not reached".
+  # The consequence is real and worth stating: coverage credits this technique with 74 only,
+  # so the two problems below are what actually close it.
+  - name: Binary Search (max boundary)
+    family: binary_search
+    min_problems: 3
+    problems:
+      - {number: 74}     # largest row whose first element <= target
+      - {number: 34}     # ⏳ both boundaries in one problem — the two biases side by side
+      - {number: 1552}   # ⏳ maximize the minimum gap — the mirror of 875/1011
 
   # ── Stack ───────────────────────────────────────────────────────────────────
   - name: Stack (matching)

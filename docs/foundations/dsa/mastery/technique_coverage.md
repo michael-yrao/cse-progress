@@ -6,7 +6,7 @@
 
 > The tracker is keyed by **problem**; this is keyed by **technique**. Use it at the weekly build to decide what to pull, and at phase exit to check the per-algorithm bar (recognition + execution, ≥1 🟢 each).
 
-> **52/52** techniques started &nbsp;·&nbsp; **8** with no 🟢 &nbsp;·&nbsp; **17** thin &nbsp;·&nbsp; **0** unqueued variant gaps
+> **53/53** techniques started &nbsp;·&nbsp; **8** with no 🟢 &nbsp;·&nbsp; **18** thin &nbsp;·&nbsp; **0** unqueued variant gaps
 
 ## ⚠️ Action list
 
@@ -24,6 +24,7 @@
 **Thin — fewer than the 3–4 surface forms a technique needs.** One instance trains recall of that problem, not the skill.
 
 - **Bellman-Ford** (advanced_graphs) — 1/3: 787
+- **Binary Search (max boundary)** (binary_search) — 1/3: 74
 - **Cycle Detection in an Iterated Sequence** (graphs) — 1/2: 202
 - **Divide & Conquer / Sorting** (sorting) — 1/3: 912
 - **Floyd-Warshall (all-pairs shortest path)** (advanced_graphs) — 1/3: 1334
@@ -59,6 +60,7 @@
 | Length-Prefix Encoding | arrays_and_hash | 1 (271) | 🟡 | ❌ | — | **no-green** |
 | Prefix/Suffix Products | arrays_and_hash | 1 (238) | 🟢 | ✅ | — | — |
 | Binary Search | binary_search | 7 (33, 74, 153, 162, 540, 704, 2300) | 🎓 | ✅ | — | — |
+| Binary Search (max boundary) | binary_search | 1 (74) | 🟢 | ✅ | — | thin (1/3) |
 | Binary Search on Answer | binary_search | 2 (875, 1011) | 🟢 | ✅ | — | thin (2/3) |
 | BFS on Implicit Graph | graphs | 1 (127) | 🟡 | ❌ | — | **no-green** |
 | Connected Components | graphs | 3 (323, 323, 323) | 🟢 | ✅ | DFS ×1 · BFS ×1 · Union-Find ×1 | — |
@@ -103,4 +105,6 @@
 **Method drift (1)** — the tracker HAS a row for this problem, but not with the method the vocabulary declares. Either the parenthetical changed or the YAML names the wrong variant; the technique is not being credited.
 
 - 695 (BFS)
+
+**Not reached yet (2)** — declared in the vocabulary, no tracker row. This is the normal state for curriculum ahead of the learner; it is a roadmap, not a finding.
 
