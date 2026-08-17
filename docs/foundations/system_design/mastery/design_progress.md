@@ -21,7 +21,7 @@ Notes for future agents:
   A question is 🔴/blank and inert (no review load) until its first mock runs.
 - Rating is the 7-point rubric in ../senior_ramp.md, scored right after the mock:
     * 🟢 Clean  — #1–4 solid AND #5 forks, #6 failure modes, #7 evolve/operate all pass.
-                                                              +30d (streak2 +60, retire@3 +180)
+                                                              the standard engine ladder — intervals in `cse.config.yml`
     * 🟡 Shaky  — skeleton (#1–4) solid, #5–7 shaky.           +10d, streak → 0
     * 🔴 Blank  — couldn't drive the framework cold.           +2d,  streak → 0
 - To log a mock: write the debrief to ../mocks/, set Comfort, add today's date to Rep

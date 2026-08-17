@@ -158,6 +158,7 @@ the code was clean and unhinted. This is the same reasoning as the fast-track's 
 testing the technique at its weakest instance while harder ones keep doing the work* — and the same
 reasoning as per-algorithm phase exit.
 
+<!-- single-source-ok: a dated worked example of one rep's cost. -->
 **The cost, stated plainly:** 323-DFS was 🟢 s1, so 🟢 makes it **s2 → +60 → Oct 10.** It leaves the board
 for two months. That is only safe *if* the category actually gets fired cold on 261/133/210 — so **fire
 the complexity gate cold on 261 (Aug 16)**; that rep is now carrying this one's weight.

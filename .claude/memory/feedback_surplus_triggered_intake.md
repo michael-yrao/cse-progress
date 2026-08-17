@@ -1,6 +1,6 @@
 ---
 name: feedback-surplus-triggered-intake
-description: Review demand is a rate (sum of 1/interval), not a headcount — measure surplus vs ~28 slots/week at every schedule build and gate pulls/extra intake on it, never on "NC150 is finished"
+description: Review demand is a rate (sum of 1/interval), not a headcount — measure surplus in UNITS against the effort ceiling at every schedule build and gate pulls/extra intake on it, never on "NC150 is finished"
 metadata:
   type: feedback
 ---
@@ -8,6 +8,7 @@ metadata:
 **Established Jul 26, 2026** when the learner asked whether the schedule runs out of problems as
 intervals lengthen near the end of NC150. It does — and the old date-based rule would have missed it.
 
+<!-- single-source-ok: DERIVATION — the intervals are inputs to `1 / interval`. -->
 **The model:** each tracked row generates `1 / interval` reps per day. 🔴 +2 → 0.50/day · 🟡 +10 →
 0.10 · 🟢 s1 +30 → 0.033 · 🟢 s2 +60 → 0.017 · 🎓 +180 → 0.006. **A graduated problem generates 1/83rd
 the load of a Blank** — retirement removes a problem from the schedule, it doesn't just label it.

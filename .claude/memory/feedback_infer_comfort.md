@@ -48,7 +48,7 @@ where `<` belonged, in a union-by-rank block whose logic they could state correc
 latter. **Don't stretch this**: a slip that survives *because they never traced the branch* is a
 verification gap, not a typo, and the tell is whether they recognize it instantly when shown.
 
-Honesty matters more than agreeableness here: if they claim 🟢 but I supplied a real fix they missed, say so plainly (see the 355 and 36 exchanges) — then defer to their call. Related: [[feedback_no_spoilers]], [[feedback_phase_gated_blanks]] (which is the *one* case where a 🔴 doesn't get the +2 loop — an un-taught technique, not a just-taught one).
+Honesty matters more than agreeableness here: if they claim 🟢 but I supplied a real fix they missed, say so plainly (see the 355 and 36 exchanges) — then defer to their call. Related: [[feedback_no_spoilers]], [[feedback_phase_gated_blanks]] (which is the *one* case where a 🔴 doesn't get the Blank-interval loop — an un-taught technique, not a just-taught one).
 
 ## Local test findings are raised, then weighed — not automatic caps (Aug 16, 2026)
 
