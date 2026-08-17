@@ -337,8 +337,13 @@ teaching, not durable retention (same logic as the SD teach/measure split). Inte
 
 `daily_cap: 7` is superseded. A day is budgeted in **units**, not problems:
 `units = comfort_base × difficulty` (🔴 3.0 / 🟡 2.0 / 🟢 1.0 / 🎓 0.5, × Easy 0.5 / Medium 1.0 /
-Hard 1.5), **ceiling 9.0/day**, hard floor 3.0, an SD lane slot costs 2.0. Weights in
+Hard 1.5), **ceiling 8.0/day**, hard floor 3.0, an SD lane slot costs 3.0. Weights in
 `cse.config.yml`; rationale and calibration in [`docs/foundations/effort_budget.md`](docs/foundations/effort_budget.md).
+
+⚠️ **`cse.config.yml` is the authority on these numbers, not this paragraph.** Both were stale here
+for a week — the ceiling went 9.0 → 8.0 on Aug 16 and the SD lane 2.0 → 3.0 on Aug 9, and neither
+edit reached this line. A budget check run off the stale ceiling passes days that are actually over.
+**Read the config (or run the script) before pricing anything.**
 
 **Don't hand-compute it — run the script.** At the weekly build and before accepting any overflow pull:
 

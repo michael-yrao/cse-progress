@@ -28,6 +28,8 @@ discovered and no `discovery_skip` entry is ever needed. That is the preferred h
 |---|---|
 | **Cadence** | 1/week, in the Sunday slot unless the week says otherwise |
 | **Pull from** | techniques already at **🟢 or 🎓** in `technique_coverage.md`, **Medium or below** |
+| **Pick order** | **technique first, then problem** — the easiest *unseen* problem that genuinely forces it. Difficulty is a consequence, never a dial |
+| **Difficulty** | ratchets **per technique**: probed Easy → 🟢 → next probe of that technique is **Medium**. **Cap at Medium**, no Hard |
 | **Never pull from** | anything 🟡 or with no 🟢 — those need *conversion reps*, and a probe there just manufactures a 🟡 row at ~73 units/year |
 | **Label** | stripped. No pattern name, no topic tag, no "this is like problem X" |
 | **The measured thing** | the **pre-code call** — shape → technique → the one feature that picks it. The code is secondary |
@@ -45,5 +47,21 @@ discovered and no `discovery_skip` entry is ever needed. That is the preferred h
 Because a 🟢 creates no row and a 🟡/🔴 does, **the row-creation rate over a rolling ~15 probes *is* the
 measure of whether the pool still teaches anything**:
 
-- **≥85% 🟢** → the pool has stopped teaching; open the next expansion tier.
+- **≥85% 🟢** → the pool has stopped teaching. **Two ordered levers, cheapest first:** raise difficulty
+  inside the pool you already own (adds zero permanent demand), and *only* when Medium is also ≥85% 🟢,
+  open the next expansion tier (every new technique is maintenance demand forever).
 - **≤70% 🟢** → real gaps remain; keep consolidating.
+
+## ⚠️ Easy-only cannot reach most of the pool
+
+Probes #1–3 were all Easy. Nothing decided that — the rule always said *Medium or below*, and practice
+drifted. Of the 44 techniques at 🟢/🎓, the **majority have no unseen Easy problem at all** (Topological
+Sort, Union-Find, Trie, Binary Search on Answer, Monotonic Stack, LRU, Dutch National Flag, Kadane,
+Multi-source BFS, Deep Copy via Hash Map, Prefix/Suffix Products, Tree Construction). Worse, those are
+disproportionately the techniques where **recognition is the hard part**, while the Easy pool
+concentrates where recognition is near-trivial. Easy-only measures the easy half of the axis.
+
+**Budget:** a Medium probe is **2.0 units**, not the 1.0 an Easy costs, against an **8.0** ceiling.
+Price it at the weekly build — it is a real slot and will sometimes displace a due review.
+
+Full reasoning: `.claude/memory/project_recognition_probes.md`.
