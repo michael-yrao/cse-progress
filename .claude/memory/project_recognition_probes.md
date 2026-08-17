@@ -22,6 +22,7 @@ train is the one the current system structurally cannot test. See [[feedback_rec
 |---|---|
 | **Cadence** | 1/week for now (a **consolidation rep** — separate ≤2/wk budget, does **not** count against new-algorithm intake, [[feedback_consolidation_reps]]) |
 | **Source pool** | techniques already at **🟢 or 🎓** in `technique_coverage.md`, **Medium or below** |
+| **Which problem** | **pick the TECHNIQUE first**, then the easiest *unseen* problem that genuinely forces it — see the difficulty rule below. Difficulty is a consequence of the technique, never a dial set in advance |
 | **Tracker row** | **none if 🟢** — a disposable rep ([[project_library_carrying_capacity]]). Only 🟡/🔴 earns a row, because only a gap needs repetition |
 | **Always logged** | the *recognition* outcome → `recognition_gotchas.md`, regardless of rating |
 
@@ -30,6 +31,43 @@ Hierholzer, Prim's, BFS-on-implicit-graph…). Those need **conversion reps**, n
 just manufactures a 🟡 row at ~73 units/year on a Medium. The pool that is safe today: Binary Search 🎓 ·
 Tree DFS 🎓 · Grid BFS 🎓 · Linked List Merge 🎓 · Sliding Window · Union-Find · Heap · Monotonic Stack ·
 Topological Sort · Hash Set Membership.
+
+## Difficulty follows the TECHNIQUE (settled Aug 17, 2026)
+
+**The rule was always "Medium or below"; practice drifted to Easy-only.** Probes #1–3 were all Easy,
+and the Aug 17 board hardcoded "Easy" into the probe rows. Nothing ever decided that — it accreted.
+
+⚠️ **An Easy-only pool structurally cannot probe most of what is banked.** Of the 44 techniques at
+🟢/🎓, the majority have **no unseen Easy problem at all**: Topological Sort, Union-Find, Trie, Binary
+Search on Answer, Monotonic Stack, LRU, Dutch National Flag, Kadane, Multi-source BFS, Deep Copy via
+Hash Map, Prefix/Suffix Products, Tree Construction. Those techniques exist only at Medium+. Easy-only
+leaves roughly ten probeable techniques — Tree DFS, Binary Search, Two Pointers, Hash Set/Map,
+Frequency Counting, Linked List basics, Array fundamentals — and probes them forever.
+
+⭐ **And the bias runs the wrong way.** The techniques with no Easy option are disproportionately the
+ones where *recognition is the hard part* (Binary Search on Answer, Monotonic Stack, Topological Sort,
+Union-Find), while the Easy pool concentrates in techniques whose recognition is near-trivial (two
+pointers on a sorted array, DFS on a tree). So an Easy-only diet measures the **easy half of the axis
+the probe exists to measure**. Probe #3 is the proof by contrast: 69 Sqrt(x) was Easy but
+recognition-rich *because it had no array shape to match* — a quality that is common at Medium and
+rare at Easy.
+
+**The rule:**
+
+1. **Pick the technique, then the problem.** Take the easiest unseen problem that genuinely *forces*
+   that technique. For a third of the pool that is necessarily a Medium.
+2. **Per-technique ratchet.** A technique probed at Easy that came back 🟢 gets its **next** probe at
+   Medium. Recognition proven at Easy is not proven at Medium.
+3. **Cap at Medium. No Hard probes.** Two reasons, and the second is the load-bearing one: a 🔴 Hard is
+   the most expensive object in the system (4.5 units on the day, plus a +2 interval), and Hards
+   typically fail on **execution**, which contaminates a measurement whose whole subject is the
+   pre-code call. Revisit only if the Medium pool saturates.
+4. ⚠️ **Verify the "no Easy exists" claim when picking.** The list above is from knowledge of the LC
+   catalog, not a live query.
+
+**Budget consequence — a Medium probe is 2.0, not 1.0** (🟡-equivalent × Medium 1.0). At the **8.0**
+ceiling that is a real slot, not the "fits the spare, costs nothing" an Easy probe was. Price it at the
+weekly build; it will sometimes displace a due review, and that is the trade being made deliberately.
 
 ## ⚠️ The scaffold path is a spoiler — this rep needs its own root
 
@@ -46,8 +84,17 @@ cold, and *that statement is the thing being measured* — the code is secondary
 ## The free diagnostic
 
 Because a 🟢 creates no row and a 🟡/🔴 does, **the row-creation rate over a rolling ~15 probes IS the
-measurement of whether the pool still teaches**: ≥85% 🟢 → the pool has stopped teaching, open the next
-expansion tier; ≤70% 🟢 → real gaps remain, keep consolidating.
+measurement of whether the pool still teaches**: ≥85% 🟢 → the pool has stopped teaching; ≤70% 🟢 →
+real gaps remain, keep consolidating.
+
+⚠️ **Two levers answer "≥85% 🟢", and they are ORDERED — cheapest first (Aug 17, 2026).**
+
+1. **Raise difficulty inside the pool you already own** (Easy → Medium, per the ratchet above). Adds
+   **zero** permanent demand: no new technique to maintain, and a 🟢 probe still creates no row.
+2. **Only when the Medium pool is also ≥85% 🟢**, open the next expansion tier.
+
+The original rule jumped straight to (2), which is the expensive lever — every new technique is
+maintenance demand forever, and the deficit is already negative. Exhaust the free one first.
 
 ## Standing exception to record at each weekly build
 
