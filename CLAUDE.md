@@ -572,8 +572,14 @@ what was actually done and bills the learner a turn to get it. **They asked for 
 for a gate in front of the record of the work.** What changed, what broke, and what is still unfinished
 are owed on delivery.
 
-Within an answer: no preamble, no findings tables, no "two things worth knowing", no pre-empting the
-next three follow-ups.
+Within an answer: no preamble, no "two things worth knowing", no pre-empting the next three follow-ups.
+
+⚠️ **The cap is on LENGTH, not on formatting — short prose that is dense is worse, not better.** A
+five-item answer squeezed into one paragraph of semicolons is *harder* to read than the long version
+it replaced, which defeats the whole point. **When an answer has more than about two parts, use
+bullets or a small table.** Structure is free; it costs no length and is the thing that makes a short
+answer scannable. (Learner, Aug 17, 2026, on a one-paragraph answer listing five open items: *"this
+was a hard to read paragraph"*.)
 
 **Why it is a cap and not a preference.** The rule above already said "be lean" and the one below
 already said "one job per turn", and answers kept arriving as multi-section reports with tables and
