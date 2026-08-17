@@ -3,6 +3,7 @@ name: feedback_end_of_week_schedule
 description: Generate the next week's schedule file before closing out the last session of the week
 metadata:
   type: feedback
+reconciled: 2026-08-17
 ---
 
 At the end of the last session of the week (or whenever the user closes out a week), generate the next week's schedule file at `docs/foundations/schedules/<YYYYMMDD>_schedule.md` before pushing.

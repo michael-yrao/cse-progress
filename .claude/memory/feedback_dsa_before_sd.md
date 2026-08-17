@@ -3,6 +3,7 @@ name: feedback-dsa-before-sd
 description: Standing session order — clear all DSA first, then run SD last, so the SD slot has an open-ended tail for the learner's questions
 metadata:
   type: feedback
+reconciled: 2026-08-17
 ---
 
 **Set by the learner Aug 9, 2026:** *"let's finish all DSA and then SD as the standard so we can spend

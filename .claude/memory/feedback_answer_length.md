@@ -3,6 +3,7 @@ name: feedback-answer-length
 description: An answer to a question is capped at one small paragraph; offer expansions as a question rather than delivering them
 metadata:
   type: feedback
+reconciled: 2026-08-17
 ---
 
 **Learner, Aug 17, 2026:** *"When answering a user question, it cannot be bigger than a small

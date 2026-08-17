@@ -3,6 +3,7 @@ name: feedback_phase_gated_blanks
 description: A 🔴 Blank on an un-taught technique is a premature attempt — phase-gate it, don't churn it in the Blank-interval retry loop
 metadata:
   type: feedback
+reconciled: 2026-08-17
 ---
 
 Before treating an overdue 🔴 Blank as urgent, check whether its **technique has actually been taught yet** (i.e. whether its phase in `study_guide.md`'s roadmap has happened).

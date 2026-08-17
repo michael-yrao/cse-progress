@@ -3,6 +3,7 @@ name: project-recognition-probes
 description: Weekly cold recognition probe — one unseen LC problem/week from an already-🟢 technique, label stripped, disposable (no tracker row on 🟢)
 metadata:
   type: project
+reconciled: 2026-08-17
 ---
 
 **Adopted by the learner Aug 9, 2026:** *"I want to improve my ability to recognize patterns in a

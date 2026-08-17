@@ -1,0 +1,128 @@
+# Engine decisions — the dated record of when the model CHANGED.
+#
+# This is the other half of `cse.config.yml`. The config says what the values ARE; this says
+# when and why they became that, and it is what rule files reconcile against.
+#
+# ── Why this file exists ──────────────────────────────────────────────────────────────────
+# Rules go stale silently, and not because their vocabulary drifts — because their PREMISE
+# expires. `feedback_unseen_on_non_sd_days` was entirely correct given "an SD day costs 3.0
+# units against the day". When that stopped being true on Aug 16, 2026, nothing connected the
+# two, and the rule kept reading as current for a day until a full manual audit found it.
+#
+# Two detectors were built first and neither can catch that class:
+#   - a retired-VOCABULARY list only catches the spellings it was handed. It had `daily_cap`
+#     and not "daily cap", so eight live instances of a superseded rule sat unflagged.
+#   - the restated-VALUE check matches the CURRENT config value, so a line asserting a STALE
+#     one (`ceiling 9.0`) is structurally invisible to it.
+#
+# Both failures are failures of WORDS. A date cannot be misspelled, and every rule file
+# already has one — so a temporal check starts COMPLETE: nothing can be silently absent.
+#
+# ── How it works ──────────────────────────────────────────────────────────────────────────
+# Each rule file carries `reconciled: YYYY-MM-DD` in its frontmatter. A rule whose
+# `reconciled` date predates a decision below has NOT been read against that decision.
+# `scripts/reconcile.py` reports those; bumping the date is the explicit act of saying
+# "I read this rule against that decision, and it is either still right or now fixed."
+#
+# ⚠️ `reconciled` is a DELIBERATE field, never `git log -1` on the file. Git mtime measures
+# "was edited", not "was re-examined" — a typo fix would have marked the most broken file in
+# the repo as current. That distinction is the whole reason this is not automated.
+#
+# ⚠️ This does not remove the audit work. It makes it VISIBLE and TRACKED instead of
+# invisible, which was the actual failure: nobody knew the backlog existed.
+#
+# ── What belongs here ─────────────────────────────────────────────────────────────────────
+# Decisions that can STRAND A RULE — a changed value, a retired concept, a moved boundary.
+# NOT every new rule: adding one stands on its own and invalidates nothing. If in doubt, ask
+# "could a rule written before this still read as correct while now being wrong?"
+
+decisions:
+  - id: answer-length-cap
+    date: 2026-08-17
+    summary: >-
+      An answer to a QUESTION is capped at one small paragraph and must be scannable
+      (bullets/table over dense prose); explaining what you DID is uncapped and unprompted.
+    affects: [turn_economy, token_discipline]
+
+  - id: single-source-of-truth
+    date: 2026-08-17
+    summary: >-
+      Every tuned value is stated in cse.config.yml and nowhere else. Prose points, never
+      copies. Enforced by scripts/check_single_source.py from the pre-commit hook.
+    affects: [intervals, effort_budget, graduate_at_streak]
+
+  - id: probe-difficulty-by-technique
+    date: 2026-08-17
+    summary: >-
+      Recognition probes pick the TECHNIQUE first, then the easiest unseen problem that
+      forces it; per-technique ratchet Easy -> Medium; capped at Medium. Easy-only could not
+      reach most banked techniques.
+    affects: [recognition_probes, effort_budget]
+
+  - id: sd-unpriced
+    date: 2026-08-16
+    summary: >-
+      SD is off-board and UNPRICED. The ceiling was lowered instead, so the SD evening is
+      charged once on every day rather than per SD slot. sd_lane_units/sd_deep_dive_units
+      retired; effort_budget.py --sd adds 0.
+    supersedes: [sd-lane-price-raised]
+    affects: [effort_budget, system_design, scheduling]
+
+  - id: ceiling-lowered
+    date: 2026-08-16
+    summary: The daily effort ceiling was lowered; it is now the honest DSA-only number.
+    affects: [effort_budget, scheduling]
+
+  - id: sd-boundary-is-content
+    date: 2026-08-16
+    summary: >-
+      Only HelloInterview-excerpt material stays private. study_guide.md and the SD tracker
+      live in cse-progress; senior_ramp, framework, coverage_map, mocks, concepts, components,
+      technologies, templates live in sd-progress.
+    supersedes: [sd-track-moved-out]
+    affects: [system_design]
+
+  - id: sd-track-moved-out
+    date: 2026-08-15
+    summary: The System Design track moved to the private sd-progress repo.
+    affects: [system_design]
+
+  - id: sd-rebuilt-as-mocks
+    date: 2026-08-13
+    summary: >-
+      The three-lane SD study model is retired — no lanes, no note-building reps, no blind
+      sprints, no Bootstrap/Transition/Mastery arc. The learner studies on HelloInterview;
+      the coach runs cold mock interviews and scores them.
+    affects: [system_design, scheduling]
+
+  - id: ai-track-removed
+    date: 2026-08-13
+    summary: The AI System Engineering track was removed. Not deferred; no trigger.
+    affects: [tracks]
+
+  - id: sd-lane-price-raised
+    date: 2026-08-09
+    summary: The SD lane slot went from 2.0 to 3.0 units. (Later retired entirely — see sd-unpriced.)
+    affects: [effort_budget]
+
+  - id: effort-budget-replaces-count
+    date: 2026-08-07
+    summary: >-
+      A day is budgeted in UNITS (comfort x difficulty) against a ceiling, not as a problem
+      count. daily_cap is superseded.
+    supersedes: [daily-cap]
+    affects: [effort_budget, scheduling, daily_cap]
+
+  - id: session-dating-source-fix
+    date: 2026-08-02
+    summary: >-
+      Session date is resolved by scripts/session_date.py (dirty tree = live session), not
+      datetime.now(). All date-touching scripts take --date.
+    affects: [session_dating]
+
+  - id: graduate-then-retire
+    date: 2026-07-26
+    summary: >-
+      Names swapped — you GRADUATE (recurring spot check), then you RETIRE (terminal).
+      The labels were originally the other way round.
+    affects: [intervals, comfort_scale]

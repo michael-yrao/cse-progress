@@ -1,12 +1,13 @@
 ---
 name: feedback_early_completion_backfill
-description: When a problem finished early frees a future day below the 5/day target, ASK the user before backfilling that slot
+description: When a problem finished early frees a future day below its effort floor, ASK the user before backfilling that slot
 metadata:
   type: feedback
+reconciled: 2026-08-17
 ---
 
 When the learner finishes a scheduled problem **early**, it vacates that problem's future slot. If
-striking it drops that future day **below the daily target of 5**, **ask the user whether to backfill
+striking it drops that future day **below its effort floor**, **ask the user whether to backfill
 the freed slot with another problem** — don't silently leave the day short, and don't silently fill it.
 
 **Why:** the day's **effort budget** has a ceiling *and* a floor (units, not a problem count — the rule
