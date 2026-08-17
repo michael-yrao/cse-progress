@@ -84,4 +84,22 @@ if [ -n "$SSOT_TRIGGER" ]; then
     python3 scripts/check_single_source.py || true
   fi
 fi
+
+# Rule reconciliation. Fires ONLY when decisions.yml is staged — i.e. the moment a decision
+# is recorded, which is exactly when the blast radius is worth seeing and when it is cheapest
+# to act on. Running it on every commit would print a 40-line backlog daily until someone
+# stopped reading it.
+#
+# Report-only, always: a rule that has not been re-read is not a broken commit, and the whole
+# design assumes reconciling is a deliberate human act (see scripts/reconcile.py).
+if echo "$STAGED" | grep -qE "^decisions\.yml$"; then
+  echo "A decision was recorded — rules not yet read against it:"
+  if command -v py >/dev/null 2>&1; then
+    py scripts/reconcile.py || true
+  elif command -v python >/dev/null 2>&1; then
+    python scripts/reconcile.py || true
+  elif command -v python3 >/dev/null 2>&1; then
+    python3 scripts/reconcile.py || true
+  fi
+fi
 exit 0

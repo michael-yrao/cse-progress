@@ -3,6 +3,7 @@ name: feedback_infer_comfort
 description: Infer the Clean/Shaky/Blank rating from the session and propose it for confirmation — don't ask the user cold
 metadata:
   type: feedback
+reconciled: 2026-08-17
 ---
 
 After a problem, **infer** the comfort rating yourself from what actually happened in the conversation, then state it as a proposal for the user to confirm or override. Do not ask an open "How did that feel — Clean, Shaky, or Blank?" when the transcript already answers it.

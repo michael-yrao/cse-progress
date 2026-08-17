@@ -363,6 +363,38 @@ how the ceiling incident happened).
 step > written rule. A written rule against duplication is itself just another copy of a rule, and
 this repo's own history says prose loses. The checker is the only version that fires unprompted.
 
+## Decisions are dated, and rules are reconciled against them
+
+**[`decisions.yml`](decisions.yml) is the dated record of when the MODEL changed** — a retired concept,
+a moved boundary, a changed value. `cse.config.yml` says what the values *are*; this says when they
+became that. **Record a decision there in the same edit that makes it.**
+
+⚠️ **Rules do not go stale because their words drift — they go stale because their PREMISE expires.**
+`feedback_unseen_on_non_sd_days` was entirely correct *given* "an SD day costs 3.0 units". When that
+stopped being true, nothing connected the two, and it kept reading as current until a manual audit
+found it. Both word-based detectors miss this class by construction: a retired-vocabulary list only
+catches spellings it was handed (it had `daily_cap`, not `"daily cap"`, and missed eight live
+instances), and the restated-value check matches the *current* value, so a line asserting a *stale*
+one is invisible to it.
+
+**So the mechanism is temporal, not lexical — a date cannot be misspelled.** Every rule file carries
+`reconciled: YYYY-MM-DD` in its frontmatter; a file whose date predates a decision has not been read
+against it. A file with no field at all is reported, not skipped, so the check starts **complete**.
+
+```sh
+python scripts/reconcile.py                     # what has not been read against what
+python scripts/reconcile.py --file <path> ...   # "I read these; they are right or now fixed"
+```
+
+- **Bump the date only after actually reading the file.** It asserts a judgement, not an edit.
+- **Never derive it from `git log`.** Mtime measures *"was edited"* — a typo fix would have stamped
+  the most broken file in the repo as current, on the day it was most wrong.
+- The pre-commit hook runs it **when `decisions.yml` is staged**, which is when the blast radius is
+  cheapest to act on. Report-only, and not on every commit — a 40-line backlog printed daily is a
+  report nobody reads.
+- ⚠️ **This does not remove the audit work.** It makes it visible and tracked instead of invisible,
+  which was the actual failure: nobody knew the backlog existed.
+
 ## Comfort-Based Spaced Repetition
 
 **The values live in [`cse.config.yml`](cse.config.yml) under `intervals:` — read them there, or run

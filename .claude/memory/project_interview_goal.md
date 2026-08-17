@@ -3,6 +3,7 @@ name: project_interview_goal
 description: End goal is big tech / MANGA-adjacent at senior/staff (L6); fintech & other domain roles are paid waypoints. SD is the binding constraint; DSA (incl. DP) still ahead. Full strategy in docs/foundations/career_strategy.md.
 metadata:
   type: project
+reconciled: 2026-08-17
 ---
 
 **Compact recall pointer — the full goal/strategy lives in
