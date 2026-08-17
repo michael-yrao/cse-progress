@@ -375,15 +375,21 @@ premium HelloInterview details on a public repo"* — and the material that carr
 **the mock debriefs**, not the reference notes, not the rubric, and not a tracker of question names.
 Question names and tiers are on HelloInterview's free listing; the paid part is the breakdowns.
 
-**Here, in `docs/foundations/system_design/`:** `study_guide.md` (mock mechanics) · `senior_ramp.md`
-(question order, phases, the 7-point rubric) · `coverage_map.md` · `mastery/design_progress.md` ·
-`concepts/` · `components/` · `technologies/` · `templates/`. The concept cards are generic
-distributed-systems theory — Little's law, quorum math, Zipfian, tail latency — with no HelloInterview
-IP in them at all.
+**Here, in `docs/foundations/system_design/`:** `study_guide.md` (mock mechanics) ·
+`mastery/design_progress.md` (the tracker — question names, comfort, dates). Question names and tiers
+are on HelloInterview's free listing; the paid part is the breakdowns, and neither of these files
+carries one.
 
-**In private [sd-progress](https://github.com/michael-yrao/sd-progress):** `mocks/` (the debriefs, which
-is the actual risk surface), `case_studies/`, `archive/`, and `framework.md` — the last kept private by
-the learner's call, conservatively, since its spine mirrors HelloInterview's Delivery framework.
+**In private [sd-progress](https://github.com/michael-yrao/sd-progress):** `senior_ramp.md` (question
+order, phase gates, the 7-point rubric) · `framework.md` · `coverage_map.md` · `mocks/` (the debriefs —
+the actual risk surface) · `case_studies/` · `archive/` · `concepts/` · `components/` ·
+`technologies/` · `templates/`.
+
+⚠️ **The reference cards moved twice on Aug 16, 2026 — the second move is the live one.** An earlier
+pass brought `concepts/`, `components/`, `technologies/`, `senior_ramp.md` and `coverage_map.md` back
+here on the argument that generic distributed-systems theory carries no HelloInterview IP. They went
+back to sd-progress the same night, and the two repos on disk are the authority: **whatever the file
+tree says beats whatever this paragraph says.** Check before citing a path.
 
 **Never paste sd-progress content into this repo — link to it.** That invariant is unchanged and is now
 the *whole* of the rule, since nothing else has to be remembered.
@@ -451,19 +457,24 @@ entire job is running cold mock interviews on HelloInterview's questions and sco
 the schedule is "read about X"; no lanes, no note-building reps, no blind sprints, no Bootstrap →
 Transition → Mastery arc. Teaching happens **on request only**, off-schedule and unrated.
 
-⚠️ **The mechanics, the board and the mock protocol are all in
-[sd-progress](https://github.com/michael-yrao/sd-progress)** (cloned beside this repo), not here —
-`study_guide.md` · `senior_ramp.md` · `mastery/design_progress.md` · `mocks/` · `coverage_map.md` ·
-`framework.md` · the frozen `technologies/` · `components/` · `concepts/` reference.
+**Which file is where is stated once, above** — see the System Design boundary under *Study Guide
+Files*. It is not repeated here: this section carried its own copy of the file list until Aug 16, 2026,
+the boundary moved, only the copy upstairs was updated, and the two then contradicted each other for a
+day. One list, one place.
 
-**Before running a mock, read `sd-progress/CLAUDE.md`** — it carries the seven numbered steps, the
-premium-content rule, and the comfort engine. They are deliberately **not duplicated here**: two copies
-of a protocol drift, and the one that drifts is always the copy nobody executes from.
+**Before running a mock, read `sd-progress/CLAUDE.md` and `senior_ramp.md` (both over there)** — they
+carry the seven numbered steps, the question order and phase gates, the 7-point rubric, the
+premium-content rule, and the comfort engine. Deliberately **not duplicated here**: two copies of a
+protocol drift, and the one that drifts is always the copy nobody executes from. The mock *mechanics*
+live here in `docs/foundations/system_design/study_guide.md`.
 
-**What this repo still owns for SD:** the *slot*. The weekly schedule file plans it, `effort_budget`
-prices it (`sd_lane_units: 3.0`), and `system_design.cadence` decides how many a week gets. When a mock
-is done in sd-progress, **its computed next-review date comes back to a schedule file here** — that is
-the schedule-integrity rule, and the repo split does not exempt it.
+**What this repo owns for SD:** the *slot*, and the *board*. The weekly schedule file plans it,
+`effort_budget` prices it (`sd_lane_units: 3.0`), and `system_design.cadence` decides how many a week
+gets. The tracker `docs/foundations/system_design/mastery/design_progress.md` lives here too and is
+rewritten by the pre-commit hook (its own block, `--tracker` rather than source discovery — there are
+no SD source files). When a mock is run, **the debrief lands in sd-progress and the computed
+next-review date comes back to a schedule file here** — that is the schedule-integrity rule, and the
+repo split does not exempt it.
 
 ## Token discipline (efficiency by default)
 
