@@ -317,7 +317,11 @@ After any problem discussion (solving, reviewing, or mentioning a problem by num
    - **⚠️ Check every active phase has reps on the board.** Found Aug 9, 2026: `Sliding Window + Stack`
      opened Aug 3 and sat a full week with **zero** of its 8 problems in the tracker — invisible because
      the board was full of legitimate review work. Nothing else in the repo surfaces an empty active phase.
-8. **Do not commit per problem — batch.** Make the edits (tracker row, `stuck_log.md`, schedule strike) and move on; commit + push **once** at session end. Every commit fires the pre-commit hook, which rewrites the tracker and causes ~70 lines of it to be re-injected into context; at one commit per problem that is a large, avoidable token cost. Commit early only if the user is about to switch machines (unpushed work would strand them) or the session ends unexpectedly.
+8. ⚠️ **ASK BEFORE EVERY COMMIT AND EVERY PUSH. No exceptions.** Set by the learner Aug 16, 2026: *"ask me before you commit and push, always."* Make the edits, say what is staged, and **stop**. The learner decides when it lands.
+   - **This replaced a weaker rule that failed, and the weaker rule lived HERE.** The previous wording — *"commit + push once at session end"* — asks for judgement about when a session ends, and that is a loophole wide enough to drive a session through: 31 commits ran under it on Aug 15–16, and ~12 more on Aug 17 because this step still carried the superseded text while `feedback_batch_commits.md` carried the real rule. **CLAUDE.md is always injected; memory files are opt-in reads — so the stale copy is the one that gets obeyed.**
+   - **Do not commit after every problem.** Accumulate the edits (tracker row, `stuck_log.md`, schedule strike) across the session; they land in one commit when the learner says so. Every commit fires the pre-commit hook, which rewrites the tracker and re-injects ~70 lines of it into context.
+   - **Commit early anyway if** the learner is about to switch machines (unpushed work strands them) or the session ends unexpectedly. Losing work beats saving tokens — but **say so and ask**, never decide unilaterally that this instance is the exception. That judgement is exactly what produced the 31.
+   - Full rule and the token arithmetic: `.claude/memory/feedback_batch_commits.md`.
 
 ## Single source of truth for tuned values
 

@@ -3,6 +3,7 @@ name: project_dandc_coding_gap
 description: Learner understands D&C conceptually but has a recurring gap CODING the recursion; the framing that unlocked it (Jul 25)
 metadata:
   type: project
+reconciled: 2026-08-17
 ---
 
 The learner repeatedly stalls on **coding** divide-and-conquer (merge sort, 912) despite

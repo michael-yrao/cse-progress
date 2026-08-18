@@ -3,6 +3,7 @@ name: feedback_self_reported_zero
 description: When the learner says they don't have something down, assume ZERO retention — re-teach from the top, never build on the part you think landed
 metadata:
   type: feedback
+reconciled: 2026-08-17
 ---
 
 **When the learner says they don't have a topic down, plan for the worst case: they kept *none* of it.**
@@ -35,10 +36,12 @@ same distinction as [[feedback_coding_for_clean]] (recognition ≠ execution) an
 2. **Re-open from the first fact, including anything logged as already worked.** Move fast through what
    they confirm; do not skip it unasked.
 3. **Never rate anything covering it** until it has been re-taught *and* had a gap to forget in. If a
-   Recall Card spans both retained and unretained sections, **scope the sprint to the retained ones** —
-   firing the rest cold manufactures a 🔴 and a +2 loop on material that was never encoded.
+   cold rep would span both retained and unretained material, **scope it to the retained part** —
+   firing the rest cold manufactures a 🔴 and a short-interval churn loop on material that was never
+   encoded. (This once named the Recall Card sprint, retired Aug 13, 2026; the rule applies to any
+   cold rep, and a **mock interview** is the live example.)
 4. **Update the written note's "worked so far" claim** rather than leaving it to be believed later. A
-   stale coverage claim in a card is how this recurs a month from now with no one left who remembers.
+   stale coverage claim is how this recurs a month from now with no one left who remembers.
 5. **Applies to any self-report of not-having-it** — *"I don't remember this"*, *"this never stuck"*,
    *"I'd have to look it up"*. Take it literally and at full strength. It is self-reported like Comfort
    is, and the learner's call is final ([[feedback_infer_comfort]]).

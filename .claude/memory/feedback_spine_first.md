@@ -3,6 +3,7 @@ name: feedback-spine-first
 description: Lead every conceptual explanation with the minimal spine (2-3 load-bearing facts); tactics/details only after, or on request
 metadata:
   type: feedback
+reconciled: 2026-08-17
 ---
 
 **Lead with the spine.** On any conceptual explanation, open with the **2–3 load-bearing facts
@@ -29,4 +30,4 @@ detail actively destroys comprehension when the skeleton isn't there yet. Cf. [[
 - If a topic needs a table, hash-slot math, or a failure-mode list, that is a *second* message the
   learner asked for — never part of the first.
 - Detail is not free. Each additional correct paragraph raises the chance the spine gets buried.
-- Applies to all conceptual coaching (SD, AI-eng, DSA patterns), not just system design.
+- Applies to all conceptual coaching (system design, DSA patterns), not just system design. (The "AI-eng" track named here was removed Aug 13, 2026.)

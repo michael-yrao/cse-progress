@@ -3,6 +3,7 @@ name: feedback-procedure-first
 description: Teach a new/unfamiliar algorithm procedure-first in plain operational language — the literal loop, run by hand on a tiny example — and add the correctness proof / complexity / jargon only later, only if asked
 metadata:
   type: feedback
+reconciled: 2026-08-17
 ---
 
 **When the learner is trying to understand or code an algorithm they don't know, teach it
@@ -37,4 +38,4 @@ pure operation.
 **Why:** for an algorithm-you're-coding, the load-bearing thing is the **procedure**, not the
 correctness theorem. This refines [[feedback-spine-first]] — I mistook the *proof* for the spine; the
 spine is the operational loop. Also an instance of [[feedback-turn-economy]] (don't bury the answer
-under layers). Applies to any new DSA algorithm, and to SD/AI mechanisms the learner is implementing.
+under layers). Applies to any new DSA algorithm, and to system-design mechanisms the learner is implementing. (The AI track named here was removed Aug 13, 2026.)

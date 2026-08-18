@@ -3,6 +3,7 @@ name: feedback_verify_terminal_actions
 description: Never run a session-terminating action (close out, commit, push, archive) on an instruction that contradicts the visible state of the work or arrives beside fabricated content — ask first; and a turn containing any fabrication is evidence for nothing
 metadata:
   type: feedback
+reconciled: 2026-08-17
 ---
 
 **Two clauses, and they only fail together — either one alone would have caught this.**

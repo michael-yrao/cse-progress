@@ -3,6 +3,7 @@ name: project_sd_roi_line
 description: The L6 big-tech ROI bar for SD questions and how to apply it — the board is now HelloInterview's 35 questions (Aug 13, 2026); the old systemdesign.io triage survives only as a compressed decline list
 metadata:
   type: project
+reconciled: 2026-08-17
 ---
 
 ⚠️ **Superseded in part, Aug 13, 2026.** The board is no longer systemdesign.io — SD is now mock

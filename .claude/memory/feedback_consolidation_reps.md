@@ -3,6 +3,7 @@ name: feedback-consolidation-reps
 description: A technique needs MULTIPLE problems, not one — near-identical siblings are the training signal (their minor differences are what recognition grades), and they don't count against the new-algorithm intake cap
 metadata:
   type: feedback
+reconciled: 2026-08-17
 ---
 
 **Set by the learner Jul 26, 2026:** *"we need multiple problems of the same flavor for users to

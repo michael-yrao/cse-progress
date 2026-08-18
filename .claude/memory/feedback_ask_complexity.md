@@ -3,6 +3,7 @@ name: feedback_ask_complexity
 description: after a problem is coded, ASK the learner for time & space complexity before rating — don't state it for them
 metadata:
   type: feedback
+reconciled: 2026-08-17
 ---
 
 After a problem is done, **ask the learner to state the time and space complexity themselves**

@@ -59,6 +59,14 @@ decisions:
       reach most banked techniques.
     affects: [recognition_probes, effort_budget]
 
+  - id: ask-before-commit
+    date: 2026-08-16
+    summary: >-
+      ASK before EVERY commit and EVERY push, no exceptions. Replaced "commit once at session
+      end", whose judgement clause was a loophole — 31 commits ran under it in one session.
+    supersedes: [batch-commits-at-session-end]
+    affects: [git_workflow, session_close]
+
   - id: sd-unpriced
     date: 2026-08-16
     summary: >-

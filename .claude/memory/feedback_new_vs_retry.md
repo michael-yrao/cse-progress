@@ -3,6 +3,7 @@ name: feedback_new_vs_retry
 description: When building a weekly schedule, only call a problem "new" if it comes from the study_guide roadmap phase AND has no existing tracker row
 metadata:
   type: feedback
+reconciled: 2026-08-17
 ---
 
 A weekly schedule's "New Problems This Week" table must contain only genuinely new problems. The source of new problems is the **Study Roadmap phase table** in `docs/foundations/dsa/study_guide.md` (the `New Problems` column for the phase covering the current dates). Everything else in a schedule — warmups and active blocks alike — is a retry/review pulled from `dsa_progress.md` by next-review due date.
