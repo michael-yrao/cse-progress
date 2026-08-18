@@ -48,6 +48,43 @@ from typing import List, Optional
 
 
 class Solution:
+
+    # ── Attempt · 2026-08-17 ──────────────
+    def carFleet_20260817(self, target: int, position: List[int], speed: List[int]) -> int:
+        # first thing we should notice is that since we can't pass
+        # starting position actually matters a lot, basically no one can pass the car in the front
+        # because of this, we will sort desc. but we can't do that on the input
+        # since position and speed indices are tied, so let's create a new tuple array to sort
+
+        numCars = len(position)
+
+        cars = []
+
+        for i in range(numCars):
+            cars.append((position[i], speed[i]))
+
+        # descending since no one can pass the front car
+        cars.sort(reverse=True)
+
+        # now we need to check who can catch up to who
+        # we need a way to determine how fast cars behind will finish
+        # fastest for each car is (target - carPosition) / carSpeed
+        # if a car is not to pass, it comes a second fleet
+        # so we use a increasingStack that will hold time to finish
+        # if a car is to pass, we neuter it and set it to current car's position and speed
+        # so they become a fleet. we can accomplish this by just doing nothing
+
+        increasingStack = []
+
+        for carPosition, carSpeed in cars:
+            time = (target - carPosition) / carSpeed
+            
+            # we only add to stack if time > increasingStack[-1] or increasingStack is empty
+            if not increasingStack or time > increasingStack[-1]:
+                increasingStack.append(time)
+        
+        return len(increasingStack)
+
     # ── Attempt 1 · 2026-08-15 ────────────────────────────────────────────
     def carFleet(self, target: int, position: List[int], speed: List[int]) -> int:
         # sort based on position. these cars are closest to the finish line

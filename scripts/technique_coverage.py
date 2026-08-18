@@ -147,6 +147,33 @@ class Resolved:
         return any(r.comfort in GREEN_OR_BETTER for r in self.rows)
 
     @property
+    def numbers(self) -> list[int]:
+        """The DISTINCT problem numbers behind this technique, ascending.
+
+        ``rows`` is one entry per *tracker row*, and a problem with two tracked method
+        variants owns two rows (19 Postorder + 19 Iterative, 206 Iterative + Recursion).
+        Counting rows therefore credited **one problem as two**, and the entire reason a
+        technique wants 3-4 problems is *different surface forms* — two methods on the
+        same problem is one surface form, drilled twice. Linked List Reversal, Remove Nth
+        From End and Linked List Merge each read "2" while holding a single problem.
+
+        So every coverage COUNT is over distinct numbers; ``rows`` stays the unit for
+        comfort, greens and the variant breakdown, which are genuinely per-row.
+        (Learner, Aug 17 2026: *"we should do the same across board ... if we are to be
+        accurate with coverage"*.)
+        """
+        return sorted({r.number for r in self.rows})
+
+    @property
+    def n_problems(self) -> int:
+        return len(self.numbers)
+
+    @property
+    def has_multi_variant_problem(self) -> bool:
+        """True when some problem contributes more than one row — i.e. rows > problems."""
+        return len(self.rows) > self.n_problems
+
+    @property
     def is_started(self) -> bool:
         """Has the learner solved anything under this technique at all?
 
@@ -165,8 +192,8 @@ class Resolved:
         out: list[str] = []
         if not self.has_green:
             out.append("**no-green**")
-        if len(self.rows) < self.min_problems:
-            out.append(f"thin ({len(self.rows)}/{self.min_problems})")
+        if self.n_problems < self.min_problems:
+            out.append(f"thin ({self.n_problems}/{self.min_problems})")
         for variant, rows in self.variant_rows.items():
             if not rows and variant not in self.queued_variants:
                 out.append(f"variant: **{variant}**")
@@ -274,7 +301,7 @@ def render(resolved: list[Resolved], rows: list[Row], claimed: set[str]) -> str:
 
     started = [t for t in resolved if t.is_started]
     blockers = [t for t in started if not t.has_green]
-    thin = [t for t in started if len(t.rows) < t.min_problems]
+    thin = [t for t in started if t.n_problems < t.min_problems]
     variant_gaps = [
         (t, v)
         for t in started
@@ -306,9 +333,10 @@ def render(resolved: list[Resolved], rows: list[Row], claimed: set[str]) -> str:
                 "trains recall of that problem, not the skill."
             )
             add("")
-            for t in sorted(thin, key=lambda t: (len(t.rows), t.name)):
-                probs = ", ".join(str(r.number) for r in t.rows) or "none"
-                add(f"- **{t.name}** ({t.family}) — {len(t.rows)}/{t.min_problems}: {probs}")
+            for t in sorted(thin, key=lambda t: (t.n_problems, t.name)):
+                probs = ", ".join(str(n) for n in t.numbers) or "none"
+                extra = f" ({len(t.rows)} rows)" if t.has_multi_variant_problem else ""
+                add(f"- **{t.name}** ({t.family}) — {t.n_problems}/{t.min_problems}{extra}: {probs}")
             add("")
         if variant_gaps:
             add("**Unqueued variant gaps — a method never once exercised, and not in any queue.**")
@@ -324,7 +352,7 @@ def render(resolved: list[Resolved], rows: list[Row], claimed: set[str]) -> str:
     add("| Technique | Family | Problems | Best | 🟢 | Variants | Gaps |")
     add("|---|---|---:|:---:|:---:|---|---|")
     for t in sorted(resolved, key=lambda t: (t.family, t.name)):
-        probs = ", ".join(str(r.number) for r in sorted(t.rows, key=lambda r: r.number)) or "—"
+        probs = ", ".join(str(n) for n in t.numbers) or "—"
         if t.variant_rows:
             parts = []
             for v, rs in t.variant_rows.items():
@@ -338,7 +366,9 @@ def render(resolved: list[Resolved], rows: list[Row], claimed: set[str]) -> str:
         else:
             variants = "—"
         add(
-            f"| {t.name} | {t.family} | {len(t.rows)} ({probs}) | {t.best_comfort} | "
+            f"| {t.name} | {t.family} | {t.n_problems}"
+            + (f" *+{len(t.rows) - t.n_problems}v*" if t.has_multi_variant_problem else "")
+            + f" ({probs}) | {t.best_comfort} | "
             f"{'✅' if t.has_green else '❌'} | {variants} | {' · '.join(t.gaps) or '—'} |"
         )
     add("")

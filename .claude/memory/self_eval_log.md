@@ -731,3 +731,26 @@ disease as everything in Cluster A. It is now item 2 of the SessionStart hook's 
   **Candidate fix worth raising at the Aug 17 build: a hook could make this self-enforcing**, the way
   `problem_link_reminder.py` does for links — warn on a commit when the session is not being closed out.
   Status: `open` — first time counted; the count is the finding.
+
+- **2026-08-17 [P2] — ran the complexity gate as if `O(1)` REPLACED the learner's `O(V+E)`, when it completes it.**
+  269 Alien Dictionary. Learner answered space as `O(V + E)` with a correct itemization (`counterMap`/`queue`
+  are vertex-scaled, `adjMap` is edge-scaled). I pushed four times toward the fixed-alphabet collapse, and my
+  framing throughout treated `O(V+E)` as the wrong answer to be corrected into `O(1)`. Learner pushed back:
+  *"while I agree for this problem it is O(1), it is important for me to understand vertices and edges in a
+  graph problem, thus me saying bound of lowercase character and V + E is more accurate."*
+  **They are right, and this file's own sibling says so.** `complexity_gotchas.md` (bounded-state-space row,
+  added Aug 11 via 202) states the standard explicitly: *"say the collapse before quoting the number — 'O(1)'
+  alone reads as hand-waving."* CLAUDE.md's gate wording says the same thing — *"itemized why-clause ('O(1),
+  one fixed 26-array' — not a bare 'O(1)')."* **The required answer was never the bare symbol; it was
+  structure + collapse.** I was driving toward the half the repo explicitly calls weaker.
+  **Cause: treating the ledger's recorded correction as the target answer rather than as the delta.** 269's
+  ledger row reads `space O(V+E) -> O(1)`, and I read that arrow as "V+E is wrong" instead of "V+E is
+  incomplete." A ledger records what was *missing*, not what should *replace* what was there.
+  ⚠️ **The real miss is still real** — the learner needed four pushes to reach `V ≤ 26` and did not volunteer
+  the collapse, which is the 4th occurrence of fixed-alphabet on this problem. But it is a **different and
+  better failure** than the three priors: they held the structure and resisted the collapse, rather than not
+  seeing the bound at all. Record it that way or the ledger loses the distinction.
+  **Apply: the gate passes on structure AND collapse, stated together, and say that when asking.** Ask for
+  the itemization *and* "does any of those terms stop growing?" — never push the learner to discard a correct
+  decomposition in exchange for a tidier symbol. A bare `O(1)` should read as an incomplete answer too.
+  Status: `open` — watch for the inverse failure (accepting a bare `O(1)` with no itemization).

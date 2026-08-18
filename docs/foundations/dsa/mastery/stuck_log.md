@@ -22,6 +22,59 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🟡 269. Alien Dictionary — 2026-08-17
+
+**Sticking point**: three execution bugs, none self-caught — but ⚠️ **two of the three are verbatim
+recurrences of the Aug 7 rep** (see that entry below). The learner wrote every fix themselves from failing
+cases and cues; no line was handed over.
+
+1. ⚠️ **`if w2[j] in adjMap` — membership test on the wrong collection. NEW this rep, and upstream of
+   everything else.** `adjMap` is keyed by edge *source*, so this asks *"does `w2[j]` have outgoing
+   edges?"* — not *"does the edge `w1[j] → w2[j]` already exist?"* Effect: needed edges get silently
+   dropped. **LeetCode's own Example 1 failed**: `["wrt","wrf","er","ett","rftt"] → "wtefr"`, losing
+   `r < t`.
+2. ⚠️ **No `break` after the first differing position — RECURRENCE of Aug 7 bug #4.** The learner's own
+   pre-code comment says *"make sure to stop when we find the first diff"*; the `break` sat inside one
+   branch only, so comparison continued past the first difference and invented constraints.
+3. ⚠️ **No completeness check — RECURRENCE of Aug 7 bug #2.** `len(result) == len(counterMap)` absent, so
+   a contradictory input returned a partial string instead of `""`. `["a","b","ac"] → "c"`.
+
+⭐ **The debugging lesson, which was the most valuable part of the session:** bug 1 **masks** bug 3. A
+2×2×2 ablation showed the completeness check changes *nothing* on its own (1029 → 1029 failing of 4001)
+because the dropped edges mean cycles never form, so the graph completes and there is nothing to catch.
+Only all three together reach 0. **Fix upstream first or you debug blind.**
+
+⚠️ **Trap worth remembering:** after fixes 1 and 2, `["a","b","a"]` returns `""` **by accident** — every
+letter is inside the cycle, so nothing reaches indegree 0, the queue starts empty, and `"".join([])` is
+`""`. The bug looks fixed while fully intact. The exposing case needs a letter *outside* the cycle
+(`["a","b","ac"]`, where free `c` is emitted alone).
+
+**Verified after the fixes**: 3 LeetCode examples + 1,872 exhaustive inputs (3-letter alphabet, words ≤2
+chars, lists of 2–3) + 20,000 random (alphabet 2–6, words ≤4, lists 1–6) — **0 failing**.
+
+**Complexity: 4th miss on 269, same fixed-alphabet family** (Jul 27 freebie, Jul 29 repeat → 🟡 cap, Aug 7,
+today). ⚠️ **But a different and better shape than the priors** — the learner held the *structure*
+(`O(V+E)`, correctly itemized: `counterMap`/queue vertex-scaled, `adjMap` edge-scaled) and resisted the
+*collapse*, rather than not seeing the bound. They then argued — correctly — that discarding `V+E` for a
+bare `O(1)` is the weaker answer, which this repo's own cue already says. See `self_eval_log.md`
+2026-08-17 [P2]: **the gate passes on structure AND collapse together.** Space took four pushes to reach
+`V ≤ 26`; **time was coach-supplied** (`O(C)`, total characters) and is a *new* category — see
+`complexity_gotchas.md`.
+
+⚠️ **Re-rep or teach? Flagging for the weekly build rather than deciding here.** This is the 4th
+consecutive 🟡 on 269 and 2 of 3 bugs are exact repeats. **But the case for a teach is weak**: the learner
+reproduces the correct algorithm cold every single time — topological sort, Kahn's, indegree counter,
+adjacency map, prefix guard, all pre-code and unaided. What fails is the same two pieces of *bookkeeping*.
+That is the **332 shape** (recognition sound, bookkeeping loses it), not a missing concept. A re-teach of
+topological sort would teach nothing. ⭐ **RESOLVED SAME SESSION — the learner chose consolidation reps over a drill, and that is the better
+call:** a rated interview problem exercises the same bookkeeping and earns a tracker row, where a synthetic
+drill earns nothing. **[802 Find Eventual Safe States] and [2115 Find All Possible Recipes] are in the
+Waiting Room on `surplus>=1`** — 802 because the completeness check *is* its problem statement, 2115 because
+its graph is derived from data exactly as 269's is. ⚠️ **Only the completeness bug transfers**; the
+first-difference rule is 269-specific modeling and will not reappear elsewhere, so it stays 269's to fix on
+the Aug 27 rep. **Do not also schedule a drill — that was the rejected option, not a parallel one.**
+
+
 ## 🟡 572. Subtree of Another Tree — 2026-08-15
 **Sticking point**: **both jobs implemented with one function.** 572 is 100 Same Tree plus an outer search,
 and one function can only answer one of those questions. Broke twice for that single reason: first it

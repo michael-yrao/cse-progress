@@ -35,6 +35,63 @@ class ListNode:
         self.next = next
 class Solution:
 
+    # ── Attempt · 2026-08-17 ──────────────
+    def removeNthFromEndRecursion_20260817(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
+        # recursive method first
+        # nth node from the end means we want to point n + 1's next to n - 1
+        # this is also postorder since we have to get to the end first before we increment
+
+        nodeCounter = 0
+
+        def postorder(node):
+            nonlocal nodeCounter
+            if not node:
+                return
+            
+            postorder(node.next)
+            nodeCounter+=1
+
+            if nodeCounter == n + 1:
+                if node.next:
+                    node.next = node.next.next
+        
+        # we need dummy node since we might remove head
+        dummyNode = ListNode(-1)
+        dummyNode.next = head
+        postorder(dummyNode)
+        return dummyNode.next
+
+    # ── Attempt · 2026-08-17 ──────────────
+    def removeNthFromEndIterative_20260817(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
+        # iterative solution
+        # n from the end means len - n from the front
+        # so len - n - 1's next to len - n + 1
+
+        # get length of the linked list
+        node = head
+        
+        lenList = 0
+        while node:
+            lenList+=1
+            node = node.next
+        
+        # since we might remove the head, we create a dummy node
+        dummyNode = ListNode(-1)
+        dummyNode.next = head
+
+        # now we try to set from dummyNode onwards, len is now 1 longer, so plus 1
+        node = dummyNode
+        counter = 0
+        while node:
+            counter+=1
+            if counter == lenList - n + 1:
+                if node.next:
+                    node.next = node.next.next
+            else:
+                node = node.next
+        
+        return dummyNode.next
+
     # ── Attempt · 2026-08-07 ──────────────
     def removeNthFromEndRecursion_20260807(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
         # postorder DFS

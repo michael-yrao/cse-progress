@@ -243,9 +243,10 @@ techniques:
       - {number: 503}
       - {number: 901}
       - {number: 739}
-      # 853 taught unrated Aug 15, 2026 (row logged 🔴, rated rep Mon Aug 17).
-      # Mapped now so coverage does not drift; the 🔴 keeps it out of the green count
-      # on its own, which is the correct signal until Monday.
+      # 853 taught unrated Aug 15, 2026; rated rep Aug 17 came back 🟢 (provisional,
+      # Streak 0 -> lock-down check Aug 27). ⚠️ It is a green in the coverage count but a
+      # PROVISIONAL one — if the Aug 27 check slips, this technique's green count drops
+      # with it, so do not read it as settled phase-exit evidence until then.
       - {number: 853}
 
   # ── Linked list ─────────────────────────────────────────────────────────────
