@@ -37,6 +37,13 @@
 # "could a rule written before this still read as correct while now being wrong?"
 
 decisions:
+  - id: midweek-reprice
+    date: 2026-08-17
+    summary: >-
+      The weekly build's "what does not fit" verdict expires as results land. Re-run
+      effort_budget.py after logging reps and re-seat from the slip list when headroom opens.
+    affects: [scheduling, effort_budget, weekly_build]
+
   - id: answer-length-cap
     date: 2026-08-17
     summary: >-
