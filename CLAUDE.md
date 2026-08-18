@@ -351,6 +351,31 @@ executable copy gets corrected the first time it produces a wrong answer.
 | **Writing code** | read the config. A `DEFAULT_CONFIG` fallback is allowed **only** where the tool must run before a config exists, and it must announce loudly when it fires |
 | **Recording history** | a dated entry stating what a number *was* is correct and must not be back-dated — mark it `single-source-ok` so the checker skips it |
 
+### ⚠️ The one DELIBERATE exception: rules live in two layers
+
+Values, history and evidence are each single-sourced. **Rules are not** — the normative sentence sits
+in this file *and* the reasoning sits in a `.claude/memory/feedback_*.md`. **This is accepted, not an
+oversight**, and it is recorded here so it is not rediscovered later as a defect and "fixed" into
+something worse.
+
+**Why it is tolerated:** this file is injected on *every turn*. Moving each rule's full derivation —
+the occurrence history, the arithmetic, the worked examples — in here would make every turn carry all
+of it forever. The memory files exist to hold that depth at zero standing cost.
+
+**What makes the split safe is one line, and it is not optional:**
+
+> **The rule sentence in CLAUDE.md is NORMATIVE and WINS. A memory file carries the why, the evidence
+> and the occurrence log — and must never be the only place a rule is stated.**
+
+**So: a rule change lands HERE, in the same edit, always.** The memory file is updated for its
+reasoning, never instead of this file.
+
+⭐ **This is not theoretical — it is the Aug 17, 2026 commit failure.** `feedback_batch_commits.md`
+carried *"ask before every commit and push"*, one day old and correct. Step 9 here still carried the
+superseded *"commit + push once at session end"*. **~12 commits and two pushes ran on the stale copy**,
+because the always-injected file is what actually gets obeyed — not the newer one, not the more
+detailed one. The split is affordable; letting the two disagree is not.
+
 ### It is enforced, not remembered
 
 ```sh
@@ -467,6 +492,24 @@ against 🟢 s2's **6.1** — a rep rushed into a 🟡 costs **12× forever**, s
 ceiling *increases* future demand. Demand sets the **floor**; the ceiling is a quality judgment and stays
 put. (Fri Aug 7 is the worked example: the board was 7.8/9, the pull that took it to 10.8 was the single
 dearest item available, and it came back 🟡 with four bugs.)
+
+## Re-price mid-week — a build's verdict expires as results land
+
+**After logging the day's results, re-run `python scripts/effort_budget.py`.** The weekly build's
+"what does not fit" is true when written and can be wrong by the next session: on Aug 17, 2026 demand
+fell **7.16 → 5.58 units/day** in one morning (weekly headroom 5.9 → 17.0) because a single 🔴 → 🟢
+conversion took one row from 3.5 units/week to 0.7. **If headroom opened, re-seat from the slip list —
+oldest first, in the same edit**, and say what changed.
+
+⚠️ **Weekly headroom does not seat an indivisible item — check the DAY, not just the week.** That same
+Aug 17 gain did *not* fit 84 Largest Rectangle: a single 4.5-unit Hard against days sitting at 7.5–8.0
+with a largest single-day spare of 0.5. Seating it needs one day cut to 3.5, which weekly slack cannot
+do.
+
+⚠️ **Headroom resting on a PROVISIONAL 🟢 is contingent, not banked.** The price is honest (a Streak-0
+Clean is charged at its short lock-down interval), but the row has proved nothing yet — a slip to 🔴 at
+the lock-down swings ~10 units/week back. **Spend it on deferrable work (🟢 backlog, an unseen
+problem), never on permanent new demand.** Full rule: `.claude/memory/feedback_midweek_reprice.md`.
 
 ## Schedule Integrity Rule
 
