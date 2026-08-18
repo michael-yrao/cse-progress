@@ -28,6 +28,17 @@ Attempt dates and comfort logs follow the **study session**, not the wall-clock 
 
 **⚠ Tooling that defaults to the wall clock (added 2026-07-24; extended 2026-07-29).** The session date isn't just for logs — **scripts default to `now()` and will silently do the wrong thing past midnight.** `restore_history.py`'s default `--date` is `now()`; on a session that started Jul 24 and crossed into Jul 25, it looked for `_20260725` attempt methods (found none — the scaffolds/solutions are `_20260724`), declared every problem "still empty," and kept **all** stashes out. Committing then ships the solved files *without their restored history*. **On any midnight-crossing close-out, pass the session date explicitly: `python scripts/restore_history.py --date <session-YYYYMMDD>`**, and read the output (all-"Kept" is the tell it used the wrong date). Same vigilance for any other now()-defaulting tooling at close-out.
 
-**`new_problem.py` is the third one, and it has no `--date` flag at all** (added 2026-07-29). It stamps `datetime.now()` into both the method name and the `# ── Attempt · <date> ──` banner, so scaffolding past midnight writes the **wrong attempt date into the learner's solution file** — `lowestCommonAncestor_20260730` for a Jul 29 rep. There is no flag to prevent it: **hand-correct the stub and banner to the session date immediately after scaffolding.** Getting this wrong strands the stash later, since `restore_history.py` keys on the dated method name.
+✅ **FIXED AT SOURCE, Aug 2, 2026 — the paragraph above describes a problem that no longer exists.**
+All three scripts now resolve the **session** date through [`scripts/session_date.py`](../../scripts/session_date.py)
+instead of `datetime.now()`, and **all three take `--date`** as an explicit override — including
+`new_problem.py`, which this file said for two weeks *"has no `--date` flag at all"*. The primary signal
+is a **dirty working tree**: past midnight, a session in progress means the session started yesterday.
+The scripts announce the override when it fires.
+
+⚠️ **This is the case study for the intervention ladder, and it cuts both ways.** The bug recurred
+**three times AFTER** being promoted to this memory file, which is why it was fixed in the tool — but
+then the memory file itself sat wrong for two weeks after the fix, telling anyone who read it to
+hand-correct a stamp the script already gets right. **A source fix does not retire the rule file; it
+obliges you to go rewrite it.**
 
 **The pattern across all three:** every script here that touches a date is wrong past midnight unless the session date is supplied, and two of them fail *silently*. Treat "it's after midnight" as a standing instruction to check each date a tool writes.

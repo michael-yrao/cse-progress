@@ -26,7 +26,7 @@ exactly what the [[feedback_recognition_gate]] front-gate grades, and it is untr
 instance.
 
 **The cap never applied to these anyway** — its own stated rationale is the *blank tax*: "a 🔴 costs 1
-active slot plus ~2–3 follow-up warmup slots as its +2 retries settle." That is the cost of learning an
+active slot plus ~2–3 follow-up warmup slots as its Blank-interval retries settle." That is the cost of learning an
 algorithm. A sibling in a known technique produces no 🔴 and no cascade, so charging it against a
 new-algorithm budget was a category error ([[feedback_difficulty_tiered_intake]] still holds, unchanged,
 for its actual class).

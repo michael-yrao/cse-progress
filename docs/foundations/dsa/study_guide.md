@@ -418,7 +418,7 @@ editing. A category earns a harder tier when its new problems consistently log �
 ### Two kinds of new problem — the cap only governs one (added Jul 26, 2026)
 
 The tiers above were calibrated on **new-algorithm** problems, and the blank-tax rationale says so
-outright: *"a 🔴 costs 1 active slot plus ~2–3 follow-up warmup slots as its +2 retries settle."*
+outright: *"a 🔴 costs 1 active slot plus ~2–3 follow-up warmup slots as its Blank-interval retries settle."*
 That is the cost of **learning an algorithm**, not the cost of *a problem*. So intake splits in two:
 
 | Class | What it is | Expected first result | Cascade | Counts against the tier cap? |

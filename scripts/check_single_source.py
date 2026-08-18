@@ -125,12 +125,18 @@ ALIASES = {
 #: `= 30`, `8 u/day`, `streak 3`. Mentioning a number near a cue is not a restatement;
 #: stating it as the setting is. Keyed by dotted-path prefix, first match wins.
 VALUE_FORMS = (
-    ("intervals.", (r"\+\s*{n}\b", r"\b{n}\s*[-–]?\s*days?\b")),
+    # `{n}d?` — prose writes both "+180 days" and "+180d", and the bare \b form missed the
+    # suffixed one (0 and d are both word chars, so there is no boundary between them).
+    # Found on feedback_coding_for_clean, which stated the graduated interval as "+180d".
+    ("intervals.", (r"\+\s*{n}d?\b", r"\b{n}\s*[-–]?\s*days?\b")),
     ("graduate_at_streak", (r"(?:streak|tier)[\s\-]*{n}\b", r"[:=]\s*{n}\b")),
+    # ⚠️ NO bare `[:=]\s*{n}` form for these two. It was here to catch "ceiling: 8" in
+    # config-shaped prose, but the config itself is not scanned — so it earned nothing and
+    # cost false positives: it matched "that trade is correct: 3-month-old 🟢s came back
+    # clean" as a restatement of floor_min. Keep the forms anchored to units or to the key.
     ("effort_budget.ceiling", (r"\b{n}\s*(?:u\b|units?)", r"ceiling[\s:=of]*{n}\b",
-                               r"\b{n}\s*/\s*(?:day|{n})", r"[:=]\s*{n}\b")),
-    ("effort_budget.floor_min", (r"\b{n}\s*(?:u\b|units?)", r"floor[\s:=of]*{n}\b",
-                                 r"[:=]\s*{n}\b")),
+                               r"\b{n}\s*/\s*(?:day|{n})")),
+    ("effort_budget.floor_min", (r"\b{n}\s*(?:u\b|units?)", r"floor[\s:=of]*{n}\b")),
     # Weight tables read "🔴 3.0" / "Easy 0.5" — the cue sits right against the number.
     ("effort_budget.comfort_units.", (r"{cue}\s*[:=]?\s*{n}\b",)),
     ("effort_budget.difficulty.", (r"{cue}\s*[:=]?\s*{n}\b",)),
@@ -346,9 +352,14 @@ def check_prose(cfg: dict) -> list[str]:
             # rules table does not.
             if line.count("|") >= 4 and re.search(r"\d{4}-\d{2}-\d{2}", line):
                 continue
+            # Hard-wrapped prose splits the cue from the value: "the *blank tax*: a 🔴 costs
+            # 1 / active slot ... as its +2 retries settle" put "blank" and "+2" on
+            # different lines and the restatement went unreported. Let a cue on the
+            # PRECEDING line govern this one too.
+            prev_low = re.sub(r"\[\[[^\]]*\]\]", " ", lines[n - 2].lower()) if n >= 2 else ""
             for dotted, val in tracked:
                 cues = cues_for(dotted)
-                if not any(c.lower() in low for c in cues):
+                if not any(c.lower() in low or c.lower() in prev_low for c in cues):
                     continue
                 # The value as prose writes it — 30 and 30.0, 8 and 8.0 — but only when the
                 # surrounding text ASSERTS it (see VALUE_FORMS), never a bare digit.
