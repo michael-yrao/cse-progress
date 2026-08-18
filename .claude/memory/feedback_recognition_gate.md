@@ -3,6 +3,7 @@ name: feedback_recognition_gate
 description: Front-gate every rep — learner states shape→technique+why (as their pre-code comment, pasted in chat) BEFORE coding; complexity gate still fires at the end
 metadata:
   type: feedback
+reconciled: 2026-08-17
 ---
 
 Every coded rep is bookended by two gates. The learner opted into this Jul 25, 2026.

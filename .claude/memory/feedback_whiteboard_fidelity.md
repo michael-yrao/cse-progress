@@ -3,6 +3,7 @@ name: feedback_whiteboard_fidelity
 description: Write the full solution from scratch every time, including ListNode/TreeNode/TrieNode definitions — no shared data-model module to import
 metadata:
   type: feedback
+reconciled: 2026-08-17
 ---
 
 Every solution is written in full from a blank page, including any data-structure definitions it needs (`ListNode`, `TreeNode`, `TrieNode`, `Node`, …). There is **no shared `datamodel` / boilerplate module to import** — re-deriving the scaffolding is part of the rep, exactly as on an interview whiteboard.

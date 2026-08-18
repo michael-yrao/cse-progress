@@ -3,6 +3,7 @@ name: feedback_let_learner_pace
 description: Don't drive progression — answer what was asked, then STOP; no "ready for the next one?" tail. The learner controls when to advance.
 metadata:
   type: feedback
+reconciled: 2026-08-17
 ---
 
 In any multi-turn thread — a coding rep debrief, a card-by-card review, a teaching session —

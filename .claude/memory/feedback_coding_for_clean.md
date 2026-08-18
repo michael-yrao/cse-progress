@@ -3,6 +3,7 @@ name: feedback_coding_for_clean
 description: 🟢 Clean requires coding from a blank page; a no-code blueprint caps at 🟡 Shaky and can't advance the streak — except a flawless spot check confirms an already-🎓 Graduated problem
 metadata:
   type: feedback
+reconciled: 2026-08-17
 ---
 
 Coding is required to reach or advance a 🟢 Clean. A no-code blueprint (the 15-min warmup format) **cannot** log Clean — the best it earns is 🟡 Shaky, no matter how flawless. To increment a streak toward graduation, the problem must be **coded** (active block, or an Easy problem coded in-warmup).

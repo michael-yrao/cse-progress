@@ -3,6 +3,7 @@ name: feedback_explanation_register
 description: Explanations read as "foreign" when the principle is named before the mechanics are shown and every step is wrapped in why-this-matters framing — show literal values first, name things after, and when they say "I don't understand," ASK which link broke instead of re-explaining; also holds the BANNED VOCABULARY list (load-bearing, footgun, …)
 metadata:
   type: feedback
+reconciled: 2026-08-17
 ---
 
 **Learner, Aug 10, 2026, mid-Redis-teach:** *"I think I have trouble with Opus model's explanation

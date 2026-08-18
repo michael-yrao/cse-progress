@@ -3,6 +3,7 @@ name: feedback_code_by_default
 description: Code every problem by default — including 🟡/🟢 warmup reviews; no-code blueprints are the exception, not the default
 metadata:
   type: feedback
+reconciled: 2026-08-17
 ---
 
 Every rep is a **coded** rep by default, warmups included. Do not schedule 🟡 Shaky or

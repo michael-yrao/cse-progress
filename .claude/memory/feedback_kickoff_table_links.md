@@ -3,6 +3,7 @@ name: feedback_kickoff_table_links
 description: hyperlink each problem to its local solution file AND its problem page (LC, or the NeetCode mirror if premium) — fires when new_problem.py runs, at kickoff, and on every problem/set transition
 metadata:
   type: feedback
+reconciled: 2026-08-17
 ---
 
 **PRIMARY TRIGGER — a scaffold is a link event. Every `new_problem.py` run ends with the

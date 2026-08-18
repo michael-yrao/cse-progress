@@ -3,6 +3,7 @@ name: feedback_batch_commits
 description: NEVER commit or push without asking first — the learner decides when; batching alone was not enough, 31 commits ran in one session through the “natural breakpoint” loophole
 metadata:
   type: feedback
+reconciled: 2026-08-17
 ---
 
 ⚠️ **ASK BEFORE EVERY COMMIT AND EVERY PUSH. No exceptions.** Set by the learner Aug 16, 2026: *"ask me before you commit and push, always."* Make the edits, say what is staged, and **stop**. The learner decides when it lands.

@@ -3,6 +3,7 @@ name: feedback-turn-economy
 description: In interactive derive/Socratic sessions, one job per turn and push rich reference (tables, mnemonics, full derivations) into the written note, not the chat
 metadata:
   type: feedback
+reconciled: 2026-08-17
 ---
 
 **In interactive coaching (derive-the-design, Socratic pushback, failure-mode drills), keep each
@@ -30,4 +31,4 @@ so no single message is a wall.
 **How to apply:** this is [[feedback-spine-first]] extended from the opening of an explanation to the
 *whole multi-turn session*, and it's how [[feedback-interactive-learning]] should actually feel on the
 page. An instance of [[feedback-operating-principles]] / token discipline. Applies to all interactive
-coaching (SD, AI-eng, DSA), not just Redis.
+coaching (system design, DSA), not just Redis. (This once listed "AI-eng" — that track was removed Aug 13, 2026.)

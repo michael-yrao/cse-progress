@@ -1,8 +1,9 @@
 ---
 name: feedback_expand_acronyms
-description: expand every acronym in parentheses on first use in a session — SD/networking/AI lanes are dense with them and the learner is 10 years out from school
+description: expand every acronym in parentheses on first use in a session — system design and networking material is dense with them and the learner is 10 years out from school
 metadata:
   type: feedback
+reconciled: 2026-08-17
 ---
 
 **Expand every acronym on first use, inline, in parentheses** — "VPC (Virtual Private Cloud)", "RTT
@@ -15,7 +16,7 @@ years past the coursework where these were introduced (their words). An unexpand
 degrade the explanation gracefully — it **halts** it: they either stop to ask (costing a turn) or nod
 past a term the rest of the paragraph depends on. That is the [[feedback_spine_first]] failure in
 miniature — volume of correct detail displacing the load-bearing idea — except here one word does it.
-It also silently breaks the Recall Cards, which are written to be answered cold weeks later.
+It also silently breaks any written note meant to be read cold weeks later — a mock debrief, a technique card — where nobody is present to ask. (This once said "the Recall Cards"; those were retired Aug 13, 2026 with the three-lane SD model, but the failure mode transfers unchanged to the notes that replaced them.)
 
 **How to apply:**
 - First use in the session gets the expansion; later uses don't need it. Do it in **chat and in the

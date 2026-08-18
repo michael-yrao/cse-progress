@@ -3,6 +3,7 @@ name: project_pull_map_expansion_todo
 description: Pending — extend pull_interview.py's pattern map to expansion techniques once the learner starts retiring them (segment tree, KMP, etc.)
 metadata:
   type: project
+reconciled: 2026-08-17
 ---
 
 **Pending task, triggered by the expansion phase.** `scripts/pull_interview.py` gates the interview pull pool by learned patterns, but its `CATEGORY_TO_TOPICS` / `FOLDER_TO_CATEGORY` maps currently cover only **NC150 categories**. Post-NC150 the pool is already wide (all NC150 topics), so this doesn't bite immediately — but once the learner begins **retiring expansion techniques** (segment tree, Fenwick/BIT, KMP, suffix structures, Tarjan's, etc.), those newly-learned techniques won't widen the pull pool until the maps are extended.

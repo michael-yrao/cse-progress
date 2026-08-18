@@ -3,6 +3,7 @@ name: feedback-concept-primer
 description: Before the FIRST exposure to a named algorithm, run a short unrated session on the OBJECT it finds and the name of that object — the procedure comes later, on a different day
 metadata:
   type: feedback
+reconciled: 2026-08-17
 ---
 
 **Set by the learner Aug 16, 2026**, off the back of Hierholzer: *"I did not remember concepts of
