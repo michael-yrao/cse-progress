@@ -22,8 +22,8 @@ Notes for future agents:
 - Rating is the 7-point rubric in ../senior_ramp.md, scored right after the mock:
     * 🟢 Clean  — #1–4 solid AND #5 forks, #6 failure modes, #7 evolve/operate all pass.
                                                               the standard engine ladder — intervals in `cse.config.yml`
-    * 🟡 Shaky  — skeleton (#1–4) solid, #5–7 shaky.           +10d, streak → 0
-    * 🔴 Blank  — couldn't drive the framework cold.           +2d,  streak → 0
+    * 🟡 Shaky  — skeleton (#1–4) solid, #5–7 shaky.           short interval, streak → 0
+    * 🔴 Blank  — couldn't drive the framework cold.           shortest interval, streak → 0
 - To log a mock: write the debrief to ../mocks/, set Comfort, add today's date to Rep
   Dates + Latest Rep Date, then stage this file and commit (or run the script).
 - The technology / concept / component cards are NO LONGER on the review engine — see

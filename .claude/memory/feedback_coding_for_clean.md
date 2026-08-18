@@ -8,7 +8,7 @@ reconciled: 2026-08-17
 
 Coding is required to reach or advance a 🟢 Clean. A no-code blueprint (the 15-min warmup format) **cannot** log Clean — the best it earns is 🟡 Shaky, no matter how flawless. To increment a streak toward graduation, the problem must be **coded** (active block, or an Easy problem coded in-warmup).
 
-**Carve-out:** a flawless no-code spot check on an already **🎓 Graduated** problem *confirms* it (stays 🎓, +180d). Graduation — earned by repeated coded Cleans — is the one status a blueprint can hold; everything below it needs code to reach or keep 🟢.
+**Carve-out:** a flawless no-code spot check on an already **🎓 Graduated** problem *confirms* it (stays 🎓, on the Graduated interval). Graduation — earned by repeated coded Cleans — is the one status a blueprint can hold; everything below it needs code to reach or keep 🟢.
 
 **Why:** The user wanted the rules tightened to match cse-coach — most DSA reps should be actually coded; "mostly remembered it out loud" is not mastery. Coding your way to Retired is what buys cheap no-code maintenance later.
 
