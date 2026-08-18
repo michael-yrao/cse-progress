@@ -51,13 +51,28 @@ DECISIONS = REPO / "decisions.yml"
 
 #: Files that carry rules and therefore need reconciling. Memory files all have YAML
 #: frontmatter; the normative docs take the same field inside an HTML comment.
-RULE_GLOBS = (".claude/memory/*.md",)
+RULE_GLOBS = (
+    ".claude/memory/*.md",
+    # ⚠️ CLAUDE.md is IN SCOPE, and it is the most important file here (added Aug 17, 2026).
+    # It is always injected, so when it and a memory file disagree, THIS is the copy that
+    # gets obeyed — which makes a stale rule here strictly worse than a stale rule anywhere
+    # else. That is not hypothetical: `feedback_batch_commits.md` carried "ask before every
+    # commit and push", one day old and correct, while step 8 here still said "commit + push
+    # once at session end" — and ~12 commits ran on the stale copy.
+    #
+    # Nothing else catches this class. The value checker only tracks cse.config.yml numbers;
+    # the retired-vocabulary list has no entry for a superseded PHRASING of a workflow step.
+    # Recording the decision and letting THIS file fall out of date is what surfaces it.
+    "CLAUDE.md",
+)
 
 #: Not rules: an append-only dated log records what was true AT THE TIME and is never
 #: reconciled — back-dating it would destroy the history it exists to hold.
 RULE_EXCLUDE = ("self_eval_log.md", "MEMORY.md", "decisions.yml")
 
 FRONTMATTER_FIELD = re.compile(r"^reconciled:\s*(\d{4}-\d{2}-\d{2})\s*$", re.M)
+#: Same assertion for a file with no YAML frontmatter (CLAUDE.md, and any normative doc).
+COMMENT_FIELD = re.compile(r"<!--\s*reconciled:\s*(\d{4}-\d{2}-\d{2})\s*-->")
 
 
 def load_decisions() -> list[dict]:
@@ -97,7 +112,7 @@ def reconciled_date(path: Path) -> dt.date | None:
         head = text[:end] if end != -1 else text
     else:
         head = text[:400]
-    m = FRONTMATTER_FIELD.search(head)
+    m = FRONTMATTER_FIELD.search(head) or COMMENT_FIELD.search(text)
     if not m:
         return None
     try:
@@ -110,7 +125,20 @@ def stamp(path: Path, when: dt.date) -> bool:
     """Write/refresh `reconciled:` in the frontmatter. Returns True if the file changed."""
     text = path.read_text(encoding="utf-8")
     if not text.startswith("---"):
-        return False
+        # No frontmatter (CLAUDE.md): carry the assertion in an HTML comment instead, placed
+        # right under the title so it is visible to a reader, not buried.
+        marker = f"<!-- reconciled: {when} -->"
+        if COMMENT_FIELD.search(text):
+            new = COMMENT_FIELD.sub(marker, text, count=1)
+        else:
+            lines = text.split("\n")
+            at = 1 if lines and lines[0].startswith("#") else 0
+            lines.insert(at, "\n" + marker if at else marker)
+            new = "\n".join(lines)
+        if new == text:
+            return False
+        path.write_text(new, encoding="utf-8")
+        return True
     end = text.find("\n---", 3)
     if end == -1:
         return False
