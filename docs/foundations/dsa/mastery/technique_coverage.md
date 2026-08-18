@@ -6,7 +6,7 @@
 
 > The tracker is keyed by **problem**; this is keyed by **technique**. Use it at the weekly build to decide what to pull, and at phase exit to check the per-algorithm bar (recognition + execution, ≥1 🟢 each).
 
-> **53/53** techniques started &nbsp;·&nbsp; **8** with no 🟢 &nbsp;·&nbsp; **18** thin &nbsp;·&nbsp; **0** unqueued variant gaps
+> **53/53** techniques started &nbsp;·&nbsp; **8** with no 🟢 &nbsp;·&nbsp; **19** thin &nbsp;·&nbsp; **0** unqueued variant gaps
 
 ## ⚠️ Action list
 
@@ -25,6 +25,7 @@
 
 - **Bellman-Ford** (advanced_graphs) — 1/3: 787
 - **Binary Search (max boundary)** (binary_search) — 1/3: 74
+- **Connected Components** (graphs) — 1/3 (3 rows): 323
 - **Cycle Detection in an Iterated Sequence** (graphs) — 1/2: 202
 - **Divide & Conquer / Sorting** (sorting) — 1/3: 912
 - **Floyd-Warshall (all-pairs shortest path)** (advanced_graphs) — 1/3: 1334
@@ -38,7 +39,7 @@
 - **Dijkstra** (advanced_graphs) — 2/3: 743, 778
 - **Floyd's Cycle / Midpoint** (linked_list) — 2/3: 141, 143
 - **Grid DFS** (graphs) — 2/3: 200, 695
-- **Prefix Sum** (prefix_sum) — 2/3: 560, 53
+- **Prefix Sum** (prefix_sum) — 2/3: 53, 560
 - **Tree BFS (level order)** (trees) — 2/3: 102, 199
 - **Trie** (tries) — 2/3: 208, 211
 
@@ -63,7 +64,7 @@
 | Binary Search (max boundary) | binary_search | 1 (74) | 🟢 | ✅ | — | thin (1/3) |
 | Binary Search on Answer | binary_search | 2 (875, 1011) | 🟢 | ✅ | — | thin (2/3) |
 | BFS on Implicit Graph | graphs | 1 (127) | 🟡 | ❌ | — | **no-green** |
-| Connected Components | graphs | 3 (323, 323, 323) | 🟢 | ✅ | DFS ×1 · BFS ×1 · Union-Find ×1 | — |
+| Connected Components | graphs | 1 *+2v* (323) | 🟢 | ✅ | DFS ×1 · BFS ×1 · Union-Find ×1 | thin (1/3) |
 | Cycle Detection in an Iterated Sequence | graphs | 1 (202) | 🟡 | ❌ | Seen-Set ×1 · ~~Floyd Fast/Slow~~ *(queued: `rated:202`)* | **no-green** · thin (1/2) |
 | Graph Clone (DFS + Hash Map) | graphs | 1 (133) | 🟡 | ❌ | — | **no-green** |
 | Graph Cycle Detection (DFS) | graphs | 1 (261) | 🟢 | ✅ | — | — |
@@ -77,9 +78,9 @@
 | Floyd's Cycle / Midpoint | linked_list | 2 (141, 143) | 🟢 | ✅ | — | thin (2/3) |
 | HashMap + Doubly Linked List (LRU) | linked_list | 1 (146) | 🟢 | ✅ | — | thin (1/3) |
 | Linked List Arithmetic | linked_list | 1 (2) | 🟢 | ✅ | — | — |
-| Linked List Merge | linked_list | 2 (21, 21) | 🎓 | ✅ | Iterative ×1 · Recursion ×1 | — |
-| Linked List Reversal | linked_list | 2 (206, 206) | 🟢 | ✅ | Iterative ×1 · Recursion ×1 | — |
-| Remove Nth From End | linked_list | 2 (19, 19) | 🟢 | ✅ | Iterative ×1 · Postorder Recursion ×1 · ~~Preorder Recursion~~ *(queued: `expansion — parked Jul 9`)* | — |
+| Linked List Merge | linked_list | 1 *+1v* (21) | 🎓 | ✅ | Iterative ×1 · Recursion ×1 | — |
+| Linked List Reversal | linked_list | 1 *+1v* (206) | 🟢 | ✅ | Iterative ×1 · Recursion ×1 | — |
+| Remove Nth From End | linked_list | 1 *+1v* (19) | 🟢 | ✅ | Iterative ×1 · Postorder Recursion ×1 · ~~Preorder Recursion~~ *(queued: `expansion — parked Jul 9`)* | — |
 | Kadane | prefix_sum | 1 (53) | 🟢 | ✅ | — | — |
 | Prefix Sum | prefix_sum | 2 (53, 560) | 🟢 | ✅ | — | thin (2/3) |
 | Greedy (single pass) | sliding_window | 1 (122) | 🟢 | ✅ | — | — |

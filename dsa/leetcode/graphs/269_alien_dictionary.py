@@ -1,5 +1,5 @@
 """
-269. Alien Dictionary   ·   https://neetcode.io/problems/alien-dictionary
+269. Alien Dictionary   ·   https://neetcode.io/problems/foreign-dictionary
 Pattern: graphs
 
 There is a new alien language that uses the English alphabet, but the ORDER of the
@@ -40,6 +40,69 @@ from typing import List, Optional
 
 
 class Solution:
+
+    # ── Attempt · 2026-08-17 ──────────────
+    def alienOrder_20260817(self, words: List[str]) -> str:
+        # map first letter where they differ
+        # so make sure to stop when we find the first diff
+        # we need to build adjMap based on this logic
+        # so this is topographical sort since we have to have
+        # certain letters beforehand
+        # which means, we need to create a counter map
+        
+        counterMap = {}
+        for word in words:
+            for char in word:
+                counterMap[char] = 0
+        
+        adjMap = collections.defaultdict(set)
+
+        # we need to compare two words at a time, we start i at 1
+        for i in range(1, len(words)):
+            w1 = words[i-1]
+            w2 = words[i]
+            minLen = min(len(w1),len(w2))
+            # failure case of example 3
+            if len(w1) > len(w2) and w1[:minLen] == w2:
+                return ""
+            # now go through each char in the two strings
+            for j in range(minLen):
+                if w1[j] != w2[j]:
+                    # check if this already exists
+                    # if not, add it. break regardless
+                    if w2[j] not in adjMap[w1[j]]:
+                        adjMap[w1[j]].add(w2[j])
+                        counterMap[w2[j]]+=1
+                    break
+        
+        # now that we have adjMap and counterMap
+        # we just do a version of what we did for course schedule
+        # all keys with 0 goes on the queue for us to use
+        queue = collections.deque()
+        
+        for key, value in counterMap.items():
+            if value == 0:
+                queue.append(key)
+        # result array since string is immutable
+        result = []
+        while queue:
+            # let's use all the nodes first
+            lenQueue = len(queue)
+            for _ in range(lenQueue):
+                currentNode = queue.popleft()
+                # add to result list
+                result.append(currentNode)
+                # decrement all the neighbors of this node
+                for neighbor in adjMap[currentNode]:
+                    counterMap[neighbor]-=1
+                    if counterMap[neighbor] == 0:
+                        queue.append(neighbor)
+
+        # cycle detection for topological sort
+        # if we got all nodes, we had no cycle
+        if len(result) == len(counterMap):
+            return "".join(result)
+        return ""
 
     # ── Attempt · 2026-08-07 ──────────────
     def alienOrder_20260807(self, words: List[str]) -> str:

@@ -66,14 +66,18 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/dsa/mastery/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **106** problems &nbsp;·&nbsp; **115** solutions &nbsp;·&nbsp; **457** reps
+> **106** problems &nbsp;·&nbsp; **115** solutions &nbsp;·&nbsp; **461** reps
 
 | | 🏆 Retired | 🎓 Graduated | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|:---:|
-| **Solutions** | 0 | 6 | 91 | 17 | 1 |
+| **Solutions** | 0 | 6 | 93 | 16 | 0 |
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Rep Date | Rep Dates |
 |---|---|---|---|---|---|---|
+| Medium | [853. Car Fleet](https://leetcode.com/problems/car-fleet/) | 🟢 | 0 | 2026-08-27 | 2026-08-17 | 2026-08-15, 2026-08-17 |
+| Medium | [19. Remove Nth Node From End of List (Postorder Recursion)](https://leetcode.com/problems/remove-nth-node-from-end-of-list/) | 🟢 | 1 | 2026-09-16 | 2026-08-17 | 2026-05-18, 2026-05-21, 2026-06-18, 2026-06-28, 2026-07-08, 2026-07-18, 2026-07-28, 2026-08-07, 2026-08-17 |
+| Medium | [19. Remove Nth Node From End of List (Iterative)](https://leetcode.com/problems/remove-nth-node-from-end-of-list/) | 🟢 | 2 | 2026-10-16 | 2026-08-17 | 2026-04-29, 2026-05-18, 2026-06-30, 2026-07-09, 2026-08-17 |
+| Hard | [269. Alien Dictionary](https://leetcode.com/problems/alien-dictionary/) | 🟡 | 0 | 2026-08-27 | 2026-08-17 | 2026-07-27, 2026-07-29, 2026-08-07, 2026-08-17 |
 | Medium | [261. Graph Valid Tree (DFS)](https://neetcode.io/problems/valid-tree) | 🟢 | 1 | 2026-09-15 | 2026-08-16 | 2026-06-15, 2026-06-17, 2026-06-21, 2026-06-23, 2026-08-06, 2026-08-16 |
 | Easy | [496. Next Greater Element I](https://leetcode.com/problems/next-greater-element-i/) | 🟢 | 1 | 2026-09-15 | 2026-08-16 | 2026-07-04, 2026-07-06, 2026-08-06, 2026-08-16 |
 | Medium | [208. Implement Trie (Prefix Tree)](https://leetcode.com/problems/implement-trie-prefix-tree/) | 🟢 | 2 | 2026-10-15 | 2026-08-16 | 2026-07-06, 2026-07-08, 2026-07-17, 2026-08-16 |
@@ -83,7 +87,6 @@ Notes for future agents:
 | Medium | [787. Cheapest Flights Within K Stops (Bellman-Ford)](https://leetcode.com/problems/cheapest-flights-within-k-stops/) | 🟢 | 1 | 2026-09-14 | 2026-08-15 | 2026-07-14, 2026-07-16, 2026-07-26, 2026-08-05, 2026-08-15 |
 | Medium | [572. Subtree Of Another Tree](https://leetcode.com/problems/subtree-of-another-tree/) | 🟡 | 0 | 2026-08-25 | 2026-08-15 | 2026-05-02, 2026-06-12, 2026-08-15 |
 | Medium | [1334. Find the City With the Smallest Number of Neighbors at a Threshold Distance (Floyd-Warshall)](https://leetcode.com/problems/find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance/) | 🟡 | 0 | 2026-08-25 | 2026-08-15 | 2026-07-31, 2026-08-05, 2026-08-15 |
-| Medium | [853. Car Fleet](https://leetcode.com/problems/car-fleet/) | 🔴 | 0 | 2026-08-17 | 2026-08-15 | 2026-08-15 |
 | Medium | [695. Max Area Of Island (DFS)](https://leetcode.com/problems/max-area-of-island/) | 🟢 | 2 | 2026-10-14 | 2026-08-15 | 2026-06-01, 2026-06-17, 2026-08-15 |
 | Medium | [743. Network Delay Time (Dijkstra)](https://leetcode.com/problems/network-delay-time/) | 🟡 | 0 | 2026-08-24 | 2026-08-14 | 2026-07-13, 2026-07-15, 2026-07-25, 2026-08-04, 2026-08-14 |
 | Medium | [739. Daily Temperatures](https://leetcode.com/problems/daily-temperatures/) | 🟡 | 0 | 2026-08-24 | 2026-08-14 | 2026-08-14 |
@@ -118,14 +121,12 @@ Notes for future agents:
 | Easy | [100. Same Tree](https://leetcode.com/problems/same-tree/) | 🎓 | 3 | 2027-02-04 | 2026-08-08 | 2026-05-01, 2026-06-05, 2026-08-08 |
 | Easy | [88. Merge Sorted Array](https://leetcode.com/problems/merge-sorted-array/) | 🎓 | 3 | 2027-02-04 | 2026-08-08 | 2026-01-10, 2026-04-03, 2026-06-04, 2026-08-08 |
 | Easy | [21. Merge Two Sorted Lists (Iterative)](https://leetcode.com/problems/merge-two-sorted-lists/) | 🎓 | 3 | 2027-02-04 | 2026-08-08 | 2026-04-26, 2026-06-12, 2026-08-08 |
-| Medium | [19. Remove Nth Node From End of List (Postorder Recursion)](https://leetcode.com/problems/remove-nth-node-from-end-of-list/) | 🟡 | 0 | 2026-08-17 | 2026-08-07 | 2026-05-18, 2026-05-21, 2026-06-18, 2026-06-28, 2026-07-08, 2026-07-18, 2026-07-28, 2026-08-07 |
 | Hard | [42. Trapping Rain Water (Array)](https://leetcode.com/problems/trapping-rain-water/) | 🟢 | 2 | 2026-10-06 | 2026-08-07 | 2026-04-15, 2026-06-29, 2026-07-08, 2026-08-07 |
 | Medium | [973. K Closest Points to Origin](https://leetcode.com/problems/k-closest-points-to-origin/) | 🟢 | 2 | 2026-10-06 | 2026-08-07 | 2026-06-23, 2026-07-03, 2026-08-07 |
 | Medium | [130. Surrounded Regions (Union-Find)](https://leetcode.com/problems/surrounded-regions/) | 🟢 | 2 | 2026-10-06 | 2026-08-07 | 2026-06-21, 2026-06-23, 2026-07-03, 2026-08-07 |
 | Easy | [110. Balanced Binary Tree](https://leetcode.com/problems/balanced-binary-tree/) | 🎓 | 3 | 2027-02-03 | 2026-08-07 | 2026-05-01, 2026-06-04, 2026-06-14, 2026-06-24, 2026-07-03, 2026-08-07 |
 | Medium | [122. Best Time to Buy and Sell Stock II](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/) | 🟢 | 2 | 2026-10-06 | 2026-08-07 | 2026-01-28, 2026-04-17, 2026-08-07 |
 | Medium | [11. Container With Most Water](https://leetcode.com/problems/container-with-most-water/) | 🟢 | 2 | 2026-10-06 | 2026-08-07 | 2026-01-31, 2026-04-14, 2026-08-07 |
-| Hard | [269. Alien Dictionary](https://leetcode.com/problems/alien-dictionary/) | 🟡 | 0 | 2026-08-17 | 2026-08-07 | 2026-07-27, 2026-07-29, 2026-08-07 |
 | Medium | [540. Single Element in a Sorted Array](https://leetcode.com/problems/single-element-in-a-sorted-array/) | 🟢 | 1 | 2026-09-05 | 2026-08-06 | 2026-05-02, 2026-06-12, 2026-06-13, 2026-07-17, 2026-07-27, 2026-08-06 |
 | Easy | [27. Remove Element](https://leetcode.com/problems/remove-element/) | 🟢 | 2 | 2026-10-05 | 2026-08-06 | 2026-01-05, 2026-03-28, 2026-05-27, 2026-06-26, 2026-07-05, 2026-08-06 |
 | Easy | [1768. Merge Strings Alternately](https://leetcode.com/problems/merge-strings-alternately/) | 🟢 | 2 | 2026-10-05 | 2026-08-06 | 2026-01-21, 2026-04-10, 2026-08-06 |
@@ -180,7 +181,6 @@ Notes for future agents:
 | Medium | [199. Binary Tree Right Side View](https://leetcode.com/problems/binary-tree-right-side-view/) | 🟢 | 2 | 2026-09-12 | 2026-07-14 | 2026-05-09, 2026-06-13, 2026-07-14 |
 | Medium | [167. Two Sum II](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/) | 🟢 | 2 | 2026-09-12 | 2026-07-14 | 2026-01-19, 2026-07-14 |
 | Medium | [36. Valid Sudoku](https://leetcode.com/problems/valid-sudoku/) | 🟢 | 1 | 2026-08-08 | 2026-07-09 | 2026-01-25, 2026-05-22, 2026-06-30, 2026-07-09 |
-| Medium | [19. Remove Nth Node From End of List (Iterative)](https://leetcode.com/problems/remove-nth-node-from-end-of-list/) | 🟢 | 1 | 2026-08-08 | 2026-07-09 | 2026-04-29, 2026-05-18, 2026-06-30, 2026-07-09 |
 | Medium | [33. Search in Rotated Sorted Array](https://leetcode.com/problems/search-in-rotated-sorted-array/) | 🟢 | 1 | 2026-08-03 | 2026-07-04 | 2026-04-13, 2026-05-29, 2026-06-15, 2026-06-25, 2026-07-04 |
 | Medium | [684. Redundant Connection (Union-Find)](https://leetcode.com/problems/redundant-connection/) | 🟢 | 1 | 2026-07-31 | 2026-07-01 | 2026-06-18, 2026-06-22, 2026-07-01 |
 | Medium | [153. Find Minimum in Rotated Sorted Array](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/) | 🟢 | 2 | 2026-08-30 | 2026-07-01 | 2026-04-21, 2026-07-01 |
@@ -221,6 +221,9 @@ note is the failure mode this section exists to prevent.
 
 | Difficulty | Problem | Trigger | Notes |
 |---|---|---|---|
+| Medium | [802. Find Eventual Safe States](https://leetcode.com/problems/find-eventual-safe-states/) | `surplus>=1` | **Topological Sort consolidation rep (4th problem).** Requested by the learner Aug 17, 2026 **in place of a Kahn's-bookkeeping drill** — a rated interview problem over a synthetic exercise, which is the better trade. ⭐ **Why this one:** topo on the **reversed** graph, so edge direction has to be reasoned about rather than copied; and "which nodes avoid cycles" makes the **completeness check the problem statement** instead of a guard that can be forgotten. That is precisely the bug that recurred on 269 (Aug 7 → Aug 17). Number/premium verified against LeetCode GraphQL Aug 17. |
+| Medium | [2115. Find All Possible Recipes from Given Supplies](https://leetcode.com/problems/find-all-possible-recipes-from-given-supplies/) | `surplus>=1` | **Topological Sort consolidation rep (5th problem).** ⭐ **Why this one:** the graph is **derived from data** (ingredient lists), exactly as 269 derives edges from adjacent word pairs — the closest surface form to 269's modeling half, which is the part no other topo problem exercises. Number/premium verified Aug 17. ⚠️ **Pair with 802, not instead of it:** 802 targets the transferable bug (completeness), 2115 targets the modeling. |
+| Medium | [19. Remove Nth Node From End of List (**one-pass two-pointer gap**)](https://leetcode.com/problems/remove-nth-node-from-end-of-list/) | `graduates:19-iterative` + `graduates:19-postorder` | **Method variant — and the one an interviewer most likely expects on this problem.** Surfaced Aug 17, 2026 after both tracked variants went 🟢 in one sitting: 19 has three variants on the books (iterative, postorder, parked preorder) and **none is the gap method** — advance a lead pointer `n` ahead, then walk both until it falls off, so the trailing pointer lands on the predecessor. ⭐ **Why it earns a rep rather than a footnote:** both tracked variants are two-pass or O(n)-stack; the gap method is the only one that is **one pass in O(1) space**, and gap-as-invariant is the transferable part — the same device as 876 midpoint and 141 cycle detection, generalized to an arbitrary offset. **Gated by the method-variant rule** — pull only once BOTH tracked rows are 🎓 (`graduate_at_streak: 3`). Earliest possible: **Iterative** is 🟢 s2 (Oct 16 → 🎓 on a clean rep); **Postorder** is 🟢 s1 and needs two more cleans (Sept 16, then ~Nov 15). ⚠️ **So this cannot fire before mid-November 2026, and only if neither slips** — stated so the weekly build does not re-evaluate it monthly for nothing. Learner's call, Aug 17, 2026: *"let's put that in the queue for when these graduate then."* |
 | Hard | [1216. Valid Palindrome III (backtracking)](https://leetcode.com/problems/valid-palindrome-iii/) | `phase:Backtracking` | **Phase-gated 🔴.** Attempted 2026-05-31 → Blank; the Backtracking foundation isn't built until **Sep 14 – Oct 11**. Premature, not forgotten. **Trigger: pull into rotation when the Backtracking phase opens (Sep 14).** |
 | Hard | [1216. Valid Palindrome III (1DP)](https://leetcode.com/problems/valid-palindrome-iii/) | `phase:1D-DP` | **Phase-gated 🔴.** Attempted 2026-05-31 → Blank; the 1D DP foundation isn't built until **Oct 12 – Nov 8**. Premature, not forgotten. **Trigger: pull into rotation when the 1D DP phase opens (Oct 12).** |
 | Medium | [399. Evaluate Division](https://leetcode.com/problems/evaluate-division/) | `rated:1334` | **Floyd-Warshall's 2nd problem** — approved by the learner Aug 16, 2026 from the company-wise pull (`Shortest Path` tag, 5 eligible). ⭐ **Chosen because it is a DIFFERENT SHAPE, not another distance grid**: weights are multiplicative and the query is a ratio, so it tests whether the triple loop is understood as a relation-closure pattern rather than a shortest-path recipe. Held behind 1334's Aug 25 rep by the D&C precedent — a 2nd problem run before the 1st is rated measures the teaching, not the technique. |
