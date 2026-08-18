@@ -16,6 +16,23 @@ evidence.
 
 ---
 
+
+## 📤 Triage — Aug 17, 2026 (20 candidates)
+
+**Shipped this session (defects — no soak, per the bar at the top of this file):**
+
+| Item | Why it is a DEFECT, not an instrument |
+|---|---|
+| `scripts/check_single_source.py` | canonical has the **same duplication it detects** — SKILL.md restates the intervals in 4 places, plus two `DEFAULT_CONFIG`s. On first run there it found **12** restatements. De-personalised on the way up: `RETIRED_TERMS` ships **empty** (retired vocabulary is a repo's own history), `PROSE_GLOBS` gains `.claude/skills/**` since that is where canonical states rules, the graduated interval maps to canonical's `intervals.clean.retired` spelling, and CONFIG falls back to `cse.config.example.yml` so it runs in the template |
+| `coach_sync.ENGINE_PATHS` += `decisions.yml` | the new decision log was matched by **no** pattern, so it was invisible to *both* sync directions. A new engine artifact does not become syncable on its own and neither direction complains about a file it was never told to look at |
+| canonical `.githooks/pre-commit` | runs the checker, warn-only, same trigger set |
+
+**Soaking (instruments — ~4 weeks per the standing bar):**
+
+- `scripts/reconcile.py` + `decisions.yml` — the temporal reconciliation mechanism. **One day old.** It is the right idea and it works here, but "rules are reconciled against dated decisions" is a *new workflow* for an adopter, not a fix to something already broken. Soak until ~Sep 14, 2026, then re-assess with real usage data (how often does the backlog actually get worked?).
+
+**Still untriaged — 11 memory files + 6 fundamentals cards.** Each needs the per-file check the bar demands (*"before declining on the skill-already-covers-it basis, actually grep the skill for it"*), and none is urgent. `feedback_answer_length` and `feedback_midweek_reprice` are the two strongest: both are general coaching rules with no learner-specific content, and both are one day old, so they soak with the instruments.
+
 ## 🐞 Defects in shipped cse-coach behaviour — send without soak
 
 ### 1. The recognition ledger has no denominator ⭐ *(strongest)*

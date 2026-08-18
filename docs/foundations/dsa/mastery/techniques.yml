@@ -379,11 +379,22 @@ techniques:
     problems:
       - {number: 200, method: BFS}
       - {number: 130, method: BFS}
-      # 695 solved BFS on Aug 15, 2026 (previously DFS-only). Same dual-credit
-      # convention as 200 above: it keeps its Grid DFS entry AND gains one here.
-      # The row title still reads "(DFS)" — that parenthetical is legacy and stale;
-      # this file is the taxonomy, so it wins.
-      - {number: 695, method: BFS}
+      # ⚠️ 695 is deliberately NOT listed here (resolved Aug 17, 2026 — it was the only
+      # `Method drift` finding in the coverage report). It was solved BFS on Aug 15 and an
+      # entry was added on the dual-credit convention used for 200 and 323 — but that
+      # convention needs TWO TRACKER ROWS, one per method, and 695 has only one, titled
+      # "(DFS)". `_matches` joins on that parenthetical, so the entry could never match and
+      # showed up as drift forever.
+      #
+      # Splitting the row was rejected on the learner's own 417 precedent (Jul 28, 2026):
+      # solved both ways, ONE row kept, and the other method "credited to nothing" —
+      # accepted explicitly, marked DO NOT re-open. The same trade applies, and here it is
+      # even cheaper: Grid BFS is already 🎓 with four problems, so it loses nothing, while
+      # a second row would add permanent review demand AND re-date the DFS row (whose real
+      # last DFS rep is Jun 17, not Aug 15) — moving a due date to fix a bookkeeping label.
+      #
+      # The BFS rep is not lost: it is recorded in recognition_gotchas.md, which is where
+      # the variant choice actually mattered.
       - {number: 733, method: BFS}
       # 417 is BFS-only by decision (Jul 28, 2026) — DO NOT re-open this.
       # The file also holds an earlier undated DFS attempt, so it HAS been solved both

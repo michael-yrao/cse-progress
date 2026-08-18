@@ -1,5 +1,7 @@
 # cse-progress
 
+<!-- reconciled: 2026-08-17 -->
+
 ## Repo Setup (one-time per machine/clone)
 
 **Four one-time steps on a fresh clone — see [`docs/SETUP.md`](docs/SETUP.md):** the git hooks path,
@@ -370,6 +372,11 @@ of it forever. The memory files exist to hold that depth at zero standing cost.
 **So: a rule change lands HERE, in the same edit, always.** The memory file is updated for its
 reasoning, never instead of this file.
 
+**And the split is now GUARDED, not merely asserted.** `reconcile.py` covers this file too, so a
+recorded decision marks CLAUDE.md unread until someone actually re-reads it. That does not detect a
+disagreement between the two layers directly — nothing does — but it forces the read at the one moment
+the disagreement is created, which is the affordable 90% of the problem.
+
 ⭐ **This is not theoretical — it is the Aug 17, 2026 commit failure.** `feedback_batch_commits.md`
 carried *"ask before every commit and push"*, one day old and correct. Step 9 here still carried the
 superseded *"commit + push once at session end"*. **~12 commits and two pushes ran on the stale copy**,
@@ -409,6 +416,13 @@ one is invisible to it.
 **So the mechanism is temporal, not lexical — a date cannot be misspelled.** Every rule file carries
 `reconciled: YYYY-MM-DD` in its frontmatter; a file whose date predates a decision has not been read
 against it. A file with no field at all is reported, not skipped, so the check starts **complete**.
+
+⚠️ **THIS FILE IS IN SCOPE** (added Aug 17, 2026), carrying the same assertion as an HTML comment under
+the title since it has no frontmatter. It is the most important file in the check: it is always
+injected, so when it and a memory file disagree **this is the copy that gets obeyed**, which makes a
+stale rule here strictly worse than a stale rule anywhere else. Verified against the real failure —
+stamping this file Aug 15 and recording `ask-before-commit` on Aug 16 flags it, which is precisely the
+miss that let ~12 commits run.
 
 ```sh
 python scripts/reconcile.py                     # what has not been read against what
