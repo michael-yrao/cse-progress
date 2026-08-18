@@ -44,6 +44,17 @@ import re
 import sys
 from pathlib import Path
 
+# Findings below carry ⚠️ / ✅ glyphs. On a stock Windows console (cp1252) printing them
+# raises UnicodeEncodeError — and the pre-commit hook invokes this with `|| true`, so the
+# traceback is SWALLOWED and the check reads as installed while having reported nothing.
+# That is strictly worse than not running: it crashed at the exact line that prints the
+# findings, so a real hit was silently lost (2026-08-17, one restated `graduate_at_streak`).
+# Same guard, same reason as scripts/new_problem.py.
+try:
+    sys.stdout.reconfigure(encoding="utf-8")
+except (AttributeError, ValueError):  # non-reconfigurable stream (redirected/wrapped)
+    pass
+
 REPO = Path(__file__).resolve().parent.parent
 CONFIG = REPO / "cse.config.yml"
 
