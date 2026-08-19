@@ -155,6 +155,14 @@ def price_day(nums: list[str], rows: list[dict], cfg: dict, sd: bool,
     if today is not None:
         stale = [n for n in nums
                  for r in by_num.get(n, []) if repped_on(r, today)]
+        blind = [n for n in nums
+                 for r in by_num.get(n, []) if not rep_dates_readable(r)]
+        if blind:
+            print(f"  !! could not read the Rep Dates column for "
+                  f"{', '.join(sorted(set(blind)))} -- those numbers were NOT checked "
+                  f"for a rep dated {today}.")
+            print("     Treat the total below as unverified and use --schedule-day.")
+            print()
         if stale:
             print(f"  !! {', '.join(sorted(set(stale)))} already have a rep dated "
                   f"{today} -- they are priced here at the comfort they EARNED,")
@@ -219,7 +227,18 @@ def repped_on(row: dict, day: dt.date) -> bool:
     already repped today has ALREADY been paid for, and its comfort in the tracker
     is now the comfort it EARNED, not the one it was billed at.
     """
-    return day.isoformat() in (row.get("reps") or "")
+    return day.isoformat() in (row["reps"] or "")
+
+
+def rep_dates_readable(row: dict) -> bool:
+    """Could the Rep Dates column be read at all for this row?
+
+    ⚠️ The tail of ROW is optional, so a row whose Latest/Rep Dates cells do not match
+    comes back with reps=None -- and `repped_on` would then answer "no rep today" for a
+    row it never actually read. A guard that quietly declines to fire is worse than no
+    guard, so the caller reports these rather than treating them as clean.
+    """
+    return row["reps"] is not None
 
 
 def find_schedule(day: dt.date) -> Path | None:
@@ -283,6 +302,13 @@ def parse_schedule_day(path: Path, day: dt.date) -> tuple[list[dict], float | No
             continue
         if not inside:
             continue
+        if not line.lstrip().startswith("|"):
+            break              # the daily table ended.
+                               # ⚠️ On the LAST day of the week there is no next day
+                               # header to break on, so without this the scan runs to
+                               # EOF and any later 5-column table is priced into Sunday.
+                               # A total that silently absorbs rows is the same class of
+                               # error this whole flag exists to prevent.
         m = SCHED_ROW.match(line)
         if not m:
             continue
@@ -292,11 +318,15 @@ def parse_schedule_day(path: Path, day: dt.date) -> tuple[list[dict], float | No
         num = SCHED_NUM.search(cell)
         glyph = GLYPH.search(m["c2"] or "")
         text = re.sub(r"\[([^\]]*)\]\([^)]*\)", r"\1", cell)
+        # Strip markdown emphasis wherever it sits, not just at the ends: the strike
+        # wraps the LINK (`~~[496 ...](...)~~ · [LC](...)`), so trailing-only stripping
+        # leaves a stray `~~` in the middle of the printed title.
+        text = re.sub(r"~~|\*\*", "", text)
         items.append({
             "num": num.group(1) if num else None,
             "start": glyph.group(0) if glyph else None,
             "done": "~~" in cell,
-            "text": re.sub(r"\s+", " ", text).strip(" ~*"),
+            "text": re.sub(r"\s+", " ", text).strip(" ·*"),
         })
     return items, stated
 
