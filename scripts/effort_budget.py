@@ -15,7 +15,9 @@ outranks a rule that asks someone to compute it.
 
 Usage:
     python scripts/effort_budget.py                     # demand, floor, ceiling, due queue
-    python scripts/effort_budget.py --day 19 110 42     # price a specific day
+    python scripts/effort_budget.py --schedule-day      # today, AS BUILT (done vs left)
+    python scripts/effort_budget.py --schedule-day 2026-08-18
+    python scripts/effort_budget.py --day 19 110 42     # price a HYPOTHETICAL day
     python scripts/effort_budget.py --day 269 560       # (--sd is retired: SD is unpriced)
     python scripts/effort_budget.py --due 2026-08-08    # what is due on a date, priced
 """
@@ -44,7 +46,23 @@ ROW = re.compile(
     r"\[(?P<num>\d+)\.\s*(?P<title>[^\]]+)\]\([^)]*\)\s*\|\s*"
     r"(?P<comfort>🔴|🟡|🟢|🎓)\s*\|\s*(?P<streak>\d+)\s*\|\s*"
     r"(?P<due>\d{4}-\d{2}-\d{2})"
+    # The tail is OPTIONAL on purpose: a malformed or legacy row must still price,
+    # it just cannot participate in the already-repped-today guard below.
+    r"(?:\s*\|\s*(?P<latest>\d{4}-\d{2}-\d{2})\s*\|\s*(?P<reps>[^|]*))?"
 )
+
+SCHEDULES = REPO / "docs/foundations/schedules"
+
+# A day header in a weekly schedule: "| ▸ **Tue Aug 18** · 8.0 units |  |  |  |  |"
+DAY_HEADER = re.compile(
+    r"\|\s*▸\s*\*\*(?P<wd>\w{3})\s+(?P<mon>\w{3})\s+(?P<day>\d{1,2})\*\*"
+    r"(?:[^|]*?·\s*(?P<units>[\d.]+)\s*units)?"
+)
+# Any 5-column row of the daily table.
+SCHED_ROW = re.compile(r"^\|(?P<c1>[^|]*)\|(?P<c2>[^|]*)\|(?P<c3>[^|]*)\|(?P<c4>[^|]*)\|(?P<c5>.*)\|\s*$")
+# The problem number is the first digits following a "[" or a "**" in the first cell.
+SCHED_NUM = re.compile(r"(?:\[|\*\*)(\d+)")
+GLYPH = re.compile(r"[🔴🟡🟢🎓]")
 
 
 def load_config() -> dict:
@@ -121,10 +139,30 @@ def report_demand(rows: list[dict], cfg: dict, today: dt.date) -> None:
           f"{sum(units(r, cfg) for r in overdue):.1f} units to clear")
 
 
-def price_day(nums: list[str], rows: list[dict], cfg: dict, sd: bool) -> None:
+def price_day(nums: list[str], rows: list[dict], cfg: dict, sd: bool,
+              today: dt.date | None = None) -> None:
     by_num: dict[str, list[dict]] = {}
     for r in rows:
         by_num.setdefault(r["num"], []).append(r)
+
+    # --- guard: this flag is a LIVE PRICER, not a ledger -----------------------
+    # Comfort in the tracker is the comfort a row EARNED at its last rep. Units are
+    # billed on the comfort a row carried GOING IN. Those agree only until a rep is
+    # logged -- after that, pricing the same number here understates it, silently and
+    # always in the same direction. Compounded with handing this flag the REMAINING
+    # items and reading the total as the day's total, that invented 5.0 units of spare
+    # capacity on a day already at the ceiling (Aug 18, 2026).
+    if today is not None:
+        stale = [n for n in nums
+                 for r in by_num.get(n, []) if repped_on(r, today)]
+        if stale:
+            print(f"  !! {', '.join(sorted(set(stale)))} already have a rep dated "
+                  f"{today} -- they are priced here at the comfort they EARNED,")
+            print("     not the one they were BILLED at, so this total UNDERSTATES the "
+                  "day as built.")
+            print("     For a day in progress use --schedule-day, which prices from the "
+                  "schedule's Start column.")
+            print()
 
     total = 0.0
     for num in nums:
@@ -174,6 +212,206 @@ def price_day(nums: list[str], rows: list[dict], cfg: dict, sd: bool) -> None:
               "🟡 saves 2.0. Never trim the active block.")
 
 
+def repped_on(row: dict, day: dt.date) -> bool:
+    """Did this row get a rep on `day`?
+
+    Reads the tracker's own Rep Dates column. Used only by the --day guard: a row
+    already repped today has ALREADY been paid for, and its comfort in the tracker
+    is now the comfort it EARNED, not the one it was billed at.
+    """
+    return day.isoformat() in (row.get("reps") or "")
+
+
+def find_schedule(day: dt.date) -> Path | None:
+    """The weekly schedule file whose 7-day span contains `day`.
+
+    Searches the live folder first, then archive/, so an audit still works on a week
+    that has already been closed out.
+    """
+    best: tuple[dt.date, Path] | None = None
+    for folder in (SCHEDULES, SCHEDULES / "archive"):
+        if not folder.is_dir():
+            continue
+        for path in folder.glob("*_schedule.md"):
+            stamp = path.name.split("_")[0]
+            if len(stamp) != 8 or not stamp.isdigit():
+                continue
+            try:
+                start = dt.date(int(stamp[:4]), int(stamp[4:6]), int(stamp[6:]))
+            except ValueError:
+                continue
+            if start <= day < start + dt.timedelta(days=7):
+                if best is None or start > best[0]:
+                    best = (start, path)
+    return best[1] if best else None
+
+
+def parse_schedule_day(path: Path, day: dt.date) -> tuple[list[dict], float | None]:
+    """Pull one day's block out of a weekly schedule's daily table.
+
+    Returns (items, stated_units). Each item carries the problem number, the START
+    comfort glyph as written at build time, and whether the row is struck through.
+
+    The START column is the whole point of this function. It is written once, at the
+    weekly build, and never mutated -- so it survives a rep being logged, which the
+    tracker's Comfort column does not. Pricing a day from the tracker AFTER reps land
+    charges the comfort the rows EARNED instead of the one they were BILLED at, and
+    therefore always understates the day.
+    """
+    week_start = dt.date(int(path.name[:4]), int(path.name[4:6]), int(path.name[6:8]))
+    wanted = None
+    for offset in range(7):
+        d = week_start + dt.timedelta(days=offset)
+        if d == day:
+            wanted = (d.strftime("%a"), d.strftime("%b"), d.day)
+            break
+    if wanted is None:
+        return [], None
+
+    items: list[dict] = []
+    stated: float | None = None
+    inside = False
+    for line in path.read_text(encoding="utf-8").splitlines():
+        header = DAY_HEADER.search(line)
+        if header:
+            hit = (header["wd"], header["mon"], int(header["day"])) == wanted
+            if hit:
+                inside = True
+                stated = float(header["units"]) if header["units"] else None
+            elif inside:
+                break          # the next day's header ends this day's block
+            continue
+        if not inside:
+            continue
+        m = SCHED_ROW.match(line)
+        if not m:
+            continue
+        cell = m["c1"]
+        if not cell.strip() or set(cell.strip()) <= {"-", ":"}:
+            continue           # blank separator row, or a markdown rule
+        num = SCHED_NUM.search(cell)
+        glyph = GLYPH.search(m["c2"] or "")
+        text = re.sub(r"\[([^\]]*)\]\([^)]*\)", r"\1", cell)
+        items.append({
+            "num": num.group(1) if num else None,
+            "start": glyph.group(0) if glyph else None,
+            "done": "~~" in cell,
+            "text": re.sub(r"\s+", " ", text).strip(" ~*"),
+        })
+    return items, stated
+
+
+def price_schedule_day(day: dt.date, rows: list[dict], cfg: dict) -> None:
+    """Price a scheduled day as BUILT, splitting done from remaining.
+
+    This exists because --day cannot do it. --day takes a list of numbers from a
+    human, so it prices exactly what it is handed -- and mid-session the natural
+    thing to hand it is the REMAINING items, whose total then reads as the day's
+    total. That error (Aug 18, 2026) invented 5.0 units of spare capacity on a day
+    already sitting at the ceiling, and a discretionary rep got seated on it. Here
+    the tool defines the day, so there is nothing to mis-hand it.
+    """
+    path = find_schedule(day)
+    if path is None:
+        print(f"no weekly schedule covers {day} (looked in {SCHEDULES} and archive/)")
+        return
+    items, stated = parse_schedule_day(path, day)
+    if not items:
+        print(f"{day} has no block in {path.name} -- nothing scheduled, or the day "
+              f"header is not in the form this parser expects.")
+        return
+
+    by_num: dict[str, list[dict]] = {}
+    for r in rows:
+        by_num.setdefault(r["num"], []).append(r)
+
+    done_total = rest_total = 0.0
+    guessed = 0
+    done_lines: list[str] = []
+    rest_lines: list[str] = []
+    unpriced: list[str] = []
+
+    for it in items:
+        if not it["num"]:
+            unpriced.append(it["text"][:62])
+            continue
+        tracked = by_num.get(it["num"])
+        if it["start"] and tracked:
+            # START comfort (build time) x difficulty (a stable property of the problem).
+            diff = tracked[0]["diff"]
+            cost = cfg["comfort_units"][it["start"]] * cfg["difficulty"][diff]
+            note = f"{it['start']} {diff[0]}"
+        elif tracked:
+            worst = max(tracked, key=lambda r: units(r, cfg))
+            cost = units(worst, cfg)
+            note = f"{label(worst)} !! no Start glyph -- priced from the tracker"
+        else:
+            cost = cfg["comfort_units"]["\U0001f534"] * cfg["difficulty"]["Medium"]
+            note = "NEW !! untracked -- guessed as a new Blank Medium"
+            guessed += 1
+        line = f"  {it['num']:>5}  {cost:4.1f}  {note}  {it['text'][:44]}"
+        if it["done"]:
+            done_total += cost
+            done_lines.append(line)
+        else:
+            rest_total += cost
+            rest_lines.append(line)
+
+    built = done_total + rest_total
+    print(f"{day:%a %b %d} - {path.name}\n")
+    if done_lines:
+        print("  DONE")
+        print("\n".join(done_lines))
+    if rest_lines:
+        print("\n  REMAINING")
+        print("\n".join(rest_lines))
+    if unpriced:
+        print("\n  UNPRICED (no problem number -- primer, probe, or free-text row)")
+        for u in unpriced:
+            print(f"    {u}")
+
+    ceiling = cfg["ceiling"]
+    # A total that silently omits rows is the exact failure this whole flag exists to
+    # prevent, so say what could NOT be priced BEFORE saying the number.
+    partial = len(unpriced) + guessed
+    floor_note = "  (FLOOR -- see below)" if partial else ""
+    print(f"\n  built {built:.1f}{floor_note} / done {done_total:.1f} "
+          f"/ remaining {rest_total:.1f} / ceiling {ceiling:.0f}")
+    if partial:
+        bits = []
+        if unpriced:
+            bits.append(f"{len(unpriced)} row(s) carry no problem number "
+                        f"(primer / probe / free text)")
+        if guessed:
+            bits.append(f"{guessed} untracked row(s) guessed at Blank Medium -- a new "
+                        f"HARD really costs 1.5x that")
+        print(f"     !! this total is a LOWER BOUND: {'; '.join(bits)}.")
+    if built > ceiling:
+        print(f"  !! the day as BUILT is OVER by {built - ceiling:.1f}")
+    elif not partial:
+        print(f"  {ceiling - built:.1f} spare against the day as built")
+    else:
+        print(f"  at most {ceiling - built:.1f} spare -- less once the rows above price")
+
+    # Catch a build-time arithmetic slip too: the header states a total, and until now
+    # nothing had ever checked it against the rows underneath it. Only assert a real
+    # mismatch when EVERY row was priced from a Start glyph against a tracked row --
+    # otherwise the difference is just the part this parser admits it cannot see, and
+    # crying wrong on that is how a check stops being read.
+    if stated is None:
+        print("  !! the day header states no unit total -- add it so it can be checked")
+    elif abs(stated - built) <= 0.05:
+        print(f"  header says {stated:.1f} -- matches")
+    elif partial:
+        print(f"  header says {stated:.1f}, priced rows sum to {built:.1f} "
+              f"(difference {stated - built:+.1f}) -- CANNOT VERIFY while rows are "
+              f"unpriced or guessed. Check that difference is what those rows are worth.")
+    else:
+        print(f"  !! HEADER SAYS {stated:.1f}, rows sum to {built:.1f} -- every row "
+              f"priced exactly, so one of them is wrong")
+
+
+
 def report_due(rows: list[dict], cfg: dict, day: dt.date) -> None:
     due = [r for r in rows if dt.date.fromisoformat(r["due"]) <= day]
     due.sort(key=lambda r: (r["due"], -units(r, cfg)))
@@ -190,7 +428,13 @@ def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--day", nargs="+", metavar="NUM",
-                    help="price a day built from these problem numbers")
+                    help="price a HYPOTHETICAL day built from these problem numbers. "
+                         "A live pricer, not a ledger -- for a day already in progress "
+                         "use --schedule-day")
+    ap.add_argument("--schedule-day", nargs="?", const="", metavar="YYYY-MM-DD",
+                    help="price a scheduled day AS BUILT from the weekly schedule file "
+                         "(Start column = the comfort each row was billed at), split "
+                         "into done vs remaining. Defaults to today")
     ap.add_argument("--sd", action="store_true",
                     help="RETIRED — SD is off-board and unpriced since Aug 16, 2026. "
                          "Accepted so the flag explains itself; adds 0 units")
@@ -204,8 +448,11 @@ def main() -> None:
     rows = parse_rows()
     today = dt.date.fromisoformat(args.today) if args.today else dt.date.today()
 
-    if args.day:
-        price_day(args.day, rows, cfg, args.sd)
+    if args.schedule_day is not None:
+        target = dt.date.fromisoformat(args.schedule_day) if args.schedule_day else today
+        price_schedule_day(target, rows, cfg)
+    elif args.day:
+        price_day(args.day, rows, cfg, args.sd, today)
     elif args.due:
         report_due(rows, cfg, dt.date.fromisoformat(args.due))
     else:

@@ -756,3 +756,70 @@ disease as everything in Cluster A. It is now item 2 of the SessionStart hook's 
   the itemization *and* "does any of those terms stop growing?" — never push the learner to discard a correct
   decomposition in exchange for a tidier symbol. A bare `O(1)` should read as an incomplete answer too.
   Status: `open` — watch for the inverse failure (accepting a bare `O(1)` with no itemization).
+
+- **2026-08-18 [P1] — named 332 in a hand-over answer with no link; Stop hook caught it, learner noticed
+  the bare-link reply.** Answering *"what other Hierholzer problems are on the horizon"*, the closing
+  line said *"Still need your call on the 332."* with no markdown link — 332 is on today's board, so the
+  hook fired and demanded links-only. The learner's read: *"you re-linked the problem for some reason."*
+  **The hook worked** (this is the rule's 11th lapse and the mechanism caught it rather than the
+  learner), but the repair is visible noise mid-conversation, which is a cost the rule's own note
+  already anticipates. **Root cause:** the link rule was honoured in the *table* and then dropped in
+  prose two turns later — the lapse is always on the incidental restate, never the deliberate lineup.
+  `consolidated→hook holding; no new rule needed. Data point for whether the hook's links-only repair
+  should be silent rather than a visible turn.`
+
+- **2026-08-18 [P2] — fused two orthogonal axes when naming a technique variant, one hour after
+  correcting the learner for doing exactly that.** Mid-rep the coach told the learner *"two separate
+  axes, and you've fused them: recursive vs iterative — heap vs sorted list — you can run
+  recursive-with-sorted-list or iterative-with-heap."* Then, writing the pin into `techniques.yml`,
+  named the variant **`Hierholzer (recursive + min-heap)`** — the same fusion, in the durable artifact.
+  Learner: *"min heap is not recursive."* **Corrected in `techniques.yml`, the schedule queue table and
+  the stuck_log entry**; variants now track the ORDERING axis only (min-heap vs pre-sorted adjacency),
+  with control flow recorded as prose so coverage does not multiply into four uns­chedulable cells.
+  **Root cause worth watching:** a distinction held clearly enough to teach it out loud did not survive
+  the trip into a file written 40 minutes later — the same shape as the 332 complexity note already in
+  `complexity_gotchas.md` (*"the unit that makes the algorithm correct is the unit that prices it"*,
+  which also failed to survive one gate to the next). `open` — one occurrence; watch for a second before
+  promoting.
+
+- **2026-08-18 [P1] — link rule lapsed a SECOND time in the same session, same shape.** Wrote *"once 560
+  and 2300 land"* in a capacity note; 2300 is on today's board, so the hook blocked the turn and the
+  links-only repair posted 2300 as an orphan line **after** the 560 hand-over. Learner read it as a
+  sequencing decision: *"how come you put 560 in your response then 2300 at the end?"* — so the repair
+  did not just add noise, it **actively misrepresented the order of play**.
+  **Pattern, now two occurrences in one session (see the earlier 332 entry):** the rule is honoured in
+  the deliberate lineup — kickoff tables, hand-overs — and dropped in *incidental prose*, where a problem
+  number appears as an argument to some other point (a capacity sum, a "still outstanding" aside). The
+  hook catches it, but the repair lands out of order and reads as intent.
+  **Ladder check (§8):** the hook is rung 2 and is working as designed — it caught both. What is wrong is
+  the repair's *shape*: a links-only turn appended after a hand-over is indistinguishable from a new
+  instruction. `open` — candidate upstream item for `project_upstream_candidates.md`: the hook should
+  either fire pre-emptively or its repair should be suppressed from the transcript, not appended.
+  Two occurrences in one day meets the promotion threshold; not promoting yet only because the fix is a
+  hook change, not a rule.
+
+- **2026-08-18 [P1] — invented 5.0 units of spare capacity by mis-pricing the day, and seated a new rep
+  on it.** Told the learner *"today is at 3.0 of 8.0 with 5.0 spare"* and then *"4.0 units used of
+  8.0"*, and scheduled 974 into that phantom room. Learner caught it: *"hold on, I'm confused. I did 560
+  so how is it only 4 units used."* **The day was at 8.0 — exactly the ceiling — the entire time.**
+  **Two independent errors, both in the same direction:**
+  1. Ran `effort_budget.py --day` on the **remaining** items and read the printed total as the **day's**
+     total, so the 3.0 already spent on 332 was silently excluded. Done twice.
+  2. `--day` re-reads **current** comfort, so after logging 🟡→🟢 conversions it re-prices the day at
+     6.0 instead of the 8.0 it was built at. **Units are charged on the comfort going in** — a
+     conversion changes future demand, not today's bill. The tool silently contradicts the rule when
+     used mid-day.
+  **Consequence:** a discretionary consolidation rep was seated on a day with no room, and the schedule
+  file carried the false arithmetic until corrected. This is the exact failure the mid-week reprice rule
+  warns about in reverse — *"weekly headroom does not seat an indivisible item, check the DAY"* — except
+  the day itself was mis-measured.
+  **Ladder (§8): this is a rung-1 candidate, not a rule.** `effort_budget.py --day` should either take
+  the completed items into account or refuse to price a day that is already partly logged; a warning
+  line ("N of these rows have a rep dated today — this is a live price, not a ledger") would have caught
+  it. Added to `project_upstream_candidates.md` scope. `open`.
+
+- **2026-08-18 [P2] — ran `new_problem.py` as a "verification" and it stashed the learner's finished work.** After renaming 235's file, ran the scaffold command again to confirm it now resolved to the right path. **It is not a dry run.** It inserted an empty dated stub at the top of `class Solution` and moved the entire body — including the completed, already-rated Aug 18 attempt — out to `.history/`.
+  **Caught immediately and fully undone**: empty stub removed, stash pasted back, stash file deleted, all six dated attempts verified present, and today's attempt re-run against its test cases to confirm the code is intact.
+  **Why it was nearly worse than it looked:** `restore_history.py` would NOT have rescued this. Its guard checks whether today's dated attempt has a real body — the fresh stub was `pass`, so restore would have correctly declined, left the stash out, and the file would have been **committed as a blank stub with the real solution sitting in `.history/`**. Recoverable, but only by someone who noticed.
+  **Root cause:** treating a **mutating** command as an inspection. The scaffold scripts are write-first by design; there is no read-only mode that answers *"where would this resolve?"*. ⚠️ **Rung-1 candidate:** `new_problem.py --dry-run` printing the resolved path and the create-vs-retry decision without touching disk. That is exactly the question being asked here, and there is currently no safe way to ask it.
+  **Second-order note:** this is the third time today a durable artifact was damaged by an action taken to *check* something (the mis-priced day, the axis-fusion in `techniques.yml`, this). `open` — added to `project_upstream_candidates.md` scope alongside the `--schedule-day` defect.

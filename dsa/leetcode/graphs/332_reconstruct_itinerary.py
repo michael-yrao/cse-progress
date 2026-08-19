@@ -22,6 +22,44 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-08-18 ──────────────
+    def findItinerary_20260818(self, tickets: List[List[str]]) -> List[str]:
+        # Eulerian 
+        # we use a stack to trace current path of the vertices and find dead ends
+        # we pop off the stack when this node gets stuck, aka all neighbors visited
+        stack = []
+
+        # we have to do lexicographical order, so since we are not doing minHeap method
+        # we need to sort the input before mapping so we go by lexicographical order
+        tickets.sort(reverse=True)
+        
+        adjMap = collections.defaultdict(list)
+
+        for src, tgt in tickets:
+            adjMap[src].append(tgt)
+        
+        # we know we start with JFK so we put JFK onto the stack
+        
+        stack.append("JFK")
+
+        result = []
+        # while we still have nodes in the stack to visit, we keep going
+        while stack:
+            currentNode = stack[-1]
+            # if no neighbors left for current node
+            # it means we hit a dead end and this node is elligible
+            # to go onto the result
+            if not adjMap[currentNode]:
+                result.append(stack.pop())
+            else:
+                # otherwise, add its neighbor to the stack
+                neighbor = adjMap[currentNode].pop()
+                stack.append(neighbor)
+
+        result.reverse()
+
+        return result
+
     # ── Attempt · 2026-08-14 ──────────────
     def findItinerary_20260814(self, tickets: List[List[str]]) -> List[str]:
         # this is not Dijkstra's, we don't have a destination nor edge weight
