@@ -4,7 +4,22 @@
 > into every session's context (~850 est. tokens/turn). The rules that must fire *unprompted* stayed
 > in `CLAUDE.md`; this is the setup mechanics only.
 
-Four one-time steps. Do all four on a fresh clone.
+⚠️ **As of Aug 19, 2026, `.claude/settings.json` is COMMITTED, not gitignored** — steps 2–4 below now
+sync automatically on clone/pull and need no manual paste. It was gitignored on the stated grounds that
+it "holds machine-absolute paths"; the actual content (`${CLAUDE_PROJECT_DIR:-.}`-relative hook commands)
+never held one, so that was stale caution rather than a real constraint, caught after the wiring sat
+missing on a machine for an unknown stretch and the link-hand-over rule lapsed unrecoverably every
+session on it. **Only `.claude/settings.local.json` (personal permission overrides) stays gitignored** —
+that one genuinely is per-machine. Steps 2–4 are kept below as the record of what the committed file
+contains and why, not as manual work.
+
+**Read this note if you're an agent working from an older or newly-created checkout:** the committed
+`.claude/settings.json` reflects whatever was known to wire in as of the commit that last touched it —
+it is not guaranteed to carry every hook this repo has ever described. If `docs/SETUP.md` or
+`CLAUDE.md` names a hook you don't find in the file, that's drift to fix (add it, don't assume it was
+deliberately dropped), not a sign the file is malformed.
+
+One remaining one-time step. Do it on a fresh clone.
 
 ## 1. Git hooks path
 
@@ -20,10 +35,10 @@ hook stays in sync via git across all machines.
 
 ## 2. The scaffold-links agent hook
 
-`.claude/hooks/scaffold_links_reminder.py` is version-controlled, but `.claude/settings.json` is
-**gitignored** (it holds machine-absolute paths), so the wiring that invokes the script does *not*
-sync. On each machine, add this block to `.claude/settings.json` once, merging with whatever
-`permissions` are already there:
+`.claude/hooks/scaffold_links_reminder.py` is version-controlled, and — as of Aug 19, 2026 — so is
+the wiring that invokes it: `.claude/settings.json` is committed (see the note at the top of this
+file), so this block arrives automatically on clone/pull. Recorded here as documentation of what's in
+it, not as a step to perform:
 
 ```json
 "hooks": {
@@ -60,8 +75,8 @@ written rule.
 
 ## 3. The problem-link Stop hook
 
-`.claude/hooks/problem_link_reminder.py`, wired the same way — script tracked, wiring not. Merge into
-the same `hooks` block:
+`.claude/hooks/problem_link_reminder.py`, wired the same way — both script and wiring are tracked now.
+The block, for reference:
 
 ```json
 "Stop": [
@@ -97,8 +112,8 @@ demanded links unconditionally would automate a spoiler.
 
 ## 4. The session-start memory hook
 
-Same deal: the script (`.claude/hooks/session_start_memory.py`) is version-controlled, the wiring is
-not. Merge this into the same `hooks` block:
+Same deal: the script (`.claude/hooks/session_start_memory.py`) is version-controlled, and the wiring
+now travels with it. For reference:
 
 ```json
 "SessionStart": [

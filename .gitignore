@@ -39,7 +39,9 @@ dist/
 .idea/
 
 # Claude Code
-.claude/settings.json
+# .claude/settings.json is COMMITTED as of Aug 19, 2026 — see docs/SETUP.md. It holds only
+# ${CLAUDE_PROJECT_DIR:-.}-relative hook wiring, no machine-absolute paths, so there was never
+# a real reason to gitignore it; that was stale caution, not a constraint.
 .claude/settings.local.json
 .claude/worktrees/
 
