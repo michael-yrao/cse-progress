@@ -364,3 +364,21 @@ number attached.** Re-derive the rate at the build rather than renewing or killi
   not cap the rating. **Learner's chosen handle: "tortoise and hare."**
   **Cue: two pointer names that both start with a person's name are not interchangeable — Boyer-Moore
   counts votes over an array; Floyd walks a linked structure at two speeds.**
+
+- **2026-08-18 · 332 Reconstruct Itinerary** — ✅ **HIT, cold and unprompted.** Fired before any code:
+  *"this is literally an iterative DFS but we are marking edges not nodes."* That is the **discriminator
+  itself**, volunteered without the label being asked for, and it is the direct repair of the Jul 28
+  entry above — where the same discriminator was already correct in the pre-code comment but the
+  **name** (Eulerian vs Hamiltonian) could not be produced at all. The name is now attached to the
+  feature. **Caveat on how much this counts:** 332 is a retry and the tracker row names Hierholzer, so
+  the technique was half-given — read this as the label finally sticking, not as evidence for the
+  recognition axis of phase exit. The measured reps stay **2097** (unseen, start node must be derived)
+  and the weekly probes.
+
+- **2026-08-18 · 235 Lowest Common Ancestor of a BST** — ✅ **HIT.** Pre-code comment carried the call and
+  the discriminator together: *"BST, so if both are smaller, we go left, if both are bigger we go right"*
+  plus *"we allow a node to be its own parent so we need to check equality."* The picking feature is the
+  **ordering property**, which turns a search of both subtrees into a pruned descent — the exact thing 236
+  (plain binary tree) does not give you. Coded correct on the first pass with zero hints. **Same caveat as
+  332 the same day:** a retry names its own technique, so this is the label sticking rather than evidence
+  for the recognition axis of phase exit.

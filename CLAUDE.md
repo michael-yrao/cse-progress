@@ -472,7 +472,8 @@ five 🟢 Easies and a day of five 🔴 Hards are not the same day.
 
 ```sh
 python scripts/effort_budget.py                          # demand · floor · ceiling · overdue cost
-python scripts/effort_budget.py --day 560 912 235 88 100 20    # price a specific day
+python scripts/effort_budget.py --schedule-day                       # TODAY as built: done vs remaining
+python scripts/effort_budget.py --day 560 912 235 88 100 20    # a HYPOTHETICAL day (build time only)
 ```
 
 Rationale and calibration: [`docs/foundations/effort_budget.md`](docs/foundations/effort_budget.md)
@@ -494,7 +495,8 @@ the script.**
 
 ```sh
 python scripts/effort_budget.py                          # demand · floor · ceiling · overdue cost
-python scripts/effort_budget.py --day 560 912 235 88 100 20 [--sd]   # price a specific day
+python scripts/effort_budget.py --schedule-day                       # TODAY as built: done vs remaining
+python scripts/effort_budget.py --day 560 912 235 88 100 20    # a HYPOTHETICAL day (build time only)
 ```
 
 **Why this replaced the count.** Thu Aug 6, Fri Aug 7 and Sat Aug 8 were each "7 problems" and measured
@@ -506,6 +508,41 @@ against 🟢 s2's **6.1** — a rep rushed into a 🟡 costs **12× forever**, s
 ceiling *increases* future demand. Demand sets the **floor**; the ceiling is a quality judgment and stays
 put. (Fri Aug 7 is the worked example: the board was 7.8/9, the pull that took it to 10.8 was the single
 dearest item available, and it came back 🟡 with four bugs.)
+
+### ⚠️ `--day` is a LIVE PRICER, not a ledger — auditing a day in progress uses `--schedule-day`
+
+**Never price a day that is already underway by passing numbers to `--day`.** Use:
+
+```sh
+python scripts/effort_budget.py --schedule-day              # today, AS BUILT
+python scripts/effort_budget.py --schedule-day 2026-08-18   # any day, incl. archived weeks
+```
+
+It reads the week's schedule file, prices each row from the **`Start` column** — the comfort written
+at the weekly build and never mutated — and splits the day into **built · done · remaining**.
+
+**Two things make `--day` wrong mid-session, and they compound:**
+
+| | |
+|---|---|
+| **It prices exactly what it is handed** | mid-day the natural list to hand it is the **remaining** items, and that total then reads as the *day's* total. The already-spent units are silently missing |
+| **It re-reads CURRENT comfort** | a 🟡 that came back 🟢 re-prices at the 🟢 rate. But **units are billed on the comfort a row carried GOING IN** — the conversion cuts *future* demand, never today's bill |
+
+⭐ **This is the Aug 18, 2026 failure and it is why the flag now warns.** Both errors ran together and
+both understate, so they never cancel: a day sitting at **exactly the ceiling** was reported as having
+**5.0 units spare**, and a discretionary consolidation rep was seated on capacity that did not exist.
+The learner caught it — *"hold on, I'm confused. I did 560 so how is it only 4 units used"*.
+
+`--day` now prints a warning naming any number whose tracker row already has a rep dated today, and
+`--schedule-day` refuses to hide what it could not price: a day containing a primer, a probe, or an
+untracked new problem reports its total as a **FLOOR**, because a total that quietly omits rows is the
+same class of error all over again.
+
+⭐ **Free side-effect worth knowing:** `--schedule-day` also checks each day header's stated units
+(`▸ Tue Aug 18 · 8.0 units`) against the rows beneath it. Nothing had ever verified that, so a
+**build-time** arithmetic slip was undetectable. It only asserts a mismatch when every row priced
+exactly; otherwise it reports the difference and says it cannot verify.
+
 
 ## Re-price mid-week — a build's verdict expires as results land
 

@@ -1874,3 +1874,47 @@ answer means something was dropped.*
 **Cue to carry:** *a string is not O(1)* — slicing, hashing, comparing and **storing** one all cost `O(L)`. And the free check that would have caught it unaided: **build-and-store is one loop doing one kind of work, so time and space should come out equal.** A space answer a factor of `L` cheaper than the time answer is the tell.
 
 **Learner's own read, and it is scheduled:** *"this is a very hard problem to knock down for Big O, we should definitely practice it more."* Carried to the Aug 17 build as a complexity-drill item.
+
+---
+
+## 332. Reconstruct Itinerary — 🟡 Shaky (2026-08-18) · **iterative / stack variant, first time**
+
+**Sticking point:** one mechanism, not the algorithm. Hierholzer itself was recalled cold and written
+into the pre-code comment before any code — stack traces the path, pop on a dead end, that is the
+itinerary. What stalled was the **used-edge bookkeeping**: the plan carried a `visited` set of `(src,
+tgt)` tuples, which cannot distinguish two copies of a duplicate ticket. Unstuck by being asked what
+happens if the edge is **removed from the adjacency list** instead of marked — absence as the record.
+That switch is the load-bearing mechanism of the iterative form and it was coach-supplied.
+
+**Upstream of it: an invented constraint.** Asked whether duplicate tickets were possible, the learner
+answered *"it shouldn't, JFK shouldn't have two tickets to ATL"* — a distinctness assumption the
+problem never states. The `set`-valued adjacency map and the edge-`visited` set both followed from it,
+so **one invented constraint produced two wrong data structures**. Correcting it by pointing at the
+problem's own constraints block collapsed both at once.
+
+**Cue to carry:** *if you cannot point at the line in the constraints, you invented it.* In an
+interview the invention is the failure, not the structure it produced.
+
+**Two bugs not self-caught:** `if neighbor not in visited` compared a **string** against a set of
+**tuples** (never matches, so nothing was ever skipped); and `popleft()` was called on a
+`defaultdict(list)` — a `deque` method typed against the container that was actually chosen.
+
+⭐ **The complexity gate was clean and is worth recording as a hit.** `complexity_gotchas.md` carried
+a standing instruction to fire *"visited holds edges not nodes"* cold on this rep, because on Aug 4 that
+same sentence was the learner's own recognition call and then failed to survive the trip to the
+complexity gate. This time it did: `O(E log E)` time with the sort named as the dominant term and the
+loop correctly argued as `O(E)` (*"we don't actually visit an edge more than once"*), and `O(V+E)` space
+itemized across **all three** live structures (`adjMap`, stack, result) rather than just the map.
+
+⭐ **The learner's own verdict on the variant, and it is correct:** *"I don't think this was a good
+problem to do for stack. It didn't feel natural."* On 332 the iterative form has **no forcing
+function** — `E ≤ 300`, so recursion never overflows, and the recursive version reads closer to the
+algorithm's description. The awkwardness was paid for nothing. **2097** is where the start node must be
+derived and the input is large enough for the stack form to earn itself.
+
+⚠️ **Two axes, not one — the learner corrected the coach on this after the rep** (*"min heap is not
+recursive"*). **Ordering** (min-heap vs pre-sorted list) and **control flow** (recursion vs explicit
+stack) are independent, and today's rep flipped **both at once** against the Jul/Aug reps. So nothing
+here is evidence about either axis in isolation. The coach had made this same conflation twice — once
+correcting the learner mid-rep (*"you can run recursive-with-sorted-list or iterative-with-heap"*) and
+then again when naming the variant `recursive + min-heap` in `techniques.yml` an hour later.

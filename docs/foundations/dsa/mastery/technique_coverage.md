@@ -17,7 +17,7 @@
 - **Dijkstra** (advanced_graphs) — best 🟡 across 743, 778
 - **Floyd-Warshall (all-pairs shortest path)** (advanced_graphs) — best 🟡 across 1334
 - **Graph Clone (DFS + Hash Map)** (graphs) — best 🟡 across 133
-- **Hierholzer (Eulerian path)** (advanced_graphs) — best 🟡 across 332
+- **Hierholzer (Eulerian path)** (advanced_graphs) — best 🟡 across 332, 332
 - **Length-Prefix Encoding** (arrays_and_hash) — best 🟡 across 271
 - **Stack (expression evaluation)** (stack) — best 🟡 across 150
 
@@ -30,7 +30,7 @@
 - **Divide & Conquer / Sorting** (sorting) — 1/3: 912
 - **Floyd-Warshall (all-pairs shortest path)** (advanced_graphs) — 1/3: 1334
 - **HashMap + Doubly Linked List (LRU)** (linked_list) — 1/3: 146
-- **Hierholzer (Eulerian path)** (advanced_graphs) — 1/3: 332
+- **Hierholzer (Eulerian path)** (advanced_graphs) — 1/3 (2 rows): 332
 - **Multi-source BFS** (graphs) — 1/3: 994
 - **Prim's MST** (advanced_graphs) — 1/3: 1584
 - **Stack (augmented entries)** (stack) — 1/2: 155
@@ -50,7 +50,7 @@
 | Bellman-Ford | advanced_graphs | 1 (787) | 🟢 | ✅ | Standard ×1 · ~~Contrast rep on 743~~ *(queued: `graduates:743`)* | thin (1/3) |
 | Dijkstra | advanced_graphs | 2 (743, 778) | 🟡 | ❌ | — | **no-green** · thin (2/3) |
 | Floyd-Warshall (all-pairs shortest path) | advanced_graphs | 1 (1334) | 🟡 | ❌ | — | **no-green** · thin (1/3) |
-| Hierholzer (Eulerian path) | advanced_graphs | 1 (332) | 🟡 | ❌ | — | **no-green** · thin (1/3) |
+| Hierholzer (Eulerian path) | advanced_graphs | 1 *+1v* (332) | 🟡 | ❌ | pre-sorted adjacency ×1 · min-heap ordering ×1 | **no-green** · thin (1/3) |
 | Prim's MST | advanced_graphs | 1 (1584) | 🟢 | ✅ | Prim's MST ×1 · ~~Kruskal's MST~~ *(queued: `expansion — edge-first MST; Aug 17 week`)* | thin (1/3) |
 | Array/String Fundamentals | arrays_and_hash | 3 (14, 66, 1929) | 🟢 | ✅ | — | — |
 | Boyer-Moore Voting | arrays_and_hash | 2 (169, 229) | 🟢 | ✅ | — | — |

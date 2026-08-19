@@ -165,7 +165,12 @@ solutions:
 
 # Problem numbers whose source file exists but should NOT be auto-added to the
 # tracker (they re-enter when properly solved and logged).
-discovery_skip: [76, 1216]   # 76 Minimum Window Substring — parked
+discovery_skip: [76, 1216, 974]   # 76 Minimum Window Substring — parked
+                             # 974 Subarray Sums Divisible by K — DISPOSABLE consolidation rep
+                             #      (Aug 18, 2026). A consolidation rep earns a tracker row ONLY
+                             #      on 🟡/🔴; a 🟢 leaves no permanent demand. ⚠️ REMOVE this entry
+                             #      if it comes back 🟡/🔴 — otherwise discovery is suppressed on a
+                             #      problem that genuinely needs repeating.
                              # 1216 Valid Palindrome III — phase-gated; the Knowledge
                              #      Expansion Queue owns it. Without this, discovery
                              #      re-injects it into the review table as a 🔴 with no

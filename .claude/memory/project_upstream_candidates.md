@@ -145,3 +145,48 @@ identical for all of them.
 | **"Unseen problem on every non-SD day"** | The *principle* is general (a problem seen 3+ times measures retention of that problem's solution, not the technique). The *formulation* is welded to this learner's SD cadence. If it goes up, it goes as the principle |
 | **No-autocomplete typo weighting** | Depends entirely on how a given learner practises |
 | **"attempts" → "reps"** | Cosmetic. Defensible as a default, not worth a PR on its own |
+
+---
+
+## DEFECT (ships without soak) — `effort_budget.py --day` cannot audit a day in progress
+
+**Added Aug 18, 2026, the day it cost a real scheduling decision.**
+
+`--day` takes a list of problem numbers and prices them. Two properties make it wrong the
+moment a day is underway, and they compound because both understate:
+
+1. **It prices exactly what it is handed.** Mid-session the natural list to pass is the
+   *remaining* items — and that total then reads as the *day's* total, silently dropping
+   everything already done.
+2. **It re-reads CURRENT comfort.** Units are billed on the comfort a row carried **going in**;
+   the tracker holds the comfort it **earned**. After a rep is logged the same number prices
+   cheaper, so re-running the flag understates the day it was supposed to audit.
+
+**Observed cost:** a day sitting at exactly the ceiling was reported as having 5.0 units spare,
+and a discretionary consolidation rep was seated on capacity that did not exist. Caught by the
+learner, not the tooling.
+
+**Fix shipped here (all three rungs of the ladder, deliberately):**
+
+| Rung | Change |
+|---|---|
+| **1 source** | new `--schedule-day [DATE]` — parses the week's schedule file and prices each row from the **`Start` column** (written at the build, never mutated), split into **built / done / remaining**. The tool defines the day, so there is nothing to mis-hand it |
+| **1 source** | `--day` now warns, naming any number whose tracker row already carries a rep dated today |
+| **3 step** | a CLAUDE.md rule under the effort-budget section: `--day` is a *live pricer, not a ledger* |
+
+**Two design points worth carrying upstream, not just the flag:**
+
+- **A total that omits rows is the same bug again.** `--schedule-day` reports its total as a
+  **FLOOR** whenever a row could not be priced (a primer or probe with no problem number, or an
+  untracked new problem guessed at Blank Medium when a new *Hard* costs 1.5x that). Hiding the
+  gap would reproduce exactly the failure the flag exists to prevent.
+- **The header check must know when to stay quiet.** `--schedule-day` also verifies each day
+  header's stated units against the rows beneath it — nothing had ever checked that, so a
+  *build-time* arithmetic slip was undetectable. It asserts a mismatch **only** when every row
+  priced exactly; otherwise it reports the difference and says it cannot verify. A check that
+  cries wrong on rows it admits it cannot see stops being read.
+
+**Depends on:** the weekly schedule's daily table having a `Start` column and a
+`> **<Day> <Mon> <D>** - N units` header. Both are conventions in this repo; canonical would need
+them declared, or the parser made tolerant of their absence (it already degrades to pricing from
+the tracker, with a warning, when a `Start` glyph is missing).

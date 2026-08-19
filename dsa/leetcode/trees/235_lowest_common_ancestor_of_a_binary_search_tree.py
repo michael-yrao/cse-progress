@@ -1,4 +1,10 @@
 """
+235. Lowest Common Ancestor of a Binary Search Tree   ·   https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/
+Pattern: trees
+
+⚠️ NOT 236 — that is the plain-binary-tree version. This one is the BST, and the ordering
+property is the whole point: it lets you prune to one subtree instead of searching both.
+
 Given a binary search tree (BST), find the lowest common ancestor (LCA) node of two given nodes in the BST.
 
 According to the definition of LCA on Wikipedia: “The lowest common ancestor is defined between two nodes p and q as the lowest node in T that has both p and q as descendants (where we allow a node to be a descendant of itself).”
@@ -36,6 +42,24 @@ class TreeNode:
         self.right = None
 
 class Solution:
+
+    # ── Attempt · 2026-08-18 ──────────────
+    def lowestCommonAncestor_20260818(self, root: TreeNode, p: TreeNode, q: TreeNode) -> TreeNode:
+        # BST, so if both are smaller, we go left, if both are bigger we go right
+        # now the thing here we allow a node to be its own parent
+        # so we need to check equality for success cases
+        if not root:
+            return None
+        # success criterias
+        if root.val <= p.val and root.val >= q.val:
+            return root
+        if root.val >= p.val and root.val <= q.val:
+            return root
+        
+        if p.val < root.val and q.val < root.val:
+            return self.lowestCommonAncestor_20260818(root.left, p, q) # type: ignore
+        else:
+            return self.lowestCommonAncestor_20260818(root.right,p, q) # type: ignore
 
     # ── Attempt · 2026-08-08 ──────────────
     def lowestCommonAncestor_20260808(self, root: TreeNode, p: TreeNode, q: TreeNode) -> TreeNode:

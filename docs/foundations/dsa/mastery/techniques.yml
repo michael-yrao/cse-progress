@@ -505,11 +505,37 @@ techniques:
   #           must be derived from out-in degree; 332 hands the start over for free.
   #   queued: 753 Cracking the Safe (Hard) — de Bruijn via Eulerian circuit.
   # Both slotted in the Aug 17 week, AFTER the Aug 18 rated rep on 332.
+  # Split Aug 18, 2026 after the learner ran the explicit-stack form for the first time and
+  # pinned the other for a later rep: "we did not do the minHeap method today and I would like
+  # to do it another time."
+  #
+  # ⚠️ TWO ORTHOGONAL AXES — corrected by the learner the same day ("min heap is not
+  # recursive"), after the coach's first draft of this entry fused them into one variant name:
+  #   (a) ORDERING     — min-heap  vs  pre-sorted adjacency list
+  #   (b) CONTROL FLOW — recursion vs  explicit stack
+  # They are independent: min-heap+stack and pre-sorted+recursion are both valid and neither has
+  # been written. The variants below track axis (a), because that is the one the learner named and
+  # the one that changes the code's shape; axis (b) is recorded here rather than as variants so the
+  # coverage report does not multiply into four cells that nothing schedules.
+  #
+  # What has actually been repped on 332: min-heap + recursion (Jul 22 / Jul 28 / Aug 4), and
+  # pre-sorted + explicit stack (Aug 18). Both axes flipped together, so neither crossed
+  # combination is evidence for anything.
+  #
+  # ✅ SPLIT INTO TWO TRACKER ROWS, Aug 18, 2026 — learner's call: "I do want these to be separate
+  # lines, I want to practice both." Follows the 19 Postorder/Iterative and 206 Iterative/Recursion
+  # convention. Verified against the .history stash before splitting: every prior attempt on 332
+  # (Jul 22 / Jul 28 / Aug 4, plus the Aug 14 teach) imports heapq, so the whole pre-Aug-18 history
+  # belongs to the min-heap row and the pre-sorted row starts fresh at Aug 18.
   - name: Hierholzer (Eulerian path)
     family: advanced_graphs
     min_problems: 3
+    variants:
+      - {name: pre-sorted adjacency}
+      - {name: min-heap ordering}
     problems:
-      - {number: 332, method: Hierholzer}
+      - {number: 332, method: min-heap ordering}
+      - {number: 332, method: pre-sorted adjacency}
 
   # min_problems dropped Aug 15, 2026 — same rule as Floyd-Warshall above.
   - name: Prim's MST

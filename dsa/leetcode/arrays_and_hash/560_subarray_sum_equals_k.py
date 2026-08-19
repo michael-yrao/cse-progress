@@ -25,6 +25,33 @@ from typing import List
 
 class Solution:
 
+    # ── Attempt · 2026-08-18 ──────────────
+    def subarraySum_20260818(self, nums: List[int], k: int) -> int:
+        # subarray sum instantly means prefix sum
+        # only issue here is that it asks for  how many subarray sums equal to k
+        # this makes classic prefixSum very inefficient where we have to loop through twice
+        # what we can do is loop through and keep track of a continuous prefix sum
+        # commonly for subarray sum, we do prefix[j] - prefix[i] = k
+        # prefix[j] is our continuous sum, prefix[i] should be in a map like we do for two sum
+        # so what we are doing is we are doing prefix[j] - k = prefix[i], so we look for prefix[i]
+        # we use a map instead of a set in case of multiple instances of the same prefixSum
+
+        prefixMap = {}
+        # in case prefix[j] == k
+        prefixMap[0] = 1
+        
+        resultCounter = 0
+        continuousSum = 0
+        for n in nums:
+            continuousSum+=n
+            diff = continuousSum - k
+            if diff in prefixMap:
+                resultCounter+=prefixMap[diff]
+            # increment continuous sum since we just saw it
+            prefixMap[continuousSum] = prefixMap.get(continuousSum,0) + 1
+        
+        return resultCounter
+
     # ── Attempt · 2026-08-08 ──────────────
     def subarraySum_20260808(self, nums: List[int], k: int) -> int:
         # first instinct when I see subarray sum is prefix sum
