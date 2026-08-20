@@ -182,7 +182,7 @@ def restore_stash(stash: Path, stamp: str | None, dry_run: bool,
     warnings.extend(collision_warnings(src, text))
 
     if not dry_run:
-        src.write_text(text, encoding="utf-8")
+        src.write_text(text, encoding="utf-8", newline="\n")
         stash.unlink()
     return None
 
@@ -199,7 +199,7 @@ def strip_legacy_region(path: Path, stamp: str | None, dry_run: bool,
     unfolded = "\n".join(strip_spoiler_region(lines)) + "\n"
     warnings.extend(collision_warnings(path, unfolded))
     if not dry_run:
-        path.write_text(unfolded, encoding="utf-8")
+        path.write_text(unfolded, encoding="utf-8", newline="\n")
     return None
 
 

@@ -737,7 +737,7 @@ def main() -> None:
             ] + members[1:]
             head = body.split("class Solution:")[0]
             body = head + "\n".join(block) + "\n"
-        path.write_text(body, encoding="utf-8")
+        path.write_text(body, encoding="utf-8", newline="\n")
         print(f"Created {path} (Attempt 1 · {today}).")
     else:
         text = path.read_text(encoding="utf-8")
@@ -882,7 +882,7 @@ def main() -> None:
             body = "\n".join(prior)
             if stash.exists():
                 body = body + "\n\n" + stash.read_text(encoding="utf-8").rstrip("\n")
-            stash.write_text(body + "\n", encoding="utf-8")
+            stash.write_text(body + "\n", encoding="utf-8", newline="\n")
         elif not stash.exists():
             # Nothing real to hide and no stash — leave the file whole (no pointer).
             active, stashed = lines, False
@@ -894,7 +894,7 @@ def main() -> None:
                 active.pop()
             active += ["", make_pointer(stash)]
 
-        path.write_text("\n".join(active).rstrip() + "\n", encoding="utf-8")
+        path.write_text("\n".join(active).rstrip() + "\n", encoding="utf-8", newline="\n")
         where = f"stashed → {stash.as_posix()}" if stashed else "no prior attempts to stash"
         print(f"Inserted attempt {today} -> {what} in {path} (line {at + 2}); {where}.")
 
