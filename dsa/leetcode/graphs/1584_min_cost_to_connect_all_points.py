@@ -33,6 +33,77 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-08-19 ──────────────
+    def minCostConnectPointsKruskal_20260819(self, points: List[List[int]]) -> int:
+        # Kruskal's Algorithm - Sort edges, Union Find
+        # points only give us the vertices, so we need to calculate 
+        # the manhattan distance of every node to every other node
+        # this is an O(E) operation
+        # we then need to take advantage of graph theory here
+        # we are building a MST, so we will have one component at the end
+        # what that means given n nodes where n = len(points)
+        # we will have n - 1 edges
+        # since we are greedily going through the edges using shortest edges
+        # we stop when we have connected n - 1 edges
+        
+        edgeWithWeight = []
+
+        
+        for i in range(len(points)):
+            for j in range(i+1, len(points)):
+                manhattanDistance = abs(points[i][0] - points[j][0]) + abs(points[i][1] - points[j][1])
+                # [0] = index of source, [1] = index of target, [2] = weight
+                edgeWithWeight.append((i, j, manhattanDistance))
+
+        # sort by weight ascending
+        edgeWithWeight.sort(key=lambda edge: edge[2])
+
+        # union find based on indices of points
+
+        rankMap = {}
+        parentMap = {}
+
+        for i in range(len(points)):
+            rankMap[i] = 0
+            parentMap[i] = i
+
+        def find(node):
+            if parentMap[node] != node:
+                parentMap[node] = find(parentMap[node])
+            return parentMap[node]
+        
+        def union(n1,n2):
+            n1r = find(n1)
+            n2r = find(n2)
+            # unioning these two forms a cycle, return false
+            if n1r == n2r:
+                return False
+            if rankMap[n1r] > rankMap[n2r]:
+                parentMap[n2r] = n1r
+            elif rankMap[n1r] < rankMap[n2r]:
+                parentMap[n1r] = n2r
+            else:
+                rankMap[n1r]+=1
+                parentMap[n2r] = n1r
+            return True
+
+        # result cost
+        cost = 0
+        # keep track of number of edges
+        edgesUsed = 0
+
+        for srcIndex, tgtIndex, weight in edgeWithWeight:
+            # if we have not connected this node yet, connect it
+            if find(srcIndex) != find(tgtIndex):
+                union(srcIndex, tgtIndex)
+                cost+=weight
+                edgesUsed+=1
+                # if we have n - 1 edges, we have finished our component
+                if edgesUsed == len(points) - 1:
+                    break
+
+        return cost
+
     # ── Attempt · 2026-08-11 ──────────────
     def minCostConnectPoints_20260811(self, points: List[List[int]]) -> int:
         # Minimum Spanning Tree, built via Prim's Algorithm

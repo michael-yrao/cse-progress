@@ -22,6 +22,19 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🟡 643. Maximum Average Subarray I (🎯 Probe #4, no tracker row — learner override) — 2026-08-19
+
+**Sticking point**: correct sliding window, correct complexity (O(n)/O(1)) — but compared `maxSum`
+against `currentSum` on every tick instead of only once the window reached size `k`, so an early
+partial-window sum could win. Randomized test caught it (6498/20000 failing pre-fix); fixed with
+`if r - l + 1 == k` gating the comparison. Classic fixed-size-sliding-window boundary trap.
+
+## 🟡 133. Clone Graph — 2026-08-19
+
+**Sticking point**: complexity, not code — time given as `O(E)`, dropped the `V` term (each node's
+creation/enqueue is its own work, not free). Exact repeat of the Aug 9 miss on this same problem;
+code itself was clean and unhinted (two-pass BFS, map-then-wire).
+
 ## 🟡 269. Alien Dictionary — 2026-08-17
 
 **Sticking point**: three execution bugs, none self-caught — but ⚠️ **two of the three are verbatim

@@ -35,6 +35,48 @@ from typing import List
 
 class Solution:
 
+    # ── Attempt · 2026-08-19 ──────────────
+    def countComponents_20260819(self, n: int, edges: List[List[int]]) -> int:
+        # union find today
+        
+        rankMap = {}
+        parentMap = {}
+
+        # initialize rank to 0 and parent to self
+        for i in range(n):
+            rankMap[i] = 0
+            parentMap[i] = i
+
+        # find root parent of node
+        def find(node):
+            if parentMap[node] != node:
+                parentMap[node] = find(parentMap[node])
+            return parentMap[node]
+        
+        def union(n1,n2):
+            n1r = find(n1)
+            n2r = find(n2)
+            # if same root parent, then we don't need 
+            if n1r == n2r:
+                return False
+            if rankMap[n1r] > rankMap[n2r]:
+                parentMap[n2r] = n1r
+            elif rankMap[n1r] < rankMap[n2r]:
+                parentMap[n1r] = n2r
+            else:
+                parentMap[n2r] = n1r
+                rankMap[n1r]+=1
+            return True
+
+        numComponents = n
+        # now we try to connect everyone based on edges given
+        for n1, n2 in edges:
+            # if we were able to connect them, then we have one less component
+            if union(n1,n2):
+                numComponents-=1
+        
+        return numComponents
+
     # ── Attempt · 2026-08-11 ──────────────
     def countComponents_20260811(self, n: int, edges: List[List[int]]) -> int:
         # doing DFS today

@@ -382,3 +382,49 @@ number attached.** Re-derive the rate at the build rather than renewing or killi
   (plain binary tree) does not give you. Coded correct on the first pass with zero hints. **Same caveat as
   332 the same day:** a retry names its own technique, so this is the label sticking rather than evidence
   for the recognition axis of phase exit.
+
+- **2026-08-19 · 🎯 PROBE #4 — 643 Maximum Average Subarray I** (Easy, unseen, label stripped) — ✅
+  **HIT, cold.** Pre-code comment read *"so we are just looking for the max sum in a window of size
+  k"* — restates the shape (fixed-length window), not yet the technique. Challenged with a concrete
+  numeric walkthrough (`nums=[1,12,-5,-6,50,3]`, `k=4`: window sums `2` then `51`, `51 = 2 - 1 + 50`)
+  before the technique name came out — but the learner then clarified the code was **already written,
+  correctly, before that exchange**: *"i already coded it up and recognized the sliding window
+  immediately, i am not understanding the problem"* (meaning the Socratic question was unclear, not
+  that the technique was missing). The code confirms it: correct drop-one/add-one running sum, written
+  cold. **Revised verdict: cold hit** — the confusion was in how the question was phrased, not in the
+  recognition itself.
+  ⚠️ **But a real bug survived into the code, not self-caught.** `maxSum` was being compared **before**
+  the window reached size `k` — so a single very-negative early element (or any partial-window sum)
+  could win the max, corrupting the answer whenever the true best window sits later. Randomized test:
+  6498/20000 cases failed pre-fix, 0/50000 post-fix (gate `if r - l + 1 == k` before updating `maxSum`).
+  **This is a real, transferable fixed-size-sliding-window trap** — compare only once the window is
+  full, not on every tick — the same family as the classic sliding-window boundary miss.
+  **Comfort: 🟡** (real bug, coach-supplied via a failing case, not self-caught).
+  **Tracker row: overridden by the learner** — *"while I agree, it is not a very worthy problem to
+  repeat, my time is finite, thus making the best use of it makes more sense, skip the row."* Recorded,
+  not silent, same handling as the 323-DFS Aug 11 override. **Probes now stand at 4 run / 1 row** (202
+  is still the only row) — worth watching if row-creation stays this low: per the free diagnostic, a
+  low rate signals the *technique* pool has stopped teaching, but two of the three 🟡/🔴-worthy results
+  so far (202, 643) have had their rows either earned or explicitly declined, so the raw row count is no
+  longer a clean read on "does the pool still teach" — the qualitative gotcha (this entry) is doing that
+  job now instead.
+
+- **2026-08-19 · 238 Product of Array Except Self** — ⚠️ **partial.** Pre-code comment read *"pre and
+  post"* plus a worked example (`nums: [1,2,3,4]`, `pre: [1,1,2,6]`, `post: [24,12,4,1]`) — names the
+  technique unaided, before any code. ❌ No discriminator stated (why prefix/suffix products over the
+  division-then-fix-zeros approach the problem's own constraints explicitly rule out). Half-spoiled
+  anyway (retry, folder `arrays_and_hash/`).
+
+- **2026-08-19 · 1448 Count Good Nodes in Binary Tree** — ⚠️ **partial.** Pre-code comment read *"this is
+  preorder DFS… we keep a max value to pass to the next node"* — names the technique and the mechanism
+  (threading max-so-far down the recursion) unaided, before any code. ❌ No discriminator stated (why
+  preorder over BFS/level-order, or over postorder) — the comment describes *what* it does, not *why this
+  and not the neighbor*. Half-spoiled anyway (retry, folder `trees/`).
+
+- **2026-08-19 · 323 Connected Components (Union-Find)** — ⚠️ **partial — corrected entry** (the original
+  version of this line wrongly said "no comment given"; the coach hadn't credited the in-file comment).
+  Pre-code comment read *"union find today"* — names the technique, unaided, before any logic. ❌ No
+  discriminator stated (why Union-Find over the DFS/BFS this same problem already has two rows of).
+  Heavily half-spoiled regardless — retry, tracker row already names Union-Find, and the row was
+  explicitly scheduled as the Union-Find variant — so this was never going to be phase-exit evidence
+  either way.
