@@ -635,7 +635,7 @@ def recompute_simple(tracker_path: Path) -> None:
     )
     new_lines = prefix_lines + [build_row(r) for r in sorted_rows] + suffix_lines
     if new_lines != lines:
-        tracker_path.write_text("\n".join(new_lines) + "\n", encoding="utf-8")
+        tracker_path.write_text("\n".join(new_lines) + "\n", encoding="utf-8", newline="\n")
         print(f"Reordered {len(sorted_rows)} rows by latest attempt date in {tracker_path}")
     else:
         print(f"No reorder needed in {tracker_path}")
@@ -855,7 +855,7 @@ def main() -> None:
     new_lines = new_prefix + sorted_lines + suffix_lines
 
     if new_lines != lines:
-        MARKDOWN_PATH.write_text("\n".join(new_lines) + "\n", encoding="utf-8")
+        MARKDOWN_PATH.write_text("\n".join(new_lines) + "\n", encoding="utf-8", newline="\n")
         action = "Migrated and reordered" if legacy_format else "Reordered"
         print(f"{action} {len(sorted_rows)} rows by latest attempt date in {MARKDOWN_PATH}")
     else:

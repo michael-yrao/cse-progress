@@ -126,7 +126,7 @@ def fix_file(path: Path, dry_run: bool) -> list[str]:
         for i in range(start, end):  # body only (exclude the def line at start-1)
             lines[i] = lines[i].replace(old, new)
 
-    path.write_text("".join(lines), encoding="utf-8")
+    path.write_text("".join(lines), encoding="utf-8", newline="\n")
     return actions
 
 

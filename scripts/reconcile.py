@@ -137,7 +137,7 @@ def stamp(path: Path, when: dt.date) -> bool:
             new = "\n".join(lines)
         if new == text:
             return False
-        path.write_text(new, encoding="utf-8")
+        path.write_text(new, encoding="utf-8", newline="\n")
         return True
     end = text.find("\n---", 3)
     if end == -1:
@@ -149,7 +149,7 @@ def stamp(path: Path, when: dt.date) -> bool:
         new_head = head.rstrip("\n") + f"\nreconciled: {when}"
     if new_head == head:
         return False
-    path.write_text(new_head + rest, encoding="utf-8")
+    path.write_text(new_head + rest, encoding="utf-8", newline="\n")
     return True
 
 

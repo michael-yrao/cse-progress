@@ -444,7 +444,7 @@ def main() -> int:
         print(f"{REPORT_MD.name} is up to date.")
         return 0
 
-    REPORT_MD.write_text(report, encoding="utf-8")
+    REPORT_MD.write_text(report, encoding="utf-8", newline="\n")
     unmapped = len({r.label for r in rows} - claimed)
     print(
         f"Wrote {REPORT_MD.relative_to(REPO_ROOT)} — "
