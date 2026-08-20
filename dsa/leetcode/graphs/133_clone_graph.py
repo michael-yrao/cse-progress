@@ -69,6 +69,39 @@ import collections
 from typing import Optional
 class Solution:
 
+    # ── Attempt · 2026-08-19 ──────────────
+    def cloneGraph_20260819(self, node: Optional['Node']) -> Optional['Node']:
+        # we can create deep copies of individual nodes first
+        # so map of old to new, then go through the neighbors
+
+        if not node:
+            return None
+
+        oldToNew = {}
+
+        visited = set()
+
+        queue = collections.deque()
+
+        queue.append(node)
+        visited.add(node)
+
+        while queue:
+            currentNode = queue.popleft()
+            if currentNode:
+                newNode = Node(currentNode.val)
+                oldToNew[currentNode] = newNode
+                for neighbor in currentNode.neighbors:
+                    if neighbor not in visited:
+                        queue.append(neighbor)
+                        visited.add(neighbor)
+        
+        for oldNode, newNode in oldToNew.items():
+            for neighbor in oldNode.neighbors:
+                newNode.neighbors.append(oldToNew[neighbor])
+        
+        return oldToNew[node]
+
     # ── Attempt · 2026-08-09 ──────────────
     def cloneGraph_20260809(self, node: Optional['Node']) -> Optional['Node']:
         # we know this is connected, so we can do one node at a time

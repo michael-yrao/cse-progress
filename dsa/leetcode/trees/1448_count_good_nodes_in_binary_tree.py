@@ -42,6 +42,26 @@ class TreeNode:
         self.right = right
 class Solution:
 
+    # ── Attempt · 2026-08-19 ──────────────
+    def goodNodes_20260819(self, root: TreeNode) -> int:
+        # path from root to x where no value greater than x
+        # this is preorder DFS
+        # we keep a max value to pass to the next node
+        maxValue = -math.inf
+
+        def preorderDFS(node, maxValue):
+            if not node:
+                return 0
+            
+            currentMax = max(node.val, maxValue)
+            
+            if node.val >= maxValue:
+                return 1 + preorderDFS(node.left, currentMax) + preorderDFS(node.right, currentMax)
+            else:
+                return preorderDFS(node.left, currentMax) + preorderDFS(node.right, currentMax)
+        
+        return preorderDFS(root, maxValue)
+
     # ── Attempt · 2026-07-20 ──────────────
     def goodNodes_20260720(self, root: TreeNode) -> int:
         # we pass largest value down to each children

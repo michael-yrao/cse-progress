@@ -30,6 +30,29 @@ from typing import List
 
 class Solution:
 
+    # ── Attempt · 2026-08-19 ──────────────
+    def productExceptSelf_20260819(self, nums: List[int]) -> List[int]:
+        # pre and post
+        # nums: [1,2,3,4]
+        # pre:  [1,1,2,6]
+        # post: [24,12,4,1]
+
+        pre = [1] * len(nums)
+        post = [1] * len(nums)
+
+        for i in range(1, len(nums)):
+            pre[i] = pre[i-1] * nums[i-1]
+        
+        for i in range(len(nums)-2,-1,-1):
+            post[i] = post[i+1] * nums[i+1]
+
+        result = [1] * len(nums)
+
+        for i in range(len(nums)):
+            result[i] = pre[i] * post[i]
+        
+        return result
+
     # ── Attempt · 2026-07-24 ──────────────
     def productExceptSelf_20260724(self, nums: List[int]) -> List[int]:
         # my preferred solution for this is pre and post product like prefixSum
