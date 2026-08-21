@@ -3,7 +3,7 @@ name: feedback_kickoff_table_links
 description: hyperlink each problem to its local solution file AND its problem page (LC, or the NeetCode mirror if premium) — fires when new_problem.py runs, at kickoff, and on every problem/set transition
 metadata:
   type: feedback
-reconciled: 2026-08-17
+reconciled: 2026-08-21
 ---
 
 **PRIMARY TRIGGER — a scaffold is a link event. Every `new_problem.py` run ends with the
@@ -76,6 +76,27 @@ LC number outside a markdown link.~~ **BUILT — Aug 12, 2026 (see below).** Occ
 Jul 20/21/23/30/31, Aug 3, Aug 5, **Aug 6**, **Aug 12**, **Aug 14**.
 
 ⚠️ **Aug 14 is the 10th, and it got past the Stop hook because the hook was shipped `DISABLED`** — written and disabled the same day (Aug 12) over a transcript-parsing bug, with its own fix left in a comment. Rebuilt and re-enabled Aug 14; run `python .claude/hooks/problem_link_reminder.py --selftest <a real transcript .jsonl>` before trusting it again.
+
+**⚠️ ~11th lapse, Aug 21, 2026 — the mid-session hand-over, AND the built hook was not loaded.**
+Kicked off 239 (on today's board, scaffolded) and named it three turns running with no link —
+recognition-gate prompt included. Learner, visibly frustrated: *"where is the link to the problem.
+This has happened so many times, what is the issue"* — the sharpest signal yet. **Root cause was
+two-layer:** (1) my chat behavior lapsed as before, but also (2) **the `Stop` hook was not active
+this session.** `.claude/settings.json` is gitignored and does not sync between machines (per CLAUDE.md
+SETUP); it was only *un-gitignored* in a pull run mid-session (commit e5cb291, "the hooks it never
+wired"), and hooks load at *session start* — so this session began with no Stop hook. **But the deeper, durable cause was worse:** every hook in
+`.claude/settings.json` invoked bare **`python`**, which does not exist on this macOS machine (only
+`python3` does — Python 3.14 framework; `/bin/sh -c 'command -v python'` → nothing). So even once the
+Stop hook loaded, it would have **failed silently on every fire** — as would the SessionStart memory
+hook (the one that injects MEMORY.md + the five gates). The git pre-commit hook escaped this only
+because it already does `if python3 … elif python …`. **Fixed Aug 21: rewrote all three settings.json
+hook commands to the same `python3`-first, `python`-fallback form**, verified each runs exit-0 under the
+configured command. The hook logic itself is sound: `--selftest` passed 17/17 detector + 4/4 board and
+computed the live board as `['239']`. **Two lessons:** (1) a hook that lives in a gitignored, per-machine
+file is one bad clone away from being prose again — the un-gitignore fixed that; (2) a hook that names a
+bare interpreter is dead on any machine that spells it differently — hooks must probe `python3`/`python`
+like the pre-commit hook does. Both are silent-failure classes; nothing surfaced them until the rule
+lapsed in front of the learner.
 
 **⚠️ 9th lapse, Aug 12, 2026 — the "what's next" hand-over, and the candidate fix had been sitting
 unbuilt for six days.** Closed a turn with *"Next on the board is **778 Swim in Rising Water**… Want

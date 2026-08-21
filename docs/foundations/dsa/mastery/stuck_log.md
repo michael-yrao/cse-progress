@@ -1968,3 +1968,42 @@ stack) are independent, and today's rep flipped **both at once** against the Jul
 here is evidence about either axis in isolation. The coach had made this same conflation twice — once
 correcting the learner mid-rep (*"you can run recursive-with-sorted-list or iterative-with-heap"*) and
 then again when naming the variant `recursive + min-heap` in `techniques.yml` an hour later.
+
+---
+
+## 2026-08-20 · 239 Sliding Window Maximum · 🔴 Blank (Hard)
+
+**Not a cold rep — spoiled + taught.** A prior agent (on the other machine) had already named the
+technique — *sliding window + monotonic deque* — so recognition was never on the table here. The
+learner opened with the honest state: *"I know it is a sliding window problem with monotonic deque but
+I don't understand how to use it here."* The mechanism was taught this session, so this is Blank by
+definition (approach supplied, not recalled), and the Blank interval (2 days → re-rep Sat Aug 22) is
+exactly the point: check whether the teaching stuck.
+
+**Where stuck:** *how* the deque is used — not that it's the right tool. Two sub-gaps:
+1. **Why maintain monotonicity at all.** Unlocked by the domination idea: the window only moves right,
+   so any smaller value to the left of a newer, bigger one can never be the max of a future window —
+   discard it. What survives is decreasing, and the front is the running max.
+2. **The front-pop condition.** Learner initially framed it as "window size > k". Reframed to the index
+   comparison: the deque stores **indices**, so the front is stale when `deque[0] < i - k + 1`.
+
+**Core realization:** store **indices, not values** — you need the position to (a) test the window
+boundary and (b) know which end holds the max. This generalized: the learner asked whether monotonic
+stacks/deques usually hold indices, and the answer (yes — you almost always need distance / width /
+in-window, not just the value) landed as a reusable rule (cf. 739, 84).
+
+**Bug not self-caught (coach flagged):** recorded the **wrong end** of the deque —
+`result.append(nums[decreasingDeque[-1]])` instead of `[0]`. The deque is decreasing front→back, so
+`[-1]` is the *smallest* survivor; the max is at the front. Trace `[1,3,-1], k=3` at `i=2`: deque
+`[1,2]` (values `3,-1`), `[-1]` yields `-1` instead of `3`.
+
+```python
+# the fix — max is the FRONT of a front-decreasing deque
+if i >= k - 1:
+    result.append(nums[decreasingDeque[0]])   # was [-1]
+```
+
+**Complexity gate — passed on the second ask.** First answer was a bare "O(n) time, O(n) space".
+Re-itemized correctly: **time O(n)** because each index is appended once and popped at most once, so the
+inner `while` pops are O(n) *total*, not per-iteration (the trap that makes it look O(nk)); **space O(k)**
+because the deque only ever holds indices inside the current window (the earlier "O(n)" was loose).

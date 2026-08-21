@@ -19,6 +19,14 @@ it is not guaranteed to carry every hook this repo has ever described. If `docs/
 `CLAUDE.md` names a hook you don't find in the file, that's drift to fix (add it, don't assume it was
 deliberately dropped), not a sign the file is malformed.
 
+⚠️ **Hook commands must probe `python3`/`python`, never name a bare interpreter (Aug 21, 2026).** On a
+machine where `python` resolves to nothing (e.g. macOS with only a `python3` framework install), a
+settings.json hook wired as `python "…hook.py"` **fails silently on every fire** — the Stop link-reminder
+and the SessionStart memory injector both went dark this way, undetectable until a rule lapsed in front
+of the learner. All three hook commands now use the pre-commit hook's idiom —
+`if command -v python3 …; then python3 "…"; else python "…"; fi` — so they run on any machine. If you
+add a hook, use that form, not a bare `python`/`python3`.
+
 One remaining one-time step. Do it on a fresh clone.
 
 ## 1. Git hooks path

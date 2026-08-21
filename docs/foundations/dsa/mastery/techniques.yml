@@ -249,6 +249,16 @@ techniques:
       # with it, so do not read it as settled phase-exit evidence until then.
       - {number: 853}
 
+  # ── Monotonic deque ─────────────────────────────────────────────────────────
+  # Distinct from Monotonic Stack: a deque pops from BOTH ends — the back to keep it
+  # decreasing, the FRONT to evict the max once it slides out of the window. 239 is
+  # the canonical sliding-window-maximum use; niche, so min_problems: 1.
+  - name: Monotonic Deque
+    family: stack
+    min_problems: 1
+    problems:
+      - {number: 239}
+
   # ── Linked list ─────────────────────────────────────────────────────────────
   - name: Linked List Reversal
     family: linked_list
