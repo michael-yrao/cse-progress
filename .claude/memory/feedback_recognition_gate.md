@@ -3,8 +3,23 @@ name: feedback_recognition_gate
 description: Front-gate every rep — learner states shape→technique+why (as their pre-code comment, pasted in chat) BEFORE coding; complexity gate still fires at the end
 metadata:
   type: feedback
-reconciled: 2026-08-17
+reconciled: 2026-08-20
 ---
+
+⭐ **SOURCE-FIXED Aug 20, 2026 — the gate is now written INTO the scaffold, not delivered by
+the coach.** `new_problem.py` writes a `# ── RECOGNITION — fill BEFORE coding ──` block (shape
+cues → technique → discriminator) at the top of every fresh attempt, on all four scaffold paths
+(new single/multi, retry single/sibling-class). The learner fills it in the file *before the
+coach speaks*, and on a retry the prior attempt's filled-in answer is stashed out like any other
+prior work, so a fresh empty prompt is what's on screen.
+
+**Why the source fix:** when the coach delivers the gate verbally, the coach can leak the
+technique by *naming candidates* — done Aug 20, 2026 on 239 (*"what makes it a monotonic deque
+rather than a stack or a heap?"*), which handed over the exact thing a new problem measures. Per
+the intervention ladder a source fix outranks this memory file, which already carried the rule and
+did not prevent the slip. ⚠️ **The standing verbal rule, still binding when you do speak first:
+name only the SHAPE CUES and ask for the technique — never list candidate techniques.** A gate
+phrased as a leading multiple-choice embeds its own answer.
 
 Every coded rep is bookended by two gates. The learner opted into this Jul 25, 2026.
 

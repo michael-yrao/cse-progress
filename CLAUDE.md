@@ -232,6 +232,12 @@ After any problem discussion (solving, reviewing, or mentioning a problem by num
    wrote a pre-code comment, that comment **is** the call — confirm or correct it before they code.
    Reference: [`recognition_gotchas.md`](docs/foundations/dsa/mastery/recognition_gotchas.md) and
    `.claude/memory/feedback_recognition_gate.md`.
+   - ⚠️ **The scaffold now carries the gate (source-fixed Aug 20, 2026).** `new_problem.py` writes a
+     `# ── RECOGNITION — fill BEFORE coding ──` block into every fresh attempt; the learner fills it in
+     the file *before you speak*. **When you DO prompt verbally, name only the SHAPE CUES and ask for
+     the technique — never list candidate techniques.** A gate phrased as a leading multiple-choice
+     (*"is it a monotonic deque or a heap?"*) hands over the answer, which is the exact spoiler that
+     source fix exists to prevent (leaked on 239, Aug 20). See `decisions.yml` `recognition-gate-in-scaffold`.
    - **Then log the call either way — hit AND miss — one dated line in the miss ledger.** A ledger that
      records only misses has **no denominator**: "no entries" and "never asked" look identical, so the
      recognition axis of phase exit ends up judged on the *absence* of evidence. (Found Aug 9, 2026: two

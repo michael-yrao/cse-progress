@@ -37,6 +37,23 @@
 # "could a rule written before this still read as correct while now being wrong?"
 
 decisions:
+  - id: recognition-gate-in-scaffold
+    date: 2026-08-20
+    summary: >-
+      The recognition gate is written INTO the scaffold by new_problem.py (a RECOGNITION block
+      the learner fills before coding), not delivered verbally by the coach. Source fix for a
+      spoiler: a verbally-delivered gate can leak the technique by naming candidates (done on 239).
+      When the coach does speak first, name only shape cues, never candidate techniques.
+    affects: [recognition_gate, scaffolding, no_spoilers]
+
+  - id: pace-flat-discipline
+    date: 2026-08-20
+    summary: >-
+      Coach ends every turn at the answer; the learner drives every transition. No coach-initiated
+      "next". Stronger than the prior "no ready? tail" — removes coach-initiated progression
+      entirely. Set by the learner after two pacing slips in one session.
+    affects: [let_learner_pace, turn_economy]
+
   - id: midweek-reprice
     date: 2026-08-17
     summary: >-
