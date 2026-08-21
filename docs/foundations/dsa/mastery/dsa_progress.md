@@ -74,7 +74,7 @@ Notes for future agents:
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Rep Date | Rep Dates |
 |---|---|---|---|---|---|---|
-| Unknown | [239. Sliding Window Maximum](https://leetcode.com/problems/sliding-window-maximum/) | 🔴 | 0 | 2026-08-22 | 2026-08-20 | 2026-08-20 |
+| Hard | [239. Sliding Window Maximum](https://leetcode.com/problems/sliding-window-maximum/) | 🔴 | 0 | 2026-08-22 | 2026-08-20 | 2026-08-20 |
 | Medium | [53. Maximum Subarray (Prefix Sum)](https://leetcode.com/problems/maximum-subarray/) | 🔴 | 0 | 2026-08-22 | 2026-08-20 | 2026-01-08, 2026-04-01, 2026-06-27, 2026-08-20 |
 | Medium | [323. Number of Connected Components (Union-Find)](https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/) | 🟢 | 2 | 2026-10-18 | 2026-08-19 | 2026-06-19, 2026-06-29, 2026-08-19 |
 | Medium | [133. Clone Graph](https://leetcode.com/problems/clone-graph/) | 🟡 | 0 | 2026-08-29 | 2026-08-19 | 2026-06-04, 2026-06-05, 2026-06-07, 2026-08-09, 2026-08-19 |
