@@ -7,6 +7,35 @@ Append-only log of corrections. Governed by [[feedback_self_evaluation]]. Newest
 
 ---
 
+- **2026-08-20 [P2] `open`** — During a 53 (prefix-sum) discussion I wrote that 560/974/525
+  "keep them all (min, or a hashmap)", conflating the min-prefix flavor (max subarray) with the
+  hashmap flavors. Learner caught the inconsistency across two turns. **Fix stated:** min-prefix →
+  max-sum only; count-map → 560/974 (counting); index-map → 525 (longest). Root cause: an imprecise
+  parenthetical in a discrimination explanation — the exact place precision matters most, since the
+  learner is building the recognition map. One-off for now; watch for a cluster of "loose parenthetical
+  in a technique-discrimination answer."
+
+- **2026-08-20 [P2] `consolidated→source fix: recognition block in new_problem.py scaffold + feedback_recognition_gate rule`** — On 239, a NEW first-exposure problem, I phrased the recognition gate as
+  *"what makes it a monotonic deque rather than a plain stack or a heap?"* — **naming the technique the
+  learner was supposed to produce.** Spoiled the one measured axis of a new problem (recognition).
+  Learner: *"why did you expose what it is before i started looking at it."* Broke [[feedback_no_spoilers]]
+  + [[feedback_recognition_gate]] (the gate asks THEM for shape→technique; I don't supply the technique
+  name). Root cause: I wrote the gate as a leading multiple-choice that embedded the answer, instead of
+  an open "what technique + why." **Fix:** on a new problem, the gate names the *shape cues* (flat array,
+  fixed window, max-per-window) and asks for the technique — never lists candidate techniques. 239's
+  recognition is now forfeit (scored like a half-spoiled retry); execution still counts. 2nd no-spoilers-
+  adjacent slip in recent logs — watch for a cluster on "gate phrased as leading question."
+
+- **2026-08-20 [P2] `consolidated→flat discipline: end every turn at the answer, learner drives transitions (feedback_let_learner_pace + decisions.yml pace-flat-discipline)`** — Tacked "back to the complexity gate" onto two consecutive answers
+  while the learner was asking genuine inclusive-vs-exclusive prefix-sum discrimination questions
+  (good use of the rep). Learner: *"stop rushing me."* Broke [[feedback_let_learner_pace]] — the
+  learner owns advancement; the gate fires when THEY finish, not on my schedule. The tell I ignored:
+  their follow-ups were still sharpening the current topic, which is the rep working, not stalling.
+  Fix: answer the question, stop, no advance-prompt tail. 2nd pacing-related slip; watch for a
+  cluster with the standing [[feedback_let_learner_pace]] entries.
+
+---
+
 ## 🔬 META-REVIEW 2026-08-02 — the promotion step itself is the weak link
 
 First full clustering pass (47 entries, 20 `open` — well past the ~8 trigger; the loop's step 2 had not

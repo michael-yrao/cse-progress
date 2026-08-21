@@ -3,8 +3,16 @@ name: feedback_let_learner_pace
 description: Don't drive progression — answer what was asked, then STOP; no "ready for the next one?" tail. The learner controls when to advance.
 metadata:
   type: feedback
-reconciled: 2026-08-17
+reconciled: 2026-08-20
 ---
+
+⭐ **FLAT DISCIPLINE (set by the learner Aug 20, 2026): end every turn at the answer; the learner
+drives every transition. No "next" from the coach unless they say go.** This is stronger than the
+"don't append a *ready?* tail" wording below — it removes coach-initiated progression entirely, not
+just the question form of it. Chosen after two pacing slips in one session (Aug 20): advance-prompts
+tacked onto answers while the learner was still asking genuine discrimination questions about the
+current problem (*"stop rushing me"*). The learner picked this over a Stop-hook on advance-prompt
+phrases — a flat behavioural rule, not a matcher.
 
 In any multi-turn thread — a coding rep debrief, a card-by-card review, a teaching session —
 **end the turn after answering the current thing. Do not append an advance-prompt** ("ready for

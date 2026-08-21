@@ -22,6 +22,43 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🔴 53. Maximum Subarray (Prefix Sum method) — 2026-08-20
+
+**Topic**: Prefix sum — max subarray via `prefix[j] − minPrefixBefore[j]`. Deliberate method-variant
+rep (the Kadane row is separately 🟢 s2). This was a **first encoding of the prefix-min method**, not
+decay — Kadane is known cold; prefix-min was new.
+
+### Where did I get stuck?
+Came in on a Kadane `runningSum` reset and stalled — couldn't see how to express "best subarray
+ending at `i`" in prefix-sum terms. Coach supplied the reframe (`subarray = prefix[j] − prefix[i]`,
+maximize by subtracting the smallest earlier prefix). Then three separate bugs, none self-caught:
+1. `prefixSum` sized length `n` (exclusive intent) but only ran to `prefix[n-1]` → the sum *including*
+   the last element was never an endpoint, so the whole-array subarray couldn't win. `[5,4,-1,7,8]→10`.
+2. `minPrefix` initialized to `nums[0]` instead of `0` (the empty prefix) → subarray starting at index 0
+   unrepresentable. `[-1,2]→0` instead of `2`.
+3. On the exclusive rewrite: **pre-allocated `[0]*(n+1)` AND `.append`ed inside the loop** → indices
+   never filled, every `prefix[i-1]` read a leftover zero, running sum never accumulated.
+
+### Core Realization
+The "empty prefix" (value 0 = take nothing before the start) must be representable *somewhere*:
+exclusive bakes it into `prefix[0]=0`; inclusive seeds it in the accumulator (`minPrefix=0`). Pick one
+storage location — pre-alloc **or** append, not both. And compute the answer *before* folding the
+current prefix into `minPrefix`, so you only subtract a prefix that ended strictly earlier.
+
+### Code Snippet
+```python
+prefixSum = [0] * (len(nums) + 1)
+for i in range(1, len(prefixSum)):
+    prefixSum[i] = nums[i-1] + prefixSum[i-1]
+minPrefix, maxSum = 0, -math.inf
+for i in range(1, len(prefixSum)):
+    maxSum = max(maxSum, prefixSum[i] - minPrefix)   # answer first
+    minPrefix = min(minPrefix, prefixSum[i])         # then fold in
+return maxSum
+```
+Complexity: O(n) time (two linear passes), O(n) space (prefix array — droppable to O(1) with a rolling
+sum, since only `minPrefix` is compared against). Next: rated re-rep after a gap (+2 → Aug 22).
+
 ## 🟡 643. Maximum Average Subarray I (🎯 Probe #4, no tracker row — learner override) — 2026-08-19
 
 **Sticking point**: correct sliding window, correct complexity (O(n)/O(1)) — but compared `maxSum`

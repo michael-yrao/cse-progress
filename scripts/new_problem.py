@@ -77,6 +77,32 @@ STATEMENT_STUB = (
     "compressed version in low-token mode — the learner never pastes it>"
 )
 
+# The recognition-gate prompt, written into EVERY fresh attempt's scaffold so the learner
+# commits shape → technique → discriminator IN THE FILE before any coaching happens.
+#
+# THIS IS A SOURCE FIX for a recurring spoiler. When the gate is delivered verbally the
+# coach can leak the technique by naming candidates — done 2026-08-20 on 239 ("what makes
+# it a monotonic deque rather than a stack or a heap?"), which handed over the one thing a
+# NEW problem is meant to measure. A scaffold the learner fills first removes the
+# opportunity: the call is on disk before the coach speaks. Per the intervention ladder
+# (feedback_self_evaluation.md), a source fix outranks the memory files that already carry
+# this rule and lapsed anyway.
+#
+# Kept on retries too. Recognition is half-spoiled there (the method is named), but the
+# block stays a FRESH, empty prompt because prior attempts — and their filled-in answers —
+# are stashed out of the file on every retry, so nothing old is visible while you work.
+RECOGNITION_LINES = [
+    "# ── RECOGNITION — fill BEFORE coding, before the coach says anything ──",
+    "#   shape cues seen →",
+    "#   technique →",
+    "#   discriminator (why this, not the nearest neighbour) →",
+]
+
+
+def recognition_block(indent: str) -> list[str]:
+    """The recognition prompt lines at a given indent (class-body = four spaces)."""
+    return [f"{indent}{ln}" for ln in RECOGNITION_LINES]
+
 # Fold markers around prior attempts. Comments carry no indentation meaning in Python,
 # so the region may open inside a class body and close at module level — which is what
 # lets one region cover every prior attempt regardless of how a file is laid out
@@ -713,6 +739,7 @@ def main() -> None:
             .replace("{params}", signatures[0][0])
             .replace("{ret}", f" {signatures[0][1]}" if signatures[0][1] else "")
             .replace("{statement}", STATEMENT_STUB)
+            .replace("{recognition}", "\n".join(recognition_block("    ")))
         )
         # The template holds ONE method under `class Solution` — correct for the common
         # case, silently wrong for a multi-method problem, where it emitted methods[0]
@@ -734,7 +761,7 @@ def main() -> None:
             block = [
                 f"class {cls_name}:",
                 f"    # ── Attempt 1 · {today} ────────────────────────────────────────────",
-            ] + members[1:]
+            ] + recognition_block("    ") + members[1:]
             head = body.split("class Solution:")[0]
             body = head + "\n".join(block) + "\n"
         path.write_text(body, encoding="utf-8", newline="\n")
@@ -817,6 +844,7 @@ def main() -> None:
             # Dated method on the existing `class Solution` — the common case.
             at = cls + 1
             block = ["", f"    # ── Attempt · {today} ──────────────"]
+            block += recognition_block("    ")
             block += stub(method, "    ", f"_{stamp}")
             what = f"{method}_{stamp}()"
         else:
@@ -861,6 +889,7 @@ def main() -> None:
                     f"_{stamp} too — an undated helper collides with the restored canonical one."
                 )
             block = ["", ""] + banner + [f"class {base}_{stamp}:"]
+            block += recognition_block("    ")
             for m in members:
                 block += [""] + stub(m, "    ", "", scope)
             what = f"class {base}_{stamp}: {', '.join(m + '()' for m in members)}"

@@ -35,6 +35,29 @@ from typing import List
 
 class Solution:
 
+    # ── Attempt · 2026-08-20 ──────────────
+    def maxSubArray_20260820(self, nums: List[int]) -> int:
+        # subarray sum = prefixSum
+        # subarray sum can also be sliding window but not knowing how to slide the window
+        # makes it hard to do so prefixSum
+        # subarray sum = prefix[j] - prefix[i]
+        # to maximize subarray sum, we minimize prefix[i]
+        # so let's keep track of that value
+
+        prefixSum = [0] * (len(nums)+1)
+
+        for i in range(1,len(prefixSum)):
+            prefixSum[i] = nums[i-1] + prefixSum[i-1]
+        
+        # default to first value
+        minPrefix = 0
+        maxSum = -math.inf
+        for i in range(1,len(prefixSum)):
+            maxSum = max(maxSum, prefixSum[i] - minPrefix)
+            minPrefix = min(minPrefix, prefixSum[i])
+
+        return maxSum # type: ignore
+
     # ── Attempt · 2026-07-26 ──────────────
     def maxSubArrayKadane_20260726(self, nums: List[int]) -> int:
         # Maximum Subarray with both positive and negative
