@@ -3,7 +3,7 @@ name: feedback_session_dating
 description: Date logs by the study SESSION, not the wall clock — a session crossing midnight keeps its start date; verify the date against the schedule day being marked
 metadata:
   type: feedback
-reconciled: 2026-08-17
+reconciled: 2026-08-21
 ---
 
 Attempt dates and comfort logs follow the **study session**, not the wall-clock date.

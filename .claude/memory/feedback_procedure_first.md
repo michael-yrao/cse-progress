@@ -3,7 +3,7 @@ name: feedback-procedure-first
 description: Teach a new/unfamiliar algorithm procedure-first in plain operational language — the literal loop, run by hand on a tiny example — and add the correctness proof / complexity / jargon only later, only if asked
 metadata:
   type: feedback
-reconciled: 2026-08-17
+reconciled: 2026-08-21
 ---
 
 **When the learner is trying to understand or code an algorithm they don't know, teach it

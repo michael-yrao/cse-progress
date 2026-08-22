@@ -3,7 +3,7 @@ name: feedback-algorithm-purpose-first
 description: When teaching or explaining any algorithm, lead with the PROBLEM it solves and why it had to exist (what the prior algorithm couldn't do) — never with its mechanism
 metadata:
   type: feedback
-reconciled: 2026-08-17
+reconciled: 2026-08-21
 ---
 
 **Set by the learner Jul 26, 2026** (during 787 / Bellman-Ford). When explaining any named algorithm,

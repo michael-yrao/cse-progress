@@ -3,7 +3,7 @@ name: feedback_explicit_over_terse
 description: don't suggest terser Python idioms (chained comparisons, comprehensions, walrus) in solution files — the learner writes explicitly on purpose, for readability under interview pressure
 metadata:
   type: feedback
-reconciled: 2026-08-17
+reconciled: 2026-08-21
 ---
 
 **Do not propose "more Pythonic" rewrites of working solution code.** The learner writes bounds

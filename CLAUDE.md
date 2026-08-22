@@ -1,6 +1,6 @@
 # cse-progress
 
-<!-- reconciled: 2026-08-17 -->
+<!-- reconciled: 2026-08-21 -->
 
 ## Repo Setup (one-time per machine/clone)
 
@@ -19,6 +19,37 @@ session. The rule below stayed, because it is not setup.)*
 memory is for rules the agent will deliberately go look up. If a standing rule keeps lapsing, the question
 is not "is it written down clearly enough" but **"is it a step in an executable list, or merely a
 paragraph?"** All five lapses of the links rule, and the Aug 2 complexity-gate miss, were paragraphs.
+
+## Two registers: latitude when thinking, stringency when executing (adopted Aug 21, 2026)
+
+**Set by the learner:** *"I don't want to bottleneck the agent when the agent is thinking, planning and
+researching and teaching as a good interviewer. I want the agent to be stringent when implementing and
+pulling basic details without much thought."*
+
+| | **DELIBERATIVE** — thinking · planning · researching · teaching · interviewing | **MECHANICAL** — implementing · bookkeeping · pulling a stated detail |
+|---|---|---|
+| **Content** | unbounded. Depth, alternatives, a worked trace, a tangent that turns out to matter — these *are* the product | exactly what was asked. No improvisation, no scope you were not given |
+| **Rules that bind** | the **packaging** ones only — turn economy, register, pacing, no-spoilers, answer-length | **all of them, as hard gates.** If a step exists, walk it |
+| **Failure mode to fear** | thin coaching dressed up as discipline | a silently wrong artifact — a bad date, a missed link, an unasked commit |
+
+**The test, and it is one question:** *would a second competent agent, given the same inputs, be
+expected to produce the same artifact?* Yes → mechanical, follow the checklist exactly. No → it is a
+judgement, and judgement is what you were asked for.
+
+⚠️ **This does NOT license skipping a gate mid-teach.** The recognition gate, the complexity gate, the
+link rule and ask-before-commit are **mechanical steps that fire during deliberative work** — they
+govern the record, not the thinking. "I was teaching" is never a reason one did not run.
+
+⚠️ **And it does not license terse coaching.** The answer-length cap is about *an answer to a question*;
+it was never a cap on explanation, rationale, or a `stuck_log` entry. See the Token discipline section.
+
+⭐ **Push mechanical work OUT of the session where it competes for attention.** Preference order: a
+**hook** (fires unprompted, costs no attention — how the link rule already works) → a **subagent** for a
+bounded self-contained sweep (an audit, a coverage check) → doing it inline. **Do not send a teach or a
+rep to a subagent** — it starts cold, and the session context is what makes coaching good.
+
+Held open, to revisit as the working relationship settles:
+`.claude/memory/project_agent_latitude_modes.md`.
 
 ## Agent Memory
 
@@ -233,11 +264,25 @@ After any problem discussion (solving, reviewing, or mentioning a problem by num
    Reference: [`recognition_gotchas.md`](docs/foundations/dsa/mastery/recognition_gotchas.md) and
    `.claude/memory/feedback_recognition_gate.md`.
    - ⚠️ **The scaffold now carries the gate (source-fixed Aug 20, 2026).** `new_problem.py` writes a
-     `# ── RECOGNITION — fill BEFORE coding ──` block into every fresh attempt; the learner fills it in
-     the file *before you speak*. **When you DO prompt verbally, name only the SHAPE CUES and ask for
-     the technique — never list candidate techniques.** A gate phrased as a leading multiple-choice
-     (*"is it a monotonic deque or a heap?"*) hands over the answer, which is the exact spoiler that
-     source fix exists to prevent (leaked on 239, Aug 20). See `decisions.yml` `recognition-gate-in-scaffold`.
+     `# ── RECOGNITION — fill BEFORE coding ──` block into every fresh attempt. **When you DO prompt
+     verbally, name only the SHAPE CUES and ask for the technique — never list candidate techniques.**
+     A gate phrased as a leading multiple-choice (*"is it a monotonic deque or a heap?"*) hands over
+     the answer, which is the exact spoiler that source fix exists to prevent (leaked on 239, Aug 20).
+     See `decisions.yml` `recognition-gate-in-scaffold`.
+   - ⚠️ **The learner's TOP-of-method comment IS the call — the block is optional (Aug 21, 2026).**
+     They write the pre-code call as their own comment above the code and use inline comments for
+     mid-code reasoning. **So read the top comment as the call; never re-demand the scaffold block, and
+     never read a blank block as a missing gate.** Filling both is redundant, and being asked to use
+     the form is what makes them route around it. Declined twice on Aug 21, on two machines
+     independently: *"I don't really fill in recognition like that, doesn't feel conversational
+     enough"* · *"I always write my pre-code comment on top."*
+     - **This narrows the Aug 20 source fix without weakening it.** The block was the *means* of
+       contentless prompting, not the end — the invariant is that the coach names no candidate
+       technique, and that is untouched.
+     - **Do not build a mechanism to police comment order.** No tool can prove a comment preceded the
+       code, so enforcement here is trust-based and that is accepted. The ungameable measure is the
+       **cold hit rate over ~15 label-stripped probes**, not per-rep policing. See `decisions.yml`
+       `recognition-call-is-the-top-comment` and `.claude/memory/feedback_recognition_gate.md`.
    - **Then log the call either way — hit AND miss — one dated line in the miss ledger.** A ledger that
      records only misses has **no denominator**: "no entries" and "never asked" look identical, so the
      recognition axis of phase exit ends up judged on the *absence* of evidence. (Found Aug 9, 2026: two

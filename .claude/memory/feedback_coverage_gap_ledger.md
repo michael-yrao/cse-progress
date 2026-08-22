@@ -3,7 +3,7 @@ name: feedback_coverage_gap_ledger
 description: Log what a session did NOT reach as bare open questions — since Aug 13, 2026 this lives in the mock debrief's "Open probes" section, and it is what the midweek deep-dive round runs on
 metadata:
   type: feedback
-reconciled: 2026-08-17
+reconciled: 2026-08-21
 ---
 
 **Set by the learner Aug 9, 2026:**

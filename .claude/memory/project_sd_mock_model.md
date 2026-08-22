@@ -3,7 +3,7 @@ name: project_sd_mock_model
 description: SD = mock interviews on HelloInterview's 35-question board (Aug 13, 2026) — learner studies independently, coach interviews and scores; the three-lane study model is retired
 metadata:
   type: project
-reconciled: 2026-08-17
+reconciled: 2026-08-21
 ---
 
 **Set by the learner Aug 13, 2026**, replacing the three-lane study model outright:

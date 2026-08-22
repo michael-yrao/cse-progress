@@ -3,7 +3,7 @@ name: feedback_midweek_reprice
 description: The weekly build's "what does not fit" verdict has a shelf life of about one session — re-run effort_budget.py after logging results and re-seat from the slip list when headroom opens
 metadata:
   type: feedback
-reconciled: 2026-08-17
+reconciled: 2026-08-21
 ---
 
 **Set by the learner Aug 17, 2026**, on seeing demand fall by a quarter in one morning: *"that is a

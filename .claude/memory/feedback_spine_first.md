@@ -3,7 +3,7 @@ name: feedback-spine-first
 description: Lead every conceptual explanation with the minimal spine (2-3 load-bearing facts); tactics/details only after, or on request
 metadata:
   type: feedback
-reconciled: 2026-08-17
+reconciled: 2026-08-21
 ---
 
 **Lead with the spine.** On any conceptual explanation, open with the **2–3 load-bearing facts

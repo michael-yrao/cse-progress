@@ -3,7 +3,7 @@ name: project-upstream-candidates
 description: Findings from cse-progress that belong in canonical cse-coach, split into shipped-behaviour defects (send now) and new instruments (soak first)
 metadata:
   type: project
-reconciled: 2026-08-17
+reconciled: 2026-08-21
 ---
 
 **Started Aug 9, 2026.** Upstream flow is a **deliberate human PR**, never automatic — one learner's
@@ -145,6 +145,34 @@ identical for all of them.
 | **"Unseen problem on every non-SD day"** | The *principle* is general (a problem seen 3+ times measures retention of that problem's solution, not the technique). The *formulation* is welded to this learner's SD cadence. If it goes up, it goes as the principle |
 | **No-autocomplete typo weighting** | Depends entirely on how a given learner practises |
 | **"attempts" → "reps"** | Cosmetic. Defensible as a default, not worth a PR on its own |
+
+---
+
+## DEFECT (ships without soak) — a probe that EARNS a row becomes unreachable by both retry scripts
+
+**Added Aug 21, 2026, found when 202's retry was scaffolded.**
+
+The probe root exists outside `solutions.roots` so a disposable rep is never discovered — correct, and
+candidate #5 above is the argument for it. **What nothing states is the exit condition.** A probe that
+comes back 🟡/🔴 earns a tracker row and becomes an ordinary review problem, but its *file* stays in the
+probe root, where:
+
+- `new_problem.py` resolves a retry to `<root>/<pattern>/<n>_*.py` and checks for twins with
+  `<root>/*/<n>_*.py` — neither reaches outside `solutions.roots`, so it **mints a second file** and
+  forks the attempt history. That is exactly what the twin check exists to prevent, defeated by a path
+  the check cannot see.
+- `restore_history.py` keys a stash back with the same glob, so the extracted prior attempts are
+  **orphaned** — extracted at scaffold time, never restored, and the file ships blank.
+
+Both failures are silent and appear only at the *second* rep, potentially weeks later.
+
+**Fix:** state the exit condition wherever the probe root is documented — *when a probe earns a tracker
+row, move its file into the tracked tree in the same edit.* Rung 1 would be `new_problem.py` widening
+its twin search to the probe root and offering the move, which turns a remembered step into a prompted
+one.
+
+**Generality:** not learner-specific. Any adopter with a probe/disposable root has the same hole the
+moment a probe comes back non-🟢, which is the case the mechanism is *designed* to produce.
 
 ---
 

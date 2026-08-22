@@ -3,7 +3,7 @@ name: feedback_operating_principles
 description: North-star operating principles for this repo — the "why" behind every specific process/coaching feedback; read this first
 metadata:
   type: feedback
-reconciled: 2026-08-17
+reconciled: 2026-08-21
 ---
 
 The specific feedback memories in this repo are instances of **two overarching principles**. Read this first; it tells you how to generalize to situations the specific rules don't literally cover.
@@ -15,7 +15,11 @@ The user's job is to solve problems and report comfort. **Everything else — ke
 1. the solution `.py` under `dsa/leetcode/<type>/`
 2. `docs/foundations/dsa/mastery/dsa_progress.md` (tracker: comfort, streak, dates)
 3. the weekly schedule (strike through what's done; slot future due dates)
-4. git remote (commit **and** push)
+4. git remote — ⚠️ **staged and REPORTED, never committed or pushed unasked.** [[feedback_batch_commits]]
+   (Aug 16, 2026): *"ask me before you commit and push, always."* Closing the loop here means the work is
+   ready and the learner has been told what would land — the publishing decision is theirs, and reading
+   this item as "push proactively" is what produced ~12 unasked commits on Aug 17.
+   *(Caught Aug 21, 2026 during the reconcile pass.)*
 
 Plus forward-looking maintenance runs automatically: proactively slot upcoming due problems, generate next week's schedule before the week starts, detect and fix out-of-order/displaced problems, respect the daily effort ceiling.
 

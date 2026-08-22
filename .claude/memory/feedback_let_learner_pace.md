@@ -3,7 +3,7 @@ name: feedback_let_learner_pace
 description: Don't drive progression — answer what was asked, then STOP; no "ready for the next one?" tail. The learner controls when to advance.
 metadata:
   type: feedback
-reconciled: 2026-08-20
+reconciled: 2026-08-21
 ---
 
 ⭐ **FLAT DISCIPLINE (set by the learner Aug 20, 2026): end every turn at the answer; the learner

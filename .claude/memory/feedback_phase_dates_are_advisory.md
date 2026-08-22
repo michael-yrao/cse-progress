@@ -3,7 +3,7 @@ name: feedback-phase-dates-are-advisory
 description: Phase end-dates are checkpoints, not deadlines — an unfinished phase carries forward; never manufacture urgency from the calendar
 metadata:
   type: feedback
-reconciled: 2026-08-17
+reconciled: 2026-08-21
 ---
 
 **Set by the learner Aug 5, 2026,** on being shown that 0 of 5 Advanced Graphs algorithms had a 🟢 with

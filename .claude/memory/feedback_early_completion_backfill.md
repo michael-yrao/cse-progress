@@ -3,7 +3,7 @@ name: feedback_early_completion_backfill
 description: When a problem finished early frees a future day below its effort floor, ASK the user before backfilling that slot
 metadata:
   type: feedback
-reconciled: 2026-08-17
+reconciled: 2026-08-21
 ---
 
 When the learner finishes a scheduled problem **early**, it vacates that problem's future slot. If
