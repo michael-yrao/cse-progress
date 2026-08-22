@@ -148,9 +148,19 @@ identical for all of them.
 
 ---
 
-## DEFECT (ships without soak) — every hook script is silently dead on a Windows console
+## ✅ SHIPPED Aug 21, 2026 (`cse-coach@e67d201`) — every hook script was silently dead on Windows
 
-**Added Aug 21, 2026, found when a pre-commit run printed a traceback where the report belonged.**
+**Found when a pre-commit run printed a traceback where the report belonged.** Promoted the same
+night, no soak: canonical had the identical defect — **11 of its 13 scripts print non-ASCII and its
+hook invokes Python 12 times**, with nothing setting the encoding anywhere. Ported `_console.py`, the
+`force_utf8()` call in all 13 scripts, and the `PYTHONIOENCODING` export.
+
+⭐ **Worth keeping as the model of what "defect, no soak" means in practice:** the finding was
+reproduced *in canonical* before porting (a survey script crashed on the very bug it was measuring),
+and the port was verified there — every script `--help`s, all 4 test modules import, the 20
+fixture-free tests pass, and the three emoji-printing scripts run with `PYTHONIOENCODING` unset.
+**pytest is not installed on that machine, so 12 fixture-taking tests did not run** — recorded rather
+than glossed as a green suite.
 
 Git runs `.githooks/pre-commit` with a console in the system ANSI codepage (cp1252 on Windows).
 Python inherits it, so the **first emoji any script prints** — `✅`, `⚠️`, a comfort glyph inside a
