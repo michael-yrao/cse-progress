@@ -3,20 +3,22 @@ name: feedback_recognition_gate
 description: Front-gate every rep — learner states shape→technique+why (as their pre-code comment, pasted in chat) BEFORE coding; complexity gate still fires at the end
 metadata:
   type: feedback
-reconciled: 2026-08-21
+reconciled: 2026-08-22
 ---
 
-⭐ **SOURCE-FIXED Aug 20, 2026 — the gate is now written INTO the scaffold, not delivered by
-the coach.** `new_problem.py` writes a `# ── RECOGNITION — fill BEFORE coding ──` block (shape
-cues → technique → discriminator) at the top of every fresh attempt, on all four scaffold paths
-(new single/multi, retry single/sibling-class). The learner fills it in the file *before the
-coach speaks*, and on a retry the prior attempt's filled-in answer is stashed out like any other
-prior work, so a fresh empty prompt is what's on screen.
+⭐ **REMOVED Aug 22, 2026 — the scaffold no longer prints a RECOGNITION block.** The Aug 20 source
+fix wrote a `# ── RECOGNITION — fill BEFORE coding ──` block (shape → technique → discriminator) into
+every fresh attempt. The learner declined it as a format twice on Aug 21 (two machines) and asked to
+remove it outright Aug 22 — *"I always write underneath."* `new_problem.py`'s `recognition_block()`
+now returns `[]` and the template's `{recognition}` line is gone, so a fresh attempt goes straight
+from the Attempt banner to the `def`. **The gate itself did not change:** the learner's own
+top-of-method comment IS the pre-code call, and it lands before the coach speaks by habit rather than
+by a printed prompt. See `decisions.yml` `recognition-block-removed-from-scaffold`.
 
-⚠️ **NARROWED Aug 21, 2026 — read the bottom section of this file before acting on the paragraph
-above.** The block is an *optional* place to record the call, not a required form: the learner's own
-top-of-method comment is the call, and a blank block is not a missing gate. The contentless-prompting
-invariant is untouched.
+*(History, Aug 20–21: the block was added as a source fix — a verbally-delivered gate can leak the
+technique by naming candidates, done on 239 — then narrowed Aug 21 to optional once the learner's top
+comment was recognized as the call. Aug 22 completes that arc by dropping the block. The
+contentless-prompting invariant below is untouched throughout.)*
 
 **Why the source fix:** when the coach delivers the gate verbally, the coach can leak the
 technique by *naming candidates* — done Aug 20, 2026 on 239 (*"what makes it a monotonic deque

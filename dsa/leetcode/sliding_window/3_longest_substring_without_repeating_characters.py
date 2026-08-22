@@ -19,6 +19,37 @@ from typing import List, Optional
 
 
 class Solution:
+
+    # ── Attempt · 2026-08-22 ──────────────
+    # ── RECOGNITION — fill BEFORE coding, before the coach says anything ──
+    #   shape cues seen →
+    #   technique →
+    #   discriminator (why this, not the nearest neighbour) →
+    def lengthOfLongestSubstring_20260822(self, s: str) -> int:
+        # dynamic sliding window
+        # keep a variable to keep track of longest
+        # use a set to keep track of what is in the window
+        
+        longest = -math.inf
+
+        currentWindow = set()
+        l = r = 0
+
+        while r < len(s):
+            # while s[r] is in the set, remove it
+            while s[r] in currentWindow:
+                currentWindow.remove(s[l])
+                l+=1
+            # now that we are safe to add to currentWindow, we do that
+            currentWindow.add(s[r])
+            # check if we can update longest
+            longest = max(longest, r - l + 1)
+            r+=1
+
+        if longest == -math.inf:
+            return 0
+        return longest # type: ignore
+
     # ── Attempt 1 · 2026-07-23 ────────────────────────────────────────────
     def lengthOfLongestSubstring(self, s: str) -> int:
         # no repeating characters = set

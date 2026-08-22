@@ -61,6 +61,42 @@ Follow up: Could you write a generalized algorithm to work on any possible set o
 from typing import List
 
 
+# ── Attempt · 2026-08-22 ──────────────
+class Solution_20260822:
+# prefix length framing
+# we use any special char as a way to distinguish current char and next
+# we prefix all of this with the length of each string
+    def encode(self, strs: List[str]) -> str:
+        # having a bit of fun today and doing array of strings
+        # this avoids us creating new strings each time
+        # but we are using a lot of arrays which doesn't really save space
+        result = []
+        for string in strs:
+            singleString = []
+            lenStr = str(len(string))
+            singleString.append(lenStr)
+            singleString.append('#')
+            singleString.append(string)
+            appendString = "".join(singleString)
+            result.append(appendString)
+        return "".join(result)
+
+    def decode(self, s: str) -> List[str]:
+        # 'two pointers' technique
+        result = []
+        i = 0
+        while i < len(s):
+            j = i + 1
+            while s[j] != '#':
+                j+=1
+            # now we have i to j, exclusive of j is the length
+            lenString = int(s[i:j])
+            # the actual string would be j+1 to j+1+lenString
+            actualString = s[j+1:j+1+lenString]
+            result.append(actualString)
+            i = j + 1 + lenString
+        return result
+
 # ── Attempt · 2026-08-12 ──────────────
 # NOTE: suffix any helper you write with _20260812 — an undated helper collides with the restored canonical one.
 class Solution_20260812:

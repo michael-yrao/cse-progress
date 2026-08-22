@@ -23,6 +23,54 @@ Constraints:
 """
 
 
+# ── Attempt · 2026-08-22 ──────────────
+# NOTE: suffix any helper class you write (Node, TrieNode, …) with _20260822 too — an undated helper collides with the restored canonical one.
+class TrieNode_20260822:
+    def __init__(self):
+        # char -> TrieNode_20260822 map
+        self.children = {}
+        self.isWord = False
+
+class WordDictionary_20260822:
+
+    def __init__(self):
+        self.root = TrieNode_20260822()
+
+    def addWord(self, word: str) -> None:
+        # this is basic add word into a Trie
+        traversal = self.root
+        for char in word:
+            if char not in traversal.children:
+                traversal.children[char] = TrieNode_20260822()
+            traversal = traversal.children[char]
+        traversal.isWord = True
+
+    def search(self, word: str) -> bool:
+        # searching for a regular word is nothing hard but we need to consider the wildcard
+        # if we see wildcard, we need to skip the current character and look at every child
+        # so this is DFS to find a word in that scenario
+        # skipping node and skipping char so we need two parameters in dfs
+        traversal = self.root
+        def dfs(node, startingIndex):
+            while startingIndex < len(word):
+                char = word[startingIndex]
+                # basic case that it is a char in the Trie
+                if char in node.children:
+                    node = node.children[char]
+                # if char is wildcard, skip char and node
+                elif char == '.':
+                    # go through all childrens of node
+                    for neighbor in node.children.values():
+                        if dfs(neighbor, startingIndex+1):
+                            return True
+                    return False
+                else:
+                    return False
+                startingIndex+=1
+            return node.isWord
+        
+        return dfs(traversal, 0)
+
 # ── Attempt · 2026-08-12 ──────────────
 # NOTE: suffix any helper class you write (Node, TrieNode, …) with _20260812 too — an undated helper collides with the restored canonical one.
 # Word Data Structure is Trie, so create TrieNode class to start
