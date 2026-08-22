@@ -3,7 +3,7 @@ name: feedback_quantify_qualify
 description: In system design, drill quantify (a number on every claim) + qualify (condition + boundary on every choice) at every framework step
 metadata:
   type: feedback
-reconciled: 2026-08-17
+reconciled: 2026-08-21
 ---
 
 Standing SD coaching discipline (learner requested Jul 20, 2026): push the learner to **quantify and

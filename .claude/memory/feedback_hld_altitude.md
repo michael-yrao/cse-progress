@@ -3,7 +3,7 @@ name: feedback_hld_altitude
 description: In system design, the learner defaults to LLD (storage shape, data structures, DB internals) — hold them at HLD altitude through steps 1–4
 metadata:
   type: feedback
-reconciled: 2026-08-17
+reconciled: 2026-08-21
 ---
 
 The learner thinks like an implementer and **defaults to low-level design** in system-design

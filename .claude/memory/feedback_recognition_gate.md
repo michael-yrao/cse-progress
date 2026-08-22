@@ -13,6 +13,11 @@ cues → technique → discriminator) at the top of every fresh attempt, on all 
 coach speaks*, and on a retry the prior attempt's filled-in answer is stashed out like any other
 prior work, so a fresh empty prompt is what's on screen.
 
+⚠️ **NARROWED Aug 21, 2026 — read the bottom section of this file before acting on the paragraph
+above.** The block is an *optional* place to record the call, not a required form: the learner's own
+top-of-method comment is the call, and a blank block is not a missing gate. The contentless-prompting
+invariant is untouched.
+
 **Why the source fix:** when the coach delivers the gate verbally, the coach can leak the
 technique by *naming candidates* — done Aug 20, 2026 on 239 (*"what makes it a monotonic deque
 rather than a stack or a heap?"*), which handed over the exact thing a new problem measures. Per

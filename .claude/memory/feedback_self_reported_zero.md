@@ -3,7 +3,7 @@ name: feedback_self_reported_zero
 description: When the learner says they don't have something down, assume ZERO retention — re-teach from the top, never build on the part you think landed
 metadata:
   type: feedback
-reconciled: 2026-08-17
+reconciled: 2026-08-21
 ---
 
 **When the learner says they don't have a topic down, plan for the worst case: they kept *none* of it.**

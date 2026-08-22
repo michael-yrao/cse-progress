@@ -3,7 +3,7 @@ name: feedback_expand_acronyms
 description: expand every acronym in parentheses on first use in a session — system design and networking material is dense with them and the learner is 10 years out from school
 metadata:
   type: feedback
-reconciled: 2026-08-17
+reconciled: 2026-08-21
 ---
 
 **Expand every acronym on first use, inline, in parentheses** — "VPC (Virtual Private Cloud)", "RTT

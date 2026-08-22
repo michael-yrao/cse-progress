@@ -3,7 +3,7 @@ name: feedback-phase-exit-per-algorithm
 description: Phase exit is judged per ALGORITHM (recognition + execution), not per problem row — "every problem 🎓 Graduated" is arithmetically impossible and gates nothing; carried gaps must be named and scheduled
 metadata:
   type: feedback
-reconciled: 2026-08-17
+reconciled: 2026-08-21
 ---
 
 **Set by the learner Jul 26, 2026:** *"the goal at end of each phase is that every single algorithm

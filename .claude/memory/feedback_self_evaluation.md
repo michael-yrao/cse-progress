@@ -3,7 +3,7 @@ name: feedback_self_evaluation
 description: On any self-correction, append a note to self_eval_log.md; periodically meta-review the log to promote recurring mistakes into durable rules
 metadata:
   type: feedback
-reconciled: 2026-08-17
+reconciled: 2026-08-21
 ---
 
 Run a continuous self-improvement loop so mistakes convert into durable rules instead of silently recurring.

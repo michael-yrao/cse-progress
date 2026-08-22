@@ -37,6 +37,35 @@
 # "could a rule written before this still read as correct while now being wrong?"
 
 decisions:
+  - id: two-registers-latitude-vs-stringency
+    date: 2026-08-21
+    summary: >-
+      Rules are now SCOPED to a register instead of reading as universal. DELIBERATIVE work (thinking,
+      planning, researching, teaching, interviewing) is unbounded in content — only the packaging rules
+      (turn economy, register, pacing, no-spoilers, answer-length) bind. MECHANICAL work (implementing,
+      bookkeeping, pulling a stated detail) follows every checklist as a hard gate. The test: would a
+      second competent agent produce the same artifact? Yes -> mechanical. Gates (recognition,
+      complexity, links, ask-before-commit) are mechanical steps that fire DURING deliberative work, so
+      "I was teaching" never excuses a skipped one. Any rule written for a status report must be
+      re-read before being applied to an explanation. Options for subagents and hooks were logged and
+      held with state triggers — see project_agent_latitude_modes.
+    affects: [operating_principles, answer_length, turn_economy, self_evaluation, teaching]
+
+  - id: recognition-call-is-the-top-comment
+    date: 2026-08-21
+    summary: >-
+      The learner's own TOP-of-method comment IS the pre-code recognition call; inline comments are
+      mid-code reasoning. The scaffold's RECOGNITION block is an OPTIONAL place to record the call,
+      never a required form — do not re-demand it when the top comment already carries the call, and
+      do not read a blank block as a missing gate. Narrows recognition-gate-in-scaffold (Aug 20),
+      whose block was the MEANS of contentless prompting, not the end: prompting still names shape
+      cues only, never candidate techniques. Learner declined the block as a format twice on Aug 21,
+      on two machines independently ("doesn't feel conversational enough" / "I always write my
+      pre-code comment on top"). Enforcement is trust-based and accepted — no tool can prove a
+      comment preceded the code; the honest measure is the label-stripped probe hit rate over ~15
+      probes, not per-rep policing.
+    affects: [recognition_gate, scaffolding, no_spoilers]
+
   - id: recognition-gate-in-scaffold
     date: 2026-08-20
     summary: >-

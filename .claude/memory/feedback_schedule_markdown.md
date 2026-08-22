@@ -3,7 +3,7 @@ name: feedback_schedule_markdown
 description: In schedule markdown, escape the period on bullets that start with a bare problem number so they don't render as roman-numeral ordered lists
 metadata:
   type: feedback
-reconciled: 2026-08-17
+reconciled: 2026-08-21
 ---
 
 In schedule/preview markdown, a bullet that **starts with a bare number followed by a period** (`- 143. Reorder List`) gets parsed by many renderers as a nested ordered list beginning at that number, and the marker is styled as lowercase roman numerals (e.g. `143.` → `cxliii.`). The text after it still shows, but the number is replaced by a garbled roman-numeral marker.

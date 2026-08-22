@@ -3,7 +3,7 @@ name: project-concepts-lane-port-pending
 description: SD "concepts lane" — built in cse-progress Jul 25-26 2026, ported up to cse-coach Jul 26; port is DONE, kept only for the finding behind it (the pull model cannot catch concepts)
 metadata:
   type: project
-reconciled: 2026-08-17
+reconciled: 2026-08-21
 ---
 
 **Status: ported, Jul 26, 2026.** All three gaps are closed in cse-coach — lane ② fallback in

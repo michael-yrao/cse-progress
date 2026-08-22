@@ -3,7 +3,7 @@ name: feedback-interactive-learning
 description: For conceptually heavy topics, drive learning with active-recall formats (derive-the-design, Socratic, failure-mode drills) — not explanation dumps
 metadata:
   type: feedback
-reconciled: 2026-08-17
+reconciled: 2026-08-21
 ---
 
 **Conceptually heavy topics get an active format, not an explanation.** The learner explicitly asked

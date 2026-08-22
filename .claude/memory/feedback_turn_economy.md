@@ -3,7 +3,7 @@ name: feedback-turn-economy
 description: In interactive derive/Socratic sessions, one job per turn and push rich reference (tables, mnemonics, full derivations) into the written note, not the chat
 metadata:
   type: feedback
-reconciled: 2026-08-17
+reconciled: 2026-08-21
 ---
 
 **In interactive coaching (derive-the-design, Socratic pushback, failure-mode drills), keep each

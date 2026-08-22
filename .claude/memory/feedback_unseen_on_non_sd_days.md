@@ -3,7 +3,7 @@ name: feedback-unseen-on-non-sd-days
 description: Standing rule — every day with no SD slot must carry at least one unseen problem (new intake or a recognition probe)
 metadata:
   type: feedback
-reconciled: 2026-08-17
+reconciled: 2026-08-21
 ---
 
 **Set by the learner Aug 9, 2026:** *"I want to always have new or probe problems on days that have no

@@ -3,7 +3,7 @@ name: project-recognition-probes
 description: Weekly cold recognition probe — one unseen LC problem/week from an already-🟢 technique, label stripped, disposable (no tracker row on 🟢)
 metadata:
   type: project
-reconciled: 2026-08-17
+reconciled: 2026-08-21
 ---
 
 **Adopted by the learner Aug 9, 2026:** *"I want to improve my ability to recognize patterns in a
@@ -73,10 +73,23 @@ weekly build; it will sometimes displace a due review, and that is the trade bei
 ## ⚠️ The scaffold path is a spoiler — this rep needs its own root
 
 `new_problem.py` writes to `dsa/leetcode/<pattern>/<number>_<name>.py`. **The path names the technique**,
-so scaffolding a probe the normal way hands over the answer before the statement is read. Use a neutral
-root (`dsa/leetcode/probes/`), which **does double duty**: a root outside `solutions.roots` is also the
+so scaffolding a probe the normal way hands over the answer before the statement is read. Use the neutral
+root **`dsa/probes/`**, which **does double duty**: a root outside `solutions.roots` is also the
 preferred way to stop `update_review_dates.py` auto-resurrecting a row for a problem deliberately left
 untracked (the discovery-resurrection trap that bites both disposable reps and graduation).
+
+⚠️ **This once said `dsa/leetcode/probes/` — corrected Aug 21, 2026. That path is INSIDE
+`solutions.roots: ["dsa/leetcode"]`**, so every probe ever run would have been discovered and given a
+tracker row, which is the exact cost the neutral root exists to avoid. The live directory has always
+been `dsa/probes/` (see [`dsa/probes/README.md`](../../dsa/probes/README.md), which states the rule
+correctly); only this file was wrong.
+
+⭐ **And the converse rule, learned Aug 21, 2026 on 202: when a probe comes back 🟡/🔴 and earns a row,
+MOVE the file into `dsa/leetcode/<pattern>/` in the same edit.** Left in `dsa/probes/`, it becomes a
+tracked problem that **neither retry script can reach** — `new_problem.py` resolves retries under
+`solutions.roots` and would mint a second file, forking the attempt history; `restore_history.py` keys
+stashes back by the same glob and would orphan them. The probe root protects an *untracked* rep; once a
+row exists the protection is over and the file belongs with the tracked problems.
 
 **Also strip the label everywhere else:** don't name the pattern, the topic tag, or the neighbouring
 problems when presenting it. The learner states **shape → technique → the one feature that picks it**

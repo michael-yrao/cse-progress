@@ -3,7 +3,7 @@ name: feedback_no_code_edits
 description: Never edit .py files under dsa/ — user writes all LeetCode solution code themselves
 metadata:
   type: feedback
-reconciled: 2026-08-17
+reconciled: 2026-08-21
 ---
 
 Never edit any `.py` files under `dsa/`. The user writes and maintains all LeetCode solution code themselves.

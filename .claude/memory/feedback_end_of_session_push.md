@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: feedback
   originSessionId: 52e81ee3-fbd0-48e9-a646-216c288288cf
-reconciled: 2026-08-17
+reconciled: 2026-08-21
 ---
 
 ⚠️ **AMENDED Aug 16, 2026 — this rule now ENDS IN A QUESTION, not an action.** [[feedback_batch_commits]] supersedes the acting half: *"ask me before you commit and push, always."*
