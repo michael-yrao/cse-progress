@@ -30,6 +30,45 @@ from typing import List, Optional
 
 
 class Solution:
+
+    # ── Attempt · 2026-08-21 ──────────────
+    # ── RECOGNITION — fill BEFORE coding, before the coach says anything ──
+    #   shape cues seen →
+    #   technique →
+    #   discriminator (why this, not the nearest neighbour) →
+    def evalRPN_20260821(self, tokens: List[str]) -> int:
+        # stack, ideally we store indices by default
+        # but since we need to stored calc'd numbers with no indices
+        # we need to store the values instead
+        # if not operator, push in
+        # if operator, pop two, calc result, push in result
+
+        operators = {'+','-','*','/'}
+        stack = []
+
+        for token in tokens:
+            # if number, just add to stack
+            if token not in operators:
+                stack.append(token)
+            # if not token, pop twice
+            else:
+                if not stack:
+                    return -1
+                secondNumber = int(stack.pop())
+                firstNumber = int(stack.pop())
+                result = 0
+                if token == '-':
+                    result = firstNumber - secondNumber
+                elif token == '+':
+                    result = firstNumber + secondNumber
+                elif token == '*':
+                    result = firstNumber * secondNumber
+                elif token == '/':
+                    result = firstNumber / secondNumber
+                stack.append(result)
+        
+        return int(stack[-1])
+
     # ── Attempt 1 · 2026-08-11 ────────────────────────────────────────────
     def evalRPN(self, tokens: List[str]) -> int:
         # push when we see number

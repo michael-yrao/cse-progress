@@ -443,7 +443,13 @@ techniques:
     min_problems: 2
     variants:
       - {name: Seen-Set}
-      - {name: Floyd Fast/Slow, queued: "rated:202"}
+      # Trigger FIRED and was HELD, Aug 21, 2026. `rated:202` was satisfied by that day's rep —
+      # which came back 🟡, leaving this technique with no 🟢. The standing rule is that a
+      # technique at 🟡 needs a CONVERSION rep, not a second surface form: adding Floyd here
+      # would manufacture a second row at ~73 units/year on a skill whose first form is not yet
+      # proven. Re-stated as a STATE condition so it cannot expire silently the way a bare date
+      # or a spent trigger does.
+      - {name: Floyd Fast/Slow, queued: "green:202"}
     problems:
       - {number: 202, method: Seen-Set}
 

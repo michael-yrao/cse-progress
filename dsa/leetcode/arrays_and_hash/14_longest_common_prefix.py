@@ -36,6 +36,26 @@ from typing import List
 import unittest
 
 class Solution:
+
+    # ── Attempt · 2026-08-21 ──────────────
+    # ── RECOGNITION — fill BEFORE coding, before the coach says anything ──
+    #   shape cues seen →
+    #   technique →
+    #   discriminator (why this, not the nearest neighbour) →
+    def longestCommonPrefix_20260821(self, strs: List[str]) -> str:
+        # the longest possible is min of strs
+        # so we just loop through and compare on shortestString
+        shortestString = min(strs)
+
+        result = []
+        for i in range(len(shortestString)):
+            for string in strs:
+                if string[i] != shortestString[i]:
+                    return "".join(result)
+            result.append(shortestString[i])
+        
+        return "".join(result)
+
     def longestCommonPrefix(self, strs: List[str]) -> str:
         prefix = ""
 
