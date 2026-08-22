@@ -28,6 +28,12 @@ from __future__ import annotations
 import subprocess
 from datetime import datetime, timedelta
 
+# Git runs hooks with a cp1252 console on Windows; the first emoji printed would
+# otherwise kill the script mid-report while the commit still succeeds. See _console.
+import _console
+
+_console.force_utf8()
+
 # Before this hour, a session is assumed to possibly belong to the previous day.
 # 05:00 is late enough to cover a long night and early enough that a genuine
 # early-morning start is not misread (nobody in this repo's history starts at 04:00).

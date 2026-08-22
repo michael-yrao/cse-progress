@@ -29,6 +29,12 @@ import math
 import re
 from pathlib import Path
 
+# Git runs hooks with a cp1252 console on Windows; the first emoji printed would
+# otherwise kill the script mid-report while the commit still succeeds. See _console.
+import _console
+
+_console.force_utf8()
+
 REPO = Path(__file__).resolve().parent.parent
 TRACKER = REPO / "docs/foundations/dsa/mastery/dsa_progress.md"
 CONFIG = REPO / "cse.config.yml"

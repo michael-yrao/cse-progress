@@ -44,6 +44,12 @@ import re
 import sys
 from pathlib import Path
 
+# Git runs hooks with a cp1252 console on Windows; the first emoji printed would
+# otherwise kill the script mid-report while the commit still succeeds. See _console.
+import _console
+
+_console.force_utf8()
+
 # Findings below carry ⚠️ / ✅ glyphs. On a stock Windows console (cp1252) printing them
 # raises UnicodeEncodeError — and the pre-commit hook invokes this with `|| true`, so the
 # traceback is SWALLOWED and the check reads as installed while having reported nothing.

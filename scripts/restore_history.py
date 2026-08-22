@@ -36,6 +36,12 @@ from new_problem import (
     strip_spoiler_region,
 )
 
+# Git runs hooks with a cp1252 console on Windows; the first emoji printed would
+# otherwise kill the script mid-report while the commit still succeeds. See _console.
+import _console
+
+_console.force_utf8()
+
 # `def maxPathSum_20260713(...)` or `class Solution_20260713:` / `class StockSpanner_20260713:`
 # — the dated attempt. The class arm matches ANY dated class name, not just `Solution`, so a
 # design problem (StockSpanner, LRUCache, …) is correctly seen as attempted.
