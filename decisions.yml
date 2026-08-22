@@ -37,6 +37,40 @@
 # "could a rule written before this still read as correct while now being wrong?"
 
 decisions:
+  - id: technique-comfort-audit
+    date: 2026-08-22
+    summary: >-
+      New weekly artifact `mastery/technique_comfort_audit.md` and generator
+      `scripts/technique_comfort_audit.py`, at the learner's request. A technique-keyed
+      PROGRESSION view (distinct from technique_coverage.md, which is gap-keyed): per-technique
+      comfort = demonstrated ceiling, auto-rolled from the tracker by reusing the coverage join;
+      coverage counts temper it; WHY-lines are hand-authored and PRESERVED across regens; and a
+      FUTURE section lists roadmap algorithms not yet started (⚪) with a why, preserved verbatim
+      between markers. Refreshed at the weekly build (step 7), NOT the pre-commit hook — it is a
+      weekly artifact and per-commit churn would fight the preserved narrative. Adds nothing to the
+      engine's computed values; it is a reporting surface only, so no rule written before it can go
+      stale because of it. Carries a generated "Needs work" callout at the top (zero-green weakest-first,
+      then thin-green) that is the weekly build's PULL-ORDER source, with the priority ruling:
+      🔴/🟡 conversions > overdue 🟢 cleans > thin-green fills + probes — a zero-green technique outranks
+      discretionary work and fresh cleans, but NOT a clean aged far past its interval (that is a
+      retention risk that makes new demand and must still be serviced).
+    affects: [weekly_build, technique_coverage, reporting, effort_budget]
+
+  - id: recognition-block-removed-from-scaffold
+    date: 2026-08-22
+    summary: >-
+      The RECOGNITION block is no longer written into scaffolds. new_problem.py's
+      recognition_block() is disabled (returns []) and the template's {recognition} line is
+      removed, so fresh attempts go straight from the Attempt banner to the def. Completes
+      recognition-call-is-the-top-comment (Aug 21), which had already made the block optional
+      after the learner declined it as a format twice; on Aug 22 they asked to remove it
+      outright ("I always write underneath"). The gate itself is UNCHANGED — the learner's
+      top-of-method comment is still the pre-code call, and the coach still fires it verbally
+      with SHAPE CUES ONLY, never candidate techniques (the 239 leak). Anti-spoiler protection
+      now rests on that habit plus coach discipline, not on a printed prompt. Supersedes the
+      MEANS of recognition-gate-in-scaffold (Aug 20); its END (contentless prompting) stands.
+    affects: [recognition_gate, scaffolding, no_spoilers]
+
   - id: two-registers-latitude-vs-stringency
     date: 2026-08-21
     summary: >-

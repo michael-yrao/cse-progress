@@ -35,6 +35,34 @@ from typing import List
 
 class Solution:
 
+    # ── Attempt · 2026-08-22 ──────────────
+    # ── RECOGNITION — fill BEFORE coding, before the coach says anything ──
+    #   shape cues seen →
+    #   technique →
+    #   discriminator (why this, not the nearest neighbour) →
+    def maxSubArrayPrefixMin_20260822(self, nums: List[int]) -> int:
+        # prefix sum method today
+        # subarray sum = prefix[j] - prefix[i]
+        # to maximize subarray sum, we maximize prefix[j] or minimize prefix[i]
+        # we will store prefix[j] as prefix subarray
+        # then we will keep track of the smallest prefix[i]
+
+        # len + 1 because we need to check all values
+        prefix = [0] * (len(nums) + 1)
+
+        for i in range(1,len(prefix)):
+            prefix[i] = prefix[i-1] + nums[i-1]
+        
+        minPrefix = 0
+        maxSum = -math.inf
+        for i in range(1, len(prefix)):
+            # prefix[j] is our current value
+            currentPrefixSum = prefix[i]
+            maxSum = max(maxSum, currentPrefixSum - minPrefix)
+            minPrefix = min(minPrefix, currentPrefixSum)
+        
+        return maxSum # type: ignore
+
     # ── Attempt · 2026-08-20 ──────────────
     def maxSubArray_20260820(self, nums: List[int]) -> int:
         # subarray sum = prefixSum

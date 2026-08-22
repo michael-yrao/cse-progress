@@ -40,6 +40,47 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-08-22 ──────────────
+    # ── RECOGNITION — fill BEFORE coding, before the coach says anything ──
+    #   shape cues seen →
+    #   technique →
+    #   discriminator (why this, not the nearest neighbour) →
+    def swimInWater_20260822(self, grid: List[List[int]]) -> int:
+        # we have a starting point of [0][0] and an end point of [rows-1][cols-1]
+        # we can't move off any grid unless time is greater
+        # at each iteration, we are moving to the lowest
+        # Dijkstra -> has start/end, using lowest greedily = minHeap
+        # we do need a visited set and no adjMap since we are in a 2D grid
+
+        rows, cols = len(grid), len(grid[0])
+        minHeap = []
+        visited = set()
+        time = 0
+
+        # we are starting with the node at (0,0) so we will initialize minHeap there
+
+        heapq.heappush(minHeap, (grid[0][0], 0, 0))
+        neighbors = [[1,0],[-1,0],[0,1],[0,-1]]
+        while minHeap:
+            # we can go as far as we can when we are under time, so let's do that
+            while time >= minHeap[0][0]:
+                # knowing we can go means we should now pop this node
+                nodeElevation, nodeRow, nodeCol = heapq.heappop(minHeap)
+                # mark as visited. big diff between BFS and Dijkstra's is where we add to visited
+                visited.add((nodeRow, nodeCol))
+                # we need to look for our stopping point
+                if nodeRow == rows - 1 and nodeCol == cols - 1:
+                    return time
+                # now let's add the neighbors to the minHeap
+                for ir, ic in neighbors:
+                    nr, nc = nodeRow + ir, nodeCol + ic
+                    if nr >= 0 and nr < rows and nc >= 0 and nc < cols and (nr,nc) not in visited:
+                        heapq.heappush(minHeap, (grid[nr][nc], nr, nc))
+            # increment time
+            time+=1
+        
+        return time
+
     # ── Attempt · 2026-08-12 ──────────────
     def swimInWater_20260812(self, grid: List[List[int]]) -> int:
         # this is Dijkstra at a glance because we have an end goal destination

@@ -6,7 +6,7 @@
 
 > The tracker is keyed by **problem**; this is keyed by **technique**. Use it at the weekly build to decide what to pull, and at phase exit to check the per-algorithm bar (recognition + execution, ≥1 🟢 each).
 
-> **54/54** techniques started &nbsp;·&nbsp; **9** with no 🟢 &nbsp;·&nbsp; **19** thin &nbsp;·&nbsp; **0** unqueued variant gaps
+> **54/54** techniques started &nbsp;·&nbsp; **8** with no 🟢 &nbsp;·&nbsp; **19** thin &nbsp;·&nbsp; **0** unqueued variant gaps
 
 ## ⚠️ Action list
 
@@ -14,12 +14,11 @@
 
 - **BFS on Implicit Graph** (graphs) — best 🟡 across 127
 - **Cycle Detection in an Iterated Sequence** (graphs) — best 🟡 across 202
-- **Dijkstra** (advanced_graphs) — best 🟡 across 743, 778
 - **Floyd-Warshall (all-pairs shortest path)** (advanced_graphs) — best 🟡 across 1334
 - **Graph Clone (DFS + Hash Map)** (graphs) — best 🟡 across 133
 - **Hierholzer (Eulerian path)** (advanced_graphs) — best 🟡 across 332, 332
 - **Length-Prefix Encoding** (arrays_and_hash) — best 🟡 across 271
-- **Monotonic Deque** (stack) — best 🔴 across 239
+- **Monotonic Deque** (stack) — best 🟡 across 239
 - **Stack (expression evaluation)** (stack) — best 🟡 across 150
 
 **Thin — fewer than the 3–4 surface forms a technique needs.** One instance trains recall of that problem, not the skill.
@@ -49,7 +48,7 @@
 | Technique | Family | Problems | Best | 🟢 | Variants | Gaps |
 |---|---|---:|:---:|:---:|---|---|
 | Bellman-Ford | advanced_graphs | 1 (787) | 🟢 | ✅ | Standard ×1 · ~~Contrast rep on 743~~ *(queued: `graduates:743`)* | thin (1/3) |
-| Dijkstra | advanced_graphs | 2 (743, 778) | 🟡 | ❌ | — | **no-green** · thin (2/3) |
+| Dijkstra | advanced_graphs | 2 (743, 778) | 🟢 | ✅ | — | thin (2/3) |
 | Floyd-Warshall (all-pairs shortest path) | advanced_graphs | 1 (1334) | 🟡 | ❌ | — | **no-green** · thin (1/3) |
 | Hierholzer (Eulerian path) | advanced_graphs | 1 *+1v* (332) | 🟡 | ❌ | pre-sorted adjacency ×1 · min-heap ordering ×1 | **no-green** · thin (1/3) |
 | Prim's MST | advanced_graphs | 1 (1584) | 🟢 | ✅ | Prim's MST ×1 · ~~Kruskal's MST~~ *(queued: `expansion — edge-first MST; Aug 17 week`)* | thin (1/3) |
@@ -87,7 +86,7 @@
 | Greedy (single pass) | sliding_window | 1 (122) | 🟢 | ✅ | — | — |
 | Sliding Window | sliding_window | 4 (3, 121, 424, 567) | 🟢 | ✅ | — | — |
 | Divide & Conquer / Sorting | sorting | 1 (912) | 🟢 | ✅ | Merge Sort ×1 · ~~Quick Sort~~ *(queued: `expansion — sorting deep-dive`)* · ~~Radix Sort~~ *(queued: `expansion — sorting deep-dive`)* · ~~Counting Sort~~ *(queued: `expansion — sorting deep-dive`)* · ~~Timsort~~ *(queued: `expansion — sorting deep-dive`)* · ~~D&C on 53~~ *(queued: `rated:912 + surplus>=1`)* | thin (1/3) |
-| Monotonic Deque | stack | 1 (239) | 🔴 | ❌ | — | **no-green** |
+| Monotonic Deque | stack | 1 (239) | 🟡 | ❌ | — | **no-green** |
 | Monotonic Stack | stack | 5 (496, 503, 739, 853, 901) | 🟢 | ✅ | — | — |
 | Stack (augmented entries) | stack | 1 (155) | 🟢 | ✅ | — | thin (1/2) |
 | Stack (expression evaluation) | stack | 1 (150) | 🟡 | ❌ | — | **no-green** · thin (1/2) |

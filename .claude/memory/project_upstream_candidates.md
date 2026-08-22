@@ -131,6 +131,15 @@ be over-fitted to this repo's paths.
 coach names problems in prose has the same hole, and the cost (a manual file hunt, every time) is
 identical for all of them.
 
+⚠️ **Known limitation (surfaced Aug 22, 2026): the hook cannot tell a RECOMMENDATION from a
+DISMISSAL.** When the coach names an on-board number to *steer the learner away from it* ("239 is a
+Hard, not quick — do 3 instead"), the hook forces 239's link to the top of the reply, advertising the
+exact rep being waved off. The learner caught it: *"the hook is working against my question."* The
+coach-side workaround is [[feedback_recommend_by_number_steer_by_description]] — link only the pick,
+describe the rest. An upstream hook could soften this (e.g. suppress the reminder for a number that
+appears in a negated/contrastive clause), but NL-detecting intent is fragile; the safer fix is the
+coaching habit, so this ships as a documented limitation, not a blocker.
+
 ---
 
 ---

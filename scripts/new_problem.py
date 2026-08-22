@@ -83,30 +83,21 @@ STATEMENT_STUB = (
     "compressed version in low-token mode — the learner never pastes it>"
 )
 
-# The recognition-gate prompt, written into EVERY fresh attempt's scaffold so the learner
-# commits shape → technique → discriminator IN THE FILE before any coaching happens.
-#
-# THIS IS A SOURCE FIX for a recurring spoiler. When the gate is delivered verbally the
-# coach can leak the technique by naming candidates — done 2026-08-20 on 239 ("what makes
-# it a monotonic deque rather than a stack or a heap?"), which handed over the one thing a
-# NEW problem is meant to measure. A scaffold the learner fills first removes the
-# opportunity: the call is on disk before the coach speaks. Per the intervention ladder
-# (feedback_self_evaluation.md), a source fix outranks the memory files that already carry
-# this rule and lapsed anyway.
-#
-# Kept on retries too. Recognition is half-spoiled there (the method is named), but the
-# block stays a FRESH, empty prompt because prior attempts — and their filled-in answers —
-# are stashed out of the file on every retry, so nothing old is visible while you work.
-RECOGNITION_LINES = [
-    "# ── RECOGNITION — fill BEFORE coding, before the coach says anything ──",
-    "#   shape cues seen →",
-    "#   technique →",
-    "#   discriminator (why this, not the nearest neighbour) →",
-]
+# The recognition-gate prompt used to be written into every fresh scaffold (source fix,
+# 2026-08-20) so the learner committed shape → technique → discriminator IN THE FILE before
+# any coaching. DISABLED 2026-08-22 at the learner's request: they always write their own
+# recognition call in a freeform comment directly under the signature, so the structured
+# block was clutter they deleted every rep. The anti-spoiler purpose it served now rests on
+# (a) that habit — the call is still on disk before the coach speaks — and (b) the standing
+# verbal rule that the coach fires the gate with SHAPE CUES ONLY, never candidate techniques
+# (the 239 leak this fix originally answered). See decisions.yml `recognition-gate-in-scaffold`
+# and [[feedback_recognition_gate]]. Kept as a no-op returning [] so the four call sites are
+# untouched; re-enable by restoring the lines below.
+RECOGNITION_LINES: list[str] = []
 
 
 def recognition_block(indent: str) -> list[str]:
-    """The recognition prompt lines at a given indent (class-body = four spaces)."""
+    """Disabled 2026-08-22 (learner writes the call freeform under the signature). Empty."""
     return [f"{indent}{ln}" for ln in RECOGNITION_LINES]
 
 # Fold markers around prior attempts. Comments carry no indentation meaning in Python,

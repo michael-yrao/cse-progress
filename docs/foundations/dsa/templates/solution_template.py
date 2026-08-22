@@ -11,6 +11,5 @@ from typing import List, Optional
 
 class Solution:
     # ── Attempt 1 · {date} ────────────────────────────────────────────
-{recognition}
     def {method}({params}){ret}:
         pass

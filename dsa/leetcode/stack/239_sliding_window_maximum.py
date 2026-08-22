@@ -19,6 +19,44 @@ from typing import List, Optional
 
 
 class Solution:
+
+    # ── Attempt · 2026-08-22 ──────────────
+    # ── RECOGNITION — fill BEFORE coding, before the coach says anything ──
+    #   shape cues seen →
+    #   technique →
+    #   discriminator (why this, not the nearest neighbour) →
+    def maxSlidingWindow_20260822(self, nums: List[int], k: int) -> List[int]:
+        # one natural way to do this problem is sliding window with maxHeap of tuple (value, index)
+        # that will give us a O(nlogn) solution
+        # we can do better by doing a monotonic deque so that we can simulate the sliding window
+        # by being able to remove from both ends
+        # the monotonic deque will need to be decreasing, that way when we see a larger value
+        # we pop from the stack side until we are smaller
+        # if the front index is no longer in the window, we pop from the queue side
+
+        result = []
+
+        # store indices
+        monotonicDeque = collections.deque()
+
+        for i in range(len(nums)):
+            # check values and pop until we can insert
+            while monotonicDeque and nums[i] > nums[monotonicDeque[-1]]:
+                monotonicDeque.pop()
+            # nothing else is bigger, let's insert the value
+            monotonicDeque.append(i)
+            # now we remove from the queue side if we are bigger than window
+            # since our monotonic deque don't always hold the whole window size
+            # we need to check if i - monotonicDeque[0] is bigger than k
+            while i - monotonicDeque[0] + 1 > k:
+                monotonicDeque.popleft()
+            # now we are good to add to the result
+            # notice the result is of size len(nums) - k so we don't add until we get to k - 1
+            # decreasing deque so the front has the biggest
+            if i >= k - 1:
+                result.append(nums[monotonicDeque[0]])
+        return result
+
     # ── Attempt 1 · 2026-08-20 ────────────────────────────────────────────
     # ── RECOGNITION — fill BEFORE coding, before the coach says anything ──
     #   shape cues seen →
