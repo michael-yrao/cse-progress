@@ -77,6 +77,9 @@ Notes for future agents:
 | Medium | [684. Redundant Connection (Union-Find)](https://leetcode.com/problems/redundant-connection/) | 🟢 | 2 | 2026-10-20 | 2026-08-21 | 2026-06-18, 2026-06-22, 2026-07-01, 2026-08-21 |
 | Medium | [36. Valid Sudoku](https://leetcode.com/problems/valid-sudoku/) | 🟡 | 0 | 2026-08-31 | 2026-08-21 | 2026-01-25, 2026-05-22, 2026-06-30, 2026-07-09, 2026-08-21 |
 | Hard | [124. Binary Tree Maximum Path Sum](https://leetcode.com/problems/binary-tree-maximum-path-sum/) | 🟡 | 0 | 2026-08-31 | 2026-08-21 | 2026-07-11, 2026-07-13, 2026-07-23, 2026-08-21 |
+| Easy | [202. Happy Number (Seen-Set)](https://leetcode.com/problems/happy-number/) | 🟡 | 0 | 2026-08-31 | 2026-08-21 | 2026-08-11, 2026-08-21 |
+| Medium | [150. Evaluate Reverse Polish Notation](https://leetcode.com/problems/evaluate-reverse-polish-notation/) | 🟡 | 0 | 2026-08-31 | 2026-08-21 | 2026-08-11, 2026-08-21 |
+| Easy | [14. Longest Common Prefix](https://leetcode.com/problems/longest-common-prefix/) | 🟢 | 2 | 2026-10-20 | 2026-08-21 | 2026-01-03, 2026-03-27, 2026-06-05, 2026-06-15, 2026-08-21 |
 | Hard | [239. Sliding Window Maximum](https://leetcode.com/problems/sliding-window-maximum/) | 🔴 | 0 | 2026-08-22 | 2026-08-20 | 2026-08-20 |
 | Medium | [53. Maximum Subarray (Prefix Sum)](https://leetcode.com/problems/maximum-subarray/) | 🔴 | 0 | 2026-08-22 | 2026-08-20 | 2026-01-08, 2026-04-01, 2026-06-27, 2026-08-20 |
 | Medium | [323. Number of Connected Components (Union-Find)](https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/) | 🟢 | 2 | 2026-10-18 | 2026-08-19 | 2026-06-19, 2026-06-29, 2026-08-19 |
@@ -118,8 +121,6 @@ Notes for future agents:
 | Medium | [875. Koko Eating Bananas](https://leetcode.com/problems/koko-eating-bananas/) | 🟢 | 1 | 2026-09-10 | 2026-08-11 | 2026-04-22, 2026-07-03, 2026-07-13, 2026-07-23, 2026-08-02, 2026-08-11 |
 | Medium | [1584. Min Cost to Connect All Points (Prim's MST)](https://leetcode.com/problems/min-cost-to-connect-all-points/) | 🟢 | 1 | 2026-09-10 | 2026-08-11 | 2026-07-16, 2026-07-18, 2026-07-20, 2026-08-01, 2026-08-11 |
 | Medium | [323. Number of Connected Components (DFS)](https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/) | 🟢 | 2 | 2026-10-10 | 2026-08-11 | 2026-07-02, 2026-07-12, 2026-08-11 |
-| Easy | [202. Happy Number (Seen-Set)](https://leetcode.com/problems/happy-number/) | 🟡 | 0 | 2026-08-21 | 2026-08-11 | 2026-08-11 |
-| Medium | [150. Evaluate Reverse Polish Notation](https://leetcode.com/problems/evaluate-reverse-polish-notation/) | 🟡 | 0 | 2026-08-21 | 2026-08-11 | 2026-08-11 |
 | Easy | [66. Plus One](https://leetcode.com/problems/plus-one/) | 🟢 | 2 | 2026-10-09 | 2026-08-10 | 2026-01-02, 2026-03-25, 2026-06-22, 2026-07-01, 2026-08-10 |
 | Easy | [703. Kth Largest Element in a Stream](https://leetcode.com/problems/kth-largest-element-in-a-stream/) | 🟢 | 2 | 2026-10-09 | 2026-08-10 | 2026-06-22, 2026-07-02, 2026-08-10 |
 | Medium | [721. Accounts Merge (Union-Find)](https://leetcode.com/problems/accounts-merge/) | 🟢 | 1 | 2026-09-08 | 2026-08-09 | 2026-07-30, 2026-08-09 |
@@ -190,7 +191,6 @@ Notes for future agents:
 | Medium | [33. Search in Rotated Sorted Array](https://leetcode.com/problems/search-in-rotated-sorted-array/) | 🟢 | 1 | 2026-08-03 | 2026-07-04 | 2026-04-13, 2026-05-29, 2026-06-15, 2026-06-25, 2026-07-04 |
 | Medium | [153. Find Minimum in Rotated Sorted Array](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/) | 🟢 | 2 | 2026-08-30 | 2026-07-01 | 2026-04-21, 2026-07-01 |
 | Medium | [49. Group Anagrams](https://leetcode.com/problems/group-anagrams/) | 🟢 | 2 | 2026-08-27 | 2026-06-28 | 2026-01-04, 2026-03-27, 2026-05-29, 2026-06-28 |
-| Easy | [14. Longest Common Prefix](https://leetcode.com/problems/longest-common-prefix/) | 🟢 | 1 | 2026-07-15 | 2026-06-15 | 2026-01-03, 2026-03-27, 2026-06-05, 2026-06-15 |
 
 ---
 

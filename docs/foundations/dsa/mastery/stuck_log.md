@@ -22,6 +22,42 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🟡 150. Evaluate Reverse Polish Notation — 2026-08-21
+
+**Sticking point**: two bugs, neither self-caught. (1) **Operand order** — the first `pop` is the
+*right* operand, so `-` and `/` were computed backwards; commutative `+`/`*` hid it until a trace of
+`["4","13","5","/","+"]` returned 4 instead of 6. (2) **Truncation toward zero** — used `//`, which
+floors (`-7 // 2 == -4`), where the problem wants `-3`. The distinction was not known and had to be
+taught: floor moves toward −∞, truncation chops the fraction, and the two only differ on a **negative**
+result.
+
+**Complexity miss (space)**: claimed O(1) on the grounds that *"the stack never holds more than 2
+values"* — true only for a balanced expression. `["1","2","3","4","5","+","+","+","+"]` stacks all five
+operands before any operator fires, so the bound is **O(n)** (~`(n+1)/2` operands). First miss on this
+problem; freebie spent, no cap.
+
+**Coach-raised, no rating effect**: the final code truncates on **read** (`int(stack.pop())`), not on
+compute, so floats live on the stack and get chopped whenever they are next popped. Verified equivalent
+— 20,000 randomized expressions, 0 mismatches — but the invariant *"values are truncated on read"* is
+fragile under edit. Truncating at the division is the version that survives.
+
+---
+
+## 🟡 202. Happy Number (Seen-Set) — 2026-08-21
+
+**Sticking point**: opened with a hardcoded blacklist (`unhappySet = {0,2,3}`) as the loop exit — a
+memorized fact rather than a technique, and it hangs forever on `n=4` (the real cycle is
+4·16·37·58·89·145·42·20, which contains none of 0/2/3). Self-diagnosed the *shape* of the error
+unprompted (*"I feel like I am chasing a black list but that shouldn't be how I approach this"*), then
+needed cues to reach a set built **during** the walk instead of before it. Also googled mid-rep (found
+"unhappy numbers repeat after 8 iterations" — again a looked-up constant, not the method).
+
+**The reusable bit**: to see that the values are trapped in a tiny range, *plug in the worst legal
+input* (9,999,999,999 → 810) rather than deriving a bound. Squaring digits destroys magnitude — the
+output depends on the digit **count**, which grows like log n.
+
+---
+
 ## 🔴 53. Maximum Subarray (Prefix Sum method) — 2026-08-20
 
 **Topic**: Prefix sum — max subarray via `prefix[j] − minPrefixBefore[j]`. Deliberate method-variant

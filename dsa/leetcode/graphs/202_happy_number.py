@@ -33,6 +33,30 @@ from typing import List, Optional
 
 
 class Solution:
+
+    # ── Attempt · 2026-08-21 ──────────────
+    # ── RECOGNITION — fill BEFORE coding, before the coach says anything ──
+    #   shape cues seen →
+    #   technique →
+    #   discriminator (why this, not the nearest neighbour) →
+    def isHappy_20260821(self, n: int) -> bool:
+        # we need to define an end point
+        # we end when we repeat numbers
+        # otherwise we are good to continue
+
+        unhappySet = set()
+        happyNumber = n
+        # as long as we are not in unhappySet, we are good to continue
+        while happyNumber not in unhappySet:
+            unhappySet.add(happyNumber)
+            currentHappyNumber = 0
+            for d in str(happyNumber):
+                digit = int(d)
+                currentHappyNumber+=(digit**2)
+            happyNumber = currentHappyNumber
+        
+        return happyNumber == 1
+
     # ── Attempt 1 · 2026-08-10 ────────────────────────────────────────────
     def isHappy(self, n: int) -> bool:
         seen = set()
