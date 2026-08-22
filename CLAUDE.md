@@ -619,6 +619,19 @@ problem), never on permanent new demand.** Full rule: `.claude/memory/feedback_m
 
 When a problem is dropped or deferred from the schedule, a new specific slot must be assigned in the same edit. Never remove a problem without immediately adding it to another day. A deferred problem with no new date is a missed problem.
 
+⭐ **The near half of this rule is now checked, not remembered (added Aug 21, 2026):**
+
+```sh
+python scripts/check_schedule_integrity.py          # current week: done rows vs the tracker
+python scripts/check_schedule_integrity.py --check  # exit 1 on a finding
+```
+
+It runs from the pre-commit hook whenever a tracker or a schedule file is staged, and reports two
+things only: a **struck row missing its `End` or `Next`**, and a **rep the tracker dates inside this
+week whose row is not struck**. ⚠️ **It does NOT verify that every future date is pre-placed** — that
+reading reports 73 of 115 rows on a healthy repo, because distant dates are *pulled* by the weekly
+build's tracker sweep rather than pushed row by row. The paragraph below is still yours to run.
+
 After logging any problem result, check its computed next review date and add it to the appropriate week's schedule file — whether that's next week or further out. Do not leave it only in `dsa_progress.md`. The spaced repetition dates are the source of truth; the weekly schedules must reflect them. When the target week's schedule doesn't exist yet, note the problem in the nearest existing schedule's preview section. Check for balance when inserting; spread across available slots rather than stacking on already-heavy days.
 
 ## Study Guide Files

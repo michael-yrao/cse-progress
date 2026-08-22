@@ -8,6 +8,12 @@ from pathlib import Path
 
 import session_date
 
+# Git runs hooks with a cp1252 console on Windows; the first emoji printed would
+# otherwise kill the script mid-report while the commit still succeeds. See _console.
+import _console
+
+_console.force_utf8()
+
 # Session "now", resolved once in main(). A study session that crosses midnight keeps
 # its START date, so stamping attempt dates from the wall clock silently mis-dates every
 # row written after 00:00 — see scripts/session_date.py and feedback_session_dating.

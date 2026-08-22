@@ -10,6 +10,20 @@
 # left on Aug 15, 2026 and CAME BACK on Aug 16 — only HelloInterview-excerpt material stayed
 # private, and a tracker of question names + comfort + dates is not that. It is handled by the
 # second block below, with --tracker rather than source discovery: there are no SD source files.)
+# ⚠️ Git runs this hook with a console in the system ANSI codepage (cp1252 on Windows).
+# Python inherits it, and the FIRST emoji any script below prints — ✅, ⚠️, a comfort glyph
+# in a problem title — raises UnicodeEncodeError and kills that script mid-report.
+#
+# The failure is worse than a crash because every block here is report-only and ends in
+# `|| true`: the traceback scrolls past, the commit succeeds, and the check LOOKS like it
+# ran. Found Aug 21, 2026 — reconcile.py fired exactly as designed, at the one moment a
+# decision is recorded, and printed a traceback instead of the backlog.
+#
+# Belt and braces with scripts/_console.py: this covers every script this hook invokes,
+# including ones added later that forget the import; that module covers every other context
+# (Git Bash, a piped run, CI), where nothing sets this variable.
+export PYTHONIOENCODING=utf-8
+
 STAGED=$(git diff --cached --name-only --diff-filter=ACM)
 if echo "$STAGED" | grep -qE "dsa_progress\.md$|^dsa/leetcode/.*\.(py|java|ts|js|cpp)$"; then
   echo "Auto-updating the DSA spaced-repetition tracker..."
@@ -82,6 +96,24 @@ if [ -n "$SSOT_TRIGGER" ]; then
     python scripts/check_single_source.py || true
   elif command -v python3 >/dev/null 2>&1; then
     python3 scripts/check_single_source.py || true
+  fi
+fi
+
+# Schedule integrity. Fires when a rating lands (the tracker) or the board is edited — the two
+# ways a done rep and its schedule row can drift apart. Checks only the CURRENT week's file:
+# a struck row must carry its End + Next, and a rep the tracker dates inside this week must be
+# struck. Report-only, and silent-when-clean by design.
+#
+# ⚠️ It deliberately does NOT check that every future review date is pre-placed in some schedule
+# file. That reading of the rule reports 73 of 115 rows on a healthy repo — distant dates are
+# pulled by the weekly build's tracker sweep, not pushed row by row. See the script's docstring.
+if echo "$STAGED" | grep -qE "dsa_progress\.md$|design_progress\.md$|^docs/foundations/schedules/.*\.md$"; then
+  if command -v py >/dev/null 2>&1; then
+    py scripts/check_schedule_integrity.py || true
+  elif command -v python >/dev/null 2>&1; then
+    python scripts/check_schedule_integrity.py || true
+  elif command -v python3 >/dev/null 2>&1; then
+    python3 scripts/check_schedule_integrity.py || true
   fi
 fi
 

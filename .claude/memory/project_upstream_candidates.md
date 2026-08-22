@@ -148,6 +148,36 @@ identical for all of them.
 
 ---
 
+## DEFECT (ships without soak) — every hook script is silently dead on a Windows console
+
+**Added Aug 21, 2026, found when a pre-commit run printed a traceback where the report belonged.**
+
+Git runs `.githooks/pre-commit` with a console in the system ANSI codepage (cp1252 on Windows).
+Python inherits it, so the **first emoji any script prints** — `✅`, `⚠️`, a comfort glyph inside a
+problem title — raises `UnicodeEncodeError` and kills that script mid-report. **9 of the 10 scripts in
+`scripts/` contain non-ASCII output**, so this is not an edge case; it is the default path.
+
+⚠️ **The crash is not the problem. The silence is.** Every block in the hook is report-only and ends
+in `|| true`, so the traceback scrolls past, the commit succeeds, and the check **appears to have
+run**. `reconcile.py` fired exactly as designed — at the one moment a decision is recorded, which is
+when its backlog is cheapest to act on — and printed a stack trace instead of the report. Nobody
+would have noticed except by reading the commit output closely.
+
+**Fix shipped here, two layers on purpose:**
+
+| Layer | Change | Covers |
+|---|---|---|
+| Hook | `export PYTHONIOENCODING=utf-8` at the top of `.githooks/pre-commit` | every script the hook invokes, **including ones added later that forget the import** |
+| Scripts | new `scripts/_console.py`; each CLI script calls `_console.force_utf8()` after its imports | every **other** context — Git Bash, a piped run, CI, an editor task — where nothing sets that variable |
+
+Neither layer alone is sufficient and the overlap costs nothing. `errors="replace"` rather than
+`"strict"`: a report rendering one glyph as `?` is still a report.
+
+**Generality:** canonical ships the same hook shape and the same emoji-rich output, so any adopter on
+Windows has a hook that looks installed and does nothing. Not learner-specific in any way.
+
+---
+
 ## DEFECT (ships without soak) — a probe that EARNS a row becomes unreachable by both retry scripts
 
 **Added Aug 21, 2026, found when 202's retry was scaffolded.**

@@ -37,6 +37,12 @@ from pathlib import Path
 
 import session_date
 
+# Git runs hooks with a cp1252 console on Windows; the first emoji printed would
+# otherwise kill the script mid-report while the commit still succeeds. See _console.
+import _console
+
+_console.force_utf8()
+
 # NeetCode slugs that differ from the LeetCode title's slug. This map exists because
 # NeetCode CANNOT be checked over the network: it is a client-side SPA, so a dead slug
 # and a live one both return 200 with the same HTML shell (verified Aug 7, 2026 —

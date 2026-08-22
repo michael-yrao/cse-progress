@@ -43,6 +43,12 @@ import sys
 from dataclasses import dataclass, field
 from pathlib import Path
 
+# Git runs hooks with a cp1252 console on Windows; the first emoji printed would
+# otherwise kill the script mid-report while the commit still succeeds. See _console.
+import _console
+
+_console.force_utf8()
+
 
 def _load_yaml():
     """Return the `yaml` module, auto-installing PyYAML on first use.
