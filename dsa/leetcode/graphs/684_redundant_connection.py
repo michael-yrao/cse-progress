@@ -28,6 +28,52 @@ Constraints:
 from typing import List
 
 class Solution:
+
+    # ── Attempt · 2026-08-21 ──────────────
+    # ── RECOGNITION — fill BEFORE coding, before the coach says anything ──
+    #   shape cues seen →
+    #   technique →
+    #   discriminator (why this, not the nearest neighbour) →
+    def findRedundantConnection_20260821(self, edges: List[List[int]]) -> List[int]:
+       # so we want to return the edge that causes the cycle
+        # I will use union find to do this
+        # we are given there is one extra edge, which means number of edges = number of vertices
+
+        rankMap = {}
+        parentMap = {}
+
+        # the problem have nodes starting at 1, so len + 1
+        numberOfVertices = len(edges)+1
+
+        for i in range(1,numberOfVertices):
+            rankMap[i] = 0
+            parentMap[i] = i
+        
+        def find(node):
+            if parentMap[node] != node:
+                parentMap[node] = find(parentMap[node])
+            return parentMap[node]
+
+        def union(n1,n2):
+            n1r = find(n1)
+            n2r = find(n2)
+            if n1r == n2r:
+                return False
+            if rankMap[n1r] > rankMap[n2r]:
+                parentMap[n2r] = n1r
+            elif rankMap[n1r] < rankMap[n2r]:
+                parentMap[n1r] = n2r
+            else:
+                rankMap[n1r]+=1
+                parentMap[n2r] = n1r
+            return True
+
+        for n1, n2 in edges:
+            if not union(n1,n2):
+                return [n1,n2]
+        
+        return None # type: ignore
+
     def findRedundantConnection(self, edges: List[List[int]]) -> List[int]:
         # trees are connected and have no cycles
         # so we are trying to find an edge to remove that makes this graph a tree

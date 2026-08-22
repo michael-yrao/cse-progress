@@ -2007,3 +2007,7 @@ if i >= k - 1:
 Re-itemized correctly: **time O(n)** because each index is appended once and popped at most once, so the
 inner `while` pops are O(n) *total*, not per-iteration (the trap that makes it look O(nk)); **space O(k)**
 because the deque only ever holds indices inside the current window (the earlier "O(n)" was loose).
+
+- **2026-08-21 · 36 Valid Sudoku · 🟡 Shaky** — box-key computed with `%3` (position *within* box) instead of `//3` (which box); not self-caught. Mnemonic: `//boxsize` = which block, `%boxsize` = offset inside it. Rows/cols and O(1)-constant complexity were clean.
+
+- **2026-08-21 · 124 Binary Tree Maximum Path Sum · 🟡 Shaky** — helper returned `node.val + left + right` (the through/peak path) instead of `node.val + max(left, right)`; the two roles split — UPDATE global with both sides (peak here), RETURN only one side (a path handed up can't branch). Not self-caught. Space is O(h)=O(n) worst-case (unbalanced), mechanism = recursion height, not node count.

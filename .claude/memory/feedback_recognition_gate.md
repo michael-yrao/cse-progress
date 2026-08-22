@@ -3,7 +3,7 @@ name: feedback_recognition_gate
 description: Front-gate every rep — learner states shape→technique+why (as their pre-code comment, pasted in chat) BEFORE coding; complexity gate still fires at the end
 metadata:
   type: feedback
-reconciled: 2026-08-20
+reconciled: 2026-08-21
 ---
 
 ⭐ **SOURCE-FIXED Aug 20, 2026 — the gate is now written INTO the scaffold, not delivered by
@@ -41,3 +41,16 @@ trigger→technique map — same pattern as [[feedback_ask_complexity]]'s comple
 **Retries carry the method in the tracker name, so they're half-spoiled** — the *measured*
 recognition reps are new problems (nothing labeled) and cold cues where the coach fires the
 statement stripped of its method label. The daily habit builds the reflex regardless.
+
+
+**⚠️ The learner's fixed convention (confirmed Aug 21, 2026): the TOP-of-method comment IS the
+pre-code recognition call; inline comments are mid-code reasoning.** So read the top comment as the
+call and do NOT re-demand the scaffold's separate `# RECOGNITION` block — filling both is redundant,
+and the learner routes around the block by writing their own comment on top (this is why 205's block
+was blank while the call sat in the first comment lines). Learner: *"I always write my pre-code comment
+on top and comment inline for any mid code comments. We should try to enforce this but it is quite
+impossible."* **Enforcement is trust-based and that is accepted** — no tool can prove a comment
+preceded the code. The real audit is not per-rep but the **probe cadence**: over ~15 label-stripped
+probes the cold-call hit rate is the honest, ungameable measure of recognition (see
+[[project_recognition_probes]]). Don't try to build a mechanism to police comment order; log the call
+from the top comment and let the probes measure it.
