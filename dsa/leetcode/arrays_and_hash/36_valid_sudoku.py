@@ -42,6 +42,47 @@ import collections
 from typing import List
 
 class Solution:
+
+    # ── Attempt · 2026-08-21 ──────────────
+    # ── RECOGNITION — fill BEFORE coding, before the coach says anything ──
+    #   shape cues seen →
+    #   technique →
+    #   discriminator (why this, not the nearest neighbour) →
+    def isValidSudoku_20260821(self, board: List[List[str]]) -> bool:
+        # we are only checking whether the current board is valid
+        # and not if it is solvable
+        # because of that. we should just do some basic checks
+        # 1. check rows are valid, rowMap, rowCount -> set
+        # 2. check cols are valid, colMap, colCount -> set
+        # 3. check a 3x3 is valid, 9 grids, (row//3, col//3) -> set
+
+        rows, cols = len(board), len(board[0])
+
+        rowMap = collections.defaultdict(set)
+        colMap = collections.defaultdict(set)
+        gridMap = collections.defaultdict(set)
+
+        for row in range(rows):
+            for col in range(cols):
+                # skip the dots
+                if board[row][col] == '.':
+                    continue
+                # check if this node exist in rowMap
+                if board[row][col] in rowMap[row]:
+                    return False
+                # check if this node exist in colMap
+                if board[row][col] in colMap[col]:
+                    return False
+                # check if this node exists in gridMap
+                if board[row][col] in gridMap[(row//3,col//3)]:
+                    return False
+                # if not in any, we add to each
+                rowMap[row].add(board[row][col])
+                colMap[col].add(board[row][col])
+                gridMap[(row//3, col//3)].add(board[row][col])
+        
+        return True
+
     def isValidSudoku(self, board: List[List[str]]) -> bool:
         # 3 validations
         # 1. check row

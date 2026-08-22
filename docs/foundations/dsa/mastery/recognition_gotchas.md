@@ -428,3 +428,11 @@ number attached.** Re-derive the rate at the build rather than renewing or killi
   Heavily half-spoiled regardless — retry, tracker row already names Union-Find, and the row was
   explicitly scheduled as the Union-Find variant — so this was never going to be phase-exit evidence
   either way.
+
+- **2026-08-21 · 🎯 PROBE #5 · 205 Isomorphic Strings** — ✅ **HIT (cold, label-stripped).** Neutral
+  `probes/` path, no technique in folder, no label. Pre-code comment named the full call unaided:
+  **shape** = two equal-length strings with a character correspondence; **technique** = hash-map
+  bijection (two maps); **discriminator** = one direction is insufficient — a single map can't reject
+  two source chars collapsing onto the same target (`badc`/`baba`), so both maps are required. Technique
+  *and* the separating feature, before any code. Green + disposable → no tracker row; next probe of this
+  technique ratchets to Medium.

@@ -34,6 +34,35 @@ from typing import Optional
 
 class Solution:
 
+    # ── Attempt · 2026-08-21 ──────────────
+    # ── RECOGNITION — fill BEFORE coding, before the coach says anything ──
+    #   shape cues seen →
+    #   technique →
+    #   discriminator (why this, not the nearest neighbour) →
+    def maxPathSum_20260821(self, root: Optional[TreeNode]) -> int:
+        # looks like we need to keep track of a maxSum
+        # compare and update it as we go through the DFS
+        maxSum = -math.inf
+
+        def findMaxSum(node):
+            nonlocal maxSum
+            if not node:
+                return 0
+            
+            # if leftSum is less than 0, we don't include leftSum
+            leftSum = findMaxSum(node.left)
+            # if rightSum is less than 0, we don't include rightSum
+            rightSum = findMaxSum(node.right)
+
+            leftSum = max(0, leftSum)
+            rightSum = max(0, rightSum)
+
+            maxSum = max(maxSum, node.val + leftSum + rightSum)
+            return node.val + max(leftSum, rightSum)
+        
+        findMaxSum(root)
+        return maxSum # type: ignore
+
     # ── Attempt · 2026-07-23 ──────────────
     def maxPathSum_20260723(self, root: Optional[TreeNode]) -> int:
         maxSum = -math.inf
