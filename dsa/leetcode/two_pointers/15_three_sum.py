@@ -39,6 +39,34 @@ from typing import List
 
 class Solution:
 
+    # ── Attempt · 2026-08-22 ──────────────
+    def threeSumSet_20260822(self, nums: List[int]) -> List[List[int]]:
+        # sort, then two sum sorted method
+        # i + j + k = 0
+        nums.sort()
+
+        resultSet = set()
+
+        for i in range(len(nums)):
+            j = i + 1
+            k = len(nums) - 1
+            while j < k:
+                if nums[i] + nums[j] + nums[k] == 0:
+                    resultSet.add((nums[i],nums[j],nums[k]))
+                    j+=1
+                    k-=1
+                elif nums[i] + nums[j] + nums[k] < 0:
+                    j+=1
+                else:
+                    k-=1
+        
+        result = []
+
+        for n1, n2, n3 in resultSet:
+            result.append([n1,n2,n3])
+        
+        return result
+
     # ── Attempt · 2026-07-24 ──────────────
     def threeSum_20260724(self, nums: List[int]) -> List[List[int]]:
         # sort, two sum sorted
