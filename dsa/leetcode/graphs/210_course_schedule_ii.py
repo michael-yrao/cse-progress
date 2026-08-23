@@ -45,6 +45,44 @@ from typing import List
 
 class Solution:
 
+    # ── Attempt · 2026-08-22 ──────────────
+    def findOrder_20260822(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
+        # topological sort
+        # we need to know all courses with 0 prereqs
+        # we then need to keep track of courses that require those courses, so adjMap
+        # we also need to keep track of courses we've already taken
+
+        numRequirements = [0] * numCourses
+        adjMap = collections.defaultdict(list)
+        takenCourses = set()
+
+        for course, prereq in prerequisites:
+            adjMap[prereq].append(course)
+            numRequirements[course]+=1
+        
+        queue = collections.deque()
+
+        for i in range(numCourses):
+            if numRequirements[i] == 0:
+                queue.append(i)
+        
+        result = []
+        while queue:
+            currentCourse = queue.popleft()
+            # take current course
+            takenCourses.add(currentCourse)
+            # add to result
+            result.append(currentCourse)
+            # check all classes that depend on this and add it to the queue
+            for neighbor in adjMap[currentCourse]:
+                numRequirements[neighbor]-=1
+                if numRequirements[neighbor] == 0:
+                    queue.append(neighbor)
+        
+        if len(result) != numCourses:
+            return []
+        return result
+
     # ── Attempt · 2026-07-24 ──────────────
     def findOrder_20260724(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
         # exact same approach as first course schedule
