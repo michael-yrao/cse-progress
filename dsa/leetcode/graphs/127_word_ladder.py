@@ -39,6 +39,55 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-08-23 ──────────────
+    def ladderLength_20260823(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
+        # in example 2, we notice that because endWord is not part of wordList, it is a failed sequence
+        # so our adjMap is constructed on beginWord + wordList
+        # for each word, we need to use a wildcard to match neighbors
+        # so hit will be .it -> hit, h.t -> hit, hi. -> hit
+        # we do need to keep track of words we've visited I believe
+        # but seems to be a simple BFS otherwise
+
+        wordList.append(beginWord)
+        adjMap = collections.defaultdict(list)
+
+        # build the adjMap
+        for word in wordList:
+            for i in range(len(word)):
+                prefix = word[:i]
+                postfix = word[i+1:]
+                key = prefix + '.' + postfix
+                adjMap[key].append(word)
+        
+        queue = collections.deque()
+        # we know beginWord is the start of our map, so we use that in our queue to start
+        queue.append(beginWord)
+
+        visited = set()
+        visited.add(beginWord)
+        # starts at 1 since beginWord counts in the sequence counter
+        cycle = 1
+        while queue:
+            # we need to keep track of number of words it took, which is actually just number of cycles in the BFS
+            lenQueue = len(queue)
+            for _ in range(lenQueue):
+                currentWord = queue.popleft()
+                # if we are at endWord, return cycle counter
+                if currentWord == endWord:
+                    return cycle
+                # if not, add neighbors to queue
+                for i in range(len(currentWord)):
+                    prefix = currentWord[:i]
+                    postfix = currentWord[i+1:]
+                    key = prefix + '.' + postfix
+                    for neighbor in adjMap[key]:
+                        if neighbor not in visited:
+                            queue.append(neighbor)
+                            visited.add(neighbor)
+            cycle+=1
+        
+        return 0
+
     # ── Attempt · 2026-08-13 ──────────────
     def ladderLength_20260813(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
         # this is just BFS with an extra step of creating the adjMap based on wildcard

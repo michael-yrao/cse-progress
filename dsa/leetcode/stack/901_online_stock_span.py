@@ -36,6 +36,28 @@ Constraints:
 """
 
 
+# ── Attempt · 2026-08-23 ──────────────
+class StockSpanner_20260823:
+# this is clearly a monotonic stack problem
+# each number's default span is 1
+# but how do I get 4 on 75, I have to store the previous value span somewhere
+# this sounds like a tuple, so do (value, span) in the tuple, decreasing stack
+
+    def __init__(self):
+        self.decreasingStack = []
+
+    def next(self, price: int) -> int:
+        # default span for any number is 1
+        currentSpan = 1
+        # while we do not conform by the decreasing stack
+        # add it to the currentSpan
+        while self.decreasingStack and price >= self.decreasingStack[-1][0]:
+            priorValue, priorSpan = self.decreasingStack.pop()
+            currentSpan+=priorSpan
+        self.decreasingStack.append((price, currentSpan))
+
+        return currentSpan
+
 # ── Attempt · 2026-08-13 ──────────────
 class StockSpanner_20260813:
     # we can have a stack of tuples here

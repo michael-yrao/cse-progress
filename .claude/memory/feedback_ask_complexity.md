@@ -3,7 +3,7 @@ name: feedback_ask_complexity
 description: after a problem is coded, ASK the learner for time & space complexity before rating — don't state it for them
 metadata:
   type: feedback
-reconciled: 2026-08-21
+reconciled: 2026-08-23
 ---
 
 After a problem is done, **ask the learner to state the time and space complexity themselves**
@@ -31,6 +31,22 @@ enforced through the interval engine (the only real lever) via two rules:
    rep at 🟡**. The gotchas card doubles as the ledger: **if the problem is already on the card, its
    freebie is spent** → the next miss drops it. The gate and the correction+card entry always happen;
    the freebie only governs the *rating consequence*.
+
+⚠️ **READ THE LEDGER BEFORE PROPOSING THE RATING — not after (promoted 2026-08-23, 2 occurrences).**
+The freebie rule above only works if its input is read *first*. Twice the rating was proposed and *then*
+the ledger checked, once in each direction: **2026-08-22** on 15 — proposed 🟡 (miss caps) when the
+freebie was **unspent** → should have been 🟢; **2026-08-23** on 567 — proposed 🟢 s2 when the freebie was
+**spent** (a REPEAT) → the rule says 🟡. Same defect, both signs: a rating that hinges on a complexity
+miss was announced to the learner before its deciding input existed. **So the sequence is fixed:**
+1. learner states time + space with why-clauses (the gate);
+2. if any bound is a miss, **open `complexity_gotchas.md` and read that problem's row** — is the freebie
+   spent (problem already carded with a dated miss) or not?
+3. *only then* propose the rating, and say the freebie state out loud ("first miss on this problem →
+   freebie, no hit" / "already spent Jul 24 → repeat, caps at 🟡").
+The tell you skipped it: you named a rating consequence of a complexity miss without having cited the
+ledger. If you can't point to the ledger row, you haven't earned the rating yet. (Comfort override still
+belongs to the learner afterward — 567 was overridden 🟡→🟢 s2 on defensible pre-constraint grounds — but
+the *proposal* must be right first.)
 
 **Why per-problem (not per-category):** the problem is already the unit of spaced repetition here, so
 this needs no new taxonomy — check "is this problem on the card?" and rate accordingly. It's less strict

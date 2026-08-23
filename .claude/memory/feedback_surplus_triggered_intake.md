@@ -3,7 +3,7 @@ name: feedback-surplus-triggered-intake
 description: Review demand is a rate (sum of 1/interval), not a headcount — measure surplus in UNITS against the effort ceiling at every schedule build and gate pulls/extra intake on it, never on "NC150 is finished"
 metadata:
   type: feedback
-reconciled: 2026-08-21
+reconciled: 2026-08-23
 ---
 
 **Established Jul 26, 2026** when the learner asked whether the schedule runs out of problems as
@@ -54,3 +54,30 @@ population matures to +60/+180, demand falls to ~7/wk by late 2027 — **75% idl
    for Tier 2 material early.
 6. **Don't read a shrinking review list as being ahead.** It's the intervals doing their job, and it
    means capacity needs redirecting, not banking.
+
+## ⚠️ Fill under-ceiling days with weak-technique coverage — don't defer it (added Aug 23, 2026)
+
+**When built days sit UNDER the daily ceiling, fill toward it with weak-technique work BEFORE deferring
+that work to a later week.** A week of 7.0-unit days against an 8.0 ceiling is capacity left idle — and
+what was being deferred to fill it later was exactly the zero-green/thin coverage the learner most wants.
+Learner, Aug 23: *"each day being 7 points feels a bit light… prioritize new techniques and techniques I
+am struggling on and then backlog."*
+
+**Priority order for the fill:** **zero-green conversions & their coverage siblings > thin-green fills >
+backlog.** New techniques (the active phase) and struggling techniques first; backlog last. This is the
+`technique_comfort_audit.md` "Needs work" pull-order, now applied to *filling capacity*, not just to
+choosing the next pull.
+
+**Prefer a NEW sibling over pulling an existing review forward.** Adding a fresh problem to a thin
+technique trains transfer AND gives a new 🟢 path, with **no interval shortening**. Pulling the existing
+🟡 review forward re-reps one problem (recall, not transfer) and shortens its interval — do it only when
+the sibling is a *variant on that same problem* (e.g. Floyd Fast/Slow on 202), where the rep is
+unavoidable anyway. (This pairs with [[feedback_consolidation_reps]]'s gate change: siblings gate on 🟡+,
+not green:base.)
+
+**The ≤2/week consolidation cap may be flexed up when the tracker is UNDER-subscribed** (real headroom)
+and the extra intake targets zero-green/thin techniques. The cap exists to protect an *over*-subscribed
+tracker from new-material overload; when demand sits well below capacity (e.g. 39/56 units), spending the
+headroom on weak-technique coverage is the point, not a violation. **Still respect the per-day ceiling and
+the blank-tax** — don't stack many first-exposure Hards in one week. See `decisions.yml`
+`fill-capacity-with-weak-coverage`.

@@ -63,7 +63,7 @@
 | Technique | Comfort | Coverage | Why |
 |---|---|---|---|
 | Monotonic Deque | 🟡 | 1p · 0🟢 · 🟡 | **Still zero-green.** 239 lock-down Aug 22 went 🔴→🟡 — technique recalled but 3 coach-guided fixes (front/back repeat, eviction-by-index, off-by-one). |
-| Monotonic Stack | 🟢 | 5p · 3🟢 · 🟡→🟢 | Strong and broad; recognition reliable (index-not-value axis internalised). |
+| Monotonic Stack | 🟢 | 5p · 4🟢 · 🟡→🟢 | Strong and broad; recognition reliable (index-not-value axis internalised). |
 | Stack (augmented entries) | 🟢 | 1p · 1🟢 · 🟢 | 901 clean; thin. |
 | Stack (expression evaluation) | 🟡 | 1p · 0🟢 · 🟡 | **150 RPN, no green.** Recognition hits but execution keeps slipping (operand order, truncation). |
 | Stack (matching) | 🟢 | 1p · 1🟢 · 🟢 | Clean; thin. |

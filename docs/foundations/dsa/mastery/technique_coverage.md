@@ -65,7 +65,7 @@
 | Binary Search on Answer | binary_search | 2 (875, 1011) | 🟢 | ✅ | — | thin (2/3) |
 | BFS on Implicit Graph | graphs | 1 (127) | 🟡 | ❌ | — | **no-green** |
 | Connected Components | graphs | 1 *+2v* (323) | 🟢 | ✅ | DFS ×1 · BFS ×1 · Union-Find ×1 | thin (1/3) |
-| Cycle Detection in an Iterated Sequence | graphs | 1 (202) | 🟡 | ❌ | Seen-Set ×1 · ~~Floyd Fast/Slow~~ *(queued: `green:202`)* | **no-green** · thin (1/2) |
+| Cycle Detection in an Iterated Sequence | graphs | 1 (202) | 🟡 | ❌ | Seen-Set ×1 · ~~Floyd Fast/Slow~~ *(queued: `🟡:202 — ready; rides 202's next rep`)* | **no-green** · thin (1/2) |
 | Graph Clone (DFS + Hash Map) | graphs | 1 (133) | 🟡 | ❌ | — | **no-green** |
 | Graph Cycle Detection (DFS) | graphs | 1 (261) | 🟢 | ✅ | — | — |
 | Grid BFS | graphs | 4 (130, 200, 417, 733) | 🎓 | ✅ | — | — |

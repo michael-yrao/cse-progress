@@ -3,7 +3,7 @@ name: feedback_kickoff_table_links
 description: hyperlink each problem to its local solution file AND its problem page (LC, or the NeetCode mirror if premium) — fires when new_problem.py runs, at kickoff, and on every problem/set transition
 metadata:
   type: feedback
-reconciled: 2026-08-21
+reconciled: 2026-08-23
 ---
 
 **PRIMARY TRIGGER — a scaffold is a link event. Every `new_problem.py` run ends with the
@@ -142,6 +142,19 @@ problem-looking number outside a markdown link, regardless of whether it is on t
 forced links onto pure-context mentions three turns running. **Raise at the next meta-review:** either
 teach the hook the day's board, or let a turn satisfy it by stating that the mention is context-only —
 the same escape the selection-menu case already has.
+
+**⚠️ NEVER WRITE A BARE PROBLEM NUMBER — the orphan-re-emit fix (Aug 23, 2026).** The Stop hook
+gathers *all* assistant text since the last human message, so a number written bare in **narration**
+("901 is a design problem — needs its interface named") trips it exactly like a hand-over, even when
+the same problem is properly linked in a table two lines later. The forced re-emit then produces a
+*context-free* link line, which the learner reads as a directive: *"are you linking 901 because you
+want me to do it first?"* (Aug 23). **Two-part fix:**
+- **On the agent (the real fix — removes the trigger):** in prose, refer to a problem **by name or
+  role, never by loose number** ("the design problem", "the sliding-window retry"). A number appears
+  *only* inside its `[file] · [LC]` pair, never loose. Then the hook never fires mid-turn and there is
+  no orphan to misread. This is stronger than labeling the orphan — it prevents it.
+- **On the hook (backup):** when an orphan is still owed, the block message now permits the fixed tag
+  `(links owed, order unchanged)` on the re-emitted line, so a debt-payment can't be read as a pick.
 
 **CAVEAT — a retry's file link is a spoiler until scaffolded.** File links are safe in the
 **kickoff** table because those items are scaffolded first (blank stub, prior attempts

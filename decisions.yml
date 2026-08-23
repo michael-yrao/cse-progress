@@ -37,6 +37,64 @@
 # "could a rule written before this still read as correct while now being wrong?"
 
 decisions:
+  - id: sibling-gate-yellow-not-green
+    date: 2026-08-23
+    summary: >-
+      A thin-technique coverage sibling now gates on the standard 🟡+ consolidation gate, NOT on
+      `green:base`. Learner: "for the techniques without proper coverage, we can drop the gate on
+      another problem being green." The `green:base` hold (224 on green:150, Floyd Fast/Slow on
+      green:202) over-tightened: for a thin technique a second problem is another path to the
+      technique's FIRST 🟢 and trains transfer that re-repping one problem can't, so gating coverage
+      behind the base going green can deadlock a technique stuck at 🟡. ONE guard retained (what
+      green:base was a blunt proxy for): a HEAVILY coach-guided 🟡 — near-🔴, multiple coach-supplied
+      fixes per the stuck_log — counts as 🔴 for sibling purposes, convert/teach first (§2a: a sibling
+      on an unlearned base just double-blanks). Effect: 224/227 (Stack-expr, 150 clean-🟡) and Floyd
+      Fast/Slow (Cycle, 202 🟡) unblock; 239 Monotonic Deque (3 coach fixes Aug 22) stays gated.
+      Recorded in techniques.yml (Floyd Fast/Slow trigger) and feedback_consolidation_reps.
+    affects: [consolidation, coverage, waiting_room, techniques_yml]
+
+  - id: fill-capacity-with-weak-coverage
+    date: 2026-08-23
+    summary: >-
+      When built days sit UNDER the daily ceiling, fill toward it with weak-technique work BEFORE
+      deferring that work to a later week — priority order: zero-green conversions & their coverage
+      siblings > thin-green fills > backlog. Learner: days at 7.0 felt light while zero-green coverage
+      sat deferred to the next week. Prefer ADDING a new sibling problem over pulling an existing
+      review forward (trains transfer + a fresh 🟢 path, no interval shortening). The ≤2/week
+      consolidation cap may be flexed up when the tracker is under-subscribed (headroom) and the extra
+      intake targets zero-green/thin techniques — the cap guards an over-subscribed tracker, not an
+      under-subscribed one. Recorded in feedback_surplus_triggered_intake.
+    affects: [scheduling, effort_budget, consolidation, weekly_build]
+
+  - id: rating-gate-hook
+    date: 2026-08-23
+    summary: >-
+      New Stop hook `.claude/hooks/rating_gate.py`, at the learner's request ("put a clear gate at
+      the rating where it requires code completion + time and space complexities given"). It blocks a
+      turn that PROPOSES a comfort rating (comfort marker + a proposal cue like "confirm?"/"→ Sep 2")
+      when the learner has not stated BOTH time and space complexity in their recent messages. Binds
+      the complexity gate to the exact moment it kept failing — the rating proposal — after that gate
+      was run backwards twice (15 on Aug 22, 127 on Aug 23: rating proposed with an axis missing).
+      Rung-2 fix (hook) above the rung-4 memory note. Checks the LEARNER's transcript, not a
+      self-asserted checklist (ungameable). Detection is keyword-based per axis (no Big-O-count credit,
+      which misfires when both O()s are one axis — the 127 case); accepted conservative cost is a single
+      block on an axis stated only as a bare O() with no word, which the re-send clears (stop_hook_active).
+      Does NOT check correctness of the bound or the freebie ledger — those stay judgement. Wired into
+      settings.json Stop alongside problem_link_reminder. See feedback_ask_complexity (ledger-read-before-rating).
+    affects: [complexity_gate, rating, hooks]
+
+  - id: link-orphan-reemit-fix
+    date: 2026-08-23
+    summary: >-
+      Two changes to stop a hook-forced link re-emit from reading as a directive (learner: "are you
+      linking 901 because you want me to do it first?"). (1) Behavioral, the real fix: in prose, refer
+      to a problem by name/role, never a loose number — a number appears only inside its [file]·[LC]
+      pair — so the Stop link hook never fires mid-turn and no context-free orphan is created. (2) Hook
+      backup: problem_link_reminder.py's block message now permits the fixed tag "(links owed, order
+      unchanged)" on a forced re-emit so a debt-payment can't be misread as a pick. Recorded in
+      feedback_kickoff_table_links.
+    affects: [links, hooks]
+
   - id: technique-comfort-audit
     date: 2026-08-22
     summary: >-
