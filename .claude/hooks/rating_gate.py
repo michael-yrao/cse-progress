@@ -46,11 +46,15 @@ import sys
 COMFORT = re.compile(
     r"🟢|🟡|🔴|🎓|\b(?:clean|shaky|blank)\b|\bs[0-2]\b", re.IGNORECASE
 )
-# A cue that the turn is PROPOSING/LOGGING a rating, not merely discussing one. A next
-# review date ("→ Sep 2", "Oct 22") is the strongest single tell that a rating is landing.
+# A cue that the turn is PROPOSING a rating — i.e. asking the learner to DECIDE, which is the
+# defining feature of a proposal (workflow step 4: "propose it for confirmation"). A recap only
+# REPORTS already-logged ratings and asks for nothing.
+#
+# ⚠️ Do NOT match a bare next-review date ("→ Sep 2", "Oct 22"): a session recap lists exactly
+# those alongside the comfort emoji ("567 🟢 s2 · Oct 22"), so date-matching false-fired on the
+# Aug 23 close-out recap. The decision-request cue is the clean discriminator — a recap has none.
 PROPOSE_CUE = re.compile(
-    r"\bconfirm\b|\bproposed?\b|\brating[:?]|\brate\b|→\s*(?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)"
-    r"|\b(?:next review|streak resets?|→ Sep| Sep \d| Oct \d)",
+    r"\bconfirm\b|\bproposed?\b|\boverride\b|\baccept\b|\brating[:?]|\brate\b",
     re.IGNORECASE,
 )
 
@@ -204,6 +208,11 @@ PROPOSE_CASES = [
     ("scale explanation, no propose cue", "The scale is 🟢 clean, 🟡 shaky, 🔴 blank.", False),
     ("past rating cite, no cue", "Your last rep on this was 🟡.", False),
     ("plain prose", "Nice, the BFS looks correct and clean.", False),
+    # The Aug 23 close-out recap false positive: comfort markers + next-review dates, but it
+    # REPORTS logged ratings and asks for no decision. Must NOT trip.
+    ("session recap, no decision request",
+     "Recap: 567 🟢 s2 (Oct 22) · 901 🟢 s1 (Sep 22) · 127 🟡 (Sep 2). Pushed.", False),
+    ("override-style proposal", "Proposed: 🟡 Shaky → Sep 2. Accept or override?", True),
 ]
 
 AXES_CASES = [
