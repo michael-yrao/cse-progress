@@ -3,7 +3,7 @@ name: feedback-consolidation-reps
 description: A technique needs MULTIPLE problems, not one — near-identical siblings are the training signal (their minor differences are what recognition grades), and they don't count against the new-algorithm intake cap
 metadata:
   type: feedback
-reconciled: 2026-08-21
+reconciled: 2026-08-23
 ---
 
 **Set by the learner Jul 26, 2026:** *"we need multiple problems of the same flavor for users to
@@ -45,3 +45,28 @@ for its actual class).
 5. Distinct from [[feedback_method_variant_promotion]]: that is *many techniques on one problem* and is
    gated on the base retiring. This is *one technique across many problems*, gated only at 🟡. Different
    axis, different gate — don't apply one rule's gate to the other.
+
+## ⚠️ Sibling gate is 🟡+, NOT `green:base` (added Aug 23, 2026)
+
+**A thin-technique coverage sibling gates on the standard `🟡+` consolidation gate — never on the base
+problem going 🟢 first.** The `green:base` hold (224 waited on `green:150`; the Floyd Fast/Slow variant
+on `green:202`) was stricter than this rule and **counterproductive for a thin technique**: a second
+problem is another path to the technique's *first* 🟢 and trains the transfer that re-repping one problem
+cannot — so gating coverage behind the base going green can **deadlock** a technique stuck at 🟡.
+
+**Why:** the goal for a thin technique is *coverage* (3–4 surface forms). Requiring the single existing
+problem to reach 🟢 before a second may enter means a technique that keeps hovering at 🟡 never gets the
+second surface form that would actually teach it. The learner's framing (Aug 23): *"for the techniques
+without proper coverage, we can drop the gate on another problem being green."*
+
+**How to apply:** a sibling is schedulable once the base is **🟡 or better** (the standard gate). **One
+guard retained** — the thing `green:base` was a blunt proxy for:
+
+> A 🟡 that was **heavily coach-guided** (near-🔴 — multiple coach-supplied fixes, per the stuck_log) is
+> treated as 🔴 for sibling purposes → convert/teach first, no sibling yet. Against a genuinely-unlearned
+> base a sibling just double-blanks (§2a).
+
+**The distinction is 🟡 *quality*, and it is a judgement:** 150 (clean-🟡, recognition hit / execution
+slip) → sibling OK; 239 (🟡 after *three* coach fixes Aug 22) → convert first. See
+`decisions.yml` `sibling-gate-yellow-not-green`. Related: [[feedback_surplus_triggered_intake]] (when to
+spend capacity on this coverage), [[feedback_coverage_gap_ledger]].

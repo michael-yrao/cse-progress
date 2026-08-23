@@ -66,14 +66,17 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/dsa/mastery/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **107+4** problems &nbsp;·&nbsp; **117+4** solutions &nbsp;·&nbsp; **486+4** reps
+> **107+4** problems &nbsp;·&nbsp; **117+4** solutions &nbsp;·&nbsp; **489+4** reps
 
 | | 🏆 Retired | 🎓 Graduated | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|:---:|
-| **Solutions** | 0 | 6 | 95 | 16 | 0 |
+| **Solutions** | 0 | 6 | 96 | 15 | 0 |
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Rep Date | Rep Dates |
 |---|---|---|---|---|---|---|
+| Medium | [567. Permutation in String](https://leetcode.com/problems/permutation-in-string/) | 🟢 | 2 | 2026-10-22 | 2026-08-23 | 2026-04-20, 2026-07-02, 2026-07-12, 2026-07-24, 2026-08-23 |
+| Medium | [901. Online Stock Span](https://leetcode.com/problems/online-stock-span/) | 🟢 | 1 | 2026-09-22 | 2026-08-23 | 2026-07-12, 2026-07-14, 2026-08-13, 2026-08-23 |
+| Hard | [127. Word Ladder (BFS)](https://leetcode.com/problems/word-ladder/) | 🟡 | 0 | 2026-09-02 | 2026-08-23 | 2026-07-18, 2026-07-21, 2026-08-03, 2026-08-13, 2026-08-23 |
 | Hard | [778. Swim in Rising Water (Dijkstra / Min-Heap)](https://leetcode.com/problems/swim-in-rising-water/) | 🟢 | 1 | 2026-09-21 | 2026-08-22 | 2026-07-23, 2026-08-02, 2026-08-12, 2026-08-22 |
 | Medium | [53. Maximum Subarray (Prefix Sum)](https://leetcode.com/problems/maximum-subarray/) | 🟢 | 0 | 2026-09-01 | 2026-08-22 | 2026-01-08, 2026-04-01, 2026-06-27, 2026-08-20, 2026-08-22 |
 | Medium | [3. Longest Substring Without Repeating Characters](https://leetcode.com/problems/longest-substring-without-repeating-characters/) | 🟢 | 2 | 2026-10-21 | 2026-08-22 | 2026-04-17, 2026-07-23, 2026-08-22 |
@@ -116,9 +119,7 @@ Notes for future agents:
 | Medium | [503. Next Greater Element II](https://leetcode.com/problems/next-greater-element-ii/) | 🟢 | 2 | 2026-10-13 | 2026-08-14 | 2026-07-11, 2026-07-21, 2026-07-31, 2026-08-10, 2026-08-14 |
 | Medium | [155. Min Stack (Pair with Min-So-Far)](https://leetcode.com/problems/min-stack/) | 🟢 | 0 | 2026-08-24 | 2026-08-14 | 2026-08-12, 2026-08-14 |
 | Medium | [138. Copy List with Random Pointer](https://leetcode.com/problems/copy-list-with-random-pointer/) | 🟢 | 1 | 2026-09-12 | 2026-08-13 | 2026-07-03, 2026-07-05, 2026-08-04, 2026-08-13 |
-| Hard | [127. Word Ladder (BFS)](https://leetcode.com/problems/word-ladder/) | 🟡 | 0 | 2026-08-23 | 2026-08-13 | 2026-07-18, 2026-07-21, 2026-08-03, 2026-08-13 |
 | Medium | [146. LRU Cache](https://leetcode.com/problems/lru-cache/) | 🟢 | 2 | 2026-10-12 | 2026-08-13 | 2026-07-04, 2026-07-07, 2026-07-16, 2026-08-13 |
-| Medium | [901. Online Stock Span](https://leetcode.com/problems/online-stock-span/) | 🟡 | 0 | 2026-08-23 | 2026-08-13 | 2026-07-12, 2026-07-14, 2026-08-13 |
 | Easy | [121. Best Time to Buy and Sell Stock](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/) | 🟢 | 2 | 2026-10-12 | 2026-08-13 | 2026-04-15, 2026-06-25, 2026-07-03, 2026-07-14, 2026-08-13 |
 | Easy | [680. Valid Palindrome II](https://leetcode.com/problems/valid-palindrome-ii/) | 🟢 | 2 | 2026-10-12 | 2026-08-13 | 2026-04-05, 2026-05-28, 2026-05-30, 2026-06-12, 2026-08-13 |
 | Medium | [875. Koko Eating Bananas](https://leetcode.com/problems/koko-eating-bananas/) | 🟢 | 1 | 2026-09-10 | 2026-08-11 | 2026-04-22, 2026-07-03, 2026-07-13, 2026-07-23, 2026-08-02, 2026-08-11 |
@@ -173,7 +174,6 @@ Notes for future agents:
 | Medium | [355. Design Twitter](https://leetcode.com/problems/design-twitter/) | 🟢 | 1 | 2026-08-24 | 2026-07-25 | 2026-06-24, 2026-06-26, 2026-07-06, 2026-07-15, 2026-07-25 |
 | Medium | [74. Search a 2D Matrix](https://leetcode.com/problems/search-a-2d-matrix/) | 🟢 | 1 | 2026-08-24 | 2026-07-25 | 2026-04-22, 2026-07-03, 2026-07-13, 2026-07-25 |
 | Medium | [347. Top K Frequent Elements](https://leetcode.com/problems/top-k-frequent-elements/) | 🟢 | 1 | 2026-08-24 | 2026-07-25 | 2026-01-11, 2026-04-09, 2026-05-30, 2026-07-25 |
-| Medium | [567. Permutation in String](https://leetcode.com/problems/permutation-in-string/) | 🟢 | 1 | 2026-08-23 | 2026-07-24 | 2026-04-20, 2026-07-02, 2026-07-12, 2026-07-24 |
 | Easy | [242. Valid Anagram](https://leetcode.com/problems/valid-anagram/) | 🟢 | 2 | 2026-09-20 | 2026-07-22 | 2026-01-01, 2026-03-25, 2026-06-22, 2026-07-22 |
 | Easy | [206. Reverse Linked List (Iterative)](https://leetcode.com/problems/reverse-linked-list/) | 🟢 | 2 | 2026-09-18 | 2026-07-20 | 2026-04-23, 2026-05-26, 2026-06-12, 2026-06-20, 2026-07-20 |
 | Easy | [21. Merge Two Sorted Lists (Recursion)](https://leetcode.com/problems/merge-two-sorted-lists/) | 🟢 | 2 | 2026-09-18 | 2026-07-20 | 2026-05-20, 2026-05-21, 2026-06-12, 2026-06-20, 2026-07-20 |

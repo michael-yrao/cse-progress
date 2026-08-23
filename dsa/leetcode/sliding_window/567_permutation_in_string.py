@@ -21,7 +21,35 @@ Constraints:
 
 """
 
+from typing import Counter
+
+
 class Solution:
+
+    # ── Attempt · 2026-08-23 ──────────────
+    def checkInclusion_20260823(self, s1: str, s2: str) -> bool:
+        # going by the examples, we look at substrings of s2
+        # so this is sliding window of fixed size, where the fixed size is len(s1)
+        # permutation means just a freqMap, so we just create freqMap of s1
+        # then add/delete as we go through s2 window
+
+        s1Map = Counter(s1)
+        s2Map = {}
+        
+        l = r = 0
+
+        while r < len(s2):
+            s2Map[s2[r]] = s2Map.get(s2[r],0)+1
+            if r - l + 1 > len(s1):
+                s2Map[s2[l]]-=1
+                if s2Map[s2[l]] == 0:
+                    del s2Map[s2[l]]
+                l+=1
+            # check map equality
+            if s1Map == s2Map:
+                return True
+            r+=1
+        return False
 
     # ── Attempt · 2026-07-24 ──────────────
     def checkInclusion_20260724(self, s1: str, s2: str) -> bool:

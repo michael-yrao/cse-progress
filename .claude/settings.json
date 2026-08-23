@@ -19,6 +19,11 @@
             "type": "command",
             "command": "if command -v python3 >/dev/null 2>&1; then python3 \"${CLAUDE_PROJECT_DIR:-.}/.claude/hooks/problem_link_reminder.py\"; else python \"${CLAUDE_PROJECT_DIR:-.}/.claude/hooks/problem_link_reminder.py\"; fi",
             "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "if command -v python3 >/dev/null 2>&1; then python3 \"${CLAUDE_PROJECT_DIR:-.}/.claude/hooks/rating_gate.py\"; else python \"${CLAUDE_PROJECT_DIR:-.}/.claude/hooks/rating_gate.py\"; fi",
+            "timeout": 10
           }
         ]
       }

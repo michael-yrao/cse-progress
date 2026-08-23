@@ -443,13 +443,13 @@ techniques:
     min_problems: 2
     variants:
       - {name: Seen-Set}
-      # Trigger FIRED and was HELD, Aug 21, 2026. `rated:202` was satisfied by that day's rep —
-      # which came back 🟡, leaving this technique with no 🟢. The standing rule is that a
-      # technique at 🟡 needs a CONVERSION rep, not a second surface form: adding Floyd here
-      # would manufacture a second row at ~73 units/year on a skill whose first form is not yet
-      # proven. Re-stated as a STATE condition so it cannot expire silently the way a bare date
-      # or a spent trigger does.
-      - {name: Floyd Fast/Slow, queued: "green:202"}
+      # GATE RELAXED Aug 23, 2026 (decisions.yml sibling-gate-yellow-not-green): the `green:202`
+      # hold was stricter than the standard 🟡+ consolidation gate. For a THIN technique a second
+      # surface form is another path to the first 🟢 AND trains transfer, so waiting on green:base
+      # can deadlock a technique stuck at 🟡. Now gated on the standard 🟡+, which 202 already is.
+      # (Floyd Fast/Slow is a variant ON 202, so it rides 202's own next rep rather than a new
+      # problem.) The retained guard: a HEAVILY coach-guided 🟡 counts as 🔴 -> convert first.
+      - {name: Floyd Fast/Slow, queued: "🟡:202 — ready; rides 202's next rep"}
     problems:
       - {number: 202, method: Seen-Set}
 
