@@ -66,7 +66,7 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/dsa/mastery/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **107** problems &nbsp;·&nbsp; **117** solutions &nbsp;·&nbsp; **486** reps
+> **107+4** problems &nbsp;·&nbsp; **117+4** solutions &nbsp;·&nbsp; **486+4** reps
 
 | | 🏆 Retired | 🎓 Graduated | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|:---:|
