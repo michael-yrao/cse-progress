@@ -37,7 +37,8 @@ discovered and no `discovery_skip` entry is ever needed. That is the preferred h
 ## What gets logged
 
 - **Always** → the recognition call (hit or miss) to
-  [`recognition_gotchas.md`](../../docs/foundations/dsa/mastery/recognition_gotchas.md).
+  [`recognition_gotchas.md`](../../docs/foundations/dsa/mastery/recognition_gotchas.md), **and a row in
+  the [Probe log](#-probe-log--the-tally) below** (the only place a disposable 🟢 probe is counted).
 - **🟢 → no tracker row.** The probe was a test of whether the *technique* transfers, not an asset to
   maintain.
 - **🟡 / 🔴 → it earns a row**, because only a gap needs repetition.
@@ -51,6 +52,31 @@ measure of whether the pool still teaches anything**:
   inside the pool you already own (adds zero permanent demand), and *only* when Medium is also ≥85% 🟢,
   open the next expansion tier (every new technique is maintenance demand forever).
 - **≤70% 🟢** → real gaps remain; keep consolidating.
+
+## 📒 Probe log — the tally
+
+Every probe gets a row here, **hand-added when it runs** (same discipline as the recognition ledger).
+This is the only place probes are *counted*: a 🟢 probe is disposable and creates no tracker row, so
+without this table it vanishes from every "problems solved" figure. Two jobs:
+
+1. **Counts the rowless probes.** A clean 🟢 is a unique problem solved that the 107-row tracker never
+   sees. Add the `🟢 · —` rows here to any "unique problems solved" total.
+2. **Gives the free diagnostic its denominator.** The row-creation rate above is computed over this
+   table — without it, "rate over ~15 probes" has no bottom.
+
+| # | Date | Problem | Technique | Result | Tracker row? |
+|---|---|---|---|---|---|
+| 1 | 2026-08-10 | 977 Squares of a Sorted Array | Two Pointers | 🟢 | — |
+| 2 | 2026-08-11 | 202 Happy Number | Cycle Detection (iterated seq) | 🟡 | ✅ earned |
+| 3 | 2026-08-16 | 69 Sqrt(x) | Binary Search on Answer | 🟢 | — |
+| 4 | 2026-08-19 | 643 Maximum Average Subarray I | Sliding Window | 🟡 | — *(learner overrode the row)* |
+| 5 | 2026-08-21 | 205 Isomorphic Strings | Hash-map bijection | 🟢 | — |
+| 6 | *pending* | 637 Average of Levels in Binary Tree | Tree BFS (level order) | — | — |
+
+**Tally (5 run):** 3 clean 🟢 · 1 earned a row (202) · 1 🟡 overridden (643). **Row-creation rate
+1/5 = 20%** — well under the 85% "pool has stopped teaching" line, so the pool still teaches.
+**Rowless-but-solved: 4** (977, 69, 643, 205) — these are the unique problems the tracker's 107 does
+not count.
 
 ## ⚠️ Easy-only cannot reach most of the pool
 

@@ -292,6 +292,40 @@ def count_retired_entries(lines: list[str]) -> int:
     return count
 
 
+def count_rowless_probes(readme: Path = SOURCE_ROOT.parent / "probes" / "README.md") -> int:
+    """Count disposable probes that were SOLVED but earn no tracker row.
+
+    A clean 🟢 probe (and a 🟡/🔴 the learner overrode) creates no row in dsa_progress.md by design —
+    so it is invisible to the `unique_problems` count above, which only sees the table. The probe log
+    table in dsa/probes/README.md is the authority; a row counts here when it has a real result
+    (🟢/🟡/🔴, i.e. not a *pending* probe) AND its "Tracker row?" cell is not a ✅. Purely additive:
+    the tracker never contains these, so there is no double-counting.
+
+    Defensive on purpose — a missing file, a renamed section, or a reformatted table returns 0 rather
+    than raising, because this runs from the pre-commit hook and must never block a commit.
+    """
+    try:
+        text = readme.read_text(encoding="utf-8")
+    except (OSError, UnicodeDecodeError):
+        return 0
+    results = {COMFORT_CLEAN, COMFORT_SHAKY, COMFORT_BLANK}
+    count = 0
+    in_log = False
+    for line in text.splitlines():
+        if line.startswith("## "):
+            in_log = "Probe log" in line
+            continue
+        if not in_log or not line.lstrip().startswith("|"):
+            continue
+        cells = [c.strip() for c in line.strip().strip("|").split("|")]
+        if len(cells) < 6:
+            continue
+        result, tracker = cells[4], cells[5]
+        if any(r in result for r in results) and "✅" not in tracker:
+            count += 1
+    return count
+
+
 def build_summary_lines(table_rows: list[dict], retired: int = 0) -> list[str]:
     attempted_rows = [row for row in table_rows if row["latest"] is not None]
     unique_problems = len({
@@ -300,6 +334,8 @@ def build_summary_lines(table_rows: list[dict], retired: int = 0) -> list[str]:
         if extract_problem_number(row["problem"]) is not None
     })
     solutions_done = len(attempted_rows)
+    rowless_probes = count_rowless_probes()
+    _p = f"+{rowless_probes}" if rowless_probes else ""  # the `+N` probe-fold suffix, shared by all three counts
     total_attempts = sum(count_attempt_dates(row["attempts"]) for row in table_rows)
     clean = sum(1 for row in table_rows if row["comfort"] == COMFORT_CLEAN)
     shaky = sum(1 for row in table_rows if row["comfort"] == COMFORT_SHAKY)
@@ -315,7 +351,15 @@ def build_summary_lines(table_rows: list[dict], retired: int = 0) -> list[str]:
         # trying and possibly failing, and the code gets written every time — what varies is the rating,
         # not whether a solution happened. "Rep" is also the vocabulary the rest of the system already
         # uses. Only the label changed; the count is still one per dated entry in `Attempt Dates`.
-        f"> **{unique_problems}** problems &nbsp;·&nbsp; **{solutions_done}** solutions &nbsp;·&nbsp; **{total_attempts}** reps",
+        # All three counts see only the table below. Disposable 🟢 probes earn no row, so each is folded
+        # in as `base+4` (source: the probe log in dsa/probes/README.md) — one rowless probe is one
+        # problem, one solution, AND one rep (a single cold attempt). The base is the review-rotation
+        # count; the `+N` is the probe-only work. `+N` is omitted from all three when there are none.
+        (
+            f"> **{unique_problems}{_p}** problems "
+            f"&nbsp;·&nbsp; **{solutions_done}{_p}** solutions "
+            f"&nbsp;·&nbsp; **{total_attempts}{_p}** reps"
+        ),
         "",
         f"| | {COMFORT_RETIRED} Retired | {COMFORT_GRADUATED} Graduated | {COMFORT_CLEAN} Clean | {COMFORT_SHAKY} Shaky | {COMFORT_BLANK} Blank |",
         "|:---|:---:|:---:|:---:|:---:|:---:|",
@@ -826,7 +870,10 @@ def main() -> None:
             return True
         if re.match(r"^\*\*\d+ problems done\*\*$", s):
             return True
-        if re.match(r"^> \*\*\d+\*\* problems", s):
+        # \d+ optionally followed by +\d+ — the probe-fold format `**107+4** problems`. Without the
+        # (?:\+\d+)? the new-format line is not recognized as a prior summary, so it is never stripped
+        # and a fresh one stacks under it on every run (the exact duplicate this whole guard prevents).
+        if re.match(r"^> \*\*\d+(?:\+\d+)?\*\* problems", s):
             return True
         if re.match(r"^\| \*?\*?Solutions\*?\*? \|", s):
             return True
