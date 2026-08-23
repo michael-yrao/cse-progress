@@ -114,3 +114,24 @@ schedule file** — that lets its breakdown be read in advance, which caps the m
 same discipline as [[project_recognition_probes]]. Previously attempting a design is *not* "prepared";
 reading the worked answer is. Related: [[feedback_coverage_gap_ledger]] (the probe bank moved into the
 debrief), [[project_sd_roi_line]], [[feedback_dsa_before_sd]].
+
+## ⏸️ Study-mode detail — the learner is mid-way through HelloInterview (Aug 23, 2026)
+
+**Learner:** *"I will update the agent when I am ready for SD Mock Interview but am still going through
+the documents in hellointerview and will provide insight on questionaires to use when I finish each
+chapter."*
+
+So the study-mode hold is not open-ended waiting — it has a shape:
+- **The learner is reading HelloInterview chapter by chapter.** SD mocks stay OFF the board until they
+  explicitly signal readiness — **do not add an SD slot, do not ask if they're ready** (unchanged rule,
+  reaffirmed).
+- **The learner will hand over which questions/questionnaires to mock on, per chapter finished.** Do NOT
+  pre-pick the mock question from HelloInterview's board on their behalf while in study mode — the choice
+  is tied to which chapters they've completed, which only they know.
+- When they signal: the first SD session is the restructure/scoping session, then mocks (per the model above).
+
+⚠️ **Lapse that prompted this note:** the Aug 24 weekly build initially seated a Sunday **SD MOCK** slot,
+against this file's standing "build every week with ZERO SD slots, do not ask" rule. The learner caught
+it (*"SD Mock doesn't look like it is happening yet, so we can push that back"*). Logged in
+`self_eval_log.md` 2026-08-23. **The rule was in MEMORY.md context the whole time** — the miss was not
+reading it as binding at build time.
