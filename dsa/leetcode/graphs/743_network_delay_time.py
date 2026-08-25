@@ -41,6 +41,53 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-08-24 ──────────────
+    def networkDelayTime_20260824(self, times: List[List[int]], n: int, k: int) -> int:
+        # min time to visit all nodes where w is positive = dijkstra's
+        # minHeap, visited and adjMap
+        # there is a chance we can't hit all nodes, so we need to check visited size later
+        
+        # build adjMap
+        adjMap = collections.defaultdict(list)
+
+        for src, dst, weight in times:
+            adjMap[src].append((dst, weight))
+
+        # visited and minHeap
+        visited = set()
+        minHeap = []
+
+        # start node is given to us as k
+        # weight to self is zero
+        heapq.heappush(minHeap, (0,k))
+
+        cumulativeWeight = 0
+        while minHeap:
+            # go in waves
+            lenHeap = len(minHeap)
+            for _ in range(lenHeap):
+                # currentWeight, currentNode
+                # do note that we want the total, so we should keep currentWeight as cumulative
+                # we can be greedy here and just pop if it's already visited
+                # since we know we are visiting smallest first via minHeap
+                currentWeight, currentNode = heapq.heappop(minHeap)
+                # key diff between BFS and Dijkstra
+                # Dijkstra = mark visited on popping from minHeap
+                # BFS = mark visited on push into queue
+                if currentNode not in visited:
+                    # mark as visited
+                    visited.add(currentNode)
+                    # update weight
+                    cumulativeWeight = currentWeight
+                    # now we get neighbors 
+                    for neighbor, neighborWeight in adjMap[currentNode]:
+                        neighborCumulativeWeight = currentWeight + neighborWeight
+                        heapq.heappush(minHeap, (neighborCumulativeWeight, neighbor))
+        
+        if len(visited) == n:
+            return cumulativeWeight
+        return -1
+
     # ── Attempt · 2026-08-14 ──────────────
     def networkDelayTime_20260814(self, times: List[List[int]], n: int, k: int) -> int:
         # Dijkstra's Algorithm

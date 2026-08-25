@@ -147,6 +147,13 @@ techniques:
     problems:
       - {number: 122}
 
+  # ── Intervals ───────────────────────────────────────────────────────────────
+  # Phase "Intervals + Greedy" opened Aug 24, 2026.
+  - name: Intervals (sort + sweep)
+    family: intervals
+    problems:
+      - {number: 56}
+
   # ── Prefix sum ──────────────────────────────────────────────────────────────
   # Bar raised to the file default of 3 on Aug 16, 2026 (tier A/B of the
   # coverage review: a LeetCode topic tag exists that can actually source it).
