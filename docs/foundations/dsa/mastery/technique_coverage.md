@@ -6,7 +6,7 @@
 
 > The tracker is keyed by **problem**; this is keyed by **technique**. Use it at the weekly build to decide what to pull, and at phase exit to check the per-algorithm bar (recognition + execution, ≥1 🟢 each).
 
-> **54/54** techniques started &nbsp;·&nbsp; **8** with no 🟢 &nbsp;·&nbsp; **19** thin &nbsp;·&nbsp; **0** unqueued variant gaps
+> **55/55** techniques started &nbsp;·&nbsp; **9** with no 🟢 &nbsp;·&nbsp; **20** thin &nbsp;·&nbsp; **0** unqueued variant gaps
 
 ## ⚠️ Action list
 
@@ -17,6 +17,7 @@
 - **Floyd-Warshall (all-pairs shortest path)** (advanced_graphs) — best 🟡 across 1334
 - **Graph Clone (DFS + Hash Map)** (graphs) — best 🟡 across 133
 - **Hierholzer (Eulerian path)** (advanced_graphs) — best 🟡 across 332, 332
+- **Intervals (sort + sweep)** (intervals) — best 🟡 across 56
 - **Length-Prefix Encoding** (arrays_and_hash) — best 🟡 across 271
 - **Monotonic Deque** (stack) — best 🟡 across 239
 - **Stack (expression evaluation)** (stack) — best 🟡 across 150
@@ -31,6 +32,7 @@
 - **Floyd-Warshall (all-pairs shortest path)** (advanced_graphs) — 1/3: 1334
 - **HashMap + Doubly Linked List (LRU)** (linked_list) — 1/3: 146
 - **Hierholzer (Eulerian path)** (advanced_graphs) — 1/3 (2 rows): 332
+- **Intervals (sort + sweep)** (intervals) — 1/3: 56
 - **Multi-source BFS** (graphs) — 1/3: 994
 - **Prim's MST** (advanced_graphs) — 1/3: 1584
 - **Stack (augmented entries)** (stack) — 1/2: 155
@@ -74,6 +76,7 @@
 | Topological Sort | graphs | 3 (207, 210, 269) | 🟢 | ✅ | Kahn's (BFS) ×3 · ~~DFS postorder~~ *(queued: `graduates:210`)* | — |
 | Union-Find | graphs | 4 (130, 261, 684, 721) | 🟢 | ✅ | — | — |
 | Heap / Priority Queue | heap | 6 (347, 355, 621, 703, 973, 1046) | 🟢 | ✅ | — | — |
+| Intervals (sort + sweep) | intervals | 1 (56) | 🟡 | ❌ | — | **no-green** · thin (1/3) |
 | Deep Copy via Hash Map | linked_list | 1 (138) | 🟢 | ✅ | — | — |
 | Floyd's Cycle / Midpoint | linked_list | 2 (141, 143) | 🟢 | ✅ | — | thin (2/3) |
 | HashMap + Doubly Linked List (LRU) | linked_list | 1 (146) | 🟢 | ✅ | — | thin (1/3) |

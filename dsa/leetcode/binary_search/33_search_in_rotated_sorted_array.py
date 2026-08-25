@@ -34,6 +34,46 @@ Constraints:
 from typing import List
 
 class Solution:
+
+    # ── Attempt · 2026-08-24 ──────────────
+    def search_20260824(self, nums: List[int], target: int) -> int:
+        # two stepper
+        # 1. find where rotation happens, this is min boundary binary search
+        # 2. look at both sides for the target, this is single target binary search
+
+        l, r = 0, len(nums) - 1
+
+        while l < r:
+            m = (l + r) // 2
+            # 4, 5, 6, 7, 0, 1, 2
+            # l        m        r
+            # if m greater, definitely not the smallest so skip this
+            if nums[m] > nums[r]:
+                l = m + 1
+            else:
+                r = m
+        
+        # l is now the start of the rotation, so now check both sides
+        rotationIndex = l
+    
+        def binarySearch(l,r):
+            while l <= r:
+                m = (l+r)//2
+                if nums[m] == target:
+                    return m
+                elif nums[m] > target:
+                    r = m - 1
+                else:
+                    l = m + 1
+            return -1
+
+        firstHalfSearch = binarySearch(0, rotationIndex-1)
+
+        if firstHalfSearch == -1:
+            return binarySearch(rotationIndex, len(nums)-1)
+        else:
+            return firstHalfSearch
+
     def search(self, nums: List[int], target: int) -> int:
         # if we are looking for logn time, we can't go through the array to find k
         # we should binary search to find k

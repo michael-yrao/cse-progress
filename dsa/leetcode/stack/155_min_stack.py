@@ -31,49 +31,22 @@ Constraints:
 from typing import List, Optional
 
 
-# ── Attempt · 2026-08-14 ──────────────
-class MinStack_20260814:
-# we keep the min value at each insert
+# ── Attempt · 2026-08-24 ──────────────
+class MinStack_20260824:
 
     def __init__(self):
-        self.stack = []
+        pass
 
     def push(self, value: int) -> None:
-        if not self.stack:
-            self.stack.append((value,value))
-        else:
-            minValue = min(self.stack[-1][1], value)
-            self.stack.append((value, minValue))
+        pass
 
     def pop(self) -> None:
-        self.stack.pop()
+        pass
 
     def top(self) -> int:
-        return self.stack[-1][0]
+        pass
 
     def getMin(self) -> int:
-        return self.stack[-1][1]
+        pass
 
-# ── Attempt 1 · 2026-08-12 ────────────────────────────────────────────
-class MinStack:
-# we store (value, min(stack)) at each value in the stack
-    def __init__(self):
-        self.stack = []
-
-    def push(self, value: int) -> None:
-        # if stack does not exist, push itself as value, min
-        if not self.stack:
-            self.stack.append((value, value))
-        else:
-            # if stack does have value already, get latest currentMin
-            currentMin = self.stack[-1][1]
-            self.stack.append((value, min(currentMin, value)))
-
-    def pop(self) -> None:
-        self.stack.pop()
-
-    def top(self) -> int:
-        return self.stack[-1][0]
-
-    def getMin(self) -> int:
-        return self.stack[-1][1]
+# ⤵ prior attempts stashed in dsa/leetcode/.history/155_min_stack.txt — restored at session end (python scripts/restore_history.py)

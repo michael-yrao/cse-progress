@@ -22,6 +22,16 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🟡 743. Network Delay Time (Dijkstra) — 2026-08-24
+**Sticking point**: code + recognition clean (weighted → Dijkstra, visited-on-pop). 🟡 is purely the **3rd repeat of the O(E)-heap-size complexity miss** — lazy Dijkstra pushes per edge relaxation, so the heap is O(E), not ≤ V. Also carried a vestigial BFS-style wave loop (harmless). Fix to lock in: heap size = O(E). Eager Dijkstra parked (Waiting Room) until lazy clears.
+
+---
+
+## 🟡 56. Merge Intervals — 2026-08-24
+**Sticking point**: first Intervals rep. Had *sort* but needed the intuition supplied (sorting by start makes overlaps adjacent → local check, not all-pairs); floated a deque before pruning it to `result[-1]`. Merge logic + complexity clean once the shape was set.
+
+---
+
 ## 🟡 150. Evaluate Reverse Polish Notation — 2026-08-21
 
 **Sticking point**: two bugs, neither self-caught. (1) **Operand order** — the first `pop` is the
