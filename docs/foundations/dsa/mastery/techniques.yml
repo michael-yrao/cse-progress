@@ -520,7 +520,7 @@ techniques:
     family: advanced_graphs
     problems:
       - {number: 1334, method: Floyd-Warshall}
-      - {number: 1462, method: Transitive Closure}
+      - {number: 1462, method: Floyd-Warshall / Transitive Closure}
 
   # Learner self-reported 50:50 on execution (Aug 15) while recognition is the
   # strongest call in the ledger. LeetCode has only three Eulerian problems total;
