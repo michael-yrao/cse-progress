@@ -35,6 +35,35 @@ class TreeNode:
         self.right = right
 class Solution:
 
+    # ── Attempt · 2026-08-25 ──────────────
+    def isSubtree_20260825(self, root: Optional[TreeNode], subRoot: Optional[TreeNode]) -> bool:
+        # go through the root, find the first node then see if it is same tree
+        # if it is same tree, return True. if not, continue down
+        # preorder DFS basically
+
+        # if null together, they are equal
+        if not root and not subRoot:
+            return True
+        
+        # if null separately, not equal
+        if not root or not subRoot:
+            return False
+
+        def isSameTree(t1, t2):
+            if not t1 and not t2:
+                return True
+            if not t1 or not t2:
+                return False
+            if t1.val != t2.val:
+                return False
+            return isSameTree(t1.left, t2.left) and isSameTree(t1.right, t2.right)
+
+        if root.val == subRoot.val:
+            if isSameTree(root, subRoot):
+                return True
+        
+        return self.isSubtree_20260825(root.left, subRoot) or self.isSubtree_20260825(root.right, subRoot)
+
     # ── Attempt · 2026-08-15 ──────────────
     def isSubtree_20260815(self, root: Optional[TreeNode], subRoot: Optional[TreeNode]) -> bool:
         # subtree means there should be a tree in root such that it is exactly same as subroot

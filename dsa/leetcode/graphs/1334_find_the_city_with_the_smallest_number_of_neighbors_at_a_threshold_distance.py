@@ -51,6 +51,51 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-08-25 ──────────────
+    def findTheCity_20260825(self, n: int, edges: List[List[int]], distanceThreshold: int) -> int:
+        # no distinct source and destination
+        # so every single node is a source/destination
+        # and we are to find the number of nodes each node can reach within distanceThreshold
+        # so we want to minimize distance from all nodes to other nodes
+        # we also have a small n, this is Floyd Warshall
+        # Floyd Warshall says given A -> B, can we go through C such that A -> C + C -> B is cheaper than A -> B
+        # so we need a 2D array to keep track of distance from all nodes to other nodes
+
+        # this will hold src -> dst weight so distance[0][2] = 3 says 0 -> 2 costs 3
+        distanceArray = []
+
+        for i in range(n):
+            array = [math.inf] * n
+            distanceArray.append(array)
+            distanceArray[i][i] = 0
+        
+        # update distanceArray in accordance with edges
+        
+        for src, dst, weight in edges:
+            distanceArray[src][dst] = weight
+            distanceArray[dst][src] = weight
+        
+        for midPoint in range(n):
+            for source in range(n):
+                for destination in range(n):
+                    if distanceArray[source][midPoint] + distanceArray[midPoint][destination] < distanceArray[source][destination]:
+                        distanceArray[source][destination] = distanceArray[source][midPoint] + distanceArray[midPoint][destination]
+        
+        # now we have what each city can reach
+        # let's check results
+        output = math.inf
+        currentLowest = math.inf
+        for i in range(n):
+            numberOfCities = 0
+            for j in range(n):
+                if i != j and distanceArray[i][j] <= distanceThreshold:
+                    numberOfCities+=1
+            if numberOfCities <= currentLowest:
+                output = i
+                currentLowest = numberOfCities
+        
+        return output # type: ignore
+
     # ── Attempt · 2026-08-15 ──────────────
     def findTheCity_20260815(self, n: int, edges: List[List[int]], distanceThreshold: int) -> int:
         # smallest number of cities and distanceThreshold tells me we should use shortest path

@@ -38,6 +38,25 @@ from typing import List
 
 class Solution:
 
+    # ── Attempt · 2026-08-25 ──────────────
+    def topKFrequent_20260825(self, nums: List[int], k: int) -> List[int]:
+        # top k so we can do minHeap of freq
+        freqMap = Counter(nums)
+
+        minHeap = []
+
+        for num, freq in freqMap.items():
+            heapq.heappush(minHeap, (freq,num))
+            if len(minHeap) > k:
+                heapq.heappop(minHeap)
+        
+        result = []
+        while minHeap:
+            freq, num = heapq.heappop(minHeap)
+            result.append(num)
+        
+        return result
+
     # ── Attempt · 2026-07-25 ──────────────
     def topKFrequent_20260725(self, nums: List[int], k: int) -> List[int]:
         # top k gives me the maxheap vibe instantly

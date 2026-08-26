@@ -513,13 +513,14 @@ techniques:
   # min_problems dropped Aug 15, 2026 so this inherits the default of 3.
   # Learner: "I want more practice with floyd warshall… this applies for all the harder
   # algorithms, we should have more than just one problem tackling it."
-  #   queued: 1462 Course Schedule IV (Medium) — transitive closure. Same triple loop,
-  #           boolean instead of additive; teaches F-W as a PATTERN, not a distance algorithm.
   #   queued: 2642 Design Graph With Shortest Path Calculator (Hard) — F-W under edge insertion.
+  # 1462 done Aug 25, 2026 — F-W as a PATTERN (boolean transitive closure), came back 🟡 (recognition
+  # miss: opened on Union-Find; execution clean). Gives the technique a 2nd surface form.
   - name: Floyd-Warshall (all-pairs shortest path)
     family: advanced_graphs
     problems:
       - {number: 1334, method: Floyd-Warshall}
+      - {number: 1462, method: Transitive Closure}
 
   # Learner self-reported 50:50 on execution (Aug 15) while recognition is the
   # strongest call in the ledger. LeetCode has only three Eulerian problems total;

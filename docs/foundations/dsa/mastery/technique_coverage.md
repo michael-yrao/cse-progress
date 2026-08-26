@@ -6,7 +6,7 @@
 
 > The tracker is keyed by **problem**; this is keyed by **technique**. Use it at the weekly build to decide what to pull, and at phase exit to check the per-algorithm bar (recognition + execution, ≥1 🟢 each).
 
-> **55/55** techniques started &nbsp;·&nbsp; **9** with no 🟢 &nbsp;·&nbsp; **20** thin &nbsp;·&nbsp; **0** unqueued variant gaps
+> **55/55** techniques started &nbsp;·&nbsp; **8** with no 🟢 &nbsp;·&nbsp; **20** thin &nbsp;·&nbsp; **0** unqueued variant gaps
 
 ## ⚠️ Action list
 
@@ -14,7 +14,6 @@
 
 - **BFS on Implicit Graph** (graphs) — best 🟡 across 127
 - **Cycle Detection in an Iterated Sequence** (graphs) — best 🟡 across 202
-- **Floyd-Warshall (all-pairs shortest path)** (advanced_graphs) — best 🟡 across 1334
 - **Graph Clone (DFS + Hash Map)** (graphs) — best 🟡 across 133
 - **Hierholzer (Eulerian path)** (advanced_graphs) — best 🟡 across 332, 332
 - **Intervals (sort + sweep)** (intervals) — best 🟡 across 56
@@ -51,7 +50,7 @@
 |---|---|---:|:---:|:---:|---|---|
 | Bellman-Ford | advanced_graphs | 1 (787) | 🟢 | ✅ | Standard ×1 · ~~Contrast rep on 743~~ *(queued: `graduates:743`)* | thin (1/3) |
 | Dijkstra | advanced_graphs | 2 (743, 778) | 🟢 | ✅ | — | thin (2/3) |
-| Floyd-Warshall (all-pairs shortest path) | advanced_graphs | 1 (1334) | 🟡 | ❌ | — | **no-green** · thin (1/3) |
+| Floyd-Warshall (all-pairs shortest path) | advanced_graphs | 1 (1334) | 🟢 | ✅ | — | thin (1/3) |
 | Hierholzer (Eulerian path) | advanced_graphs | 1 *+1v* (332) | 🟡 | ❌ | pre-sorted adjacency ×1 · min-heap ordering ×1 | **no-green** · thin (1/3) |
 | Prim's MST | advanced_graphs | 1 (1584) | 🟢 | ✅ | Prim's MST ×1 · ~~Kruskal's MST~~ *(queued: `expansion — edge-first MST; Aug 17 week`)* | thin (1/3) |
 | Array/String Fundamentals | arrays_and_hash | 3 (14, 66, 1929) | 🟢 | ✅ | — | — |
@@ -106,6 +105,14 @@
 | Two Pointers (converging) | two_pointers | 9 (11, 15, 18, 88, 125, 167, 344, 680, 1768) | 🎓 | ✅ | — | — |
 
 ## Vocabulary maintenance
+
+**Unmapped tracker rows (1)** — solved but assigned to no technique. Add them to `techniques.yml`, or coverage silently drifts behind the tracker.
+
+- 1462 Course Schedule IV (Floyd-Warshall / Transitive Closure)
+
+**Method drift (1)** — the tracker HAS a row for this problem, but not with the method the vocabulary declares. Either the parenthetical changed or the YAML names the wrong variant; the technique is not being credited.
+
+- 1462 (Transitive Closure)
 
 **Not reached yet (2)** — declared in the vocabulary, no tracker row. This is the normal state for curriculum ahead of the learner; it is a roadmap, not a finding.
 
