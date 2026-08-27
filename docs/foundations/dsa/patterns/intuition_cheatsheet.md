@@ -12,6 +12,8 @@ Fast triage: scan the **signal** column for a clue that matches your problem, th
 | "Subarray **sums to k**" / many range-sum queries | prefix sum (+ hashmap) | [prefix_sum](techniques/prefix_sum.md) |
 | "**Next greater/smaller**", spans, histogram, temperatures | monotonic stack | [monotonic_stack](techniques/monotonic_stack.md) |
 | "**Max/min in every window** of size k" | monotonic deque | [monotonic_stack](techniques/monotonic_stack.md) |
+| **Intervals**: "merge/insert overlapping" (→ a set) | sort by **start**, sweep | [intervals](techniques/intervals.md) |
+| **Intervals**: "max that fit" / "min to remove" / "min arrows" (→ a number) | sort by **end**, greedy frontier | [intervals](techniques/intervals.md) |
 | Linked list: "**cycle?**", "**middle**", "find the duplicate number" | fast & slow pointers | [fast_slow_pointer](techniques/fast_slow_pointer.md) |
 | Linked list: "**reverse**", reorder, palindrome | in-place reversal | [in_place_reversal](techniques/in_place_reversal.md) |
 | Linked list: head may change (insert/delete at front, merge) | dummy node | [dummy_node](techniques/dummy_node.md) |

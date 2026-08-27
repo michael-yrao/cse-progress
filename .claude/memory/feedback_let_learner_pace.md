@@ -3,8 +3,20 @@ name: feedback_let_learner_pace
 description: Don't drive progression — answer what was asked, then STOP; no "ready for the next one?" tail. The learner controls when to advance.
 metadata:
   type: feedback
-reconciled: 2026-08-21
+reconciled: 2026-08-26
 ---
+
+⭐⭐ **BROADENED (learner, Aug 26, 2026): "don't push the user to do something."** The rule is not
+only about advancing to the *next problem* — it covers pushing the learner toward **any action**
+they didn't ask for. Closing a conceptual answer with an imperative to act — *"now code it,"*
+*"give me the complexities,"* *"write it up"* — while the learner is still asking genuine *why*
+questions about the current step is the same slip in a new costume: the coach driving pace instead
+of the learner. On Aug 26 (57/435 Intervals) nearly every conceptual reply ended with "code it" /
+"hit me with the complexities" while the learner was mid-way through understanding *why sort by
+end* and *why track the frontier* — real discrimination questions, not stalling. **Answer the
+question, then STOP.** No trailing imperative, no trailing "next?", no nudge toward the keyboard.
+When they're ready to code or state complexity, they'll do it; the complexity gate still fires
+**when they signal the rep is done**, not as a push tacked onto teaching.
 
 ⭐ **FLAT DISCIPLINE (set by the learner Aug 20, 2026): end every turn at the answer; the learner
 drives every transition. No "next" from the coach unless they say go.** This is stronger than the

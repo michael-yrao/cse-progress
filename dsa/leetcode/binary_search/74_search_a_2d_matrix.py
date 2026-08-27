@@ -28,6 +28,41 @@ Constraints:
 from typing import List
 class Solution:
 
+    # ── Attempt · 2026-08-26 ──────────────
+    def searchMatrix_20260826(self, matrix: List[List[int]], target: int) -> bool:
+        # we want to find the maximum row that this number can sit on
+        # then once we find the row, we just do an exact number binary search
+
+        # we can find the maximum row possible by just looking at the first number of each row
+
+        l, r = 0, len(matrix) - 1
+
+        while l < r:
+            # +1 to bias towards the upperbound
+            m = (l + r + 1) // 2
+            # if this number is greater than target, skip this number
+            if matrix[m][0] > target:
+                r = m - 1
+            else:
+                l = m
+        
+        # now we know the number is on row l
+        rowNumber = l
+
+        # now we just do binary search on this row
+        l, r = 0, len(matrix[rowNumber]) - 1
+
+        while l <= r:
+            m = (l + r) // 2
+            if matrix[rowNumber][m] == target:
+                return True
+            elif matrix[rowNumber][m] < target:
+                l = m + 1
+            else:
+                r = m - 1
+        
+        return False
+
     # ── Attempt · 2026-07-25 ──────────────
     def searchMatrix_20260725(self, matrix: List[List[int]], target: int) -> bool:
         # since we know we are non-decreasing, it means we can find the highest row

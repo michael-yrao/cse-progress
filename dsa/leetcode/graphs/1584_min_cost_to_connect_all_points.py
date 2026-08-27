@@ -33,6 +33,72 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-08-26 ──────────────
+    def minCostConnectPointsKruskal_20260826(self, points: List[List[int]]) -> int:
+        # we will use Kruskal's to build the MST here
+        # Kruskal's is built around UF
+        # what we do is create a distanceMap of all nodes to each other
+        # sort by smallest
+        # UF through the distanceMap
+
+        nodeCount = len(points)
+
+        distanceMap = []
+        # calculate distance between every point
+        for i in range(nodeCount):
+            for j in range(i+1, nodeCount):
+                manhattanDistance = abs(points[j][0] - points[i][0]) + abs(points[j][1] - points[i][1])
+                distanceMap.append((manhattanDistance, i, j))
+        
+        # we know there are len(points) nodes, so we will do UF on that size
+
+        rankMap = {}
+        parentMap = {}
+
+        for i in range(nodeCount):
+            rankMap[i] = 0
+            parentMap[i] = i
+        
+        def find(node):
+            if parentMap[node] != node:
+                parentMap[node] = find(parentMap[node])
+            return parentMap[node]
+        
+        def union(n1,n2):
+            n1r = find(n1)
+            n2r = find(n2)
+            if n1r == n2r:
+                return False
+            if rankMap[n1r] > rankMap[n2r]:
+                parentMap[n2r] = n1r
+            elif rankMap[n1r] < rankMap[n2r]:
+                parentMap[n1r] = n2r
+            else:
+                parentMap[n2r] = n1r
+                rankMap[n1r]+=1
+            return True
+        
+        # sort distanceMap
+        distanceMap.sort()
+
+        # so we start with nodeCount of components
+        # we are done if we are down to 1, so let's keep a counter
+        componentCounter = nodeCount
+        # keep track of total distance
+        totalDistance = 0
+
+        # go through the distance map and union all the nodes
+        for weight, src, dst in distanceMap:
+            # if we can combine these nodes without creating a cycle
+            # we add it to the component
+            if union(src, dst):
+                totalDistance+=weight
+                componentCounter-=1
+                if componentCounter == 1:
+                    return totalDistance
+        
+        return 0
+
     # ── Attempt · 2026-08-19 ──────────────
     def minCostConnectPointsKruskal_20260819(self, points: List[List[int]]) -> int:
         # Kruskal's Algorithm - Sort edges, Union Find

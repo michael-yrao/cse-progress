@@ -153,6 +153,8 @@ techniques:
     family: intervals
     problems:
       - {number: 56}
+      - {number: 57}
+      - {number: 435, method: Interval scheduling (sort by end)}
 
   # ── Prefix sum ──────────────────────────────────────────────────────────────
   # Bar raised to the file default of 3 on Aug 16, 2026 (tier A/B of the
@@ -566,9 +568,10 @@ techniques:
     family: advanced_graphs
     variants:
       - {name: Prim's MST}
-      - {name: Kruskal's MST, queued: "expansion — edge-first MST; Aug 17 week"}
+      - {name: Kruskal's MST}
     problems:
       - {number: 1584, method: Prim's MST}
+      - {number: 1584, method: Kruskal's MST}
 
   # ── Sorting & divide and conquer ────────────────────────────────────────────
   # Bar raised to the file default of 3 on Aug 16, 2026 (tier A/B of the
