@@ -22,6 +22,63 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🔴 435. Non-overlapping Intervals — 2026-08-26
+**Topic**: Interval scheduling greedy (sort by END) — the sibling of merge-intervals (56/57, sort by START).
+### Where did I get stuck?
+Recognized the shape unaided — "remove fewest = keep most non-overlapping → sort + greedy + track a
+frontier." The two gaps: (1) the **greedy criterion**. First proposed "remove the right one," then
+"remove the one covering more *range*." Both wrong — the counterexample `[[0,10],[9,11],[10,20]]`
+(wide-but-early-ending vs narrow-but-late-ending) showed the deciding property is the **end**, not
+the width: keep the earliest-ending interval. (2) **Why sort by end** and **why one frontier scalar
+suffices** were both coach-taught on request, not derived. Code then carried 3 bugs, none self-caught:
+`math` unimported, `intervals = intervals.sort(...)` (in-place sort returns `None` → crashes `len`),
+and a double `index += 1` on removal that skipped the next interval (undercounts — failing case
+`[[1,100],[2,3],[2,4],[2,5]]` returned 2, should be 3).
+### Core Realization
+**Sort by END, not start** — the sort key follows the goal: *max non-overlapping / interval
+scheduling → sort by end* (this problem); *merge all overlaps → sort by start* (56). Greedy invariant:
+when two overlap, keep the one that **ends earliest** (frees the timeline soonest → most room for the
+future). After sorting by end this needs no undo — just skip the current interval, leave the frontier.
+The frontier (`lkgEnd`) is a complete summary of everything kept: only the last-kept interval reaches
+furthest right, so its end is the only value that can decide the next overlap.
+### Code Snippet
+```
+intervals.sort(key=lambda x: x[1])        # by END
+lkgEnd, count = float('-inf'), 0
+for start, end in intervals:
+    if start >= lkgEnd:  lkgEnd = end     # keep
+    else:                count += 1       # drop (frontier unchanged) — ONE advance per iter
+return count
+```
+
+---
+
+## 🔴 57. Insert Interval — 2026-08-26
+**Topic**: Intervals (sort + sweep) — 2nd Intervals rep, first exposure to the insert/merge variant.
+### Where did I get stuck?
+Recognition and the overlap *condition* came unaided (rejected binary search after seeing the O(n)
+wide-merge worst case; derived the full non-overlap complement `end<newStart or start>newEnd` via a
+concrete counterexample). The wall was the **merge mechanics**: floated a "graph problem / mark
+neighbors" framing (vestigial — sorted input makes overlaps contiguous, no graph needed), then tried
+a `mergeIntervals(i)` helper that manually advanced `i`, and appended `newInterval` once per before/
+after interval (would duplicate it N times). Could not see that `newInterval` has exactly one home,
+at the before→after boundary. Declared blank; approach handed over as pseudocode.
+### Core Realization
+The sweep is **three phases over one index**, and the merged interval is placed **once, outside any
+loop**: (1) copy everything ending before `newStart`; (2) grow `newStart/newEnd` through the
+contiguous overlap run (`intervals[i].start <= newEnd` suffices — phase 1 already ate the "before"
+group); (3) append the grown `[newStart,newEnd]` once — this also covers the append-at-end case;
+(4) copy the rest. No helper, no manual index skipping — the `while` conditions do it.
+### Code Snippet
+```
+while i<n and intervals[i].end < newStart:  result.append(intervals[i]); i+=1   # before
+while i<n and intervals[i].start <= newEnd:  newStart=min(...); newEnd=max(...); i+=1  # grow
+result.append([newStart,newEnd])                                                 # place ONCE
+while i<n:  result.append(intervals[i]); i+=1                                     # after
+```
+
+---
+
 ## 🟡 743. Network Delay Time (Dijkstra) — 2026-08-24
 **Sticking point**: code + recognition clean (weighted → Dijkstra, visited-on-pop). 🟡 is purely the **3rd repeat of the O(E)-heap-size complexity miss** — lazy Dijkstra pushes per edge relaxation, so the heap is O(E), not ≤ V. Also carried a vestigial BFS-style wave loop (harmless). Fix to lock in: heap size = O(E). Eager Dijkstra parked (Waiting Room) until lazy clears.
 
