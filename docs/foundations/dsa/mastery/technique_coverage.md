@@ -6,7 +6,7 @@
 
 > The tracker is keyed by **problem**; this is keyed by **technique**. Use it at the weekly build to decide what to pull, and at phase exit to check the per-algorithm bar (recognition + execution, ≥1 🟢 each).
 
-> **55/55** techniques started &nbsp;·&nbsp; **8** with no 🟢 &nbsp;·&nbsp; **20** thin &nbsp;·&nbsp; **1** unqueued variant gaps
+> **55/55** techniques started &nbsp;·&nbsp; **8** with no 🟢 &nbsp;·&nbsp; **19** thin &nbsp;·&nbsp; **1** unqueued variant gaps
 
 ## ⚠️ Action list
 
@@ -16,7 +16,7 @@
 - **Cycle Detection in an Iterated Sequence** (graphs) — best 🟡 across 202
 - **Graph Clone (DFS + Hash Map)** (graphs) — best 🟡 across 133
 - **Hierholzer (Eulerian path)** (advanced_graphs) — best 🟡 across 332, 332
-- **Intervals (sort + sweep)** (intervals) — best 🟡 across 56, 57
+- **Intervals (sort + sweep)** (intervals) — best 🟡 across 56, 57, 435
 - **Length-Prefix Encoding** (arrays_and_hash) — best 🟡 across 271
 - **Monotonic Deque** (stack) — best 🟡 across 239
 - **Stack (expression evaluation)** (stack) — best 🟡 across 150
@@ -39,7 +39,6 @@
 - **Floyd's Cycle / Midpoint** (linked_list) — 2/3: 141, 143
 - **Floyd-Warshall (all-pairs shortest path)** (advanced_graphs) — 2/3: 1334, 1462
 - **Grid DFS** (graphs) — 2/3: 200, 695
-- **Intervals (sort + sweep)** (intervals) — 2/3: 56, 57
 - **Prefix Sum** (prefix_sum) — 2/3: 53, 560
 - **Tree BFS (level order)** (trees) — 2/3: 102, 199
 - **Trie** (tries) — 2/3: 208, 211
@@ -79,7 +78,7 @@
 | Topological Sort | graphs | 3 (207, 210, 269) | 🟢 | ✅ | Kahn's (BFS) ×3 · ~~DFS postorder~~ *(queued: `graduates:210`)* | — |
 | Union-Find | graphs | 4 (130, 261, 684, 721) | 🟢 | ✅ | — | — |
 | Heap / Priority Queue | heap | 6 (347, 355, 621, 703, 973, 1046) | 🟢 | ✅ | — | — |
-| Intervals (sort + sweep) | intervals | 2 (56, 57) | 🟡 | ❌ | — | **no-green** · thin (2/3) |
+| Intervals (sort + sweep) | intervals | 3 (56, 57, 435) | 🟡 | ❌ | — | **no-green** |
 | Deep Copy via Hash Map | linked_list | 1 (138) | 🟢 | ✅ | — | — |
 | Floyd's Cycle / Midpoint | linked_list | 2 (141, 143) | 🟢 | ✅ | — | thin (2/3) |
 | HashMap + Doubly Linked List (LRU) | linked_list | 1 (146) | 🟢 | ✅ | — | thin (1/3) |
@@ -109,15 +108,6 @@
 | Two Pointers (converging) | two_pointers | 9 (11, 15, 18, 88, 125, 167, 344, 680, 1768) | 🎓 | ✅ | — | — |
 
 ## Vocabulary maintenance
-
-**Unmapped tracker rows (1)** — solved but assigned to no technique. Add them to `techniques.yml`, or coverage silently drifts behind the tracker.
-
-- 435 Non-overlapping Intervals
-
-**Method drift (2)** — the tracker HAS a row for this problem, but not with the method the vocabulary declares. Either the parenthetical changed or the YAML names the wrong variant; the technique is not being credited.
-
-- 1584 (Kruskal's MST)
-- 435 (Interval scheduling (sort by end))
 
 **Not reached yet (2)** — declared in the vocabulary, no tracker row. This is the normal state for curriculum ahead of the learner; it is a roadmap, not a finding.
 

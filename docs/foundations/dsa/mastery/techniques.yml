@@ -154,7 +154,7 @@ techniques:
     problems:
       - {number: 56}
       - {number: 57}
-      - {number: 435, method: Interval scheduling (sort by end)}
+      - {number: 435}
 
   # ── Prefix sum ──────────────────────────────────────────────────────────────
   # Bar raised to the file default of 3 on Aug 16, 2026 (tier A/B of the
@@ -570,8 +570,12 @@ techniques:
       - {name: Prim's MST}
       - {name: Kruskal's MST}
     problems:
+      # 1584 is one tracker row (titled Prim's MST); it was also solved Kruskal
+      # Aug 26 (recognition ledger + solution file record it). Both methods stay
+      # declared in `variants`; the Kruskal *problem-credit* comes from 1489 (its
+      # own row, Aug 31 week) rather than a 2nd 1584 entry — one number can't carry
+      # two method parentheticals on a single row, and a duplicate just drifts.
       - {number: 1584, method: Prim's MST}
-      - {number: 1584, method: Kruskal's MST}
 
   # ── Sorting & divide and conquer ────────────────────────────────────────────
   # Bar raised to the file default of 3 on Aug 16, 2026 (tier A/B of the
