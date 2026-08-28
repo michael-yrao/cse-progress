@@ -27,6 +27,37 @@ from typing import List, Optional
 
 
 class Solution:
+
+    # ── Attempt · 2026-08-27 ──────────────
+    def dailyTemperatures_20260827(self, temperatures: List[int]) -> List[int]:
+        # go from this backwards
+        # if we do this from the front, it feels like an O(n^2)
+        # going from the end, the last element always has zero
+        # when we see 76, 73 is useless because it will never be ith day warmer temperature
+        # so we can pop it, so decreasing stack
+        # we also care for how many days, which is how many indices between i and j
+        # such that value at j is greater than value at i
+
+        decreasingStack = []
+
+        # initialize decreasing stack with last item and also the output with all 0s
+        result = [0] * len(temperatures)
+
+        decreasingStack.append(len(temperatures) - 1)
+
+        for i in range(len(temperatures)-2,-1,-1):
+            # if top element of stack is smaller or equal to current element, pop it
+            while decreasingStack and temperatures[decreasingStack[-1]] <= temperatures[i]:
+                decreasingStack.pop()
+            # when we are here, there is either nothing in stack or stack[-1] is greater
+            # set result[i] to stack[-1] - i
+            if decreasingStack:
+                result[i] = decreasingStack[-1] - i
+            # insert i into the stack
+            decreasingStack.append(i)
+        
+        return result
+
     # ── Attempt 1 · 2026-08-14 ────────────────────────────────────────────
     def dailyTemperatures(self, temperatures: List[int]) -> List[int]:
         # we need to go from end to beginning

@@ -42,10 +42,24 @@ Constraints:
 """
 
 from collections import defaultdict
+import collections
 from typing import List
 import unittest
 
 class Solution:
+
+    # ── Attempt · 2026-08-27 ──────────────
+    def groupAnagrams_20260827(self, strs: List[str]) -> List[List[str]]:
+        # map of sorted -> unsorted copies
+
+        sortedMap = collections.defaultdict(list)
+
+        for string in strs:
+            sortedString = "".join(sorted(string))
+            sortedMap[sortedString].append(string)
+        
+        return list(sortedMap.values())
+
     def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
         anagramMap = {}
         for str in strs:
