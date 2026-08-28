@@ -66,7 +66,7 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/dsa/mastery/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **111+4** problems &nbsp;·&nbsp; **121+4** solutions &nbsp;·&nbsp; **497+4** reps
+> **111+4** problems &nbsp;·&nbsp; **121+4** solutions &nbsp;·&nbsp; **499+4** reps
 
 | | 🏆 Retired | 🎓 Graduated | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|:---:|
@@ -74,6 +74,8 @@ Notes for future agents:
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Rep Date | Rep Dates |
 |---|---|---|---|---|---|---|
+| Medium | [49. Group Anagrams](https://leetcode.com/problems/group-anagrams/) | 🟢 | 3 | 2027-02-23 | 2026-08-27 | 2026-01-04, 2026-03-27, 2026-05-29, 2026-06-28, 2026-08-27 |
+| Medium | [739. Daily Temperatures](https://leetcode.com/problems/daily-temperatures/) | 🟡 | 0 | 2026-09-06 | 2026-08-27 | 2026-08-14, 2026-08-27 |
 | Medium | [57. Insert Interval](https://leetcode.com/problems/insert-interval/) | 🔴 | 0 | 2026-08-28 | 2026-08-26 | 2026-08-26 |
 | Medium | [435. Non-overlapping Intervals](https://leetcode.com/problems/non-overlapping-intervals/) | 🔴 | 0 | 2026-08-28 | 2026-08-26 | 2026-08-26 |
 | Medium | [74. Search a 2D Matrix](https://leetcode.com/problems/search-a-2d-matrix/) | 🟢 | 2 | 2026-10-25 | 2026-08-26 | 2026-04-22, 2026-07-03, 2026-07-13, 2026-07-25, 2026-08-26 |
@@ -122,7 +124,6 @@ Notes for future agents:
 | Medium | [80. Remove Duplicates from Sorted Array II](https://leetcode.com/problems/remove-duplicates-from-sorted-array-ii/) | 🟢 | 2 | 2026-10-15 | 2026-08-16 | 2026-01-13, 2026-04-13, 2026-06-25, 2026-06-27, 2026-07-11, 2026-08-16 |
 | Medium | [787. Cheapest Flights Within K Stops (Bellman-Ford)](https://leetcode.com/problems/cheapest-flights-within-k-stops/) | 🟢 | 1 | 2026-09-14 | 2026-08-15 | 2026-07-14, 2026-07-16, 2026-07-26, 2026-08-05, 2026-08-15 |
 | Medium | [695. Max Area Of Island (DFS)](https://leetcode.com/problems/max-area-of-island/) | 🟢 | 2 | 2026-10-14 | 2026-08-15 | 2026-06-01, 2026-06-17, 2026-08-15 |
-| Medium | [739. Daily Temperatures](https://leetcode.com/problems/daily-temperatures/) | 🟡 | 0 | 2026-08-24 | 2026-08-14 | 2026-08-14 |
 | Medium | [503. Next Greater Element II](https://leetcode.com/problems/next-greater-element-ii/) | 🟢 | 2 | 2026-10-13 | 2026-08-14 | 2026-07-11, 2026-07-21, 2026-07-31, 2026-08-10, 2026-08-14 |
 | Medium | [155. Min Stack (Pair with Min-So-Far)](https://leetcode.com/problems/min-stack/) | 🟢 | 0 | 2026-08-24 | 2026-08-14 | 2026-08-12, 2026-08-14 |
 | Medium | [138. Copy List with Random Pointer](https://leetcode.com/problems/copy-list-with-random-pointer/) | 🟢 | 1 | 2026-09-12 | 2026-08-13 | 2026-07-03, 2026-07-05, 2026-08-04, 2026-08-13 |
@@ -194,7 +195,6 @@ Notes for future agents:
 | Medium | [199. Binary Tree Right Side View](https://leetcode.com/problems/binary-tree-right-side-view/) | 🟢 | 2 | 2026-09-12 | 2026-07-14 | 2026-05-09, 2026-06-13, 2026-07-14 |
 | Medium | [167. Two Sum II](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/) | 🟢 | 2 | 2026-09-12 | 2026-07-14 | 2026-01-19, 2026-07-14 |
 | Medium | [153. Find Minimum in Rotated Sorted Array](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/) | 🟢 | 2 | 2026-08-30 | 2026-07-01 | 2026-04-21, 2026-07-01 |
-| Medium | [49. Group Anagrams](https://leetcode.com/problems/group-anagrams/) | 🟢 | 2 | 2026-08-27 | 2026-06-28 | 2026-01-04, 2026-03-27, 2026-05-29, 2026-06-28 |
 
 ---
 
