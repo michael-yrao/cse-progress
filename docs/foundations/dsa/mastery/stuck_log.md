@@ -22,6 +22,9 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🟡 269. Alien Dictionary — 2026-08-27
+**Sticking point**: invalid-order guard used `len(w2) == minLen` (fires on equal adjacent words too, e.g. `["abc","abc"]` → wrong `""`); correct guard is `len(w1) > len(w2)` — coach handed the failing input, learner localized the fix. Algorithm otherwise clean.
+
 ## 🔴 435. Non-overlapping Intervals — 2026-08-26
 **Topic**: Interval scheduling greedy (sort by END) — the sibling of merge-intervals (56/57, sort by START).
 ### Where did I get stuck?

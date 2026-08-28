@@ -66,7 +66,7 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/dsa/mastery/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **111+4** problems &nbsp;·&nbsp; **121+4** solutions &nbsp;·&nbsp; **499+4** reps
+> **111+4** problems &nbsp;·&nbsp; **121+4** solutions &nbsp;·&nbsp; **500+4** reps
 
 | | 🏆 Retired | 🎓 Graduated | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|:---:|
@@ -76,6 +76,7 @@ Notes for future agents:
 |---|---|---|---|---|---|---|
 | Medium | [49. Group Anagrams](https://leetcode.com/problems/group-anagrams/) | 🟢 | 3 | 2027-02-23 | 2026-08-27 | 2026-01-04, 2026-03-27, 2026-05-29, 2026-06-28, 2026-08-27 |
 | Medium | [739. Daily Temperatures](https://leetcode.com/problems/daily-temperatures/) | 🟡 | 0 | 2026-09-06 | 2026-08-27 | 2026-08-14, 2026-08-27 |
+| Hard | [269. Alien Dictionary](https://leetcode.com/problems/alien-dictionary/) | 🟡 | 0 | 2026-09-06 | 2026-08-27 | 2026-07-27, 2026-07-29, 2026-08-07, 2026-08-17, 2026-08-27 |
 | Medium | [57. Insert Interval](https://leetcode.com/problems/insert-interval/) | 🔴 | 0 | 2026-08-28 | 2026-08-26 | 2026-08-26 |
 | Medium | [435. Non-overlapping Intervals](https://leetcode.com/problems/non-overlapping-intervals/) | 🔴 | 0 | 2026-08-28 | 2026-08-26 | 2026-08-26 |
 | Medium | [74. Search a 2D Matrix](https://leetcode.com/problems/search-a-2d-matrix/) | 🟢 | 2 | 2026-10-25 | 2026-08-26 | 2026-04-22, 2026-07-03, 2026-07-13, 2026-07-25, 2026-08-26 |
@@ -115,7 +116,6 @@ Notes for future agents:
 | Medium | [853. Car Fleet](https://leetcode.com/problems/car-fleet/) | 🟢 | 0 | 2026-08-27 | 2026-08-17 | 2026-08-15, 2026-08-17 |
 | Medium | [19. Remove Nth Node From End of List (Postorder Recursion)](https://leetcode.com/problems/remove-nth-node-from-end-of-list/) | 🟢 | 1 | 2026-09-16 | 2026-08-17 | 2026-05-18, 2026-05-21, 2026-06-18, 2026-06-28, 2026-07-08, 2026-07-18, 2026-07-28, 2026-08-07, 2026-08-17 |
 | Medium | [19. Remove Nth Node From End of List (Iterative)](https://leetcode.com/problems/remove-nth-node-from-end-of-list/) | 🟢 | 2 | 2026-10-16 | 2026-08-17 | 2026-04-29, 2026-05-18, 2026-06-30, 2026-07-09, 2026-08-17 |
-| Hard | [269. Alien Dictionary](https://leetcode.com/problems/alien-dictionary/) | 🟡 | 0 | 2026-08-27 | 2026-08-17 | 2026-07-27, 2026-07-29, 2026-08-07, 2026-08-17 |
 | Medium | [261. Graph Valid Tree (DFS)](https://neetcode.io/problems/valid-tree) | 🟢 | 1 | 2026-09-15 | 2026-08-16 | 2026-06-15, 2026-06-17, 2026-06-21, 2026-06-23, 2026-08-06, 2026-08-16 |
 | Easy | [496. Next Greater Element I](https://leetcode.com/problems/next-greater-element-i/) | 🟢 | 1 | 2026-09-15 | 2026-08-16 | 2026-07-04, 2026-07-06, 2026-08-06, 2026-08-16 |
 | Medium | [208. Implement Trie (Prefix Tree)](https://leetcode.com/problems/implement-trie-prefix-tree/) | 🟢 | 2 | 2026-10-15 | 2026-08-16 | 2026-07-06, 2026-07-08, 2026-07-17, 2026-08-16 |
