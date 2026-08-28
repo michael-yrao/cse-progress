@@ -7,6 +7,18 @@ Append-only log of corrections. Governed by [[feedback_self_evaluation]]. Newest
 
 ---
 
+- **2026-08-27 [P3] `open`** — Asked "what problems are left today", I answered with a table whose
+  file links were **dead on click**: I copied the paths verbatim from the schedule row
+  (`../../../dsa/...`, correct relative to the schedule file three folders deep) instead of writing the
+  **repo-root-relative** path the chat renderer needs. Learner: *"clicking the link does nothing."* The
+  correct form was already known — [[feedback_kickoff_table_links]]:44 specifies `dsa/...`. Root cause:
+  transcription from the source artifact rather than emitting the documented form. **Gap surfaced:** the
+  Stop hook (`problem_link_reminder.py`) validates that a number sits *inside* a markdown link, never
+  that the path resolves — so a present-but-dead link passes it clean. Not cheaply closable (the hook
+  can't know the chat renderer's base dir), so it stays trust-bound. **Fix on me:** when a schedule row
+  is the source, rewrite its `../../../` prefix to a repo-root-relative path before emitting to chat.
+  Watch for a cluster on "copied a relative path out of a nested file."
+
 - **2026-08-20 [P2] `open`** — During a 53 (prefix-sum) discussion I wrote that 560/974/525
   "keep them all (min, or a hashmap)", conflating the min-prefix flavor (max subarray) with the
   hashmap flavors. Learner caught the inconsistency across two turns. **Fix stated:** min-prefix →
