@@ -33,6 +33,13 @@ from pathlib import Path
 # `[LC](https://leetcode.com/problems/...)` both count as linking 211.
 MD_LINK = re.compile(r"\[[^\]]*\]\([^)]*\)")
 
+# The TARGET of a markdown link (the part in parens), captured. Used to check that a
+# solution-file link actually RESOLVES — a present-but-dead link passes the "is it
+# linked" test above while clicking does nothing. This is the Aug 27, 2026 lapse: paths
+# copied from a schedule row (`../../../dsa/...`, correct relative to that file, dead
+# relative to the repo root the chat renderer uses).
+MD_LINK_TARGET = re.compile(r"\[[^\]]*\]\(([^)]*)\)")
+
 # Inline code span. A backticked number is a code/data reference under discussion, not
 # a problem being handed over.
 CODE_SPAN = re.compile(r"`[^`]*`")
@@ -393,6 +400,50 @@ def unlinked_problem_numbers(text: str, board: "set[str] | None" = None) -> list
     return found
 
 
+def broken_file_links(text: str) -> list[str]:
+    """Solution-file (`.py`) link targets in `text` that do NOT resolve from the repo root.
+
+    The chat renderer resolves a relative link against the WORKSPACE ROOT, which is
+    REPO_ROOT here. A `.py` target that does not exist when joined to REPO_ROOT is a dead
+    link — the Aug 27, 2026 failure, where `../../../dsa/...` (correct inside a schedule
+    file) climbed out of the repo and clicked nowhere.
+
+    Deliberately scoped to `.py` targets — the problem-link rule's own domain — so ordinary
+    doc/URL links are never second-guessed. URLs and absolute paths are skipped; a `#Lnn`
+    line anchor is stripped before the check. Returns the offending targets, in order.
+
+    Complements `unlinked_problem_numbers`: that flags a number with NO link; this flags a
+    link whose PATH is broken. A number inside `[269](../../../dsa/...)` counts as linked
+    there and dead here, so the two never double-report the same problem.
+    """
+    broken: list[str] = []
+    for target in MD_LINK_TARGET.findall(text):
+        target = target.strip()
+        if "://" in target or target.startswith(("#", "mailto:")):
+            continue  # a URL or an in-page anchor, not a repo file
+        path = target.split("#", 1)[0].strip()  # drop a #Lnn line anchor
+        if not path.endswith(".py"):
+            continue
+        if Path(path).is_absolute():
+            continue  # an absolute path is the author's call, not a chat-relative link
+        if not (REPO_ROOT / path).resolve().exists():
+            broken.append(target)
+    return broken
+
+
+BROKEN_MESSAGE = (
+    "DEAD LINK — this turn links solution file(s) whose path does NOT resolve from the "
+    "repo root: {paths}\n"
+    "The chat renderer resolves a relative link against the WORKSPACE ROOT (the repo "
+    "root), so a `../../../dsa/...` path copied from a schedule row (correct THERE, three "
+    "folders deep) clicks nowhere here. Re-emit ONLY the fixed link line(s), one each, with "
+    "a REPO-ROOT-RELATIVE path (e.g. `dsa/leetcode/stack/853_car_fleet.py`). The cleanest "
+    "way to get it right: run `python scripts/links.py <number> ...` and paste its output — "
+    "it reads the path from disk so it cannot be wrong.\n"
+    "Rule: .claude/memory/feedback_kickoff_table_links.md"
+)
+
+
 # Re-enabled 2026-08-14 after the 10th lapse got past it. It was disabled on the day it
 # was written because `last_assistant_text()` read only the FINAL assistant entry, which
 # is almost always a `tool_use` record with no text. The replacement above gathers the
@@ -417,6 +468,17 @@ def main() -> None:
 
     text = last_turn_text(payload.get("transcript_path", ""))
     if not text:
+        return
+
+    # A present-but-dead file link passes the "is it linked" test but clicks nowhere.
+    # Checked first: it needs no board and no cue word — a broken path is broken whatever
+    # the turn is about.
+    broken = broken_file_links(text)
+    if broken:
+        json.dump(
+            {"decision": "block", "reason": BROKEN_MESSAGE.format(paths=", ".join(broken))},
+            sys.stdout,
+        )
         return
 
     nums = unlinked_problem_numbers(text, todays_board())
@@ -476,6 +538,25 @@ BOARD_CASES = [
 ]
 
 
+# Path-resolution cases for broken_file_links. The passing paths must be REAL files in
+# this repo so the check exercises the true filesystem, not a mock.
+BROKEN_CASES = [
+    # (name, text, should_flag)
+    ("repo-root-relative -> ok",
+     "[853 Car Fleet](dsa/leetcode/stack/853_car_fleet.py)", False),
+    ("schedule-relative -> dead",
+     "[853 Car Fleet](../../../dsa/leetcode/stack/853_car_fleet.py)", True),
+    ("line anchor kept, path ok",
+     "[853](dsa/leetcode/stack/853_car_fleet.py#L12)", False),
+    ("nonexistent file -> dead",
+     "[999 Nope](dsa/leetcode/stack/999_does_not_exist.py)", True),
+    ("URL is not a file link",
+     "[LC](https://leetcode.com/problems/car-fleet/)", False),
+    ("non-.py relative link ignored",
+     "[setup](docs/SETUP.md)", False),
+]
+
+
 def _selftest(transcript: str | None = None) -> int:
     failures = 0
     for name, text, expected in CASES:
@@ -485,6 +566,16 @@ def _selftest(transcript: str | None = None) -> int:
             print(f"FAIL  {name}: block={got}, expected {expected} -> "
                   f"{unlinked_problem_numbers(text)}")
     print(f"detector: {len(CASES) - failures}/{len(CASES)} passed")
+
+    broken_failures = 0
+    for name, text, expected in BROKEN_CASES:
+        got = bool(broken_file_links(text))
+        if got != expected:
+            broken_failures += 1
+            print(f"FAIL  {name}: flag={got}, expected {expected} -> "
+                  f"{broken_file_links(text)}")
+    failures += broken_failures
+    print(f"broken:   {len(BROKEN_CASES) - broken_failures}/{len(BROKEN_CASES)} passed")
 
     board_failures = 0
     for name, text, board, expected in BOARD_CASES:

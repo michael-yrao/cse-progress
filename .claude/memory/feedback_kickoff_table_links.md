@@ -156,6 +156,24 @@ want me to do it first?"* (Aug 23). **Two-part fix:**
 - **On the hook (backup):** when an orphan is still owed, the block message now permits the fixed tag
   `(links owed, order unchanged)` on the re-emitted line, so a debt-payment can't be read as a pick.
 
+**⚠️ 12th lapse, Aug 27, 2026 — a PRESENT link that was DEAD on click.** Asked "what problems are
+left today", answered with a table whose file links were markdown-correct but pointed at
+`../../../dsa/...` — copied verbatim from the schedule row, where that prefix is right (relative to a
+file three folders deep) but dead in chat, which resolves relative to the **repo root**. Learner:
+*"clicking the link does nothing."* This is a new failure *shape*: every prior lapse was a **missing**
+link; this was a **wrong-path** link, which the presence-only Stop hook waves through. **Two-rung fix,
+both built the same day:**
+- **Source (primary) — `scripts/links.py <number> ...`.** Prints the `[file] · [LC/NC]` pair per number,
+  reading the path from disk (glob `<root>/*/<number>_*.py`) and title/URL from the file header (tracker
+  fallback). The agent runs it and pastes the output — transcription is removed, so the path cannot be
+  wrong. Same top-of-ladder move as `new_problem.py`'s `report_links()`, which is why the scaffold case
+  never lapses. **Use it for any kickoff / restate / hand-over / "what's next" link.**
+- **Hook (backup) — `broken_file_links()` in `problem_link_reminder.py`.** Now also resolves every `.py`
+  link target against `REPO_ROOT` and blocks a dead one, naming the offending path and pointing at
+  `links.py`. Scoped to `.py` targets so doc/URL links are never second-guessed; complements the
+  unlinked-number check (that flags a *missing* link, this a *broken* one — no double-report).
+  Selftest: `broken: 6/6`.
+
 **CAVEAT — a retry's file link is a spoiler until scaffolded.** File links are safe in the
 **kickoff** table because those items are scaffolded first (blank stub, prior attempts
 stashed). In a **selection/candidate menu** where the learner hasn't picked yet, the retry
