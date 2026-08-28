@@ -66,14 +66,15 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/dsa/mastery/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **111+4** problems &nbsp;·&nbsp; **121+4** solutions &nbsp;·&nbsp; **500+4** reps
+> **111+4** problems &nbsp;·&nbsp; **121+4** solutions &nbsp;·&nbsp; **501+4** reps
 
 | | 🏆 Retired | 🎓 Graduated | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|:---:|
-| **Solutions** | 0 | 6 | 98 | 15 | 2 |
+| **Solutions** | 0 | 6 | 97 | 15 | 3 |
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Rep Date | Rep Dates |
 |---|---|---|---|---|---|---|
+| Medium | [424. Longest Repeating Character Replacement](https://leetcode.com/problems/longest-repeating-character-replacement/) | 🔴 | 0 | 2026-08-30 | 2026-08-28 | 2026-04-19, 2026-07-02, 2026-07-10, 2026-07-17, 2026-07-27, 2026-08-28 |
 | Medium | [49. Group Anagrams](https://leetcode.com/problems/group-anagrams/) | 🟢 | 3 | 2027-02-23 | 2026-08-27 | 2026-01-04, 2026-03-27, 2026-05-29, 2026-06-28, 2026-08-27 |
 | Medium | [739. Daily Temperatures](https://leetcode.com/problems/daily-temperatures/) | 🟡 | 0 | 2026-09-06 | 2026-08-27 | 2026-08-14, 2026-08-27 |
 | Hard | [269. Alien Dictionary](https://leetcode.com/problems/alien-dictionary/) | 🟡 | 0 | 2026-09-06 | 2026-08-27 | 2026-07-27, 2026-07-29, 2026-08-07, 2026-08-17, 2026-08-27 |
@@ -172,7 +173,6 @@ Notes for future agents:
 | Medium | [128. Longest Consecutive Sequence](https://leetcode.com/problems/longest-consecutive-sequence/) | 🟢 | 2 | 2026-09-27 | 2026-07-29 | 2026-01-26, 2026-04-14, 2026-06-27, 2026-06-29, 2026-07-29 |
 | Easy | [733. Flood Fill (BFS)](https://leetcode.com/problems/flood-fill/) | 🎓 | 3 | 2027-01-25 | 2026-07-29 | 2026-06-12, 2026-06-19, 2026-06-28, 2026-07-29 |
 | Easy | [169. Majority Element](https://leetcode.com/problems/majority-element/) | 🟢 | 2 | 2026-09-26 | 2026-07-28 | 2026-01-05, 2026-04-01, 2026-05-28, 2026-06-27, 2026-07-28 |
-| Medium | [424. Longest Repeating Character Replacement](https://leetcode.com/problems/longest-repeating-character-replacement/) | 🟢 | 1 | 2026-08-26 | 2026-07-27 | 2026-04-19, 2026-07-02, 2026-07-10, 2026-07-17, 2026-07-27 |
 | Medium | [18. Four Sum](https://leetcode.com/problems/4sum/) | 🟢 | 1 | 2026-08-26 | 2026-07-27 | 2026-01-23, 2026-07-17, 2026-07-27 |
 | Easy | [104. Maximum Depth of Binary Tree](https://leetcode.com/problems/maximum-depth-of-binary-tree/) | 🟢 | 2 | 2026-09-25 | 2026-07-27 | 2026-04-30, 2026-05-27, 2026-06-27, 2026-07-27 |
 | Medium | [53. Maximum Subarray (Kadane)](https://leetcode.com/problems/maximum-subarray/) | 🟢 | 2 | 2026-09-24 | 2026-07-26 | 2026-01-08, 2026-04-02, 2026-06-23, 2026-06-24, 2026-07-26 |

@@ -2127,3 +2127,19 @@ because the deque only ever holds indices inside the current window (the earlier
 - **2026-08-25 · 1462 Course Schedule IV · 🟡 Shaky** — execution 🟢-clean (Warshall boolean closure, `k` outermost, OR-accumulate, direct prereqs seeded; complexity O(n³+k)/O(n²) itemized correctly). The 🟡 is **recognition, not code**: opened on **Union-Find** ("find the root parent"), corrected on one coach-supplied directed failing case (`0→1`, query `[1,0]` — UF's symmetric same-set can't express directional reachability). New problem, so it's real recognition evidence: the **undirected-connectivity vs directed-reachability discriminator isn't reflexive yet**. Recovered to Floyd-Warshall/transitive-closure himself and self-derived the recurrence.
 
 - **2026-08-27 · 739 Daily Temperatures · 🟡 Shaky** — recognition clean (monotonic stack scanning from the end, indices-on-stack so the day-count = index difference, self-derived). Two coach-supplied pieces kept it 🟡: (1) the **"why decreasing, not increasing"** rationale — a shorter day to the right is permanently shadowed the moment a taller day appears to its left, so it's popped; learner flags this as a *repeat* soft spot (which monotone direction). (2) index-vs-temperature bug in the pop test — compared the stored *index* against a temperature (`stack[-1] <= temp[i]`) instead of dereferencing (`temperatures[stack[-1]] <= temp[i]`); not self-caught, surfaced via failing case `[30,60,90]→[0,0,0]`. Complexity clean + unaided (amortized O(n), each index in/out once; O(n) space worst-case strictly-decreasing input).
+
+- **2026-08-28 · 424 Longest Repeating Character Replacement · 🔴 Blank** (was 🟢 s1 — decayed, not never-encoded). Recognition was fine (dynamic sliding window, freqMap, l/r shrink loop — all learner's). The 🔴 is the **one invariant that IS this problem**, and it had decayed completely:
+  - **Where stuck:** tracked the window-max as a *character* (`maxFreq = s[r]`) and read its **live** count `freqMap[maxFreq]` in the shrink test. Live counts drop on eviction, so the "max" collapsed the moment that char left the window → over-shrinks → loses the answer.
+  - **Core realization (coach-supplied, did not land into working code):** the max-frequency count must be a **plain integer that only ever goes up** — `maxFreq = max(maxFreq, freqMap[s[r]])`, **never decremented**, even when the window shrinks. It's a record of "the densest any single char has ever been," not a fact about the current window. A stale/too-high value is *safe* because the shrink test `(r-l+1) - maxFreq > k` only needs an over-estimate to avoid false shrinks; the best window is already banked in the result.
+  - **Failing case used:** `"ABBB", k=0` → learner's code returns `2` (or `5` at one earlier stage), expected `3` (the `BBB`). Also had an earlier live-count-in-shrink bug (`freqMap[s[r]]` instead of the max) and a return bug (`r-l+1` overshoot / no running max).
+  - **Snippet (target form):**
+    ```python
+    maxFreq = 0
+    for r in range(len(s)):
+        freqMap[s[r]] += 1
+        maxFreq = max(maxFreq, freqMap[s[r]])   # only goes up, never decremented
+        while (r - l + 1) - maxFreq > k:
+            freqMap[s[l]] -= 1; l += 1
+        res = max(res, r - l + 1)
+    ```
+  - **Extended teach did not convert** (learner tired, end of a cut-short day) — re-rep Aug 31 fresh. This is the repo's recurring **sliding-window fixed-alphabet / max-tracking** cluster (see 438 in the pull queue, aimed at exactly this).
