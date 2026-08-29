@@ -149,12 +149,25 @@ techniques:
 
   # ── Intervals ───────────────────────────────────────────────────────────────
   # Phase "Intervals + Greedy" opened Aug 24, 2026.
+  # The flavours are keyed by SORT KEY + ANSWER SHAPE, which is also the recognition
+  # discriminator: sort by START when the answer is a SET OF INTERVALS (union work),
+  # sort by END when the answer is a COUNT OF INTERVALS KEPT (scheduling), sweep-line
+  # when the answer is a COUNT OF SIMULTANEOUS things. Declared Aug 28, 2026 — before
+  # that this technique carried no `variants:` at all, so the report read `3 (56,57,435)`
+  # with the bar met and could not surface a breadth gap even in principle.
   - name: Intervals (sort + sweep)
     family: intervals
+    min_problems: 5
+    variants:
+      - {name: "Merge overlapping (sort by start)"}
+      - {name: "Insert into sorted (3-phase sweep)"}
+      - {name: "Interval scheduling (sort by end)"}
+      - {name: "Max concurrent (sweep line / min-heap of ends)", queued: "green:435"}
+      - {name: "Two-list intersection (two pointers)", queued: "green:56"}
     problems:
-      - {number: 56}
-      - {number: 57}
-      - {number: 435}
+      - {number: 56, variant: "Merge overlapping (sort by start)"}
+      - {number: 57, variant: "Insert into sorted (3-phase sweep)"}
+      - {number: 435, variant: "Interval scheduling (sort by end)"}
 
   # ── Prefix sum ──────────────────────────────────────────────────────────────
   # Bar raised to the file default of 3 on Aug 16, 2026 (tier A/B of the

@@ -1,6 +1,6 @@
 # cse-progress
 
-<!-- reconciled: 2026-08-22 -->
+<!-- reconciled: 2026-08-28 -->
 
 ## Repo Setup (one-time per machine/clone)
 

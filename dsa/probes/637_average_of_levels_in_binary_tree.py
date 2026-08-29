@@ -21,6 +21,7 @@ over the nearest alternative.
 """
 # Write everything yourself from here — including any ListNode/TreeNode classes a
 # problem needs. No shared data-model imports (whiteboard fidelity).
+import collections
 from typing import List, Optional
 
 
@@ -30,4 +31,25 @@ class Solution:
     # technique:
     # picks it over:
     def averageOfLevels(self, root: Optional["TreeNode"]) -> List[float]:
-        pass
+        # nice little BFS
+        if not root:
+            return []
+        
+        result = []
+
+        queue = collections.deque()
+        queue.append(root)
+
+        while queue:
+            lenQueue = len(queue)
+            total = 0
+            for _ in range(lenQueue):
+                currentNode = queue.popleft()
+                total+=currentNode.val
+                if currentNode.left:
+                    queue.append(currentNode.left)
+                if currentNode.right:
+                    queue.append(currentNode.right)
+            result.append(total/lenQueue)
+
+        return result

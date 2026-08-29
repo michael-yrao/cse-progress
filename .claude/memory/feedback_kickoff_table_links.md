@@ -49,9 +49,21 @@ paywalled; the NeetCode mirror is free). Same rule the `--premium` flag encodes.
 in one click; the LC link is the canonical problem reference. Plain-text problem names cost
 them a manual file hunt.
 
-**How to apply:** in the kickoff table, render the problem cell as a markdown link to the
-repo-relative `.py` path, and add an `LC` column (or inline `· [LC](url)`) to the LeetCode
-URL. Applies to §2a kickoff and any lineup/preview table. **Also link on every transition:**
+**How to apply:** in the kickoff table, render **both links INSIDE the Problem cell** —
+`[<number> <title>](<repo-relative .py path>) · [LC](<url>)`, exactly the convention the weekly
+schedule file already uses. Applies to §2a kickoff and any lineup/preview table.
+
+⚠️ **NEVER give the links their own column** (set by the learner Aug 25, 2026: *"my screen on this
+computer is quite small and i couldn't see the link just now. Can we add hyperlink to the problems
+under the problem column so it takes less horizontal space?"*). A separate `File` / `LC` column widens
+the table past a small terminal, and the column that gets pushed off-screen is **the link itself** —
+so the rule above is satisfied on paper while the learner cannot see or click a single link. The
+earlier wording here offered "an `LC` column (or inline)" as equals; they are not. **Inline is the
+only correct form.** Keep the whole table to ~3 columns and put anything long in the Note cell.
+
+**Same rule when NOT in a table.** A narrow screen argues for a bulleted list over a table whenever
+there are more than about three columns' worth to say — the pair travels with the problem name either
+way. **Also link on every transition:**
 whenever moving on to the next problem or starting a new set mid-session, restate the
 problem(s) with both links — don't make the learner scroll back to the kickoff table
 (reaffirmed Jul 21). Related: [[feedback_proactive_scheduling]].

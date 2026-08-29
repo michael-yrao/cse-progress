@@ -3,7 +3,7 @@ name: feedback-consolidation-reps
 description: A technique needs MULTIPLE problems, not one — near-identical siblings are the training signal (their minor differences are what recognition grades), and they don't count against the new-algorithm intake cap
 metadata:
   type: feedback
-reconciled: 2026-08-23
+reconciled: 2026-08-28
 ---
 
 **Set by the learner Jul 26, 2026:** *"we need multiple problems of the same flavor for users to
@@ -42,6 +42,14 @@ for its actual class).
    of one. Active block if the problem is Hard, generous warmup otherwise.
 4. **Aim for ~3–4 problems per technique** before treating it as covered, spanning the meaningful
    variations rather than repeating the same shape.
+   - ⚠️ **"~3–4" is the DEFAULT, not a cap — the operative clause is *spanning the meaningful
+     variations*.** Where a technique genuinely has more distinct flavours than that, the honest bar is
+     the flavour count, set per-technique via `min_problems` in `techniques.yml` (the same mechanism that
+     drops Dutch National Flag to 1). **Intervals was raised to 5 on Aug 28, 2026** for exactly this
+     reason: merge-by-start, insert-into-sorted, schedule-by-end, max-concurrent sweep-line, and
+     two-list intersection are five different procedures, not five phrasings of one. A technique sitting
+     at "3/3, bar met" while three of its flavours have never been written is the failure this bullet
+     exists to prevent — see `decisions.yml` `interval-flavours-declared`.
 5. Distinct from [[feedback_method_variant_promotion]]: that is *many techniques on one problem* and is
    gated on the base retiring. This is *one technique across many problems*, gated only at 🟡. Different
    axis, different gate — don't apply one rule's gate to the other.
