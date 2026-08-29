@@ -89,3 +89,22 @@ requires *"correct complexity"*, so the list was consuming an input it never gat
   catch it, in the moment, and on 211 that is exactly what happened.
 - **Late is better than never, but say so.** Running it after the rating means their confirmation was
   given on incomplete information — re-check whether the miss changes the rating and tell them either way.
+
+## ⚠️ Known false positive in `rating_gate.py` — a RESULTS TABLE reads as a proposal (found Aug 28, 2026)
+
+The hook blocked a turn that proposed **no rating at all**: a factual answer about the probe tally,
+rendering the six past probe results as a table of 🟢/🟡 glyphs. The hook saw the glyphs, found no
+complexity statement in the learner's recent messages, and blocked.
+
+**The failure shape is not "too sensitive" — it is that a RECORD of a past result and a PROPOSAL about a
+current one are lexically identical.** Same class as the link hook's orphan-number problem, which was
+fixed by letting the turn carry the fixed tag `(links owed, order unchanged)` to mark a debt rather than
+a pick. Candidate fixes, cheapest first:
+
+1. **Let a turn declare itself historical** with a fixed tag the hook recognises (mirrors the link fix).
+2. **Require a proposal cue**, not a bare glyph — the rating turns all say *"proposed rating"* /
+   *"reads as"* / *"confirm?"*. A glyph inside a markdown table row is almost never a proposal.
+
+⚠️ **Do not fix it by weakening the gate itself.** The gate caught two real backwards-run ratings (15 on
+Aug 22, 127 on Aug 23) and that is worth occasional noise. The bug is the *trigger*, not the *rule*.
+Raise at the Aug 30 reconcile pass.
