@@ -19,6 +19,32 @@ from typing import List, Optional
 
 
 class Solution:
+
+    # ── Attempt · 2026-08-28 ──────────────
+    def nonOverlappingIntervals_20260828(self, intervals: List[List[int]]) -> int:
+        # we want to maximize the number of non-overlapping intervals by removing
+        # the minimum amount of intervals
+        # maximizing non-overlapping intervals is a greedy sort by end interval problem
+        # this way, we know if currentInterval intersects with prior, we can remove it safely
+
+        result = 0
+        # sort intervals by the second interval value ascending
+        intervals.sort(key = lambda interval : interval[1])
+
+        # can't just check against prior interval since the interval changes after a removal
+        # so we need to keep track of latest actual priorIntervalEnd
+        latestIntervalEnd = intervals[0][1]
+        # we assume first interval is always valid since we sort by end time
+        for i in range(1, len(intervals)):
+            # if overlapping, increment number of intervals to remove
+            if intervals[i][0] < latestIntervalEnd:
+                result+=1
+            # if not overlapping, update latest interval end value
+            else:
+                latestIntervalEnd = intervals[i][1]
+        
+        return result
+
     # ── Attempt 1 · 2026-08-26 ────────────────────────────────────────────
     def nonOverlappingIntervals(self, intervals: List[List[int]]) -> int:
         # we are being asked to remove as little as possible, so keep as many intervals as possible

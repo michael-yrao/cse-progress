@@ -18,6 +18,56 @@ from typing import List, Optional
 
 
 class Solution:
+
+    # ── Attempt · 2026-08-28 ──────────────
+    def insertInterval_20260828(self, intervals: List[List[int]], newInterval: List[int]) -> List[List[int]]:
+        # how to tell if two intervals are overlapping
+        # from example 1:
+        # interval.end >= newInterval.start
+        # from example 2:
+        # [3,5] merges with [4,8] with same as above to get [3,8]
+        # this is min(interval.start, newInterval.start) and max(interval.end, newInterval.end)
+        # [6,7] merges with the same to get [3,8]
+        # [8,10] merges with [3,8] with the same logic
+        # we will do this in a few steps to make it easy
+        # 1. insert intervals before that don't overlap
+        # 2. merge intervals that do overlap
+        # 3. insert final merged interval
+        # 4. insert intervals after that don't overlap
+
+        result = []
+        index = 0
+        
+        # find intervals don't overlap
+        # this criteria is interval.end < newInterval.start
+        while index < len(intervals) and intervals[index][1] < newInterval[0]:
+            result.append(intervals[index])
+            index+=1
+        
+        # now we know we are hitting overlap so let's do merge
+        # we known intervals.end >= newInterval.start here
+        # but this could also mean it is after the newInterval
+        # so we need to make sure it is under that boundary
+        # so interval = [3,8] and newInterval = [4,10]
+        # and interval = [18,20] and newInterval = [4,10]
+        # what is the difference, it is the start of interval and end of newInterval
+        # from our trace earlier, we need to update the newInterval
+        while index < len(intervals) and intervals[index][0] <= newInterval[1]:
+            newInterval[0] = min(intervals[index][0], newInterval[0])
+            newInterval[1] = max(intervals[index][1], newInterval[1])
+            index+=1
+        
+        # now our newInterval is ready to be pushed into the result
+        result.append(newInterval)
+
+        # now we put everything that are after
+        # that criteria is interval.start > newInterval.end
+        while index < len(intervals) and intervals[index][0] > newInterval[1]:
+            result.append(intervals[index])
+            index+=1
+        
+        return result
+
     # ── Attempt 1 · 2026-08-26 ────────────────────────────────────────────
     def insertInterval(self, intervals: List[List[int]], newInterval: List[int]) -> List[List[int]]:
         # intervals = [[1,3],[6,9]], newInterval = [2,5] -> merge with [1,3]

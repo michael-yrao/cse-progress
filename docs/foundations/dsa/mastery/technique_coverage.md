@@ -6,7 +6,7 @@
 
 > The tracker is keyed by **problem**; this is keyed by **technique**. Use it at the weekly build to decide what to pull, and at phase exit to check the per-algorithm bar (recognition + execution, ≥1 🟢 each).
 
-> **55/55** techniques started &nbsp;·&nbsp; **8** with no 🟢 &nbsp;·&nbsp; **19** thin &nbsp;·&nbsp; **1** unqueued variant gaps
+> **55/55** techniques started &nbsp;·&nbsp; **8** with no 🟢 &nbsp;·&nbsp; **20** thin &nbsp;·&nbsp; **1** unqueued variant gaps
 
 ## ⚠️ Action list
 
@@ -42,6 +42,7 @@
 - **Prefix Sum** (prefix_sum) — 2/3: 53, 560
 - **Tree BFS (level order)** (trees) — 2/3: 102, 199
 - **Trie** (tries) — 2/3: 208, 211
+- **Intervals (sort + sweep)** (intervals) — 3/5: 56, 57, 435
 
 **Unqueued variant gaps — a method never once exercised, and not in any queue.**
 
@@ -78,7 +79,7 @@
 | Topological Sort | graphs | 3 (207, 210, 269) | 🟢 | ✅ | Kahn's (BFS) ×3 · ~~DFS postorder~~ *(queued: `graduates:210`)* | — |
 | Union-Find | graphs | 4 (130, 261, 684, 721) | 🟢 | ✅ | — | — |
 | Heap / Priority Queue | heap | 6 (347, 355, 621, 703, 973, 1046) | 🟢 | ✅ | — | — |
-| Intervals (sort + sweep) | intervals | 3 (56, 57, 435) | 🟡 | ❌ | — | **no-green** |
+| Intervals (sort + sweep) | intervals | 3 (56, 57, 435) | 🟡 | ❌ | Merge overlapping (sort by start) ×1 · Insert into sorted (3-phase sweep) ×1 · Interval scheduling (sort by end) ×1 · ~~Max concurrent (sweep line / min-heap of ends)~~ *(queued: `green:435`)* · ~~Two-list intersection (two pointers)~~ *(queued: `green:56`)* | **no-green** · thin (3/5) |
 | Deep Copy via Hash Map | linked_list | 1 (138) | 🟢 | ✅ | — | — |
 | Floyd's Cycle / Midpoint | linked_list | 2 (141, 143) | 🟢 | ✅ | — | thin (2/3) |
 | HashMap + Doubly Linked List (LRU) | linked_list | 1 (146) | 🟢 | ✅ | — | thin (1/3) |

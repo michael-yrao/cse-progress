@@ -66,20 +66,20 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/dsa/mastery/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **111+4** problems &nbsp;·&nbsp; **121+4** solutions &nbsp;·&nbsp; **501+4** reps
+> **111+5** problems &nbsp;·&nbsp; **121+5** solutions &nbsp;·&nbsp; **503+5** reps
 
 | | 🏆 Retired | 🎓 Graduated | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|:---:|
-| **Solutions** | 0 | 6 | 97 | 15 | 3 |
+| **Solutions** | 0 | 6 | 97 | 17 | 1 |
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Rep Date | Rep Dates |
 |---|---|---|---|---|---|---|
 | Medium | [424. Longest Repeating Character Replacement](https://leetcode.com/problems/longest-repeating-character-replacement/) | 🔴 | 0 | 2026-08-30 | 2026-08-28 | 2026-04-19, 2026-07-02, 2026-07-10, 2026-07-17, 2026-07-27, 2026-08-28 |
+| Medium | [57. Insert Interval](https://leetcode.com/problems/insert-interval/) | 🟡 | 0 | 2026-09-07 | 2026-08-28 | 2026-08-26, 2026-08-28 |
+| Medium | [435. Non-overlapping Intervals](https://leetcode.com/problems/non-overlapping-intervals/) | 🟡 | 0 | 2026-09-07 | 2026-08-28 | 2026-08-26, 2026-08-28 |
 | Medium | [49. Group Anagrams](https://leetcode.com/problems/group-anagrams/) | 🟢 | 3 | 2027-02-23 | 2026-08-27 | 2026-01-04, 2026-03-27, 2026-05-29, 2026-06-28, 2026-08-27 |
 | Medium | [739. Daily Temperatures](https://leetcode.com/problems/daily-temperatures/) | 🟡 | 0 | 2026-09-06 | 2026-08-27 | 2026-08-14, 2026-08-27 |
 | Hard | [269. Alien Dictionary](https://leetcode.com/problems/alien-dictionary/) | 🟡 | 0 | 2026-09-06 | 2026-08-27 | 2026-07-27, 2026-07-29, 2026-08-07, 2026-08-17, 2026-08-27 |
-| Medium | [57. Insert Interval](https://leetcode.com/problems/insert-interval/) | 🔴 | 0 | 2026-08-28 | 2026-08-26 | 2026-08-26 |
-| Medium | [435. Non-overlapping Intervals](https://leetcode.com/problems/non-overlapping-intervals/) | 🔴 | 0 | 2026-08-28 | 2026-08-26 | 2026-08-26 |
 | Medium | [74. Search a 2D Matrix](https://leetcode.com/problems/search-a-2d-matrix/) | 🟢 | 2 | 2026-10-25 | 2026-08-26 | 2026-04-22, 2026-07-03, 2026-07-13, 2026-07-25, 2026-08-26 |
 | Medium | [1334. Find the City With the Smallest Number of Neighbors at a Threshold Distance (Floyd-Warshall)](https://leetcode.com/problems/find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance/) | 🟢 | 1 | 2026-09-24 | 2026-08-25 | 2026-07-31, 2026-08-05, 2026-08-15, 2026-08-25 |
 | Medium | [1462. Course Schedule IV (Floyd-Warshall / Transitive Closure)](https://leetcode.com/problems/course-schedule-iv/) | 🟡 | 0 | 2026-09-04 | 2026-08-25 | 2026-08-25 |

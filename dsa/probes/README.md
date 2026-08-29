@@ -71,12 +71,24 @@ without this table it vanishes from every "problems solved" figure. Two jobs:
 | 3 | 2026-08-16 | 69 Sqrt(x) | Binary Search on Answer | 🟢 | — |
 | 4 | 2026-08-19 | 643 Maximum Average Subarray I | Sliding Window | 🟡 | — *(learner overrode the row)* |
 | 5 | 2026-08-21 | 205 Isomorphic Strings | Hash-map bijection | 🟢 | — |
-| 6 | *pending* | 637 Average of Levels in Binary Tree | Tree BFS (level order) | — | — |
+| 6 | 2026-08-28 | 637 Average of Levels in Binary Tree | Tree BFS (level order) | 🟢 | — |
 
-**Tally (5 run):** 3 clean 🟢 · 1 earned a row (202) · 1 🟡 overridden (643). **Row-creation rate
-1/5 = 20%** — well under the 85% "pool has stopped teaching" line, so the pool still teaches.
-**Rowless-but-solved: 4** (977, 69, 643, 205) — these are the unique problems the tracker's 107 does
-not count.
+**Tally (6 run):** 4 clean 🟢 · 1 earned a row (202) · 1 🟡 overridden (643). **Row-creation rate
+1/6 = 17%** — well under the 85% "pool has stopped teaching" line, so the pool still teaches.
+**Rowless-but-solved: 5** (977, 69, 643, 205, 637) — these are the unique problems the tracker's 121
+does not count.
+
+⚠️ **Difficulty ratchet is now armed for Tree BFS** — probe #6 was an Easy and came back 🟢, so the
+next probe of this technique is a **Medium** (cap at Medium, never Hard). See the ratchet rule above.
+
+## 🎣 Queued probe candidates — named, gated, not yet eligible
+
+A candidate is parked here **with a state trigger, never a date** — the pull rules gate on comfort, so
+a candidate named while its technique is 🟡 must not silently become due just because time passed.
+
+| Candidate | Technique | Trigger | Why it is a good probe |
+|---|---|---|---|
+| **452 Minimum Number of Arrows to Burst Balloons** (Medium) | Intervals — *Interval scheduling (sort by end)* | **`green:435`** | Learner's pick, Aug 28, 2026. ⭐ It is **435's exact procedure wearing different words** — balloons and arrows rather than intervals to remove — so it tests whether the *sort-by-end greedy* transfers, not whether 435 is remembered. That surface-change-only property is what makes a probe measure recognition instead of recall. ⚠️ **Not eligible yet:** Intervals is **zero-green** (56 · 57 · 435 all 🟡), and the standing rule is never to probe a 🟡 or no-🟢 technique — that manufactures a review row on ground the learner has not yet held, at ~73 units/year for a Medium. Convert 435 first; the probe is the *reward* for that, not a substitute |
 
 ## ⚠️ Easy-only cannot reach most of the pool
 

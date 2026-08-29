@@ -37,6 +37,18 @@
 # "could a rule written before this still read as correct while now being wrong?"
 
 decisions:
+  - id: interval-flavours-declared
+    date: 2026-08-28
+    summary: >-
+      "Intervals (sort + sweep)" now declares five VARIANTS keyed by sort key + answer shape
+      (merge-by-start, insert-into-sorted, schedule-by-end, max-concurrent sweep-line,
+      two-list intersection), and min_problems moves 3 -> 5. Before this the technique
+      declared no variants at all, so the coverage report read "3 (56,57,435)" with the bar
+      met and could not surface a breadth gap even in principle. The two uncovered flavours
+      are queued on green:435 / green:56 rather than scheduled -- the technique is zero-green
+      across all three problems it has.
+    affects: [technique_coverage, techniques_vocabulary, intervals]
+
   - id: sibling-gate-yellow-not-green
     date: 2026-08-23
     summary: >-
