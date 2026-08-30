@@ -1,6 +1,6 @@
 # cse-progress
 
-<!-- reconciled: 2026-08-28 -->
+<!-- reconciled: 2026-08-29 -->
 
 ## Repo Setup (one-time per machine/clone)
 
@@ -728,6 +728,24 @@ or any solution file is staged. Run it by hand with `python scripts/technique_co
 | **Weekly build** (§9a) | which technique to pull — `thin` names the ones under 3–4 problems |
 | **Phase exit** | the per-algorithm bar — `no-green` is the blocker list, directly |
 | **Method-variant promotion** | which variants were never exercised, minus those already queued |
+
+⚠️ **WHERE a coverage sibling comes from: the PULL first, authoring last (adopted Aug 29, 2026).**
+Once a technique is named as thin/no-green, its candidate **population** is a company frequency pull —
+`python scripts/pull_interview.py --company <C> --technique <t>` — read by frequency. **Reach for a
+hand-picked problem only if the pull does not yield enough coverage, and say so in the build.** Learner:
+*"make sure the population comes from company pulls first and then we can reach for others if there is
+not enough coverage."*
+- ⭐ **Corollary, and it is the sharper half: if a rung exists only to justify the problem below it,
+  re-examine the RUNG — do not schedule the sequel.** This is the 227 failure: it was authored Aug 11
+  to defend 150 after the learner had already rejected 150, and it took two weeks and the learner's
+  second rejection to surface. Parked Aug 29; 224 flagged for the same test.
+- **Exempt from the post-NC150 pull gate.** `feedback_expansion_pull_scheduling` governs *filling
+  application slots*, not *sourcing a sibling* — different question, and `--technique` already exists.
+- ⚠️ **`⚠ already in the phase plan` is a fuzzy TITLE substring match and only a flag — grep the study
+  guide before calling a swap free.** It false-positived on *Decode String* (matched *Encode and Decode
+  Strings*) the day this rule was written.
+- Why and the occurrence log: `.claude/memory/feedback_consolidation_reps.md`, `decisions.yml`
+  `coverage-sibling-pulled-not-authored`.
 
 Three gap checks: **no-green** (execution unproven — blocks phase exit), **thin** (fewer than
 `min_problems`), **variant** (a declared method with zero problems). A variant already sitting in the

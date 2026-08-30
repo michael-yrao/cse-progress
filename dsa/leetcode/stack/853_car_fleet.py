@@ -49,8 +49,106 @@ from typing import List, Optional
 
 class Solution:
 
-    # ── Attempt · 2026-08-27 ──────────────
-    def carFleet_20260827(self, target: int, position: List[int], speed: List[int]) -> int:
-        pass
+    # ── Attempt · 2026-08-29 ──────────────
+    def carFleet_20260829(self, target: int, position: List[int], speed: List[int]) -> int:
+        # main trick to notice with this problem is that if a car is in front
+        # it will never be passed so we have to sort with highest position first
+        # issue is that speed index is tied with position, so we need to make a new array
+        # where we have them as tuples as sort by position
+        # then if any cars catch up to the previous car, they are the same fleet
 
-# ⤵ prior attempts stashed in dsa/leetcode/.history/853_car_fleet.txt — restored at session end (python scripts/restore_history.py)
+        cars = []
+
+        for i in range(len(position)):
+            cars.append((position[i],speed[i]))
+        
+        cars.sort(reverse=True)
+
+        # now we keep track of who is in front and who NOT catchup
+        # if any car catches up, it's the same fleet, so we can just ignore
+
+        fleets = []
+
+        for carPosition, carSpeed in cars:
+            # we know 8,4 will catch up to 10,2 because given target
+            # if they had no constraint, 8,4 will hit target at same time or faster
+            carTime = (target - carPosition) / carSpeed
+            # this means fleets should hold the time to finish
+            
+            # if nothing else in fleets, nothing to compare, new fleet
+            if not fleets:
+                fleets.append(carTime)
+            # if carTime <=, that means it will become same fleet
+            # so we add to the fleets array if > so it becomes a new fleet
+            elif fleets and carTime > fleets[-1]:
+                fleets.append(carTime)
+
+        return len(fleets)
+
+    # ── Attempt · 2026-08-17 ──────────────
+    def carFleet_20260817(self, target: int, position: List[int], speed: List[int]) -> int:
+        # first thing we should notice is that since we can't pass
+        # starting position actually matters a lot, basically no one can pass the car in the front
+        # because of this, we will sort desc. but we can't do that on the input
+        # since position and speed indices are tied, so let's create a new tuple array to sort
+
+        numCars = len(position)
+
+        cars = []
+
+        for i in range(numCars):
+            cars.append((position[i], speed[i]))
+
+        # descending since no one can pass the front car
+        cars.sort(reverse=True)
+
+        # now we need to check who can catch up to who
+        # we need a way to determine how fast cars behind will finish
+        # fastest for each car is (target - carPosition) / carSpeed
+        # if a car is not to pass, it comes a second fleet
+        # so we use a increasingStack that will hold time to finish
+        # if a car is to pass, we neuter it and set it to current car's position and speed
+        # so they become a fleet. we can accomplish this by just doing nothing
+
+        increasingStack = []
+
+        for carPosition, carSpeed in cars:
+            time = (target - carPosition) / carSpeed
+            
+            # we only add to stack if time > increasingStack[-1] or increasingStack is empty
+            if not increasingStack or time > increasingStack[-1]:
+                increasingStack.append(time)
+        
+        return len(increasingStack)
+
+    # ── Attempt 1 · 2026-08-15 ────────────────────────────────────────────
+    def carFleet(self, target: int, position: List[int], speed: List[int]) -> int:
+        # sort based on position. these cars are closest to the finish line
+        # so we order them in descending order since we can't pass cars
+        # so cars in front are the limiting factor
+        # we will have a monotonic stack that hold fleets
+        # so if the car behind the latest car has a faster or equal finish time, it is part of same fleet
+        # which means we check if time to finish > stack[-1]
+        # so this is an increasing stack with time as the main factor
+        
+        increasingStack = []
+
+        cars = []
+
+        for i in range(len(position)):
+            cars.append((position[i], speed[i]))
+        
+        # sort with highest first
+        cars.sort(reverse=True)
+
+        for carPosition, carSpeed in cars:
+            # get time to finish for each car at current speed
+            # which is (target - position) / speed, we don't use // since // doesn't even reach the target
+            time = (target - carPosition) / carSpeed
+
+            # since we cannot pass, it is impossible for cars behind each car iteration to finish earlier
+            # we are using stack to keep track of total fleets, so if it takes longer, we add to stack
+            if not increasingStack or time > increasingStack[-1]:
+                increasingStack.append(time)
+        
+        return len(increasingStack)

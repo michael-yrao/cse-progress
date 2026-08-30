@@ -65,6 +65,27 @@ decisions:
       Recorded in techniques.yml (Floyd Fast/Slow trigger) and feedback_consolidation_reps.
     affects: [consolidation, coverage, waiting_room, techniques_yml]
 
+  - id: coverage-sibling-pulled-not-authored
+    date: 2026-08-29
+    summary: >-
+      The candidate POPULATION for a coverage sibling is a company frequency pull first
+      (`pull_interview.py --technique <t>`); author or hand-pick only if the pull does not yield
+      enough coverage. Learner: "let's make sure the population comes from company pulls first and
+      then we can reach for others if there is not enough coverage" — clarified as meaning the pool
+      that provides a TECHNIQUE's coverage, not intake generally. feedback_consolidation_reps
+      specified WHEN a technique needs another problem and was silent on WHERE it comes from, so the
+      source defaulted to coach invention. Found via 227 Basic Calculator II: never in NC150, never
+      in a pull, entered Aug 11 solely to justify 150 Evaluate RPN after the learner rejected it
+      ("it's the base rung under 224/227/772") — a thin problem generating its own sequel. The
+      learner independently reached the same verdict two weeks later ("feels like a brain teaser
+      than an actual technique check"). COROLLARY, the sharper half: if a rung exists only to
+      justify the problem below it, re-examine the RUNG — do not schedule the sequel. This is
+      EXEMPT from feedback_expansion_pull_scheduling's post-NC150 gate, which governs filling
+      application slots, not sourcing a sibling. Effect: 227 parked (trigger = rated:<pulled
+      Stack-expr sibling>, scaffold deleted so discovery mints no phantom row); 224 flagged for
+      re-examination rather than seated by default.
+    affects: [consolidation, coverage, waiting_room, pull_interview, study_guide]
+
   - id: fill-capacity-with-weak-coverage
     date: 2026-08-23
     summary: >-

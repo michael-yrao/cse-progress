@@ -40,8 +40,8 @@ import heapq
 from typing import List
 
 
-# ── Attempt · 2026-08-24 ──────────────
-class Twitter_20260824:
+# ── Attempt · 2026-08-29 ──────────────
+class Twitter_20260829:
 
     def __init__(self):
         pass

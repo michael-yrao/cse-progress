@@ -22,12 +22,42 @@ from typing import List, Optional
 
 class Solution:
 
-    # ── Attempt · 2026-08-28 · ROW 1 — pre-sorted adjacency ──────────────
-    def findItinerary_20260828(self, tickets: List[List[str]]) -> List[str]:
+    # ── Attempt · 2026-08-29 · ROW 1 — pre-sorted adjacency ──────────────
+    def findItinerary_20260829(self, tickets: List[List[str]]) -> List[str]:
         pass
 
-    # ── Attempt · 2026-08-28 · ROW 2 — min-heap ordering ──────────────
-    def findItinerary_20260828_minheap(self, tickets: List[List[str]]) -> List[str]:
-        pass
+    # ── Attempt · 2026-08-29 · ROW 2 — min-heap ordering ──────────────
+    def findItinerary_20260829_minheap(self, tickets: List[List[str]]) -> List[str]:
+        # Eulerian Path since we are not guaranteed to finish at our starting vertex
+        # we know we traverse starting with JFK
+        # Eulerian Path, we want to visit every edge once, so that is our visited set
+        # visited set = (startVertex, endVertex) but we are not given that those are unique
+        # so maybe just a visited list instead
+        # lexicalgraphical order, minHeap to hold the vertices will sort that for us automatically
+        # we then need adjacency map so we can push those onto the minHeap
+        # actually we just might not need visited if we are popping off the minHeap
+        # it basically tells us it is visited, TBD
+
+        adjMap = collections.defaultdict(list)
+
+        for src, dst in tickets:
+            heapq.heappush(adjMap[src],dst)
+
+        result = []
+        # now that we have an adjMap with the neighbors in lexicographical order
+        # go through the edges
+        # notice that we end when we hit the final node without any edges
+        # DFS until we hit the end
+        def dfs(node):
+            # we have neighbors for this node, so we push them onto our recursion stack
+            while adjMap[node]:
+                dfs(heapq.heappop(adjMap[node]))
+
+            # add each node to the result
+            result.append(node)
+
+        dfs("JFK")
+        result.reverse()
+        return result
 
 # ⤵ prior attempts stashed in dsa/leetcode/.history/332_reconstruct_itinerary.txt — restored at session end (python scripts/restore_history.py)
