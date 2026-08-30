@@ -66,14 +66,18 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/dsa/mastery/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **111+5** problems &nbsp;·&nbsp; **121+5** solutions &nbsp;·&nbsp; **503+5** reps
+> **111+5** problems &nbsp;·&nbsp; **121+5** solutions &nbsp;·&nbsp; **507+5** reps
 
 | | 🏆 Retired | 🎓 Graduated | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|:---:|
-| **Solutions** | 0 | 6 | 97 | 17 | 1 |
+| **Solutions** | 0 | 6 | 97 | 16 | 2 |
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Rep Date | Rep Dates |
 |---|---|---|---|---|---|---|
+| Hard | [332. Reconstruct Itinerary (min-heap ordering)](https://leetcode.com/problems/reconstruct-itinerary/) | 🔴 | 0 | 2026-08-31 | 2026-08-29 | 2026-07-22, 2026-07-28, 2026-08-04, 2026-08-29 |
+| Medium | [133. Clone Graph](https://leetcode.com/problems/clone-graph/) | 🟡 | 0 | 2026-09-08 | 2026-08-29 | 2026-06-04, 2026-06-05, 2026-06-07, 2026-08-09, 2026-08-19, 2026-08-29 |
+| Medium | [155. Min Stack (Pair with Min-So-Far)](https://leetcode.com/problems/min-stack/) | 🟢 | 1 | 2026-09-28 | 2026-08-29 | 2026-08-12, 2026-08-14, 2026-08-29 |
+| Medium | [853. Car Fleet](https://leetcode.com/problems/car-fleet/) | 🟢 | 1 | 2026-09-28 | 2026-08-29 | 2026-08-15, 2026-08-17, 2026-08-29 |
 | Medium | [424. Longest Repeating Character Replacement](https://leetcode.com/problems/longest-repeating-character-replacement/) | 🔴 | 0 | 2026-08-30 | 2026-08-28 | 2026-04-19, 2026-07-02, 2026-07-10, 2026-07-17, 2026-07-27, 2026-08-28 |
 | Medium | [57. Insert Interval](https://leetcode.com/problems/insert-interval/) | 🟡 | 0 | 2026-09-07 | 2026-08-28 | 2026-08-26, 2026-08-28 |
 | Medium | [435. Non-overlapping Intervals](https://leetcode.com/problems/non-overlapping-intervals/) | 🟡 | 0 | 2026-09-07 | 2026-08-28 | 2026-08-26, 2026-08-28 |
@@ -106,7 +110,6 @@ Notes for future agents:
 | Medium | [150. Evaluate Reverse Polish Notation](https://leetcode.com/problems/evaluate-reverse-polish-notation/) | 🟡 | 0 | 2026-08-31 | 2026-08-21 | 2026-08-11, 2026-08-21 |
 | Easy | [14. Longest Common Prefix](https://leetcode.com/problems/longest-common-prefix/) | 🟢 | 2 | 2026-10-20 | 2026-08-21 | 2026-01-03, 2026-03-27, 2026-06-05, 2026-06-15, 2026-08-21 |
 | Medium | [323. Number of Connected Components (Union-Find)](https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/) | 🟢 | 2 | 2026-10-18 | 2026-08-19 | 2026-06-19, 2026-06-29, 2026-08-19 |
-| Medium | [133. Clone Graph](https://leetcode.com/problems/clone-graph/) | 🟡 | 0 | 2026-08-29 | 2026-08-19 | 2026-06-04, 2026-06-05, 2026-06-07, 2026-08-09, 2026-08-19 |
 | Medium | [1448. Count Good Nodes in Binary Tree](https://leetcode.com/problems/count-good-nodes-in-binary-tree/) | 🟢 | 2 | 2026-10-18 | 2026-08-19 | 2026-05-15, 2026-06-18, 2026-07-10, 2026-07-20, 2026-08-19 |
 | Easy | [206. Reverse Linked List (Recursion)](https://leetcode.com/problems/reverse-linked-list/) | 🟢 | 2 | 2026-10-18 | 2026-08-19 | 2026-04-24, 2026-07-03, 2026-07-14, 2026-07-24, 2026-08-19 |
 | Medium | [238. Product of Array Except Self](https://leetcode.com/problems/product-of-array-except-self/) | 🟢 | 2 | 2026-10-18 | 2026-08-19 | 2026-01-24, 2026-04-13, 2026-07-24, 2026-08-19 |
@@ -114,7 +117,6 @@ Notes for future agents:
 | Medium | [235. Lowest Common Ancestor of a Binary Search Tree](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/) | 🟢 | 1 | 2026-09-17 | 2026-08-18 | 2026-05-03, 2026-06-12, 2026-07-19, 2026-07-29, 2026-08-08, 2026-08-18 |
 | Medium | [560. Subarray Sum Equals K](https://leetcode.com/problems/subarray-sum-equals-k/) | 🟢 | 1 | 2026-09-17 | 2026-08-18 | 2026-04-05, 2026-06-26, 2026-06-28, 2026-07-29, 2026-08-08, 2026-08-18 |
 | Medium | [2300. Successful Pairs of Spells and Potions](https://leetcode.com/problems/successful-pairs-of-spells-and-potions/) | 🟢 | 2 | 2026-10-17 | 2026-08-18 | 2026-05-03, 2026-06-12, 2026-06-19, 2026-08-18 |
-| Medium | [853. Car Fleet](https://leetcode.com/problems/car-fleet/) | 🟢 | 0 | 2026-08-27 | 2026-08-17 | 2026-08-15, 2026-08-17 |
 | Medium | [19. Remove Nth Node From End of List (Postorder Recursion)](https://leetcode.com/problems/remove-nth-node-from-end-of-list/) | 🟢 | 1 | 2026-09-16 | 2026-08-17 | 2026-05-18, 2026-05-21, 2026-06-18, 2026-06-28, 2026-07-08, 2026-07-18, 2026-07-28, 2026-08-07, 2026-08-17 |
 | Medium | [19. Remove Nth Node From End of List (Iterative)](https://leetcode.com/problems/remove-nth-node-from-end-of-list/) | 🟢 | 2 | 2026-10-16 | 2026-08-17 | 2026-04-29, 2026-05-18, 2026-06-30, 2026-07-09, 2026-08-17 |
 | Medium | [261. Graph Valid Tree (DFS)](https://neetcode.io/problems/valid-tree) | 🟢 | 1 | 2026-09-15 | 2026-08-16 | 2026-06-15, 2026-06-17, 2026-06-21, 2026-06-23, 2026-08-06, 2026-08-16 |
@@ -126,7 +128,6 @@ Notes for future agents:
 | Medium | [787. Cheapest Flights Within K Stops (Bellman-Ford)](https://leetcode.com/problems/cheapest-flights-within-k-stops/) | 🟢 | 1 | 2026-09-14 | 2026-08-15 | 2026-07-14, 2026-07-16, 2026-07-26, 2026-08-05, 2026-08-15 |
 | Medium | [695. Max Area Of Island (DFS)](https://leetcode.com/problems/max-area-of-island/) | 🟢 | 2 | 2026-10-14 | 2026-08-15 | 2026-06-01, 2026-06-17, 2026-08-15 |
 | Medium | [503. Next Greater Element II](https://leetcode.com/problems/next-greater-element-ii/) | 🟢 | 2 | 2026-10-13 | 2026-08-14 | 2026-07-11, 2026-07-21, 2026-07-31, 2026-08-10, 2026-08-14 |
-| Medium | [155. Min Stack (Pair with Min-So-Far)](https://leetcode.com/problems/min-stack/) | 🟢 | 0 | 2026-08-24 | 2026-08-14 | 2026-08-12, 2026-08-14 |
 | Medium | [138. Copy List with Random Pointer](https://leetcode.com/problems/copy-list-with-random-pointer/) | 🟢 | 1 | 2026-09-12 | 2026-08-13 | 2026-07-03, 2026-07-05, 2026-08-04, 2026-08-13 |
 | Medium | [146. LRU Cache](https://leetcode.com/problems/lru-cache/) | 🟢 | 2 | 2026-10-12 | 2026-08-13 | 2026-07-04, 2026-07-07, 2026-07-16, 2026-08-13 |
 | Easy | [121. Best Time to Buy and Sell Stock](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/) | 🟢 | 2 | 2026-10-12 | 2026-08-13 | 2026-04-15, 2026-06-25, 2026-07-03, 2026-07-14, 2026-08-13 |
@@ -161,7 +162,6 @@ Notes for future agents:
 | Easy | [1929. Concatenation of Array](https://leetcode.com/problems/concatenation-of-array/) | 🟢 | 2 | 2026-10-04 | 2026-08-05 | 2026-01-01, 2026-03-25, 2026-08-05 |
 | Easy | [217. Contains Duplicate](https://leetcode.com/problems/contains-duplicate/) | 🟢 | 2 | 2026-10-04 | 2026-08-05 | 2026-01-01, 2026-03-25, 2026-08-05 |
 | Easy | [26. Remove Duplicates from Sorted Array](https://leetcode.com/problems/remove-duplicates-from-sorted-array/) | 🟢 | 2 | 2026-10-04 | 2026-08-05 | 2026-01-09, 2026-04-02, 2026-08-05 |
-| Hard | [332. Reconstruct Itinerary (min-heap ordering)](https://leetcode.com/problems/reconstruct-itinerary/) | 🟡 | 0 | 2026-08-14 | 2026-08-04 | 2026-07-22, 2026-07-28, 2026-08-04 |
 | Medium | [143. Reorder List](https://leetcode.com/problems/reorder-list/) | 🟢 | 1 | 2026-09-03 | 2026-08-04 | 2026-04-26, 2026-07-06, 2026-07-15, 2026-07-25, 2026-08-04 |
 | Medium | [2. Add Two Numbers](https://leetcode.com/problems/add-two-numbers/) | 🟢 | 2 | 2026-10-03 | 2026-08-04 | 2026-07-05, 2026-08-04 |
 | Medium | [994. Rotting Oranges](https://leetcode.com/problems/rotting-oranges/) | 🟢 | 2 | 2026-10-02 | 2026-08-03 | 2026-06-06, 2026-06-15, 2026-06-25, 2026-07-04, 2026-08-03 |

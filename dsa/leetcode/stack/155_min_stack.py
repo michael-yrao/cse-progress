@@ -31,22 +31,75 @@ Constraints:
 from typing import List, Optional
 
 
-# ── Attempt · 2026-08-24 ──────────────
-class MinStack_20260824:
+# ── Attempt · 2026-08-29 ──────────────
+class MinStack_20260829:
+# not a true min stack
+# more like we are saying do a stack and also keep track of min
+# so what we can do is just store a tuple in a stack
+# lets do (value, min)
 
     def __init__(self):
-        pass
+        self.stack = []
 
     def push(self, value: int) -> None:
-        pass
+        if self.stack:
+            minValue = min(self.stack[-1][1], value)
+            self.stack.append((value, minValue))
+        else:
+            self.stack.append((value,value))
 
     def pop(self) -> None:
-        pass
+        self.stack.pop()
 
     def top(self) -> int:
-        pass
+        return self.stack[-1][0]
 
     def getMin(self) -> int:
-        pass
+        return self.stack[-1][1]
 
-# ⤵ prior attempts stashed in dsa/leetcode/.history/155_min_stack.txt — restored at session end (python scripts/restore_history.py)
+# ── Attempt · 2026-08-14 ──────────────
+class MinStack_20260814:
+# we keep the min value at each insert
+
+    def __init__(self):
+        self.stack = []
+
+    def push(self, value: int) -> None:
+        if not self.stack:
+            self.stack.append((value,value))
+        else:
+            minValue = min(self.stack[-1][1], value)
+            self.stack.append((value, minValue))
+
+    def pop(self) -> None:
+        self.stack.pop()
+
+    def top(self) -> int:
+        return self.stack[-1][0]
+
+    def getMin(self) -> int:
+        return self.stack[-1][1]
+
+# ── Attempt 1 · 2026-08-12 ────────────────────────────────────────────
+class MinStack:
+# we store (value, min(stack)) at each value in the stack
+    def __init__(self):
+        self.stack = []
+
+    def push(self, value: int) -> None:
+        # if stack does not exist, push itself as value, min
+        if not self.stack:
+            self.stack.append((value, value))
+        else:
+            # if stack does have value already, get latest currentMin
+            currentMin = self.stack[-1][1]
+            self.stack.append((value, min(currentMin, value)))
+
+    def pop(self) -> None:
+        self.stack.pop()
+
+    def top(self) -> int:
+        return self.stack[-1][0]
+
+    def getMin(self) -> int:
+        return self.stack[-1][1]

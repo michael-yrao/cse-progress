@@ -22,6 +22,65 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🟡 133. Clone Graph — 2026-08-29
+**Sticking point**: dropped the `if not node: return None` guard that earlier reps on this problem had — `adjList = []` crashed on `currentNode.neighbors`; coach handed the failing input, learner localized and fixed. Algorithm otherwise clean and correct first pass. Second friction was the complexity gate, not the code: the rewire pass was priced **O(V·E)** by taking the inner loop as E-per-node instead of `deg(node)`, whose sum over all nodes is `2E` → the pass is **O(V+E)**. ⭐ The *previously* missed half (BFS = O(V+E), "since we don't revisit nodes") came back right and unaided, repairing Aug 9 and Aug 19.
+
+## 🔴 332. Reconstruct Itinerary (min-heap ordering) — 2026-08-29
+**Topic**: Hierholzer's algorithm / Eulerian path — 4th rated rep, technique still zero-green.
+### Where did I get stuck?
+**Not on recognition, and not on the code.** The pre-code call was clean and unaided: *Eulerian path
+since we are not guaranteed to finish at our starting vertex · we visit every EDGE once, so the visited
+unit is edges not nodes · min-heap gives lexicographic order for free · popping off the heap IS the
+visited marker, so no visited set is needed.* That last clause was written as a "TBD" hunch and it was
+right.
+
+The gap was one fact, and it is the same one that has stranded this problem five sessions running:
+**what to do when the greedy walk dead-ends.** Learner's own words — *"I don't fully recall the
+execution of this"*, then *"this is the same issue I walk back into for hierholzer every time"*, then
+*"I just can never think of this solution on the spot, ever."*
+
+Coach supplied exactly one sentence: **the vertex you strand at is necessarily the LAST airport of the
+itinerary** (mid-walk every arrival is paired with a departure, so the only vertex that can run out of
+exits is the one with the unpaired arrival). Off that, the learner immediately produced *"go as deep as
+I can and pop and retrace my steps when I hit the end node"* — and then wrote the whole DFS correctly,
+first pass, including the final `reverse()`. Nothing downstream of the hinge was coach-supplied.
+
+Two self-flagged cleanups after the fact (learner opened with *"I feel like my dfs is badly written"*,
+which was a correct instinct): a dead base case duplicating the tail append, and a `nonlocal result`
+that does nothing because `.append` mutates rather than rebinds.
+### Core Realization
+**Dead-ending is not a failure state — it is the algorithm finding the ending first.** That single
+reframe is the whole of Hierholzer:
+
+- Do **not** append on the way *in*. Append on the way *out*, when a vertex has no edges left.
+- The result therefore comes out **backwards**. Reverse it at the end.
+- Consume the edge by **deleting** it (heappop), not by marking a node visited — nodes are revisited,
+  edges are not. (This half was already held; see the Aug 14 recognition entry.)
+
+⚠️ **The retrieval cue is the thing to drill, not the loop.** Four reps now where the mechanism could
+be executed once named and could not be recalled cold. The cue to card: *"use every EDGE exactly once,
+and I need lexicographic order" → Hierholzer, post-order append, reverse.*
+### Code Snippet
+```
+adjMap = collections.defaultdict(list)
+for src, dst in tickets:
+    heapq.heappush(adjMap[src], dst)
+
+result = []
+def dfs(node):
+    while adjMap[node]:              # consume by DELETING the edge
+        dfs(heapq.heappop(adjMap[node]))
+    result.append(node)              # post-order: append on the way OUT
+
+dfs("JFK")
+result.reverse()
+return result
+```
+Complexity gate passed: **time O(E log E)** (a heap push and a heap pop per ticket), **space O(E)** —
+recursion depth follows the Euler path (E deep), not the distinct-airport count. That is the direct
+repair of the Aug 4 `O(V)` stack miss and it came unaided; the second O(E) term (`adjMap` itself) was
+not named, flagged without penalty.
+
 ## 🟡 269. Alien Dictionary — 2026-08-27
 **Sticking point**: invalid-order guard used `len(w2) == minLen` (fires on equal adjacent words too, e.g. `["abc","abc"]` → wrong `""`); correct guard is `len(w1) > len(w2)` — coach handed the failing input, learner localized the fix. Algorithm otherwise clean.
 

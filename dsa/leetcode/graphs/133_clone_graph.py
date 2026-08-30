@@ -69,6 +69,39 @@ import collections
 from typing import Optional
 class Solution:
 
+    # ── Attempt · 2026-08-29 ──────────────
+    def cloneGraph_20260829(self, node: Optional['Node']) -> Optional['Node']:
+        # since each node has neighbors, we need to make a mapping of old to new
+        # create those nodes first, map them and assign neighbors
+        # we can use BFS to assign
+
+        if not node:
+            return None
+
+        oldToNewMap = {}
+        visited = set()
+
+        queue = collections.deque()
+
+        queue.append(node)
+        visited.add(node)
+
+        while queue:
+            currentNode = queue.popleft()
+            oldToNewMap[currentNode] = Node(currentNode.val)
+            for neighbor in currentNode.neighbors:
+                if neighbor not in visited:
+                    visited.add(neighbor)
+                    queue.append(neighbor)
+        
+        # now that we constructed the oldToNewMap
+        # go through each key, value and assign neighbors
+        for oldNode, newNode in oldToNewMap.items():
+            for neighbor in oldNode.neighbors:
+                newNode.neighbors.append(oldToNewMap[neighbor])
+        
+        return oldToNewMap[node]
+
     # ── Attempt · 2026-08-19 ──────────────
     def cloneGraph_20260819(self, node: Optional['Node']) -> Optional['Node']:
         # we can create deep copies of individual nodes first

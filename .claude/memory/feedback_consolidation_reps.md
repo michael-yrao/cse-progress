@@ -3,7 +3,7 @@ name: feedback-consolidation-reps
 description: A technique needs MULTIPLE problems, not one — near-identical siblings are the training signal (their minor differences are what recognition grades), and they don't count against the new-algorithm intake cap
 metadata:
   type: feedback
-reconciled: 2026-08-28
+reconciled: 2026-08-29
 ---
 
 **Set by the learner Jul 26, 2026:** *"we need multiple problems of the same flavor for users to
@@ -78,3 +78,45 @@ guard retained** — the thing `green:base` was a blunt proxy for:
 slip) → sibling OK; 239 (🟡 after *three* coach fixes Aug 22) → convert first. See
 `decisions.yml` `sibling-gate-yellow-not-green`. Related: [[feedback_surplus_triggered_intake]] (when to
 spend capacity on this coverage), [[feedback_coverage_gap_ledger]].
+
+## ⚠️ WHERE a sibling comes from: PULL first, author last (added Aug 29, 2026)
+
+**The candidate population for a coverage sibling is a company frequency pull — `python
+scripts/pull_interview.py --company <C> --technique <t>` — and only if that does not yield enough
+coverage do you reach for anything else.** Learner, Aug 29: *"let's make sure the population comes
+from company pulls first and then we can reach for others if there is not enough coverage"*, clarified
+as the pool that provides a **technique's coverage**, not intake generally.
+
+**Why this had to be written down:** everything above specifies *when* a technique needs another
+problem and says **nothing about where the problem comes from**. That silence is not neutral — the
+source defaults to coach invention, which is how **227 Basic Calculator II** reached a board. It was
+never in NC150 and never in a pull. It entered on Aug 11, 2026 as a *justification*: the learner had
+rejected 150 Evaluate RPN (*"I don't see anything of value here"*), the defence offered was *"it's the
+base rung under 224/227/772"*, and the build then recorded that one of 224/227 must be scheduled **or
+the prerequisite leads nowhere**. A thin problem generated its own sequel. Two weeks later the learner
+reached the same verdict unprompted — *"digit and calculator problems with stack sucks … it feels like
+a brain teaser than an actual technique check or teach"* — and 227 was parked.
+
+⭐ **THE COROLLARY IS THE SHARPER HALF: if a rung exists only to justify the problem below it,
+re-examine the RUNG — do not schedule the sequel.** The Aug 11 note already recorded that *the
+learner's reaction is the data, not my rebuttal*, and then scheduled the rebuttal anyway.
+
+**This is EXEMPT from the post-NC150 pull gate.** [[feedback_expansion_pull_scheduling]] says *"during
+NC150 there are no interview pulls yet — the roadmap is the work"*, and that stands: it governs
+**filling application slots**. It was never about **sourcing a coverage sibling**, and the tool has
+supported `--technique` all along.
+
+**How to apply, at the weekly build:**
+
+1. A technique needs coverage → run the pull, technique-filtered, and read it by frequency.
+2. Prefer a candidate already in the phase plan — but **verify it**. The `⚠ already in the phase plan`
+   flag is a **fuzzy substring match on the title and is only a FLAG, by design** (the script says so).
+   It false-positived on Aug 29: *Decode String* was flagged as planned because *Encode and Decode
+   Strings* (271) contains it. **Grep the study guide before calling a swap free.**
+3. Only if the pull yields too little coverage do you hand-pick — and say in the build that you did,
+   and why.
+4. A high-frequency pull that proves genuinely interview-worthy goes **into the phase plan**, per
+   [[feedback_roi_promotes_to_curriculum]] — not parked in the Expansion Queue.
+
+Recorded in `decisions.yml` `coverage-sibling-pulled-not-authored`; occurrence log in
+`self_eval_log.md` 2026-08-29.
