@@ -3,7 +3,7 @@ name: feedback-provisional-clean
 description: A 🟢 Clean that directly follows a 🔴 Blank is logged with Streak 0 (provisional) → a short lock-down interval, not the normal Streak-1 one; only Blank→Clean is provisional
 metadata:
   type: feedback
-reconciled: 2026-08-21
+reconciled: 2026-08-30
 ---
 
 **When logging a 🟢 Clean that directly follows a 🔴 Blank, set Streak 0, not 1.** `update_review_dates.py`

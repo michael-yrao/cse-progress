@@ -3,7 +3,7 @@ name: feedback_no_prior_attempt_comparison
 description: When giving feedback on an attempt, judge today's code on its own; never read or reference the prior attempts (stashed in <root>/.history/ during a retry)
 metadata:
   type: feedback
-reconciled: 2026-08-21
+reconciled: 2026-08-30
 ---
 
 When the user asks "what's the issue with my implementation?", point at the bug **in the code they wrote today** and stop. Do **not** open, read, or cite the prior attempts — during a retry they're moved out of the file into `<root>/.history/<number>_<snake>.txt` (older files may still show a `# region ⚠ PRIOR ATTEMPTS` fold) — not to compare approaches, not to say "your last attempt had this right," not as evidence for a comfort rating.

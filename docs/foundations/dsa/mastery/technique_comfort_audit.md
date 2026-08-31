@@ -5,7 +5,7 @@
      The FUTURE section is hand-authored and preserved verbatim between its markers.
      Run at the weekly build: python scripts/technique_comfort_audit.py -->
 
-> **54** techniques started &nbsp;·&nbsp; **46** with a 🟢 &nbsp;·&nbsp; **8** still zero-green. Comfort = demonstrated ceiling (best across the technique's problems); coverage tempers it.
+> **56** techniques started &nbsp;·&nbsp; **48** with a 🟢 &nbsp;·&nbsp; **8** still zero-green. Comfort = demonstrated ceiling (best across the technique's problems); coverage tempers it.
 
 ## ⚠️ Needs work — pull order for the weekly build
 
@@ -16,16 +16,16 @@
 
 - 🟡 **BFS on Implicit Graph** (graphs) — 1p · 0🟢 · 🟡
 - 🟡 **Cycle Detection in an Iterated Sequence** (graphs) — 1p · 0🟢 · 🟡
-- 🟡 **Floyd-Warshall (all-pairs shortest path)** (advanced_graphs) — 1p · 0🟢 · 🟡
 - 🟡 **Graph Clone (DFS + Hash Map)** (graphs) — 1p · 0🟢 · 🟡
-- 🟡 **Hierholzer (Eulerian path)** (advanced_graphs) — 1p · 0🟢 · 🟡
+- 🟡 **Hierholzer (Eulerian path)** (advanced_graphs) — 1p · 0🟢 · 🔴→🟡
+- 🟡 **Intervals (sort + sweep)** (intervals) — 3p · 0🟢 · 🟡
 - 🟡 **Length-Prefix Encoding** (arrays_and_hash) — 1p · 0🟢 · 🟡
 - 🟡 **Monotonic Deque** (stack) — 1p · 0🟢 · 🟡
 - 🟡 **Stack (expression evaluation)** (stack) — 1p · 0🟢 · 🟡
 
-**Thin-green (15) — proven but narrow, discretionary:**
+**Thin-green (16) — proven but narrow, discretionary:**
 
-- **Bellman-Ford** (1/3) · **Binary Search (max boundary)** (1/3) · **Connected Components** (1/3) · **Divide & Conquer / Sorting** (1/3) · **HashMap + Doubly Linked List (LRU)** (1/3) · **Multi-source BFS** (1/3) · **Prim's MST** (1/3) · **Stack (augmented entries)** (1/2) · **Binary Search on Answer** (2/3) · **Dijkstra** (2/3) · **Floyd's Cycle / Midpoint** (2/3) · **Grid DFS** (2/3) · **Prefix Sum** (2/3) · **Tree BFS (level order)** (2/3) · **Trie** (2/3)
+- **Bellman-Ford** (1/3) · **Binary Search (max boundary)** (1/3) · **Connected Components** (1/3) · **Divide & Conquer / Sorting** (1/3) · **HashMap + Doubly Linked List (LRU)** (1/3) · **Multi-source BFS** (1/3) · **Prim's MST** (1/3) · **Stack (augmented entries)** (1/2) · **Binary Search on Answer** (2/3) · **Dijkstra** (2/3) · **Floyd's Cycle / Midpoint** (2/3) · **Floyd-Warshall (all-pairs shortest path)** (2/3) · **Grid DFS** (2/3) · **Prefix Sum** (2/3) · **Tree BFS (level order)** (2/3) · **Trie** (2/3)
 
 ## Started techniques
 
@@ -56,7 +56,7 @@
 | Technique | Comfort | Coverage | Why |
 |---|---|---|---|
 | Greedy (single pass) | 🟢 | 1p · 1🟢 · 🟢 | Clean; thin, and mostly subsumed by the coming Greedy phase. |
-| Sliding Window | 🟢 | 4p · 4🟢 · 🟢 | Clean; amortized-O(n) (l monotonic) sharpened on 3, Aug 22. |
+| Sliding Window | 🟢 | 4p · 3🟢 · 🔴→🟢 | Clean; amortized-O(n) (l monotonic) sharpened on 3, Aug 22. |
 
 ### stack
 
@@ -72,8 +72,9 @@
 
 | Technique | Comfort | Coverage | Why |
 |---|---|---|---|
-| Binary Search | 🎓 | 7p · 7🟢 · 🟢→🎓 | Graduated; seven clean problems. Core boundary logic is automatic. |
+| Binary Search (exact match) | 🎓 | 2p · 2🟢 · 🟢→🎓 | 704 + 33, both clean; 33's rotated two-pass held cold Aug 24. **Graduated** — the settled base rung of the family. |
 | Binary Search (max boundary) | 🟢 | 1p · 1🟢 · 🟢 | **Thin — credited to 74 alone** (69 was a green probe, no row). 34 + 1552 intake queued to fix. |
+| Binary Search (min boundary) | 🟢 | 6p · 6🟢 · 🟢 | The bias the learner reaches for by default — answer at `r`, plain midpoint. Six problems, all green (153 Graduated Aug 30). Named Aug 30 so an unnamed default becomes measurable. |
 | Binary Search on Answer | 🟢 | 2p · 2🟢 · 🟢 | Koko/capacity clean; bounds derived not recalled. |
 
 ### linked_list
@@ -95,7 +96,7 @@
 | BST Descent | 🟢 | 2p · 2🟢 · 🟢 | Clean; 235 hit the tree-height complexity category unaided. |
 | Tree BFS (level order) | 🟢 | 2p · 2🟢 · 🟢 | Clean; a fresh probe (637) is queued to test it cold. |
 | Tree Construction (Divide & Conquer) | 🟢 | 1p · 1🟢 · 🟢 | 105 clean; thin. |
-| Tree DFS (recursive) | 🎓 | 6p · 5🟢 · 🟡→🎓 | Graduated, broad; **124 and 1448 slipped to 🟡** on return-value bugs (both-sides vs max), streaks reset. |
+| Tree DFS (recursive) | 🎓 | 6p · 6🟢 · 🟢→🎓 | Graduated, broad; **124 and 1448 slipped to 🟡** on return-value bugs (both-sides vs max), streaks reset. |
 | Tree DFS with Postorder Return | 🟢 | 2p · 1🟢 · 🟡→🟢 | The peak-vs-path distinction (update global both sides, return one) is the recurring trap. |
 
 ### heap
@@ -125,9 +126,15 @@
 |---|---|---|---|
 | Bellman-Ford | 🟢 | 1p · 1🟢 · 🟢 | 787 clean; thin. |
 | Dijkstra | 🟢 | 2p · 1🟢 · 🟡→🟢 | **First green Aug 22 (778) after 0-for-2 in August** — shallow but no longer a blocker. 743 still 🟡. |
-| Floyd-Warshall (all-pairs shortest path) | 🟡 | 1p · 0🟢 · 🟡 | **1334, no green.** 1462/399 fills queued behind `rated:1334`. |
-| Hierholzer (Eulerian path) | 🟡 | 1p · 0🟢 · 🟡 | **332, no green — cost 5 sessions** because its first attempt was the introduction. The primer rule exists because of this. |
+| Floyd-Warshall (all-pairs shortest path) | 🟢 | 2p · 1🟢 · 🟡→🟢 | **1334, no green.** 1462/399 fills queued behind `rated:1334`. |
+| Hierholzer (Eulerian path) | 🟡 | 1p · 0🟢 · 🔴→🟡 | **332, no green — cost 5 sessions** because its first attempt was the introduction. The primer rule exists because of this. |
 | Prim's MST | 🟢 | 1p · 1🟢 · 🟢 | Written four times on 1584, clean; Kruskal (the sibling) still a pending teach. |
+
+### intervals
+
+| Technique | Comfort | Coverage | Why |
+|---|---|---|---|
+| Intervals (sort + sweep) | 🟡 | 3p · 0🟢 · 🟡 | **Phase opened Aug 24; zero-green after 3.** 56 🟡; 57 and 435 both 🔴→🟡 on a 2-day re-rep — the sort criterion is the learner's now, execution still takes coach fixes. Needs a **conversion**, not a 4th surface form. |
 
 ### prefix_sum
 

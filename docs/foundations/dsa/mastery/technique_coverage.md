@@ -6,7 +6,7 @@
 
 > The tracker is keyed by **problem**; this is keyed by **technique**. Use it at the weekly build to decide what to pull, and at phase exit to check the per-algorithm bar (recognition + execution, ≥1 🟢 each).
 
-> **55/55** techniques started &nbsp;·&nbsp; **8** with no 🟢 &nbsp;·&nbsp; **20** thin &nbsp;·&nbsp; **1** unqueued variant gaps
+> **56/56** techniques started &nbsp;·&nbsp; **8** with no 🟢 &nbsp;·&nbsp; **20** thin &nbsp;·&nbsp; **1** unqueued variant gaps
 
 ## ⚠️ Action list
 
@@ -65,8 +65,9 @@
 | In-Place Array Rotation | arrays_and_hash | 1 (189) | 🟢 | ✅ | — | — |
 | Length-Prefix Encoding | arrays_and_hash | 1 (271) | 🟡 | ❌ | — | **no-green** |
 | Prefix/Suffix Products | arrays_and_hash | 1 (238) | 🟢 | ✅ | — | — |
-| Binary Search | binary_search | 7 (33, 74, 153, 162, 540, 704, 2300) | 🎓 | ✅ | — | — |
+| Binary Search (exact match) | binary_search | 2 (33, 704) | 🎓 | ✅ | — | — |
 | Binary Search (max boundary) | binary_search | 1 (74) | 🟢 | ✅ | — | thin (1/3) |
+| Binary Search (min boundary) | binary_search | 6 (153, 162, 540, 875, 1011, 2300) | 🟢 | ✅ | — | — |
 | Binary Search on Answer | binary_search | 2 (875, 1011) | 🟢 | ✅ | — | thin (2/3) |
 | BFS on Implicit Graph | graphs | 1 (127) | 🟡 | ❌ | — | **no-green** |
 | Connected Components | graphs | 1 *+2v* (323) | 🟢 | ✅ | DFS ×1 · BFS ×1 · Union-Find ×1 | thin (1/3) |

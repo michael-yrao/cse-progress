@@ -32,6 +32,28 @@ class TreeNode:
         self.right = right
 class Solution:
 
+    # ── Attempt · 2026-08-30 ──────────────
+    def diameterOfBinaryTree_20260830(self, root: Optional[TreeNode]) -> int:
+        # diameter means height it looks like
+        # so we just take max height on either sides
+        # we go all the way down first and pass value to its predecessor
+
+        maxDiameter = 0
+
+        def maxHeight(node):
+            nonlocal maxDiameter
+            if not node:
+                return 0
+            
+            leftHeight = maxHeight(node.left)
+            rightHeight = maxHeight(node.right)
+            maxDiameter = max(maxDiameter, leftHeight + rightHeight)
+            return 1 + max(leftHeight,rightHeight)
+        
+        maxHeight(root)
+
+        return maxDiameter
+
     # ── Attempt · 2026-07-31 ──────────────
     def diameterOfBinaryTree_20260731(self, root: Optional[TreeNode]) -> int:
         diameter = 0

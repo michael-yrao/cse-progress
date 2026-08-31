@@ -7,6 +7,21 @@ Append-only log of corrections. Governed by [[feedback_self_evaluation]]. Newest
 
 ---
 
+- **2026-08-31 [P2] `open`** — Caught at the weekly build, unprompted: **deleting an unattempted
+  scaffold does NOT undo the tracker row it already minted.** 84 Largest Rectangle was scaffolded on
+  Aug 30, the night stood down, and the file was deleted per the 227 precedent — but discovery had
+  already run, and a row `| Unknown | 84 ... | 🔴 | 0 | | | |` was sitting in `dsa_progress.md`
+  uncommitted, for a rep that never happened. Removed here; re-running `update_review_dates.py`
+  confirms it does not come back (no file, no discovery). **The rule was incomplete, not wrong.**
+  CLAUDE.md and both Aug 29/Aug 30 schedule notes say "delete the scaffold" as if that were the whole
+  remedy; the row is a *second* artifact and needs its own deletion. It survived because it is
+  invisible in normal use — blank dates mean it adds no scheduled demand and never appears in a due
+  list, so nothing surfaces it except reading the tracker's tail. **Fix landed:** CLAUDE.md's scaffold
+  rule now names both artifacts, and the phantom row's shape (`Unknown` difficulty + blank dates) is
+  written down as the thing to grep for. Root cause: an undo written for the *cause* (the file) and
+  not the *effect* (the row) — watch for a cluster on "cleanup that reverses the trigger but not the
+  side effect."
+
 - **2026-08-27 [P3] `open`** — Asked "what problems are left today", I answered with a table whose
   file links were **dead on click**: I copied the paths verbatim from the schedule row
   (`../../../dsa/...`, correct relative to the schedule file three folders deep) instead of writing the

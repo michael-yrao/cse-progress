@@ -3,7 +3,7 @@ name: project-library-carrying-capacity
 description: A tracked problem bills ~0.039 slots/week forever, capping the library at ~500-600 — two valves added Jul 26 2026, graduation (🏆 above 🎓) and disposable reps (no row for a 🟢 pull/consolidation rep)
 metadata:
   type: project
-reconciled: 2026-08-21
+reconciled: 2026-08-30
 ---
 
 **Decided Jul 26, 2026**, from the learner's question about running out of problems as intervals

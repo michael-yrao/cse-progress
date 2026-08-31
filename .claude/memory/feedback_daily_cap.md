@@ -3,7 +3,7 @@ name: feedback_daily_cap
 description: SUPERSEDED Aug 7, 2026 — the daily problem COUNT was replaced by the effort budget (units). Do not schedule from this file.
 metadata:
   type: feedback
-reconciled: 2026-08-21
+reconciled: 2026-08-30
 ---
 
 # ⚠️ SUPERSEDED — do not schedule from this file

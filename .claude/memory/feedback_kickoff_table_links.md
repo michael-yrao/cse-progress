@@ -3,7 +3,7 @@ name: feedback_kickoff_table_links
 description: hyperlink each problem to its local solution file AND its problem page (LC, or the NeetCode mirror if premium) — fires when new_problem.py runs, at kickoff, and on every problem/set transition
 metadata:
   type: feedback
-reconciled: 2026-08-23
+reconciled: 2026-08-30
 ---
 
 **PRIMARY TRIGGER — a scaffold is a link event. Every `new_problem.py` run ends with the
@@ -149,11 +149,16 @@ no link, or better, ask whether it should be raised at all. Corollary: **a debri
 problem's pre-code call has spoiled that problem's next rep** — see the Aug 14 entry in
 `self_eval_log.md`.
 
-⚠️ **This conflicts with `problem_link_reminder.py` as currently written**, which blocks on *any*
-problem-looking number outside a markdown link, regardless of whether it is on the board. Tonight it
-forced links onto pure-context mentions three turns running. **Raise at the next meta-review:** either
-teach the hook the day's board, or let a turn satisfy it by stating that the mention is context-only —
-the same escape the selection-menu case already has.
+✅ **RESOLVED — the hook was taught the day's board (confirmed at the Aug 30, 2026 reconcile).** This
+paragraph used to warn that `problem_link_reminder.py` blocked on *any* problem-looking number
+regardless of the board, and filed the fix as a meta-review item. The fix shipped: the hook resolves
+the day's board from the tracker's due dates (`_tracker_numbers`, matching **exactly** today, not
+`<=`) plus today's row of the current schedule file (`_todays_schedule_numbers`), and its block
+message now states outright that *only problems on today's board are flagged* and that an off-board
+mention must NOT be linked. So the scope limit above is enforced, not merely asked for. The
+selection-menu escape is also in the block message. **What remains coach-side and unmechanised:** the
+hook still cannot tell a recommendation from a dismissal — see
+[[feedback_recommend_by_number_steer_by_description]].
 
 **⚠️ NEVER WRITE A BARE PROBLEM NUMBER — the orphan-re-emit fix (Aug 23, 2026).** The Stop hook
 gathers *all* assistant text since the last human message, so a number written bare in **narration**

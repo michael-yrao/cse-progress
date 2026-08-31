@@ -3,7 +3,7 @@ name: feedback_difficulty_tiered_intake
 description: New-problem intake is tiered by category difficulty, not flat 5/week — hard/algorithm-dense categories cap at 4/week, DP at 3
 metadata:
   type: feedback
-reconciled: 2026-08-21
+reconciled: 2026-08-30
 ---
 
 New-problem intake is **difficulty-tiered**, not a flat 5/week:

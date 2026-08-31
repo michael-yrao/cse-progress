@@ -3,7 +3,7 @@ name: feedback_early_completion_backfill
 description: When a problem finished early frees a future day below its effort floor, ASK the user before backfilling that slot
 metadata:
   type: feedback
-reconciled: 2026-08-21
+reconciled: 2026-08-30
 ---
 
 When the learner finishes a scheduled problem **early**, it vacates that problem's future slot. If
@@ -17,7 +17,7 @@ to bank the lighter day) is the learner's call, so surface it as a question rath
 
 **How to apply:** on logging an early completion, (1) mark it done on the day it was actually done and
 strike it from its scheduled future day ([[feedback_schedule_mistakes]] out-of-order handling); (2) if
-that future day is now < 5, ask whether to fill the slot; (3) on yes, pull the highest-priority due
+that future day is now under its effort **floor** — read it from `cse.config.yml` (`effort_budget`), or run `python scripts/effort_budget.py`; this step named a bare "5" until Aug 30, 2026, which is the restated-value drift `check_single_source.py` exists to catch — ask whether to fill the slot; (3) on yes, pull the highest-priority due
 item by review tier (🔴 > 🟡 > 🟢 > 🎓) — favor the overdue-🟢 burn-down backlog — and re-slot it in the
 same edit (strike it from wherever it was previewed, no double-count). Establishes Jul 14, 2026 (167
 Two Sum II done early, freeing a Thu Jul 16 slot → backfilled with 1 Two Sum from the overflow).

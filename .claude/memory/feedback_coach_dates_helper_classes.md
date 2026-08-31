@@ -3,7 +3,7 @@ name: feedback_coach_dates_helper_classes
 description: The learner writes helper classes with natural names; the COACH dates them (TrieNode → TrieNode_20260822) at rating time, never the learner
 metadata:
   type: feedback
-reconciled: 2026-08-22
+reconciled: 2026-08-30
 ---
 
 **The learner writes helper classes (`TrieNode`, `Node`, `ListNode`) with their natural names —

@@ -3,7 +3,7 @@ name: feedback_operating_principles
 description: North-star operating principles for this repo — the "why" behind every specific process/coaching feedback; read this first
 metadata:
   type: feedback
-reconciled: 2026-08-21
+reconciled: 2026-08-30
 ---
 
 The specific feedback memories in this repo are instances of **two overarching principles**. Read this first; it tells you how to generalize to situations the specific rules don't literally cover.

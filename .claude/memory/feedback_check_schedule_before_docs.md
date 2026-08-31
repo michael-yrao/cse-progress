@@ -3,7 +3,7 @@ name: feedback-check-schedule-before-docs
 description: Before writing solution content into shared pattern/technique docs, check today's and this week's schedule — a worked example is a spoiler for whoever has that problem queued
 metadata:
   type: feedback
-reconciled: 2026-08-21
+reconciled: 2026-08-30
 ---
 
 **Promoted Jul 26, 2026** after two occurrences in a single session.

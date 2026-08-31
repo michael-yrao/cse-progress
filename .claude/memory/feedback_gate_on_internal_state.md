@@ -3,7 +3,7 @@ name: feedback-gate-on-internal-state
 description: Never gate a study milestone on an offer, interview result, or application date — every trigger must resolve against something measurable in the repo (rating, streak, surplus, pull rate)
 metadata:
   type: feedback
-reconciled: 2026-08-21
+reconciled: 2026-08-30
 ---
 
 **Set by the learner Jul 26, 2026:** *"let's not worry about the offer and worry about the timeline

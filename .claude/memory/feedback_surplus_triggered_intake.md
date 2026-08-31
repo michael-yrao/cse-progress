@@ -3,7 +3,7 @@ name: feedback-surplus-triggered-intake
 description: Review demand is a rate (sum of 1/interval), not a headcount — measure surplus in UNITS against the effort ceiling at every schedule build and gate pulls/extra intake on it, never on "NC150 is finished"
 metadata:
   type: feedback
-reconciled: 2026-08-23
+reconciled: 2026-08-30
 ---
 
 **Established Jul 26, 2026** when the learner asked whether the schedule runs out of problems as
