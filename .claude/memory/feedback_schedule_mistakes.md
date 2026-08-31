@@ -3,7 +3,7 @@ name: feedback_schedule_mistakes
 description: When user does a problem out of scheduled order, proactively detect and fix the swap without waiting for user to catch it
 metadata:
   type: feedback
-reconciled: 2026-08-21
+reconciled: 2026-08-30
 ---
 
 When logging a problem result, check whether it was scheduled for today or a different day. If the user did a problem early (or from the wrong day), proactively detect the displaced problem and reschedule it — don't wait for the user to notice.

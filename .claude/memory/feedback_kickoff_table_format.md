@@ -3,7 +3,7 @@ name: feedback_kickoff_table_format
 description: Kickoff board table — problem name IS the file link; no separate file column
 metadata:
   type: feedback
-reconciled: 2026-08-22
+reconciled: 2026-08-30
 ---
 
 The start-of-day kickoff board is a compact table: the **problem name is the markdown link to

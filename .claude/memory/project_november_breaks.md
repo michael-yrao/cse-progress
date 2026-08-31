@@ -3,7 +3,7 @@ name: project_november_breaks
 description: Two ~1-week light-maintenance breaks in Nov 2026 (~Nov 1–7 and ~Nov 24–30) landing inside the DP phase; the Oct/Nov weekly builds must sequence DP around them.
 metadata:
   type: project
-reconciled: 2026-08-21
+reconciled: 2026-08-30
 ---
 
 Set by learner Aug 6, 2026. **Two ~1-week breaks in November 2026**, both **light-maintenance, not

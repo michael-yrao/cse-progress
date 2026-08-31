@@ -37,6 +37,16 @@
 # "could a rule written before this still read as correct while now being wrong?"
 
 decisions:
+  - id: stack-expression-ladder-parked
+    date: 2026-08-31
+    summary: >-
+      224 Basic Calculator is PARKED beside 227, for the same reason: both were authored to
+      justify their own base (150), never frequency-pulled. The Stack-expression 2nd problem
+      is now 394 Decode String (Google pull, freq 58.3), and both parked rungs re-gate on
+      `rated:394`. Applies coverage-sibling-pulled-not-authored to the rungs already in the
+      plan, not just to future ones.
+    affects: [scheduling, waiting_room, consolidation_reps]
+
   - id: interval-flavours-declared
     date: 2026-08-28
     summary: >-
@@ -64,6 +74,37 @@ decisions:
       Fast/Slow (Cycle, 202 🟡) unblock; 239 Monotonic Deque (3 coach fixes Aug 22) stays gated.
       Recorded in techniques.yml (Floyd Fast/Slow trigger) and feedback_consolidation_reps.
     affects: [consolidation, coverage, waiting_room, techniques_yml]
+
+  - id: binary-search-two-axes
+    date: 2026-08-30
+    summary: >-
+      Binary-search vocabulary restructured into TWO INDEPENDENT AXES, replacing a taxonomy that
+      was asymmetric and hid a gap. AXIS 1 (what you converge on): exact match | min boundary |
+      max boundary. AXIS 2 (what you search over): the array | the answer space. A problem is
+      listed under one entry per axis it exercises — the schema already allowed this (74 sat in
+      two entries before the change). THE DEFECT: `Binary Search (max boundary)` was already
+      keyed on the BIAS and already spanned both search spaces (74 array-space, 1552
+      answer-space), but the min side was not keyed that way at all — its answer-space half sat
+      in `Binary Search on Answer` and its array-space half was never named, diffused through a
+      generic seven-problem `Binary Search` bucket that also held the exact-match problems. So
+      coverage reported "Binary Search: 7 problems, healthy" and was structurally unable to
+      answer "how many min-boundary reps do I have?" — the identical failure the Aug 17
+      max-boundary note describes, mirrored onto the other bias. CHANGES: generic `Binary Search`
+      split into `Binary Search (exact match)` (704, 33) and `Binary Search (min boundary)` (153,
+      2300, 162, 540, 875, 1011); `Binary Search on Answer` KEPT as the second axis rather than
+      folded in (learner: "keep as second axis, harder problems typically have more than just one
+      axis" — recognizing you must MANUFACTURE the search space is a distinct recognition skill
+      from knowing which bias to use once you have one) and gains 1552, which is answer-space with
+      the MAX bias and whose absence was what made that axis read as a min-only concern. 875/1011
+      are min-boundary practice regardless of searching the answer space — the learner's point,
+      and why they are listed on both axes. 540 placed on min boundary at the learner's call
+      (first index where pair-start parity breaks — a predicate boundary, never a target compare).
+      FOUND when 153 graduated Aug 30 and the learner asked for coverage on both boundaries.
+      EFFECT ON THE BOARD: max boundary is the real gap at 1/3 (74 only — 34 and 1552 are queued
+      but untracked, so they do not yet count); min boundary reads 6 and healthy, confirming the
+      learner's intuition that it is the default form. 34 and 1552 were already seated for the
+      Aug 31 week and closing them also takes `on Answer` to 3/3.
+    affects: [techniques_yml, coverage, recognition]
 
   - id: coverage-sibling-pulled-not-authored
     date: 2026-08-29

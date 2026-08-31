@@ -3,7 +3,7 @@ name: project-recognition-probes
 description: Weekly cold recognition probe — one unseen LC problem/week from an already-🟢 technique, label stripped, disposable (no tracker row on 🟢)
 metadata:
   type: project
-reconciled: 2026-08-21
+reconciled: 2026-08-31
 ---
 
 **Adopted by the learner Aug 9, 2026:** *"I want to improve my ability to recognize patterns in a
@@ -112,7 +112,11 @@ maintenance demand forever, and the deficit is already negative. Exhaust the fre
 
 ## Standing exception to record at each weekly build
 
-The fill table says **surplus ≤0 → no consolidation reps**, and surplus is **−9.6**. This runs as a
+The fill table says **surplus ≤0 → no consolidation reps**, and surplus is negative — **recomputed
+Aug 30, 2026: demand 9.27 units/day against the 8.0 ceiling, i.e. −1.27/day (−8.9/week)**, so the
+gate is still shut and the exception is still the thing that lets a probe run. (The figure here read
+a stale **−9.6** until this pass; a hold justified by a number expires the moment the number moves —
+recompute it at every build rather than copying this one forward.) This runs as a
 **deliberate, arithmetic-backed exception**, not a quiet override: the gate exists to stop *permanent*
 demand growth, and a disposable probe adds one slot once and **zero forever after**. Restate the
 reasoning at each build rather than letting it become invisible precedent — and if the probe's

@@ -3,7 +3,7 @@ name: feedback_expansion_pull_scheduling
 description: Post-NC150, weekly schedule generation populates application slots via pull_interview.py gated by learned patterns and weighted by comfort; pulled problems get identical Clean/Shaky/Blank treatment
 metadata:
   type: feedback
-reconciled: 2026-08-21
+reconciled: 2026-08-31
 ---
 
 Once NC150 is largely retired and the learner enters the knowledge-expansion phase, **weekly schedule generation is the trigger** for the application thread. This extends [[feedback_end_of_week_schedule]] and [[feedback_proactive_scheduling]] — the weekly build now assembles, in priority order:

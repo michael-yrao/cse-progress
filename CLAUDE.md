@@ -1,6 +1,6 @@
 # cse-progress
 
-<!-- reconciled: 2026-08-29 -->
+<!-- reconciled: 2026-08-31 -->
 
 ## Repo Setup (one-time per machine/clone)
 
@@ -86,6 +86,15 @@ inert:
   and the tracker gains a Blank that never happened, plus a near-term rep to service it — the Blank
   interval is the shortest in the ladder, so it lands almost immediately. This collides head-on
   with the end-of-session `git status` sweep, whose whole job is to catch unstaged solution files.
+  - ⚠️ **DELETING THE SCAFFOLD DOES NOT DELETE THE ROW. Undo BOTH artifacts.** Once discovery has
+    run, the row is independent of the file — removing the `.py` leaves the row in place and
+    `update_review_dates.py` has nothing to reconcile it against. **So when an unattempted scaffold
+    is pulled, delete the file AND the tracker row, in the same edit**, then re-run the script to
+    confirm the row does not return. Found Aug 31, 2026 on 84 (scaffolded Aug 30, night stood down,
+    file deleted — the row survived uncommitted for a rep that never happened).
+  - **What to grep for:** a phantom reads `| Unknown | [<n>. …] | 🔴 | 0 | | | |` — **`Unknown`
+    difficulty and blank dates**. Blank dates are why it hides: it adds no scheduled demand and never
+    appears in a due list, so nothing surfaces it except reading the tracker's tail.
 - **Retry scaffolds move history out of the file.** Scaffolding a retry the learner didn't ask for
   stashes their prior attempts to `.history/`. `restore_history.py` correctly declines to restore
   an unattempted stub, so the file stays blank and the stash gets committed — recoverable, but it
@@ -738,7 +747,9 @@ not enough coverage."*
 - ⭐ **Corollary, and it is the sharper half: if a rung exists only to justify the problem below it,
   re-examine the RUNG — do not schedule the sequel.** This is the 227 failure: it was authored Aug 11
   to defend 150 after the learner had already rejected 150, and it took two weeks and the learner's
-  second rejection to surface. Parked Aug 29; 224 flagged for the same test.
+  second rejection to surface. Parked Aug 29; **224 failed the same test and was parked Aug 31** —
+  Stack-expression's 2nd problem is now **394 Decode String** (Google pull, freq 58.3), and both
+  parked rungs re-gate on `rated:394`. See `decisions.yml` `stack-expression-ladder-parked`.
 - **Exempt from the post-NC150 pull gate.** `feedback_expansion_pull_scheduling` governs *filling
   application slots*, not *sourcing a sibling* — different question, and `--technique` already exists.
 - ⚠️ **`⚠ already in the phase plan` is a fuzzy TITLE substring match and only a flag — grep the study

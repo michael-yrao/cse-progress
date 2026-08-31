@@ -3,7 +3,7 @@ name: feedback_recognition_gate
 description: Front-gate every rep — learner states shape→technique+why (as their pre-code comment, pasted in chat) BEFORE coding; complexity gate still fires at the end
 metadata:
   type: feedback
-reconciled: 2026-08-22
+reconciled: 2026-08-30
 ---
 
 ⭐ **REMOVED Aug 22, 2026 — the scaffold no longer prints a RECOGNITION block.** The Aug 20 source

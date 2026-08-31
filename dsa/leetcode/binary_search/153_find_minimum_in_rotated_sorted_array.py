@@ -40,6 +40,22 @@ Constraints:
 from typing import List
 
 class Solution:
+
+    # ── Attempt · 2026-08-30 ──────────────
+    def findMin_20260830(self, nums: List[int]) -> int:
+        # this is just finding the start of the rotation
+        # min boundary binary search
+        l, r = 0, len(nums) - 1
+        while l < r:
+            m = (l + r) // 2
+            # not possible to be the min value
+            if nums[m] > nums[r]:
+                l = m + 1
+            else:
+                r = m
+        
+        return nums[l]
+
     def findMin(self, nums: List[int]) -> int:
         # similar to searching for an element in a rotated array
         # we use l < r instead of l <= r like in normal binary search

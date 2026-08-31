@@ -3,7 +3,7 @@ name: feedback_method_variant_promotion
 description: Promote an alternate-method variant of a problem into rotation only when the base method graduates (🎓)
 metadata:
   type: feedback
-reconciled: 2026-08-21
+reconciled: 2026-08-30
 ---
 
 For a problem tracked under multiple methods (e.g. 42 Array vs Two-Pointer, 75 Dutch Flag vs Bucket Sort), pull the harder/alternate variant into active rotation **when the base method graduates (🎓, at `graduate_at_streak`)** — not while the base is still churning through 🟡/🟢 reps.

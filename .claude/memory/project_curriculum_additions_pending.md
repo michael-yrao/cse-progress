@@ -3,7 +3,7 @@ name: project_curriculum_additions_pending
 description: SD/AI curriculum gaps added to cse-coach on Jul 25 that must be folded into cse-progress's hand-maintained trackers when those lanes build (not auto-synced)
 metadata:
   type: project
-reconciled: 2026-08-21
+reconciled: 2026-08-30
 ---
 
 On **Jul 25, 2026** a curriculum spot-check added interview-tier gaps to the **cse-coach**

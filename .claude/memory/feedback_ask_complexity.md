@@ -3,7 +3,7 @@ name: feedback_ask_complexity
 description: after a problem is coded, ASK the learner for time & space complexity before rating — don't state it for them
 metadata:
   type: feedback
-reconciled: 2026-08-23
+reconciled: 2026-08-30
 ---
 
 After a problem is done, **ask the learner to state the time and space complexity themselves**
@@ -107,4 +107,12 @@ a pick. Candidate fixes, cheapest first:
 
 ⚠️ **Do not fix it by weakening the gate itself.** The gate caught two real backwards-run ratings (15 on
 Aug 22, 127 on Aug 23) and that is worth occasional noise. The bug is the *trigger*, not the *rule*.
-Raise at the Aug 30 reconcile pass.
+
+✅ **FIXED at the Aug 30, 2026 reconcile pass — candidate 2, and the diagnosis was one word off.** The
+hook already required a proposal cue; the cue list simply contained a bare `rate`, which is also the
+ordinary noun for a frequency. The blocked turn said *"row-creation **rate** 17%"* — the probe
+diagnostic's own vocabulary — so the tally answer tripped a rule aimed at *"**rate** it?"*. Narrowed to
+the decision-request forms only (`rate it/this/that/the rep`, `rate?`); `confirm`, `proposed`,
+`override`, `accept` and `rating:`/`rating?` are untouched, so **the gate is not weakened** — the two
+backwards-run ratings above would still block. Two regression cases added; selftest **18/18**.
+Candidate 1 (a fixed historical tag) was not needed and is not implemented.

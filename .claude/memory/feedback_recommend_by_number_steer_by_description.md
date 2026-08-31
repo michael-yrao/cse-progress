@@ -3,7 +3,7 @@ name: feedback_recommend_by_number_steer_by_description
 description: When recommending a problem, name only the pick by number+link; refer to problems you're steering away from by description, not number
 metadata:
   type: feedback
-reconciled: 2026-08-22
+reconciled: 2026-08-30
 ---
 
 When answering "what's a quick one / what should I do", **name only the problem you are

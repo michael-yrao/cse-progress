@@ -3,7 +3,7 @@ name: feedback_read_before_asserting
 description: Never assert what a file/tracker/log contains from memory, impression, or a partial read — Read it first; grep/tail answer "does X exist", never "what is the state of this"
 metadata:
   type: feedback
-reconciled: 2026-08-21
+reconciled: 2026-08-30
 ---
 
 **Before asserting what a file contains, READ it.** Never state a count, a date, a comfort

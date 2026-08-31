@@ -3,7 +3,7 @@ name: feedback_proactive_scheduling
 description: After logging any result, scan the tracker for problems due within the next 7 days and slot them proactively
 metadata:
   type: feedback
-reconciled: 2026-08-21
+reconciled: 2026-08-30
 ---
 
 After logging a problem result, scan `dsa_progress.md` for any problems whose Next Review Date falls within the next 7 days and slot them into the schedule in the same edit. Do not wait for the user to notice they were missed.

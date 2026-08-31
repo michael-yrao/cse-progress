@@ -184,29 +184,74 @@ techniques:
     problems:
       - {number: 53, method: Kadane}
 
-  # ── Binary search ───────────────────────────────────────────────────────────
-  - name: Binary Search
-    family: binary_search
-    problems:
-      - {number: 704}
-      - {number: 74}
-      - {number: 33}
-      - {number: 153}
-      - {number: 162}
-      - {number: 540}
-      - {number: 2300}
-
-  # Bar raised to the file default of 3 on Aug 16, 2026 (tier A/B of the
-  # coverage review: a LeetCode topic tag exists that can actually source it).
+  # ── Binary search ─────────────────────────────────────────────────────
   #
-  # ⚠️ Both of these MINIMIZE (smallest k that works). The maximizing form is a separate
-  # technique below — it needs the other mid-bias and it is the one that loops forever if
-  # you get it wrong.
+  # ⭐ TWO AXES, and they are independent (restructured Aug 30, 2026 at the learner's call).
+  #
+  #   AXIS 1 — WHAT YOU CONVERGE ON:  exact match | min boundary | max boundary
+  #   AXIS 2 — WHAT YOU SEARCH OVER:  the array | the answer space  ("on answer", below)
+  #
+  # A problem is listed under one entry per axis it exercises, which the schema already
+  # allows (74 was in two entries before this change). Learner, Aug 30: *"keep [on-answer]
+  # as a second axis, harder problems typically have more than just one axis."*
+  #
+  # ⚠️ WHY THIS WAS RESTRUCTURED — the taxonomy was ASYMMETRIC and the asymmetry hid a gap.
+  # `Binary Search (max boundary)` was already keyed on the BIAS and already spanned both
+  # search spaces (74 array-space, 1552 answer-space). The min side was not keyed that way
+  # at all: its answer-space half sat in `Binary Search on Answer` and its array-space half
+  # was never named — it was diffused through a generic seven-problem `Binary Search` bucket
+  # that also held the exact-match problems. So coverage reported "Binary Search: 7 problems,
+  # healthy" and was structurally unable to answer *"how many min-boundary reps do I have?"*
+  # — the identical failure the Aug 17 note below describes, mirrored onto the other bias.
+  #
+  # Found when 153 graduated (Aug 30) and the learner asked for coverage on both boundaries:
+  # *"this is min boundary, max boundary is slightly different … our existing problem set
+  # should have a lot of min boundary binary search since it is the default for most
+  # non-exact match binary searches."* Correct, and none of it was visible from the file.
+  - name: Binary Search (exact match)
+    family: binary_search
+    min_problems: 2
+    problems:
+      - {number: 704}    # the base rung — target present or not
+      - {number: 33}     # rotated, still an exact-match target search
+
+  # AXIS 1, min bias. The default shape for any non-exact-match search: you want the
+  # SMALLEST value satisfying a monotone predicate, so the answer lives at `r` on exit and
+  # the ordinary `m = (l + r) // 2` is correct. This is the bias the learner reaches for by
+  # default, which is exactly why it needed naming — an unnamed default is unmeasurable.
+  #
+  # ⚠️ 875 and 1011 are ALSO on the second axis (`Binary Search on Answer`). They are
+  # min-boundary practice regardless of searching the answer space rather than an array —
+  # that was the learner's Aug 30 point and it is why they are listed here too.
+  - name: Binary Search (min boundary)
+    family: binary_search
+    min_problems: 3
+    problems:
+      - {number: 153}    # first index of the rotation — Graduated Aug 30
+      - {number: 2300}   # first potion index that clears the threshold
+      - {number: 162}    # first index where the sequence turns — peak
+      - {number: 540}    # first index where pair-start parity breaks (learner's call, Aug 30)
+      - {number: 875}    # => also axis 2 — smallest k that works
+      - {number: 1011}   # => also axis 2 — smallest capacity that works
+
+  # AXIS 2 — the search space IS the answer, not an array you were handed. Kept as its own
+  # entry rather than folded into the bias entries (learner's call, Aug 30): recognizing that
+  # you must MANUFACTURE the search space is a distinct recognition skill from knowing which
+  # bias to use once you have one. Fold it in and that signal becomes invisible.
+  #
+  # ⚠️ Bar was raised to the file default of 3 on Aug 16, 2026 (tier A/B of the coverage
+  # review: a LeetCode topic tag exists that can actually source it).
+  #
+  # ⚠️ This entry held ONLY the two minimizing problems until Aug 30, which is what made the
+  # axis read as a min-only concern. 1552 is answer-space with the MAX bias and belongs here
+  # as much as 875 does; adding it is what makes this a real second axis rather than a
+  # synonym for "min boundary on answer".
   - name: Binary Search on Answer
     family: binary_search
     problems:
-      - {number: 875}
-      - {number: 1011}
+      - {number: 875}    # => also axis 1, min
+      - {number: 1011}   # => also axis 1, min
+      - {number: 1552}   # => also axis 1, max — maximize the minimum gap
 
   # Added Aug 17, 2026. The learner noticed 69 was only their SECOND max-boundary rep and
   # asked to fill the technique — and nothing in the repo could have surfaced that, because
@@ -229,7 +274,7 @@ techniques:
     problems:
       - {number: 74}     # largest row whose first element <= target
       - {number: 34}     # ⏳ both boundaries in one problem — the two biases side by side
-      - {number: 1552}   # ⏳ maximize the minimum gap — the mirror of 875/1011
+      - {number: 1552}   # ⏳ maximize the minimum gap — => also axis 2 (on answer)
 
   # ── Stack ───────────────────────────────────────────────────────────────────
   - name: Stack (matching)

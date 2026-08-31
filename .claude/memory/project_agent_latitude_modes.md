@@ -3,7 +3,7 @@ name: project_agent_latitude_modes
 description: Latitude when thinking/teaching, stringency when executing — the three enforcement options considered Aug 21, 2026, which one shipped, and the conditions for reaching for the other two
 metadata:
   type: project
-reconciled: 2026-08-21
+reconciled: 2026-08-30
 ---
 
 **Set by the learner Aug 21, 2026**, at the end of the reconcile pass:

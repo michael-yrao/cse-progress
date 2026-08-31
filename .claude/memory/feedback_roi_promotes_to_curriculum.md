@@ -3,7 +3,7 @@ name: feedback-roi-promotes-to-curriculum
 description: NC150 is the STARTING point for high-ROI, not the ceiling — anything with genuine interview ROI belongs in the study guide curriculum, never parked in the Knowledge Expansion Queue
 metadata:
   type: feedback
-reconciled: 2026-08-21
+reconciled: 2026-08-30
 ---
 
 **Set by the learner Jul 26, 2026.** The Knowledge Expansion Queue is for material that is

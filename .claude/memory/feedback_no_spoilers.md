@@ -3,7 +3,7 @@ name: feedback_no_spoilers
 description: Zero hints/approaches unless explicitly asked or user says stuck; never recap the approach when a problem (especially a retry) begins
 metadata:
   type: feedback
-reconciled: 2026-08-21
+reconciled: 2026-08-30
 ---
 
 Give **no** hints, approaches, pattern names, or algorithm reminders unless the user **explicitly asks** for help or says they're stuck.

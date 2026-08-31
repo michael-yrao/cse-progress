@@ -3,7 +3,7 @@ name: feedback_git_commit
 description: Always run git status before committing to catch unstaged solution files
 metadata:
   type: feedback
-reconciled: 2026-08-21
+reconciled: 2026-08-30
 ---
 
 Always run `git status` before staging and committing to catch any modified or untracked `.py` files that the user wrote during the session.

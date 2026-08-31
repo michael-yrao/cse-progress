@@ -3,7 +3,7 @@ name: feedback_dont_rewrite_learner_comments
 description: Never rewrite comments the learner wrote; flag what's inaccurate and let them reword it — the comment is their verbal-communication practice
 metadata:
   type: feedback
-reconciled: 2026-08-22
+reconciled: 2026-08-30
 ---
 
 **Do not edit or rewrite a comment the learner wrote in their solution.** When a comment is

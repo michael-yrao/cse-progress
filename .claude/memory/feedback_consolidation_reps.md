@@ -3,7 +3,7 @@ name: feedback-consolidation-reps
 description: A technique needs MULTIPLE problems, not one — near-identical siblings are the training signal (their minor differences are what recognition grades), and they don't count against the new-algorithm intake cap
 metadata:
   type: feedback
-reconciled: 2026-08-29
+reconciled: 2026-08-31
 ---
 
 **Set by the learner Jul 26, 2026:** *"we need multiple problems of the same flavor for users to
@@ -100,6 +100,19 @@ a brain teaser than an actual technique check or teach"* — and 227 was parked.
 ⭐ **THE COROLLARY IS THE SHARPER HALF: if a rung exists only to justify the problem below it,
 re-examine the RUNG — do not schedule the sequel.** The Aug 11 note already recorded that *the
 learner's reaction is the data, not my rebuttal*, and then scheduled the rebuttal anyway.
+
+⚠️ **Applied to the rungs ALREADY IN THE PLAN, Aug 31, 2026 — not only to future ones.** Parking 227
+on Aug 29 left **224 Basic Calculator** sitting in the Waiting Room under `🟡:150`, flagged but not
+re-examined. It fails the same test for the same reason: it is the parens rung of a ladder authored to
+defend its own base, never frequency-pulled, and the learner has now rejected the family twice. **224
+is parked beside 227**; Stack-expression's 2nd problem is **394 Decode String** (`pull_interview.py
+--company Google --technique stack`, freq 58.3, and not in the phase plan), and both parked rungs
+re-gate on `rated:394`.
+
+**The general form:** adopting a sourcing rule does not retroactively clean the board. At the first
+weekly build after one lands, **walk the Waiting Room and re-price every entry against it** — an
+authored rung is invisible once it is already listed, because a Waiting Room row looks identical
+whether it came from a pull or from a rebuttal. `decisions.yml` `stack-expression-ladder-parked`.
 
 **This is EXEMPT from the post-NC150 pull gate.** [[feedback_expansion_pull_scheduling]] says *"during
 NC150 there are no interview pulls yet — the roadmap is the work"*, and that stands: it governs

@@ -53,8 +53,15 @@ COMFORT = re.compile(
 # ⚠️ Do NOT match a bare next-review date ("→ Sep 2", "Oct 22"): a session recap lists exactly
 # those alongside the comfort emoji ("567 🟢 s2 · Oct 22"), so date-matching false-fired on the
 # Aug 23 close-out recap. The decision-request cue is the clean discriminator — a recap has none.
+#
+# Do NOT match a bare "rate": it is also the ordinary noun for a frequency ("row-creation
+# rate", "hit rate", "pass rate"), and on Aug 28, 2026 that blocked a turn that proposed
+# NOTHING -- a factual answer about the probe tally, rendering six past results as a table of
+# comfort glyphs. A RECORD of past results and a PROPOSAL about a current one are lexically
+# identical except for the decision request, so only decision-request forms of the verb count.
 PROPOSE_CUE = re.compile(
-    r"\bconfirm\b|\bproposed?\b|\boverride\b|\baccept\b|\brating[:?]|\brate\b",
+    r"\bconfirm\b|\bproposed?\b|\boverride\b|\baccept\b|\brating[:?]"
+    r"|\brate\s+(?:it|this|that|the\s+rep)\b|\brate\?",
     re.IGNORECASE,
 )
 
@@ -213,6 +220,11 @@ PROPOSE_CASES = [
     ("session recap, no decision request",
      "Recap: 567 🟢 s2 (Oct 22) · 901 🟢 s1 (Sep 22) · 127 🟡 (Sep 2). Pushed.", False),
     ("override-style proposal", "Proposed: 🟡 Shaky → Sep 2. Accept or override?", True),
+    # The Aug 28, 2026 results-table false positive: comfort glyphs plus the word "rate" used
+    # as a FREQUENCY, proposing nothing. Must NOT trip.
+    ("probe tally, 'rate' as a frequency",
+     "Probes: 🟢 🟢 🟡 🟢 🟢 🟢 — row-creation rate 17%, the pool still teaches.", False),
+    ("rate as a decision request", "Coded from a blank page, no hints. Rate it?", True),
 ]
 
 AXES_CASES = [
