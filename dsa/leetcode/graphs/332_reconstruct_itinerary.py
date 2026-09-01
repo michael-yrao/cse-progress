@@ -56,10 +56,6 @@ class Solution:
         result.reverse()
         return result
 
-    # ── Attempt · 2026-08-29 · ROW 1 — pre-sorted adjacency ──────────────
-    def findItinerary_20260829(self, tickets: List[List[str]]) -> List[str]:
-        pass
-
     # ── Attempt · 2026-08-29 · ROW 2 — min-heap ordering ──────────────
     def findItinerary_20260829_minheap(self, tickets: List[List[str]]) -> List[str]:
         # Eulerian Path since we are not guaranteed to finish at our starting vertex
