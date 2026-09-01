@@ -66,21 +66,23 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/dsa/mastery/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **111+5** problems &nbsp;·&nbsp; **121+5** solutions &nbsp;·&nbsp; **509+5** reps
+> **111+5** problems &nbsp;·&nbsp; **121+5** solutions &nbsp;·&nbsp; **513+5** reps
 
 | | 🏆 Retired | 🎓 Graduated | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|:---:|
-| **Solutions** | 0 | 6 | 97 | 16 | 2 |
+| **Solutions** | 0 | 6 | 98 | 17 | 0 |
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Rep Date | Rep Dates |
 |---|---|---|---|---|---|---|
+| Medium | [424. Longest Repeating Character Replacement](https://leetcode.com/problems/longest-repeating-character-replacement/) | 🟡 | 0 | 2026-09-10 | 2026-08-31 | 2026-04-19, 2026-07-02, 2026-07-10, 2026-07-17, 2026-07-27, 2026-08-28, 2026-08-31 |
+| Hard | [332. Reconstruct Itinerary (min-heap ordering)](https://leetcode.com/problems/reconstruct-itinerary/) | 🟢 | 0 | 2026-09-10 | 2026-08-31 | 2026-07-22, 2026-07-28, 2026-08-04, 2026-08-29, 2026-08-31 |
+| Medium | [261. Graph Valid Tree (Union-Find)](https://neetcode.io/problems/valid-tree/question) | 🟢 | 2 | 2026-10-30 | 2026-08-31 | 2026-06-19, 2026-06-29, 2026-07-09, 2026-07-18, 2026-08-01, 2026-08-31 |
+| Medium | [355. Design Twitter](https://leetcode.com/problems/design-twitter/) | 🟢 | 2 | 2026-10-30 | 2026-08-31 | 2026-06-24, 2026-06-26, 2026-07-06, 2026-07-15, 2026-07-25, 2026-08-31 |
 | Medium | [153. Find Minimum in Rotated Sorted Array](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/) | 🟢 | 3 | 2027-02-26 | 2026-08-30 | 2026-04-21, 2026-07-01, 2026-08-30 |
 | Easy | [543. Diameter of Binary Tree](https://leetcode.com/problems/diameter-of-binary-tree/) | 🟢 | 2 | 2026-10-29 | 2026-08-30 | 2026-04-30, 2026-06-02, 2026-06-12, 2026-06-14, 2026-06-24, 2026-06-26, 2026-07-20, 2026-07-31, 2026-08-30 |
-| Hard | [332. Reconstruct Itinerary (min-heap ordering)](https://leetcode.com/problems/reconstruct-itinerary/) | 🔴 | 0 | 2026-08-31 | 2026-08-29 | 2026-07-22, 2026-07-28, 2026-08-04, 2026-08-29 |
 | Medium | [133. Clone Graph](https://leetcode.com/problems/clone-graph/) | 🟡 | 0 | 2026-09-08 | 2026-08-29 | 2026-06-04, 2026-06-05, 2026-06-07, 2026-08-09, 2026-08-19, 2026-08-29 |
 | Medium | [155. Min Stack (Pair with Min-So-Far)](https://leetcode.com/problems/min-stack/) | 🟢 | 1 | 2026-09-28 | 2026-08-29 | 2026-08-12, 2026-08-14, 2026-08-29 |
 | Medium | [853. Car Fleet](https://leetcode.com/problems/car-fleet/) | 🟢 | 1 | 2026-09-28 | 2026-08-29 | 2026-08-15, 2026-08-17, 2026-08-29 |
-| Medium | [424. Longest Repeating Character Replacement](https://leetcode.com/problems/longest-repeating-character-replacement/) | 🔴 | 0 | 2026-08-30 | 2026-08-28 | 2026-04-19, 2026-07-02, 2026-07-10, 2026-07-17, 2026-07-27, 2026-08-28 |
 | Medium | [57. Insert Interval](https://leetcode.com/problems/insert-interval/) | 🟡 | 0 | 2026-09-07 | 2026-08-28 | 2026-08-26, 2026-08-28 |
 | Medium | [435. Non-overlapping Intervals](https://leetcode.com/problems/non-overlapping-intervals/) | 🟡 | 0 | 2026-09-07 | 2026-08-28 | 2026-08-26, 2026-08-28 |
 | Medium | [49. Group Anagrams](https://leetcode.com/problems/group-anagrams/) | 🟢 | 3 | 2027-02-23 | 2026-08-27 | 2026-01-04, 2026-03-27, 2026-05-29, 2026-06-28, 2026-08-27 |
@@ -169,7 +171,6 @@ Notes for future agents:
 | Medium | [994. Rotting Oranges](https://leetcode.com/problems/rotting-oranges/) | 🟢 | 2 | 2026-10-02 | 2026-08-03 | 2026-06-06, 2026-06-15, 2026-06-25, 2026-07-04, 2026-08-03 |
 | Easy | [219. Contains Duplicate II](https://leetcode.com/problems/contains-duplicate-ii/) | 🟢 | 2 | 2026-10-02 | 2026-08-03 | 2026-03-22, 2026-04-14, 2026-06-25, 2026-07-04, 2026-08-03 |
 | Medium | [229. Majority Element II](https://leetcode.com/problems/majority-element-ii/) | 🟢 | 1 | 2026-09-02 | 2026-08-03 | 2026-01-30, 2026-04-14, 2026-06-27, 2026-06-29, 2026-07-12, 2026-07-24, 2026-08-03 |
-| Medium | [261. Graph Valid Tree (Union-Find)](https://neetcode.io/problems/valid-tree) | 🟢 | 1 | 2026-08-31 | 2026-08-01 | 2026-06-19, 2026-06-29, 2026-07-09, 2026-07-18, 2026-08-01 |
 | Medium | [417. Pacific Atlantic Water Flow (BFS)](https://leetcode.com/problems/pacific-atlantic-water-flow/) | 🟢 | 1 | 2026-08-30 | 2026-07-31 | 2026-06-11, 2026-07-19, 2026-07-31 |
 | Medium | [128. Longest Consecutive Sequence](https://leetcode.com/problems/longest-consecutive-sequence/) | 🟢 | 2 | 2026-09-27 | 2026-07-29 | 2026-01-26, 2026-04-14, 2026-06-27, 2026-06-29, 2026-07-29 |
 | Easy | [733. Flood Fill (BFS)](https://leetcode.com/problems/flood-fill/) | 🎓 | 3 | 2027-01-25 | 2026-07-29 | 2026-06-12, 2026-06-19, 2026-06-28, 2026-07-29 |
@@ -180,7 +181,6 @@ Notes for future agents:
 | Medium | [189. Rotate Array](https://leetcode.com/problems/rotate-array/) | 🟢 | 2 | 2026-09-24 | 2026-07-26 | 2026-01-11, 2026-04-04, 2026-06-24, 2026-07-26 |
 | Easy | [1046. Last Stone Weight](https://leetcode.com/problems/last-stone-weight/) | 🟢 | 2 | 2026-09-24 | 2026-07-26 | 2026-06-23, 2026-07-26 |
 | Easy | [704. Binary Search](https://leetcode.com/problems/binary-search/) | 🎓 | 3 | 2027-01-22 | 2026-07-26 | 2026-03-09, 2026-04-13, 2026-05-27, 2026-06-27, 2026-07-26 |
-| Medium | [355. Design Twitter](https://leetcode.com/problems/design-twitter/) | 🟢 | 1 | 2026-08-24 | 2026-07-25 | 2026-06-24, 2026-06-26, 2026-07-06, 2026-07-15, 2026-07-25 |
 | Easy | [242. Valid Anagram](https://leetcode.com/problems/valid-anagram/) | 🟢 | 2 | 2026-09-20 | 2026-07-22 | 2026-01-01, 2026-03-25, 2026-06-22, 2026-07-22 |
 | Easy | [206. Reverse Linked List (Iterative)](https://leetcode.com/problems/reverse-linked-list/) | 🟢 | 2 | 2026-09-18 | 2026-07-20 | 2026-04-23, 2026-05-26, 2026-06-12, 2026-06-20, 2026-07-20 |
 | Easy | [21. Merge Two Sorted Lists (Recursion)](https://leetcode.com/problems/merge-two-sorted-lists/) | 🟢 | 2 | 2026-09-18 | 2026-07-20 | 2026-05-20, 2026-05-21, 2026-06-12, 2026-06-20, 2026-07-20 |
