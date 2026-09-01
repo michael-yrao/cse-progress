@@ -6,7 +6,7 @@
 
 > The tracker is keyed by **problem**; this is keyed by **technique**. Use it at the weekly build to decide what to pull, and at phase exit to check the per-algorithm bar (recognition + execution, ≥1 🟢 each).
 
-> **56/56** techniques started &nbsp;·&nbsp; **8** with no 🟢 &nbsp;·&nbsp; **20** thin &nbsp;·&nbsp; **1** unqueued variant gaps
+> **56/56** techniques started &nbsp;·&nbsp; **7** with no 🟢 &nbsp;·&nbsp; **20** thin &nbsp;·&nbsp; **1** unqueued variant gaps
 
 ## ⚠️ Action list
 
@@ -15,7 +15,6 @@
 - **BFS on Implicit Graph** (graphs) — best 🟡 across 127
 - **Cycle Detection in an Iterated Sequence** (graphs) — best 🟡 across 202
 - **Graph Clone (DFS + Hash Map)** (graphs) — best 🟡 across 133
-- **Hierholzer (Eulerian path)** (advanced_graphs) — best 🟡 across 332, 332
 - **Intervals (sort + sweep)** (intervals) — best 🟡 across 56, 57, 435
 - **Length-Prefix Encoding** (arrays_and_hash) — best 🟡 across 271
 - **Monotonic Deque** (stack) — best 🟡 across 239
@@ -55,7 +54,7 @@
 | Bellman-Ford | advanced_graphs | 1 (787) | 🟢 | ✅ | Standard ×1 · ~~Contrast rep on 743~~ *(queued: `graduates:743`)* | thin (1/3) |
 | Dijkstra | advanced_graphs | 2 (743, 778) | 🟢 | ✅ | — | thin (2/3) |
 | Floyd-Warshall (all-pairs shortest path) | advanced_graphs | 2 (1334, 1462) | 🟢 | ✅ | — | thin (2/3) |
-| Hierholzer (Eulerian path) | advanced_graphs | 1 *+1v* (332) | 🟡 | ❌ | pre-sorted adjacency ×1 · min-heap ordering ×1 | **no-green** · thin (1/3) |
+| Hierholzer (Eulerian path) | advanced_graphs | 1 *+1v* (332) | 🟢 | ✅ | pre-sorted adjacency ×1 · min-heap ordering ×1 | thin (1/3) |
 | Prim's MST | advanced_graphs | 1 (1584) | 🟢 | ✅ | Prim's MST ×1 · **Kruskal's MST ×0** | thin (1/3) · variant: **Kruskal's MST** |
 | Array/String Fundamentals | arrays_and_hash | 3 (14, 66, 1929) | 🟢 | ✅ | — | — |
 | Boyer-Moore Voting | arrays_and_hash | 2 (169, 229) | 🟢 | ✅ | — | — |

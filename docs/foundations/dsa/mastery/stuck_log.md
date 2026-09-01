@@ -22,6 +22,9 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🟡 424. Longest Repeating Character Replacement — 2026-08-31
+**Sticking point**: approach was all theirs (sliding window + stale `maxFreq`, clean pre-code recognition call), but the return was `maxFreq + k` — overshoots when `k` exceeds the available "other" chars (`s="AAAA", k=2` → 6, should be 4). Fixed to a running `max(res, r-l+1)` after one nudge. ⚠️ **Complexity: fixed-alphabet space miss — REPEAT on this problem (freebie spent 2026-07-27), capped the rep at 🟡**: gave O(n) space, correct is O(1) (`freqMap` ≤ 26 keys, uppercase-only). Time O(n) itemized correctly (amortized inner `while`). Converts 🔴→🟡; Sliding-window fixed-alphabet/max-tracking cluster (see 438 in the pull queue).
+
 ## 🟡 133. Clone Graph — 2026-08-29
 **Sticking point**: dropped the `if not node: return None` guard that earlier reps on this problem had — `adjList = []` crashed on `currentNode.neighbors`; coach handed the failing input, learner localized and fixed. Algorithm otherwise clean and correct first pass. Second friction was the complexity gate, not the code: the rewire pass was priced **O(V·E)** by taking the inner loop as E-per-node instead of `deg(node)`, whose sum over all nodes is `2E` → the pass is **O(V+E)**. ⭐ The *previously* missed half (BFS = O(V+E), "since we don't revisit nodes") came back right and unaided, repairing Aug 9 and Aug 19.
 

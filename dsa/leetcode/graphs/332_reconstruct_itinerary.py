@@ -22,6 +22,40 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-08-31 ──────────────
+    def findItinerary_20260829_minheap_20260831(self, tickets: List[List[str]]) -> List[str]:
+        # Eulerian Path - Visit each edge once with no guarantee that we will end up at starting node
+        # adjMap with minHeap since we need to worry about lexicographical order
+        # we must have an end, which is a node with no edges to traverse
+        # we can find that by checking if adjMap is empty for the node
+        # we won't need visited set since we are just popping out of minHeap
+        
+        adjMap = collections.defaultdict(list)
+
+        # initiate the adjMap
+        for src, dst in tickets:
+            heapq.heappush(adjMap[src], dst)
+        
+        # we need to go through to the end until we find a node with no neighbors
+        # that is DFS
+        result = []
+        def dfs(node):
+            # add the final node
+            if not adjMap[node]:
+                result.append(node)
+                return
+            
+            # we have neighbors here so let's go through them
+            while adjMap[node]:
+                dfs(heapq.heappop(adjMap[node]))
+            
+            # add the caller nodes, so we constructed backwards
+            result.append(node)
+        
+        dfs("JFK")
+        result.reverse()
+        return result
+
     # ── Attempt · 2026-08-29 · ROW 1 — pre-sorted adjacency ──────────────
     def findItinerary_20260829(self, tickets: List[List[str]]) -> List[str]:
         pass

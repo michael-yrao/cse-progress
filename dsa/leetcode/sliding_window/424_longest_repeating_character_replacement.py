@@ -31,6 +31,32 @@ import collections
 
 class Solution:
 
+    # ── Attempt · 2026-08-31 ──────────────
+    def characterReplacement_20260831(self, s: str, k: int) -> int:
+        # sliding window, highest freq char + k is the max size
+        # main difficulty here is tracking the highest freq char without constantly checking max
+        # which would bring the complexity of this problem to O(n^2)
+        # so key is how do we use r and l to track maxFreq
+        # we want to track of maxFreqChar only, not really the maxFreq in the window
+        
+        l = r = 0
+
+        freqMap = collections.defaultdict(int)
+
+        maxFreq = 0
+        maxWindow = 0
+        while r < len(s):
+            # increment the freq for s[r]
+            freqMap[s[r]]+=1
+            maxFreq = max(maxFreq, freqMap[s[r]])
+            while r - l + 1 > maxFreq + k:
+                freqMap[s[l]]-=1
+                l+=1
+            maxWindow = max(maxWindow, r - l + 1)
+            r+=1
+        
+        return maxWindow
+
     # ── Attempt · 2026-08-27 ──────────────
     def characterReplacement_20260827(self, s: str, k: int) -> int:
         # we want the most freq char in the window

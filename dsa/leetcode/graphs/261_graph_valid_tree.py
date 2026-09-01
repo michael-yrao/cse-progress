@@ -33,6 +33,56 @@ from typing import List
 
 class Solution:
 
+    # ── Attempt · 2026-08-31 ──────────────
+    def validTree_20260831(self, n: int, edges: List[List[int]]) -> bool:
+        # today we are doing union find
+        # 2 things we need to check
+        # 1. are all nodes connected
+        # 2. do we have a cycle
+
+        # we are given n nodes, we can immediately check if n == n - 1 edges
+        if len(edges) != n - 1:
+            return False
+        
+        rankMap = {}
+        parentMap = {}
+
+        # initialize the UF maps
+        for i in range(n):
+            rankMap[i] = 0
+            parentMap[i] = i
+        
+        def find(node):
+            if parentMap[node] != node:
+                parentMap[node] = find(parentMap[node])
+            return parentMap[node]
+        
+        def union(n1,n2):
+            n1r = find(n1)
+            n2r = find(n2)
+            # if same root, will form cycle
+            if n1r == n2r:
+                return False
+            if rankMap[n1r] > rankMap[n2r]:
+                parentMap[n2r] = n1r
+            elif rankMap[n2r] > rankMap[n1r]:
+                parentMap[n1r] = n2r
+            else:
+                parentMap[n2r] = n1r
+                rankMap[n1r]+=1
+            return True
+        
+        # now let's go through all edges and try to connect them
+        for n1,n2 in edges:
+            # if this will form a cycle, return False
+            if not union(n1,n2):
+                return False
+        
+        # we don't need to check if all nodes are connected
+        # we already checked with len(edges) == n - 1
+        # so we just return True
+        return True
+
     # ── Attempt · 2026-08-16 ──────────────
     def validTree_20260816(self, n: int, edges: List[List[int]]) -> bool:
         # today's rep requires us to this using DFS
