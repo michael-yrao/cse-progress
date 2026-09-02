@@ -31,6 +31,38 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-09-01 ──────────────
+    def evalRPN_20260901(self, tokens: List[str]) -> int:
+        # insert into the stack until we see an operator
+        # we never insert operators in, so insert the result in each time
+
+        stack = []
+
+        for token in tokens:
+            if token in ('+','-','/','*'):
+                # problem says this is always valid
+                # thus these two should always work without me checking
+                secondNumber = int(stack.pop())
+                firstNumber = int(stack.pop())
+                result = 0
+                if token == '+':
+                    result+=(firstNumber+secondNumber)
+                elif token == '-':
+                    result+=(firstNumber-secondNumber)
+                elif token == '*':
+                    result+=(firstNumber*secondNumber)
+                elif token == '/':
+                    result+=(firstNumber/secondNumber)
+                # never actually gets here
+                else:
+                    result+=0
+                stack.append(result)
+            # if not symbol then it's a number
+            else:
+                stack.append(token)
+        
+        return int(stack[-1])
+
     # ── Attempt · 2026-08-21 ──────────────
     # ── RECOGNITION — fill BEFORE coding, before the coach says anything ──
     #   shape cues seen →

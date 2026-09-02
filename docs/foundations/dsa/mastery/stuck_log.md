@@ -22,6 +22,9 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🟡 239. Sliding Window Maximum — 2026-09-01
+**Sticking point**: recognition was clean (monotonic decreasing deque), but three execution bugs — (1) the append gate only inserted the current index when it beat the back, silently dropping equal/smaller indices that are future maxima; (2) reading the window max off the back `[-1]` instead of the front `[0]` (front/back inversion); (3) eviction bound off by one (`> k` → `+1 > k`, self-caught). Fix is pop-all-smaller-off-back then **always** append; read max at front.
+
 ## 🟡 424. Longest Repeating Character Replacement — 2026-08-31
 **Sticking point**: approach was all theirs (sliding window + stale `maxFreq`, clean pre-code recognition call), but the return was `maxFreq + k` — overshoots when `k` exceeds the available "other" chars (`s="AAAA", k=2` → 6, should be 4). Fixed to a running `max(res, r-l+1)` after one nudge. ⚠️ **Complexity: fixed-alphabet space miss — REPEAT on this problem (freebie spent 2026-07-27), capped the rep at 🟡**: gave O(n) space, correct is O(1) (`freqMap` ≤ 26 keys, uppercase-only). Time O(n) itemized correctly (amortized inner `while`). Converts 🔴→🟡; Sliding-window fixed-alphabet/max-tracking cluster (see 438 in the pull queue).
 

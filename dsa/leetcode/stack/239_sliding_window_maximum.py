@@ -20,6 +20,41 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-09-01 ──────────────
+    def maxSlidingWindow_20260901(self, nums: List[int], k: int) -> List[int]:
+        # the way we solve this with sliding window is with a minHeap
+        # this gives us a nice O(nlogn) solution however we can do even better
+        # using deque, we can always keep track of the left side via queue side
+        # and then we can keep track of right side via stack side, simulating what a sliding window does
+        # but the concern here is that in order for us to do this, we need to clearly define
+        # how to remove from the end (queue side) and how to insert into the front (stack side)
+        # 1. we need store indices to help us simulate r - l + 1 <= k
+        #    a. r = stack side, l = queue side
+        # 2. remove from queue side when we are over the boundary above
+        # 3. insert into stack when we decrease only, so monotonically decreasing stack so the 
+        # 4. we need to know where we are because looking at the example, we can tell we run into issues with this immediately since we won't insert -1 and -3, so our r is actually the index we are currently on, not the stack side
+
+        decreasingDeque = collections.deque()
+
+        result = []
+
+        for i in range(len(nums)):
+            # while i - what is on the queue side is greater than k, pop queue side
+            while decreasingDeque and i - decreasingDeque[0] + 1 > k:
+                decreasingDeque.popleft()
+            # monotonically increasing queue / decreasing stack logic
+            # remove from stack side until we are decreasing
+            while decreasingDeque and nums[i] > nums[decreasingDeque[-1]]:
+                decreasingDeque.pop() 
+            # now that we know we won't break increasing queue policy, insert
+            decreasingDeque.append(i)
+            # note that result size is nums - k + 1, so we only insert to result at that length
+            # so if i >= k - 1
+            if i >= k - 1:
+                result.append(nums[decreasingDeque[0]])
+        
+        return result
+
     # ── Attempt · 2026-08-22 ──────────────
     # ── RECOGNITION — fill BEFORE coding, before the coach says anything ──
     #   shape cues seen →

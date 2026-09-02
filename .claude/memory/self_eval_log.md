@@ -7,6 +7,16 @@ Append-only log of corrections. Governed by [[feedback_self_evaluation]]. Newest
 
 ---
 
+- **2026-09-01 [P2] `open`** — Learner, mid-239: *"stop once the conversation has resolved… in the
+  last 4 exchanges the agent suffixed with 'code it' with no added benefit."* After the recognition
+  call was confirmed and the deque-direction invariant was settled, I kept appending an imperative
+  tail (**"Code it."**) to three consecutive resolved turns. This is the **advance-prompt tail**
+  ([[feedback_let_learner_pace]]) in imperative clothing — same failure as "ready for the next one?",
+  driving progression the learner already owns. The turn was *done*; the tail added nothing and made
+  the coach the one pushing pace. **Fix:** when a point resolves, end the turn — no "code it", no "go",
+  no "on to X". Silence is the correct close. Watch for a cluster with [[feedback_let_learner_pace]]
+  and [[feedback_turn_economy]] on redundant tails.
+
 - **2026-08-31 [P2] `open`** — Caught at the weekly build, unprompted: **deleting an unattempted
   scaffold does NOT undo the tracker row it already minted.** 84 Largest Rectangle was scaffolded on
   Aug 30, the night stood down, and the file was deleted per the 227 precedent — but discovery had
