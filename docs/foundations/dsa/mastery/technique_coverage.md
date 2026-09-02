@@ -6,7 +6,7 @@
 
 > The tracker is keyed by **problem**; this is keyed by **technique**. Use it at the weekly build to decide what to pull, and at phase exit to check the per-algorithm bar (recognition + execution, ≥1 🟢 each).
 
-> **56/56** techniques started &nbsp;·&nbsp; **7** with no 🟢 &nbsp;·&nbsp; **20** thin &nbsp;·&nbsp; **1** unqueued variant gaps
+> **56/56** techniques started &nbsp;·&nbsp; **5** with no 🟢 &nbsp;·&nbsp; **20** thin &nbsp;·&nbsp; **1** unqueued variant gaps
 
 ## ⚠️ Action list
 
@@ -16,9 +16,7 @@
 - **Cycle Detection in an Iterated Sequence** (graphs) — best 🟡 across 202
 - **Graph Clone (DFS + Hash Map)** (graphs) — best 🟡 across 133
 - **Intervals (sort + sweep)** (intervals) — best 🟡 across 56, 57, 435
-- **Length-Prefix Encoding** (arrays_and_hash) — best 🟡 across 271
 - **Monotonic Deque** (stack) — best 🟡 across 239
-- **Stack (expression evaluation)** (stack) — best 🟡 across 150
 
 **Thin — fewer than the 3–4 surface forms a technique needs.** One instance trains recall of that problem, not the skill.
 
@@ -62,7 +60,7 @@
 | Hash Map Lookup | arrays_and_hash | 2 (1, 219) | 🟢 | ✅ | — | — |
 | Hash Set Membership | arrays_and_hash | 3 (36, 128, 217) | 🟢 | ✅ | — | — |
 | In-Place Array Rotation | arrays_and_hash | 1 (189) | 🟢 | ✅ | — | — |
-| Length-Prefix Encoding | arrays_and_hash | 1 (271) | 🟡 | ❌ | — | **no-green** |
+| Length-Prefix Encoding | arrays_and_hash | 1 (271) | 🟢 | ✅ | — | — |
 | Prefix/Suffix Products | arrays_and_hash | 1 (238) | 🟢 | ✅ | — | — |
 | Binary Search (exact match) | binary_search | 2 (33, 704) | 🎓 | ✅ | — | — |
 | Binary Search (max boundary) | binary_search | 1 (74) | 🟢 | ✅ | — | thin (1/3) |
@@ -95,7 +93,7 @@
 | Monotonic Deque | stack | 1 (239) | 🟡 | ❌ | — | **no-green** |
 | Monotonic Stack | stack | 5 (496, 503, 739, 853, 901) | 🟢 | ✅ | — | — |
 | Stack (augmented entries) | stack | 1 (155) | 🟢 | ✅ | — | thin (1/2) |
-| Stack (expression evaluation) | stack | 1 (150) | 🟡 | ❌ | — | **no-green** · thin (1/2) |
+| Stack (expression evaluation) | stack | 1 (150) | 🟢 | ✅ | — | thin (1/2) |
 | Stack (matching) | stack | 1 (20) | 🟢 | ✅ | — | — |
 | BST Descent | trees | 2 (98, 235) | 🟢 | ✅ | — | — |
 | Tree BFS (level order) | trees | 2 (102, 199) | 🟢 | ✅ | — | thin (2/3) |
