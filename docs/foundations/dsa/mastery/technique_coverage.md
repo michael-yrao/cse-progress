@@ -6,14 +6,12 @@
 
 > The tracker is keyed by **problem**; this is keyed by **technique**. Use it at the weekly build to decide what to pull, and at phase exit to check the per-algorithm bar (recognition + execution, ≥1 🟢 each).
 
-> **56/56** techniques started &nbsp;·&nbsp; **5** with no 🟢 &nbsp;·&nbsp; **20** thin &nbsp;·&nbsp; **1** unqueued variant gaps
+> **56/56** techniques started &nbsp;·&nbsp; **3** with no 🟢 &nbsp;·&nbsp; **20** thin &nbsp;·&nbsp; **1** unqueued variant gaps
 
 ## ⚠️ Action list
 
 **No 🟢 — blocks per-algorithm phase exit.** Execution is unproven.
 
-- **BFS on Implicit Graph** (graphs) — best 🟡 across 127
-- **Cycle Detection in an Iterated Sequence** (graphs) — best 🟡 across 202
 - **Graph Clone (DFS + Hash Map)** (graphs) — best 🟡 across 133
 - **Intervals (sort + sweep)** (intervals) — best 🟡 across 56, 57, 435
 - **Monotonic Deque** (stack) — best 🟡 across 239
@@ -66,9 +64,9 @@
 | Binary Search (max boundary) | binary_search | 1 (74) | 🟢 | ✅ | — | thin (1/3) |
 | Binary Search (min boundary) | binary_search | 6 (153, 162, 540, 875, 1011, 2300) | 🟢 | ✅ | — | — |
 | Binary Search on Answer | binary_search | 2 (875, 1011) | 🟢 | ✅ | — | thin (2/3) |
-| BFS on Implicit Graph | graphs | 1 (127) | 🟡 | ❌ | — | **no-green** |
+| BFS on Implicit Graph | graphs | 1 (127) | 🟢 | ✅ | — | — |
 | Connected Components | graphs | 1 *+2v* (323) | 🟢 | ✅ | DFS ×1 · BFS ×1 · Union-Find ×1 | thin (1/3) |
-| Cycle Detection in an Iterated Sequence | graphs | 1 (202) | 🟡 | ❌ | Seen-Set ×1 · ~~Floyd Fast/Slow~~ *(queued: `🟡:202 — ready; rides 202's next rep`)* | **no-green** · thin (1/2) |
+| Cycle Detection in an Iterated Sequence | graphs | 1 (202) | 🟢 | ✅ | Seen-Set ×1 · ~~Floyd Fast/Slow~~ *(queued: `🟡:202 — ready; rides 202's next rep`)* | thin (1/2) |
 | Graph Clone (DFS + Hash Map) | graphs | 1 (133) | 🟡 | ❌ | — | **no-green** |
 | Graph Cycle Detection (DFS) | graphs | 1 (261) | 🟢 | ✅ | — | — |
 | Grid BFS | graphs | 4 (130, 200, 417, 733) | 🎓 | ✅ | — | — |

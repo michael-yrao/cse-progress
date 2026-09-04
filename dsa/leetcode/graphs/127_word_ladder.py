@@ -39,6 +39,63 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-09-02 ──────────────
+    def ladderLength_20260902(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
+        # graph to try to get from start node of beginWord to end node of endWord
+        # we can traverse one letter difference at a time so we do wildcard
+        # e.g. create an adjMap of wildcards, *it -> hit, h*t -> hit, hot
+        # example 2 shows that if endWord is not part of beginWord + wordList, we can't finish
+        # we are looking for the shortest transformation sequence
+        # since this is not weighted, shortest can be found via BFS
+
+        wordList.append(beginWord)
+
+        # now let's construct the adjacency Map
+        adjMap = collections.defaultdict(list)
+
+        for word in wordList:
+            # need to create the wildcard for each char
+            for i in range(len(word)):
+                pre = word[:i]
+                post = word[i+1:]
+                wildcard = pre + '*' + post
+                adjMap[wildcard].append(word)
+        
+        # now that we have our adjMap created, let's do BFS
+        queue = collections.deque()
+        visited = set()
+
+        # start with beginWord, so add beginWord to queue
+        queue.append(beginWord)
+        visited.add(beginWord)
+
+        # note that we are counting beginWord in result counter
+        # so let's initialize this to 1
+        numberOfIterations = 1
+        while queue:
+            lenQueue = len(queue)
+            for _ in range(lenQueue):
+                currentWord = queue.popleft()
+                # if we are currently at endWord, return
+                if currentWord == endWord:
+                    return numberOfIterations
+                # otherwise, let's check the neighbors
+                # have to do the wildcard
+                for i in range(len(currentWord)):
+                    pre = currentWord[:i]
+                    post = currentWord[i+1:]
+                    wildcard = pre + '*' + post
+                    # now that wildcard is constructed, check the neighbors
+                    for neighbor in adjMap[wildcard]:
+                        # if we haven't visited yet, add to queue and visited
+                        if neighbor not in visited:
+                            visited.add(neighbor)
+                            queue.append(neighbor)
+            numberOfIterations+=1
+        
+        # if we haven't returned by now, we prob never saw endWord
+        return 0
+
     # ── Attempt · 2026-08-23 ──────────────
     def ladderLength_20260823(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
         # in example 2, we notice that because endWord is not part of wordList, it is a failed sequence
