@@ -3,7 +3,7 @@ name: feedback_ask_complexity
 description: after a problem is coded, ASK the learner for time & space complexity before rating — don't state it for them
 metadata:
   type: feedback
-reconciled: 2026-08-30
+reconciled: 2026-09-03
 ---
 
 After a problem is done, **ask the learner to state the time and space complexity themselves**
@@ -116,3 +116,39 @@ the decision-request forms only (`rate it/this/that/the rep`, `rate?`); `confirm
 `override`, `accept` and `rating:`/`rating?` are untouched, so **the gate is not weakened** — the two
 backwards-run ratings above would still block. Two regression cases added; selftest **18/18**.
 Candidate 1 (a fixed historical tag) was not needed and is not implemented.
+
+---
+
+## ⭐ Clean code + Big-O miss → don't cap; drill it end-of-week (formalized Sep 3, 2026)
+
+**Normative sentence lives in CLAUDE.md** (LeetCode Review Workflow step 1) and the rule table in
+`complexity_gotchas.md` (rule 4 + the cleanup queue). This is the why + the history.
+
+**The rule:** when **recognition AND code were clean off a blank page** and the *only* miss was a
+complexity bound, the miss **does not cap** the comfort rating (rate on the code — a clean rep is 🟢),
+and the missed bound is **queued for an end-of-week complexity cleanup** where it is re-asked cold on
+the *existing* code. Supersedes the freebie→repeat-🟡 cap (rule 2) for this case only. If the code
+itself needed a real fix, the normal cap stands.
+
+**Why (learner, Sep 3, 2026):** *"we do an end of week cleanup for clean code and big O misses only …
+the agent can ask the user to look at the code and explain the bounds again at end of the week for
+everything that was missed."* The insight: **the code rep and the complexity concept are different
+units of learning, and re-repping the first to re-test the second is churn.** Re-solving a problem you
+can already solve, just to be re-asked its Big-O, spends a whole rep (and a +10 🟡 interval) to test a
+one-minute concept. Decouple them: rate the code honestly, and test the *bound* cheaply off-rep at week
+close by re-explaining it on the code already written — no re-solve.
+
+**How to apply:**
+- In the moment: still fire the gate, still correct the miss, still ledger it. Only the *rating
+  consequence* and the *re-test timing* move.
+- Record the missed bound in the cleanup-queue table in `complexity_gotchas.md` (problem · missed bound
+  · queued date).
+- At the weekly close-out (CLAUDE.md step 7): fire each queued problem cold — *"re-open your code for X,
+  give me time + space with the why."* Clean → clear. Missed again → a bound that fails a second cold
+  re-explain is a real gap, not churn: escalate to a proper complexity teach on that category.
+
+**First application: 743 Network Delay Time, Sep 3.** Clean lazy-Dijkstra + clean recognition; the space
+why-clause mis-attributed the O(E) (called the heap "≤ V nodes"), self-corrected on one non-leading
+nudge. Under the pre-Sep-3 rule this was a 3rd repeat miss → 🟡 cap; under this policy it logged **🟢
+(🟡→🟢)** with the bound queued. This is the exact case the policy is for: the concept, not the code,
+was the gap. [[feedback_let_learner_pace]] · see `decisions.yml` `complexity-cleanup-formalized`.

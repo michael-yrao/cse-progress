@@ -36,6 +36,50 @@ class ListNode:
         
 class Solution:
 
+    # ── Attempt · 2026-09-03 ──────────────
+    def reorderList_20260903(self, head: Optional[ListNode]) -> None:
+        """
+        Do not return anything, modify head in-place instead.
+        """
+        # 1. find mid point (tortoise and hare)
+        # 2. reverse second half (typical reverse)
+        # 3. repoint
+
+        fast, slow = head, head
+
+        while fast and fast.next:
+            fast = fast.next.next
+            slow = slow.next
+        
+        # now slow is at middle
+        # slow.next is start of second half so let's point it there
+        secondHalf = slow.next
+
+        # break off the two lists to prevent any cycles
+        slow.next = None
+
+        # reverse second half
+        shp = secondHalf
+        prev = None
+        while shp:
+            shpNext = shp.next
+            shp.next = prev
+            prev = shp
+            shp = shpNext
+        
+        # now that we are reversed, let's repoint
+        fhp = head
+        shp = prev
+        
+        # while both are not None, point alternatively
+        while fhp and shp:
+            fhpNext = fhp.next
+            shpNext = shp.next
+            fhp.next = shp
+            shp.next = fhpNext
+            fhp = fhpNext
+            shp = shpNext
+
     # ── Attempt · 2026-08-04 ──────────────
     def reorderList_20260804(self, head: Optional[ListNode]) -> None:
         """

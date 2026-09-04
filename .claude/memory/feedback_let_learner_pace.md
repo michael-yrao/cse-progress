@@ -6,6 +6,14 @@ metadata:
 reconciled: 2026-08-30
 ---
 
+⭐ **The GATES are not an exemption (learner, Sep 3, 2026 on the 124 handoff).** Handing over a
+scaffolded rep and closing with *"give me your pre-code call…"* is the same push in yet another
+costume — the recognition front-gate delivered as a prod. The gate is a **standing expectation**
+(the scaffold flow already carries it — *"this should be jotted down already"*), so **hand over the
+problem and STOP.** The recognition gate fires when the learner engages the problem, exactly as the
+complexity gate fires when they signal the rep is done — never as an imperative tacked onto the
+handoff. Don't re-demand the call; don't prompt for it.
+
 ⭐⭐ **BROADENED (learner, Aug 26, 2026): "don't push the user to do something."** The rule is not
 only about advancing to the *next problem* — it covers pushing the learner toward **any action**
 they didn't ask for. Closing a conceptual answer with an imperative to act — *"now code it,"*

@@ -34,6 +34,24 @@ from typing import Optional
 
 class Solution:
 
+    # ── Attempt · 2026-09-03 ──────────────
+    def maxPathSum_20260903(self, root: Optional[TreeNode]) -> int:
+        # we want basically a max left and a max right and then add them
+        maxSum = -math.inf
+        def dfs(root):
+            nonlocal maxSum
+            if not root:
+                return 0
+            
+            # if either size has sum of less than 0, just don't include it
+            leftSide = max(0,dfs(root.left))
+            rightSide = max(0,dfs(root.right))
+            maxSum = max(maxSum, root.val + leftSide + rightSide)
+            return root.val + max(leftSide, rightSide)
+        
+        dfs(root)
+        return maxSum # type: ignore
+
     # ── Attempt · 2026-08-21 ──────────────
     # ── RECOGNITION — fill BEFORE coding, before the coach says anything ──
     #   shape cues seen →

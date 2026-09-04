@@ -195,5 +195,52 @@ script names the cheaper alternative in the same breath.
 
 ---
 
+## Familiarity discounting — three layers (adopted Sep 3, 2026)
+
+<!-- single-source-ok: this section states the discount VALUES as a dated derivation; the live
+     values are in cse.config.yml under effort_budget. -->
+
+**The problem.** The flat `comfort_units × difficulty` price could not tell a Hard seen twice from a
+Hard wrestled eight times — both a 🟡 Hard billed a flat 3.0. The learner, Sep 3: *"a lot of problems
+have been attempted quite frequently, so a Hard doesn't always feel like it is 3 points or 4.5 points
+after multiple attempts."*
+
+**The tension that shaped the fix.** The unit price does two jobs at once: (1) it **bounds a day's
+real effort**, which familiarity genuinely lowers; and (2) it applies **conversion pressure** — a 🔴/🟡
+bills high *on purpose*, because a rep rushed into a 🟡 costs ~12× a 🟢 forever, so the high price is
+what pushes a stuck problem toward a teach-first (§2a) instead of a sixth cold re-blank. A naive
+"discount by attempt count" softens job 2 on exactly the chronic rows job 2 exists for. So the rule:
+**discount only where familiarity is earned, and never let it touch a fresh struggle.**
+
+The price becomes `base(comfort, streak) × difficulty(tier, demoted?) × attempt_factor`, three layers:
+
+| Layer | Rule | Touches |
+|---|---|---|
+| **A · streak-graded green** | 🟢 base decays with streak: s0 → s1 → s2 → 🎓 | proven rows |
+| **B · earned difficulty demotion** | at 🟢 s2+ / 🎓 the LC tier drops one step (Hard→Medium→Easy) | proven rows |
+| **C · attempt decay** | 🔴/🟡 with ≥ `min_attempts`: −`per_attempt` each attempt past `min−1`, floored | chronic rows |
+
+A Hard across its whole life, old → new: 🔴 2-att `4.5→4.5` · 🔴 8-att `4.5→3.6` · 🟡 5-att `3.0→2.85`
+· 🟢 s1 `1.5→1.2` · 🟢 s2 `1.5→0.6` · 🎓 `0.75→0.5`.
+
+**Guardrails (non-negotiable — the engine breaks without them):**
+- **No ordering inversion.** C is floored so a discounted chronic 🔴/🟡 never bills less than the same
+  problem one comfort-level cleaner (a chronic 🔴 Hard floors at 3.15, still above any 🟢 Hard's 1.5).
+- **Fresh pressure intact.** C does nothing before `min_attempts`, so a genuinely-new blank stays full
+  price — C only says "after N wrestles, stop pricing this like a cold blank; the teach-first should
+  already have fired."
+- **The ceiling does not move.** This re-prices *demand*, not the quality ceiling (still 8.0). It is
+  not a licence to catch up on a backlog — demand sets the floor, the ceiling stays a quality call.
+
+**Attempt count = familiarity going in.** `--schedule-day` counts only attempts *strictly before* the
+scheduled day (joined from the tracker's Rep Dates), so a day-as-built prices the row's state at build,
+not what later reps added — the same discipline as pricing from the Start column, extended to attempts.
+
+**Values live in `cse.config.yml`** under `green_streak_units`, `difficulty_demotion`, `attempt_decay`.
+The knob most likely to be re-tuned is C's `per_attempt` / `floor` — set conservative at adoption
+(−5%/attempt, −30% floor); steepen if familiar reps still feel heavy.
+
+---
+
 *Companion: [`feedback_surplus_triggered_intake`](../../.claude/memory/feedback_surplus_triggered_intake.md)
 computes demand as a rate; this doc computes its **cost**. Same arithmetic, different unit.*

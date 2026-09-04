@@ -11,7 +11,9 @@ not have to be remembered or re-derived. Per the intervention ladder in
 .claude/memory/feedback_self_evaluation.md — a tool that emits the right value
 outranks a rule that asks someone to compute it.
 
-    units = comfort_units × difficulty      (weights live in cse.config.yml)
+    units = base(comfort, streak) × difficulty(tier, demoted?) × attempt_factor
+            (weights and the three familiarity layers live in cse.config.yml; the
+             flat comfort_units × difficulty was the pre-Sep-3-2026 form)
 
 Usage:
     python scripts/effort_budget.py                     # demand, floor, ceiling, due queue
@@ -81,6 +83,13 @@ def load_config() -> dict:
     defaults = {
         "comfort_units": {"🔴": 3.0, "🟡": 2.0, "🟢": 1.0, "🎓": 0.5},
         "difficulty": {"Easy": 0.5, "Medium": 1.0, "Hard": 1.5},
+        # Familiarity discounting (Sep 3, 2026) — must mirror cse.config.yml, or a machine
+        # without PyYAML prices every familiar rep at the old flat rate.
+        "green_streak_units": {0: 1.0, 1: 0.8, 2: 0.6},
+        "difficulty_demotion": {"trigger": {"comfort": "🟢", "min_streak": 2},
+                                "map": {"Hard": "Medium", "Medium": "Easy", "Easy": "Easy"}},
+        "attempt_decay": {"applies_to": ["🔴", "🟡"], "min_attempts": 5,
+                          "per_attempt": 0.05, "floor": 0.70},
         # Fallback only — used when PyYAML is missing and cse.config.yml cannot be read.
         # It must track the config, or a machine without PyYAML silently prices every day
         # against the wrong ceiling and calls over-full days "ok". Was 9.0 until Aug 16, 2026.
@@ -116,9 +125,73 @@ def interval(row: dict) -> int:
     return CLEAN_INTERVAL.get(row["streak"], 60)
 
 
+_DATE = re.compile(r"\d{4}-\d{2}-\d{2}")
+
+
+def attempt_count(reps: str | None, before: dt.date | None = None) -> int:
+    """How many dated attempts this row carries.
+
+    `before` counts only attempts strictly earlier than that date — the familiarity a
+    row had GOING IN to a rep on `before`, which is what the day-as-built pricing wants.
+    None counts every attempt (the current familiarity), which is right for demand and
+    hypothetical-day pricing.
+    """
+    dates = _DATE.findall(reps or "")
+    if before is not None:
+        cut = before.isoformat()
+        dates = [d for d in dates if d < cut]
+    return len(dates)
+
+
+def _green_base(streak: int, cfg: dict) -> float:
+    """Streak-graded green base (layer A). Falls back gracefully if the block is absent."""
+    gsu = cfg.get("green_streak_units") or {}
+    if not gsu:
+        return cfg["comfort_units"]["🟢"]
+    if streak in gsu:
+        return gsu[streak]
+    return gsu[max(gsu)]          # streak past the top key prices at the top key
+
+
+def _is_proven(comfort: str, streak: int, cfg: dict) -> bool:
+    """Has this row earned the difficulty demotion (layer B)? 🎓, or 🟢 at min_streak."""
+    if comfort == "🎓":
+        return True
+    trig = (cfg.get("difficulty_demotion") or {}).get("trigger") or {}
+    return comfort == trig.get("comfort", "🟢") and streak >= trig.get("min_streak", 2)
+
+
+def _attempt_factor(comfort: str, attempts: int, cfg: dict) -> float:
+    """Chronic-row decay (layer C). 1.0 unless comfort is in scope AND attempts ≥ min."""
+    ad = cfg.get("attempt_decay") or {}
+    if comfort not in (ad.get("applies_to") or []):
+        return 1.0
+    min_attempts = ad.get("min_attempts", 5)
+    if attempts < min_attempts:
+        return 1.0
+    per = ad.get("per_attempt", 0.05)
+    floor = ad.get("floor", 0.70)
+    return max(floor, 1.0 - per * (attempts - (min_attempts - 1)))
+
+
+def price(comfort: str, streak: int, diff: str, attempts: int, cfg: dict) -> float:
+    """The one pricing function — every path routes through it (added Sep 3, 2026).
+
+        base(comfort, streak) × difficulty(tier, demoted?) × attempt_factor
+
+    (A) greens decay with streak, (B) proven rows price one tier easier, (C) chronic
+    🔴/🟡 with ≥ min_attempts get a bounded discount. See cse.config.yml for the why and
+    the guardrails (no ordering inversion; conversion pressure preserved on fresh rows).
+    """
+    base = _green_base(streak, cfg) if comfort == "🟢" else cfg["comfort_units"][comfort]
+    if _is_proven(comfort, streak, cfg):
+        diff = (cfg.get("difficulty_demotion") or {}).get("map", {}).get(diff, diff)
+    return base * cfg["difficulty"][diff] * _attempt_factor(comfort, attempts, cfg)
+
+
 def units(row: dict, cfg: dict) -> float:
-    base = cfg["comfort_units"][row["comfort"]]
-    return base * cfg["difficulty"][row["diff"]]
+    return price(row["comfort"], row["streak"], row["diff"],
+                 attempt_count(row.get("reps")), cfg)
 
 
 def label(row: dict) -> str:
@@ -323,6 +396,7 @@ def parse_schedule_day(path: Path, day: dt.date) -> tuple[list[dict], float | No
             continue           # blank separator row, or a markdown rule
         num = SCHED_NUM.search(cell)
         glyph = GLYPH.search(m["c2"] or "")
+        streak_m = re.search(r"s(\d+)", m["c2"] or "")
         text = re.sub(r"\[([^\]]*)\]\([^)]*\)", r"\1", cell)
         # Strip markdown emphasis wherever it sits, not just at the ends: the strike
         # wraps the LINK (`~~[496 ...](...)~~ · [LC](...)`), so trailing-only stripping
@@ -331,6 +405,7 @@ def parse_schedule_day(path: Path, day: dt.date) -> tuple[list[dict], float | No
         items.append({
             "num": num.group(1) if num else None,
             "start": glyph.group(0) if glyph else None,
+            "start_streak": int(streak_m.group(1)) if streak_m else 0,
             "done": "~~" in cell,
             "text": re.sub(r"\s+", " ", text).strip(" ·*"),
         })
@@ -373,10 +448,15 @@ def price_schedule_day(day: dt.date, rows: list[dict], cfg: dict) -> None:
             continue
         tracked = by_num.get(it["num"])
         if it["start"] and tracked:
-            # START comfort (build time) x difficulty (a stable property of the problem).
+            # START comfort + streak (build time) x difficulty (a stable property). Attempt
+            # count is the familiarity GOING IN: attempts strictly before this day, joined
+            # from the tracker's Rep Dates — so day-as-built pricing bills the row's state
+            # at build, not what later reps added.
             diff = tracked[0]["diff"]
-            cost = cfg["comfort_units"][it["start"]] * cfg["difficulty"][diff]
-            note = f"{it['start']} {diff[0]}"
+            attempts = attempt_count(tracked[0].get("reps"), before=day)
+            cost = price(it["start"], it["start_streak"], diff, attempts, cfg)
+            streak_tag = f" s{it['start_streak']}" if it["start"] == "🟢" else ""
+            note = f"{it['start']}{streak_tag} {diff[0]}"
         elif tracked:
             worst = max(tracked, key=lambda r: units(r, cfg))
             cost = units(worst, cfg)
