@@ -37,6 +37,22 @@
 # "could a rule written before this still read as correct while now being wrong?"
 
 decisions:
+  - id: complexity-miss-off-rep-drill
+    date: 2026-09-02
+    summary: >-
+      POLICY SET BY LEARNER (provisional — to be formally DESIGNED at the Sep 7 build, not yet
+      wired): a complexity miss no longer caps a comfort rating when recognition AND code were
+      clean off a blank page. The recurring miss is a complexity CONCEPT (e.g. string-is-not-O(1),
+      bounded-state-space word-vs-bit), not the problem's code — re-repping clean code to re-test
+      the concept is churn. The concept is instead drilled OFF-REP via a planned cold "complexity
+      probe" (fire code -> learner gives T/S cold, no writing; tracked in complexity_gotchas.md,
+      disposable). First applied to 127 (over-learned code, waiver) then generalized on 202 Happy
+      Number (space O(1) missed, cued) at the learner's explicit call. ⚠️ SUPERSEDES the
+      freebie/repeat 🟡-cap rule from feedback_ask_complexity FOR THE clean-code case ONLY — until
+      Sep 7 this is a per-rep learner override recorded in the ledger, NOT yet a rewritten gate.
+      The rating gate + freebie rule still stand as written until the build formalizes this.
+    affects: [complexity_gate, ratings, complexity_gotchas, feedback_ask_complexity, probes]
+
   - id: stack-expression-ladder-parked
     date: 2026-08-31
     summary: >-

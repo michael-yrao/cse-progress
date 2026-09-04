@@ -34,6 +34,24 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-09-02 ──────────────
+    def isHappy_20260902(self, n: int) -> bool:
+        # if we have seen this number, we are repeating, so a set
+        seen = set()
+
+        # now we do the happy number logic
+        while n not in seen:
+            # add n itself to seen
+            seen.add(n)
+            currentNum = 0
+            for digit in str(n):
+                currentNum+=int(digit)**2
+            n = currentNum
+            if n == 1:
+                return True
+        
+        return False
+
     # ── Attempt · 2026-08-21 ──────────────
     # ── RECOGNITION — fill BEFORE coding, before the coach says anything ──
     #   shape cues seen →

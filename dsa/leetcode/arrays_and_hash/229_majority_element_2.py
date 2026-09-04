@@ -30,6 +30,33 @@ import unittest
 
 class Solution:
 
+    # ── Attempt · 2026-09-02 ──────────────
+    def majorityElement_20260902(self, nums: List[int]) -> List[int]:
+        # there are at most 2 numbers appearing n/3 times or more
+        # then we check if those two numbers are actually appearing n/3 times
+        # so just a map is good enough no need for heap
+
+        freqMap = {}
+
+        for num in nums:
+            freqMap[num] = freqMap.get(num,0) + 1
+            if len(freqMap) > 2:
+                for key in list(freqMap):
+                    freqMap[key]-=1
+                    if freqMap[key] == 0:
+                        del freqMap[key]
+        
+        # now freqMap should have two, let's check if they are actually n/3 size
+
+        expectedSize = len(nums) // 3
+
+        result = []
+        for key in freqMap:
+            if nums.count(key) > expectedSize:
+                result.append(key)
+        
+        return result
+
     # ── Attempt · 2026-08-03 ──────────────
     def majorityElement_20260803(self, nums: List[int]) -> List[int]:
         # there are at most two elements that can appear more than n/3 times
