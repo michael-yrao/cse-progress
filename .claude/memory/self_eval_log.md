@@ -976,3 +976,21 @@ user to do something."* Same root as the advance-prompt tail — coach driving p
 but broader: any unsolicited nudge to take an action, not just "next problem". consolidated→[[feedback_let_learner_pace]] (broadened Aug 26).
 
 - 2026-09-02 [P1] — Updated comfort/streak but forgot to append today's attempt date to the tracker's Attempt Dates column — next-review dates computed off the PREVIOUS attempt. On 127/202/229 I set the new comfort + streak, ran update_review_dates.py, and it produced Next dates ~12 days early (127 Sep 22 not Oct 2, 202 Sep 20 not Oct 2). Root: update_review_dates.py derives latest_attempt from the row's Attempt Dates column, NOT from the source file's dated method — so a rep is only counted once its date is manually appended to that column. Restoring history and staging the files changed nothing (confirmed empirically), which surfaced it. Self-caught before commit by verifying computed dates against the schedule rows (Oct 2 / Oct 2 / Nov 1) and finding the mismatch. Fixed by appending 2026-09-02 + updating latest-attempt on all three rows, then re-running. Candidate SOURCE FIX (stronger than a written rule): have update_review_dates.py parse _YYYYMMDD method suffixes / attempt banners and reconcile them into the Attempt Dates column, so logging a rep cannot silently omit the date. Until then this is a manual step in the logging workflow. open — watch for recurrence; promote to source fix on 2nd occurrence.
+
+## 2026-09-03 [P2] — pushed the learner into the recognition gate at rep handoff (124)
+Handed over 124 and closed with an imperative to act: "give me your pre-code call — what
+traversal, and the one thing you return up vs record." A push toward the keyboard, exactly
+[[feedback_let_learner_pace]]. New costume: the *recognition front-gate* delivered as a prod.
+Learner: "don't push the user towards the next action. This should be jotted down already."
+The gate is a standing expectation (scaffold flow) — hand over the problem and STOP; the gate
+fires when they engage, not as a nudge. Recurrence of an already-promoted rule → sharpened the
+file rather than re-promoting.
+
+## 2026-09-03 [P2] — kickoff board carried a spoiler "Focus" column (124/56/743/743)
+Re-presented today's board with a per-problem Focus/note column: "post-order hinge", "Intervals
+zero-green conversion", "complexity gate cold — O(E) heap-size miss". That pre-localizes the
+technique AND the exact miss to watch — spoiling the recognition front-gate and pre-localizing the
+rep (same class as the retry-handover rule: number + links only, no prior failure category). Those
+notes are the schedule's rep-notes / stuck_log content and must NOT ride the handover table.
+Learner: "let's not put the focus here, it spoils a bit." Fix: kickoff/restate board = number +
+links + comfort + units ONLY. [[feedback_kickoff_table_links]] / [[feedback_let_learner_pace]].

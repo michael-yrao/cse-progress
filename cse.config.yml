@@ -65,6 +65,45 @@ effort_budget:
     "🎓": 0.5
   difficulty: {Easy: 0.5, Medium: 1.0, Hard: 1.5}
 
+  # ── Familiarity discounting (added Sep 3, 2026) ─────────────────────────────────────
+  # The flat `comfort_units × difficulty` price could not tell a Hard seen twice from a
+  # Hard wrestled eight times. The learner: "a Hard doesn't always feel like 3 or 4.5
+  # points after multiple attempts." Three layers now discount for demonstrated
+  # familiarity — but ONLY where it is earned, so the conversion pressure the budget
+  # exists to apply (a 🟡 bills ~12× a 🟢 forever) is preserved on genuinely-stuck rows.
+  # Full derivation: docs/foundations/effort_budget.md. Decision: `familiarity-discounting`.
+  #
+  # The unified price is:  base(comfort, streak) × difficulty(tier, demoted?) × attempt_factor
+  # `effort_budget.py` is the single implementation; nothing else prices a day.
+
+  # (A) Streak-graded green — a 🟢 proven across more reps costs less, decaying toward 🎓.
+  # Keyed by streak (int). A streak past the top key uses the top key; a missing block
+  # falls back to comfort_units["🟢"]. Reds/yellows are untouched here (they have no streak).
+  green_streak_units:
+    0: 1.0
+    1: 0.8
+    2: 0.6
+
+  # (B) Earned difficulty demotion — once a problem is PROVEN (🟢 at min_streak, or 🎓),
+  # its intrinsic tier stops mattering as much: it prices one difficulty tier easier.
+  # This is what makes a well-worn Hard bill like a Medium. Only fires on proven rows,
+  # so it never cheapens a struggling one.
+  difficulty_demotion:
+    trigger: {comfort: "🟢", min_streak: 2}   # 🎓 always counts as proven
+    map: {Hard: Medium, Medium: Easy, Easy: Easy}
+
+  # (C) Attempt-count decay — relief for CHRONIC rows only. Applies to 🔴/🟡 (greens are
+  # handled by A+B) and does NOTHING before min_attempts, so a fresh blank stays full price
+  # and the teach-first incentive on new struggles is intact. After that, −per_attempt for
+  # each attempt beyond (min_attempts − 1), floored so a chronic 🔴 Hard never drops below
+  # the priciest cleaner tier (no ordering inversion). Conservative by design — steepen
+  # per_attempt / lower floor if familiar reps still feel heavy.
+  attempt_decay:
+    applies_to: ["🔴", "🟡"]
+    min_attempts: 5
+    per_attempt: 0.05
+    floor: 0.70
+
   # A hard ceiling, one number for every day (not per-day) — decided by the learner
   # Aug 7, 2026. It is NOT derived from demand, and must never be raised to chase a
   # deficit: on a Medium row a 🟡 bills 73 units/year against 🟢 s2's 6.1, so a rep

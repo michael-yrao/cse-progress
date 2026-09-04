@@ -19,7 +19,33 @@ and **enforce** them (the ledger below *is* the per-problem freebie state).
    analysis (the cue, never the answer). On a **new problem** cue **proactively, before they answer**
    (teaching); on a **review** ask **cold** and cue the *why* only on a bare symbol or a miss (testing).
 
-The gate and the correction always happen; the freebie only governs the *rating consequence*.
+4. ⭐ **Clean code + Big-O miss does NOT cap the rating (formalized Sep 3, 2026 — supersedes the 🟡 cap
+   in rule 2 for this case only).** When **recognition AND code were clean off a blank page** and the
+   *only* miss was a complexity bound, rate the rep on the code (a clean rep is 🟢) and **do not cap**.
+   Re-repping clean code just to re-ask its Big-O is churn — you re-solve a problem you can already
+   solve. Instead the missed bound is **queued for the end-of-week complexity cleanup** (below): the
+   concept is still tested, just decoupled from the code rep and done cheaply off-rep.
+   - **Scope is exactly "clean code + Big-O miss only."** If the code itself needed a real fix, rule 2
+     (freebie → 🟡 cap) applies unchanged — a complexity miss riding alongside a code miss is *not*
+     waived.
+   - Still correct the miss in the moment and record it in the ledger; the waiver governs the *rating*
+     and the *timing of the re-test*, never whether the concept is tested.
+
+The gate and the correction always happen; the freebie/cap only governs the *rating consequence*.
+
+## ⏳ End-of-week complexity cleanup queue (added Sep 3, 2026)
+
+Problems whose **code was clean but a Big-O bound was missed** (rule 4). At the **end-of-week close-out**
+(CLAUDE.md workflow step 7 / the weekly build), the coach fires each queued problem cold: *"re-open your
+code for X and give me time + space, with the why."* No re-solving — the code already exists; this tests
+only the **bound**.
+- **Clean → clear the row** (concept stuck).
+- **Missed again → keep it queued** and flag it: a bound that fails a second cold re-explain is a real
+  gap, not churn — escalate to a proper complexity teach on that category, don't just re-queue silently.
+
+| Problem | Missed bound | Queued | Cleared |
+|---|---|---|---|
+| 743 Network Delay Time (Dijkstra) | **space**: lazy-Dijkstra heap is **O(E)** (E pushes, dedup on pop), not "≤ V nodes". Total space O(V+E) was right; the *attribution* was wrong. Self-corrected on one non-leading nudge | 2026-09-03 | — |
 
 ## Recurring categories (the transfer — this is the part to master)
 
@@ -149,7 +175,7 @@ A problem in this table has used its one free complexity miss. The **next** miss
 | 567 Permutation in String | fixed-alphabet array (space) | O(n) → **O(1)** | 2026-07-24 | **spent → REPEAT MISS 2026-08-23**: gave `O(len(s1))`, not the tight `O(1)`. Per the ledger this caps the rep at 🟡 — coach flagged it, **learner OVERRODE to 🟢 s2**, on the grounds that `O(len(s1))` is the correct *pre-constraint* bound and the ≤26 collapse (which they then stated unprompted) is interview discussion, not a knowledge gap. Rating is theirs; the miss is recorded so the family count stays honest |
 | 229 Majority Element II | bounded structure (space) | O(n) → **O(1)** (map capped at ≤2) | 2026-07-24 | spent |
 | 210 Course Schedule II | graph traversal (**time**) | O(V·E) → **O(V+E)** (Kahn's/topo) | 2026-07-24 | spent |
-| 743 Network Delay Time (Dijkstra) | heap ops per-edge (**time**) | O(V log E) → **O(E log V)** (E pushes/pops dominate) | 2026-07-25 | **spent → REPEAT 2026-08-04 (capped 🟡) → REPEAT 2026-08-24 (capped 🟡).** Same root: lazy Dijkstra pushes once per **edge relaxation**, so the heap is **O(E)**, not ≤ V. "≤ V in the heap" is the eager/decrease-key version. Rec: stay on **lazy** in Python (`heapq` has no decrease-key); eager only buys O(V) heap memory always + O(E + V log V) *with a Fibonacci heap* on dense graphs. |
+| 743 Network Delay Time (Dijkstra) | heap ops per-edge (**time**) | O(V log E) → **O(E log V)** (E pushes/pops dominate) | 2026-07-25 | **spent → REPEAT 2026-08-04 (capped 🟡) → REPEAT 2026-08-24 (capped 🟡).** Same root: lazy Dijkstra pushes once per **edge relaxation**, so the heap is **O(E)**, not ≤ V. "≤ V in the heap" is the eager/decrease-key version. Rec: stay on **lazy** in Python (`heapq` has no decrease-key); eager only buys O(V) heap memory always + O(E + V log V) *with a Fibonacci heap* on dense graphs. ⭐ **2026-09-03: the SPACE face of the same root** (heap O(E) not "≤ V") missed on otherwise-clean code + recognition. Under the new clean-code policy (rule 4) this was **NOT capped — rep logged 🟢 (🟡→🟢), bound queued for EOW cleanup** instead. Self-corrected on one nudge. |
 | 355 Design Twitter | list-membership scan (**time**) + squared-dims/phantom-log (**time**) | `follow` O(1) → **O(F)** (list `in` scan; set→O(1)); `getNewsFeed` O(n²logn) → **O(F·T)** (heap capped at 10 = O(1)/op, no square) | 2026-07-25 | spent |
 | 424 Longest Repeating Char Replacement | fixed-alphabet array (space) | O(n) → **O(1)** (freqMap ≤ 26 keys — uppercase-only constraint) | 2026-07-27 | **spent → REPEAT MISS 2026-08-31 (capped that rep at 🟡)**: gave O(n) space again; same ≤26 collapse missed. Time O(n) was itemized correctly (amortized inner `while`) |
 | 104 Max Depth of Binary Tree | full-traversal vs search (**time**) | O(log n) → **O(n)** — recursing into *both* children never discards a subtree; O(log n) requires each step to *throw half away* (binary search, BST descent). Computing a property **of the whole tree** ≠ searching **for a node** | 2026-07-27 | spent |

@@ -37,6 +37,39 @@
 # "could a rule written before this still read as correct while now being wrong?"
 
 decisions:
+  - id: complexity-cleanup-formalized
+    date: 2026-09-03
+    summary: >-
+      FORMALIZES the provisional complexity-miss-off-rep-drill (Sep 2). The clean-code complexity
+      waiver is now a standing rule, not a per-rep override: when recognition AND code were clean off
+      a blank page and the ONLY miss was a Big-O bound, the miss does NOT cap the comfort rating (rate
+      on the code) — it is instead queued for an END-OF-WEEK COMPLEXITY CLEANUP, where the coach
+      re-asks the bound cold on the existing code at the weekly close-out (no re-solving). Clean →
+      clear; missed again → escalate to a complexity teach on that category. Scope is exactly clean
+      code + Big-O miss; a complexity miss alongside a code fix keeps the normal freebie→🟡 cap.
+      Learner: "we do an end of week cleanup for clean code and big O misses only." Rationale: the code
+      rep and the complexity concept are different learning units; re-repping clean code to re-test a
+      concept is churn. Mechanism: cleanup-queue table in complexity_gotchas.md (rule 4); close-out
+      step in CLAUDE.md workflow step 7; why in feedback_ask_complexity. First applied to 743 (space
+      heap-O(E) attribution, logged 🟢 🟡→🟢, queued).
+    supersedes: [complexity-miss-off-rep-drill]
+    affects: [complexity_gate, ratings, complexity_gotchas, feedback_ask_complexity, weekly_closeout]
+
+  - id: familiarity-discounting
+    date: 2026-09-03
+    summary: >-
+      Effort pricing now discounts for demonstrated familiarity, in three composed layers:
+      (A) streak-graded green base (🟢 s0 1.0 → s1 0.8 → s2 0.6 → 🎓 0.5), (B) earned
+      difficulty demotion (a proven 🟢 s2+/🎓 problem prices one tier easier — a worn Hard
+      bills like a Medium), (C) attempt-count decay for CHRONIC 🔴/🟡 only (≥5 attempts,
+      −5%/attempt, floored at −30%). Prompted by the learner: a Hard doesn't feel like 3.0
+      or 4.5 after many attempts. Guardrails: no ordering inversion, and conversion pressure
+      on fresh (<5-attempt) blanks is untouched. New keys in cse.config.yml under
+      effort_budget: green_streak_units, difficulty_demotion, attempt_decay. All routed
+      through effort_budget.py's single price() function. Library demand fell ~5.4 → 4.5
+      units/day at adoption. The ceiling stays 8.0 — this re-prices demand, not quality.
+    affects: [effort_budget, scheduling]
+
   - id: complexity-miss-off-rep-drill
     date: 2026-09-02
     summary: >-

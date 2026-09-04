@@ -41,6 +41,45 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-09-03 ──────────────
+    def networkDelayTime_20260903(self, times: List[List[int]], n: int, k: int) -> int:
+        # this is literally Dijkstra's, asking for min time to travel to all nodes
+        # so we do minHeap, visited set and an adjacency map
+        # big diff is that we mark visited when we pop out of the heap
+        
+        totalTime = 0
+        
+        # construct and initialize our adjMap
+        adjMap = collections.defaultdict(list)
+
+        for source, target, time in times:
+            adjMap[source].append((target,time))
+        
+        # construct and initialize our minHeap
+        minHeap = []
+
+        # start node costs 0
+        heapq.heappush(minHeap,(0,k))
+
+        visited = set()
+        
+        # while we have nodes to traverse, we go through it
+        while minHeap:
+            currentWeight, currentNode = heapq.heappop(minHeap)
+            # if we have not visited yet, mark as visited and increment value
+            if currentNode not in visited:
+                # mark as visited
+                visited.add(currentNode)
+                # currentWeight needs to be cumulative
+                totalTime = currentWeight
+                for neighborNode, neighborWeight in adjMap[currentNode]:
+                    if neighborNode not in visited:
+                        heapq.heappush(minHeap, ((currentWeight + neighborWeight),neighborNode))
+        
+        if len(visited) == n:
+            return totalTime
+        return -1
+
     # ── Attempt · 2026-08-24 ──────────────
     def networkDelayTime_20260824(self, times: List[List[int]], n: int, k: int) -> int:
         # min time to visit all nodes where w is positive = dijkstra's

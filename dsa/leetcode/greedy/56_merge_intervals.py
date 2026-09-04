@@ -18,6 +18,37 @@ from typing import List, Optional
 
 
 class Solution:
+
+    # ── Attempt · 2026-09-03 ──────────────
+    def merge_20260903(self, intervals: List[List[int]]) -> List[List[int]]:
+        # sort first on startTime, then merge
+        # I know it is sort, but what is the intuition to sort here and by what
+        # with it sorted, now let's look at the criterias to merge
+        # [2,6] is merging with [1,3] because priorEnd >= currentStart
+        # [2,6] is not merging with [8,10] because of the same
+        # now what about [1,8] and [2,6], we know to merge because of the same reason
+        # now consider [[1,10],[2,3],[5,6]]
+        # this tells us we need to sort by start so our start time is settled in place
+        # and we only need to update our end time if we need to merge
+
+        intervals.sort(key = lambda interval:interval[0])
+
+        result = []
+        result.append(intervals[0])
+        # we are given intervals is at least size 1, so start our index at 1
+        # everything before index - 1, we consider to be sacred and complete
+        for i in range(1, len(intervals)):
+            currentStart = intervals[i][0]
+            currentEnd = intervals[i][1]
+            priorIntervalEnd = result[-1][1]
+            # this means we need to merge
+            if priorIntervalEnd >= currentStart:
+                result[-1][1] = max(priorIntervalEnd, currentEnd)
+            # if we do not need to merge, we just insert
+            else:
+                result.append(intervals[i])
+        return result
+
     # ── Attempt 1 · 2026-08-24 ────────────────────────────────────────────
     def merge(self, intervals: List[List[int]]) -> List[List[int]]:
         # sort by start time so that any overlapping intervals are next to each other

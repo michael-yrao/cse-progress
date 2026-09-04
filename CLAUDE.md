@@ -1,6 +1,6 @@
 # cse-progress
 
-<!-- reconciled: 2026-08-31 -->
+<!-- reconciled: 2026-09-03 -->
 
 ## Repo Setup (one-time per machine/clone)
 
@@ -320,6 +320,16 @@ After any problem discussion (solving, reviewing, or mentioning a problem by num
    - **It fires on the rep, not on the ritual.** A session that arrives as "what's the issue with my
      code" and never had a scaffold or a kickoff is still a rep. If you are about to propose a comfort
      rating, the gate is already overdue.
+   - ⭐ **Clean code + a Big-O miss does NOT cap the rating (formalized Sep 3, 2026 by the learner).**
+     When **recognition AND code were clean off a blank page** and the *only* miss was a complexity
+     bound, rate on the code (a clean rep is 🟢) and **do not apply the freebie/repeat-🟡 cap**. Re-repping
+     clean code to re-ask its Big-O is churn. Instead **queue the missed bound in the end-of-week
+     complexity cleanup** (the queue table in `complexity_gotchas.md`), where it is re-asked cold on the
+     existing code at the weekly close-out (workflow step 7). Scope is exactly *clean code + Big-O miss*:
+     if the code needed a real fix, the normal freebie→🟡 cap stands. Always still correct the miss and
+     ledger it — the waiver moves the *rating consequence* and the *re-test timing*, never whether the
+     concept is tested. Supersedes the pre-Sep-3 flat cap for this case; see `decisions.yml`
+     `complexity-cleanup-formalized` and `.claude/memory/feedback_ask_complexity.md`.
 2. **If the learner says they're stuck — READ THEIR SOLUTION FILE BEFORE SAYING ANYTHING.** Not before
    *asserting*; before **hinting**. It is one tool call and it is free.
    - **Why it's a step and not a nicety:** on 540 (Jul 27) the coaching started immediately — worked
@@ -352,6 +362,13 @@ After any problem discussion (solving, reviewing, or mentioning a problem by num
      recomputed, where the per-day load row gets drawn (an aggregate is not a schedule), and where
      `technique_coverage.md` is read to pick conversion reps. Skipping it means the next week runs
      off the previous week's assumptions.
+   - ⭐ **Run the END-OF-WEEK COMPLEXITY CLEANUP** (added Sep 3, 2026). Read the cleanup-queue table in
+     [`complexity_gotchas.md`](docs/foundations/dsa/mastery/complexity_gotchas.md): for each queued
+     problem — a rep whose code was clean but a Big-O bound was missed (the clean-code waiver, step 1) —
+     ask the learner to **re-open that code and re-state time + space cold, with the why**. No
+     re-solving; only the bound is tested. Clean → clear the row; missed again → keep it queued and
+     escalate to a proper complexity teach on that category (a bound that fails a second cold re-explain
+     is a real gap, not churn). An empty queue is a clean pass, not a skip.
    - Minimum contents: capacity/surplus arithmetic · per-day load row · daily table · protected reps ·
      backlog/slip list (nothing dropped without a date or an explicit "no date exists") · SD slots
      (placed, never priced) · end-of-week targets · next-week preview · **concept primers** (below).
@@ -545,8 +562,13 @@ be recall of fresh teaching, not durable retention (same logic as the SD teach/m
 ## Daily load is an EFFORT BUDGET, not a problem count (adopted Aug 7, 2026)
 
 `daily_cap` is superseded. A day is budgeted in **units**, not problems:
-`units = comfort_base × difficulty` — a worse comfort and a harder problem each cost more, so a day of
-five 🟢 Easies and a day of five 🔴 Hards are not the same day.
+`units = base(comfort, streak) × difficulty(tier, demoted?) × attempt_factor` — a worse comfort and a
+harder problem each cost more, so a day of five 🟢 Easies and a day of five 🔴 Hards are not the same
+day. **Familiarity discounts (added Sep 3, 2026):** a proven 🟢 decays with its streak, a proven
+problem prices one difficulty tier easier, and a chronic 🔴/🟡 (≥5 attempts) gets a bounded discount —
+so a well-worn Hard no longer bills like a cold one, while a fresh blank keeps full conversion pressure.
+The three layers and their guardrails live in `effort_budget:` (see `familiarity-discounting` in
+`decisions.yml` and the doc); the script is the only thing that prices a day.
 
 **The weights, the ceiling and the floor live in [`cse.config.yml`](cse.config.yml) under
 `effort_budget:`. Don't reprint them and don't hand-compute — run the script**, which reads them:

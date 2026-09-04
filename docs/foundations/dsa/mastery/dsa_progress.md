@@ -66,14 +66,18 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/dsa/mastery/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **111+5** problems &nbsp;·&nbsp; **121+5** solutions &nbsp;·&nbsp; **520+5** reps
+> **111+5** problems &nbsp;·&nbsp; **121+5** solutions &nbsp;·&nbsp; **524+5** reps
 
 | | 🏆 Retired | 🎓 Graduated | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|:---:|
-| **Solutions** | 0 | 6 | 102 | 13 | 0 |
+| **Solutions** | 0 | 6 | 104 | 11 | 0 |
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Rep Date | Rep Dates |
 |---|---|---|---|---|---|---|
+| Hard | [124. Binary Tree Maximum Path Sum](https://leetcode.com/problems/binary-tree-maximum-path-sum/) | 🟢 | 1 | 2026-10-03 | 2026-09-03 | 2026-07-11, 2026-07-13, 2026-07-23, 2026-08-21, 2026-09-03 |
+| Medium | [743. Network Delay Time (Dijkstra)](https://leetcode.com/problems/network-delay-time/) | 🟢 | 1 | 2026-10-03 | 2026-09-03 | 2026-07-15, 2026-07-25, 2026-08-04, 2026-08-14, 2026-08-24, 2026-09-03 |
+| Medium | [56. Merge Intervals](https://leetcode.com/problems/merge-intervals/) | 🟡 | 0 | 2026-09-13 | 2026-09-03 | 2026-08-24, 2026-09-03 |
+| Medium | [143. Reorder List](https://leetcode.com/problems/reorder-list/) | 🟢 | 2 | 2026-11-02 | 2026-09-03 | 2026-04-26, 2026-07-06, 2026-07-15, 2026-07-25, 2026-08-04, 2026-09-03 |
 | Hard | [127. Word Ladder (BFS)](https://leetcode.com/problems/word-ladder/) | 🟢 | 1 | 2026-10-02 | 2026-09-02 | 2026-07-18, 2026-07-21, 2026-08-03, 2026-08-13, 2026-08-23, 2026-09-02 |
 | Easy | [202. Happy Number (Seen-Set)](https://leetcode.com/problems/happy-number/) | 🟢 | 1 | 2026-10-02 | 2026-09-02 | 2026-08-11, 2026-08-21, 2026-09-02 |
 | Medium | [229. Majority Element II](https://leetcode.com/problems/majority-element-ii/) | 🟢 | 2 | 2026-11-01 | 2026-09-02 | 2026-01-30, 2026-04-14, 2026-06-27, 2026-06-29, 2026-07-12, 2026-07-24, 2026-08-03, 2026-09-02 |
@@ -100,8 +104,6 @@ Notes for future agents:
 | Medium | [1462. Course Schedule IV (Floyd-Warshall / Transitive Closure)](https://leetcode.com/problems/course-schedule-iv/) | 🟡 | 0 | 2026-09-04 | 2026-08-25 | 2026-08-25 |
 | Medium | [347. Top K Frequent Elements](https://leetcode.com/problems/top-k-frequent-elements/) | 🟢 | 2 | 2026-10-24 | 2026-08-25 | 2026-01-11, 2026-04-09, 2026-05-30, 2026-07-25, 2026-08-25 |
 | Medium | [572. Subtree Of Another Tree](https://leetcode.com/problems/subtree-of-another-tree/) | 🟢 | 1 | 2026-09-24 | 2026-08-25 | 2026-05-02, 2026-06-12, 2026-08-15, 2026-08-25 |
-| Medium | [56. Merge Intervals](https://leetcode.com/problems/merge-intervals/) | 🟡 | 0 | 2026-09-03 | 2026-08-24 | 2026-08-24 |
-| Medium | [743. Network Delay Time (Dijkstra)](https://leetcode.com/problems/network-delay-time/) | 🟡 | 0 | 2026-09-03 | 2026-08-24 | 2026-07-15, 2026-07-25, 2026-08-04, 2026-08-14, 2026-08-24 |
 | Medium | [33. Search in Rotated Sorted Array](https://leetcode.com/problems/search-in-rotated-sorted-array/) | 🟢 | 2 | 2026-10-23 | 2026-08-24 | 2026-05-29, 2026-06-15, 2026-06-25, 2026-07-04, 2026-08-24 |
 | Medium | [567. Permutation in String](https://leetcode.com/problems/permutation-in-string/) | 🟢 | 2 | 2026-10-22 | 2026-08-23 | 2026-04-20, 2026-07-02, 2026-07-12, 2026-07-24, 2026-08-23 |
 | Medium | [901. Online Stock Span](https://leetcode.com/problems/online-stock-span/) | 🟢 | 1 | 2026-09-22 | 2026-08-23 | 2026-07-12, 2026-07-14, 2026-08-13, 2026-08-23 |
@@ -112,7 +114,6 @@ Notes for future agents:
 | Medium | [210. Course Schedule II](https://leetcode.com/problems/course-schedule-ii/) | 🟢 | 2 | 2026-10-21 | 2026-08-22 | 2026-06-09, 2026-06-13, 2026-07-24, 2026-08-22 |
 | Medium | [684. Redundant Connection (Union-Find)](https://leetcode.com/problems/redundant-connection/) | 🟢 | 2 | 2026-10-20 | 2026-08-21 | 2026-06-18, 2026-06-22, 2026-07-01, 2026-08-21 |
 | Medium | [36. Valid Sudoku](https://leetcode.com/problems/valid-sudoku/) | 🟡 | 0 | 2026-08-31 | 2026-08-21 | 2026-01-25, 2026-05-22, 2026-06-30, 2026-07-09, 2026-08-21 |
-| Hard | [124. Binary Tree Maximum Path Sum](https://leetcode.com/problems/binary-tree-maximum-path-sum/) | 🟡 | 0 | 2026-08-31 | 2026-08-21 | 2026-07-11, 2026-07-13, 2026-07-23, 2026-08-21 |
 | Easy | [14. Longest Common Prefix](https://leetcode.com/problems/longest-common-prefix/) | 🟢 | 2 | 2026-10-20 | 2026-08-21 | 2026-01-03, 2026-03-27, 2026-06-05, 2026-06-15, 2026-08-21 |
 | Medium | [323. Number of Connected Components (Union-Find)](https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/) | 🟢 | 2 | 2026-10-18 | 2026-08-19 | 2026-06-19, 2026-06-29, 2026-08-19 |
 | Medium | [1448. Count Good Nodes in Binary Tree](https://leetcode.com/problems/count-good-nodes-in-binary-tree/) | 🟢 | 2 | 2026-10-18 | 2026-08-19 | 2026-05-15, 2026-06-18, 2026-07-10, 2026-07-20, 2026-08-19 |
@@ -167,7 +168,6 @@ Notes for future agents:
 | Easy | [1929. Concatenation of Array](https://leetcode.com/problems/concatenation-of-array/) | 🟢 | 2 | 2026-10-04 | 2026-08-05 | 2026-01-01, 2026-03-25, 2026-08-05 |
 | Easy | [217. Contains Duplicate](https://leetcode.com/problems/contains-duplicate/) | 🟢 | 2 | 2026-10-04 | 2026-08-05 | 2026-01-01, 2026-03-25, 2026-08-05 |
 | Easy | [26. Remove Duplicates from Sorted Array](https://leetcode.com/problems/remove-duplicates-from-sorted-array/) | 🟢 | 2 | 2026-10-04 | 2026-08-05 | 2026-01-09, 2026-04-02, 2026-08-05 |
-| Medium | [143. Reorder List](https://leetcode.com/problems/reorder-list/) | 🟢 | 1 | 2026-09-03 | 2026-08-04 | 2026-04-26, 2026-07-06, 2026-07-15, 2026-07-25, 2026-08-04 |
 | Medium | [2. Add Two Numbers](https://leetcode.com/problems/add-two-numbers/) | 🟢 | 2 | 2026-10-03 | 2026-08-04 | 2026-07-05, 2026-08-04 |
 | Medium | [994. Rotting Oranges](https://leetcode.com/problems/rotting-oranges/) | 🟢 | 2 | 2026-10-02 | 2026-08-03 | 2026-06-06, 2026-06-15, 2026-06-25, 2026-07-04, 2026-08-03 |
 | Easy | [219. Contains Duplicate II](https://leetcode.com/problems/contains-duplicate-ii/) | 🟢 | 2 | 2026-10-02 | 2026-08-03 | 2026-03-22, 2026-04-14, 2026-06-25, 2026-07-04, 2026-08-03 |
