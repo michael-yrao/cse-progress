@@ -66,14 +66,16 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/dsa/mastery/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **111+5** problems &nbsp;·&nbsp; **121+5** solutions &nbsp;·&nbsp; **524+5** reps
+> **112+5** problems &nbsp;·&nbsp; **122+5** solutions &nbsp;·&nbsp; **526+5** reps
 
 | | 🏆 Retired | 🎓 Graduated | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|:---:|
-| **Solutions** | 0 | 6 | 104 | 11 | 0 |
+| **Solutions** | 0 | 6 | 105 | 10 | 1 |
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Rep Date | Rep Dates |
 |---|---|---|---|---|---|---|
+| Hard | [84. Largest Rectangle in Histogram](https://leetcode.com/problems/largest-rectangle-in-histogram/) | 🔴 | 0 | 2026-09-06 | 2026-09-04 | 2026-09-04 |
+| Medium | [1462. Course Schedule IV (Floyd-Warshall / Transitive Closure)](https://leetcode.com/problems/course-schedule-iv/) | 🟢 | 1 | 2026-10-04 | 2026-09-04 | 2026-08-25, 2026-09-04 |
 | Hard | [124. Binary Tree Maximum Path Sum](https://leetcode.com/problems/binary-tree-maximum-path-sum/) | 🟢 | 1 | 2026-10-03 | 2026-09-03 | 2026-07-11, 2026-07-13, 2026-07-23, 2026-08-21, 2026-09-03 |
 | Medium | [743. Network Delay Time (Dijkstra)](https://leetcode.com/problems/network-delay-time/) | 🟢 | 1 | 2026-10-03 | 2026-09-03 | 2026-07-15, 2026-07-25, 2026-08-04, 2026-08-14, 2026-08-24, 2026-09-03 |
 | Medium | [56. Merge Intervals](https://leetcode.com/problems/merge-intervals/) | 🟡 | 0 | 2026-09-13 | 2026-09-03 | 2026-08-24, 2026-09-03 |
@@ -101,7 +103,6 @@ Notes for future agents:
 | Hard | [269. Alien Dictionary](https://leetcode.com/problems/alien-dictionary/) | 🟡 | 0 | 2026-09-06 | 2026-08-27 | 2026-07-27, 2026-07-29, 2026-08-07, 2026-08-17, 2026-08-27 |
 | Medium | [74. Search a 2D Matrix](https://leetcode.com/problems/search-a-2d-matrix/) | 🟢 | 2 | 2026-10-25 | 2026-08-26 | 2026-04-22, 2026-07-03, 2026-07-13, 2026-07-25, 2026-08-26 |
 | Medium | [1334. Find the City With the Smallest Number of Neighbors at a Threshold Distance (Floyd-Warshall)](https://leetcode.com/problems/find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance/) | 🟢 | 1 | 2026-09-24 | 2026-08-25 | 2026-07-31, 2026-08-05, 2026-08-15, 2026-08-25 |
-| Medium | [1462. Course Schedule IV (Floyd-Warshall / Transitive Closure)](https://leetcode.com/problems/course-schedule-iv/) | 🟡 | 0 | 2026-09-04 | 2026-08-25 | 2026-08-25 |
 | Medium | [347. Top K Frequent Elements](https://leetcode.com/problems/top-k-frequent-elements/) | 🟢 | 2 | 2026-10-24 | 2026-08-25 | 2026-01-11, 2026-04-09, 2026-05-30, 2026-07-25, 2026-08-25 |
 | Medium | [572. Subtree Of Another Tree](https://leetcode.com/problems/subtree-of-another-tree/) | 🟢 | 1 | 2026-09-24 | 2026-08-25 | 2026-05-02, 2026-06-12, 2026-08-15, 2026-08-25 |
 | Medium | [33. Search in Rotated Sorted Array](https://leetcode.com/problems/search-in-rotated-sorted-array/) | 🟢 | 2 | 2026-10-23 | 2026-08-24 | 2026-05-29, 2026-06-15, 2026-06-25, 2026-07-04, 2026-08-24 |
