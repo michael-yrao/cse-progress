@@ -106,5 +106,9 @@
 
 ## Vocabulary maintenance
 
+**Unmapped tracker rows (1)** — solved but assigned to no technique. Add them to `techniques.yml`, or coverage silently drifts behind the tracker.
+
+- 84 Largest Rectangle in Histogram
+
 **Not reached yet (2)** — declared in the vocabulary, no tracker row. This is the normal state for curriculum ahead of the learner; it is a roadmap, not a finding.
 

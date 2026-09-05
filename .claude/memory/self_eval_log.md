@@ -5,6 +5,19 @@
 
 Append-only log of corrections. Governed by [[feedback_self_evaluation]]. Newest at top. Meta-review promotes recurring root causes into rules; entries are never deleted, only re-statused.
 
+## 2026-09-04 [P2] — Friday lineup carried technique names + a Note column (84/1462) — 2nd lapse in 2 days
+Presented the Friday board as a table with a Note cell ("Floyd-Warshall", "recognition call
+re-measured", "closes the Stack phase") and technique parentheticals in the titles. Spoils the
+recognition front-gate. Learner: *"the technique is kinda already spoiled in the table for both,
+this is the same issue i brought up yesterday. The tables should just be the name of the problems
+and links, nothing else."* Direct recurrence of the 2026-09-03 124 "Focus column" entry — the prose
+fix ("number + links + comfort + units only") did not hold, and the learner has now tightened it
+further: name + links ONLY, no comfort/units either. Root: I rebuild the lineup by hand-copying
+schedule rows, which drag along the `(technique)` title and the Note column. **SOURCE FIX applied
+(rung 1):** the presented lineup is `scripts/links.py <n> ...` output verbatim — reads title from the
+file header, emits no technique/note, nothing to strip. Sharpened [[feedback_kickoff_table_format]].
+consolidated→[[feedback_kickoff_table_format]] (source-fixed; watch for a 3rd lapse to confirm it holds).
+
 ---
 
 - **2026-09-01 [P2] `open`** — Learner, mid-239: *"stop once the conversation has resolved… in the
@@ -994,3 +1007,19 @@ rep (same class as the retry-handover rule: number + links only, no prior failur
 notes are the schedule's rep-notes / stuck_log content and must NOT ride the handover table.
 Learner: "let's not put the focus here, it spoils a bit." Fix: kickoff/restate board = number +
 links + comfort + units ONLY. [[feedback_kickoff_table_links]] / [[feedback_let_learner_pace]].
+
+## 2026-09-04 [P2] — over-scaffolded the recognition gate on 84 (led toward the technique)
+While coaching 84 I described the mechanism ("keep candidates around, discard ones that can never
+win") and closed with "name it, and that's your recognition call" — which walks the learner to the
+answer instead of firing shape cues and letting them make the call. Learner: *"'Name it, and that's
+your recognition call.' is leading, let's make sure we don't do that."* Rule already exists
+([[feedback_recognition_gate]]: name only the SHAPE, never the mechanism or a candidate technique) —
+this is a recurrence in a new costume (describing the data structure's behavior IS naming it). Fix:
+state the problem's structure, then stop; let the learner supply the technique unprompted. open.
+
+## 2026-09-04 [P2] — closed answers with imperatives to act on 84 ("write it up", "code it")
+Ended two turns with "put the recognition call in the file... and code it" / "write it up" — pushing
+the learner toward the keyboard. Recurrence of [[feedback_let_learner_pace]] (the advance-prompt /
+push-to-act tail, already logged Aug 26 + Sep 3-124). Learner: *"same issue as your statements
+above."* Fix: answer the conceptual question, then STOP — no action-nudge tail. The learner drives
+when to code. open — this rule keeps recurring as a tail; watch whether it needs a stronger fix.

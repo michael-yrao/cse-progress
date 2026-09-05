@@ -2227,3 +2227,46 @@ because the deque only ever holds indices inside the current window (the earlier
 
 ### 2026-09-03 · 56 Merge Intervals 🟡 (Intervals zero-green — no conversion)
 Sticking point: **the sort key.** Sorted by `end` and felt the merge was "too convoluted to modify existing intervals" — the friction was real but mis-diagnosed as a merge problem. Coach surfaced it with `[[1,10],[2,3],[5,6]]` (container lands last under end-sort → must reach back). Sort by **start** freezes the block's start (smallest start, processed in order), so only the end ever moves. Also had the anchor bug from the sort-by-end template — compared `intervals[i-1]` not `result[-1]` — but self-corrected that one ("do we just modify result[-1]?"). Complexity clean and unaided (O(n log n) / O(n)).
+
+### 2026-09-04 · 84 Largest Rectangle in Histogram 🔴 (unseen, first exposure — closes Stack phase)
+First exposure to the largest-rectangle monotonic-stack pattern; entirely taught → 🔴 by §2a
+(never-encoded, not decayed). Recognition itself was *reached* (learner named "monotonic increasing
+stack, keyed off the next-smaller height on each side") but only after being walked off a
+two-pointer transfer from Container-With-Water (`min(h)×width`), which collapses on the interior min —
+the learner saw that on `[2,1,5,6,2,3]` → 6 not 10.
+
+**Where stuck (execution/intuition, every piece needed unpacking):**
+- **The width formula `i - stack[-1] - 1`.** Repeatedly conflated *two different `-1`s*: (1) the
+  trailing `-1` = "exclude both walls" (a counting adjustment, always present when the stack is
+  non-empty), vs (2) the left-wall-`= -1` *sentinel* that only appears when the stack empties
+  (`width = i`). Unlocked only by hand-counting bars strictly between two walls on a drawn histogram.
+- **Why `stack[-1]` is the left wall** — worried it might skip a shorter bar. Core realization
+  (coach-supplied, traced on `[1,5,6,2,1]`): `stack[-1]` is the previous bar *on the stack*, not in the
+  array; everything skipped in the array-gap was popped earlier **for being taller**, so it's inside
+  the rectangle, and the increasing invariant guarantees the survivor below is the nearest *shorter*
+  bar to the left.
+- **The end-of-array flush / `append(0)` sentinel** — didn't see that the increasing tail never pops.
+  The sentinel `0` is a universal right wall at index `n` that drains the stack inside the main loop.
+
+**Core realization that finally landed (learner's own words):** *"all monotonic stack is a loop on top
+of a while that restores the monotonic rule; this just adds the layer of calculating personal bests for
+each height."* → **the durable frame: every rectangle has a shortest bar, so the answer is some bar's
+"personal best" (its height × how wide it reaches before a shorter bar stops it each side); the stack is
+just the O(n) tool for nearest-smaller-both-sides.** The learner flagged, correctly, that the index
+arithmetic needs memorization — reframed as: memorize the *skeleton* (shared across 739/496/503/901/42),
+understand the *walls* (that's the debugger). Complexity clean and unaided: O(n) time (each index
+pushed/popped once, amortized), O(n) space (stack up to n).
+
+**Skeleton to carry (the transferable part):**
+```python
+for i in range(len(arr)):
+    while stack and <current breaks the monotonic rule vs arr[stack[-1]]>:
+        popped = stack.pop()
+        <PROCESS popped>            # 84: area = heights[popped] * (i - stack[-1] - 1)
+    stack.append(i)
+```
+Two knobs per problem: the monotonic direction (nearest-smaller → increasing stack) and `<PROCESS popped>`.
+
+⚠️ **Re-rep +2 (Sep 6) is the measure of whether the teaching landed** — a never-encoded 🔴, so if it
+blanks again the teaching didn't take (§2a). Recognition is the front to watch: does "next-smaller each
+side → monotonic stack" fire without the two-pointer detour.
