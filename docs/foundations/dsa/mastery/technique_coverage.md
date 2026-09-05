@@ -89,7 +89,7 @@
 | Sliding Window | sliding_window | 4 (3, 121, 424, 567) | 🟢 | ✅ | — | — |
 | Divide & Conquer / Sorting | sorting | 1 (912) | 🟢 | ✅ | Merge Sort ×1 · ~~Quick Sort~~ *(queued: `expansion — sorting deep-dive`)* · ~~Radix Sort~~ *(queued: `expansion — sorting deep-dive`)* · ~~Counting Sort~~ *(queued: `expansion — sorting deep-dive`)* · ~~Timsort~~ *(queued: `expansion — sorting deep-dive`)* · ~~D&C on 53~~ *(queued: `rated:912 + surplus>=1`)* | thin (1/3) |
 | Monotonic Deque | stack | 1 (239) | 🟡 | ❌ | — | **no-green** |
-| Monotonic Stack | stack | 5 (496, 503, 739, 853, 901) | 🟢 | ✅ | — | — |
+| Monotonic Stack | stack | 6 (84, 496, 503, 739, 853, 901) | 🟢 | ✅ | — | — |
 | Stack (augmented entries) | stack | 1 (155) | 🟢 | ✅ | — | thin (1/2) |
 | Stack (expression evaluation) | stack | 1 (150) | 🟢 | ✅ | — | thin (1/2) |
 | Stack (matching) | stack | 1 (20) | 🟢 | ✅ | — | — |
@@ -105,10 +105,6 @@
 | Two Pointers (converging) | two_pointers | 9 (11, 15, 18, 88, 125, 167, 344, 680, 1768) | 🎓 | ✅ | — | — |
 
 ## Vocabulary maintenance
-
-**Unmapped tracker rows (1)** — solved but assigned to no technique. Add them to `techniques.yml`, or coverage silently drifts behind the tracker.
-
-- 84 Largest Rectangle in Histogram
 
 **Not reached yet (2)** — declared in the vocabulary, no tracker row. This is the normal state for curriculum ahead of the learner; it is a roadmap, not a finding.
 

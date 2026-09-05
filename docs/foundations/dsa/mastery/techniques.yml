@@ -315,6 +315,10 @@ techniques:
       # PROVISIONAL one — if the Aug 27 check slips, this technique's green count drops
       # with it, so do not read it as settled phase-exit evidence until then.
       - {number: 853}
+      # 84 done Sep 4, 2026 (unseen, first exposure) — largest-rectangle variant: each pop
+      # finalizes the popped bar's rectangle (height × nearest-smaller-both-sides width).
+      # Fully taught → 🔴 (never-encoded); re-rep Sep 6 measures it. Closes the Stack phase.
+      - {number: 84}
 
   # ── Monotonic deque ─────────────────────────────────────────────────────────
   # Distinct from Monotonic Stack: a deque pops from BOTH ends — the back to keep it
