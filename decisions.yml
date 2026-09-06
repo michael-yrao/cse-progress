@@ -37,6 +37,16 @@
 # "could a rule written before this still read as correct while now being wrong?"
 
 decisions:
+  - id: four-sum-retired-redundant-with-3sum
+    date: 2026-09-06
+    summary: >-
+      18. Four Sum retired. Learner solves it with a set instead of the intended
+      two-pointer-after-sort form, which collapses it into a re-run of 3Sum's pattern
+      plus a wrapper loop rather than a distinct rep — no new recognition or execution
+      challenge over 3Sum. Row dropped, not deferred; no trigger to bring it back unless
+      a set-based approach becomes the thing worth drilling.
+    affects: [dsa_progress, scheduling]
+
   - id: complexity-cleanup-formalized
     date: 2026-09-03
     summary: >-

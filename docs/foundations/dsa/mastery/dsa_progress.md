@@ -66,14 +66,15 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/dsa/mastery/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **114+5** problems &nbsp;·&nbsp; **124+5** solutions &nbsp;·&nbsp; **530+5** reps
+> **114+5** problems &nbsp;·&nbsp; **124+5** solutions &nbsp;·&nbsp; **528+5** reps
 
 | | 🏆 Retired | 🎓 Graduated | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|:---:|
-| **Solutions** | 0 | 6 | 106 | 10 | 2 |
+| **Solutions** | 0 | 6 | 105 | 10 | 3 |
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Rep Date | Rep Dates |
 |---|---|---|---|---|---|---|
+| Unknown | [34. Find First And Last Position Of Element In Sorted Array](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/) | 🔴 | 0 | 2026-09-08 | 2026-09-06 | 2026-09-06 |
 | Medium | [55. Jump Game](https://leetcode.com/problems/jump-game/) | 🟡 | 0 | 2026-09-15 | 2026-09-05 | 2026-09-05 |
 | Medium | [36. Valid Sudoku](https://leetcode.com/problems/valid-sudoku/) | 🟢 | 1 | 2026-10-05 | 2026-09-05 | 2026-01-25, 2026-05-22, 2026-06-30, 2026-07-09, 2026-08-21, 2026-09-05 |
 | Hard | [332. Reconstruct Itinerary (pre-sorted adjacency)](https://leetcode.com/problems/reconstruct-itinerary/) | 🟡 | 0 | 2026-09-15 | 2026-09-05 | 2026-08-18, 2026-09-05 |
@@ -178,7 +179,6 @@ Notes for future agents:
 | Medium | [128. Longest Consecutive Sequence](https://leetcode.com/problems/longest-consecutive-sequence/) | 🟢 | 2 | 2026-09-27 | 2026-07-29 | 2026-01-26, 2026-04-14, 2026-06-27, 2026-06-29, 2026-07-29 |
 | Easy | [733. Flood Fill (BFS)](https://leetcode.com/problems/flood-fill/) | 🎓 | 3 | 2027-01-25 | 2026-07-29 | 2026-06-12, 2026-06-19, 2026-06-28, 2026-07-29 |
 | Easy | [169. Majority Element](https://leetcode.com/problems/majority-element/) | 🟢 | 2 | 2026-09-26 | 2026-07-28 | 2026-01-05, 2026-04-01, 2026-05-28, 2026-06-27, 2026-07-28 |
-| Medium | [18. Four Sum](https://leetcode.com/problems/4sum/) | 🟢 | 1 | 2026-08-26 | 2026-07-27 | 2026-01-23, 2026-07-17, 2026-07-27 |
 | Easy | [104. Maximum Depth of Binary Tree](https://leetcode.com/problems/maximum-depth-of-binary-tree/) | 🟢 | 2 | 2026-09-25 | 2026-07-27 | 2026-04-30, 2026-05-27, 2026-06-27, 2026-07-27 |
 | Medium | [53. Maximum Subarray (Kadane)](https://leetcode.com/problems/maximum-subarray/) | 🟢 | 2 | 2026-09-24 | 2026-07-26 | 2026-01-08, 2026-04-02, 2026-06-23, 2026-06-24, 2026-07-26 |
 | Medium | [189. Rotate Array](https://leetcode.com/problems/rotate-array/) | 🟢 | 2 | 2026-09-24 | 2026-07-26 | 2026-01-11, 2026-04-04, 2026-06-24, 2026-07-26 |

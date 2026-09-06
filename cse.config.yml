@@ -204,7 +204,10 @@ solutions:
 
 # Problem numbers whose source file exists but should NOT be auto-added to the
 # tracker (they re-enter when properly solved and logged).
-discovery_skip: [76, 1216, 974]   # 76 Minimum Window Substring — parked
+discovery_skip: [76, 1216, 974, 18]   # 76 Minimum Window Substring — parked
+                             # 18 Four Sum — RETIRED Sep 6, 2026 (redundant with 3Sum when solved
+                             #      via set — no new recognition/execution over 3Sum). Row dropped,
+                             #      not deferred. See decisions.yml `four-sum-retired-redundant-with-3sum`.
                              # 974 Subarray Sums Divisible by K — DISPOSABLE consolidation rep
                              #      (Aug 18, 2026). A consolidation rep earns a tracker row ONLY
                              #      on 🟡/🔴; a 🟢 leaves no permanent demand. ⚠️ REMOVE this entry

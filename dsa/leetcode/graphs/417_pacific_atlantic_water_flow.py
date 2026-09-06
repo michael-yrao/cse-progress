@@ -50,8 +50,8 @@ from typing import List
 
 class Solution:
 
-    # ── Attempt · 2026-08-30 ──────────────
-    def pacificAtlantic_20260830(self, heights: List[List[int]]) -> List[List[int]]:
-       pass
+    # ── Attempt · 2026-09-06 ──────────────
+    def pacificAtlantic_20260906(self, heights: List[List[int]]) -> List[List[int]]:
+        pass
 
 # ⤵ prior attempts stashed in dsa/leetcode/.history/417_pacific_atlantic_water_flow.txt — restored at session end (python scripts/restore_history.py)
