@@ -19,7 +19,6 @@
 **Thin — fewer than the 3–4 surface forms a technique needs.** One instance trains recall of that problem, not the skill.
 
 - **Bellman-Ford** (advanced_graphs) — 1/3: 787
-- **Binary Search (max boundary)** (binary_search) — 1/3: 74
 - **Connected Components** (graphs) — 1/3 (3 rows): 323
 - **Cycle Detection in an Iterated Sequence** (graphs) — 1/2: 202
 - **Divide & Conquer / Sorting** (sorting) — 1/3: 912
@@ -28,6 +27,7 @@
 - **Prim's MST** (advanced_graphs) — 1/3: 1584
 - **Stack (augmented entries)** (stack) — 1/2: 155
 - **Stack (expression evaluation)** (stack) — 1/2: 150
+- **Binary Search (max boundary)** (binary_search) — 2/3: 34, 74
 - **Binary Search on Answer** (binary_search) — 2/3: 875, 1011
 - **Dijkstra** (advanced_graphs) — 2/3: 743, 778
 - **Floyd's Cycle / Midpoint** (linked_list) — 2/3: 141, 143
@@ -61,7 +61,7 @@
 | Length-Prefix Encoding | arrays_and_hash | 1 (271) | 🟢 | ✅ | — | — |
 | Prefix/Suffix Products | arrays_and_hash | 1 (238) | 🟢 | ✅ | — | — |
 | Binary Search (exact match) | binary_search | 2 (33, 704) | 🎓 | ✅ | — | — |
-| Binary Search (max boundary) | binary_search | 1 (74) | 🟢 | ✅ | — | thin (1/3) |
+| Binary Search (max boundary) | binary_search | 2 (34, 74) | 🟢 | ✅ | — | thin (2/3) |
 | Binary Search (min boundary) | binary_search | 6 (153, 162, 540, 875, 1011, 2300) | 🟢 | ✅ | — | — |
 | Binary Search on Answer | binary_search | 2 (875, 1011) | 🟢 | ✅ | — | thin (2/3) |
 | BFS on Implicit Graph | graphs | 1 (127) | 🟢 | ✅ | — | — |
@@ -102,9 +102,9 @@
 | Dutch National Flag | two_pointers | 1 (75) | 🟢 | ✅ | — | — |
 | Fast/Slow In-Place Write | two_pointers | 4 (26, 27, 80, 283) | 🟢 | ✅ | — | — |
 | Prefix/Suffix Max | two_pointers | 1 (42) | 🟢 | ✅ | Array ×1 · ~~Two Pointer~~ *(queued: `graduates:42`)* | — |
-| Two Pointers (converging) | two_pointers | 9 (11, 15, 18, 88, 125, 167, 344, 680, 1768) | 🎓 | ✅ | — | — |
+| Two Pointers (converging) | two_pointers | 8 (11, 15, 88, 125, 167, 344, 680, 1768) | 🎓 | ✅ | — | — |
 
 ## Vocabulary maintenance
 
-**Not reached yet (2)** — declared in the vocabulary, no tracker row. This is the normal state for curriculum ahead of the learner; it is a roadmap, not a finding.
+**Not reached yet (1)** — declared in the vocabulary, no tracker row. This is the normal state for curriculum ahead of the learner; it is a roadmap, not a finding.
 
