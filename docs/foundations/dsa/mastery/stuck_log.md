@@ -2270,3 +2270,48 @@ Two knobs per problem: the monotonic direction (nearest-smaller → increasing s
 ⚠️ **Re-rep +2 (Sep 6) is the measure of whether the teaching landed** — a never-encoded 🔴, so if it
 blanks again the teaching didn't take (§2a). Recognition is the front to watch: does "next-smaller each
 side → monotonic stack" fire without the two-pointer detour.
+
+---
+
+### 2026-09-05 · 55 Jump Game 🟡 (first Greedy exposure)
+
+Sticking point: recognition landed the **greedy family** but the discriminating knob was wrong — proposed
+"jump to the highest *value* in range" (should be furthest *reach*, `i + nums[i]`), and stayed in a
+path-*simulation* frame. First coded version simulated jumps (pick max-reach index, hop, repeat) and had
+an **infinite loop** — candidate scan started at `j = i`, so a node could pick *itself* as the next jump,
+with no "no forward progress → return False" exit (spun forever on `[3,2,1,0,4]`). Reframe coach-supplied:
+**track the frontier, not the traveler** — one pass, `maxReach = max(maxReach, i+nums[i])`, `if i > maxReach: return False`. Learner rewrote to the clean one-pass form; complexity O(n)/O(1) unaided.
+
+### 2026-09-05 · 332 Reconstruct Itinerary (pre-sorted adjacency) — TEACH, unrated
+
+Recognition clean and cold: Eulerian path (consume every **edge** once, not every node; need not end at
+start; no visited-node set), self-derived that pre-sorting each adjacency list handles the lexical order.
+**Execution supplied** — iterative-stack Hierholzer did not come naturally. Taught procedure-first with a
+hand-trace: `stack=[start]`, peek top; if it has an unused edge push the smallest, else pop it to `result`;
+reverse at end (post-order). Learner resolved the pop-direction subtlety themselves (`reverse=True` sort so
+smallest sits at the list end for O(1) `pop()`). Format: explanation + hand-trace (§7a rung 4). Gap
+targeted: recursion→explicit-stack conversion. Learner's own takeaway (correct): Hierholzer is the
+technique, the ordering structure (heap / pre-sorted list) is a swappable detail — heap only wins if edges
+arrive dynamically. **Rated re-measure Sep 15** (a few days out so it measures recall, not this teach).
+
+### 2026-09-05 · 2097 Valid Arrangement of Pairs — DRILL/teach, unrated (🔴 execution)
+
+Consolidation drill for iterative Hierholzer, pulled forward from the Sep 7 week right after the 332
+pre-sorted teach. **Recognition clean and cold**: graph → Eulerian path → Hierholzer, and the learner
+spotted on their own that the one difference from 332 is *no given start node*. Two things then had to be
+supplied:
+- **Modeling**: first modeled *each pair as a node* ("that doesn't seem right"). Corrected to **pair = directed edge, number = node**; the Euler walk over edges IS the arrangement (consecutive shared node ⟹ `end==start`).
+- **Start via degrees** (first time using in/out degree): net tally `outMinusIn[u]+=1, [v]-=1` (learner used the mirror sign, `in-out`, consistently → start is the `-1` node; all-balanced ⟹ circuit, start anywhere with an edge). Procedure supplied.
+
+⚠️ **The iterative Hierholzer loop did NOT transfer from the morning's 332 teach.** Across ~3 rounds the
+learner kept writing a plain DFS — `stack.pop()` + append immediately, a `for` over all neighbors, no edge
+consumption, an `endingNode` hack to paper over the never-reached dead end — instead of the peek /
+consume-one-edge / pop-when-stuck / reverse structure they'd written correctly hours earlier. Landed only
+after the two loops were put side by side and the fatal diffs named (pop-immediately kills post-order; the
+`for` mutates-while-iterating and pops the wrong edge; `endingNode` is unnecessary because Hierholzer
+commits the dead-end node itself). Final code correct end-to-end (degree start → Hierholzer → reverse →
+zip consecutive nodes to pairs).
+
+**Takeaway**: recognition is solid; the gap is purely **executing iterative Hierholzer from memory** — same
+finding as 332 today. One re-measure of the iterative form (Sep 15, cold) covers both. `import collections`
+was correctly added (scaffold only imported typing).

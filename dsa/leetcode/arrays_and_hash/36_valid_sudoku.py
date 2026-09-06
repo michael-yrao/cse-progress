@@ -43,6 +43,28 @@ from typing import List
 
 class Solution:
 
+    # ── Attempt · 2026-09-05 ──────────────
+    def isValidSudoku_20260905(self, board: List[List[str]]) -> bool:
+        # check row, check col and check each grid
+        # so let's see row[0][1] should be part of 0, 0, so that is  // 3
+        
+        rowMap, colMap, gridMap = collections.defaultdict(set), collections.defaultdict(set), collections.defaultdict(set)
+
+        rows, cols = len(board), len(board[0])
+
+        # check rows
+        for i in range(rows):
+            for j in range(cols):
+                # skip empty cells
+                if board[i][j] == ".":
+                    continue
+                if board[i][j] in rowMap[i] or board[i][j] in colMap[j] or board[i][j] in gridMap[(i//3,j//3)]:
+                    return False
+                rowMap[i].add(board[i][j])
+                colMap[j].add(board[i][j])
+                gridMap[(i//3,j//3)].add(board[i][j])
+        return True
+
     # ── Attempt · 2026-08-21 ──────────────
     # ── RECOGNITION — fill BEFORE coding, before the coach says anything ──
     #   shape cues seen →
