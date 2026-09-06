@@ -66,14 +66,18 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/dsa/mastery/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **112+5** problems &nbsp;·&nbsp; **122+5** solutions &nbsp;·&nbsp; **526+5** reps
+> **114+5** problems &nbsp;·&nbsp; **124+5** solutions &nbsp;·&nbsp; **530+5** reps
 
 | | 🏆 Retired | 🎓 Graduated | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|:---:|
-| **Solutions** | 0 | 6 | 105 | 10 | 1 |
+| **Solutions** | 0 | 6 | 106 | 10 | 2 |
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Rep Date | Rep Dates |
 |---|---|---|---|---|---|---|
+| Medium | [55. Jump Game](https://leetcode.com/problems/jump-game/) | 🟡 | 0 | 2026-09-15 | 2026-09-05 | 2026-09-05 |
+| Medium | [36. Valid Sudoku](https://leetcode.com/problems/valid-sudoku/) | 🟢 | 1 | 2026-10-05 | 2026-09-05 | 2026-01-25, 2026-05-22, 2026-06-30, 2026-07-09, 2026-08-21, 2026-09-05 |
+| Hard | [332. Reconstruct Itinerary (pre-sorted adjacency)](https://leetcode.com/problems/reconstruct-itinerary/) | 🟡 | 0 | 2026-09-15 | 2026-09-05 | 2026-08-18, 2026-09-05 |
+| Hard | [2097. Valid Arrangement of Pairs](https://leetcode.com/problems/valid-arrangement-of-pairs/) | 🔴 | 0 | 2026-09-07 | 2026-09-05 | 2026-09-05 |
 | Hard | [84. Largest Rectangle in Histogram](https://leetcode.com/problems/largest-rectangle-in-histogram/) | 🔴 | 0 | 2026-09-06 | 2026-09-04 | 2026-09-04 |
 | Medium | [1462. Course Schedule IV (Floyd-Warshall / Transitive Closure)](https://leetcode.com/problems/course-schedule-iv/) | 🟢 | 1 | 2026-10-04 | 2026-09-04 | 2026-08-25, 2026-09-04 |
 | Hard | [124. Binary Tree Maximum Path Sum](https://leetcode.com/problems/binary-tree-maximum-path-sum/) | 🟢 | 1 | 2026-10-03 | 2026-09-03 | 2026-07-11, 2026-07-13, 2026-07-23, 2026-08-21, 2026-09-03 |
@@ -114,13 +118,11 @@ Notes for future agents:
 | Medium | [15. 3Sum](https://leetcode.com/problems/3sum/) | 🟢 | 2 | 2026-10-21 | 2026-08-22 | 2026-01-19, 2026-04-07, 2026-05-30, 2026-07-24, 2026-08-22 |
 | Medium | [210. Course Schedule II](https://leetcode.com/problems/course-schedule-ii/) | 🟢 | 2 | 2026-10-21 | 2026-08-22 | 2026-06-09, 2026-06-13, 2026-07-24, 2026-08-22 |
 | Medium | [684. Redundant Connection (Union-Find)](https://leetcode.com/problems/redundant-connection/) | 🟢 | 2 | 2026-10-20 | 2026-08-21 | 2026-06-18, 2026-06-22, 2026-07-01, 2026-08-21 |
-| Medium | [36. Valid Sudoku](https://leetcode.com/problems/valid-sudoku/) | 🟡 | 0 | 2026-08-31 | 2026-08-21 | 2026-01-25, 2026-05-22, 2026-06-30, 2026-07-09, 2026-08-21 |
 | Easy | [14. Longest Common Prefix](https://leetcode.com/problems/longest-common-prefix/) | 🟢 | 2 | 2026-10-20 | 2026-08-21 | 2026-01-03, 2026-03-27, 2026-06-05, 2026-06-15, 2026-08-21 |
 | Medium | [323. Number of Connected Components (Union-Find)](https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/) | 🟢 | 2 | 2026-10-18 | 2026-08-19 | 2026-06-19, 2026-06-29, 2026-08-19 |
 | Medium | [1448. Count Good Nodes in Binary Tree](https://leetcode.com/problems/count-good-nodes-in-binary-tree/) | 🟢 | 2 | 2026-10-18 | 2026-08-19 | 2026-05-15, 2026-06-18, 2026-07-10, 2026-07-20, 2026-08-19 |
 | Easy | [206. Reverse Linked List (Recursion)](https://leetcode.com/problems/reverse-linked-list/) | 🟢 | 2 | 2026-10-18 | 2026-08-19 | 2026-04-24, 2026-07-03, 2026-07-14, 2026-07-24, 2026-08-19 |
 | Medium | [238. Product of Array Except Self](https://leetcode.com/problems/product-of-array-except-self/) | 🟢 | 2 | 2026-10-18 | 2026-08-19 | 2026-01-24, 2026-04-13, 2026-07-24, 2026-08-19 |
-| Hard | [332. Reconstruct Itinerary (pre-sorted adjacency)](https://leetcode.com/problems/reconstruct-itinerary/) | 🟡 | 0 | 2026-08-28 | 2026-08-18 | 2026-08-18 |
 | Medium | [235. Lowest Common Ancestor of a Binary Search Tree](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/) | 🟢 | 1 | 2026-09-17 | 2026-08-18 | 2026-05-03, 2026-06-12, 2026-07-19, 2026-07-29, 2026-08-08, 2026-08-18 |
 | Medium | [560. Subarray Sum Equals K](https://leetcode.com/problems/subarray-sum-equals-k/) | 🟢 | 1 | 2026-09-17 | 2026-08-18 | 2026-04-05, 2026-06-26, 2026-06-28, 2026-07-29, 2026-08-08, 2026-08-18 |
 | Medium | [2300. Successful Pairs of Spells and Potions](https://leetcode.com/problems/successful-pairs-of-spells-and-potions/) | 🟢 | 2 | 2026-10-17 | 2026-08-18 | 2026-05-03, 2026-06-12, 2026-06-19, 2026-08-18 |

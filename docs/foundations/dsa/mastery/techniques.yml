@@ -146,6 +146,7 @@ techniques:
     min_problems: 1
     problems:
       - {number: 122}
+      - {number: 55}   # reachability frontier: track furthest reach in one pass (Sep 5, 2026)
 
   # ── Intervals ───────────────────────────────────────────────────────────────
   # Phase "Intervals + Greedy" opened Aug 24, 2026.
@@ -624,6 +625,7 @@ techniques:
     problems:
       - {number: 332, method: min-heap ordering}
       - {number: 332, method: pre-sorted adjacency}
+      - {number: 2097}   # Sep 5, 2026 — purest Hierholzer: no lexical order (so off the ordering-variant axis), start derived from out-in degree
 
   # min_problems dropped Aug 15, 2026 — same rule as Floyd-Warshall above.
   - name: Prim's MST

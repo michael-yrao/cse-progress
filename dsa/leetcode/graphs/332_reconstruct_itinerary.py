@@ -22,6 +22,47 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-09-05 ──────────────
+    def findItinerary_20260829_minheap_20260905(self, tickets: List[List[str]]) -> List[str]:
+        # Eulerian Path since we are visiting edges once each
+        # and we are not guaranteed to end at the starting node
+        # we have a requirement to go in smallest lexical order if possible
+        # so this makes a minHeap very attractively here
+        # However, today the practice is to use iterative hierholzer
+        # hierholzer's use a form of DFS, which means iterative is stack
+        # issue is that with stack, we don't have a good way to handle the lexical order it wants
+        # so maybe we pre-sort first so the tickets enter the stack in lexical order
+        # we should sort by 'to' so JFK goes to the smallest destination first
+        # so let's do an adjMap and visited set like normal DFS
+
+        tickets.sort(key=lambda ticket:ticket[1], reverse=True)
+
+        adjMap = collections.defaultdict(list)
+
+        for source, dst in tickets:
+            adjMap[source].append(dst)
+        
+        stack = []
+        
+        stack.append("JFK")
+
+        result = []
+        # while we still have nodes in the stack to visit, we keep going
+        while stack:
+            currentNode = stack[-1]
+            # if no neighbors left for current node
+            # that means we add this to result
+            if not adjMap[currentNode]:
+                result.append(stack.pop())
+            else:
+                # otherwise, add its neighbors
+                neighbor = adjMap[currentNode].pop()
+                stack.append(neighbor)
+
+        result.reverse()
+
+        return result
+
     # ── Attempt · 2026-08-31 ──────────────
     def findItinerary_20260829_minheap_20260831(self, tickets: List[List[str]]) -> List[str]:
         # Eulerian Path - Visit each edge once with no guarantee that we will end up at starting node
