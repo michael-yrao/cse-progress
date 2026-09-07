@@ -41,6 +41,21 @@ from typing import List
 
 
 class Solution:
+
+    # ── Attempt · 2026-09-06 ──────────────
+    def twoSumSolution1_20260906(self, nums: List[int], target: int) -> List[int]:
+        # check if diff exists in map
+        # if not, continue and insert current value into the map
+        diffMap = {}
+
+        for i in range(len(nums)):
+            diff = target - nums[i]
+            if diff in diffMap:
+                return [diffMap[diff], i]
+            diffMap[nums[i]] = i
+        
+        return None # type: ignore
+
     def twoSum_20260714(self, nums: List[int], target: int) -> List[int]:
         diffMap = {}
 
