@@ -37,6 +37,43 @@
 # "could a rule written before this still read as correct while now being wrong?"
 
 decisions:
+  - id: complexity-probe-drill
+    date: 2026-09-06
+    summary: >-
+      NEW standing drill (pinned Sep 2, decided Sep 6): the cold complexity probe. The coach fires an
+      already-solved 🟢/🎓 problem during a warmup; the learner states time + space COLD on the existing
+      code, with the why — no re-solving, no new file. Cadence ~2 per warmup-week, woven into warmups
+      (rides free like the recognition gate). Disposable: only a MISS is carded (in the new probe ledger
+      in complexity_gotchas.md) and re-queued; a repeated same-category miss escalates to a teach.
+      Distinct from the end-of-week clean-code cleanup queue (that re-asks a bound missed on a clean-code
+      rep THIS week; the probe fires cold on any mature problem to keep the miss-cluster categories fresh).
+      Learner picked "2/warmup-week, ledger-tracked" over a weekly batch of 5. Mechanism lives in
+      complexity_gotchas.md.
+    affects: [complexity_gate, complexity_gotchas, weekly_build]
+
+  - id: grid-bfs-not-thinned
+    date: 2026-09-06
+    summary: >-
+      Considered thinning the Grid BFS cluster (200, 130, 417, 733) after the learner read it as
+      over-tested (417 greened to s2 Sep 6). DECLINED — leave it. The cluster is already nearly free:
+      733 is 🎓, 200/130 are s2, the whole cluster generates ~0.17 reps/week, so thinning saves almost
+      nothing. "Over-tested" is a feeling; the cost is near-zero because the members are mature. 417 (s2)
+      graduates itself on its next clean and can retire normally. Fast-tracking 417 to 🎓 was separately
+      refused — the coverage gate needs a HARDER same-technique sibling on the normal ladder and none
+      exists (all Grid-BFS problems are Medium/Easy).
+    affects: [scheduling, ratings]
+
+  - id: greedy-backtracking-overlap
+    date: 2026-09-06
+    summary: >-
+      Greedy sub-track (Intervals + Greedy phase) runs one week long: 45/763/134/846 land Sep 7–13, and
+      the last two (1899 Merge Triplets, 678 Valid Parenthesis String) carry into the Sep 14 week as they
+      come due. Backtracking OPENS ON SCHEDULE Sep 14 (22 Generate Parentheses first) — it is not delayed
+      for two easy greedy carries, since it is Hard/dense and a delay pushes the whole roadmap (incl. DP,
+      Oct–Nov) back. So Greedy and Backtracking overlap for the Sep 14 week. Phase dates are advisory
+      (feedback_phase_dates_are_advisory) — a normal carry, not a slip.
+    affects: [scheduling, curriculum]
+
   - id: four-sum-retired-redundant-with-3sum
     date: 2026-09-06
     summary: >-

@@ -47,6 +47,28 @@ only the **bound**.
 |---|---|---|---|
 | 743 Network Delay Time (Dijkstra) | **space**: lazy-Dijkstra heap is **O(E)** (E pushes, dedup on pop), not "≤ V nodes". Total space O(V+E) was right; the *attribution* was wrong. Self-corrected on one non-leading nudge | 2026-09-03 | **2026-09-06 ✅ cold re-ask clean** — heap-is-O(E) attributed correctly, unaided |
 
+## 🎯 Cold complexity probes (standing drill, added Sep 6, 2026)
+
+**Mechanism:** the coach fires an **already-solved** problem number during a warmup; the learner **opens
+their existing code and states time + space cold, each with the why** — no re-solving, no writing. It is the
+complexity analogue of the recognition probe, and like the recognition gate it **rides free on reps already
+happening** (no dedicated slot, no new file — the solution already exists).
+
+- **Cadence: ~2 per warmup-week**, woven into warmups. Pool = any **🟢/🎓** solved problem (mature enough that
+  the *code* isn't the test — only the bound is). Spread the categories; don't fire two from the same cluster.
+- **Disposable — only a MISS is logged.** A clean probe leaves no trace (the ledger would fill with noise
+  otherwise). A miss is carded below and re-queued for a later cold re-ask, exactly like the freebie ledger.
+- **A repeated miss on the same category escalates** to a proper complexity teach on that category — a bound
+  that fails cold twice is a real gap, not churn (same rule as the end-of-week cleanup queue).
+- **Distinct from the end-of-week cleanup queue** (rule 4): that queue re-asks a bound *specifically missed on
+  a clean-code rep this week*; this probe fires *cold on any mature problem*, to keep the miss-cluster
+  categories (fixed-alphabet O(1) space, recursion-stack O(depth), graph O(V+E), output-counting) fresh
+  between actual encounters with them.
+
+| Date | Problem | Bound probed | Result |
+|---|---|---|---|
+| _(none yet — first probes fire in the Sep 7–13 warmups)_ | | | |
+
 ## Recurring categories (the transfer — this is the part to master)
 
 Almost every miss so far is **space**, in one of these buckets. Time was consistently correct until
