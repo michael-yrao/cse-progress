@@ -1,6 +1,6 @@
 # cse-progress
 
-<!-- reconciled: 2026-09-03 -->
+<!-- reconciled: 2026-09-06 -->
 
 ## Repo Setup (one-time per machine/clone)
 
@@ -369,6 +369,12 @@ After any problem discussion (solving, reviewing, or mentioning a problem by num
      re-solving; only the bound is tested. Clean → clear the row; missed again → keep it queued and
      escalate to a proper complexity teach on that category (a bound that fails a second cold re-explain
      is a real gap, not churn). An empty queue is a clean pass, not a skip.
+   - ⭐ **Seed ~2 COLD COMPLEXITY PROBES into the week's warmups** (added Sep 6, 2026). Distinct from the
+     cleanup queue above: the probe fires **cold on any mature 🟢/🎓 solved problem** (not just this week's
+     clean-code misses) to keep the miss-cluster categories fresh between encounters. Coach names a solved
+     problem mid-warmup → learner states time + space cold on the existing code, with the why. **Disposable —
+     only a MISS is carded** (probe ledger in `complexity_gotchas.md`); a repeated same-category miss
+     escalates to a teach. Rides free on warmups, no dedicated slot. See `decisions.yml` `complexity-probe-drill`.
    - Minimum contents: capacity/surplus arithmetic · per-day load row · daily table · protected reps ·
      backlog/slip list (nothing dropped without a date or an explicit "no date exists") · SD slots
      (placed, never priced) · end-of-week targets · next-week preview · **concept primers** (below).
