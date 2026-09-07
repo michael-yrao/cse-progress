@@ -3,7 +3,7 @@ name: project_familiarity_engine_revisit
 description: OPEN — revisit at the Sep 7 build how the familiarity discount interacts with DAILY packing; discounted units understate the indivisible cost of the next problem.
 metadata:
   type: project
-reconciled: 2026-09-03
+reconciled: 2026-09-06
 ---
 
 **Open design question, raised by the learner Sep 3, 2026 — revisit at the Sep 7 build.**

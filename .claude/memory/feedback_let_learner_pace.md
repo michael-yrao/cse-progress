@@ -3,7 +3,7 @@ name: feedback_let_learner_pace
 description: Don't drive progression — answer what was asked, then STOP; no "ready for the next one?" tail. The learner controls when to advance.
 metadata:
   type: feedback
-reconciled: 2026-08-30
+reconciled: 2026-09-06
 ---
 
 ⭐ **The GATES are not an exemption (learner, Sep 3, 2026 on the 124 handoff).** Handing over a
