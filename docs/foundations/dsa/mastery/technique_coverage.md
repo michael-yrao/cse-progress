@@ -55,7 +55,7 @@
 | Array/String Fundamentals | arrays_and_hash | 3 (14, 66, 1929) | 🟢 | ✅ | — | — |
 | Boyer-Moore Voting | arrays_and_hash | 2 (169, 229) | 🟢 | ✅ | — | — |
 | Frequency Counting | arrays_and_hash | 2 (49, 242) | 🟢 | ✅ | — | — |
-| Hash Map Lookup | arrays_and_hash | 2 (1, 219) | 🟢 | ✅ | — | — |
+| Hash Map Lookup | arrays_and_hash | 2 (1, 219) | 🎓 | ✅ | — | — |
 | Hash Set Membership | arrays_and_hash | 3 (36, 128, 217) | 🟢 | ✅ | — | — |
 | In-Place Array Rotation | arrays_and_hash | 1 (189) | 🟢 | ✅ | — | — |
 | Length-Prefix Encoding | arrays_and_hash | 1 (271) | 🟢 | ✅ | — | — |
