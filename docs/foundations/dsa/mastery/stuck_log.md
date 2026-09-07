@@ -22,6 +22,12 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🟡 34. Find First and Last Position in Sorted Array — 2026-09-06
+**Sticking point**: recognition (two boundary binary searches) and the *first-position* loop were clean and cold; the *last-position* boundary was the gap. Two coupled ideas taught: (1) the **keep-`m` (candidate) branch** is guarded by the "m could still be the answer" comparison — `>=` for leftmost, `<=` for rightmost — and last-position needs `<=` so equality searches *right*, not left; (2) whenever a branch assigns `l = m` (no `+1`), the midpoint **must** round up `(l+r+1)//2` or the two-element case stalls (`m=l`, `l=m=l` forever) — `r = m` pairs with plain `//2`. Fix: write both loops in one basis (candidate-branch-first *or* exclude-branch-first) so they mirror and self-check. First exposure to this bias variant.
+
+## 🟡 540. Single Element in a Sorted Array — 2026-09-06
+**Sticking point**: recognition (binary search on pair parity) and the invariant were clean, but the value-normalizing approach — move `m` to a pair's first index based on neighbor values — had no branch for `m` landing *on* the single element, so at its even index `m%2==0 → l=m+2` skipped past the answer (`[1,1,2,3,3]` → 3 not 2; failing case supplied). Fix was the learner's own reframe: **canonicalize the index by parity first (value-independent: odd→`m-1`), then one `nums[m]==nums[m+1]` check picks the direction** — which drops the single-element case out naturally via the not-equal branch. Slip from 🟢 s1.
+
 ## 🟡 239. Sliding Window Maximum — 2026-09-01
 **Sticking point**: recognition was clean (monotonic decreasing deque), but three execution bugs — (1) the append gate only inserted the current index when it beat the back, silently dropping equal/smaller indices that are future maxima; (2) reading the window max off the back `[-1]` instead of the front `[0]` (front/back inversion); (3) eviction bound off by one (`> k` → `+1 > k`, self-caught). Fix is pop-all-smaller-off-back then **always** append; read max at front.
 

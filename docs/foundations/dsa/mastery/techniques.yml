@@ -231,6 +231,7 @@ techniques:
       - {number: 2300}   # first potion index that clears the threshold
       - {number: 162}    # first index where the sequence turns — peak
       - {number: 540}    # first index where pair-start parity breaks (learner's call, Aug 30)
+      - {number: 34}     # the first-position half — clean cold; last-position half taught (done Sep 6)
       - {number: 875}    # => also axis 2 — smallest k that works
       - {number: 1011}   # => also axis 2 — smallest capacity that works
 
@@ -273,7 +274,7 @@ techniques:
     min_problems: 3
     problems:
       - {number: 74}     # largest row whose first element <= target
-      - {number: 34}     # ⏳ both boundaries in one problem — the two biases side by side
+      - {number: 34}     # both boundaries in one problem — the two biases side by side (done Sep 6, 🟡)
       - {number: 1552}   # ⏳ maximize the minimum gap — => also axis 2 (on answer)
 
   # ── Stack ───────────────────────────────────────────────────────────────────

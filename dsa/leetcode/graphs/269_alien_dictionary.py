@@ -11,6 +11,9 @@ Return a string of the unique letters in the new language, sorted in the new
 language's order. If there is no solution, return "". If there are multiple
 solutions, return any of them.
 
+** The result must contain EVERY unique letter that appears anywhere in `words`,
+   including letters that carry no ordering constraint (they may be placed anywhere). **
+
 Note: a string `a` is lexicographically smaller than a string `b` if, at the first
 position where they differ, `a`'s letter comes before `b`'s in the alien order. If
 the first `min(len(a), len(b))` characters are equal, then `a` is smaller iff
@@ -28,6 +31,12 @@ Example 3:
     Input:  words = ["z","x","z"]
     Output: ""          # the ordering is invalid — no valid alien order exists
 
+Example 4 (underdetermined — any valid order is accepted):
+    Input:  words = ["ca","cb"]
+    # The only constraint the words impose is a < b (they differ at index 1).
+    # 'c' appears but is never ordered against a or b, so it may go anywhere.
+    Output: "cab"       # any of "cab", "acb", "abc" (any order with a before b) is correct
+
 Constraints:
     1 <= words.length <= 100
     1 <= words[i].length <= 100
@@ -43,6 +52,378 @@ class Solution:
 
     # ── Attempt · 2026-09-06 ──────────────
     def alienOrder_20260906(self, words: List[str]) -> str:
-        pass
+        # so the way we define adjacency is via the first diff between word1 and word2
+        # which means any differences beyond the first is irrelevant
+        # there is a dependency from one char to another, this is topological sort
+        # one thing this problem does very badly is not cleanly stating we need all unique characters in the result
+        # so we need to initialize all unique chars to have 0 in that case
+        
+        # initialize every unique char to zero
+        prereqCounterMap = {}
+        adjMap = collections.defaultdict(set)
 
-# ⤵ prior attempts stashed in dsa/leetcode/.history/269_alien_dictionary.txt — restored at session end (python scripts/restore_history.py)
+        for word in words:
+            for char in word:
+                prereqCounterMap[char] = 0
+
+        # now let's go through and populate adjMap and actual req
+        for i in range(1, len(words)):
+            word1 = words[i-1]
+            word2 = words[i]
+            # compare char by char for the two words
+            # let's first cover the failure case
+            lenWord1 = len(word1)
+            lenWord2 = len(word2)
+            minLen = min(lenWord1, lenWord2)
+            # scenario of example 3
+            if word1[:minLen] == word2[:minLen] and lenWord1 > lenWord2:
+                return ""
+            # now that we know it is valid, let's do comparison
+            for j in range(minLen):
+                if word1[j] != word2[j]:
+                    # if not already known, add it in
+                    # and also increment prereqs
+                    if word2[j] not in adjMap[word1[j]]:
+                        adjMap[word1[j]].add(word2[j])
+                        prereqCounterMap[word2[j]]+=1
+                    # we don't continue checking these word anymore since we already have seen differences
+                    break
+        
+        # now that we have our adjMap, we need to find who does not have a prereq and go from there to generate our output
+        # this means we need a queue and a visited set
+        queue = collections.deque()
+        visited = set()
+
+        # find the nodes with no prereq
+        for node in prereqCounterMap:
+            if prereqCounterMap[node] == 0:
+                queue.append(node)
+        
+        # result array
+        result = []
+
+        # while there are nodes to visit
+        while queue:
+            # let's get rid of all the nodes we can right now
+            lenQueue = len(queue)
+            for _ in range(lenQueue):
+                currentNode = queue.popleft()
+                # visiting it now, so mark as visited
+                visited.add(currentNode)
+                # add to result as well
+                result.append(currentNode)
+                # now let's check all its neighbors
+                for neighbor in adjMap[currentNode]:
+                    # since we visited currentNode, decrement prereq
+                    prereqCounterMap[neighbor]-=1
+                    if prereqCounterMap[neighbor] == 0:
+                        queue.append(neighbor)
+        
+        # if we couldn't visit all, return ""
+        if len(visited) != len(prereqCounterMap):
+            return ""
+        return "".join(result)
+
+    # ── Attempt · 2026-08-27 ──────────────
+    def alienOrder_20260827(self, words: List[str]) -> str:
+        # lexicographical order
+        # on first occurence of word1 and word2 being different
+        # we check if the mapping already exists, if it does, break
+        # if it doesn't exist, add to map and then break
+        # this is topological graph where we need to put a letter before another
+        # so have a counter of how many prereqs each letter has
+        # we should also have a map of prereq to what it unlocks, so adjMap
+
+        prereqCounter = {}
+        # go through all unique letters of all words and initialize to 0
+        for word in words:
+            for i in range(len(word)):
+                prereqCounter[word[i]] = 0
+
+        adjMap = collections.defaultdict(set)
+
+        for i in range(1, len(words)):
+            w1 = words[i - 1]
+            w2 = words[i]
+            minLen = min(len(w1), len(w2))
+            # failure case per example 3
+            # we have to check if len(w1) > len(w2) and not len(w2) == minLen
+            # since this fails where w1 == w2
+            if len(w1) > len(w2) and w1[:minLen] == w2:
+                return ""
+            # now we go through minLen and find the first occurence
+            # that is different
+            for j in range(minLen):
+                # if different, log it and move on
+                if w1[j] != w2[j]:
+                    if w2[j] not in adjMap[w1[j]]:
+                        adjMap[w1[j]].add(w2[j])
+                        prereqCounter[w2[j]]+=1
+                    break
+        
+        # create a queue to help create the result
+        queue = collections.deque()
+
+        # put everyone with no prereqs in
+        for key, value in prereqCounter.items():
+            if value == 0:
+                queue.append(key)
+        
+        visited = set()
+        result = []
+        while queue:
+            lenQueue = len(queue)
+            for _ in range(lenQueue):
+                currentNode = queue.popleft()
+                result.append(currentNode)
+                visited.add(currentNode)
+                # now decrement all neighbors
+                for neighbor in adjMap[currentNode]:
+                    prereqCounter[neighbor]-=1
+                    if neighbor not in visited and prereqCounter[neighbor] == 0:
+                        queue.append(neighbor)
+        
+        if len(result) != len(prereqCounter):
+            return ""
+        return "".join(result)
+
+    # ── Attempt · 2026-08-17 ──────────────
+    def alienOrder_20260817(self, words: List[str]) -> str:
+        # map first letter where they differ
+        # so make sure to stop when we find the first diff
+        # we need to build adjMap based on this logic
+        # so this is topographical sort since we have to have
+        # certain letters beforehand
+        # which means, we need to create a counter map
+        
+        counterMap = {}
+        for word in words:
+            for char in word:
+                counterMap[char] = 0
+        
+        adjMap = collections.defaultdict(set)
+
+        # we need to compare two words at a time, we start i at 1
+        for i in range(1, len(words)):
+            w1 = words[i-1]
+            w2 = words[i]
+            minLen = min(len(w1),len(w2))
+            # failure case of example 3
+            if len(w1) > len(w2) and w1[:minLen] == w2:
+                return ""
+            # now go through each char in the two strings
+            for j in range(minLen):
+                if w1[j] != w2[j]:
+                    # check if this already exists
+                    # if not, add it. break regardless
+                    if w2[j] not in adjMap[w1[j]]:
+                        adjMap[w1[j]].add(w2[j])
+                        counterMap[w2[j]]+=1
+                    break
+        
+        # now that we have adjMap and counterMap
+        # we just do a version of what we did for course schedule
+        # all keys with 0 goes on the queue for us to use
+        queue = collections.deque()
+        
+        for key, value in counterMap.items():
+            if value == 0:
+                queue.append(key)
+        # result array since string is immutable
+        result = []
+        while queue:
+            # let's use all the nodes first
+            lenQueue = len(queue)
+            for _ in range(lenQueue):
+                currentNode = queue.popleft()
+                # add to result list
+                result.append(currentNode)
+                # decrement all the neighbors of this node
+                for neighbor in adjMap[currentNode]:
+                    counterMap[neighbor]-=1
+                    if counterMap[neighbor] == 0:
+                        queue.append(neighbor)
+
+        # cycle detection for topological sort
+        # if we got all nodes, we had no cycle
+        if len(result) == len(counterMap):
+            return "".join(result)
+        return ""
+
+    # ── Attempt · 2026-08-07 ──────────────
+    def alienOrder_20260807(self, words: List[str]) -> str:
+        # so this is like a topological graph
+        # between z and o, z comes first because there is no dependency on z but there is dependency on o
+        # we also only care about the first letter
+        # example 3 is a failure case, so need to consider that
+        # but since we know this is topological graph, we can thinking of course schedule
+        # which means we need a counter of prerequisites for each node
+        # we also need adjacency map so we know what we can go to next
+        # also we need a queue to keep track of the ones that have no prereqs
+        adjMap = collections.defaultdict(set)
+        counterMap = {}
+        queue = collections.deque()
+        
+        # since w1 = "a", w2 = "a" should still produce "a", it means we need to init our counterMap
+        
+        for word in words:
+            for char in word:
+                counterMap[char] = 0
+
+        # let's start by constructing our adjMap and maybe populating our counterMap along the way
+
+        for i in range(1,len(words)):
+            w1 = words[i-1]
+            w2 = words[i]
+            # compare the two words, when we see the first lexicographical difference, we stop
+            # w1 and w2 are not always the same size, so get the min first
+            minLength = min(len(w1),len(w2))
+            # let's cover example 3's failure case first
+            if len(w1) > len(w2) and w1[:minLength] == w2:
+                return ""
+            # now that we know we are not in the failure case, let's do the mapping
+            for j in range(minLength):
+                if w1[j] != w2[j]:
+                    # need to make sure we account for dups, so add a not in condition here
+                    if w2[j] not in adjMap[w1[j]]:
+                        adjMap[w1[j]].add(w2[j])
+                        counterMap[w2[j]]+=1
+                    break
+        
+        # now that our adjMap is setup and our counterMap is setup
+        # let's get all the ones with no dependencies to add to our queue first
+        # these guys must be the key of counterMap, so we can just loop there
+        for key in counterMap:
+            if counterMap[key] == 0:
+                queue.append(key)
+
+        # string array to construct our result
+        # we also need to consider whether or not we've visited this already
+        # so we should have a visited set while we go through this
+        result = []
+        while queue:
+            # let's use all the nodes that have 0 req
+            lenQueue = len(queue)
+            for _ in range(lenQueue):
+                currentNode = queue.popleft()
+                result.append(currentNode)
+                for neighbor in adjMap[currentNode]:
+                    counterMap[neighbor]-=1
+                    if counterMap[neighbor] == 0:
+                        queue.append(neighbor)
+        
+        if len(result) == len(counterMap):
+            return "".join(result)
+        return ""
+
+    # ── Attempt · 2026-07-29 ──────────────
+    def alienOrder_20260729(self, words: List[str]) -> str:
+        # the FIRST different letter determines lexicographically difference
+        # so we need to stop at the first instance of difference and that is our mapping
+        # so we construct an adjacency map based on this lexicographical order
+        # now how do we know what order to go in for the map
+        # smallest first, so we can use topological sort like course schedule
+        # simply put, we give rank to each char and we only go through it if it is zero
+        
+        rankMap = {}
+        # pre-populate rankMap for chars in words only
+        for word in words:
+            for char in word:
+                rankMap[char] = 0
+
+        adjMap = collections.defaultdict(set)
+
+        for i in range(1,len(words)):
+            firstWord = words[i-1]
+            secondWord = words[i]
+            minSize = min(len(firstWord), len(secondWord))
+            # example 3 failure case
+            if len(firstWord) > len(secondWord) and firstWord[:minSize] == secondWord[:minSize]:
+                return ""
+            # now that we know we can map, find the first diff
+            for i in range(minSize):
+                # if not equal, firstWord[i] comes before secondWord[i]
+                if firstWord[i] != secondWord[i]:
+                    if secondWord[i] not in adjMap[firstWord[i]]:
+                        adjMap[firstWord[i]].add(secondWord[i])
+                        rankMap[secondWord[i]]+=1
+                    break
+        
+        # now we go through the rankMap and only use chars with 0
+        queue = collections.deque()
+        for key in rankMap:
+            if rankMap[key] == 0:
+                queue.append(key)
+        
+        result = ""
+        while queue:
+            currentKey = queue.popleft()
+            result+=currentKey
+            for neighbor in adjMap[currentKey]:
+                rankMap[neighbor]-=1
+                if rankMap[neighbor] == 0:
+                    queue.append(neighbor)
+        
+        # check if we went through all available chars
+        if len(result) == len(rankMap):
+            return result
+        return ""
+
+    # ── Attempt 1 · 2026-07-27 ────────────────────────────────────────────
+    def alienOrder(self, words: List[str]) -> str:
+        # build adjacency map of letters
+        # then afterwards, we can build a word using BFS or DFS
+        # we need to know the basic idea of where to start for BFS/DFS
+        # so we need to find the char that has no preceding character
+        # so we can keep track of that, we can do something like course schedule
+        # increment the letters that have predecessors
+
+        adjMap = {char : set() for word in words for char in word}
+        rankMap = {char: 0 for char in adjMap}
+        
+        def buildAdjMap(firstWord, secondWord):
+            # if we cannot build a mapping at any point, return empty string
+            # abc -> ab
+            minLen = min(len(firstWord), len(secondWord))
+            if len(firstWord) > len(secondWord) and firstWord[:len(secondWord)] == secondWord:
+                return ""
+            for i in range(minLen):
+                # at the first position different, check lexicographical difference
+                if firstWord[i] != secondWord[i]:
+                    if secondWord[i] not in adjMap[firstWord[i]]:
+                        adjMap[firstWord[i]].add(secondWord[i])
+                        rankMap[secondWord[i]]+=1
+                    # break here regardless since lexicographical order has been checked
+                    break
+        
+        for i in range(len(words)-1):
+            firstWord = words[i]
+            secondWord = words[i+1]
+            if buildAdjMap(firstWord, secondWord) == "":
+                return ""
+
+        result = []
+        queue = collections.deque()
+        # add only the ones with rank of 0
+        for key in rankMap:
+            if rankMap[key] == 0:
+                queue.append(key)
+
+        # BFS on the adjacency map and rank map
+        while queue:
+            currentChar = queue.popleft()
+            result.append(currentChar)
+            # now decrement rank of its neighbors
+            for neighbor in adjMap[currentChar]:
+                rankMap[neighbor]-=1
+                if rankMap[neighbor] == 0:
+                    queue.append(neighbor)
+
+        # check if we mapped all edges
+        # rankMap has all distinct nodes, thus if len(rankMap) == len(result), we are good
+        # otherwise, return ""
+
+        if len(rankMap) != len(result):
+            return ""
+
+        return "".join(result)
