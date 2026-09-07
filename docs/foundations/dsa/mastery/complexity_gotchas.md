@@ -45,7 +45,7 @@ only the **bound**.
 
 | Problem | Missed bound | Queued | Cleared |
 |---|---|---|---|
-| 743 Network Delay Time (Dijkstra) | **space**: lazy-Dijkstra heap is **O(E)** (E pushes, dedup on pop), not "≤ V nodes". Total space O(V+E) was right; the *attribution* was wrong. Self-corrected on one non-leading nudge | 2026-09-03 | — |
+| 743 Network Delay Time (Dijkstra) | **space**: lazy-Dijkstra heap is **O(E)** (E pushes, dedup on pop), not "≤ V nodes". Total space O(V+E) was right; the *attribution* was wrong. Self-corrected on one non-leading nudge | 2026-09-03 | **2026-09-06 ✅ cold re-ask clean** — heap-is-O(E) attributed correctly, unaided |
 
 ## Recurring categories (the transfer — this is the part to master)
 

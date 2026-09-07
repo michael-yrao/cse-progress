@@ -62,7 +62,7 @@
 | Prefix/Suffix Products | arrays_and_hash | 1 (238) | 🟢 | ✅ | — | — |
 | Binary Search (exact match) | binary_search | 2 (33, 704) | 🎓 | ✅ | — | — |
 | Binary Search (max boundary) | binary_search | 2 (34, 74) | 🟢 | ✅ | — | thin (2/3) |
-| Binary Search (min boundary) | binary_search | 6 (153, 162, 540, 875, 1011, 2300) | 🟢 | ✅ | — | — |
+| Binary Search (min boundary) | binary_search | 7 (34, 153, 162, 540, 875, 1011, 2300) | 🟢 | ✅ | — | — |
 | Binary Search on Answer | binary_search | 2 (875, 1011) | 🟢 | ✅ | — | thin (2/3) |
 | BFS on Implicit Graph | graphs | 1 (127) | 🟢 | ✅ | — | — |
 | Connected Components | graphs | 1 *+2v* (323) | 🟢 | ✅ | DFS ×1 · BFS ×1 · Union-Find ×1 | thin (1/3) |

@@ -1,4 +1,7 @@
 {
+  "env": {
+  "BASH_ENV": ".claude/bash_env.sh"
+  },
   "hooks": {
     "PostToolUse": [
       {
