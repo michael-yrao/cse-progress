@@ -3,7 +3,7 @@ name: project-upstream-candidates
 description: Findings from cse-progress that belong in canonical cse-coach, split into shipped-behaviour defects (send now) and new instruments (soak first)
 metadata:
   type: project
-reconciled: 2026-08-30
+reconciled: 2026-09-06
 ---
 
 **Started Aug 9, 2026.** Upstream flow is a **deliberate human PR**, never automatic — one learner's
@@ -51,6 +51,14 @@ categories" table exists to fix. **The enforcement mechanism is blind to the fai
 **Fix options (a menu, not a decree — it changes rating semantics):** category freebie alongside the
 per-problem one · proactive cue whenever constraints name a bounded alphabet · leave as-is and rely on the
 cue table.
+
+⭐ **RESOLVED LOCALLY, Sep 3, 2026 — `complexity-cleanup-formalized` (`decisions.yml`).** This repo did
+not pick from the menu above; it moved the concept off the rating entirely. Clean code + a Big-O miss no
+longer caps at 🟡 — the bound is re-asked cold at the end-of-week complexity cleanup, keyed to the
+category (`complexity_gotchas.md` rule 4). That is effectively the "category, not per-problem" fix, minus
+the freebie framing. **What now ships upstream is this adopted design, not the open menu** — soak
+complete here; re-assess whether canonical wants the same off-rep cleanup mechanism. See
+[[feedback_ask_complexity]].
 
 ### 3. The weekly build cannot see an active phase with zero reps ⭐
 §9a is entirely **demand**-driven: due reviews, overdue counts, surplus. All of those can be healthy while
