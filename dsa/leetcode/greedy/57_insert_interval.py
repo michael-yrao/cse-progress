@@ -19,6 +19,50 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-09-07 ──────────────
+    def insertInterval_20260907(self, intervals: List[List[int]], newInterval: List[int]) -> List[List[int]]:
+        # so sharing any point is considered for merging
+        # so let's find the criteria for merge
+        # [[1,3], [6,9]] ; [2,5]
+        # we merge with [1,3] because newStart <= currentEnd
+        # we do not merge with [6,9] because of the above
+        # now let's consider [[2,4],[6,9]] ; [1,2]
+        # we merge with [2,4] because newStart <= currentEnd
+        # so the rule holds
+        # so let's do multi-steps here
+        # 1. find intervals before new interval that do not intersect
+        # 2. find intervals that do intersect and merge them
+        # 3. find intervals after new interval that do not intersect
+        # these 3 things combined will give us our solution
+
+        result = []
+
+        # 1. find intervals before new interval that do not intersect
+        
+        currentIndex = 0
+        while currentIndex < len(intervals) and newInterval[0] > intervals[currentIndex][1]:
+            result.append(intervals[currentIndex])
+            currentIndex+=1
+        
+        # now we know starting at currentIndex, we intersect
+        # so what is our criteria to stop merging
+        # easier to think about when to stop and to swap that around
+        # let's check how to merge, set start to min of both and end to max of both
+        while currentIndex < len(intervals) and newInterval[1] >= intervals[currentIndex][0]:
+            newInterval[0] = min(newInterval[0], intervals[currentIndex][0])
+            newInterval[1] = max(newInterval[1], intervals[currentIndex][1])
+            currentIndex+=1
+            
+        # now let's insert this new interval into the result
+        result.append(newInterval)
+
+        # 3. find intervals after new interval that do not intersect
+        while currentIndex < len(intervals) and newInterval[1] < intervals[currentIndex][0]:
+            result.append(intervals[currentIndex])
+            currentIndex+=1
+        
+        return result
+
     # ── Attempt · 2026-08-28 ──────────────
     def insertInterval_20260828(self, intervals: List[List[int]], newInterval: List[int]) -> List[List[int]]:
         # how to tell if two intervals are overlapping

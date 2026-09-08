@@ -2321,3 +2321,23 @@ zip consecutive nodes to pairs).
 **Takeaway**: recognition is solid; the gap is purely **executing iterative Hierholzer from memory** — same
 finding as 332 today. One re-measure of the iterative form (Sep 15, cold) covers both. `import collections`
 was correctly added (scaffold only imported typing).
+
+### 2026-09-07 · 435 Non-overlapping Intervals 🟡 (retry)
+Greedy skeleton was clean and self-derived (sort by end, keep earliest-ending, count drops). Sticking point:
+the overlap test carried a dead second clause — `latestEnd > start AND latestEnd < end`. Since intervals are
+sorted by end, `latestEnd <= end` always, so the clause is inert — except when ends are **equal**, where it
+flips false and wrongly keeps an overlapping interval (returns 0 on `[[1,2],[1,2],[1,2]]`, want 2). Fix:
+overlap depends only on the start — `latestEnd > intervals[i][0]`. Coach-flagged (failing case + "overlap is
+start-only"), not self-caught → 🟡. Cluster already greened by 57 the same day.
+
+### 2026-09-07 · 912 Sort an Array (Merge Sort) 🟡 (retry, slipped from 🟢 s1)
+Divide/conquer structure and merge idea were sound, but three misses, two of them correctness:
+1. **Boundary** — top-level call `mergeSort(0, len(nums)-1)` with half-open ranges drops the last element.
+   Fix: `mergeSort(0, len(nums))`.
+2. **Merge bound** — main loop `while left < minLen and right < minLen` exits when the shorter array is
+   done, then the cleanup dumps the longer array's tail unsorted (`[1,5,9]`+`[3]` → `[1,5,9,3]`). Fix: bound
+   each pointer by its own array's length (`left < lenLeft and right < lenRight`); `minLen` then unused.
+3. **Complexity (space)** — answered O(n log n), conflating *total allocation over the run* (freed as it
+   goes) with *peak simultaneous* space. Peak is O(n) (held leftSides n/2+n/4+… = n, + result, + O(log n)
+   stack). Carded in complexity_gotchas.md.
+Both bugs coach-flagged (failing cases), not self-caught → 🟡, +10.
