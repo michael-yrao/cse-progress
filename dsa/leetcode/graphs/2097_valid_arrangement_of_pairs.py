@@ -22,6 +22,80 @@ from typing import List, Optional
 
 
 class Solution:
+
+    # ── Attempt · 2026-09-07 ──────────────
+    def validArrangementOfPairs_20260907(self, pairs: List[List[int]]) -> List[List[int]]:
+        # since we just did this two days ago, I still remember the numbers are nodes
+        # and that the edges are the results
+        # so example 1, we have nodes as below
+        # 11, 9, 4, 5, 1
+        # this example is an Eulerian Path
+        # looking at example 2 with nodes of 1, 3, 2 where path ends back at 1
+        # we have an Eulerian Circuit
+        # so key thing for this problem is to figure out what the starting and end nodes are
+        # all nodes in an Eulerian circuit have an in and out edge with its degree evening out
+        # if we have an Eulerian path, start node has an edge exiting and end node has an edge entering
+        # so let's say leaving = -1 and entering is +1
+        # so we will construct a degreeMap to help us find our start and end node
+        # Hierholzer, so we need a stack and adjMap for the nodes
+        # we also need to realize our output needs to be created after Hierholzer finishes
+        # since Hierholzer will help us generate line 6 but not the actual result
+
+        resultNodes = []
+
+        adjMap = collections.defaultdict(list)
+
+        # defaultdict of int initializes these nodes' be of 0 degree, therefore nothing going to it or even amount of edges going in and out
+        degreeMap = collections.defaultdict(int)
+
+        # adjMap is pretty straightforward, it's just the pairs
+        # entering = +1, exiting = -1 so src-=1 and dst+=1
+        for src, dst in pairs:
+            degreeMap[src]-=1
+            degreeMap[dst]+=1
+            adjMap[src].append(dst)
+
+        # initialize our startingNode to first node in case of Eulerian Circuit        
+        startingNode = pairs[0][0]
+
+        # if it is not, let's set startingNode to the one with -1 degree
+        for node in degreeMap:
+            if degreeMap[node] == -1:
+                startingNode = node
+                break
+
+        # Starting Hierholzer
+        # now that we have our starting node, let's add it to our stack
+        stack = []
+
+        stack.append(startingNode)
+
+        # while we have nodes in the stack to go through
+        while stack:
+            # check if current node has neighbors we have yet to add to the stack
+            # if it does not have anything else, this is the first node we put into result
+            # we also don't pop off the stack unless it fits this criteria
+            currentNode = stack[-1]
+            if not adjMap[currentNode]:
+                stack.pop()
+                resultNodes.append(currentNode)
+            else:
+            # if this is not true, then we add its neighbors
+                stack.append(adjMap[currentNode].pop())
+        
+        # when this is done, since we pushed the nodes in in reverse order, we need to reverse it
+        resultNodes.reverse()
+
+        # now we go through the resultNodes to generate the actual result
+        result = []
+        
+        for i in range(1,len(resultNodes)):
+            startNode = resultNodes[i-1]
+            endNode = resultNodes[i]
+            result.append([startNode, endNode])
+        
+        return result
+
     # ── Attempt 1 · 2026-09-05 ────────────────────────────────────────────
     def validArrangementOfPairs(self, pairs: List[List[int]]) -> List[List[int]]:
         # drawing this makes it really easy to notice it is a graph problem

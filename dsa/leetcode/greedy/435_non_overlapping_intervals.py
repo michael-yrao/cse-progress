@@ -20,6 +20,27 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-09-07 ──────────────
+    def nonOverlappingIntervals_20260907(self, intervals: List[List[int]]) -> int:
+        # we are trying to keep as many intervals as possible
+        # this means we sort by end 
+        # [[1,2],[1,3],[2,3],[3,4]]
+        # now we just keep track of latest end and if it is in between current interval
+        # if it is, get rid of the interval
+        intervals.sort(key=lambda interval:interval[1])
+        latestEnd = -math.inf
+
+        resultCounter = 0
+        for i in range(len(intervals)):
+            # if latestEnd is in between this range, do not update latestEnd
+            # and increment number of removals 
+            if latestEnd > intervals[i][0]:
+                resultCounter+=1
+            else:
+                latestEnd = intervals[i][1]
+        
+        return resultCounter
+
     # ── Attempt · 2026-08-28 ──────────────
     def nonOverlappingIntervals_20260828(self, intervals: List[List[int]]) -> int:
         # we want to maximize the number of non-overlapping intervals by removing

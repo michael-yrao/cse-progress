@@ -66,14 +66,18 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/dsa/mastery/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **114+5** problems &nbsp;·&nbsp; **124+5** solutions &nbsp;·&nbsp; **533+5** reps
+> **114+5** problems &nbsp;·&nbsp; **124+5** solutions &nbsp;·&nbsp; **537+5** reps
 
 | | 🏆 Retired | 🎓 Graduated | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|:---:|
-| **Solutions** | 0 | 7 | 105 | 10 | 2 |
+| **Solutions** | 0 | 7 | 106 | 10 | 1 |
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Rep Date | Rep Dates |
 |---|---|---|---|---|---|---|
+| Hard | [2097. Valid Arrangement of Pairs](https://leetcode.com/problems/valid-arrangement-of-pairs/) | 🟢 | 0 | 2026-09-17 | 2026-09-07 | 2026-09-05, 2026-09-07 |
+| Medium | [57. Insert Interval](https://leetcode.com/problems/insert-interval/) | 🟢 | 1 | 2026-10-07 | 2026-09-07 | 2026-08-26, 2026-08-28, 2026-09-07 |
+| Medium | [435. Non-overlapping Intervals](https://leetcode.com/problems/non-overlapping-intervals/) | 🟡 | 0 | 2026-09-17 | 2026-09-07 | 2026-08-26, 2026-08-28, 2026-09-07 |
+| Medium | [912. Sort an Array (Merge Sort)](https://leetcode.com/problems/sort-an-array/) | 🟡 | 0 | 2026-09-17 | 2026-09-07 | 2026-01-06, 2026-03-26, 2026-07-15, 2026-07-29, 2026-08-08, 2026-09-07 |
 | Medium | [34. Find First And Last Position Of Element In Sorted Array](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/) | 🟡 | 0 | 2026-09-16 | 2026-09-06 | 2026-09-06 |
 | Medium | [739. Daily Temperatures](https://leetcode.com/problems/daily-temperatures/) | 🟢 | 1 | 2026-10-06 | 2026-09-06 | 2026-08-14, 2026-08-27, 2026-09-06 |
 | Hard | [269. Alien Dictionary](https://leetcode.com/problems/alien-dictionary/) | 🟢 | 1 | 2026-10-06 | 2026-09-06 | 2026-07-27, 2026-07-29, 2026-08-07, 2026-08-17, 2026-08-27, 2026-09-06 |
@@ -83,7 +87,6 @@ Notes for future agents:
 | Medium | [55. Jump Game](https://leetcode.com/problems/jump-game/) | 🟡 | 0 | 2026-09-15 | 2026-09-05 | 2026-09-05 |
 | Medium | [36. Valid Sudoku](https://leetcode.com/problems/valid-sudoku/) | 🟢 | 1 | 2026-10-05 | 2026-09-05 | 2026-01-25, 2026-05-22, 2026-06-30, 2026-07-09, 2026-08-21, 2026-09-05 |
 | Hard | [332. Reconstruct Itinerary (pre-sorted adjacency)](https://leetcode.com/problems/reconstruct-itinerary/) | 🟡 | 0 | 2026-09-15 | 2026-09-05 | 2026-08-18, 2026-09-05 |
-| Hard | [2097. Valid Arrangement of Pairs](https://leetcode.com/problems/valid-arrangement-of-pairs/) | 🔴 | 0 | 2026-09-07 | 2026-09-05 | 2026-09-05 |
 | Hard | [84. Largest Rectangle in Histogram](https://leetcode.com/problems/largest-rectangle-in-histogram/) | 🔴 | 0 | 2026-09-06 | 2026-09-04 | 2026-09-04 |
 | Medium | [1462. Course Schedule IV (Floyd-Warshall / Transitive Closure)](https://leetcode.com/problems/course-schedule-iv/) | 🟢 | 1 | 2026-10-04 | 2026-09-04 | 2026-08-25, 2026-09-04 |
 | Hard | [124. Binary Tree Maximum Path Sum](https://leetcode.com/problems/binary-tree-maximum-path-sum/) | 🟢 | 1 | 2026-10-03 | 2026-09-03 | 2026-07-11, 2026-07-13, 2026-07-23, 2026-08-21, 2026-09-03 |
@@ -106,8 +109,6 @@ Notes for future agents:
 | Medium | [133. Clone Graph](https://leetcode.com/problems/clone-graph/) | 🟡 | 0 | 2026-09-08 | 2026-08-29 | 2026-06-04, 2026-06-05, 2026-06-07, 2026-08-09, 2026-08-19, 2026-08-29 |
 | Medium | [155. Min Stack (Pair with Min-So-Far)](https://leetcode.com/problems/min-stack/) | 🟢 | 1 | 2026-09-28 | 2026-08-29 | 2026-08-12, 2026-08-14, 2026-08-29 |
 | Medium | [853. Car Fleet](https://leetcode.com/problems/car-fleet/) | 🟢 | 1 | 2026-09-28 | 2026-08-29 | 2026-08-15, 2026-08-17, 2026-08-29 |
-| Medium | [57. Insert Interval](https://leetcode.com/problems/insert-interval/) | 🟡 | 0 | 2026-09-07 | 2026-08-28 | 2026-08-26, 2026-08-28 |
-| Medium | [435. Non-overlapping Intervals](https://leetcode.com/problems/non-overlapping-intervals/) | 🟡 | 0 | 2026-09-07 | 2026-08-28 | 2026-08-26, 2026-08-28 |
 | Medium | [49. Group Anagrams](https://leetcode.com/problems/group-anagrams/) | 🟢 | 3 | 2027-02-23 | 2026-08-27 | 2026-01-04, 2026-03-27, 2026-05-29, 2026-06-28, 2026-08-27 |
 | Medium | [74. Search a 2D Matrix](https://leetcode.com/problems/search-a-2d-matrix/) | 🟢 | 2 | 2026-10-25 | 2026-08-26 | 2026-04-22, 2026-07-03, 2026-07-13, 2026-07-25, 2026-08-26 |
 | Medium | [1334. Find the City With the Smallest Number of Neighbors at a Threshold Distance (Floyd-Warshall)](https://leetcode.com/problems/find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance/) | 🟢 | 1 | 2026-09-24 | 2026-08-25 | 2026-07-31, 2026-08-05, 2026-08-15, 2026-08-25 |
@@ -155,7 +156,6 @@ Notes for future agents:
 | Medium | [621. Task Scheduler](https://leetcode.com/problems/task-scheduler/) | 🟢 | 2 | 2026-10-08 | 2026-08-09 | 2026-06-30, 2026-07-01, 2026-07-10, 2026-08-09 |
 | Medium | [105. Construct Binary Tree from Preorder and Inorder Traversal](https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/) | 🟢 | 2 | 2026-10-08 | 2026-08-09 | 2026-07-08, 2026-07-10, 2026-08-09 |
 | Medium | [1011. Capacity To Ship Packages Within D Days](https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/) | 🟢 | 2 | 2026-10-08 | 2026-08-09 | 2026-05-03, 2026-06-12, 2026-08-09 |
-| Medium | [912. Sort an Array (Merge Sort)](https://leetcode.com/problems/sort-an-array/) | 🟢 | 1 | 2026-09-07 | 2026-08-08 | 2026-01-06, 2026-03-26, 2026-07-15, 2026-07-29, 2026-08-08 |
 | Easy | [20. Valid Parentheses](https://leetcode.com/problems/valid-parentheses/) | 🟢 | 2 | 2026-10-07 | 2026-08-08 | 2026-05-19, 2026-05-21, 2026-06-30, 2026-07-09, 2026-08-08 |
 | Easy | [100. Same Tree](https://leetcode.com/problems/same-tree/) | 🎓 | 3 | 2027-02-04 | 2026-08-08 | 2026-05-01, 2026-06-05, 2026-08-08 |
 | Easy | [88. Merge Sorted Array](https://leetcode.com/problems/merge-sorted-array/) | 🎓 | 3 | 2027-02-04 | 2026-08-08 | 2026-01-10, 2026-04-03, 2026-06-04, 2026-08-08 |
