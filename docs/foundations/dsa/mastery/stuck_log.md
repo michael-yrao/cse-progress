@@ -22,6 +22,9 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🟡 45. Jump Game II — 2026-09-08
+**Sticking point**: recognition clean cold (greedy, jump by max reach), but the window mechanics were the gap — set `left = nextJumpPoint` (collapsed the layer to the single best point) so `range(left, right)` stalled and infinite-looped on `[1,2,1,1,1]`. Fix (learner's, after failing case + "what should left/right hold"): the new layer starts at the **previous `right + 1`** and extends to the farthest reach across the whole window (BFS-layer frontier). Also `n=1` returned 1 not 0 (already at last index → 0 jumps; `[0]` supplied). Clean invariant to internalize: `left = old_right + 1` visits each index once — the `left=nextJumpPoint` form re-scans a window's tail. First Greedy min-jumps exposure.
+
 ## 🟡 34. Find First and Last Position in Sorted Array — 2026-09-06
 **Sticking point**: recognition (two boundary binary searches) and the *first-position* loop were clean and cold; the *last-position* boundary was the gap. Two coupled ideas taught: (1) the **keep-`m` (candidate) branch** is guarded by the "m could still be the answer" comparison — `>=` for leftmost, `<=` for rightmost — and last-position needs `<=` so equality searches *right*, not left; (2) whenever a branch assigns `l = m` (no `+1`), the midpoint **must** round up `(l+r+1)//2` or the two-element case stalls (`m=l`, `l=m=l` forever) — `r = m` pairs with plain `//2`. Fix: write both loops in one basis (candidate-branch-first *or* exclude-branch-first) so they mirror and self-check. First exposure to this bias variant.
 
@@ -2341,3 +2344,9 @@ Divide/conquer structure and merge idea were sound, but three misses, two of the
    goes) with *peak simultaneous* space. Peak is O(n) (held leftSides n/2+n/4+… = n, + result, + O(log n)
    stack). Carded in complexity_gotchas.md.
 Both bugs coach-flagged (failing cases), not self-caught → 🟡, +10.
+
+### 2026-09-08 · 721 Accounts Merge · 🟡
+Retry (3rd attempt). UF skeleton recalled cleanly, but three coach-flagged bugs: stored account **name**
+instead of index in the email map (own comment said "use indices"); subscripted a **set** (`defaultdict(set)`
+then `[i-1]`); and `union(i-1, i)` unioned the **loop counter** instead of the stored account indices.
+Complexity clean (O(N·M·log(N·M)) / O(N·M)). Sticking point: mapping-value type + indexing the wrong variable.
