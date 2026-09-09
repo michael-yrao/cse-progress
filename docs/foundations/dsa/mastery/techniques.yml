@@ -146,6 +146,7 @@ techniques:
     problems:
       - {number: 122}
       - {number: 55}   # reachability frontier: track furthest reach in one pass (Sep 5, 2026)
+      - {number: 45}   # min-jumps via BFS-layer frontier ([prev_end+1, farthest]) (Sep 8, 2026)
 
   # ── Intervals ───────────────────────────────────────────────────────────────
   # Phase "Intervals + Greedy" opened Aug 24, 2026.

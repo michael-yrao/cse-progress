@@ -65,6 +65,69 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-09-08 ──────────────
+    def accountsMerge_20260908(self, accounts: List[List[str]]) -> List[List[str]]:
+        # use the emails as the key for us to do union find
+        # if they are the same, it means we group two accounts together
+        # so that means the account names are our components
+        # but there could be same account names so we will use indices
+        
+        rankMap, parentMap = {}, {}
+
+        for i in range(len(accounts)):
+            rankMap[i] = 0
+            parentMap[i] = i
+
+        def find(node):
+            if parentMap[node] != node:
+                parentMap[node] = find(parentMap[node])
+            return parentMap[node]
+        
+        def union(n1,n2):
+            n1r = find(n1)
+            n2r = find(n2)
+            # will return cycle
+            if n1r == n2r:
+                return False
+            if rankMap[n1r] > rankMap[n2r]:
+                parentMap[n2r] = n1r
+            elif rankMap[n1r] < rankMap[n2r]:
+                parentMap[n1r] = n2r
+            else:
+                parentMap[n2r] = n1r
+                rankMap[n1r]+=1
+        
+        emailToAccountMap = collections.defaultdict(list)
+        # let's map email to account index
+        # then we can put keys with multiple as a component
+        for i in range(len(accounts)):
+            for j in range(1,len(accounts[i])):
+                emailToAccountMap[accounts[i][j]].append(i)
+        
+        # now we UF on the ones with multiple nodes
+        for email in emailToAccountMap:
+            for i in range(1, len(emailToAccountMap[email])):
+                account1 = emailToAccountMap[email][i-1]
+                account2 = emailToAccountMap[email][i]
+                union(account1, account2)
+        
+        # now that the accounts are unioned, we need to put all of them into a set to return
+        # we do this by doing rootParentToEmailMap
+        rootParentToEmailMap = collections.defaultdict(set)
+
+        for i in range(len(accounts)):
+            rootParentToEmailMap[find(i)].update(accounts[i][1:])
+        
+        # now we just unpack this all to an array format
+        result = []
+
+        for rootParent, emails in rootParentToEmailMap.items():
+            sortedEmails = sorted(emails)
+            resultArray = [accounts[rootParent][0]] + sortedEmails
+            result.append(resultArray)
+        
+        return result
+
     # ── Attempt · 2026-08-09 ──────────────
     def accountsMerge_20260809(self, accounts: List[List[str]]) -> List[List[str]]:
         # this is an union find problem. we are saying names with one or more shared email is one component
