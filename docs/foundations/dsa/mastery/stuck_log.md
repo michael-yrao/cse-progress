@@ -2350,3 +2350,59 @@ Retry (3rd attempt). UF skeleton recalled cleanly, but three coach-flagged bugs:
 instead of index in the email map (own comment said "use indices"); subscripted a **set** (`defaultdict(set)`
 then `[i-1]`); and `union(i-1, i)` unioned the **loop counter** instead of the stored account indices.
 Complexity clean (O(N·M·log(N·M)) / O(N·M)). Sticking point: mapping-value type + indexing the wrong variable.
+
+### 2026-09-09 · 763 Partition Labels · 🟡 (new)
+Recognition self-generated and clean (max-partitions → greedy → extend to last-index), and self-resolved the
+redundant frequency map when probed. Two gaps: (1) stuck on turning the idea into the loop — coach supplied the
+operational procedure (running `end = max(end, lastIndex[c])`, cut at `i == end`) + the one-variable invariant;
+(2) length-vs-index bug — used `result[-1]` (a length) as the prior part's end index; coach-flagged via failing
+trace (first part returned 8 not 9; third 16 not 8), fixed cleanly with a `priorEnd` tracker. Complexity spotless
+(O(n) / O(1) fixed-26 alphabet, tightening volunteered). Sticking point: execution mechanics of the greedy sweep.
+
+### 2026-09-09 · 134 Gas Station · 🔴 (new, first exposure)
+**Where stuck:** had the feasibility gate (`sum(gas) >= sum(cost)` → else -1) on their own, but the
+greedy *choice* was wrong first (theory 1: "start at the highest-return station" — rejected only after
+a coach counterexample). Could not derive the actual mechanism unaided.
+**Core realization (coach-supplied):** the valid start is **one index after the point where the running
+tank bottoms out** — not after the best single station. Safety argument: past the running minimum the
+tank never goes negative to the end (everything after is measured relative to the deepest deficit), and
+the wraparound is covered by `total >= 0`. The O(n) single-pass form: sweep a resetting `tank`; when it
+goes negative at `i`, the whole segment `[start..i]` is dead (each intermediate station was reached with
+a non-negative tank, so starting later only loses buffer) → `tank = 0`, `start = i+1`.
+**Genuinely theirs:** the feasibility invariant, and the recognition that the reset mechanism *is* Kadane
+(running accumulator, reset on negative) pointed at a start-index instead of a max-sum, plus a circular
+feasibility gate. Good transfer — but recognized *after* the mechanism was supplied, so it's labeling, not
+derivation.
+**The bug at the end:** was resetting `tank` but never recording where it restarted — missing the `start`
+variable entirely (asked "am I missing variables?"). Coach diagnosed; learner added `result = i+1`.
+**Complexity clean** (O(n) time — two sums + one loop; O(1) space). +2d re-rep Sep 11 to measure whether
+the reset mechanism stuck (today it was taught, not recalled — §2a teach/measure).
+Code core:
+```
+totalGas = 0; result = 0
+for i in range(len(gas)):
+    totalGas += gas[i] - cost[i]
+    if totalGas < 0:
+        totalGas = 0; result = i + 1
+return result
+```
+
+### 2026-09-09 · 472 Concatenated Words · 🔴 (new, first exposure — PARKED, phase-gated)
+**Root:** the trie is incidental; the binding technique is **Word Break** (string decomposition), which the
+learner had NEVER encoded (*"i actually never did word break"*). 472 is the Hard variant of it — the wrong
+place to meet the technique. Parked behind 139 (pure Word Break); `discovery_skip`'d.
+**Where stuck / what was supplied (all coach):**
+1. Initial approach counted word-ends along a single trie descent — that counts nested *prefixes*, not a
+   left-to-right segmentation (failing case `["a","aa","aab"]`: counts "a"+"aa" → flags "aab", but "b" isn't a
+   word). Fixed by the restart-at-root recursion.
+2. `KeyError` on the trie walk after a restart (suffix path not in trie) — needed the `if char not in children`
+   guard. Failing case `["a","ab"]`.
+3. TLE — the restart re-walks the same suffix repeatedly; needed memoization. Learner grasped *why* (reset to
+   root → re-scan). Added `@lru_cache(None)` on `(word, root, index, count)` — correct (count in key avoids
+   poisoning) and passes, though it caches (index,count) = O(L²) states vs the count-free O(L). Coach flagged the
+   count-free/index-keyed refinement but working code stood.
+4. Complexity: learner had no idea, asked to be taught → taught `states × work` + trie-build; **did not land**
+   (*"not yet, will get it at DP"*). New-problem freebie; carded. Re-drill at DP (Oct).
+**Genuinely theirs:** trie build, sort-by-length reasoning, the "reset-to-root causes re-scan" memo intuition.
+**Rating:** 🔴, phase-gated — NO +2 loop; re-rep gated `rated:139`. Correct solution reached (passes LC) but
+technique supplied throughout. Its being a phase-gated blank is why it parks instead of churning.

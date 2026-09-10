@@ -1017,9 +1017,32 @@ your recognition call.' is leading, let's make sure we don't do that."* Rule alr
 this is a recurrence in a new costume (describing the data structure's behavior IS naming it). Fix:
 state the problem's structure, then stop; let the learner supply the technique unprompted. open.
 
+## 2026-09-09 [P2] — push-to-act tails AGAIN ("go code it", "go for it") on 134
+Closed three consecutive turns with "go for it" / "go code it" / "Go code it — single sweep". Learner:
+*"please don't push the user to 'go for it' or 'go code it'."* This is [[feedback_let_learner_pace]]
+recurring for the **5th+ time as an action-tail** (Aug 26, Sep 3, Sep 4, now Sep 9) — the memory file
+plainly states the rule and it keeps lapsing anyway. Per the intervention ladder a rule that recurs
+this many times as prose needs a **stronger fix than a memory file**. ⭐ ESCALATE at the next
+meta-review: a Stop-hook that flags an imperative push-to-act at the end of an assistant turn ("go
+code it", "go for it", "give it a shot", "code it up", "take a crack"). open — flagged for rung-2.
+
 ## 2026-09-04 [P2] — closed answers with imperatives to act on 84 ("write it up", "code it")
 Ended two turns with "put the recognition call in the file... and code it" / "write it up" — pushing
 the learner toward the keyboard. Recurrence of [[feedback_let_learner_pace]] (the advance-prompt /
 push-to-act tail, already logged Aug 26 + Sep 3-124). Learner: *"same issue as your statements
 above."* Fix: answer the conceptual question, then STOP — no action-nudge tail. The learner drives
 when to code. open — this rule keeps recurring as a tail; watch whether it needs a stronger fix.
+
+## 2026-09-09 [P1] — 472 seated ahead of its own prerequisite (Word Break untaught)
+472 Concatenated Words was pulled as a **Trie coverage sibling** (`pull_interview.py` Trie tag), seated
+Sep 7 gated on `208+211 🟢`, i.e. on TRIE readiness only. But 472's binding technique is **Word Break**
+(string decomposition), which the learner had never encoded — the trie is incidental. The pull/gate keyed
+on the headline topic tag and never checked the harder second technique, so a Hard problem got scheduled
+ahead of its own prerequisite (139 Word Break, the gentle pure form). Learner surfaced it: *"i actually
+never did word break"* → *"how did this got pushed in before 139?"* Coach also missed it at the Sep 7 build.
+**Root cause:** a MULTI-TECHNIQUE problem must gate on ALL its techniques (especially the hardest/least-
+covered), not just its headline tag. **Fix candidates (climb the ladder at meta-review):** (1) source fix —
+`pull_interview.py` flags when a pulled problem carries a *second* technique tag with no 🟢 coverage (a
+"hidden prerequisite" warning); (2) build-step — when seating a coverage sibling, check every technique tag
+it carries, not just the one it was pulled for. Related: [[feedback_concept_primer]] (meet a technique on
+its gentlest form first), [[feedback_phase_gated_blanks]]. open — flagged for rung-1/rung-3.

@@ -204,7 +204,13 @@ solutions:
 
 # Problem numbers whose source file exists but should NOT be auto-added to the
 # tracker (they re-enter when properly solved and logged).
-discovery_skip: [76, 1216, 974, 18]   # 76 Minimum Window Substring — parked
+discovery_skip: [76, 1216, 974, 18, 472]   # 76 Minimum Window Substring — parked
+                             # 472 Concatenated Words — PARKED Sep 9, 2026 (phase-gated blank). Its
+                             #      binding technique is Word Break, never encoded; 🔴 first exposure.
+                             #      Re-queued behind 139 Word Break (Waiting Room trigger `rated:139`).
+                             #      File keeps its real attempt. ⚠️ REMOVE this entry when 472 is retried
+                             #      post-139 so it re-enters the review loop. See self_eval_log 2026-09-09
+                             #      (472 seated on the wrong technique gate — Trie, not Word Break).
                              # 18 Four Sum — RETIRED Sep 6, 2026 (redundant with 3Sum when solved
                              #      via set — no new recognition/execution over 3Sum). Row dropped,
                              #      not deferred. See decisions.yml `four-sum-retired-redundant-with-3sum`.

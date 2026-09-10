@@ -147,6 +147,8 @@ techniques:
       - {number: 122}
       - {number: 55}   # reachability frontier: track furthest reach in one pass (Sep 5, 2026)
       - {number: 45}   # min-jumps via BFS-layer frontier ([prev_end+1, farthest]) (Sep 8, 2026)
+      - {number: 763}  # partition frontier: extend to max last-index of chars seen, cut at i==end (Sep 9, 2026)
+      - {number: 134}  # gas station: running-tank reset (Kadane-shaped), start=i+1 on negative + total>=0 gate (Sep 9, 2026)
 
   # ── Intervals ───────────────────────────────────────────────────────────────
   # Phase "Intervals + Greedy" opened Aug 24, 2026.
