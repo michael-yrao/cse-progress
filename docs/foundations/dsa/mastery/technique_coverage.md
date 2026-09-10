@@ -84,7 +84,7 @@
 | Remove Nth From End | linked_list | 1 *+1v* (19) | 🟢 | ✅ | Iterative ×1 · Postorder Recursion ×1 · ~~Preorder Recursion~~ *(queued: `expansion — parked Jul 9`)* | — |
 | Kadane | prefix_sum | 1 (53) | 🟢 | ✅ | — | — |
 | Prefix Sum | prefix_sum | 2 (53, 560) | 🟢 | ✅ | — | thin (2/3) |
-| Greedy (single pass) | sliding_window | 3 (45, 55, 122) | 🟢 | ✅ | — | — |
+| Greedy (single pass) | sliding_window | 5 (45, 55, 122, 134, 763) | 🟢 | ✅ | — | — |
 | Sliding Window | sliding_window | 4 (3, 121, 424, 567) | 🟢 | ✅ | — | — |
 | Divide & Conquer / Sorting | sorting | 1 (912) | 🟡 | ❌ | Merge Sort ×1 · ~~Quick Sort~~ *(queued: `expansion — sorting deep-dive`)* · ~~Radix Sort~~ *(queued: `expansion — sorting deep-dive`)* · ~~Counting Sort~~ *(queued: `expansion — sorting deep-dive`)* · ~~Timsort~~ *(queued: `expansion — sorting deep-dive`)* · ~~D&C on 53~~ *(queued: `rated:912 + surplus>=1`)* | **no-green** · thin (1/3) |
 | Monotonic Deque | stack | 1 (239) | 🟡 | ❌ | — | **no-green** |
