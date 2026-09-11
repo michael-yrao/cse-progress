@@ -26,4 +26,4 @@ Aug 6, 2026.
   **prereq-tech gate at off 🔴** (Redis 🟡 · Postgres note-built/undrilled · Vitess none). Execution plan:
   [`system_design/senior_ramp.md`](../../https://github.com/michael-yrao/sd-progress/blob/main/senior_ramp.md).
 - **Apply trigger = a repo-evaluable gate**, never an offer/interview outcome — see `career_strategy.md` §4,
-  [[feedback_gate_on_internal_state]], [[feedback_phase_dates_are_advisory]].
+  [[feedback_gate_on_internal_state]], [[feedback_phase_progression]].

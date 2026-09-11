@@ -3,8 +3,11 @@ name: feedback_midweek_reprice
 description: The weekly build's "what does not fit" verdict has a shelf life of about one session — re-run effort_budget.py after logging results and re-seat from the slip list when headroom opens
 metadata:
   type: feedback
-reconciled: 2026-09-06
+reconciled: 2026-09-11
 ---
+
+**Operational rule lives in the skill** — `references/effort-budget.md` (Re-price mid-week). This file is
+the *why* + the evidence.
 
 **Set by the learner Aug 17, 2026**, on seeing demand fall by a quarter in one morning: *"that is a
 good signal to let us know that we can and should modify the current week's schedule as we progress
@@ -53,5 +56,5 @@ anything yet. 853 at its lock-down check:
 So a conversion that has not survived its lock-down can still swing ~10 units/week back. **Spend that
 headroom on deferrable work (🟢 backlog, an unseen problem) — never on permanent new demand.**
 
-Pairs with [[feedback_surplus_triggered_intake]] (surplus is a rate, measured at the build) and
-[[feedback_proactive_scheduling]]. Related: [[feedback_phase_dates_are_advisory]].
+Pairs with [[feedback_intake_and_surplus]] (surplus is a rate, measured at the build) and
+[[feedback_schedule_integrity]]. Related: [[feedback_phase_progression]].

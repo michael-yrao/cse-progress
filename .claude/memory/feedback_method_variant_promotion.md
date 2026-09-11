@@ -13,4 +13,4 @@ For a problem tracked under multiple methods (e.g. 42 Array vs Two-Pointer, 75 D
 **How to apply:**
 - Park the variant in the knowledge-expansion queue with an explicit trigger note: "pull into rotation when <base method> graduates (🎓)."
 - When logging a result that takes the base method to 🎓 (`graduate_at_streak`), check for a parked variant and promote it: create its review row and schedule it as a new problem.
-- First concrete instance: [[project_overview]] — 42 Trapping Rain Water Two-Pointer waits on 42 Array reaching 🎓 (Array hit 🟢 streak 1 on Jul 8, 2026).
+- First concrete instance: [[project_interview_goal]] — 42 Trapping Rain Water Two-Pointer waits on 42 Array reaching 🎓 (Array hit 🟢 streak 1 on Jul 8, 2026).

@@ -57,8 +57,8 @@ one.** So deleting a row is not enough for either valve; the next commit silentl
 
 **What the tracker now means:** *"everything still unproven"* — a work queue, not a trophy case. A
 **shrinking** row count is healthy. Don't report row count as progress; the accomplishment record is
-the 🏆 list plus the technique ledgers. Related: [[feedback-surplus-triggered-intake]] (the capacity
-math this derives from), [[feedback-phase-exit-per-algorithm]] (why techniques, not problems, are the
+the 🏆 list plus the technique ledgers. Related: [[feedback_intake_and_surplus]] (the capacity
+math this derives from), [[feedback_phase_progression]] (why techniques, not problems, are the
 unit of mastery).
 
 **Status:** documented, not yet exercised. Zero rows have reached 🎓 as of Jul 26, 2026 (max streak 2),

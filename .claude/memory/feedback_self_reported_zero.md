@@ -15,7 +15,7 @@ Set by the learner Aug 8, 2026, immediately after flagging networking fact 2 as 
 part we worked" and "the part that's left" and then teach only the remainder. Re-open it from the top.
 The pieces I recorded as *covered* are exactly the pieces most likely to be mis-recorded, because what I
 actually observed was **the learner following along in the moment**, which is not retention — it is the
-same distinction as [[feedback_coding_for_clean]] (recognition ≠ execution) and the teach/measure split.
+same distinction as [[feedback_coding_rules]] (recognition ≠ execution) and the teach/measure split.
 
 **Why the learner is right to force the worst case, and why it's cheap:**
 

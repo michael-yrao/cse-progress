@@ -29,14 +29,14 @@ NC150 problem. Parking is a statement about ROI; making it for the wrong reason 
    any per-phase notes), and update that phase's **new-problem count** so the intake cap arithmetic
    and the phase-completion bar ("N of M 🎓 Graduated") stay honest.
 3. **Curriculum scope ≠ schedule timing.** Promoting something into a phase says it is *in scope*;
-   it does **not** override the difficulty-tiered intake cap ([[feedback_difficulty_tiered_intake]]).
+   it does **not** override the difficulty-tiered intake cap ([[feedback_intake_and_surplus]]).
    A promoted item still waits for a real slot. Say the new count out loud when promoting — a phase
    quietly growing from 7 to 9 moves the completion bar.
 4. **Say what you did NOT promote and why.** The rule is "worthy ROI gets added," which only means
    something if the bar is applied honestly in both directions. Redundant-with-something-already-done
    is the most common reason to decline.
 5. The queue keeps its two legitimate jobs: **below-the-line depth**, and **phase-gated 🔴s**
-   ([[feedback_phase_gated_blanks]]).
+   ([[feedback_phase_progression]]).
 
 Related: [[feedback_method_variant_promotion]] (a second *method* on a solved problem is still gated
 on the base retiring — that gate is about rep economics, not ROI, and this rule does not loosen it).

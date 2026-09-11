@@ -12,4 +12,4 @@ A weekly schedule's "New Problems This Week" table must contain only genuinely n
 
 **Why:** A prior schedule listed 42. Trapping Rain Water as a new problem in the week of Jun 29, even though it was an April-vintage retry already tracked since 2026-04-15 (and was already correctly listed in the same file's "April Vintage Cleared" table). User caught the double-listing and asked where new problems come from.
 
-**How to apply:** When generating a weekly schedule, cross-check every "New Problems" candidate against (1) the roadmap phase list in `study_guide.md` and (2) the absence of an existing `dsa_progress.md` row. If it fails either check, move it to the appropriate backlog/overdue table instead. See [[feedback_schedule_mistakes]] for the related out-of-order detection rule.
+**How to apply:** When generating a weekly schedule, cross-check every "New Problems" candidate against (1) the roadmap phase list in `study_guide.md` and (2) the absence of an existing `dsa_progress.md` row. If it fails either check, move it to the appropriate backlog/overdue table instead. See [[feedback_schedule_integrity]] for the related out-of-order detection rule.

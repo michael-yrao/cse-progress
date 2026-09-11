@@ -28,7 +28,7 @@ instance.
 **The cap never applied to these anyway** — its own stated rationale is the *blank tax*: "a 🔴 costs 1
 active slot plus ~2–3 follow-up warmup slots as its Blank-interval retries settle." That is the cost of learning an
 algorithm. A sibling in a known technique produces no 🔴 and no cascade, so charging it against a
-new-algorithm budget was a category error ([[feedback_difficulty_tiered_intake]] still holds, unchanged,
+new-algorithm budget was a category error ([[feedback_intake_and_surplus]] still holds, unchanged,
 for its actual class).
 
 **How to apply:**
@@ -76,7 +76,7 @@ guard retained** — the thing `green:base` was a blunt proxy for:
 
 **The distinction is 🟡 *quality*, and it is a judgement:** 150 (clean-🟡, recognition hit / execution
 slip) → sibling OK; 239 (🟡 after *three* coach fixes Aug 22) → convert first. See
-`decisions.yml` `sibling-gate-yellow-not-green`. Related: [[feedback_surplus_triggered_intake]] (when to
+`decisions.yml` `sibling-gate-yellow-not-green`. Related: [[feedback_intake_and_surplus]] (when to
 spend capacity on this coverage), [[feedback_coverage_gap_ledger]].
 
 ## ⚠️ WHERE a sibling comes from: PULL first, author last (added Aug 29, 2026)

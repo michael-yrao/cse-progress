@@ -1,12 +1,18 @@
 ---
 name: project_familiarity_engine_revisit
-description: OPEN — revisit at the Sep 7 build how the familiarity discount interacts with DAILY packing; discounted units understate the indivisible cost of the next problem.
+description: OPEN — how the familiarity discount interacts with DAILY packing; discounted units understate the indivisible cost of the next problem. Trigger is now a STATE condition, not a date.
 metadata:
   type: project
-reconciled: 2026-09-06
+reconciled: 2026-09-11
 ---
 
-**Open design question, raised by the learner Sep 3, 2026 — revisit at the Sep 7 build.**
+**Open design question, raised by the learner Sep 3, 2026.**
+
+⚠️ **Trigger de-rotted (Sep 10, 2026):** the original *"revisit at the Sep 7 build"* date **expired
+unactioned** (exactly the silent-date-expiry the [[feedback_phase_progression]] queue-audit warns against).
+Replaced with a **state condition:** revisit **the next weekly build at which familiarity-discounted
+per-day slack would seat a problem the day cannot actually fit** — i.e. when the #1-vs-#2 choice below
+actually bites. Until then it stays open and costs nothing.
 
 ## The observation
 
@@ -31,7 +37,7 @@ indivisible problem. The number is doing two jobs that the discount pulls apart:
 | **Demand-rate / library carrying capacity** (steady-state load, `Σ 1/interval`) | **Yes, genuinely** — familiar reps really do generate less load over time. Demand fell 5.4 → 3.7 u/day honestly. |
 | **Packing a single day to the ceiling** | **Questionable** — the ceiling is an *attention* judgment, and a familiar problem's attention cost is not what the discount says. |
 
-## Candidate framings to decide between (Sep 7)
+## Candidate framings to decide between (when the trigger condition fires)
 
 1. **Two prices, two uses.** Keep the discounted price for the demand-rate / capacity calc, but pack a
    *day* against something closer to the **nominal/cold** price — or against the explicit test *"does the
@@ -46,8 +52,8 @@ indivisible problem. The number is doing two jobs that the discount pulls apart:
 
 ## Decision for now (Sep 3)
 
-Framing #2 in practice: **did not seat new work into this week's freed per-day slack.** Let the Sep 7
-build absorb the week-level surplus. Revisit whether packing should use a separate (cold/nominal or
-slot-count) measure then — decide #1 vs #2 explicitly rather than leaving it implicit.
+Framing #2 in practice: **did not seat new work into that week's freed per-day slack** — let the next
+build absorb the week-level surplus. Decide #1 vs #2 explicitly when the trigger condition above fires,
+rather than leaving it implicit.
 
-See [[decisions]] `familiarity-discounting`, `docs/foundations/effort_budget.md` (familiarity section).
+See `decisions.yml` `familiarity-discounting`, `docs/foundations/effort_budget.md` (familiarity section).
