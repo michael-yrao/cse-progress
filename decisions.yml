@@ -37,6 +37,21 @@
 # "could a rule written before this still read as correct while now being wrong?"
 
 decisions:
+  - id: self-eval-loop-fires-and-routes
+    date: 2026-09-10
+    summary: >-
+      The self-evaluation meta-review now FIRES (it was an unfired paragraph, 40 days overdue):
+      session_start_memory.py computes days-since-last-meta-review + an open count of entries dated AFTER
+      that review, and injects a "META-REVIEW OVERDUE" banner past thresholds in cse.config.yml
+      (self_eval.meta_review_days / .open_threshold). The intervention ladder's "numbered step" rung now
+      routes by trigger: a coaching-moment rule → a skill reference (loads at that moment), an unprompted one
+      → CLAUDE.md; the meta-review's promotion step is an EDIT to that layer, not another memory note.
+      Also folded ~6 operational orphans that were memory-only into their skill references (SD drills
+      quantify_qualify/hld_altitude/coverage_gap_ledger/expand_acronyms → system-design.md; explanation_register
+      → SKILL §1; recommend_by_number → scaffolding; dsa_before_sd → weekly-build), leaving each memory file as
+      the why. Follows the memory de-convolution (73→51 files) done the same day.
+    affects: [self_evaluation, operating_principles, system_design, teaching, scaffolding, weekly_build, reconcile]
+
   - id: skill-layer-in-intervention-ladder
     date: 2026-09-10
     summary: >-

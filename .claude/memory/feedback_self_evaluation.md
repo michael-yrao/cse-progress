@@ -3,7 +3,7 @@ name: feedback_self_evaluation
 description: On any self-correction, append a note to self_eval_log.md; periodically meta-review the log to promote recurring mistakes into durable rules
 metadata:
   type: feedback
-reconciled: 2026-09-10
+reconciled: 2026-09-11
 ---
 
 Run a continuous self-improvement loop so mistakes convert into durable rules instead of silently recurring.
@@ -20,11 +20,20 @@ Whenever something you did gets corrected — whether **you** catch it or the **
 
 ## 2. Periodically — meta-review the log
 
-At the **start of each week's first session** (or whenever `open` entries reach ~8), do a self-evaluation of the self-evaluations:
+**The trigger is now fired, not remembered (2026-09-10).** The SessionStart hook computes it and injects a
+loud `META-REVIEW OVERDUE` banner when the log's last meta-review is older than `self_eval.meta_review_days`
+OR the open count reaches `self_eval.open_threshold` (both in `cse.config.yml`). Do the review when the
+banner fires (or at the start of a week):
 - Cluster the `open` entries by root cause.
 - Any root cause that appears **2+ times** gets promoted — **using the ladder below**, so the mistake is prevented structurally, not just remembered.
+- **Promotion is an EDIT, not a note.** A **coaching-moment** rule → add the operational statement to the
+  right **skill reference** (`.claude/skills/cse-coach/references/*.md` — it loads at that moment) and leave
+  the *why* in a memory file that cross-links it; record a `decisions.yml` entry if the model changed (that
+  forces the skill re-read via `reconcile.py`). **Cross-cutting/unprompted** → a hook or a CLAUDE.md gate.
+  **Pure judgement, no trigger** → a memory file (the weakest rung — see below).
 - Mark promoted entries `consolidated→<the actual fix>`. Leave true one-offs `open` (they may still cluster later).
-- Keep the log append-only; don't delete entries, just update their status.
+- Keep the log append-only; don't delete entries, just update their status. **Archive** `consolidated→`
+  entries (and old meta-review cluster bodies) to `self_eval_archive.md` so the live log stays small.
 
 ### ⚠️ The intervention ladder (added 2026-08-02, from the first full clustering pass)
 
@@ -58,8 +67,11 @@ A rule that must fire *unprompted* cannot live only in an opt-in read (a memory 
 CLAUDE.md is always injected, the skill and memory are opt-in, and on 2026-08-02 an entire session ran with
 no memory loaded at all. See `decisions.yml` `skill-layer-in-intervention-ladder`.
 
-**This section applies to this file too.** The meta-review was itself a paragraph-rule with no trigger, and
-it went unrun for 19 days while the log grew to 20 `open` entries against a threshold of ~8. It is now
-gate 2 in `.claude/hooks/session_start_memory.py`.
+**This section applies to this file too.** The meta-review was itself a paragraph-rule with no trigger — it
+went unrun for **40 days** (log grown to ~45 `open` entries) before the 2026-09-10 audit caught it. It is
+now **computed and fired** by `meta_review_banner()` in `.claude/hooks/session_start_memory.py`, which
+injects a `META-REVIEW OVERDUE` banner at session start once it is due. (Earlier this note said "gate 2" —
+that was wrong: gate 2 of the ALWAYS-ON block *logs* a correction; the overdue *trigger* is the computed
+check, which did not exist until 2026-09-10.)
 
 **Why:** The user wants mistakes to feed back into the system. A one-off correction is noise; a *repeated* one is a missing rule. This loop surfaces the repeats. It's the same synthesis we did manually to produce [[feedback_operating_principles]] — now automated and ongoing.

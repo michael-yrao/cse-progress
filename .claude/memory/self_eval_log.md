@@ -5,6 +5,47 @@
 
 Append-only log of corrections. Governed by [[feedback_self_evaluation]]. Newest at top. Meta-review promotes recurring root causes into rules; entries are never deleted, only re-statused.
 
+## 2026-09-11 [P2] — Friday demo lineup used `../../../dsa/...` schedule-row links (dead from repo root) — recurrence of the 09-04 source-fixed root
+Asked for a dry-run of the Friday session-start, I built the board as a table by hand-copying rows out of
+`20260907_schedule.md`. Those rows carry `../../../dsa/...` paths (correct three folders deep in the schedule
+file, dead when the chat renderer resolves them against the repo root) — `problem_link_reminder.py` blocked
+the turn. **Root:** the same hand-copy-the-schedule-row habit the 2026-09-04 entry SOURCE-FIXED — the
+presented lineup is supposed to be `scripts/links.py <n> ...` output verbatim (reads path from disk, can't be
+wrong). The source fix exists; I simply didn't route through it. Two-layer miss, actually: the same hand-copy
+also dragged Note-column text and technique parentheticals (⚠️ protected / min-first greedy / no-teach-first)
+into a lineup table — the recognition-gate spoiler the 09-04 learner correction ("name + links ONLY") named.
+The demo framing doesn't excuse it: a demo of the session-start must model the correct session-start.
+**This is the 3rd lapse** the 09-04 entry was watching for ("watch for a 3rd lapse to confirm it holds") — the
+prose+source-fix pairing did NOT hold under a demo/narrative turn, because narrating "what the agent does"
+bypassed the reflex to actually RUN links.py. consolidated→[[feedback_kickoff_table_format]] /
+[[feedback_kickoff_table_links.md]] (source fix is correct but under-triggered; the trigger is ANY presented
+lineup, including a described/demoed one, not just a live kickoff).
+
+## 🔬 META-REVIEW 2026-09-10 — first review in 40 days; the two live recurring roots were fixed structurally this session
+
+Overdue by the loop's own cadence (last meta-review 2026-08-02). The 2026-09-10 memory-audit did the
+structural clustering; this records the promotions and resets the cadence. The trigger itself was the
+biggest finding — the meta-review had **no firing mechanism** and sat unrun; now computed by
+`meta_review_banner()` in `session_start_memory.py` (see [[feedback_self_evaluation]]).
+
+**The two roots with 2+ recurrences — both promoted OFF the memory layer this session:**
+- **Lineup/link spoilers & missing links** (Focus/Note columns 09-03, 09-04; the 12-lapse links history).
+  → Promoted to the **skill**: `references/scaffolding.md` "Presenting the kickoff / lineup board" +
+  `references/review-workflow.md`, backed by the `links.py` source-fix. Memory why merged into
+  [[feedback_lineup_links_only]]. This is a skill-reference promotion, the new top "step" rung.
+- **Push-to-act / advance-the-learner tails** (08-26, 09-03, 09-04, 09-09). A memory paragraph
+  ([[feedback_let_learner_pace]]) that kept recurring → promoted to **SKILL.md principle 3** ("the learner
+  sets the tempo"), a top-level always-loaded coaching principle. Stronger rung than the paragraph.
+
+**Everything else** reviewed as one-offs (no 2+ cluster) — left `open`; they may still cluster later.
+**Ladder lesson reinforced:** both promotions went to the *skill* layer, not another memory file — the
+skill loads at the coaching moment, which is exactly where these lapse. The memory-paragraph rung stays the
+weakest (its 7/9 recurrence record is why).
+
+**Deferred (mechanical, low-risk):** physically archiving the ~10 `consolidated→` entries + the 08-02 July
+cluster body to `self_eval_archive.md` — the log isn't injected, so its size costs no context; do it when
+convenient rather than risk mis-slicing an append-only file at session end.
+
 ## 2026-09-10 [P1] — dated a new decisions.yml entry with the wall-clock date (09-11), not the session date (09-10)
 During the CLAUDE.md→skill refactor I hand-wrote `skill-layer-in-intervention-ladder` as `date: 2026-09-11`
 and stamped several `reconciled:` fields the same way, following the harness "today is 2026-09-11" notice.
