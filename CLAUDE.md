@@ -24,7 +24,8 @@ read `SKILL.md` + `references/` directly as plain markdown.
 only in an opt-in read — so the always-on gates below stay here (and in the SessionStart
 hook), while moment-triggered engine detail lives in the skill, loaded when its moment
 arrives. If a standing rule keeps lapsing, ask: **is it a step in an executable list, or
-merely a paragraph?**
+merely a paragraph?** — or, in tier terms, *is it in too cold a tier?* The full model (the four
+tiers, the "which tier?" routing rule, the compaction loop) is [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
 
 ## Always-on gates — bound to a MOMENT, not a topic
 
@@ -50,7 +51,7 @@ them. The *how* is in the named skill reference.
    the commit — both, or neither counts. (`weekly-build.md`.)
 8. **Asked to commit or push?** ⚠️ **Ask first, every time. No exceptions.** Make the edits,
    say what is staged, and stop; accumulate edits and let them land in one commit when the
-   learner says so. (`feedback_batch_commits.md`.)
+   learner says so. (`feedback_commit_discipline.md`.)
 
 ## Two registers: latitude when thinking, stringency when executing (Aug 21, 2026)
 

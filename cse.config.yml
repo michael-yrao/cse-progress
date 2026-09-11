@@ -224,3 +224,10 @@ discovery_skip: [76, 1216, 974, 18, 472, 399]   # 76 Minimum Window Substring �
                              #      re-injects it into the review table as a 🔴 with no
                              #      attempt dates, restarting the +2-day churn that
                              #      phase-gating exists to stop.
+
+# Self-evaluation loop cadence — the SessionStart hook injects a "META-REVIEW OVERDUE"
+# banner when the log's last meta-review is older than meta_review_days OR the open-entry
+# count reaches open_threshold. (Operational cadence, not an engine-tuned value.)
+self_eval:
+  meta_review_days: 14
+  open_threshold: 8
