@@ -37,6 +37,24 @@
 # "could a rule written before this still read as correct while now being wrong?"
 
 decisions:
+  - id: skill-layer-in-intervention-ladder
+    date: 2026-09-10
+    summary: >-
+      The coaching engine moved out of the always-injected CLAUDE.md into a repo-local skill
+      (.claude/skills/cse-coach/SKILL.md + references/), loaded only at coaching moments; CLAUDE.md
+      dropped 899→168 lines / 70KB→~10KB and now carries only always-on gates, the register rules,
+      single-source, decisions/reconcile, the token-discipline cap, and pointers. The intervention
+      ladder's "numbered step" rung is now split by trigger: a COACHING-MOMENT rule goes in a skill
+      reference (loads reliably at that moment); a CROSS-CUTTING / unprompted rule stays in CLAUDE.md
+      (injected every turn). Skill files carry `reconciled:` (SKILL.md in frontmatter, references in an
+      HTML comment) and are in reconcile.py RULE_GLOBS + check_single_source.py PROSE_GLOBS, so a future
+      decision flags a stale reference and a restated tuned value is caught there too. The self-evaluation
+      LOOP itself stays where it was (SessionStart hook gates 2/3 + feedback_self_evaluation.md) — it is
+      not a coaching moment; only its distilled lessons live as dated warnings inside the references.
+      Not an upstream sync: cse-progress had drifted ahead of canonical cse-coach and uses different
+      paths, so the skill was authored from this repo's own current CLAUDE.md.
+    affects: [operating_principles, self_evaluation, single_source, reconcile, scaffolding, review_workflow, effort_budget, weekly_build, technique_coverage, system_design]
+
   - id: complexity-probe-drill
     date: 2026-09-06
     summary: >-

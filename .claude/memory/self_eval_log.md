@@ -5,6 +5,18 @@
 
 Append-only log of corrections. Governed by [[feedback_self_evaluation]]. Newest at top. Meta-review promotes recurring root causes into rules; entries are never deleted, only re-statused.
 
+## 2026-09-10 [P1] — dated a new decisions.yml entry with the wall-clock date (09-11), not the session date (09-10)
+During the CLAUDE.md→skill refactor I hand-wrote `skill-layer-in-intervention-ladder` as `date: 2026-09-11`
+and stamped several `reconciled:` fields the same way, following the harness "today is 2026-09-11" notice.
+But the session began 2026-09-10 and only crossed midnight mid-session — the tree is dirty, so the **session
+date is 09-10** (`session_date.py`). Caught it because `reconcile.py` (which reads `session_date.py`) stamped
+09-10, contradicting my 09-11 decision date. Fixed the decision date and the stamps to 09-10.
+**Root:** hand-editing a dated artifact used wall-clock instead of the session date — the exact class
+[[feedback_session_dating]] and the `session_date.py` source fix exist to prevent; the source fix only covers
+the *scripts*, and a manual edit bypasses it. **The reconcile step surfaced it before commit**, which is the
+source fix doing its job one layer out. consolidated→[[feedback_session_dating]] (existing rule; manual
+edits to decisions.yml / frontmatter must use the session date — when unsure, let a script stamp it).
+
 ## 2026-09-04 [P2] — Friday lineup carried technique names + a Note column (84/1462) — 2nd lapse in 2 days
 Presented the Friday board as a table with a Note cell ("Floyd-Warshall", "recognition call
 re-measured", "closes the Stack phase") and technique parentheticals in the titles. Spoils the

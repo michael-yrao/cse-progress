@@ -5,9 +5,12 @@ with a System Design pillar). This file is the **agent-agnostic entry point** so
 drive it from GitHub Copilot, the **caveman** skill, or any assistant — not just
 Claude Code.
 
-> **Recommended: Claude Code**, which auto-loads memory and the full workflow. Other
-> agents: read [`CLAUDE.md`](CLAUDE.md) in full — it is the source of truth for the
-> review workflow, the comfort scale, the guardrails, and the schedule rules.
+> **Recommended: Claude Code**, which auto-loads memory and the coaching skill. Other
+> agents: read [`.claude/skills/cse-coach/SKILL.md`](.claude/skills/cse-coach/SKILL.md) and
+> its `references/` — that is the source of truth for the review workflow, the comfort scale,
+> the guardrails, and the schedule rules (Claude Code loads it as a skill; you read it as
+> plain markdown). [`CLAUDE.md`](CLAUDE.md) is now thin — the always-on gates + repo-maintenance
+> rules + pointers; read it too, but the engine is in the skill.
 
 ## The contract (essentials)
 1. **Comfort = infer, then confirm.** After a problem, infer 🟢 Clean / 🟡 Shaky /
@@ -26,7 +29,8 @@ Under the caveman skill or any low-credit setup: terse output, caveman-compresse
 problem statements, no recaps. Rules unchanged — only verbosity drops.
 
 ## Key files
-- `CLAUDE.md` — full workflow (read first)
+- `.claude/skills/cse-coach/SKILL.md` + `references/` — the coaching engine (read first)
+- `CLAUDE.md` — always-on gates, repo-maintenance rules, pointers (thin)
 - `cse.config.yml` — engine settings
 - `scripts/update_review_dates.py` — Comfort→interval engine (runs on commit)
 - `docs/foundations/dsa/mastery/dsa_progress.md` — the DSA tracker

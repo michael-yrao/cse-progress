@@ -70,6 +70,11 @@ RULE_GLOBS = (
     # the retired-vocabulary list has no entry for a superseded PHRASING of a workflow step.
     # Recording the decision and letting THIS file fall out of date is what surfaces it.
     "CLAUDE.md",
+    # The coaching engine moved into the skill (2026-09-10). Its rules are opt-in reads, so a
+    # decision that postdates a reference file's `reconciled:` is the signal that the skill has
+    # not been read against the change — the same temporal check CLAUDE.md gets. SKILL.md carries
+    # `reconciled:` in frontmatter; each reference file carries it as an HTML comment.
+    ".claude/skills/**/*.md",
 )
 
 #: Not rules: an append-only dated log records what was true AT THE TIME and is never
