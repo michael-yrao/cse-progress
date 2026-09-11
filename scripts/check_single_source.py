@@ -76,6 +76,9 @@ PROSE_GLOBS = (
     "AGENTS.md",
     "docs/foundations/**/*.md",
     ".claude/memory/*.md",
+    # The coaching engine's rules now live in the skill, so it is where a value would be
+    # restated — same failure mode as CLAUDE.md prose (added 2026-09-10 with the skill refactor).
+    ".claude/skills/**/*.md",
 )
 PROSE_EXCLUDE = ("docs/foundations/schedules/",)
 

@@ -3,7 +3,7 @@ name: feedback_self_evaluation
 description: On any self-correction, append a note to self_eval_log.md; periodically meta-review the log to promote recurring mistakes into durable rules
 metadata:
   type: feedback
-reconciled: 2026-09-06
+reconciled: 2026-09-10
 ---
 
 Run a continuous self-improvement loop so mistakes convert into durable rules instead of silently recurring.
@@ -40,13 +40,23 @@ Rank the options; take the strongest one that applies:
 1. **Source fix** — make the tool structurally incapable of the mistake. *(4/4 held)*
 2. **Hook** — bind it to a tool call or event the mistake cannot avoid. `scaffold_links_reminder.py` ended
    a 5-lapse streak that four memory-file reinforcements had not dented.
-3. **Numbered step** in a CLAUDE.md workflow the agent must walk through to finish the task.
+3. **Numbered step** in a workflow the agent must walk through to finish the task. Two homes, and the
+   choice is by trigger (added 2026-09-10 with the skill refactor):
+   - **A skill reference** (`.claude/skills/cse-coach/references/*.md`) for a **coaching-moment** rule —
+     one that fires when the learner starts/reviews a problem, scaffolds, builds the week, or runs a mock.
+     The skill loads reliably at exactly that moment, so a step placed there is read when it is needed and
+     costs nothing the rest of the time. This is the strongest "step" for a coaching rule.
+   - **The always-injected CLAUDE.md** for a **cross-cutting / unprompted** rule — one with no single
+     coaching trigger (an always-on gate, a repo-maintenance meta-rule). CLAUDE.md is injected every turn,
+     so the rule fires without the skill being loaded.
 4. **Memory file** — reserve for genuine judgement calls with **no mechanizable trigger** (e.g. "strip down
    instead of explaining more"). *(7/9 recurred)*
 
 **Diagnostic question for any lapsing rule: "is this a step in an executable list, or merely a paragraph?"**
-A rule that must fire *unprompted* cannot live only in `.claude/memory/` — CLAUDE.md is always injected,
-memory files are opt-in reads, and on 2026-08-02 an entire session ran with no memory loaded at all.
+— and, once it is a step, **"does it fire at a coaching moment (→ skill reference) or unprompted (→ CLAUDE.md)?"**
+A rule that must fire *unprompted* cannot live only in an opt-in read (a memory file *or* a skill reference):
+CLAUDE.md is always injected, the skill and memory are opt-in, and on 2026-08-02 an entire session ran with
+no memory loaded at all. See `decisions.yml` `skill-layer-in-intervention-ladder`.
 
 **This section applies to this file too.** The meta-review was itself a paragraph-rule with no trigger, and
 it went unrun for 19 days while the log grew to 20 `open` entries against a threshold of ~8. It is now
