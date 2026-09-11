@@ -22,6 +22,42 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-09-10 ──────────────
+    def findItinerary_20260829_minheap_20260910(self, tickets: List[List[str]]) -> List[str]:
+        # Eulerian Path since we need to use all tickets (edges) once and only once
+        # path and not Circuit since we are not guaranteed to get back to the starting point
+        # since we are also required to do lexicographical order
+        # we can do this one of two ways: sort -> stack hierholzer or minHeap hierholzer
+        # we will do minHeap Hierholzer
+        # so we have an adjMap that holds a heap instead of a list
+        # and we do the classic Hierholzer algorithm, which is to add to result when we 
+        # have no neighbors for this node to visit
+
+        adjMap = collections.defaultdict(list)
+
+        # initialize our adjMap
+        for src, dst in tickets:
+            heapq.heappush(adjMap[src],dst)
+
+        result = []
+        def dfs(node):
+            nonlocal result
+            # if nowhere else to visit, add it to result
+            if not adjMap[node]:
+                result.append(node)
+                return
+            # if neighbors to visit, dfs on them
+            while adjMap[node]:
+                dfs(heapq.heappop(adjMap[node]))
+            
+            # when we get here, we would have gone through every neighbor
+            # now we add the node
+            result.append(node)
+        
+        dfs("JFK")
+        result.reverse()
+        return result
+
     # ── Attempt · 2026-09-05 ──────────────
     def findItinerary_20260829_minheap_20260905(self, tickets: List[List[str]]) -> List[str]:
         # Eulerian Path since we are visiting edges once each

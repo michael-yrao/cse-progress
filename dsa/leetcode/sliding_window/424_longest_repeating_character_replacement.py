@@ -27,9 +27,39 @@ Constraints:
 
 from collections import defaultdict
 import collections
+import math
 
 
 class Solution:
+
+    # ── Attempt · 2026-09-10 ──────────────
+    def characterReplacement_20260910(self, s: str, k: int) -> int:
+        # our size is bound by the maximum freq char of our current window
+        # issue is that in order to finding max freq each time is very costly
+        # so main challenge of this problem is actually how do we tackle the max freq problem
+        # in an efficient amount of time
+        # we need a freqMap to keep track of freq for each char
+        # keep track of biggest freq and if current index is not equal, what do we do
+        # if current index is equal, what do we do
+
+        longest = -math.inf
+        
+        l = r = 0
+
+        freqMap = collections.defaultdict(int)
+        maxFreq = 0
+        while r < len(s):
+            freqMap[s[r]]+=1
+            maxFreq = max(freqMap[s[r]], maxFreq)
+            # shrink until window is valid
+            while r - l + 1 > maxFreq + k:
+                freqMap[s[l]]-=1
+                l+=1
+            # update longest if it is the biggest
+            longest = max(longest, r - l + 1)
+            r+=1
+        
+        return longest # type: ignore
 
     # ── Attempt · 2026-08-31 ──────────────
     def characterReplacement_20260831(self, s: str, k: int) -> int:

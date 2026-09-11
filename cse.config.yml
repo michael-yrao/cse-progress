@@ -204,7 +204,7 @@ solutions:
 
 # Problem numbers whose source file exists but should NOT be auto-added to the
 # tracker (they re-enter when properly solved and logged).
-discovery_skip: [76, 1216, 974, 18, 472]   # 76 Minimum Window Substring — parked
+discovery_skip: [76, 1216, 974, 18, 472, 399]   # 76 Minimum Window Substring — parked; 399 Evaluate Division — disposable F-W 3rd, scaffolded Sep 10, carried to a fresher day
                              # 472 Concatenated Words — PARKED Sep 9, 2026 (phase-gated blank). Its
                              #      binding technique is Word Break, never encoded; 🔴 first exposure.
                              #      Re-queued behind 139 Word Break (Waiting Room trigger `rated:139`).

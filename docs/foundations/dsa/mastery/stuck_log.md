@@ -2406,3 +2406,28 @@ place to meet the technique. Parked behind 139 (pure Word Break); `discovery_ski
 **Genuinely theirs:** trie build, sort-by-length reasoning, the "reset-to-root causes re-scan" memo intuition.
 **Rating:** 🔴, phase-gated — NO +2 loop; re-rep gated `rated:139`. Correct solution reached (passes LC) but
 technique supplied throughout. Its being a phase-gated blank is why it parks instead of churning.
+
+### 2026-09-10 · 424 Longest Repeating Character Replacement · 🔴 (never-encoded, not decayed)
+**Root:** the learner said it plainly — *"i honestly don't understand this problem, it feels new every single
+time I try."* This is the never-encoded signature (§2a), not decay: 8 prior attempt dates, still re-deriving
+from scratch under pressure. The whole problem is one inequality and it had never been internalized.
+**Where stuck / what was supplied (all coach):**
+1. **No window at all.** First code accumulated a *global* freqMap that never decrements — no left pointer, no
+   shrink. Surfaced with failing case `"AABA", k=0` (returns 3, answer 2).
+2. **Wrong shrink variable.** Added a window but tested `size > freqMap[s[r]] + k` — the count of the *newest*
+   right char, not the window's max. Over-shrinks when the right edge isn't the dominant char. Failing case
+   `"BAABA", k=1` → 3 vs 4. Supplied the concept: validity depends on the window's *most frequent* char.
+3. **Live count vs high-water mark.** Switched to `freqMap[maxFreqChar]`, still wrong (`"ABBB", k=1` → 3 vs 4):
+   `freqMap[maxFreqChar]` *decrements* when that char is evicted, collapsing the window. Supplied the key
+   property — maxFreq must be a **high-water mark that never decreases** (a scalar, not a live dict read).
+   Learner then wrote correct code (fuzz-verified 20k cases, 0 mismatches).
+**Taught the spine (uncapped):** a window is valid ⟺ `windowSize − maxFreq ≤ k` — keep the commonest letter,
+replace the rest, that count must fit in k. Everything else (freqMap, maxFreq, shrink, record size) is
+bookkeeping to evaluate that one line as the window slides. Framed as the same skeleton as every variable-size
+sliding-window problem; only the inequality changes. (The *why maxFreq may be stale* proof deferred — offered, not taken.)
+**Complexity:** time O(n) correct (each char in/out once). **Space missed AGAIN** — said O(n) for freqMap;
+it's O(1) / fixed-26 (uppercase-only alphabet). This is the repo's most-repeated miss category (see
+complexity_gotchas). Freebie long spent → repeat miss, but rating was already 🔴 on execution.
+**Genuinely theirs:** once handed the high-water-mark property, the implementation and the eviction bookkeeping.
+**Rating:** 🔴, standard +2 (Sat Sep 12) — a real forgetting gap after the teach; provisional lock-down on any
+clean stacks the further gap. Learner's call on the +2 (vs a 10-day push): a Blank→Clean is provisional anyway.
