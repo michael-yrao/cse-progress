@@ -3,12 +3,12 @@ name: feedback_infer_comfort
 description: Infer the Clean/Shaky/Blank rating from the session and propose it for confirmation — don't ask the user cold
 metadata:
   type: feedback
-reconciled: 2026-09-06
+reconciled: 2026-09-11
 ---
 
 After a problem, **infer** the comfort rating yourself from what actually happened in the conversation, then state it as a proposal for the user to confirm or override. Do not ask an open "How did that feel — Clean, Shaky, or Blank?" when the transcript already answers it.
 
-**Why:** the rubric is written down (CLAUDE.md) and I watched the whole attempt — I know how many hints I gave, whether they self-caught their bugs, and whether they could derive the approach. Making the user supply what I can already read is offloading work they shouldn't have to do.
+**Why:** the rubric is written down (the coaching skill — `SKILL.md` §2 / `references/spaced-repetition.md`) and I watched the whole attempt — I know how many hints I gave, whether they self-caught their bugs, and whether they could derive the approach. Making the user supply what I can already read is offloading work they shouldn't have to do.
 
 **How to apply:**
 
@@ -34,7 +34,7 @@ Under-rating a fresh 🔴 as 🟡 isn't a harmless rounding: it sets the next re
 
 They write solutions **in the LeetCode editor with no autocomplete**, on purpose: *"it's easy to miss these
 things as there is no auto complete, fits better with the google doc style interviews."* That is a
-**deliberate fidelity choice**, the same instinct as whiteboard fidelity ([[feedback_whiteboard_fidelity]])
+**deliberate fidelity choice**, the same instinct as whiteboard fidelity ([[feedback_coding_rules]])
 — practise under the conditions the interview actually imposes.
 
 **What follows for rating:** when a flagged defect is a **transcription slip** — a duplicated line from a
@@ -49,7 +49,7 @@ where `<` belonged, in a union-by-rank block whose logic they could state correc
 latter. **Don't stretch this**: a slip that survives *because they never traced the branch* is a
 verification gap, not a typo, and the tell is whether they recognize it instantly when shown.
 
-Honesty matters more than agreeableness here: if they claim 🟢 but I supplied a real fix they missed, say so plainly (see the 355 and 36 exchanges) — then defer to their call. Related: [[feedback_no_spoilers]], [[feedback_phase_gated_blanks]] (which is the *one* case where a 🔴 doesn't get the Blank-interval loop — an un-taught technique, not a just-taught one).
+Honesty matters more than agreeableness here: if they claim 🟢 but I supplied a real fix they missed, say so plainly (see the 355 and 36 exchanges) — then defer to their call. Related: [[feedback_no_spoilers]], [[feedback_phase_progression]] (which is the *one* case where a 🔴 doesn't get the Blank-interval loop — an un-taught technique, not a just-taught one).
 
 ## Local test findings are raised, then weighed — not automatic caps (Aug 16, 2026)
 
@@ -65,3 +65,11 @@ testing", and not "report as interview-prep only".
 the rating including it, and then **defer without re-arguing** if the learner discounts it. The finding
 still lands in the ledgers as a record; only the comfort number is theirs. Same shape as the standing rule
 in this file — honesty first, their call final.
+
+## A repeat low rating is NOT evidence of a repeating cause (migrated from the closed D&C-gap note, Jul 29 / Aug 8, 2026)
+
+Before firing the teach reflex on a row that has gone 🟡/🔴 more than once, **diff the `stuck_log` entries**
+— three 🟡s on one problem were often three *unrelated* causes, not one persistent gap (seen on the D&C
+recursion row and on 560 the same day). Reacting to the rating count instead of the actual sticking points
+re-teaches something already known and wastes the rep. The rating history says *"still unproven"*; the
+stuck-log says *why* — read the why before deciding the cause.

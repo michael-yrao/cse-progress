@@ -6,7 +6,7 @@ metadata:
 reconciled: 2026-09-06
 ---
 
-Once NC150 is largely retired and the learner enters the knowledge-expansion phase, **weekly schedule generation is the trigger** for the application thread. This extends [[feedback_end_of_week_schedule]] and [[feedback_proactive_scheduling]] — the weekly build now assembles, in priority order:
+Once NC150 is largely retired and the learner enters the knowledge-expansion phase, **weekly schedule generation is the trigger** for the application thread. This extends [[feedback_end_of_week_schedule]] and [[feedback_schedule_integrity]] — the weekly build now assembles, in priority order:
 
 1. **Due reviews first (spaced-rep sweep)** — everything with `Next Review Date ≤ end of the coming week`, slotted Blank → Shaky → Clean → Retired.
 2. **Active blocks = current learning** — the next **expansion-tier techniques** (segment tree, KMP, XOR trie, …) from the expansion queue. This is the protected 45-min slot.

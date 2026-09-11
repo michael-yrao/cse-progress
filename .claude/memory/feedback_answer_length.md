@@ -15,7 +15,7 @@ multi-section report with tables and bolded asides, the one load-bearing sentenc
 has to be re-explained anyway — so volume actively defeats its own purpose. This was said after a run
 of answers that each opened with a findings table and closed with "two things worth knowing".
 
-⚠️ **It is a CAP, not a nudge.** [[feedback_turn_economy]] already said "one job per turn" and the
+⚠️ **It is a CAP, not a nudge.** [[feedback_teaching]] already said "one job per turn" and the
 CLAUDE.md token-discipline rule already said "be lean", and answers stayed long. Both were phrased as
 dispositions; this one is a hard limit with a fixed escape hatch, which is the difference between a
 rule that fires and a paragraph.
@@ -39,8 +39,8 @@ offered.
 - **NOT capped**, because these were never the problem: the comfort-rating rationale (propose + why),
   concept explanations when stuck or asked, `stuck_log`/debrief/memory writing, and reporting that an
   action may have gone wrong or a finding that changes what to do next — state it, then stop.
-- **Depth goes in a file, not the chat.** Same move as [[feedback_turn_economy]]: if it is worth
+- **Depth goes in a file, not the chat.** Same move as [[feedback_teaching]]: if it is worth
   keeping, it belongs in a note that gets reread, not in scrollback.
 
-Full rule: the *Token discipline* section of `CLAUDE.md`. Related: [[feedback_spine_first]],
+Full rule: the *Token discipline* section of `CLAUDE.md`. Related: [[feedback_teaching]],
 [[feedback_interactive_learning]].

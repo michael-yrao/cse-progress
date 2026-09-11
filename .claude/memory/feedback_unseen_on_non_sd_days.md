@@ -3,8 +3,11 @@ name: feedback-unseen-on-non-sd-days
 description: Standing rule — every day with no SD slot must carry at least one unseen problem (new intake or a recognition probe)
 metadata:
   type: feedback
-reconciled: 2026-09-06
+reconciled: 2026-09-11
 ---
+
+**Operational rule lives in the skill** — `references/weekly-build.md` (every non-SD day carries ≥1 unseen
+problem, placed before backlog). This file is the *why* + the build judgement.
 
 **Set by the learner Aug 9, 2026:** *"I want to always have new or probe problems on days that have no
 system design. problems that i have seen more than twice will always be a bit more lenient on me."*
@@ -48,7 +51,7 @@ of pure review unless SD is doing the hard work instead."*
    Fall back to a **probe** when phase intake is capped or exhausted.
 4. Only then fill remaining units with due reviews and the 🟢 backlog.
 
-⚠️ **The intake caps still bind.** Difficulty-tiered intake ([[feedback_difficulty_tiered_intake]]) is
+⚠️ **The intake caps still bind.** Difficulty-tiered intake ([[feedback_intake_and_surplus]]) is
 moderate 5 / hard 4 / DP 3 per week. **The probe is the release valve**: in a DP phase capped at 3, the
 fourth non-SD day takes a probe, not a fourth new problem. A probe costs no permanent demand (no tracker
 row on 🟢), so it never fights the cap.

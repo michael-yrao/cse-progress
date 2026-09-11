@@ -15,7 +15,7 @@ first time and explain what problem the algorithm solves."*
 
 Two artifacts already pointed at this and **both are passive**:
 
-- [[feedback_algorithm_purpose_first]] (Jul 26) says lead with the problem and the broken assumption,
+- [[feedback_teaching]] (Jul 26) says lead with the problem and the broken assumption,
   never the mechanism. But it fires **while you are already explaining** — i.e. *after* a rep went wrong.
 - `patterns/README.md` → *Graph algorithms — the name index* (Aug 5) is a **lookup you must know to go
   read**. `stuck_log.md` records that it was prompted by this very failure: *"same failure kind as 332's
@@ -46,7 +46,7 @@ Scheduled **at the weekly build**, whenever the week contains a first exposure t
 | Covers | Deliberately excludes |
 |---|---|
 | **The object** — what thing is being found, and **its name**. *"A walk that uses every edge exactly once. It is called an Eulerian path."* | **The procedure.** That is the first rep, or the teach if the rep stalls |
-| **The discriminator** — the nearest neighbouring object and the one feature that separates them. *Eulerian = edges, Hamiltonian = nodes — and one is linear while the other is NP-hard* | **The proof.** Only on request, and later. See [[feedback_procedure_first]] |
+| **The discriminator** — the nearest neighbouring object and the one feature that separates them. *Eulerian = edges, Hamiltonian = nodes — and one is linear while the other is NP-hard* | **The proof.** Only on request, and later. See [[feedback_teaching]] |
 | **Why it needs an algorithm at all** — what the obvious approach does, and what it costs | |
 
 ⚠️ **The first attempt lands at least a day later.** Same reason a teach is gap-protected: a primer

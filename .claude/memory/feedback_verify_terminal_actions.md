@@ -62,5 +62,5 @@ section that ended up taught rather than derived because the session had been de
   for the meta-work first, which overrides this.
 
 Same family as [[feedback_read_before_asserting]] — acting on state never actually verified. Interacts
-with [[feedback_batch_commits]] and [[feedback_end_of_session_push]]: those say *when* to commit, this
+with [[feedback_commit_discipline]] and [[feedback_commit_discipline]]: those say *when* to commit, this
 says **confirm the session is actually over first**. Logged in [[self_eval_log]].

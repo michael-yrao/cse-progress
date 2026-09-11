@@ -20,7 +20,7 @@ for interactive methods (Jul 14 2026) after an explanation-only Redis thread lef
 4. ~~**Cold blind sprint** (Recall Card)~~ — **retired Aug 13, 2026** with the study lanes. What measures SD now is a cold mock ([[project_sd_mock_model]]); the ladder above still governs **requested** teaching, which is the only teaching left on the SD track.
 
 **What does NOT work (stop doing):**
-- Escalating explanation essays. Correct detail without a skeleton = noise. See [[feedback-spine-first]].
+- Escalating explanation essays. Correct detail without a skeleton = noise. See [[feedback_teaching]].
 - Answering a follow-up with more surface area than the question had.
 - Tables/mechanisms/edge cases before the learner has stated the core idea back once.
 
@@ -61,7 +61,7 @@ derive from** — switch to spine-then-pull immediately rather than reaching for
 
 ⚠️ **And check Bootstrap before assuming a topic has been taught at all.** *"A note exists"* is not
 *"the learner has been taught"* — writing the card is the coach producing, not the learner learning. See
-the Aug 8 entry in [[self_eval_log]] and [[feedback_spine_first]].
+the Aug 8 entry in [[self_eval_log]] and [[feedback_teaching]].
 
 ## ⚠️⚠️ Correction, same day (Aug 8, 2026, session 3): spine-then-pull is the learner's STANDING FORMAT, not a zero-state fallback
 
@@ -95,8 +95,8 @@ which is why it beat two attempts at derivation and produced the best SD session
 **The distinction that matters:** a Socratic question asks them to *produce the answer*; this format asks
 them to *produce the question*. They are still doing the cognitive work — they own the direction, the
 gap-finding, and the depth — but they are never asked to invent a mechanism they have no basis to invent.
-Do not read "no derivation" as "back to explanation dumps": [[feedback_spine_first]] and
-[[feedback_turn_economy]] still bind. **One bit per turn, then stop.**
+Do not read "no derivation" as "back to explanation dumps": [[feedback_teaching]] and
+[[feedback_teaching]] still bind. **One bit per turn, then stop.**
 
 **Where derive-the-design still belongs:** DSA reps and *design* sessions (lane ③), where the learner is
 building the thing rather than learning what the thing is. This carve-out is about conceptual/plumbing
