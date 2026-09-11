@@ -3,8 +3,10 @@ name: feedback-dsa-before-sd
 description: Standing session order — clear all DSA first, then run SD last, so the SD slot has an open-ended tail for the learner's questions
 metadata:
   type: feedback
-reconciled: 2026-09-06
+reconciled: 2026-09-11
 ---
+
+**Operational rule lives in the skill** — `references/weekly-build.md` ("Day order"). This file is the *why*.
 
 **Set by the learner Aug 9, 2026:** *"let's finish all DSA and then SD as the standard so we can spend
 more time on SD at the end for me to ask a lot of questions."*

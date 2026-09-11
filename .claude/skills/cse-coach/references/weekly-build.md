@@ -1,4 +1,4 @@
-<!-- reconciled: 2026-09-10 -->
+<!-- reconciled: 2026-09-11 -->
 # End-of-week close-out & schedule build
 
 **Open this** when today is the last session of the week. **Not for** a mid-week rep (that's
@@ -58,6 +58,11 @@ week's assumptions.
 - **⚠️ Check every active phase has reps on the board.** (Found Aug 9, 2026: `Sliding Window +
   Stack` opened Aug 3 and sat a week with zero of its 8 problems in the tracker — invisible because
   the board was full of legitimate review work.)
+
+**Day order:** within each day, place **all DSA first, SD last** — the SD slot gets the open-ended tail
+(spine-then-pull has no natural stopping point; bounded DSA reps do), so SD also absorbs any overrun. Never
+push SD to the next day unless the learner asks (a started design that moves becomes unratable). full rule:
+[`feedback_dsa_before_sd`](.claude/memory/feedback_dsa_before_sd.md).
 
 **Minimum contents of the built week:** capacity/surplus arithmetic · per-day load row · daily
 table · protected reps · backlog/slip list (nothing dropped without a date or an explicit "no date
