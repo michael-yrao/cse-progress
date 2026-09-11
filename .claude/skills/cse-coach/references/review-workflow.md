@@ -1,4 +1,4 @@
-<!-- reconciled: 2026-09-10 -->
+<!-- reconciled: 2026-09-11 -->
 # LeetCode review workflow — gate detail
 
 **Open this** for any problem discussion (solving, reviewing, or the learner mentioning a
@@ -94,6 +94,10 @@ full rule: [`feedback_read_before_asserting.md`](.claude/memory/feedback_read_be
 
 ## Schedule integrity
 
+**Any lineup or restate table you present** (mark-completed step, "what's next", hand-over) is **problem
+name + links only** — build from `python scripts/links.py <n> ...`, no Note/Focus/technique/comfort column
+(it spoils the recognition gate). See `scaffolding.md` → "Presenting the kickoff / lineup board".
+
 When a problem is dropped or deferred, **a new specific slot is assigned in the same edit** —
 never remove a problem without immediately adding it to another day. A deferred problem with no
 new date is a missed problem. After logging any result, add its computed next-review date to the
@@ -121,4 +125,4 @@ Make the edits, say what is staged, and **stop**. Accumulate edits across the se
 in one commit when the learner says so. Commit early only if the learner is about to switch
 machines or the session ends unexpectedly — and then *say so and ask*, never decide unilaterally.
 The normative rule lives in the always-injected CLAUDE.md (that copy wins); this is the workflow
-step. full rule: [`feedback_batch_commits.md`](.claude/memory/feedback_batch_commits.md).
+step. full rule: [`feedback_commit_discipline.md`](.claude/memory/feedback_commit_discipline.md).

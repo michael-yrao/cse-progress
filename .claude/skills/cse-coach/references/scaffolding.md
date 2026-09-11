@@ -1,4 +1,4 @@
-<!-- reconciled: 2026-09-10 -->
+<!-- reconciled: 2026-09-11 -->
 # Scaffolding a problem
 
 **Open this** before you create or set up any problem file for the learner.
@@ -113,6 +113,40 @@ blocks a scaffold and is silent when offline.**
 - ⚠️ A TLS-trust failure is **not** "offline." A Python with no root certificates fails every
   call forever, so silence would leave the check looking installed while never running. It
   prints one line naming the fix (`Install Certificates.command` / `pip install certifi`).
+
+## Presenting the kickoff / lineup board — name + links, NOTHING else
+
+A presented lineup — the kickoff board, a mid-session restate, a "what's next" hand-over —
+carries **only the problem, as its links**: `[<n> <title>](repo-relative .py path) · [LC]`
+(or `[NC]` if premium), the pair inside the problem cell. **No Note/Focus/technique/comfort/
+units/difficulty column, and no technique parenthetical in the title.**
+
+⚠️ **Any column beyond the name spoils the recognition front-gate** — the one thing the gate
+exists to measure. `Course Schedule IV (Floyd-Warshall)`, a "Focus" cell reading "post-order
+hinge", a Note cell with the exact miss to watch — each hands the learner the call before they
+recall it. Comfort/units belong in the *schedule file* for planning; they never ride the lineup
+shown to the learner. (Learner, twice: *"The tables should just be the name of the problems and
+links, nothing else."*)
+
+⭐ **Build the lineup from `scripts/links.py <n> ...`, VERBATIM — never hand-copy schedule rows.**
+The script reads the title from each file's header, so it emits a clean pair with no technique
+parenthetical and no Note column; hand-copying a row drags along its `(technique)` title and its
+rep-directive Note cell, which is exactly how the spoiler leaks. Run it, paste the lines, add
+nothing:
+
+```sh
+$ python scripts/links.py 743 332
+[743 Network Delay Time](dsa/leetcode/graphs/743_network_delay_time.py) · [LC](https://leetcode.com/problems/network-delay-time/)
+[332 Reconstruct Itinerary](dsa/leetcode/graphs/332_reconstruct_itinerary.py) · [LC](https://leetcode.com/problems/reconstruct-itinerary/)
+```
+
+⭐ **Recommend by number, steer by description.** When you suggest what to do next, link **only the pick**
+(name + `[file]·[LC]`); refer to problems you're steering *away from* by **description, not number** — a
+link is an invitation, so linking a steer-away advertises the rep you're declining. full rule:
+[`feedback_recommend_by_number_steer_by_description`](.claude/memory/feedback_recommend_by_number_steer_by_description.md).
+
+full rule: [`feedback_lineup_links_only.md`](.claude/memory/feedback_lineup_links_only.md); the links
+pair itself is the links rule (both links, inside the problem cell, `NC` when premium).
 
 ## The recognition probe variant
 

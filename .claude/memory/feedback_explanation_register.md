@@ -3,14 +3,16 @@ name: feedback_explanation_register
 description: Explanations read as "foreign" when the principle is named before the mechanics are shown and every step is wrapped in why-this-matters framing — show literal values first, name things after, and when they say "I don't understand," ASK which link broke instead of re-explaining; also holds the BANNED VOCABULARY list (load-bearing, footgun, …)
 metadata:
   type: feedback
-reconciled: 2026-09-06
+reconciled: 2026-09-11
 ---
+
+**Operational rule lives in the skill** — `SKILL.md` §1 (Register). This file is the *why* + the banned-vocab list.
 
 **Learner, Aug 10, 2026, mid-Redis-teach:** *"I think I have trouble with Opus model's explanation
 sometimes, it feels very foreign the way it explains things."*
 
-This is **register**, not ordering, which is what makes it distinct from [[feedback_procedure_first]]
-and [[feedback_spine_first]]. Those say *which* facts come first. This is about the **packaging around
+This is **register**, not ordering, which is what makes it distinct from [[feedback_teaching]]
+and [[feedback_teaching]]. Those say *which* facts come first. This is about the **packaging around
 them** — and the packaging was the problem on a session where the content was landing fine.
 
 ## What reads as foreign
@@ -78,7 +80,7 @@ requires full content on: the comfort-rating rationale, concept explanations whe
 reasoning behind a decision, and `stuck_log.md` entries. Those stay complete. What goes is the framing
 wrapped around them. A short answer that drops the *why* is a different failure, not this fix.
 
-Also unchanged: [[feedback_turn_economy]] (one job per turn), [[feedback_procedure_first]] (mechanics
+Also unchanged: [[feedback_teaching]] (one job per turn), [[feedback_teaching]] (mechanics
 before proof), and the requirement to *ask* rather than assert. Terse and Socratic are compatible;
 this does not license answering a question the learner should derive.
 

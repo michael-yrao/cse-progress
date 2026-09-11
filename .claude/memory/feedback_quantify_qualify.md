@@ -3,8 +3,10 @@ name: feedback_quantify_qualify
 description: In system design, drill quantify (a number on every claim) + qualify (condition + boundary on every choice) at every framework step
 metadata:
   type: feedback
-reconciled: 2026-09-06
+reconciled: 2026-09-11
 ---
+
+**Operational rule lives in the skill** — `references/system-design.md` ("During & after the mock"). This file is the *why*.
 
 Standing SD coaching discipline (learner requested Jul 20, 2026): push the learner to **quantify and
 qualify** every statement so they build the habit of high-quality, senior-level answers.

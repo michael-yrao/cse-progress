@@ -1,4 +1,4 @@
-<!-- reconciled: 2026-09-10 -->
+<!-- reconciled: 2026-09-11 -->
 # System Design — the learner studies, you interview
 
 **Open this** before running or scheduling a System Design mock, and before any SD teaching.
@@ -49,6 +49,22 @@ computed next-review date comes back to a schedule file here** — schedule-inte
 *(There were three tracks until Aug 13, 2026; the AI track was removed — never started, a plan
 nobody executed. The one AI-flavoured design that mattered survives as a board row: **ChatGPT**,
 on HelloInterview's Hard tier.)*
+
+## During & after the mock — the coach's drills
+
+These fire while you run the mock; each memory file holds the *why*.
+
+- **Quantify & qualify every step** — push a **number on every claim** and a **condition/boundary on every
+  choice** at each framework step; coach the fusion sentence ("[choice] because [number]; trades X for Y;
+  breaks at [scale] → [alternative]"). full rule: [`feedback_quantify_qualify`](.claude/memory/feedback_quantify_qualify.md).
+- **Hold HLD altitude** — the learner defaults to LLD (storage shape, DB internals); keep them at HLD through
+  framework steps 1–4 and **name each altitude slip** ("drawing a box, or standing inside one?"). full rule:
+  [`feedback_hld_altitude`](.claude/memory/feedback_hld_altitude.md).
+- **Expand every acronym on first use**, in chat and in the note — SD material is acronym-dense. full rule:
+  [`feedback_expand_acronyms`](.claude/memory/feedback_expand_acronyms.md).
+- **End the mock by logging what wasn't reached** as bare open questions in the debrief's "❓ Open" section
+  (the unspoiled mock-interview bank) — ask whether to answer now or hold for the next mock. full rule:
+  [`feedback_coverage_gap_ledger`](.claude/memory/feedback_coverage_gap_ledger.md).
 
 ## ⚠️ Worst-case retention — a self-report of "not down" means ZERO kept
 
