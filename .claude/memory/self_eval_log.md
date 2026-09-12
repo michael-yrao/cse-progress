@@ -5,6 +5,24 @@
 
 Append-only log of corrections. Governed by [[feedback_self_evaluation]]. Newest at top. Meta-review promotes recurring root causes into rules; entries are never deleted, only re-statused.
 
+## 2026-09-12 [P2] — Advance-prompt tail promoted OFF prose to a Stop hook (reverses the Aug 20 "no matcher" choice); in-session summary layer considered and DECLINED
+Planning question: is an in-session context-truncation / summary layer worth adding against within-session
+degradation (a rule stated early lapsing later — LITM)? **Declined** — the harness already auto-compacts, a
+bespoke summary fights the tiered design and degrades coaching nuance, and LITM is cured by small hot context
++ position-independent re-injection (hooks), not by compressing the middle. The repo's own 2026-08-02
+meta-review already proved the layer question: memory paragraphs recurred 7/9, source fixes held 4/4, hooks
+held. A within-session lapse is just the **coldest** case — a rule living only in hot chat. **So the
+within-session defense IS the Stop hooks, which re-fire every turn regardless of conversation position.**
+The audit then surfaced one fragile-but-mechanizable root to promote: the **advance-prompt tail** ("Code
+it.", "ready for the next one?", "on to 271"), which lapsed 4+× as prose (09-01, 09-03, 09-04, 09-09) — the
+ladder's threshold. **Conflict surfaced before finalizing:** [[feedback_let_learner_pace]]:34 recorded the
+learner **declining this exact hook on Aug 20** in favor of a flat behavioural rule. Raised it; the learner
+chose to **reverse** that (premise "prose will hold" expired). **Fix landed (rung 2, hook):**
+`advance_prompt_tail()` in `.claude/hooks/problem_link_reminder.py` (already wired on Stop, no settings
+change) — inspects only the turn's FINAL ≤7-word sentence so the required gate prompts + genuine rep
+questions stay clean; 14 self-test cases pass. consolidated→ `advance_prompt_tail` hook +
+[[feedback_let_learner_pace]] (reversal noted) + `decisions.yml` `no-summary-layer-advance-tail-hook`.
+
 ## 2026-09-11 [P2] — Presented the live Friday board as a 4-column table with a "What it is" column → technique spoiler; escalated OFF prose to a blocking hook
 In this session's live kickoff I built the board as `# | Problem | Mode | What it is`. The "What it is"
 cells named the technique for 239 (monotonic-deque) and 134 (running-tank reset) — the exact recognition

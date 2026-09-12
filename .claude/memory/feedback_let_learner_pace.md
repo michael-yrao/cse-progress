@@ -3,8 +3,17 @@ name: feedback_let_learner_pace
 description: Don't drive progression — answer what was asked, then STOP; no "ready for the next one?" tail. The learner controls when to advance.
 metadata:
   type: feedback
-reconciled: 2026-09-06
+reconciled: 2026-09-12
 ---
+
+⭐⭐⭐ **NOW HOOK-ENFORCED (2026-09-12) — the Aug 20 "no matcher" preference was REVERSED.** After the
+flat behavioural rule lapsed 4+ more times as prose (09-01, 09-03, 09-04, 09-09) — the intervention
+ladder's threshold to leave the prose rung — the learner chose to promote it. `advance_prompt_tail()`
+in `.claude/hooks/problem_link_reminder.py` (Stop hook, re-fires every turn) blocks a turn whose FINAL
+short sentence pushes the next rep ("Code it.", "ready for the next one?", "on to 271"). Deliberately
+narrow: final sentence only, ≤7 words, so the required complexity/recognition gate prompts and a
+genuine rep question stay clean. This supersedes the "picked a flat rule over a Stop-hook" note below —
+the premise (prose will hold) expired. See `decisions.yml` `no-summary-layer-advance-tail-hook`.
 
 ⭐ **The GATES are not an exemption (learner, Sep 3, 2026 on the 124 handoff).** Handing over a
 scaffolded rep and closing with *"give me your pre-code call…"* is the same push in yet another
@@ -32,7 +41,8 @@ drives every transition. No "next" from the coach unless they say go.** This is 
 just the question form of it. Chosen after two pacing slips in one session (Aug 20): advance-prompts
 tacked onto answers while the learner was still asking genuine discrimination questions about the
 current problem (*"stop rushing me"*). The learner picked this over a Stop-hook on advance-prompt
-phrases — a flat behavioural rule, not a matcher.
+phrases — a flat behavioural rule, not a matcher. **(⚠️ REVERSED 2026-09-12 — see the top note: the
+prose rule lapsed 4+× more, so the Stop-hook was built after all.)**
 
 In any multi-turn thread — a coding rep debrief, a card-by-card review, a teaching session —
 **end the turn after answering the current thing. Do not append an advance-prompt** ("ready for

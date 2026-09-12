@@ -534,6 +534,91 @@ SPOILER_MESSAGE = (
 )
 
 
+# ── Advance-prompt-tail detector ─────────────────────────────────────────────────
+# When a point resolves, the turn ENDS at the answer — the learner sets the tempo
+# (SKILL.md principle 3; decisions.yml `pace-flat-discipline`; feedback_let_learner_pace).
+# A trailing imperative or nudge toward the NEXT rep — "Code it.", "ready for the next
+# one?", "on to 271", "shall we move on?" — drives a progression the learner already
+# owns. This lapsed as PROSE 4+ times (2026-08-20 ×2, 09-01, 09-03, 09-04, 09-09), which
+# is the intervention ladder's threshold to leave the prose rung, so it becomes a hook.
+#
+# Deliberately narrow, like every detector here: it inspects only the turn's FINAL
+# sentence and only when that sentence is SHORT (a tacked-on tail, not a substantive
+# close). So "once you code it up, the amortized O(1) shows" — a long final sentence
+# mid-teach — and a genuine question the rep itself raised are untouched, and the
+# REQUIRED gate prompts (complexity / recognition) never match the advance vocabulary.
+# A false positive trains the agent to skim past the hook, the one cost a hook can't pay.
+
+# Short advance nudges that ARE the whole tail (matched against the cleaned final
+# sentence exactly). Bare "next"/"ready" are deliberately EXCLUDED — too ambiguous, and
+# "whenever you're ready" is the blessed learner-paced close, which must stay silent.
+ADVANCE_EXACT = {
+    "go", "go ahead", "go for it", "let's go", "lets go", "onward",
+    "next one", "next up",
+}
+
+# Nudges recognizable wherever they sit inside a short final sentence.
+ADVANCE_PHRASE = re.compile(
+    r"(?:"
+    r"(?:now\s+)?code\s+(?:it|this|that)(?:\s+up)?"   # "code it", "now code it up", "code that up"
+    r"|ready\s+for\s+(?:the\s+|another\b|a\s+)?(?:next|one)"
+    r"|ready\s+to\s+move\s+on"
+    r"|(?:shall|should)\s+we\s+move\s+on"
+    r"|let'?s\s+move\s+on"
+    r"|let'?s\s+(?:do|tackle|start|try)\s+(?:the\s+)?next"
+    r"|move\s+on\s+to\s+(?:the\s+)?next"
+    r"|on\s+to\s+(?:the\s+)?(?:next|\d{1,4})"
+    r")",
+    re.IGNORECASE,
+)
+
+# A tail is a SHORT final sentence. Longer than this is a substantive close, not a nudge.
+ADVANCE_TAIL_MAX_WORDS = 7
+
+
+def _final_sentence(text: str) -> str:
+    """The turn's last sentence, cleaned of markdown, for tail inspection.
+
+    Takes the last non-empty line, strips a leading list/quote/heading marker and
+    surrounding emphasis, then returns the final sentence within it.
+    """
+    lines = [ln.strip() for ln in text.strip().splitlines() if ln.strip()]
+    if not lines:
+        return ""
+    last = lines[-1]
+    last = re.sub(r"^[>\-*\d.)#\s]+", "", last)          # leading list/quote/heading markers
+    last = last.replace("*", "").replace("`", "").strip()  # emphasis / code ticks
+    parts = [p.strip() for p in re.split(r"[.!?]+", last) if p.strip()]
+    return parts[-1] if parts else ""
+
+
+def advance_prompt_tail(text: str) -> str:
+    """The advance-prompt tail ending this turn, or "" when it ends cleanly.
+
+    Returns the offending fragment so the block message can quote it back.
+    """
+    tail = _final_sentence(text)
+    norm = tail.lower().rstrip("?!.").strip()
+    if not norm or len(norm.split()) > ADVANCE_TAIL_MAX_WORDS:
+        return ""                                   # a substantive close, not a nudge
+    if norm in ADVANCE_EXACT or ADVANCE_PHRASE.search(norm):
+        return tail
+    return ""
+
+
+ADVANCE_MESSAGE = (
+    "ADVANCE-PROMPT TAIL — this turn ends by pushing the learner to the next rep: "
+    "\"{tail}\".\n"
+    "The learner sets the tempo (SKILL.md principle 3). When a point resolves, END THE "
+    "TURN at the answer — no \"code it\", no \"go\", no \"on to X\", no \"ready for the "
+    "next one?\". Silence is the correct close; the learner drives every transition.\n"
+    "Re-emit the turn WITHOUT the trailing nudge — keep the substance, drop the last "
+    "sentence that pushes pace. (A genuine question the rep itself raised is fine; this "
+    "fires only on a short tail that advances the learner.)\n"
+    "Rule: .claude/memory/feedback_let_learner_pace.md"
+)
+
+
 # Re-enabled 2026-08-14 after the 10th lapse got past it. It was disabled on the day it
 # was written because `last_assistant_text()` read only the FINAL assistant entry, which
 # is almost always a `tool_use` record with no text. The replacement above gathers the
@@ -577,6 +662,16 @@ def main() -> None:
     if spoiler:
         json.dump(
             {"decision": "block", "reason": SPOILER_MESSAGE.format(signals="; ".join(spoiler))},
+            sys.stdout,
+        )
+        return
+
+    # A turn that resolves and then pushes to the next rep drives pace the learner owns.
+    # Board-independent: it reads only the turn's own final sentence.
+    tail = advance_prompt_tail(text)
+    if tail:
+        json.dump(
+            {"decision": "block", "reason": ADVANCE_MESSAGE.format(tail=tail)},
             sys.stdout,
         )
         return
@@ -695,6 +790,30 @@ SPOILER_CASES = [
 ]
 
 
+# Advance-prompt-tail cases for advance_prompt_tail. The turn ENDS at the answer; a
+# short trailing nudge to the next rep is the failure. The required gate prompts and a
+# genuine rep question must stay clean.
+ADVANCE_CASES = [
+    # (name, text, should_flag)
+    ("bare 'Code it.'", "The invariant holds at each pop. Code it.", True),
+    ("'code it up' tail", "That's the monotonic-deque direction settled.\nNow code it up.", True),
+    ("ready for the next one", "Deque direction is settled. Ready for the next one?", True),
+    ("on to a number", "Nice — that closes 239. On to 271.", True),
+    ("shall we move on", "The recognition call is right. Shall we move on?", True),
+    ("bare go", "Looks right.\nGo.", True),
+    ("let's do the next", "Complexity checks out. Let's do the next problem.", True),
+    # Negatives — must stay silent.
+    ("ends on the answer", "The amortized cost is O(n) because each index is pushed and popped once.", False),
+    ("complexity gate prompt", "What's the time and space complexity — each with a why?", False),
+    ("recognition gate prompt", "What shape do you see, and what technique does it pick?", False),
+    ("code-it inside a long close",
+     "Once you code it up the two-pointer walk makes the O(n) bound obvious.", False),
+    ("whenever you're ready (blessed close)", "That settles the invariant. Whenever you're ready.", False),
+    ("genuine rep question", "Does the deque hold indices or values in your version?", False),
+    ("make sense check", "So the window never shrinks past the max. Make sense?", False),
+]
+
+
 def _selftest(transcript: str | None = None) -> int:
     failures = 0
     for name, text, expected in CASES:
@@ -723,6 +842,16 @@ def _selftest(transcript: str | None = None) -> int:
             print(f"FAIL  {name}: flag={got}, expected {expected} -> {spoiler_lineup(text)}")
     failures += spoiler_failures
     print(f"spoiler:  {len(SPOILER_CASES) - spoiler_failures}/{len(SPOILER_CASES)} passed")
+
+    advance_failures = 0
+    for name, text, expected in ADVANCE_CASES:
+        got = bool(advance_prompt_tail(text))
+        if got != expected:
+            advance_failures += 1
+            print(f"FAIL  {name}: flag={got}, expected {expected} -> "
+                  f"{advance_prompt_tail(text)!r}")
+    failures += advance_failures
+    print(f"advance:  {len(ADVANCE_CASES) - advance_failures}/{len(ADVANCE_CASES)} passed")
 
     board_failures = 0
     for name, text, board, expected in BOARD_CASES:
