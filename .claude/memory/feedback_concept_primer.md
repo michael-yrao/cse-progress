@@ -1,5 +1,5 @@
 ---
-name: feedback-concept-primer
+name: feedback_concept_primer
 description: Before the FIRST exposure to a named algorithm, run a short unrated session on the OBJECT it finds and the name of that object — the procedure comes later, on a different day
 metadata:
   type: feedback

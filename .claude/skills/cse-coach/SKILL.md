@@ -28,7 +28,12 @@ interviews** and score them (§7).
 ## When to open which reference file
 
 `SKILL.md` is the spine. Open the reference file for the moment at hand — do not
-pre-load them all.
+pre-load them all. **Each reference is operationally self-sufficient: act from it.**
+A trailing `full rule:` / `why:` citation to a `.claude/memory/*.md` file is the
+*why/evidence* archive (L3) — read it only to understand *why* a rule exists or when
+a decision names it, never as a step needed to *do* the task. Operational resources it
+may also cite — a `*_gotchas.md` ledger, `cse.config.yml`, a generated `*_coverage.md` —
+are the exception: open those when the task needs them.
 
 | Moment | Open |
 |---|---|

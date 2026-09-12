@@ -79,65 +79,42 @@ Persistent behavioral preferences live in `.claude/memory/`. At session start, r
 memories to `.claude/memory/` in this repo** (not `~/.claude/projects/`) and index them in
 `MEMORY.md`, so they sync across machines via git.
 
-## Single source of truth for tuned values
+## Single source of truth, and dated decisions
 
-**Every tuned number — review intervals, the effort ceiling/floor, comfort/difficulty
-weights, `graduate_at_streak` — is stated in [`cse.config.yml`](cse.config.yml) and NOWHERE
-else. Prose points at it; prose never copies it.** The failure is always silent, and it is
-always the copy nobody executes from that rots.
+**Every tuned number — review intervals, the effort ceiling/floor, comfort/difficulty weights,
+`graduate_at_streak` — lives in [`cse.config.yml`](cse.config.yml) and NOWHERE else. Prose points at
+the key; prose never copies the number.** (Silent failure: the copy nobody executes from is the one
+that rots — rationale in [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).)
 
 | | |
 |---|---|
-| **Changing a value** | edit `cse.config.yml`, and nothing else. A second file updated was already a bug |
+| **Changing a value** | edit `cse.config.yml`, nothing else — a second file updated was already a bug |
 | **Writing prose** | name the key and point at the config; never write the number |
-| **Writing code** | read the config. A `DEFAULT_CONFIG` fallback is allowed only where the tool must run before a config exists, and must announce loudly when it fires |
-| **Recording history** | a dated entry stating what a number *was* is correct; mark it `single-source-ok` so the checker skips it |
+| **Writing code** | read the config; a `DEFAULT_CONFIG` fallback only where the tool runs before a config exists, and it must announce when it fires |
+| **Recording history** | a dated entry stating what a number *was* is fine — mark it `single-source-ok` |
 
-### ⚠️ The one DELIBERATE exception: rules live in layers
+**Rules are the one deliberate exception — they live in two layers:** the normative sentence in the
+always-injected/loaded layer (here, or a skill reference for a coaching-moment rule), the *why/evidence*
+in a `.claude/memory/feedback_*.md`.
 
-Values, history and evidence are single-sourced. **Rules are not** — the normative sentence
-sits here (or in a skill reference for a coaching-moment rule) *and* the reasoning sits in a
-`.claude/memory/feedback_*.md`. This is accepted: this file is injected every turn, so moving
-each rule's full derivation here would carry it forever.
+> The always-injected/loaded sentence is NORMATIVE and WINS. A memory file carries the why, the evidence
+> and the occurrence log — and must never be the only place a rule is stated.
 
-> **The rule sentence in the always-injected/loaded layer is NORMATIVE and WINS. A memory file
-> carries the why, the evidence and the occurrence log — and must never be the only place a
-> rule is stated.**
+So a rule change lands in CLAUDE.md (or the skill reference) in the **same edit**, always.
 
-So a rule change lands in CLAUDE.md (or the skill reference) in the same edit, always. `reconcile.py`
-covers this file and the skill, forcing a re-read when a decision is recorded — the affordable
-90% of keeping the layers agreeing.
-
-### Enforced, not remembered
+**[`decisions.yml`](decisions.yml) dates when the MODEL changed** (`cse.config.yml` says what values
+*are*; this says when they became that) — record a decision there in the same edit. Staleness is checked
+*temporally, not lexically*: every rule file carries `reconciled: YYYY-MM-DD`; a file predating a decision
+hasn't been read against it. ⚠️ **CLAUDE.md and the skill files are IN SCOPE** — always injected, so a
+stale rule here is obeyed over a correct one anywhere else.
 
 ```sh
-python scripts/check_single_source.py           # report
-python scripts/check_single_source.py --check    # exit 1 on drift
+python scripts/check_single_source.py --check    # exit 1 on a copied value (script-vs-config = hard; prose = advisory)
+python scripts/reconcile.py                       # what hasn't been read against which decision
 ```
 
-Runs from the pre-commit hook. Script-defaults-vs-config is an exact hard finding; prose
-restating a value is heuristic and advisory.
-
-## Decisions are dated, and rules are reconciled against them
-
-**[`decisions.yml`](decisions.yml) is the dated record of when the MODEL changed.**
-`cse.config.yml` says what values *are*; this says when they became that. **Record a decision
-there in the same edit that makes it.** Rules go stale when their PREMISE expires, not when
-their words drift — so the check is temporal, not lexical: every rule file carries
-`reconciled: YYYY-MM-DD`; a file predating a decision has not been read against it.
-
-⚠️ **CLAUDE.md and the skill files are IN SCOPE.** This file is always injected, so when it and
-a memory file disagree this is the copy that gets obeyed — a stale rule here is strictly worse
-than anywhere else.
-
-```sh
-python scripts/reconcile.py                      # what has not been read against what
-python scripts/reconcile.py --file <path> ...    # "I read these; they are right or now fixed"
-```
-
-Bump the date only after actually reading the file (it asserts a judgement, not an edit);
-never derive it from `git log`. The pre-commit hook runs it, report-only, when `decisions.yml`
-is staged.
+Both run report-only from the pre-commit hook. Bump a `reconciled:` date only after actually re-reading
+the file — never derive it from `git log`.
 
 ## Token discipline (efficiency by default)
 
