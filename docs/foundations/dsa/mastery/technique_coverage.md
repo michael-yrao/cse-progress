@@ -6,19 +6,17 @@
 
 > The tracker is keyed by **problem**; this is keyed by **technique**. Use it at the weekly build to decide what to pull, and at phase exit to check the per-algorithm bar (recognition + execution, ≥1 🟢 each).
 
-> **56/56** techniques started &nbsp;·&nbsp; **2** with no 🟢 &nbsp;·&nbsp; **20** thin &nbsp;·&nbsp; **1** unqueued variant gaps
+> **56/56** techniques started &nbsp;·&nbsp; **1** with no 🟢 &nbsp;·&nbsp; **20** thin &nbsp;·&nbsp; **1** unqueued variant gaps
 
 ## ⚠️ Action list
 
 **No 🟢 — blocks per-algorithm phase exit.** Execution is unproven.
 
 - **Divide & Conquer / Sorting** (sorting) — best 🟡 across 912
-- **Monotonic Deque** (stack) — best 🟡 across 239
 
 **Thin — fewer than the 3–4 surface forms a technique needs.** One instance trains recall of that problem, not the skill.
 
 - **Bellman-Ford** (advanced_graphs) — 1/3: 787
-- **Connected Components** (graphs) — 1/3 (3 rows): 323
 - **Cycle Detection in an Iterated Sequence** (graphs) — 1/2: 202
 - **Divide & Conquer / Sorting** (sorting) — 1/3: 912
 - **HashMap + Doubly Linked List (LRU)** (linked_list) — 1/3: 146
@@ -28,6 +26,7 @@
 - **Stack (expression evaluation)** (stack) — 1/2: 150
 - **Binary Search (max boundary)** (binary_search) — 2/3: 34, 74
 - **Binary Search on Answer** (binary_search) — 2/3: 875, 1011
+- **Connected Components** (graphs) — 2/3 (4 rows): 323, 547
 - **Dijkstra** (advanced_graphs) — 2/3: 743, 778
 - **Floyd's Cycle / Midpoint** (linked_list) — 2/3: 141, 143
 - **Floyd-Warshall (all-pairs shortest path)** (advanced_graphs) — 2/3: 1334, 1462
@@ -64,7 +63,7 @@
 | Binary Search (min boundary) | binary_search | 7 (34, 153, 162, 540, 875, 1011, 2300) | 🟢 | ✅ | — | — |
 | Binary Search on Answer | binary_search | 2 (875, 1011) | 🟢 | ✅ | — | thin (2/3) |
 | BFS on Implicit Graph | graphs | 1 (127) | 🟢 | ✅ | — | — |
-| Connected Components | graphs | 1 *+2v* (323) | 🟢 | ✅ | DFS ×1 · BFS ×1 · Union-Find ×1 | thin (1/3) |
+| Connected Components | graphs | 2 *+2v* (323, 547) | 🟢 | ✅ | DFS ×1 · BFS ×1 · Union-Find ×1 | thin (2/3) |
 | Cycle Detection in an Iterated Sequence | graphs | 1 (202) | 🟢 | ✅ | Seen-Set ×1 · ~~Floyd Fast/Slow~~ *(queued: `🟡:202 — ready; rides 202's next rep`)* | thin (1/2) |
 | Graph Clone (DFS + Hash Map) | graphs | 1 (133) | 🟢 | ✅ | — | — |
 | Graph Cycle Detection (DFS) | graphs | 1 (261) | 🟢 | ✅ | — | — |
@@ -84,10 +83,10 @@
 | Remove Nth From End | linked_list | 1 *+1v* (19) | 🟢 | ✅ | Iterative ×1 · Postorder Recursion ×1 · ~~Preorder Recursion~~ *(queued: `expansion — parked Jul 9`)* | — |
 | Kadane | prefix_sum | 1 (53) | 🟢 | ✅ | — | — |
 | Prefix Sum | prefix_sum | 2 (53, 560) | 🟢 | ✅ | — | thin (2/3) |
-| Greedy (single pass) | sliding_window | 5 (45, 55, 122, 134, 763) | 🟢 | ✅ | — | — |
+| Greedy (single pass) | sliding_window | 6 (45, 55, 122, 134, 763, 846) | 🟢 | ✅ | — | — |
 | Sliding Window | sliding_window | 4 (3, 121, 424, 567) | 🟢 | ✅ | — | — |
 | Divide & Conquer / Sorting | sorting | 1 (912) | 🟡 | ❌ | Merge Sort ×1 · ~~Quick Sort~~ *(queued: `expansion — sorting deep-dive`)* · ~~Radix Sort~~ *(queued: `expansion — sorting deep-dive`)* · ~~Counting Sort~~ *(queued: `expansion — sorting deep-dive`)* · ~~Timsort~~ *(queued: `expansion — sorting deep-dive`)* · ~~D&C on 53~~ *(queued: `rated:912 + surplus>=1`)* | **no-green** · thin (1/3) |
-| Monotonic Deque | stack | 1 (239) | 🟡 | ❌ | — | **no-green** |
+| Monotonic Deque | stack | 1 (239) | 🟢 | ✅ | — | — |
 | Monotonic Stack | stack | 6 (84, 496, 503, 739, 853, 901) | 🟢 | ✅ | — | — |
 | Stack (augmented entries) | stack | 1 (155) | 🟢 | ✅ | — | thin (1/2) |
 | Stack (expression evaluation) | stack | 1 (150) | 🟢 | ✅ | — | thin (1/2) |

@@ -66,18 +66,21 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/dsa/mastery/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **117+5** problems &nbsp;·&nbsp; **127+5** solutions &nbsp;·&nbsp; **544+5** reps
+> **119+5** problems &nbsp;·&nbsp; **129+5** solutions &nbsp;·&nbsp; **548+5** reps
 
 | | 🏆 Retired | 🎓 Graduated | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|:---:|
-| **Solutions** | 0 | 7 | 106 | 11 | 3 |
+| **Solutions** | 0 | 7 | 107 | 12 | 3 |
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Rep Date | Rep Dates |
 |---|---|---|---|---|---|---|
+| Hard | [239. Sliding Window Maximum](https://leetcode.com/problems/sliding-window-maximum/) | 🟢 | 1 | 2026-10-11 | 2026-09-11 | 2026-08-20, 2026-08-22, 2026-09-01, 2026-09-11 |
+| Medium | [846. Hand of Straights](https://leetcode.com/problems/hand-of-straights/) | 🟡 | 0 | 2026-09-21 | 2026-09-11 | 2026-09-11 |
+| Medium | [547. Number of Provinces](https://leetcode.com/problems/number-of-provinces/) | 🔴 | 0 | 2026-09-13 | 2026-09-11 | 2026-09-11 |
+| Medium | [134. Gas Station](https://leetcode.com/problems/gas-station/) | 🟡 | 0 | 2026-09-21 | 2026-09-11 | 2026-09-09, 2026-09-11 |
 | Hard | [332. Reconstruct Itinerary (min-heap ordering)](https://leetcode.com/problems/reconstruct-itinerary/) | 🟢 | 1 | 2026-10-10 | 2026-09-10 | 2026-07-22, 2026-07-28, 2026-08-04, 2026-08-29, 2026-08-31, 2026-09-10 |
 | Medium | [424. Longest Repeating Character Replacement](https://leetcode.com/problems/longest-repeating-character-replacement/) | 🔴 | 0 | 2026-09-12 | 2026-09-10 | 2026-04-19, 2026-07-02, 2026-07-10, 2026-07-17, 2026-07-27, 2026-08-28, 2026-08-31, 2026-09-10 |
 | Medium | [763. Partition Labels](https://leetcode.com/problems/partition-labels/) | 🟡 | 0 | 2026-09-19 | 2026-09-09 | 2026-09-09 |
-| Medium | [134. Gas Station](https://leetcode.com/problems/gas-station/) | 🔴 | 0 | 2026-09-11 | 2026-09-09 | 2026-09-09 |
 | Medium | [45. Jump Game II](https://leetcode.com/problems/jump-game-ii/) | 🟡 | 0 | 2026-09-18 | 2026-09-08 | 2026-09-08 |
 | Medium | [133. Clone Graph](https://leetcode.com/problems/clone-graph/) | 🟢 | 1 | 2026-10-08 | 2026-09-08 | 2026-06-04, 2026-06-05, 2026-06-07, 2026-08-09, 2026-08-19, 2026-08-29, 2026-09-08 |
 | Medium | [721. Accounts Merge (Union-Find)](https://leetcode.com/problems/accounts-merge/) | 🟡 | 0 | 2026-09-18 | 2026-09-08 | 2026-07-30, 2026-08-09, 2026-09-08 |
@@ -103,7 +106,6 @@ Notes for future agents:
 | Hard | [127. Word Ladder (BFS)](https://leetcode.com/problems/word-ladder/) | 🟢 | 1 | 2026-10-02 | 2026-09-02 | 2026-07-18, 2026-07-21, 2026-08-03, 2026-08-13, 2026-08-23, 2026-09-02 |
 | Easy | [202. Happy Number (Seen-Set)](https://leetcode.com/problems/happy-number/) | 🟢 | 1 | 2026-10-02 | 2026-09-02 | 2026-08-11, 2026-08-21, 2026-09-02 |
 | Medium | [229. Majority Element II](https://leetcode.com/problems/majority-element-ii/) | 🟢 | 2 | 2026-11-01 | 2026-09-02 | 2026-01-30, 2026-04-14, 2026-06-27, 2026-06-29, 2026-07-12, 2026-07-24, 2026-08-03, 2026-09-02 |
-| Hard | [239. Sliding Window Maximum](https://leetcode.com/problems/sliding-window-maximum/) | 🟡 | 0 | 2026-09-11 | 2026-09-01 | 2026-08-20, 2026-08-22, 2026-09-01 |
 | Medium | [150. Evaluate Reverse Polish Notation](https://leetcode.com/problems/evaluate-reverse-polish-notation/) | 🟢 | 1 | 2026-10-01 | 2026-09-01 | 2026-08-11, 2026-08-21, 2026-09-01 |
 | Medium | [271. Encode and Decode Strings](https://leetcode.com/problems/encode-and-decode-strings/) | 🟢 | 1 | 2026-10-01 | 2026-09-01 | 2026-07-01, 2026-07-03, 2026-07-13, 2026-07-23, 2026-08-02, 2026-08-12, 2026-08-22, 2026-09-01 |
 | Medium | [53. Maximum Subarray (Prefix Sum)](https://leetcode.com/problems/maximum-subarray/) | 🟢 | 1 | 2026-10-01 | 2026-09-01 | 2026-01-08, 2026-04-01, 2026-06-27, 2026-08-20, 2026-08-22, 2026-09-01 |

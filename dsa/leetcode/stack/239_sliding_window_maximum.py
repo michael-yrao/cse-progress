@@ -20,6 +20,38 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-09-11 ──────────────
+    def maxSlidingWindow_20260911(self, nums: List[int], k: int) -> List[int]:
+        # one way to solve this is to use sliding window and minHeap
+        # this would give us a clean O(nlogn) solution
+        # what we can do better is using a monotonically decreasing stack
+        # we will use a deque to simulate a sliding window
+        # the node on the queue side will be the largest element since it is decreasing
+        # we store the index of the node instead of the value like the typical monotonic stacks
+
+        result = []
+
+        decreasingStack = collections.deque()
+
+        for i in range(len(nums)):
+            # while we violate decreasingStack, remove from the stack
+            while decreasingStack and nums[i] > nums[decreasingStack[-1]]:
+                decreasingStack.pop()
+            # now that we know we don't violate decreasingStack
+            # insert the value
+            decreasingStack.append(i)
+            # check if we violate the size of the window
+            # left most is the oldest, so let's compare i vs that
+            while i - decreasingStack[0] + 1 > k:
+                decreasingStack.popleft()
+            
+            # now we are actually a valid window
+            # check if we are at index k - 1 or above, if not, we don't add to result
+            if i >= k - 1:
+                result.append(nums[decreasingStack[0]])
+        
+        return result
+
     # ── Attempt · 2026-09-01 ──────────────
     def maxSlidingWindow_20260901(self, nums: List[int], k: int) -> List[int]:
         # the way we solve this with sliding window is with a minHeap
