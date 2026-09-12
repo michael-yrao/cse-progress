@@ -15,6 +15,7 @@ operational copy is in a skill reference or CLAUDE.md. Grouped for scanning.
 - [Answer length](feedback_answer_length.md) — an answer to a question is one small paragraph; offer expansions, don't dump. Rationale/artifacts exempt.
 - [Let the learner pace](feedback_let_learner_pace.md) — end the turn after answering; no "next?" tail; the learner drives advancement.
 - [Interactive learning](feedback_interactive_learning.md) — derive/Socratic for heavy concepts, but spine-then-pull; at TRUE ZERO it degrades → teach the spine, let them pull.
+- [Concept primer](feedback_concept_primer.md) — before the FIRST exposure to a named algorithm, a short UNRATED session on the object it finds + its name; the procedure comes later, another day.
 - [Expand acronyms](feedback_expand_acronyms.md) — expand every acronym on first use, chat + note.
 
 ## Rating & gates
@@ -29,6 +30,7 @@ operational copy is in a skill reference or CLAUDE.md. Grouped for scanning.
 ## Scaffolding, lineup & the learner's code
 - [Lineup = links only](feedback_lineup_links_only.md) — a presented board is name + links, NOTHING else (spoils recognition); every on-board mention carries the `[file]·[LC/NC]` pair. (merges the two kickoff files)
 - [Learner-code boundary](feedback_learner_code_boundary.md) — coach may date a helper (tooling); never touch the learner's logic or comments (their reps). (merges 2)
+- [Recommend by number, steer by description](feedback_recommend_by_number_steer_by_description.md) — link only the pick; name problems you're steering away from by description, not number (a link is an invitation).
 - [Schedule markdown](feedback_schedule_markdown.md) — escape the period on bullets starting with a bare problem number.
 
 ## Scheduling, curriculum & effort
