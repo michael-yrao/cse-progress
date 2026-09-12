@@ -1,4 +1,4 @@
-<!-- reconciled: 2026-09-11 -->
+<!-- reconciled: 2026-09-12 -->
 # System Design — the learner studies, you interview
 
 **Open this** before running or scheduling a System Design mock, and before any SD teaching.
@@ -48,7 +48,10 @@ computed next-review date comes back to a schedule file here** — schedule-inte
 
 *(There were three tracks until Aug 13, 2026; the AI track was removed — never started, a plan
 nobody executed. The one AI-flavoured design that mattered survives as a board row: **ChatGPT**,
-on HelloInterview's Hard tier.)*
+on HelloInterview's Hard tier. ⚠️ The AI track was **revived as a parked pillar** on Sep 12, 2026
+— see [`project_ai_pillar`](.claude/memory/project_ai_pillar.md) / `decisions.yml`
+`ai-pillar-revived-deferred`; it does not activate, and needs no SD-side action, until its DSA-headroom
+trigger fires at a weekly build.)*
 
 ## During & after the mock — the coach's drills
 

@@ -37,6 +37,31 @@
 # "could a rule written before this still read as correct while now being wrong?"
 
 decisions:
+  - id: ai-pillar-revived-deferred
+    date: 2026-09-12
+    summary: >-
+      REVISITS `ai-track-removed` (Aug 13): AI Engineering returns as a planned THIRD pillar, but
+      PARKED behind a measured trigger — not started now. Learner's calls this session: (1) DEFER
+      until DSA lightens (Backtracking opened Sep 14, DP runs Oct–Nov — the heaviest phase — and the
+      SD pillar already fills the starved "evening" slot, so there is no additive capacity now);
+      (2) GOAL = interview prep, so the path front-loads evals (02/04) → RAG (03) → agents (05) →
+      ml-system-design (10), NOT linear 00→12; (3) start at ~1 notebook/week on activation, with an
+      explicit cadence RAMP for BOTH AI and SD as DSA load drops. Design mirrors the SD pillar
+      (off-board, UNPRICED, cadence-driven, learner-does/coach-assesses, own tracker). The recorded
+      cause of the original removal — "a plan nobody executed" — is defended against three ways:
+      every AI rep is an ACTIVE scored+spaced artifact (run the notebook + a modification/eval the
+      coach probes cold, reusing the SD drills), not a reading checkbox; the activation trigger has a
+      real firing mechanism (a weekly-build checklist step, not a paragraph); and the path is a
+      prioritized subset, not a 40-notebook march. Trigger (measured, not a date): DP/Backtracking
+      phases closed AND effort_budget.py shows ≥2 days/week well under the ceiling for 2 consecutive
+      weeks. Resource: github.com/calmrocks/ai-engineer-notebooks (public — tracker lives in-repo under
+      docs/foundations/ai_engineering/, no sd-progress-style privacy split). NOT built yet (single-
+      source / no-premature-scaffold): the skill reference, the ai_progress tracker, and any
+      cse.config.yml cadence key — added at activation when they hold live values. Spec parked in
+      docs/foundations/ai_engineering/ROADMAP.md + project_ai_pillar.md.
+    supersedes: [ai-track-removed]
+    affects: [tracks, system_design, scheduling, weekly_build]
+
   - id: no-summary-layer-advance-tail-hook
     date: 2026-09-12
     summary: >-
