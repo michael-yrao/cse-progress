@@ -22,6 +22,44 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🔴 547. Number of Provinces — 2026-09-11 (🎯 Probe #7, cold, label-stripped)
+**Topic**: connected components — recognizing the shape, and Union-Find execution.
+
+### Where did I get stuck?
+Cold recognition missed. The statement's transitivity clause ("a↔b and b↔c ⟹ a↔c") read like **Floyd-Warshall**, so the call was "build the transitive closure (FW), then count the groups with **Number of Islands**." Coded a grid-DFS walking `(row±1, col±1)` neighbours — i.e. treated the **adjacency matrix as a spatial grid**. It returned 5 on `[[1,0,1],[0,1,0],[1,0,1]]` (answer 2). Getting to connected-components / Union-Find took a full coach walk-through.
+
+### Core Realization
+1. A cell `isConnected[i][j] == 1` is an **edge (i↔j), not a pixel.** So node `i`'s neighbours are **the 1s in row `i`**, not the cells physically touching it. Islands = spatial-cell neighbours; components = row-entry neighbours. Same 2D array, completely different adjacency.
+2. **DFS/BFS carries transitivity by walking it** — `dfs(0)→dfs(1)→dfs(2)` reaches an indirectly-connected node with no precomputed closure. So the FW pass was solving a problem the count never had.
+3. **What's asked picks the technique:** "how many groups?" → connected components → **Union-Find** (or DFS/BFS). FW/Dijkstra/BF are the *weighted shortest-path* family — reach for them only when a distance/closure is the **output**.
+4. ⭐ **The sharpest cold test (mine, after the fact):** *no weighted edges + nothing to minimise ⟹ the entire shortest-path family is out before you even reach "components."* The transitivity clause is just the **definition of a component** (equivalence relation) — every components problem has it; it is not an FW cue.
+
+### Code Snippet (the correct UF, once pointed at it)
+```python
+parent = {i: i for i in range(n)}; rank = {i: 0 for i in range(n)}
+def find(x):
+    if parent[x] != x: parent[x] = find(parent[x])   # path compression
+    return parent[x]
+def union(a, b):                                     # returns True on a real merge
+    ra, rb = find(a), find(b)
+    if ra == rb: return False
+    # union by rank ...
+    return True
+count = n
+for i in range(n):
+    for j in range(n):
+        if isConnected[i][j] and union(i, j):        # decrement per SUCCESSFUL merge, not per edge
+            count -= 1
+return count
+```
+Execution was clean and mine once directed; time O(n²) correct, space missed O(n²)→**O(n)** (both maps keyed by node = n entries; the n² is the *input*). Earns a tracker row; re-fires cold Sep 13.
+
+## 🟡 134. Gas Station — 2026-09-11
+**Sticking point**: +2 re-rep of the Sep 9 🔴 — the **running-tank reset written cold and unaided** (`start = i+1` when the tank goes negative), so Wednesday's teach stuck; that was the thing this rep measured. Two gaps needed flagging (not self-caught): `startingStation` initialized to `-1` (fails a feasible input that never resets → should init `0`) and the missing **feasibility gate** (`sum(gas) < sum(cost) → -1`). Learner derived both off failing cases, and correctly reasoned that the *resetting* tank can't be the feasibility signal (needs a non-resetting total). Also asked for the greedy-correctness proof (the skip lemma: a start that fails reaching B rules out everything in (A,B], so the surplus a middle start throws away is why B+1 is the only next candidate) — bonus, not required to code. 🔴→🟡. Complexity O(n)/O(1) clean.
+
+## 🟡 846. Hand of Straights — 2026-09-11
+**Sticking point**: recognition to the consecutive-sequence family was instant, but every approach the learner reached felt O(n²) (sort + re-search per group), so execution stalled. Coach-supplied unlock: a **count map** makes "is the next card present?" an O(1) lookup, so you never re-scan — take the smallest value with count > 0 as the forced group anchor and decrement its run of `groupSize`. The real gap was **amortized complexity**: the `while`-in-`for` reads as O(n·k) until you see there are only n/k group-starts (each consumes k cards), so total inner work is O(n) and the sort dominates → O(n log n). Same amortization the 239 rep needed — worth a targeted complexity rep. First exposure to min-anchor greedy on a count map. +10 re-rep fires cold on the count-map + the amortized bound.
+
 ## 🟡 45. Jump Game II — 2026-09-08
 **Sticking point**: recognition clean cold (greedy, jump by max reach), but the window mechanics were the gap — set `left = nextJumpPoint` (collapsed the layer to the single best point) so `range(left, right)` stalled and infinite-looped on `[1,2,1,1,1]`. Fix (learner's, after failing case + "what should left/right hold"): the new layer starts at the **previous `right + 1`** and extends to the farthest reach across the whole window (BFS-layer frontier). Also `n=1` returned 1 not 0 (already at last index → 0 jumps; `[0]` supplied). Clean invariant to internalize: `left = old_right + 1` visits each index once — the `left=nextJumpPoint` form re-scans a window's tail. First Greedy min-jumps exposure.
 

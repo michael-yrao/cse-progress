@@ -72,9 +72,12 @@ without this table it vanishes from every "problems solved" figure. Two jobs:
 | 4 | 2026-08-19 | 643 Maximum Average Subarray I | Sliding Window | 🟡 | — *(learner overrode the row)* |
 | 5 | 2026-08-21 | 205 Isomorphic Strings | Hash-map bijection | 🟢 | — |
 | 6 | 2026-08-28 | 637 Average of Levels in Binary Tree | Tree BFS (level order) | 🟢 | — |
+| 7 | 2026-09-11 | 547 Number of Provinces | Union-Find (connected components) | 🔴 | ✅ earned |
 
-**Tally (6 run):** 4 clean 🟢 · 1 earned a row (202) · 1 🟡 overridden (643). **Row-creation rate
-1/6 = 17%** — well under the 85% "pool has stopped teaching" line, so the pool still teaches.
+**Tally (7 run):** 4 clean 🟢 · 2 earned a row (202, 547) · 1 🟡 overridden (643). **Row-creation rate
+2/7 = 29%** — still under the 85% "pool has stopped teaching" line, so the pool still teaches; the 🔴 on
+547 (first Medium probe) is a real recognition gap (adjacency-matrix modelled as a spatial grid → chose
+Number-of-Islands over connected-components/UF), exactly the kind the probe exists to surface.
 **Rowless-but-solved: 5** (977, 69, 643, 205, 637) — these are the unique problems the tracker's 121
 does not count.
 

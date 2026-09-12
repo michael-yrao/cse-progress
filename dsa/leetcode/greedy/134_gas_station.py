@@ -28,6 +28,29 @@ from typing import List, Optional
 
 
 class Solution:
+
+    # ── Attempt · 2026-09-11 ──────────────
+    def gasStation_20260911(self, gas: List[int], cost: List[int]) -> int:
+        # we want to maximize our tank before the highest cost
+        # this is a tactic, not really an algorithm cause I can't prove it always works
+        # what we can do instead is just check if we can start at each index
+        # netGas = gas[i] - cost[i], if we are at negative, we know we can't use this
+        # essentially Kadane's algorithm
+
+        if sum(gas) < sum(cost):
+            return -1
+
+        netGas = 0
+        startingStation = 0
+        for i in range(len(gas)):
+            currentGas = gas[i] - cost[i]
+            netGas+=currentGas
+            if netGas < 0:
+                netGas = 0
+                startingStation = i + 1
+            
+        return startingStation
+
     # ── Attempt 1 · 2026-09-09 ────────────────────────────────────────────
     def gasStation(self, gas: List[int], cost: List[int]) -> int:
         # from example 2, we notice sum of gas must be >= sum of cost
