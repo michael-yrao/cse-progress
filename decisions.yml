@@ -37,6 +37,27 @@
 # "could a rule written before this still read as correct while now being wrong?"
 
 decisions:
+  - id: no-summary-layer-advance-tail-hook
+    date: 2026-09-12
+    summary: >-
+      Considered adding an in-session context-truncation / summary layer to guard against
+      within-session degradation (a rule stated early in a session lapsing later — lost-in-the-middle).
+      DECLINED. The harness already auto-compacts; a bespoke summary fights the tiered design
+      (docs/ARCHITECTURE.md) and degrades the very coaching nuance it would try to preserve; and LITM
+      is cured by keeping hot context SMALL + re-injecting load-bearing rules POSITION-INDEPENDENTLY
+      (hooks), not by compressing the middle. The repo's own 2026-08-02 meta-review already measured
+      this: memory-paragraph rules recurred 7/9, source fixes held 4/4, hooks held. A within-session
+      lapse is just the coldest case — a rule living only in hot chat. So the within-session defense
+      is the existing Stop hooks, which re-fire EVERY turn regardless of conversation position. One
+      fragile-but-mechanizable root was promoted off the prose rung accordingly: the ADVANCE-PROMPT
+      TAIL ("Code it.", "ready for the next one?", "on to 271"), which recurred 4+× as prose
+      (`pace-flat-discipline` / feedback_let_learner_pace) → now a Stop-hook detector
+      `advance_prompt_tail()` added to problem_link_reminder.py (already wired on Stop, no settings
+      change). It inspects only the turn's FINAL short sentence, so the required complexity/recognition
+      gate prompts and genuine rep questions stay clean; 14 self-test cases pass. This adds an
+      enforcement tier to an existing rule; it strands no rule and changes no tuned value.
+    affects: [let_learner_pace, turn_economy, hooks, operating_principles]
+
   - id: self-eval-loop-fires-and-routes
     date: 2026-09-10
     summary: >-
