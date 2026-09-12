@@ -177,7 +177,9 @@ RETIRED_TERMS = (
     ("SD lane", "the SD mock slot; it is scheduled here, executed in sd-progress, and NOT priced"),
     ("blind sprint", "nothing — retired with the three-lane SD model, Aug 13, 2026"),
     ("Bootstrap → Transition", "nothing — the SD arc was retired Aug 13, 2026"),
-    ("ai_progress", "nothing — the AI System Engineering track was removed Aug 13, 2026"),
+    # `ai_progress` was retired with ai-track-removed (Aug 13, 2026); un-retired Sep 12, 2026
+    # when ai-pillar-revived-deferred superseded that decision — the AI tracker is now PLANNED
+    # (parked), so `ai_progress` is a live future name again, not a dead dialect.
 )
 
 

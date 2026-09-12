@@ -1,4 +1,4 @@
-<!-- reconciled: 2026-09-11 -->
+<!-- reconciled: 2026-09-12 -->
 # End-of-week close-out & schedule build
 
 **Open this** when today is the last session of the week. **Not for** a mid-week rep (that's
@@ -58,6 +58,11 @@ week's assumptions.
 - **⚠️ Check every active phase has reps on the board.** (Found Aug 9, 2026: `Sliding Window +
   Stack` opened Aug 3 and sat a week with zero of its 8 problems in the tracker — invisible because
   the board was full of legitimate review work.)
+- **If the AI pillar is still PARKED, test its activation trigger** (see
+  [`project_ai_pillar`](.claude/memory/project_ai_pillar.md)): DP/Backtracking phases closed AND
+  `effort_budget.py` shows ≥2 days/week well under the ceiling for 2 weeks. Met → raise starting it
+  with the learner; not met → say nothing. This is the firing mechanism that keeps "deferred" from
+  becoming "forgotten" — don't skip it just because AI isn't on the board.
 
 **Day order:** within each day, place **all DSA first, SD last** — the SD slot gets the open-ended tail
 (spine-then-pull has no natural stopping point; bounded DSA reps do), so SD also absorbs any overrun. Never

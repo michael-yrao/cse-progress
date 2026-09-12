@@ -63,6 +63,7 @@ operational copy is in a skill reference or CLAUDE.md. Grouped for scanning.
 ## Project state (standing)
 - [Interview goal](project_interview_goal.md) — L6 big-tech; fintech is a paid waypoint; DP still ahead; apply-gate is repo-evaluable. Full strategy = `docs/foundations/career_strategy.md`.
 - [SD = mock interviews](project_sd_mock_model.md) ⭐ — learner studies SD on HelloInterview; coach runs cold mocks + scores; currently STUDY MODE (zero SD slots, don't nudge). The SD-state decision record.
+- [AI pillar (parked)](project_ai_pillar.md) — AI Engineering is a planned THIRD pillar, PARKED behind a measured trigger (DSA must lighten); active/scored/spaced like SD, interview-first path, ~1 notebook/wk on activation. Don't nudge until the trigger fires.
 - [SD ROI line (L6)](project_sd_roi_line.md) — the bar for every SD add/decline; board = HelloInterview 35; parked designs carry state triggers.
 - [Recognition probes](project_recognition_probes.md) — 1 cold label-stripped probe/week from a 🟢 technique; disposable (no row on 🟢); the recognition axis the board can't test.
 - [Library carrying capacity](project_library_carrying_capacity.md) — a tracked problem bills ~0.039 slots/wk forever → cap ~500–600; valves: 🏆 retirement, disposable reps.
