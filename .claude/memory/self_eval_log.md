@@ -5,6 +5,23 @@
 
 Append-only log of corrections. Governed by [[feedback_self_evaluation]]. Newest at top. Meta-review promotes recurring root causes into rules; entries are never deleted, only re-statused.
 
+## 2026-09-11 [P2] — Presented the live Friday board as a 4-column table with a "What it is" column → technique spoiler; escalated OFF prose to a blocking hook
+In this session's live kickoff I built the board as `# | Problem | Mode | What it is`. The "What it is"
+cells named the technique for 239 (monotonic-deque) and 134 (running-tank reset) — the exact recognition
+call the front-gate exists to make the learner produce. The learner caught it. **Same spoiler-column root
+as 09-03 (a "Focus" column), 09-04 (a Note column + technique-in-title), and the demo entry immediately
+below** — and it recurred AFTER all of those were "consolidated→" the skill/memory PROSE layer (SKILL.md §4
++ `references/scaffolding.md` already name the exact forbidden columns, and I read them at skill-load and
+violated them anyway). Prose has now failed this root ≥3 times = the ladder's threshold to escalate off the
+prose rung. **Fix (learner-chosen) — a BLOCKING Stop hook:** added `spoiler_lineup()` to
+`.claude/hooks/problem_link_reminder.py` (already wired on `Stop`, no settings change). It blocks a turn
+presenting a lineup TABLE whose scaffold-`.py`-link row carries an extra column, a comfort/tag emoji, or a
+technique parenthetical in the title; the block message routes the re-emit through `scripts/links.py`
+verbatim. 7 self-test cases + positive/negative payload checks pass. Also repointed the two live hook
+messages (`problem_link_reminder.py`, `scaffold_links_reminder.py`) from the merged-away
+`feedback_kickoff_table_links.md` to `feedback_lineup_links_only.md`. consolidated→ `spoiler_lineup` hook
+(rung 2, above the prose the 09-03/09-04/09-11-demo entries all relied on). [[feedback_lineup_links_only]].
+
 ## 2026-09-11 [P2] — Friday demo lineup used `../../../dsa/...` schedule-row links (dead from repo root) — recurrence of the 09-04 source-fixed root
 Asked for a dry-run of the Friday session-start, I built the board as a table by hand-copying rows out of
 `20260907_schedule.md`. Those rows carry `../../../dsa/...` paths (correct three folders deep in the schedule

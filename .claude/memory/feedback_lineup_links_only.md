@@ -30,7 +30,9 @@ name+links-only rule).
 
 - **A column beyond the name pre-localizes the technique or the exact miss to watch** — the same class as
   the retry-handover spoiler (number + links only, no prior failure category). Leaked as a "Focus" column
-  on 124 (Sep 3) and as a Note column + technique-in-title on 84/1462 (Sep 4).
+  on 124 (Sep 3), a Note column + technique-in-title on 84/1462 (Sep 4), and a "What it is" column on the
+  Sep 11 Friday board (239 → "monotonic-deque", 134 → "running-tank reset"). The Sep 11 recurrence — the
+  3rd after the prose was tightened — escalated this root off the prose rung to a **blocking hook** (below).
 - **A link to an off-board problem advertises a rep that isn't due** — on the night this was set, that is
   how 503 (🟢, due Sep 9) got pulled 26 days early while a 🟡 and a 🔴 sat undone. For an unscaffolded
   retry the file link is also the spoiler the caveat below forbids.
@@ -46,6 +48,12 @@ fixes climbed the ladder:
   shipping DISABLED; taught the day's board Aug 30 so it flags only on-board numbers). Also blocks a
   **broken** `.py` link (Aug 27 — a present-but-dead `../../../` path copied from a schedule row).
 - **Lineup format → source-fixed** (`scripts/links.py`, the name+links-only builder, Sep 4).
+- **Spoiler-column case → Stop hook** `problem_link_reminder.py::spoiler_lineup` (Sep 11). Blocks a
+  presented lineup **table** whose scaffold-`.py`-link row carries an extra column, a comfort/tag emoji, or
+  a technique parenthetical in the title, and routes the re-emit through `scripts/links.py`. Prose (SKILL.md
+  §4 + `references/scaffolding.md`, both naming the exact forbidden columns) had failed this root 3× —
+  Sep 3/4/11 — so it earned the rung above. Board-independent: the scaffold-`.py`-link signature already
+  scopes it to a lineup, so rating/coverage/schedule tables never trip it.
 - ⚠️ **Never write a bare problem number** in narration — the Stop hook gathers all assistant text, so a
   loose number trips it even when linked elsewhere. Refer to a problem by name/role; a number appears only
   inside its pair (Aug 23).
