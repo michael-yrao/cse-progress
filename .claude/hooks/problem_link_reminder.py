@@ -6,7 +6,7 @@ The rule — every problem mention carries `[file] · [LC/NC]` — has lapsed ni
 a `LINKS:` line at source, but neither can reach the dominant remaining failure mode:
 the **mid-session restate** — "next is 778", "still on the board: 271, 155", a
 hand-over, a "what's next". No tool runs, so nothing fires. See the Aug 6 entry in
-`.claude/memory/feedback_kickoff_table_links.md`, which named this hook as the fix and
+`.claude/memory/feedback_lineup_links_only.md`, which named this hook as the fix and
 then left it unbuilt for six days while the rule lapsed once more.
 
 Mechanism: at Stop, read the last assistant message from the transcript and look for a
@@ -275,7 +275,7 @@ MESSAGE = (
     "EXCEPTION — in a SELECTION MENU where the learner has not picked yet, an "
     "unscaffolded retry's file link is a SPOILER: link LC/NC only. If that is this "
     "turn, say so plainly instead of adding file links.\n"
-    "Rule: .claude/memory/feedback_kickoff_table_links.md"
+    "Rule: .claude/memory/feedback_lineup_links_only.md"
 )
 
 
@@ -440,7 +440,97 @@ BROKEN_MESSAGE = (
     "a REPO-ROOT-RELATIVE path (e.g. `dsa/leetcode/stack/853_car_fleet.py`). The cleanest "
     "way to get it right: run `python scripts/links.py <number> ...` and paste its output — "
     "it reads the path from disk so it cannot be wrong.\n"
-    "Rule: .claude/memory/feedback_kickoff_table_links.md"
+    "Rule: .claude/memory/feedback_lineup_links_only.md"
+)
+
+
+# ── Spoiler-column detector ─────────────────────────────────────────────────────
+# A presented lineup is problem NAME + LINKS and nothing else — build it from
+# `scripts/links.py`, which emits PLAIN LINES, not a table. So a markdown TABLE that
+# wraps a scaffold `.py` link and adds anything else (a Note/Focus/technique/comfort/
+# units column, an index column, a comfort emoji, a technique parenthetical in the
+# title) is a spoiler: it pre-localizes the technique or the exact miss to watch and
+# defeats the recognition front-gate. This lapsed as prose 3+ times — Sep 3 (a "Focus"
+# column), Sep 4 (a Note column + technique-in-title), Sep 11 (a "What it is" column) —
+# so it is a hook, per the intervention ladder. See feedback_lineup_links_only.md.
+
+# A markdown link, capturing (visible text, target).
+MD_LINK_FULL = re.compile(r"\[([^\]]*)\]\(([^)]*)\)")
+
+# Comfort ratings and schedule tags — a comfort/tag column has no place in a lineup.
+LINEUP_EMOJI = re.compile(r"🟢|🟡|🔴|🎓|🆕|🎯|🔥|⚙️|🔤|🔥")
+
+# A technique parenthetical inside a link title, e.g. `(Monotonic Deque)`,
+# `(Floyd-Warshall)`. `links.py` output never carries one.
+TITLE_PARENTHETICAL = re.compile(r"\([A-Z][^)]*\)")
+
+
+def _is_scaffold_py_link(target: str) -> bool:
+    """True for a solution-file link like `dsa/leetcode/stack/239_...py` — the signature
+    of an ACTIONABLE lineup. Rating, coverage and schedule-explanation tables carry LC
+    URLs or bare numbers, never a scaffold `.py`, so keying on this keeps the detector
+    from crying wolf on tables that are legitimately allowed to have columns."""
+    t = target.split("#", 1)[0].strip()
+    return t.endswith(".py") and "dsa/" in t and "://" not in t
+
+
+def spoiler_lineup(text: str) -> "list[str]":
+    """Signals that a presented lineup/board TABLE carries more than name + links.
+
+    Fires only on a table ROW that itself holds a `dsa/….py` scaffold link, so a
+    rating-rationale / coverage / schedule table (no scaffold links) never trips it.
+    Returns the human-readable signals found (empty = clean).
+    """
+    signals: "list[str]" = []
+    for raw in text.splitlines():
+        line = raw.strip()
+        if not line.startswith("|"):
+            continue
+        links = MD_LINK_FULL.findall(line)
+        py_links = [(vis, tgt) for vis, tgt in links if _is_scaffold_py_link(tgt)]
+        if not py_links:
+            continue  # not a lineup row — a table may legitimately have columns here
+
+        cells = [c.strip() for c in line.strip("|").split("|")]
+        pair_cells = [
+            c for c in cells
+            if any(_is_scaffold_py_link(t) for _, t in MD_LINK_FULL.findall(c))
+        ]
+        # A cell that is neither the problem pair nor a pure `---`/`:` separator is an
+        # extra column — the primary signal, since the correct lineup is not a table.
+        others = [c for c in cells if c and c not in pair_cells and (set(c) - set("-:"))]
+        if len(cells) > 1 and others:
+            preview = ", ".join(repr(c[:24]) for c in others[:3])
+            signals.append(f"an extra column beside the problem ({preview})")
+        if LINEUP_EMOJI.search(line):
+            signals.append("a comfort/tag emoji column")
+        for vis, _ in py_links:
+            if TITLE_PARENTHETICAL.search(vis):
+                signals.append(f"a technique parenthetical in the title ({vis.strip()})")
+        if signals:
+            break  # one offending row is enough
+
+    seen: "set[str]" = set()
+    out: "list[str]" = []
+    for s in signals:
+        if s not in seen:
+            seen.add(s)
+            out.append(s)
+    return out
+
+
+SPOILER_MESSAGE = (
+    "SPOILER COLUMN — this turn presents a lineup/board as a TABLE carrying more than the "
+    "problem name + links: {signals}.\n"
+    "A presented lineup is name + links ONLY. Any column beyond the name — Note/Focus/"
+    "technique/comfort/units/difficulty, an index column, a comfort emoji, or a technique "
+    "parenthetical in the title — hands the learner the recognition call before they make "
+    "it, which is the one thing the recognition front-gate exists to measure.\n"
+    "Re-emit the lineup as name + links ONLY, one problem per line, built from "
+    "`python scripts/links.py <n> ...` VERBATIM — no table, no extra cells. Comfort and "
+    "units belong in the schedule file, never the lineup shown to the learner. A "
+    "recognition probe stays UNLINKED (a link spoils it).\n"
+    "Rule: .claude/memory/feedback_lineup_links_only.md"
 )
 
 
@@ -477,6 +567,16 @@ def main() -> None:
     if broken:
         json.dump(
             {"decision": "block", "reason": BROKEN_MESSAGE.format(paths=", ".join(broken))},
+            sys.stdout,
+        )
+        return
+
+    # A presented lineup carrying more than name + links spoils the recognition gate.
+    # Board-independent: the scaffold-`.py`-link signature already scopes it to a lineup.
+    spoiler = spoiler_lineup(text)
+    if spoiler:
+        json.dump(
+            {"decision": "block", "reason": SPOILER_MESSAGE.format(signals="; ".join(spoiler))},
             sys.stdout,
         )
         return
@@ -557,6 +657,44 @@ BROKEN_CASES = [
 ]
 
 
+# Spoiler-column cases for spoiler_lineup. A lineup is name + links ONLY; a table
+# wrapping a scaffold `.py` link with anything else is the failure.
+SPOILER_CASES = [
+    # (name, text, should_flag)
+    ("4-column lineup table -> block",
+     "| # | Problem | Mode | What it is |\n|---|---|---|---|\n"
+     "| 1 | [239 Sliding Window Maximum](dsa/leetcode/stack/239_sliding_window_maximum.py) · "
+     "[LC](https://leetcode.com/problems/sliding-window-maximum/) | retry | monotonic-deque blocker |",
+     True),
+    ("comfort-emoji column -> block",
+     "| [846 Hand of Straights](dsa/leetcode/greedy/846_hand_of_straights.py) · "
+     "[LC](https://leetcode.com/problems/hand-of-straights/) | 🆕 |",
+     True),
+    ("technique parenthetical in title -> block",
+     "| [239 Sliding Window Maximum (Monotonic Deque)](dsa/leetcode/stack/239_sliding_window_maximum.py) · "
+     "[LC](https://leetcode.com/problems/sliding-window-maximum/) |",
+     True),
+    ("clean plain lines -> ok",
+     "[239 Sliding Window Maximum](dsa/leetcode/stack/239_sliding_window_maximum.py) · "
+     "[LC](https://leetcode.com/problems/sliding-window-maximum/)\n"
+     "[846 Hand of Straights](dsa/leetcode/greedy/846_hand_of_straights.py) · "
+     "[LC](https://leetcode.com/problems/hand-of-straights/)",
+     False),
+    ("single-column pair table -> ok",
+     "| Today |\n|---|\n| [846 Hand of Straights](dsa/leetcode/greedy/846_hand_of_straights.py) · "
+     "[LC](https://leetcode.com/problems/hand-of-straights/) |",
+     False),
+    ("rating table, no scaffold link -> ok",
+     "| Axis | Verdict |\n|---|---|\n| recognition | clean |\n| complexity | O(n)/O(1) |",
+     False),
+    ("coverage table, LC links only -> ok",
+     "| Technique | Problems |\n|---|---|\n| Monotonic Stack | "
+     "[496](https://leetcode.com/problems/next-greater-element-i/), "
+     "[901](https://leetcode.com/problems/online-stock-span/) |",
+     False),
+]
+
+
 def _selftest(transcript: str | None = None) -> int:
     failures = 0
     for name, text, expected in CASES:
@@ -576,6 +714,15 @@ def _selftest(transcript: str | None = None) -> int:
                   f"{broken_file_links(text)}")
     failures += broken_failures
     print(f"broken:   {len(BROKEN_CASES) - broken_failures}/{len(BROKEN_CASES)} passed")
+
+    spoiler_failures = 0
+    for name, text, expected in SPOILER_CASES:
+        got = bool(spoiler_lineup(text))
+        if got != expected:
+            spoiler_failures += 1
+            print(f"FAIL  {name}: flag={got}, expected {expected} -> {spoiler_lineup(text)}")
+    failures += spoiler_failures
+    print(f"spoiler:  {len(SPOILER_CASES) - spoiler_failures}/{len(SPOILER_CASES)} passed")
 
     board_failures = 0
     for name, text, board, expected in BOARD_CASES:
