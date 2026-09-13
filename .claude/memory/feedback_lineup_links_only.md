@@ -49,11 +49,16 @@ fixes climbed the ladder:
   **broken** `.py` link (Aug 27 — a present-but-dead `../../../` path copied from a schedule row).
 - **Lineup format → source-fixed** (`scripts/links.py`, the name+links-only builder, Sep 4).
 - **Spoiler-column case → Stop hook** `problem_link_reminder.py::spoiler_lineup` (Sep 11). Blocks a
-  presented lineup **table** whose scaffold-`.py`-link row carries an extra column, a comfort/tag emoji, or
-  a technique parenthetical in the title, and routes the re-emit through `scripts/links.py`. Prose (SKILL.md
-  §4 + `references/scaffolding.md`, both naming the exact forbidden columns) had failed this root 3× —
-  Sep 3/4/11 — so it earned the rung above. Board-independent: the scaffold-`.py`-link signature already
+  presented lineup **table** whose scaffold-`.py`-link row carries a *semantic* extra column, a comfort/tag
+  emoji, or a technique parenthetical in the title, and routes the re-emit through `scripts/links.py`. Prose
+  (SKILL.md §4 + `references/scaffolding.md`, both naming the exact forbidden columns) had failed this root
+  3× — Sep 3/4/11 — so it earned the rung above. Board-independent: the scaffold-`.py`-link signature already
   scopes it to a lineup, so rating/coverage/schedule tables never trip it.
+  - **A bare numeric index column is EXEMPT (learner's call, Sep 12).** `| 138 | [138 Copy…] |` or a running
+    `1, 2, 3` only echoes the number already in the link text — it localizes nothing the lineup doesn't
+    already show, so it is not a spoiler. The detector over-flagged one (`_is_index_cell` now exempts it);
+    the spoiler is a *semantic* cell (Note/Focus/technique/comfort/units/difficulty), not an index. A
+    technique parenthetical or a comfort emoji in the same table still blocks.
 - ⚠️ **Never write a bare problem number** in narration — the Stop hook gathers all assistant text, so a
   loose number trips it even when linked elsewhere. Refer to a problem by name/role; a number appears only
   inside its pair (Aug 23).

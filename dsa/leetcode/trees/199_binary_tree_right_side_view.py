@@ -49,55 +49,8 @@ class TreeNode:
         self.right = right
 class Solution:
 
-    # ── Attempt · 2026-07-14 ──────────────
-    def rightSideView_20260714(self, root: Optional[TreeNode]) -> List[int]:
-        # basic BFS, insert last element per level to result
-        result = []
+    # ── Attempt · 2026-09-12 ──────────────
+    def rightSideView_20260912(self, root: Optional[TreeNode]) -> List[int]:
+        pass
 
-        queue = collections.deque()
-
-        queue.append(root)
-
-        while queue:
-            levelSize = len(queue)
-            for i in range(levelSize):
-                currentNode = queue.popleft()
-                if currentNode:
-                    if i == levelSize - 1:
-                        result.append(currentNode.val)
-                    # append neighbors
-                    if currentNode.left:
-                        queue.append(currentNode.left)
-                    if currentNode.right:
-                        queue.append(currentNode.right)
-        
-        return result        
-
-    def rightSideView(self, root: Optional[TreeNode]) -> List[int]:
-        # if we do bfs, it's just the last element we see each time
-        # so we'll just do that
-        if not root:
-            return []
-
-        result = []
-
-        queue = collections.deque()
-
-        queue.append(root)
-
-        while queue:
-            # we want to put the last element of each level in the result
-            # so we want to keep track of number of elements in each level
-            numElementInLevel = len(queue)
-
-            for i in range(numElementInLevel):
-                currentNode = queue.popleft()
-                # at last element, add to result
-                if i == numElementInLevel - 1:
-                    result.append(currentNode.val)
-                if currentNode.left:
-                    queue.append(currentNode.left)
-                if currentNode.right:
-                    queue.append(currentNode.right)
-        
-        return result
+# ⤵ prior attempts stashed in dsa/leetcode/.history/199_binary_tree_right_side_view.txt — restored at session end (python scripts/restore_history.py)

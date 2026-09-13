@@ -32,6 +32,29 @@ import math
 
 class Solution:
 
+    # ── Attempt · 2026-09-12 ──────────────
+    def characterReplacement_20260912(self, s: str, k: int) -> int:
+        # most freq char + k is our ceiling for each window
+        # sliding window
+        # freqMap to keep track of freq
+
+        l = r = 0
+        freqMap = collections.defaultdict(int)
+        maxFreq = 0
+        longest = 0
+
+        while r < len(s):
+            freqMap[s[r]]+=1
+            maxFreq = max(maxFreq, freqMap[s[r]])
+            while r - l + 1 > maxFreq + k:
+                freqMap[s[l]]-=1
+                l+=1
+            # valid window here
+            longest = max(longest, r - l + 1)
+            r+=1
+        
+        return longest
+
     # ── Attempt · 2026-09-10 ──────────────
     def characterReplacement_20260910(self, s: str, k: int) -> int:
         # our size is bound by the maximum freq char of our current window

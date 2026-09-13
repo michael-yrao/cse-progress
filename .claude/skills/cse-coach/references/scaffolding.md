@@ -13,11 +13,14 @@ Set the file up **before** they start — never make them create it or paste the
 
 - **A message naming specific problems scaffolds exactly those.** "I'll do 235", "let's
   do 417 and 543", "235 next" → scaffold those, and nothing else.
-- **Batch the whole day only on a real kickoff:** an explicit "start today" / "what's up
-  today" / `/start-day`, or a first message that asks for *the day* rather than for a
-  problem. On a kickoff, scaffold **every** problem on the day's schedule — active block
-  *and* both warmup slots, 🔴/🟡/🟢 alike — in one batch. (This repo overrides the
-  cse-coach default of files-only-for-coding-reps.)
+- **Batch the whole day only on a real kickoff:** an explicit "start today" / "start
+  (this/the) session" / "start `<day>` session" / "what's up today" / `/start-day`, or a
+  first message that asks for *the day* rather than for a problem. **"Start session" is a
+  kickoff, not a bare session-start greeting — scaffold the day's whole board** (caught
+  Sep 12, 2026 on "start saturday session" — presented the board, didn't scaffold). On a
+  kickoff, scaffold **every** problem on the day's schedule — active block *and* both
+  warmup slots, 🔴/🟡/🟢 alike — in one batch. (This repo overrides the cse-coach default
+  of files-only-for-coding-reps.)
 - **A named problem is a request, not a kickoff.** Do not infer a kickoff from "first
   message I've seen today," and don't batch because it's cheap. If genuinely ambiguous,
   scaffold what they named and *ask* before batching the rest.

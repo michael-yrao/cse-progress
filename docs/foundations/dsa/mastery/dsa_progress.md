@@ -66,20 +66,23 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/dsa/mastery/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **119+5** problems &nbsp;·&nbsp; **129+5** solutions &nbsp;·&nbsp; **548+5** reps
+> **119+5** problems &nbsp;·&nbsp; **130+5** solutions &nbsp;·&nbsp; **552+5** reps
 
 | | 🏆 Retired | 🎓 Graduated | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|:---:|
-| **Solutions** | 0 | 7 | 107 | 12 | 3 |
+| **Solutions** | 0 | 8 | 105 | 14 | 3 |
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Rep Date | Rep Dates |
 |---|---|---|---|---|---|---|
+| Medium | [167. Two Sum II](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/) | 🎓 | 3 | 2027-03-11 | 2026-09-12 | 2026-01-19, 2026-07-14, 2026-09-12 |
+| Medium | [743. Network Delay Time (Dijkstra — min-heap)](https://leetcode.com/problems/network-delay-time/) | 🟡 | 0 | 2026-09-22 | 2026-09-12 | 2026-07-15, 2026-07-25, 2026-08-04, 2026-08-14, 2026-08-24, 2026-09-03, 2026-09-12 |
+| Medium | [743. Network Delay Time (Dijkstra — array-scan)](https://leetcode.com/problems/network-delay-time/) | 🔴 | 0 | 2026-09-14 | 2026-09-12 | 2026-09-12 |
+| Medium | [424. Longest Repeating Character Replacement](https://leetcode.com/problems/longest-repeating-character-replacement/) | 🟡 | 0 | 2026-09-22 | 2026-09-12 | 2026-04-19, 2026-07-02, 2026-07-10, 2026-07-17, 2026-07-27, 2026-08-28, 2026-08-31, 2026-09-10, 2026-09-12 |
 | Hard | [239. Sliding Window Maximum](https://leetcode.com/problems/sliding-window-maximum/) | 🟢 | 1 | 2026-10-11 | 2026-09-11 | 2026-08-20, 2026-08-22, 2026-09-01, 2026-09-11 |
 | Medium | [846. Hand of Straights](https://leetcode.com/problems/hand-of-straights/) | 🟡 | 0 | 2026-09-21 | 2026-09-11 | 2026-09-11 |
 | Medium | [547. Number of Provinces](https://leetcode.com/problems/number-of-provinces/) | 🔴 | 0 | 2026-09-13 | 2026-09-11 | 2026-09-11 |
 | Medium | [134. Gas Station](https://leetcode.com/problems/gas-station/) | 🟡 | 0 | 2026-09-21 | 2026-09-11 | 2026-09-09, 2026-09-11 |
 | Hard | [332. Reconstruct Itinerary (min-heap ordering)](https://leetcode.com/problems/reconstruct-itinerary/) | 🟢 | 1 | 2026-10-10 | 2026-09-10 | 2026-07-22, 2026-07-28, 2026-08-04, 2026-08-29, 2026-08-31, 2026-09-10 |
-| Medium | [424. Longest Repeating Character Replacement](https://leetcode.com/problems/longest-repeating-character-replacement/) | 🔴 | 0 | 2026-09-12 | 2026-09-10 | 2026-04-19, 2026-07-02, 2026-07-10, 2026-07-17, 2026-07-27, 2026-08-28, 2026-08-31, 2026-09-10 |
 | Medium | [763. Partition Labels](https://leetcode.com/problems/partition-labels/) | 🟡 | 0 | 2026-09-19 | 2026-09-09 | 2026-09-09 |
 | Medium | [45. Jump Game II](https://leetcode.com/problems/jump-game-ii/) | 🟡 | 0 | 2026-09-18 | 2026-09-08 | 2026-09-08 |
 | Medium | [133. Clone Graph](https://leetcode.com/problems/clone-graph/) | 🟢 | 1 | 2026-10-08 | 2026-09-08 | 2026-06-04, 2026-06-05, 2026-06-07, 2026-08-09, 2026-08-19, 2026-08-29, 2026-09-08 |
@@ -100,7 +103,6 @@ Notes for future agents:
 | Hard | [84. Largest Rectangle in Histogram](https://leetcode.com/problems/largest-rectangle-in-histogram/) | 🔴 | 0 | 2026-09-06 | 2026-09-04 | 2026-09-04 |
 | Medium | [1462. Course Schedule IV (Floyd-Warshall / Transitive Closure)](https://leetcode.com/problems/course-schedule-iv/) | 🟢 | 1 | 2026-10-04 | 2026-09-04 | 2026-08-25, 2026-09-04 |
 | Hard | [124. Binary Tree Maximum Path Sum](https://leetcode.com/problems/binary-tree-maximum-path-sum/) | 🟢 | 1 | 2026-10-03 | 2026-09-03 | 2026-07-11, 2026-07-13, 2026-07-23, 2026-08-21, 2026-09-03 |
-| Medium | [743. Network Delay Time (Dijkstra)](https://leetcode.com/problems/network-delay-time/) | 🟢 | 1 | 2026-10-03 | 2026-09-03 | 2026-07-15, 2026-07-25, 2026-08-04, 2026-08-14, 2026-08-24, 2026-09-03 |
 | Medium | [56. Merge Intervals](https://leetcode.com/problems/merge-intervals/) | 🟡 | 0 | 2026-09-13 | 2026-09-03 | 2026-08-24, 2026-09-03 |
 | Medium | [143. Reorder List](https://leetcode.com/problems/reorder-list/) | 🟢 | 2 | 2026-11-02 | 2026-09-03 | 2026-04-26, 2026-07-06, 2026-07-15, 2026-07-25, 2026-08-04, 2026-09-03 |
 | Hard | [127. Word Ladder (BFS)](https://leetcode.com/problems/word-ladder/) | 🟢 | 1 | 2026-10-02 | 2026-09-02 | 2026-07-18, 2026-07-21, 2026-08-03, 2026-08-13, 2026-08-23, 2026-09-02 |
@@ -202,7 +204,6 @@ Notes for future agents:
 | Medium | [162. Find Peak Element](https://leetcode.com/problems/find-peak-element/) | 🟢 | 2 | 2026-09-14 | 2026-07-16 | 2026-05-02, 2026-06-12, 2026-06-13, 2026-07-16 |
 | Medium | [207. Course Schedule I](https://leetcode.com/problems/course-schedule/) | 🟢 | 2 | 2026-09-14 | 2026-07-16 | 2026-06-08, 2026-06-12, 2026-06-13, 2026-07-16 |
 | Medium | [199. Binary Tree Right Side View](https://leetcode.com/problems/binary-tree-right-side-view/) | 🟢 | 2 | 2026-09-12 | 2026-07-14 | 2026-05-09, 2026-06-13, 2026-07-14 |
-| Medium | [167. Two Sum II](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/) | 🟢 | 2 | 2026-09-12 | 2026-07-14 | 2026-01-19, 2026-07-14 |
 
 ---
 
