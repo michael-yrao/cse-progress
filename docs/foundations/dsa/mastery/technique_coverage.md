@@ -18,6 +18,7 @@
 
 - **Bellman-Ford** (advanced_graphs) — 1/3: 787
 - **Cycle Detection in an Iterated Sequence** (graphs) — 1/2: 202
+- **Dijkstra** (advanced_graphs) — 1/3: 778
 - **Divide & Conquer / Sorting** (sorting) — 1/3: 912
 - **HashMap + Doubly Linked List (LRU)** (linked_list) — 1/3: 146
 - **Multi-source BFS** (graphs) — 1/3: 994
@@ -27,7 +28,6 @@
 - **Binary Search (max boundary)** (binary_search) — 2/3: 34, 74
 - **Binary Search on Answer** (binary_search) — 2/3: 875, 1011
 - **Connected Components** (graphs) — 2/3 (4 rows): 323, 547
-- **Dijkstra** (advanced_graphs) — 2/3: 743, 778
 - **Floyd's Cycle / Midpoint** (linked_list) — 2/3: 141, 143
 - **Floyd-Warshall (all-pairs shortest path)** (advanced_graphs) — 2/3: 1334, 1462
 - **Grid DFS** (graphs) — 2/3: 200, 695
@@ -46,7 +46,7 @@
 | Technique | Family | Problems | Best | 🟢 | Variants | Gaps |
 |---|---|---:|:---:|:---:|---|---|
 | Bellman-Ford | advanced_graphs | 1 (787) | 🟢 | ✅ | Standard ×1 · ~~Contrast rep on 743~~ *(queued: `graduates:743`)* | thin (1/3) |
-| Dijkstra | advanced_graphs | 2 (743, 778) | 🟢 | ✅ | — | thin (2/3) |
+| Dijkstra | advanced_graphs | 1 (778) | 🟢 | ✅ | — | thin (1/3) |
 | Floyd-Warshall (all-pairs shortest path) | advanced_graphs | 2 (1334, 1462) | 🟢 | ✅ | — | thin (2/3) |
 | Hierholzer (Eulerian path) | advanced_graphs | 2 *+1v* (332, 2097) | 🟢 | ✅ | pre-sorted adjacency ×1 · min-heap ordering ×1 | thin (2/3) |
 | Prim's MST | advanced_graphs | 1 (1584) | 🟢 | ✅ | Prim's MST ×1 · **Kruskal's MST ×0** | thin (1/3) · variant: **Kruskal's MST** |
@@ -103,6 +103,15 @@
 | Two Pointers (converging) | two_pointers | 8 (11, 15, 88, 125, 167, 344, 680, 1768) | 🎓 | ✅ | — | — |
 
 ## Vocabulary maintenance
+
+**Unmapped tracker rows (2)** — solved but assigned to no technique. Add them to `techniques.yml`, or coverage silently drifts behind the tracker.
+
+- 743 Network Delay Time (Dijkstra — array-scan)
+- 743 Network Delay Time (Dijkstra — min-heap)
+
+**Method drift (1)** — the tracker HAS a row for this problem, but not with the method the vocabulary declares. Either the parenthetical changed or the YAML names the wrong variant; the technique is not being credited.
+
+- 743 (Dijkstra)
 
 **Not reached yet (1)** — declared in the vocabulary, no tracker row. This is the normal state for curriculum ahead of the learner; it is a roadmap, not a finding.
 

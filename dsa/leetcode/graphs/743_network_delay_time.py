@@ -36,10 +36,56 @@ Constraints:
 # problem needs. No shared data-model imports (whiteboard fidelity).
 import collections
 import heapq
+import math
 from typing import List, Optional
 
 
 class Solution:
+
+    # ── Attempt · 2026-09-12 ──────────────
+    def networkDelayTime_20260912(self, times: List[List[int]], n: int, k: int) -> int:
+        # dijkstra's, we want to do the array dijkstra variant today
+        # dijkstra = visited array, adjMap and distance array
+
+        visited = [False] * (n + 1)
+        visited[0] = True
+
+        adjMap = collections.defaultdict(list)
+
+        for src, dst, weight in times:
+            adjMap[src].append((dst,weight))
+        
+        # distance array, initialized to infinity to start
+        distance = [math.inf] * (n + 1)
+        # distance to starting point is zero
+        distance[k] = 0
+        distance[0] = 0
+
+        def findMin():
+            minIndex = -1
+            minValue = math.inf
+            for i in range(1,len(distance)):
+                if distance[i] < minValue and not visited[i]:
+                    minIndex = i
+                    minValue = distance[i]
+            return minIndex
+
+        # relax neighbors of node
+        def relax(node):
+            for neighbor, neighborWeight in adjMap[node]:
+                if not visited[neighbor]:
+                    neighborDistance = distance[node] + neighborWeight
+                    if neighborDistance < distance[neighbor]:
+                        distance[neighbor] = neighborDistance
+            
+        for _ in range(n):
+            nextNode = findMin()
+            if nextNode == -1:
+                return -1
+            visited[nextNode] = True
+            relax(nextNode)
+            
+        return max(distance) # type: ignore
 
     # ── Attempt · 2026-09-03 ──────────────
     def networkDelayTime_20260903(self, times: List[List[int]], n: int, k: int) -> int:

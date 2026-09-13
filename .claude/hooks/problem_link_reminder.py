@@ -447,12 +447,17 @@ BROKEN_MESSAGE = (
 # ── Spoiler-column detector ─────────────────────────────────────────────────────
 # A presented lineup is problem NAME + LINKS and nothing else — build it from
 # `scripts/links.py`, which emits PLAIN LINES, not a table. So a markdown TABLE that
-# wraps a scaffold `.py` link and adds anything else (a Note/Focus/technique/comfort/
-# units column, an index column, a comfort emoji, a technique parenthetical in the
-# title) is a spoiler: it pre-localizes the technique or the exact miss to watch and
-# defeats the recognition front-gate. This lapsed as prose 3+ times — Sep 3 (a "Focus"
-# column), Sep 4 (a Note column + technique-in-title), Sep 11 (a "What it is" column) —
-# so it is a hook, per the intervention ladder. See feedback_lineup_links_only.md.
+# wraps a scaffold `.py` link and adds a SEMANTIC column (a Note/Focus/technique/comfort/
+# units column, a comfort emoji, a technique parenthetical in the title) is a spoiler: it
+# pre-localizes the technique or the exact miss to watch and defeats the recognition
+# front-gate. This lapsed as prose 3+ times — Sep 3 (a "Focus" column), Sep 4 (a Note
+# column + technique-in-title), Sep 11 (a "What it is" column) — so it is a hook, per the
+# intervention ladder. See feedback_lineup_links_only.md.
+#
+# EXEMPT: a bare numeric index column (`| 138 | [138 Copy…](…) |` or a running `1, 2, 3`).
+# It merely echoes the problem number already visible in the link text — it localizes
+# nothing the lineup doesn't already show, so it is NOT a spoiler. (Learner, Sep 12, 2026:
+# "the index column is fine.")
 
 # A markdown link, capturing (visible text, target).
 MD_LINK_FULL = re.compile(r"\[([^\]]*)\]\(([^)]*)\)")
@@ -463,6 +468,13 @@ LINEUP_EMOJI = re.compile(r"🟢|🟡|🔴|🎓|🆕|🎯|🔥|⚙️|🔤|🔥"
 # A technique parenthetical inside a link title, e.g. `(Monotonic Deque)`,
 # `(Floyd-Warshall)`. `links.py` output never carries one.
 TITLE_PARENTHETICAL = re.compile(r"\([A-Z][^)]*\)")
+
+
+def _is_index_cell(cell: str) -> bool:
+    """True for a bare numeric index column — `138`, `1`, `1.` — which only echoes the
+    problem number already shown in the link text. Not a spoiler, so it is exempt from the
+    extra-column signal below. (Learner's call, Sep 12, 2026.)"""
+    return cell.rstrip(".").strip().isdigit()
 
 
 def _is_scaffold_py_link(target: str) -> bool:
@@ -496,9 +508,13 @@ def spoiler_lineup(text: str) -> "list[str]":
             c for c in cells
             if any(_is_scaffold_py_link(t) for _, t in MD_LINK_FULL.findall(c))
         ]
-        # A cell that is neither the problem pair nor a pure `---`/`:` separator is an
-        # extra column — the primary signal, since the correct lineup is not a table.
-        others = [c for c in cells if c and c not in pair_cells and (set(c) - set("-:"))]
+        # A cell that is neither the problem pair, a pure `---`/`:` separator, nor a bare
+        # numeric index is an extra column — the primary signal, since the correct lineup
+        # is not a table. A numeric index echoes the link's own number and is exempt.
+        others = [
+            c for c in cells
+            if c and c not in pair_cells and (set(c) - set("-:")) and not _is_index_cell(c)
+        ]
         if len(cells) > 1 and others:
             preview = ", ".join(repr(c[:24]) for c in others[:3])
             signals.append(f"an extra column beside the problem ({preview})")
@@ -522,10 +538,11 @@ def spoiler_lineup(text: str) -> "list[str]":
 SPOILER_MESSAGE = (
     "SPOILER COLUMN — this turn presents a lineup/board as a TABLE carrying more than the "
     "problem name + links: {signals}.\n"
-    "A presented lineup is name + links ONLY. Any column beyond the name — Note/Focus/"
-    "technique/comfort/units/difficulty, an index column, a comfort emoji, or a technique "
-    "parenthetical in the title — hands the learner the recognition call before they make "
-    "it, which is the one thing the recognition front-gate exists to measure.\n"
+    "A presented lineup is name + links ONLY. Any SEMANTIC column — Note/Focus/"
+    "technique/comfort/units/difficulty, a comfort emoji, or a technique parenthetical in "
+    "the title — hands the learner the recognition call before they make it, which is the "
+    "one thing the recognition front-gate exists to measure. (A bare numeric index column "
+    "is fine — it only echoes the number already in the link.)\n"
     "Re-emit the lineup as name + links ONLY, one problem per line, built from "
     "`python scripts/links.py <n> ...` VERBATIM — no table, no extra cells. Comfort and "
     "units belong in the schedule file, never the lineup shown to the learner. A "
@@ -778,6 +795,13 @@ SPOILER_CASES = [
     ("single-column pair table -> ok",
      "| Today |\n|---|\n| [846 Hand of Straights](dsa/leetcode/greedy/846_hand_of_straights.py) · "
      "[LC](https://leetcode.com/problems/hand-of-straights/) |",
+     False),
+    ("bare numeric index column -> ok (learner's call Sep 12)",
+     "| # | Problem |\n|---|---|\n"
+     "| 138 | [138 Copy List with Random Pointer](dsa/leetcode/linked_list/138_copy_list_with_random_pointer.py) · "
+     "[LC](https://leetcode.com/problems/copy-list-with-random-pointer/) |\n"
+     "| 167 | [167 Two Sum II](dsa/leetcode/two_pointers/167_two_sum_2.py) · "
+     "[LC](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/) |",
      False),
     ("rating table, no scaffold link -> ok",
      "| Axis | Verdict |\n|---|---|\n| recognition | clean |\n| complexity | O(n)/O(1) |",

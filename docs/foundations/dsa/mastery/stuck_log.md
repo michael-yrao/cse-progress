@@ -22,6 +22,36 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🟡 424. Longest Repeating Character Replacement — 2026-09-12
+**Sticking point**: +2 re-measure of Thu's 🔴 — **the spine stuck**: validity `size − maxFreq ≤ k` with maxFreq as a high-water mark, recognition self-generated cold (a big recovery). One execution slip, coach-nudged: `freqMap[r]`/`freqMap[l]` keyed on the **index**, not the char `s[r]`/`s[l]` — so maxFreq never exceeded 1 and the window capped at k+1 (caught via `"AABABBA", k=1`). Complexity: time O(n) itemized (inner `while` amortized — `l` only moves forward). **Fixed-alphabet space missed a 4th time** (said O(n); it's O(1), freqMap ≤ 26 by the uppercase-only constraint) — but he *stated* the ≤26 bound himself under one cue, then mis-framed it as "safer to say O(n)"; corrected to: analyze against the given constraint ⟹ O(1) is the tight/expected answer, O(min(n,Σ)) only if the alphabet were unbounded. Rating capped at 🟡 by the repeat (freebie long spent). 🔴→🟡.
+
+## 🟡 743. Network Delay Time (Dijkstra — min-heap) — 2026-09-12
+**Sticking point**: recall thin on the heap form ("I don't have a good recollection"); the **eager `dist[]` conversion** (lower `distance[neighbor]` at relaxation, before the push; drop the pop-time write) was coach-walked off the prior green lazy base. Working code once pointed at the two spots. Complexity (O(V + E log V), O(V+E) space) correct, though the learner thought the stale-skip heap was O(V) — it's **O(E)** (O(V) is the indexed-PQ/decrease-key form, not implemented). Split from the array-scan as its own row (learner's call); re-rep Sep 22.
+
+## 🔴 743. Network Delay Time (Dijkstra — array-scan) — 2026-09-12
+**Topic**: Dijkstra — the heapless O(V²) array-scan form (the variant the learner actually came to drill). Split into its own tracker row from the min-heap form above. Base 743 (lazy) was 🟢 Sep 3; recall was thin ("I don't have a good recollection of this").
+
+### Where did I get stuck? (all coach-walked)
+1. **Eager conversion.** Opened asking "how do I do greedy for this variant." Taught the Dijkstra spine (greedy: settle the min-`dist` unsettled node, relax neighbors) and the eager move — lower `distance[neighbor]` *at relaxation time*, before the push — vs the lazy "set on pop." First attempt set `distance[currentNode]` on pop (dist-array-as-visited = actually the lazy form); coach pointed at the two exact spots to convert.
+2. **"What makes it eager?"** Needed the when-you-commit framing: eager writes best-known into `dist[]` the instant a shorter path is found; lazy defers to pop.
+3. **Array-scan (O(V²)) form.** Wanted "the absolute most efficient here." Coach supplied the density argument (V≤100, E≤6000 ≈ dense ⟹ O(V²) array-scan beats O(E log V) heap) and the whole skeleton (visited[] + linear min-scan replacing the heap).
+4. **The fatal relax bug — `visited[neighbor]=True` inside relax.** Conceptual miss: **settling ≠ relaxing.** Marking a node visited when you relax it means it's never selected by findMin, never relaxes its own neighbors → Example 1 returned −1 instead of 2. Coach-flagged with the trace.
+5. **Unconditional overwrite in relax.** `distance[neighbor] = newDist` with no `< ` guard — clobbers a better existing value. Coach-flagged; it's the same min-guard their own Prim's (1584) `relax` already had.
+
+### Core Realization
+- **Array-scan Dijkstra ≡ array-scan Prim's (1584), helper-for-helper** (`distance[]` + `visited` + `findMin`/`getCandidate` + `relax`). The *only* difference is the relaxation key: Prim relaxes with the **bare edge weight** (cheapest wire into the tree), Dijkstra with the **accumulated path** `dist[u]+w`. Learner generated the Prim parallel themselves — the strongest thing in the rep.
+- **The heap is just a faster "find nearest unsettled node."** Swap it for an O(V) linear scan → O(V²), no `log`, and that *wins* on dense graphs.
+- **visited belongs only in the selection loop, never in relax.** A node is final only when `findMin` picks it (the greedy guarantee).
+
+### Complexity (landed, but the reasoning was taught)
+- Array form: **O(V² + E) = O(V²)** — findMin O(V)×V = O(V²); relax is O(E) *amortized total* (each edge touched once, when its source settles — not O(E) per call); and since **E ≤ V², the +E is absorbed by V²** (learner initially had the domination backwards: "V² becomes E"). Space O(V+E).
+- Heap form (earlier in the session): O(V + E log V), O(V+E) space — learner correctly noted log E = O(log V), but wrongly thought the stale-skip heap is O(V) (it's **O(E)** — the O(V) heap is the indexed-PQ/decrease-key form, not implemented).
+
+### Genuinely theirs
+All code written by the learner; the recognition (greedy / dist-array / Dijkstra) held throughout; the density argument and the Prim↔Dijkstra equivalence were theirs once pointed at; the honest self-rating **🔴 over the coach's soft 🟡**.
+
+**Rating:** 🔴, standard +2 (learner's call, re-try Sep 14). Measures whether the eager + array-scan forms are writable from a blank page after the teach. Watch the relax-settles-nothing rule and the min-guard cold.
+
 ## 🔴 547. Number of Provinces — 2026-09-11 (🎯 Probe #7, cold, label-stripped)
 **Topic**: connected components — recognizing the shape, and Union-Find execution.
 

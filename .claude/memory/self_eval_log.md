@@ -5,6 +5,28 @@
 
 Append-only log of corrections. Governed by [[feedback_self_evaluation]]. Newest at top. Meta-review promotes recurring root causes into rules; entries are never deleted, only re-statused.
 
+## 2026-09-12 [P3] — spoiler-column hook over-flagged a bare numeric index column
+Presented the Saturday board as a table with a `#` index column; `spoiler_lineup` blocked it as an
+"extra column." Learner: *"no problem, the index column is fine. if you want that as a hard rule, you
+can modify the skill."* The detector treated ANY non-pair cell as a spoiler, but a bare numeric index
+(`138`, or a running `1,2,3`) only **echoes the number already in the link text** — it localizes nothing
+the lineup doesn't already show, so it is not a spoiler; the real target is a *semantic* column
+(Note/Focus/technique/comfort/units) or a technique parenthetical. Fix (rung-1, source): added
+`_is_index_cell` to exempt a bare numeric cell in `problem_link_reminder.py::spoiler_lineup`, updated the
+block message + header comment (dropped "an index column" from the forbidden list), added a self-test case
+(8/8 pass), and noted the exemption in [[feedback_lineup_links_only]]. A technique parenthetical/comfort
+emoji in the same table still blocks. resolved.
+
+## 2026-09-12 [P2] — "start saturday session" not treated as a kickoff; presented the board, didn't scaffold
+On "start saturday session" I invoked the skill, presented the day's board, and stopped — I did **not**
+batch-scaffold. Asked "did you scaffold any?", I confirmed I hadn't. Learner: *"when I say start session,
+it means the agent should scaffold."* Root cause: `scaffolding.md`'s kickoff-trigger list
+(§"batch only on a kickoff") enumerated "start today" / "what's up today" / `/start-day` but **not**
+"start session" / "start `<day>` session", so I read the phrase as an ambient session-start greeting
+rather than a day kickoff. Fix (rung-3, skill reference): added "start (this/the) session" / "start
+`<day>` session" to the kickoff triggers in `scaffolding.md`, with an explicit note that "start session"
+is a kickoff, not a greeting. First occurrence → reference-prose is the right rung; no hook. open.
+
 ## 2026-09-12 [P2] — Advance-prompt tail promoted OFF prose to a Stop hook (reverses the Aug 20 "no matcher" choice); in-session summary layer considered and DECLINED
 Planning question: is an in-session context-truncation / summary layer worth adding against within-session
 degradation (a rule stated early lapsing later — LITM)? **Declined** — the harness already auto-compacts, a
