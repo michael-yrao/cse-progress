@@ -1156,3 +1156,34 @@ covered), not just its headline tag. **Fix candidates (climb the ladder at meta-
 "hidden prerequisite" warning); (2) build-step — when seating a coverage sibling, check every technique tag
 it carries, not just the one it was pulled for. Related: [[feedback_concept_primer]] (meet a technique on
 its gentlest form first), [[feedback_phase_gated_blanks]]. open — flagged for rung-1/rung-3.
+
+## 2026-09-13 [P1] — kickoff greeting → presented the board, didn't scaffold (2nd day running)
+On "let's do our sunday session" I presented the day's board and did NOT scaffold the day's problems.
+This is a **recurrence one day after** the same miss on "start saturday session" (Sep 12), which was
+recorded only as a bolded note in [`scaffolding.md`](../skills/cse-coach/references/scaffolding.md)
+(lines 20-22) — and, it turns out, with **no self_eval entry at all** (this is the first).
+**Root cause — a TIER REGRESSION from the multi-skill migration.** Before the split, the coaching
+engine (incl. "kickoff → scaffold the whole board") lived inline in the always-injected `CLAUDE.md`,
+so it fired every session. The migration moved it into `references/scaffolding.md`, an **opt-in read**
+whose open-trigger ("setting a problem up before the learner codes") already presumes the decision to
+scaffold. At a session-start greeting the coach loads only `SKILL.md` (the spine — §4 says merely
+"batch the whole day only on a real kickoff" and points deeper); the rule that **"start session" IS a
+kickoff** lives one level down in a file never opened at that moment. This is exactly CLAUDE.md's own
+failure mode: *"a rule that must fire unprompted cannot live only in an opt-in read"* / *"too cold a
+tier?"* The Sep 12 fix landed in that same cold tier and lapsed within 24h.
+**Fix — climb the ladder (source > hook > skill/CLAUDE.md step > memory), learner's call this session
+"hook + always-on gate":** (1) new `UserPromptSubmit` hook `kickoff_scaffold_reminder.py` that
+regex-matches kickoff phrasing and injects a scaffold-the-board reminder (warn-only, quiet on named-
+problem / non-kickoff prompts — mirrors `scaffold_links_reminder.py`); (2) restore the rule as a
+numbered always-on gate in `CLAUDE.md` + the SessionStart hook's `ALWAYS_ON` block; (3) `decisions.yml`
+entry `kickoff-scaffold-gate` + `reconciled:` bump on `scaffolding.md` (which keeps the mechanics/scope
+nuance but is no longer the sole home of the trigger). Related: [[feedback_lineup_links_only]]. closed
+at rungs 2+3 — reopen if a kickoff greeting slips past the hook.
+**Follow-on discovered same session:** the kickoff gate scaffolds the *whole* board upfront, so every board
+item left unattempted by close-out is a latent phantom tracker row (`discover_source_problems` plants
+`Unknown`/🔴/blank-date rows for any source file with no row). Surfaced today when a mid-session
+`update_review_dates.py` run planted rows for 394 + 1552 (scaffolded, not yet attempted); removed them, nothing
+committed. **Consequence to bake into close-out:** the weekly/session close-out MUST reconcile unattempted board
+scaffolds (attempt → real row; else remove file AND row) BEFORE the pre-commit discovery runs — otherwise the
+kickoff gate's own upfront scaffolding manufactures phantoms. Candidate: a close-out checklist step or a
+`restore_history`-style guard. Watch at this session's close-out (394 disposable, 1552 intake still open).

@@ -75,6 +75,10 @@ ALWAYS-ON GATES — each is bound to a MOMENT, not a topic. Check the trigger, n
    no "where the rep lives" — that is stuck_log content and it pre-localizes the rep. (2 occurrences.)
 6. Last session of the week? -> Archive this week's schedule AND generate next week's, before the
    commit. Both, or neither counts. Step 7 of CLAUDE.md's LeetCode Review Workflow. (Missed 2026-08-02.)
+7. Learner asks to start the day / a session (a kickoff)? -> Scaffold the WHOLE day's board (every
+   problem on today's schedule, active block AND both warmups) BEFORE presenting it. A message naming
+   a specific problem is NOT a kickoff -- scaffold only that. (Presented-not-scaffolded Sep 12 AND 13,
+   2026; the reference-tier fix lapsed in a day. Gate 9 of CLAUDE.md; kickoff_scaffold_reminder.py.)
 
 Load the individual memory file before acting on any rule you are unsure about. Index follows.
 """

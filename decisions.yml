@@ -37,6 +37,21 @@
 # "could a rule written before this still read as correct while now being wrong?"
 
 decisions:
+  - id: kickoff-scaffold-gate
+    date: 2026-09-13
+    summary: >-
+      The "a real kickoff scaffolds the whole day's board before presenting it" rule was PROMOTED
+      out of the reference tier (references/scaffolding.md, an opt-in read) to hook + always-on gate.
+      Cause: the multi-skill migration moved it off always-injected CLAUDE.md into scaffolding.md,
+      whose open-trigger presumes the decision to scaffold, so a session-start greeting never reached
+      it — presented-not-scaffolded on Sep 12 ("start saturday session") and again Sep 13 ("let's do
+      our sunday session"); the Sep 12 note-in-the-same-cold-tier fix lapsed in a day. Now enforced by
+      a UserPromptSubmit hook (kickoff_scaffold_reminder.py, warn-only, regex-matches kickoff phrasing)
+      AND stated as gate 9 in CLAUDE.md + gate 7 in session_start_memory.py's ALWAYS_ON block.
+      scaffolding.md keeps the mechanics + scope nuance but is no longer the sole home of the trigger.
+      No cse.config.yml value changed. See self_eval_log.md 2026-09-13.
+    affects: [scaffolding, scheduling, weekly_build]
+
   - id: ai-pillar-revived-deferred
     date: 2026-09-12
     summary: >-

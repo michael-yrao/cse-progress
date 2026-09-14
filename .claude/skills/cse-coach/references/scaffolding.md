@@ -1,4 +1,4 @@
-<!-- reconciled: 2026-09-11 -->
+<!-- reconciled: 2026-09-13 -->
 # Scaffolding a problem
 
 **Open this** before you create or set up any problem file for the learner.

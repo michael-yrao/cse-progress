@@ -66,14 +66,16 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/dsa/mastery/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **119+5** problems &nbsp;·&nbsp; **130+5** solutions &nbsp;·&nbsp; **552+5** reps
+> **120+5** problems &nbsp;·&nbsp; **131+5** solutions &nbsp;·&nbsp; **554+5** reps
 
 | | 🏆 Retired | 🎓 Graduated | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|:---:|
-| **Solutions** | 0 | 8 | 105 | 14 | 3 |
+| **Solutions** | 0 | 8 | 106 | 14 | 3 |
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Rep Date | Rep Dates |
 |---|---|---|---|---|---|---|
+| Hard | [1489. Find Critical and Pseudo-Critical Edges in MST (Kruskal)](https://leetcode.com/problems/find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree/) | 🟡 | 0 | 2026-09-23 | 2026-09-13 | 2026-09-13 |
+| Medium | [56. Merge Intervals](https://leetcode.com/problems/merge-intervals/) | 🟢 | 1 | 2026-10-13 | 2026-09-13 | 2026-08-24, 2026-09-03, 2026-09-13 |
 | Medium | [167. Two Sum II](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/) | 🎓 | 3 | 2027-03-11 | 2026-09-12 | 2026-01-19, 2026-07-14, 2026-09-12 |
 | Medium | [743. Network Delay Time (Dijkstra — min-heap)](https://leetcode.com/problems/network-delay-time/) | 🟡 | 0 | 2026-09-22 | 2026-09-12 | 2026-07-15, 2026-07-25, 2026-08-04, 2026-08-14, 2026-08-24, 2026-09-03, 2026-09-12 |
 | Medium | [743. Network Delay Time (Dijkstra — array-scan)](https://leetcode.com/problems/network-delay-time/) | 🔴 | 0 | 2026-09-14 | 2026-09-12 | 2026-09-12 |
@@ -103,7 +105,6 @@ Notes for future agents:
 | Hard | [84. Largest Rectangle in Histogram](https://leetcode.com/problems/largest-rectangle-in-histogram/) | 🔴 | 0 | 2026-09-06 | 2026-09-04 | 2026-09-04 |
 | Medium | [1462. Course Schedule IV (Floyd-Warshall / Transitive Closure)](https://leetcode.com/problems/course-schedule-iv/) | 🟢 | 1 | 2026-10-04 | 2026-09-04 | 2026-08-25, 2026-09-04 |
 | Hard | [124. Binary Tree Maximum Path Sum](https://leetcode.com/problems/binary-tree-maximum-path-sum/) | 🟢 | 1 | 2026-10-03 | 2026-09-03 | 2026-07-11, 2026-07-13, 2026-07-23, 2026-08-21, 2026-09-03 |
-| Medium | [56. Merge Intervals](https://leetcode.com/problems/merge-intervals/) | 🟡 | 0 | 2026-09-13 | 2026-09-03 | 2026-08-24, 2026-09-03 |
 | Medium | [143. Reorder List](https://leetcode.com/problems/reorder-list/) | 🟢 | 2 | 2026-11-02 | 2026-09-03 | 2026-04-26, 2026-07-06, 2026-07-15, 2026-07-25, 2026-08-04, 2026-09-03 |
 | Hard | [127. Word Ladder (BFS)](https://leetcode.com/problems/word-ladder/) | 🟢 | 1 | 2026-10-02 | 2026-09-02 | 2026-07-18, 2026-07-21, 2026-08-03, 2026-08-13, 2026-08-23, 2026-09-02 |
 | Easy | [202. Happy Number (Seen-Set)](https://leetcode.com/problems/happy-number/) | 🟢 | 1 | 2026-10-02 | 2026-09-02 | 2026-08-11, 2026-08-21, 2026-09-02 |
@@ -242,7 +243,6 @@ note is the failure mode this section exists to prevent.
 | Hard | [1216. Valid Palindrome III (backtracking)](https://leetcode.com/problems/valid-palindrome-iii/) | `phase:Backtracking` | **Phase-gated 🔴.** Attempted 2026-05-31 → Blank; the Backtracking foundation isn't built until **Sep 14 – Oct 11**. Premature, not forgotten. **Trigger: pull into rotation when the Backtracking phase opens (Sep 14).** |
 | Hard | [1216. Valid Palindrome III (1DP)](https://leetcode.com/problems/valid-palindrome-iii/) | `phase:1D-DP` | **Phase-gated 🔴.** Attempted 2026-05-31 → Blank; the 1D DP foundation isn't built until **Oct 12 – Nov 8**. Premature, not forgotten. **Trigger: pull into rotation when the 1D DP phase opens (Oct 12).** |
 | Medium | [399. Evaluate Division](https://leetcode.com/problems/evaluate-division/) | `rated:1334` | **Floyd-Warshall's 2nd problem** — approved by the learner Aug 16, 2026 from the company-wise pull (`Shortest Path` tag, 5 eligible). ⭐ **Chosen because it is a DIFFERENT SHAPE, not another distance grid**: weights are multiplicative and the query is a ratio, so it tests whether the triple loop is understood as a relation-closure pattern rather than a shortest-path recipe. Held behind 1334's Aug 25 rep by the D&C precedent — a 2nd problem run before the 1st is rated measures the teaching, not the technique. |
-| Hard | [1489. Find Critical and Pseudo-Critical Edges in MST](https://leetcode.com/problems/find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree/) | `rated:1584-kruskal` | **MST's 3rd problem** — promoted out of `backlog/competitive_style.md` Aug 16, 2026, where it had no trigger. Kruskal with include/exclude probing, so it only makes sense after the Kruskal variant rep on 1584. ⚠️ **With this, MST reaches 3 without premium**: 1584 + the Kruskal variant + this. |
 | Hard | [472. Concatenated Words](https://leetcode.com/problems/concatenated-words/) | `rated:139` | **Re-parked Sep 9, 2026 — phase-gated blank.** Attempted cold, came back 🔴: its binding technique is **Word Break** (string decomposition), never encoded — the trie is incidental. Retry only after 139 Word Break (the pure form) is rated. `discovery_skip`'d so it doesn't churn. (Was seated this week on `rated:211`, the Trie trigger — that gated the wrong technique; see self_eval 2026-09-09.) |
 | Medium | [1472. Design Browser History](https://leetcode.com/problems/design-browser-history/) | `rated:146` | **2nd problem for HashMap + Doubly Linked List** — the technique had exactly one (146 LRU). A design problem where the DLL is the point and there is no eviction policy to hide behind. |
 | Medium | [53. Maximum Subarray (Divide and Conquer)](https://leetcode.com/problems/maximum-subarray/) | `rated:912` + `surplus>=1` | **D&C consolidation rep.** ⚠️ *Original trigger "active block week of Jul 6" **expired unfired** — caught Jul 26, 2026, three weeks stale. A dead stub (`maxSubarrayDivideNConquer`, body `return`) sits in the solution file from that abandoned setup.* **Re-triggered as a condition, not a date: pull once (a) 912 Merge Sort has its RATED rep (Jul 29 — D&C was taught unrated Jul 25, so 912 measures retention first) AND (b) surplus ≥ 1.** Rationale: D&C currently has exactly **one** problem (912) where a technique wants 3–4, and this is the natural second — but running it before 912 is rated would measure the teaching, not the technique. See [[project_dandc_coding_gap]]. |
