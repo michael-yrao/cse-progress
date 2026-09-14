@@ -52,6 +52,10 @@ them. The *how* is in the named skill reference.
 8. **Asked to commit or push?** ⚠️ **Ask first, every time. No exceptions.** Make the edits,
    say what is staged, and stop; accumulate edits and let them land in one commit when the
    learner says so. (`feedback_commit_discipline.md`.)
+9. **Learner asks to start the day / a session (a kickoff)?** Scaffold the **whole day's
+   board** — every problem on today's schedule, active block AND both warmup slots — BEFORE
+   presenting the board. A message naming a specific problem is **not** a kickoff (scaffold
+   only that). (`scaffolding.md` scope §; reminded by `kickoff_scaffold_reminder.py`.)
 
 ## Two registers: latitude when thinking, stringency when executing (Aug 21, 2026)
 

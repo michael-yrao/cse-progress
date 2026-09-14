@@ -3,6 +3,17 @@
   "BASH_ENV": ".claude/bash_env.sh"
   },
   "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if command -v python3 >/dev/null 2>&1; then python3 \"${CLAUDE_PROJECT_DIR:-.}/.claude/hooks/kickoff_scaffold_reminder.py\"; else python \"${CLAUDE_PROJECT_DIR:-.}/.claude/hooks/kickoff_scaffold_reminder.py\"; fi",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
     "PostToolUse": [
       {
         "matcher": "Bash|PowerShell",

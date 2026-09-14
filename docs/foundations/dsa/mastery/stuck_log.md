@@ -2499,3 +2499,24 @@ complexity_gotchas). Freebie long spent → repeat miss, but rating was already 
 **Genuinely theirs:** once handed the high-water-mark property, the implementation and the eviction bookkeeping.
 **Rating:** 🔴, standard +2 (Sat Sep 12) — a real forgetting gap after the teach; provisional lock-down on any
 clean stacks the further gap. Learner's call on the +2 (vs a 10-day push): a Blank→Clean is provisional anyway.
+
+### 2026-09-13 · 1489 Find Critical and Pseudo-Critical Edges in MST · 🟡 (Hard, Kruskal 2nd form, carried Sat→Sun)
+Recognition **clean and self-generated** off a blank page: UF + Kruskal, with the right discriminator written into
+the top comment — *"we need to ban specific edges, thus it has to be UF and Kruskal"* (Prim's can't exclude a
+chosen edge cleanly). Base MST (UF with rank + path compression, indexed-edge sort) was already sound from Sat.
+**Why 🟡, not 🟢 — execution needed real scaffolding across the two sessions:** (1) the **pseudo-critical concept
+itself was taught** — went in not knowing the problem's core definition (three buckets: critical / pseudo-critical /
+useless); (2) the **force-inclusion test** (to separate pseudo-critical from useless) came out of Socratic prompting,
+not unaided; (3) three coach-caught correctness bugs — the connectivity check looping `range(len(edges))` instead of
+`range(n)` (KeyError when E>V), a `range(n)` regression on the **main** Kruskal loop after the first fix landed on the
+wrong loop, and the disconnect **sentinel sign**: shipped `removedWeight > base` with a `-math.inf` sentinel, which
+silently misclassifies every bridge/tree-edge (a maximally-critical edge) as pseudo-critical — flagged twice before
+the `n=3` tree counterexample made it land, then fixed to `+math.inf`. Verified vs both official examples + the tree
+case. **Genuinely theirs:** the whole UF class, the two helpers, the classification loop, and the final debugging.
+**Complexity:** time **O(E²+E log E)** self-derived and correct (E edges × 2 Kruskal passes each, sort dominated).
+Space bound **O(E)** correct but reached via *"no extra space"* — missed the per-helper UF O(V) and `find`'s recursion
+stack, both real allocations dominated only because V≤E+1 in a connected graph. Per the 853/332 itemization precedent
+a correct bound with an incomplete why is a **pass, not a miss** — no freebie spent (see complexity_gotchas). 🟡, +10
+(shaky interval) → re-rep **2026-09-23**. 📌 **Hard-effort data point** (pinned Sep 21 multiplier revisit): ~2
+sessions, heavy back-and-forth, felt-effort HIGH — a real witness that a 🔴/🟡 Hard's 4.5-unit price may under-read
+wall-clock here (though this one *earned* its length).

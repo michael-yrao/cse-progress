@@ -104,8 +104,9 @@
 
 ## Vocabulary maintenance
 
-**Unmapped tracker rows (2)** — solved but assigned to no technique. Add them to `techniques.yml`, or coverage silently drifts behind the tracker.
+**Unmapped tracker rows (3)** — solved but assigned to no technique. Add them to `techniques.yml`, or coverage silently drifts behind the tracker.
 
+- 1489 Find Critical and Pseudo-Critical Edges in MST (Kruskal)
 - 743 Network Delay Time (Dijkstra — array-scan)
 - 743 Network Delay Time (Dijkstra — min-heap)
 
