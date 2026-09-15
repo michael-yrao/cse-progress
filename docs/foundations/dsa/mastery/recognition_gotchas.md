@@ -514,3 +514,21 @@ number attached.** Re-derive the rate at the build rather than renewing or killi
 `rated:202`, and Aug 21 was that rated rep — but it came back **🟡**, and the standing rule is that a
 technique with no 🟢 needs a **conversion rep**, not a second surface form. Re-stated as a state
 condition so it cannot expire silently: **`green:202`**.
+
+- **2026-09-14 · 🎯 PROBE #8 · 648 Replace Words** (Medium, unseen, label-stripped) — ✅ **technique HIT,
+  cold, but not a clean call.** Named **Trie** immediately and unaided (correct), and coded it clean from
+  a blank page (build root Trie, per word descend and stop at the first end-of-root = shortest prefix).
+  Two soft misses kept it at 🟡 (learner's own downward call):
+  - ❌ **Wrong-reason embellishment:** *"a Trie problem where we needed to have tackled Word Break."* This
+    is **prefix lookup, not segmentation** — each word maps to one root that prefixes it; no split, no DP.
+    The learner was pattern-matching "Trie + dictionary → 472," dragging in word-break machinery that 648
+    does not need. Corrected before coding.
+  - ❌ **Discriminator not producible unaided:** could not say what the Trie buys over the naive
+    hash-set-of-all-prefixes (they're ~same big-O, which is *why* it's subtle). The picking feature,
+    supplied: the Trie finds the shortest matching root in **one left-to-right walk with early exit at
+    the first terminal node**, and shares storage across common prefixes — the hash set has to fabricate
+    and test every candidate prefix substring (O(L²) slicing). 
+  - Execution stall (self-reported at rating): the *shortest*-root requirement and "what if a matching
+    char sequence starts mid-word" — resolved by the "stop at first `isWord` during a single descent"
+    framing. Earned a Trie row (was 2/3 → now 3 problems, one 🟡). Contrast probe #7 (547), where the
+    **technique itself** was wrong; here only the *reasoning around* a correct call was shaky.

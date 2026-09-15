@@ -33,6 +33,33 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-09-14 ──────────────
+    def findCheapestPrice_20260914(self, n: int, flights: List[List[int]], src: int, dst: int, k: int) -> int:
+        # cheapest flights with definitive source and destination = shortest path
+        # k stops = bellman ford
+        # distance array and clone only
+
+        distance = [math.inf] * n
+
+        # starting point distance is zero
+        distance[src] = 0
+
+        traverseCounter = 0
+        # traverse until we can no longer relax the nodes
+        # k is number of stops, k = 1 means 2 edges, so k+1 for our constraint
+        while traverseCounter < k+1:
+            # we need a copy of the distance to make sure we don't do multi-steps
+            currentDistanceState = distance.copy()
+            for source, destination, weight in flights:
+                if distance[source] != math.inf:
+                    currentDistanceState[destination] = min(currentDistanceState[destination], distance[source] + weight)
+            distance = currentDistanceState
+            traverseCounter+=1
+        
+        if distance[dst] == math.inf:
+            return -1
+        return distance[dst] # type: ignore
+
     # ── Attempt · 2026-08-15 ──────────────
     def findCheapestPrice_20260815(self, n: int, flights: List[List[int]], src: int, dst: int, k: int) -> int:
         # this is bellman ford since we are looking for the shortest path 

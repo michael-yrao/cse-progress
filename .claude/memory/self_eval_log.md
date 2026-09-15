@@ -5,6 +5,33 @@
 
 Append-only log of corrections. Governed by [[feedback_self_evaluation]]. Newest at top. Meta-review promotes recurring root causes into rules; entries are never deleted, only re-statused.
 
+## 2026-09-14 [P3] — bare problem numbers in end-of-turn tallies tripped the link hook 3× in one session
+Three closing recaps ("today's tally: 207 🎓, 743 🟡, 787 🔴", "162 and the probe still open", etc.) named
+board problems by bare number without a markdown link → `problem_link_reminder.py` blocked each, and I paid
+the link debt each time. Enforcement is already handled (the hook catches it every turn, rung-2), so this is
+not a missing-guard problem — it's that I keep *generating* the debt in the one place a link adds nothing (a
+recap of work already linked earlier in the session), which wastes a turn per occurrence. Root: treating the
+tally as prose rather than as a lineup subject to the links-only rule. Behavioral fix (stated in-session, now
+durable): **in a recap of already-completed work, refer to problems by title or outcome, not by bare number**
+— if a number must appear, link it. No rung-1/2 change needed (the hook is the safety net); this entry exists
+so the habit is visible to meta-review rather than dying with the context window. Recurrence family: the
+links-only rule ([[feedback_lineup_links_only]]) has lapsed 10+× historically. open.
+
+## 2026-09-14 [P2] — two overdue 🔴s slipped consecutive weekly builds, caught only at session-start reconcile
+At the Sep 14 session start I ran `effort_budget.py --due` and found **two overdue 🔴s absent from the
+Sep 14 board**: **84 Largest Rectangle** (🔴, due Sep 6 — its +2 fell on the last day of the Aug 31 week,
+so it slipped the Sep 7 build *and* the Sep 13 build) and **547 Number of Provinces** (🔴, Probe #7 re-rep,
+due Sep 13 — missed by the Sep 13 build that generated this week). Both are exactly the leak the weekly
+build's "nothing dropped without a date" integrity check exists to prevent. Root cause: the close-out reads
+the *coverage audit* pull-order (conversions/cleans/thin-green) but there is **no mechanical check that every
+overdue row on `effort_budget.py --due <today>` appears on the built board** — an overdue row invisible to
+the audit's technique framing (a 🔴 whose due date crossed a week boundary) can fall through. A build note
+in prose ("nothing dropped without a date") is the same too-cold-tier failure the architecture warns about.
+Fix (this turn, rung-3 stopgap): seated 84 (Fri) + 547 (Wed), moved 721 Fri→Thu, re-priced the week
+42.5→50.0, noted it on the board. **Candidate rung-1/2 fix to raise:** a `check_overdue_seated.py` (or a
+close-out step in `weekly-build.md`) that diffs `--due <today>` against the built schedule's problem
+numbers and fails on any overdue row not present. Recurrence of the Aug-2 "schedule integrity" family. open.
+
 ## 2026-09-12 [P3] — spoiler-column hook over-flagged a bare numeric index column
 Presented the Saturday board as a table with a `#` index column; `spoiler_lineup` blocked it as an
 "extra column." Learner: *"no problem, the index column is fine. if you want that as a hard rule, you

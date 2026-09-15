@@ -38,6 +38,43 @@ from typing import List
 
 class Solution:
 
+    # ── Attempt · 2026-09-14 ──────────────
+    def numIslandsDFS_20260914(self, grid: List[List[str]]) -> int:
+        # doing DFS method today
+
+        rows, cols = len(grid), len(grid[0])
+
+        visited = set()
+
+        island = 0
+
+        def dfs(row, col):
+            if row < 0 or row >= rows or col < 0 or col >= cols:
+                return 0
+            if (row, col) in visited:
+                return 0
+            if grid[row][col] == '0':
+                return 0
+            
+            # now that we know we are in an unvisited land
+            # mark as visited
+            visited.add((row,col))
+
+            # now visit all neighbors and do the same thing
+            dfs(row+1, col)
+            dfs(row-1, col)
+            dfs(row, col+1)
+            dfs(row, col-1)
+
+            return 1
+
+        for row in range(rows):
+            for col in range(cols):
+                if (row, col) not in visited and grid[row][col] == '1':
+                    island+=dfs(row,col)
+        
+        return island
+
     # ── Attempt · 2026-07-20 ──────────────
     def numIslands_20260720(self, grid: List[List[str]]) -> int:
         # DFS solution

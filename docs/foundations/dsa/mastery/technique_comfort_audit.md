@@ -5,22 +5,20 @@
      The FUTURE section is hand-authored and preserved verbatim between its markers.
      Run at the weekly build: python scripts/technique_comfort_audit.py -->
 
-> **56** techniques started &nbsp;·&nbsp; **53** with a 🟢 &nbsp;·&nbsp; **3** still zero-green. Comfort = demonstrated ceiling (best across the technique's problems); coverage tempers it.
+> **56** techniques started &nbsp;·&nbsp; **55** with a 🟢 &nbsp;·&nbsp; **1** still zero-green. Comfort = demonstrated ceiling (best across the technique's problems); coverage tempers it.
 
 ## ⚠️ Needs work — pull order for the weekly build
 
 > Priority: **🔴/🟡 conversions below > overdue 🟢 cleans > thin-green fills**. A zero-green
 > technique outranks discretionary work and fresh cleans — not a clean aged far past its interval.
 
-**Zero-green (3) — execution unproven, weakest first:**
+**Zero-green (1) — execution unproven, weakest first:**
 
-- 🟡 **Graph Clone (DFS + Hash Map)** (graphs) — 1p · 0🟢 · 🟡
-- 🟡 **Intervals (sort + sweep)** (intervals) — 3p · 0🟢 · 🟡
-- 🟡 **Monotonic Deque** (stack) — 1p · 0🟢 · 🟡
+- 🟡 **Divide & Conquer / Sorting** (sorting) — 1p · 0🟢 · 🟡
 
 **Thin-green (19) — proven but narrow, discretionary:**
 
-- **Bellman-Ford** (1/3) · **Connected Components** (1/3) · **Cycle Detection in an Iterated Sequence** (1/2) · **Divide & Conquer / Sorting** (1/3) · **HashMap + Doubly Linked List (LRU)** (1/3) · **Multi-source BFS** (1/3) · **Prim's MST** (1/3) · **Stack (augmented entries)** (1/2) · **Stack (expression evaluation)** (1/2) · **Binary Search (max boundary)** (2/3) · **Binary Search on Answer** (2/3) · **Dijkstra** (2/3) · **Floyd's Cycle / Midpoint** (2/3) · **Floyd-Warshall (all-pairs shortest path)** (2/3) · **Grid DFS** (2/3) · **Hierholzer (Eulerian path)** (2/3) · **Prefix Sum** (2/3) · **Tree BFS (level order)** (2/3) · **Trie** (2/3)
+- **Bellman-Ford** (1/3) · **Cycle Detection in an Iterated Sequence** (1/2) · **Dijkstra** (1/3) · **HashMap + Doubly Linked List (LRU)** (1/3) · **Multi-source BFS** (1/3) · **Prim's MST** (1/3) · **Stack (augmented entries)** (1/2) · **Stack (expression evaluation)** (1/2) · **Binary Search (max boundary)** (2/3) · **Binary Search on Answer** (2/3) · **Connected Components** (2/3) · **Floyd's Cycle / Midpoint** (2/3) · **Floyd-Warshall (all-pairs shortest path)** (2/3) · **Grid DFS** (2/3) · **Hierholzer (Eulerian path)** (2/3) · **Prefix Sum** (2/3) · **Tree BFS (level order)** (2/3) · **Trie** (2/3) · **Intervals (sort + sweep)** (3/5)
 
 ## Started techniques
 
@@ -31,7 +29,7 @@
 | Array/String Fundamentals | 🟢 | 3p · 3🟢 · 🟢 | Clean and foundational; no open gaps. |
 | Boyer-Moore Voting | 🟢 | 2p · 2🟢 · 🟢 | Majority-element voting solid; thin but the technique is problem-specific. |
 | Frequency Counting | 🟢 | 2p · 2🟢 · 🟢 | Hashmap counts, clean; a building block more than a standalone skill. |
-| Hash Map Lookup | 🟢 | 2p · 2🟢 · 🟢 | Complement/two-sum lookup, clean. |
+| Hash Map Lookup | 🎓 | 2p · 2🟢 · 🟢→🎓 | Complement/two-sum lookup, clean. |
 | Hash Set Membership | 🟢 | 3p · 3🟢 · 🟢 | Mostly clean; **36 Valid Sudoku slipped 🟡 Aug 21** on the `%3` vs `//3` box-key bug. |
 | In-Place Array Rotation | 🟢 | 1p · 1🟢 · 🟢 | Single canonical problem, clean; thin by nature. |
 | Length-Prefix Encoding | 🟢 | 1p · 1🟢 · 🟢 | **271 only, no green.** Code is right but the encode-time complexity (O(n)→O(N)) missed Aug 22. |
@@ -50,14 +48,14 @@
 
 | Technique | Comfort | Coverage | Why |
 |---|---|---|---|
-| Greedy (single pass) | 🟢 | 2p · 1🟢 · 🟡→🟢 | Clean; thin, and mostly subsumed by the coming Greedy phase. |
+| Greedy (single pass) | 🟢 | 6p · 1🟢 · 🟡→🟢 | Clean; thin, and mostly subsumed by the coming Greedy phase. |
 | Sliding Window | 🟢 | 4p · 3🟢 · 🟡→🟢 | Clean; amortized-O(n) (l monotonic) sharpened on 3, Aug 22. |
 
 ### stack
 
 | Technique | Comfort | Coverage | Why |
 |---|---|---|---|
-| Monotonic Deque | 🟡 | 1p · 0🟢 · 🟡 | **Still zero-green.** 239 lock-down Aug 22 went 🔴→🟡 — technique recalled but 3 coach-guided fixes (front/back repeat, eviction-by-index, off-by-one). |
+| Monotonic Deque | 🟢 | 1p · 1🟢 · 🟢 | **Still zero-green.** 239 lock-down Aug 22 went 🔴→🟡 — technique recalled but 3 coach-guided fixes (front/back repeat, eviction-by-index, off-by-one). |
 | Monotonic Stack | 🟢 | 6p · 5🟢 · 🔴→🟢 | Strong and broad; recognition reliable (index-not-value axis internalised). |
 | Stack (augmented entries) | 🟢 | 1p · 1🟢 · 🟢 | 901 clean; thin. |
 | Stack (expression evaluation) | 🟢 | 1p · 1🟢 · 🟢 | **150 RPN, no green.** Recognition hits but execution keeps slipping (operand order, truncation). |
@@ -105,31 +103,31 @@
 | Technique | Comfort | Coverage | Why |
 |---|---|---|---|
 | BFS on Implicit Graph | 🟢 | 1p · 1🟢 · 🟢 | **127 Word Ladder, no green.** Due Sun Aug 23. |
-| Connected Components | 🟢 | 1p · 1🟢 · 🟢 | 323 (all three methods) clean. |
+| Connected Components | 🟢 | 2p · 1🟢 · 🔴→🟢 | 323 (all three methods) clean. |
 | Cycle Detection in an Iterated Sequence | 🟢 | 1p · 1🟢 · 🟢 | **202 Happy Number, no green.** Same recognition miss twice (Aug 11 probe, Aug 21) — a blacklist plan, not the cycle-detection technique. |
-| Graph Clone (DFS + Hash Map) | 🟡 | 1p · 0🟢 · 🟡 | **133, no green.** O(V+E) complexity missed twice (Aug 9, Aug 19) — dropped the V term both times. |
+| Graph Clone (DFS + Hash Map) | 🟢 | 1p · 1🟢 · 🟢 | **133, no green.** O(V+E) complexity missed twice (Aug 9, Aug 19) — dropped the V term both times. |
 | Graph Cycle Detection (DFS) | 🟢 | 1p · 1🟢 · 🟢 | Clean; thin. |
 | Grid BFS | 🎓 | 4p · 4🟢 · 🟢→🎓 | Graduated; four clean. |
 | Grid DFS | 🟢 | 2p · 2🟢 · 🟢 | Clean. |
 | Multi-source BFS | 🟢 | 1p · 1🟢 · 🟢 | 994 clean; thin. |
 | Topological Sort | 🟢 | 3p · 3🟢 · 🟢 | Kahn's solid across three; **DFS-topo variant still never written** (the gap that motivated the coverage tool). |
-| Union-Find | 🟢 | 4p · 4🟢 · 🟢 | Clean and broad; α-complexity correct, no hints on recent reps. |
+| Union-Find | 🟢 | 4p · 3🟢 · 🟡→🟢 | Clean and broad; α-complexity correct, no hints on recent reps. |
 
 ### advanced_graphs
 
 | Technique | Comfort | Coverage | Why |
 |---|---|---|---|
 | Bellman-Ford | 🟢 | 1p · 1🟢 · 🟢 | 787 clean; thin. |
-| Dijkstra | 🟢 | 2p · 2🟢 · 🟢 | **First green Aug 22 (778) after 0-for-2 in August** — shallow but no longer a blocker. 743 still 🟡. |
+| Dijkstra | 🟢 | 1p · 1🟢 · 🟢 | **First green Aug 22 (778) after 0-for-2 in August** — shallow but no longer a blocker. 743 still 🟡. |
 | Floyd-Warshall (all-pairs shortest path) | 🟢 | 2p · 2🟢 · 🟢 | **1334, no green.** 1462/399 fills queued behind `rated:1334`. |
-| Hierholzer (Eulerian path) | 🟢 | 2p · 1🟢 · 🔴→🟢 | **332, no green — cost 5 sessions** because its first attempt was the introduction. The primer rule exists because of this. |
+| Hierholzer (Eulerian path) | 🟢 | 2p · 2🟢 · 🟡→🟢 | **332, no green — cost 5 sessions** because its first attempt was the introduction. The primer rule exists because of this. |
 | Prim's MST | 🟢 | 1p · 1🟢 · 🟢 | Written four times on 1584, clean; Kruskal (the sibling) still a pending teach. |
 
 ### intervals
 
 | Technique | Comfort | Coverage | Why |
 |---|---|---|---|
-| Intervals (sort + sweep) | 🟡 | 3p · 0🟢 · 🟡 | **Phase opened Aug 24; zero-green after 3.** 56 🟡; 57 and 435 both 🔴→🟡 on a 2-day re-rep — the sort criterion is the learner's now, execution still takes coach fixes. Needs a **conversion**, not a 4th surface form. |
+| Intervals (sort + sweep) | 🟢 | 3p · 1🟢 · 🟡→🟢 | **Phase opened Aug 24; zero-green after 3.** 56 🟡; 57 and 435 both 🔴→🟡 on a 2-day re-rep — the sort criterion is the learner's now, execution still takes coach fixes. Needs a **conversion**, not a 4th surface form. |
 
 ### prefix_sum
 
@@ -142,7 +140,7 @@
 
 | Technique | Comfort | Coverage | Why |
 |---|---|---|---|
-| Divide & Conquer / Sorting | 🟢 | 1p · 1🟢 · 🟢 | **912 only.** D&C coding gap — 53-D&C is the queued second problem (`rated:912` + surplus). |
+| Divide & Conquer / Sorting | 🟡 | 1p · 0🟢 · 🟡 | **912 only.** D&C coding gap — 53-D&C is the queued second problem (`rated:912` + surplus). |
 
 ### tries
 

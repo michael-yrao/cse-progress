@@ -73,13 +73,16 @@ without this table it vanishes from every "problems solved" figure. Two jobs:
 | 5 | 2026-08-21 | 205 Isomorphic Strings | Hash-map bijection | 🟢 | — |
 | 6 | 2026-08-28 | 637 Average of Levels in Binary Tree | Tree BFS (level order) | 🟢 | — |
 | 7 | 2026-09-11 | 547 Number of Provinces | Union-Find (connected components) | 🔴 | ✅ earned |
+| 8 | 2026-09-14 | 648 Replace Words | Trie (prefix search) | 🟡 | ✅ earned |
 
-**Tally (7 run):** 4 clean 🟢 · 2 earned a row (202, 547) · 1 🟡 overridden (643). **Row-creation rate
-2/7 = 29%** — still under the 85% "pool has stopped teaching" line, so the pool still teaches; the 🔴 on
-547 (first Medium probe) is a real recognition gap (adjacency-matrix modelled as a spatial grid → chose
-Number-of-Islands over connected-components/UF), exactly the kind the probe exists to surface.
-**Rowless-but-solved: 5** (977, 69, 643, 205, 637) — these are the unique problems the tracker's 121
-does not count.
+**Tally (8 run):** 4 clean 🟢 · 3 earned a row (202, 547, 648) · 1 🟡 overridden (643). **Row-creation rate
+3/8 = 38%** — still under the 85% "pool has stopped teaching" line, so the pool still teaches. Probe #8:
+the technique call (**Trie**) fired cold and correct and the code was self-written clean — but the learner
+self-assessed 🟡 (over-mine), citing multiple hints to get direction: an incorrect "needed Word Break"
+over-association (this is prefix lookup, not segmentation), needing a hint for the Trie-vs-hashset
+discriminator, and getting stuck on the shortest-root / mid-word-start handling. A cleaner outcome than
+#7's wrong-technique 🔴, but not a pristine call. **Rowless-but-solved: 5** (977, 69, 643, 205, 637) —
+these are the unique problems the tracker does not count.
 
 ⚠️ **Difficulty ratchet is now armed for Tree BFS** — probe #6 was an Easy and came back 🟢, so the
 next probe of this technique is a **Medium** (cap at Medium, never Hard). See the ratchet rule above.
