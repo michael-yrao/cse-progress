@@ -3,7 +3,7 @@ name: feedback_lineup_links_only
 description: Why a presented lineup is problem-name + links and NOTHING else, and why every on-board problem mention carries the [file]·[LC/NC] pair — the occurrence log behind both
 metadata:
   type: feedback
-reconciled: 2026-09-11
+reconciled: 2026-09-14
 ---
 
 **Operational rule lives in the skill** — `.claude/skills/cse-coach/references/scaffolding.md`
@@ -71,6 +71,14 @@ fixes climbed the ladder:
 - ⚠️ **A retry's file link is a spoiler until scaffolded.** Kickoff-table files are safe (scaffolded
   first, prior attempts stashed). In a **selection/candidate menu** the retry isn't scaffolded yet →
   **LC/NC only**; surface the file link only after the pick is scaffolded. (Learned Jul 20.)
+- ⚠️ **A recognition probe is the INVERSE pair: local file link YES, LC/NC link NO** (Sep 14, 2026).
+  It is the one on-board item where the *problem-page* link is the spoiler — LC's topic tags / editorial
+  name the technique, which is the whole thing the probe measures. The `dsa/probes/<n>_<snake>.py` path
+  names the *problem*, not the technique, and the learner must open the file to do the rep — so present it
+  as `[<n> <title>](dsa/probes/…py)` with **no** `· [LC]`. Prior wording said a probe "stays UNLINKED,"
+  which over-corrected and left the learner asking for the file link **3× on Sep 14**. Enforcement: created
+  via `new_problem.py --probe` (prints the local link only); `scaffold_links_reminder.py` and the Stop
+  hook's message both carry the probe branch. Dated: `decisions.yml` `probe-local-file-link`.
 
 Related: [[feedback_no_spoilers]], [[feedback_recommend_by_number_steer_by_description]],
 [[feedback_schedule_integrity]].

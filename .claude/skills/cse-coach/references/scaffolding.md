@@ -1,4 +1,4 @@
-<!-- reconciled: 2026-09-13 -->
+<!-- reconciled: 2026-09-14 -->
 # Scaffolding a problem
 
 **Open this** before you create or set up any problem file for the learner.
@@ -157,3 +157,17 @@ A **recognition probe** gets a file — but at a neutral path that does **not** 
 technique (so the page can't leak the call). See `dsa/probes/README.md`. (The old "blind
 sprint" exception — a page left blank *was* the rep — is gone: SD blind sprints and the AI
 track were both retired Aug 13, 2026.)
+
+- **Create it with `new_problem.py --probe`** (added Sep 14, 2026), not a hand-written file:
+  ```sh
+  python scripts/new_problem.py --probe --number 648 --title "Replace Words" \
+      --signature "dictionary: List[str], sentence: str -> str"
+  ```
+  It writes the blind file to `dsa/probes/<n>_<snake>.py` (the "🎯 RECOGNITION PROBE — you
+  name it" header + the shape→technique→picking-feature prompt), skips the tracker entirely
+  (outside `solutions.roots`), and prints the **local file link ONLY**. Fill the statement.
+- **Present a probe with its LOCAL file link only — never LC/NC.** `[<n> <title>](dsa/probes/…py)`
+  and nothing else. The problem/number/title do not spoil; only the technique-bearing LC page
+  (its tags/editorial) does. This is the inverse of the normal `[file] · [LC]` pair — see
+  [[feedback_lineup_links_only]] ("a recognition probe is the INVERSE pair"). Don't leave it
+  unlinked: the learner needs to open the file to do the rep.

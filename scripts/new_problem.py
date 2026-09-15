@@ -76,6 +76,12 @@ except (AttributeError, ValueError):  # non-reconfigurable stream (redirected/wr
 TEMPLATE = Path("docs/foundations/dsa/templates/solution_template.py")
 DEFAULT_ROOT = "dsa/leetcode"
 
+# Recognition probes live OUTSIDE solutions.roots on purpose (dsa/probes/README.md): the
+# folder never names the technique (the normal dsa/leetcode/<pattern>/ path is itself a
+# spoiler), and being outside the root means update_review_dates.py never auto-creates a
+# tracker row for a disposable probe. --probe writes here; see build_probe().
+PROBES_DIR = Path("dsa/probes")
+
 # The learner never pastes the statement. The coach fills this in — auto-fetched
 # from the problem source, or a "caveman-compressed" version in low-token mode.
 STATEMENT_STUB = (
@@ -99,6 +105,38 @@ RECOGNITION_LINES: list[str] = []
 def recognition_block(indent: str) -> list[str]:
     """Disabled 2026-08-22 (learner writes the call freeform under the signature). Empty."""
     return [f"{indent}{ln}" for ln in RECOGNITION_LINES]
+
+
+def build_probe(number: str, title: str, url: str, method: str,
+                params: str, ret: str) -> str:
+    """A blind recognition-probe file (dsa/probes/README.md).
+
+    The header names the PROBLEM and its URL (the learner reads the statement here), but
+    NOT the technique — that is the one thing the probe measures. The "you name it" banner
+    and the shape -> technique -> picking-feature prompt are the gate the learner answers
+    before coding. `report_links` prints the LOCAL path only for a probe: the LC page's
+    topic tags / editorial would hand over the technique call.
+    """
+    ret_suffix = f" {ret}" if ret else ""
+    return (
+        '"""\n'
+        f"{number}. {title}   ·   {url}\n"
+        "Pattern: 🎯 RECOGNITION PROBE — you name it. Do not look it up.\n"
+        "\n"
+        f"{STATEMENT_STUB}\n"
+        "\n"
+        "Before you write code, state: shape -> technique -> the ONE feature that picks it\n"
+        "over the nearest alternative.\n"
+        '"""\n'
+        "# Write everything yourself from here — including any ListNode/TreeNode classes a\n"
+        "# problem needs. No shared data-model imports (whiteboard fidelity).\n"
+        "from typing import List\n"
+        "\n"
+        "\n"
+        "class Solution:\n"
+        f"    def {method}({params}){ret_suffix}:\n"
+        "        pass\n"
+    )
 
 # Fold markers around prior attempts. Comments carry no indentation meaning in Python,
 # so the region may open inside a class body and close at module level — which is what
@@ -290,7 +328,7 @@ def verify_links(number: str, slug: str, url: str, premium: bool,
     return url
 
 
-def report_links(path: Path, number: str, title: str, url: str) -> None:
+def report_links(path: Path, number: str, title: str, url: str, probe: bool = False) -> None:
     """Print both links — the local file and the problem page — for what was scaffolded.
 
     THIS IS A SOURCE FIX, not a convenience. "Link the file and the problem page on every
@@ -308,7 +346,14 @@ def report_links(path: Path, number: str, title: str, url: str) -> None:
 
     The label tracks the host, so a premium problem reads `NC` and points at the free
     NeetCode mirror rather than the paywalled LeetCode page.
+
+    A recognition probe (`probe=True`) prints the LOCAL FILE LINK ONLY — no LC/NC. The
+    file path names the problem (the learner opens it to do the rep), but the problem
+    PAGE's tags/editorial would name the technique, which is the one thing being measured.
     """
+    if probe:
+        print(f"LINKS: [{number} {title}]({path.as_posix()})  (probe — local link only, no LC/NC)")
+        return
     label = "NC" if "neetcode" in url else "LC"
     print(f"LINKS: [{number} {title}]({path.as_posix()}) · [{label}]({url})")
 
@@ -627,7 +672,13 @@ def main() -> None:
     ap = argparse.ArgumentParser(description="Scaffold a solution file (empty dated skeleton).")
     ap.add_argument("--number", required=True)
     ap.add_argument("--title", required=True)
-    ap.add_argument("--pattern", required=True, help="category folder, e.g. arrays_and_hash")
+    ap.add_argument("--pattern", default=None, help="category folder, e.g. arrays_and_hash "
+                    "(required unless --probe, which writes to dsa/probes/ instead)")
+    ap.add_argument("--probe", action="store_true",
+                    help="scaffold a blind RECOGNITION PROBE to dsa/probes/ (neutral path, "
+                         "'you name it' header, no technique). Prints the LOCAL file link "
+                         "ONLY — no LC/NC (the problem page spoils the technique call). "
+                         "For a NEW probe; see dsa/probes/README.md")
     ap.add_argument("--url", default="")
     ap.add_argument("--method", action="append", default=[],
                     help="method name; for a multi-method problem either comma-separate "
@@ -658,6 +709,8 @@ def main() -> None:
                          "(see scripts/session_date.py). Override only when the "
                          "auto-detection announces something wrong")
     args = ap.parse_args()
+    if not args.probe and not args.pattern:
+        ap.error("--pattern is required (the category folder), unless --probe.")
 
     # NOT datetime.now(): a session that crosses midnight keeps its START date, and
     # stamping wall clock here wrote the wrong attempt date into both the method name
@@ -702,6 +755,28 @@ def main() -> None:
         url = f"https://neetcode.io/problems/{NEETCODE_RENAMES.get(slug, slug)}"
     else:
         url = f"https://leetcode.com/problems/{slug}/"
+
+    if args.probe:
+        # A blind probe: neutral dsa/probes/ path (no technique folder), local-link-only
+        # report. New probe only — a probe that earned a tracker row is retried as a normal
+        # problem, not through this branch.
+        probe_path = PROBES_DIR / f"{args.number}_{name}.py"
+        if probe_path.exists():
+            ap.error(
+                f"probe file already exists: {probe_path.as_posix()}\n"
+                f"--probe scaffolds a NEW blind probe. A probe that earned a row is a "
+                f"tracked problem — retry it via its normal path, not --probe."
+            )
+        probe_path.parent.mkdir(parents=True, exist_ok=True)
+        params0, ret0 = signatures[0]
+        probe_path.write_text(
+            build_probe(str(args.number), args.title, url, method, params0, ret0),
+            encoding="utf-8", newline="\n",
+        )
+        print(f"Created probe {probe_path} (blind — technique stripped from path + header).")
+        report_links(probe_path, str(args.number), args.title, url, probe=True)
+        return
+
     root = source_root()
     path = root / args.pattern / f"{args.number}_{name}.py"
 

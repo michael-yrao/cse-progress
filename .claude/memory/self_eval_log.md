@@ -5,6 +5,24 @@
 
 Append-only log of corrections. Governed by [[feedback_self_evaluation]]. Newest at top. Meta-review promotes recurring root causes into rules; entries are never deleted, only re-statused.
 
+## 2026-09-14 [P2] — probe never linked (asked 3×); "close out the day" commit authorization — two rule changes
+Two rule changes the learner requested at the Sep 14 close-out, both landed same turn (normative sentence +
+feedback memory + dated decisions.yml, per the two-layer rule).
+1. **Probe-link miss → source fix.** The standing rule ("a recognition probe stays UNLINKED — a link spoils
+   it") over-corrected: only the **LC/NC** page spoils (tags/editorial name the technique), the **local file
+   link** does not (the path names the problem, not the technique, and the learner opens it to do the rep).
+   Symptom: the learner asked for the probe's file link **3×** this session. Fix climbed to the source
+   (rung 1): `new_problem.py --probe` (writes the blind file to `dsa/probes/`, prints local link only),
+   `scaffold_links_reminder.py` probe branch, `problem_link_reminder.py` Stop message, scaffolding.md +
+   feedback_lineup_links_only + CLAUDE.md gate 4 + `decisions.yml` `probe-local-file-link`.
+2. **"close out the day" = commit+push authorization.** Learner granted a scoped exception to gate 8's
+   absolute "ask every time" — an explicit close-out-and-publish phrase now authorizes commit+push, with
+   pending-confirmation carve-outs. Safe because the trigger is the learner's explicit phrase, not agent
+   judgement (the thing behind the Aug 15 31-commit run). Also fixed a verified collision: "close monday
+   session" was false-firing the kickoff-scaffold hook (`<weekday> session` pattern) → added a close-out
+   guard. CLAUDE.md gate 8 + feedback_commit_discipline + `decisions.yml` `close-out-commit-authorization`.
+Both hooks verified by regex run; `--probe` smoke-tested. resolved.
+
 ## 2026-09-14 [P3] — bare problem numbers in end-of-turn tallies tripped the link hook 3× in one session
 Three closing recaps ("today's tally: 207 🎓, 743 🟡, 787 🔴", "162 and the probe still open", etc.) named
 board problems by bare number without a markdown link → `problem_link_reminder.py` blocked each, and I paid

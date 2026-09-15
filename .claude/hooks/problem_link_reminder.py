@@ -546,7 +546,8 @@ SPOILER_MESSAGE = (
     "Re-emit the lineup as name + links ONLY, one problem per line, built from "
     "`python scripts/links.py <n> ...` VERBATIM — no table, no extra cells. Comfort and "
     "units belong in the schedule file, never the lineup shown to the learner. A "
-    "recognition probe stays UNLINKED (a link spoils it).\n"
+    "recognition probe carries its LOCAL FILE LINK ONLY — [<n> <title>](dsa/probes/<file>.py) "
+    "— and NEVER an LC/NC link (the problem page's tags/editorial spoil the technique call).\n"
     "Rule: .claude/memory/feedback_lineup_links_only.md"
 )
 
