@@ -37,6 +37,41 @@
 # "could a rule written before this still read as correct while now being wrong?"
 
 decisions:
+  - id: close-out-commit-authorization
+    date: 2026-09-14
+    summary: >-
+      NARROWS the absolute "ask before every commit AND push, no exceptions" (feedback_commit_discipline,
+      set Aug 16 after the 31-commit run). The learner granted a scoped exception: an EXPLICIT
+      close-out-and-publish instruction — "close out the day/session/week", "wrap up and commit/push" —
+      IS standing authorization to commit AND push with no per-action confirmation; the agent does the
+      pre-commit sweep (git status · restore_history.py · update_review_dates) and reports what landed.
+      Why it does not reopen the 31-commit hole: that failure was AGENT JUDGEMENT (inferring a "natural
+      breakpoint"); this trigger is the LEARNER'S EXPLICIT PHRASE, which is not agent discretion — the
+      same premise-expired reversal as advance-prompt-tail. Carve-outs still force an ask: an unrated rep,
+      an unsettled schedule/structural decision, a weekly close-out whose build isn't done (gate 7 first),
+      an odd git state, or any irreversible action beyond an ordinary commit+push (delete, force-push,
+      history rewrite). A vague close-out ("call it a night") still only reports done. Normative sentence
+      moved into CLAUDE.md gate 8. Also: kickoff_scaffold_reminder.py now excludes this phrase family, so
+      "close monday session" no longer false-fires the kickoff gate (verified). No cse.config.yml value
+      changed. Strands any rule still reading "a close-out is never permission." See self_eval_log 2026-09-14.
+    affects: [commit_discipline, kickoff, weekly_build]
+
+  - id: probe-local-file-link
+    date: 2026-09-14
+    summary: >-
+      CORRECTS the prior "a recognition probe stays UNLINKED (a link spoils it)" wording. Only the
+      LC/NC (problem-page) link spoils — its topic tags/editorial name the technique, which is the one
+      thing the probe measures. The LOCAL file link does NOT: the dsa/probes/<n>_<snake>.py path names
+      the problem, not the technique, and the learner must open the file to do the rep. New rule: a probe
+      carries its LOCAL file link ONLY, never LC/NC — the inverse of the normal [file]·[LC] pair.
+      Enforced at the source: new_problem.py grew a --probe mode (writes the blind file to dsa/probes/,
+      outside solutions.roots so no tracker row, and prints the local link only); scaffold_links_reminder.py
+      gained a probe branch (asks for the local link only, not "both"); problem_link_reminder.py's Stop
+      message updated. Cause: the over-strict "unlinked" rule left the learner asking for the probe's file
+      link 3× on Sep 14. No cse.config.yml value changed. Strands the "probe stays unlinked" wording in any
+      rule file predating this. See self_eval_log 2026-09-14, dsa/probes/README.md.
+    affects: [scaffolding, lineup_links]
+
   - id: kickoff-scaffold-gate
     date: 2026-09-13
     summary: >-

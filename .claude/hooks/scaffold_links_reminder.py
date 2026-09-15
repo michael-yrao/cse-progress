@@ -25,11 +25,28 @@ import sys
 # and no read-only command does.
 TRIGGER = re.compile(r"new_problem\.py.*--number", re.DOTALL)
 
+# A recognition probe is scaffolded blind (new_problem.py --probe → dsa/probes/). Its
+# link rule is the INVERSE of a normal scaffold: the local file link YES (the learner
+# opens it to do the rep), the LC/NC link NO (the problem page's tags/editorial name the
+# technique — the one thing the probe measures). Asking for "both links" here would make
+# the agent hand over the spoiler. See feedback_lineup_links_only.md + dsa/probes/README.md.
+# Forward only: a real invocation is always `new_problem.py --probe` (script then flag).
+# A `--probe.*new_problem.py` alternation added nothing real and false-matched a compound
+# command that merely echoed "--probe" in a label before an unrelated scaffold.
+PROBE = re.compile(r"new_problem\.py.*--probe", re.DOTALL)
+
 REMINDER = (
     "Scaffold complete. Before continuing, reply with BOTH links for EVERY problem "
     "just scaffolded: the repo-relative .py path AND its LeetCode URL (NeetCode "
     "mirror if premium). Unprompted, in this turn — do not defer to a later table. "
     "Rule: .claude/memory/feedback_lineup_links_only.md"
+)
+
+PROBE_REMINDER = (
+    "Probe scaffolded. Reply with the probe's LOCAL FILE LINK ONLY — "
+    "[<n> <title>](dsa/probes/<file>.py) — and NO LC/NC link: a recognition probe is "
+    "blind, so the problem page's tags/editorial would spoil the technique call. "
+    "Unprompted, in this turn. Rule: .claude/memory/feedback_lineup_links_only.md"
 )
 
 
@@ -43,11 +60,12 @@ def main() -> None:
     if not TRIGGER.search(command):
         return
 
+    reminder = PROBE_REMINDER if PROBE.search(command) else REMINDER
     json.dump(
         {
             "hookSpecificOutput": {
                 "hookEventName": "PostToolUse",
-                "additionalContext": REMINDER,
+                "additionalContext": reminder,
             }
         },
         sys.stdout,

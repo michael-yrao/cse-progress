@@ -1,6 +1,6 @@
 # cse-progress
 
-<!-- reconciled: 2026-09-10 -->
+<!-- reconciled: 2026-09-14 -->
 
 This is a personal spaced-repetition practice log + coaching workflow (DSA, with a System
 Design pillar). **The coaching engine is a skill; this file carries only the always-on
@@ -40,8 +40,9 @@ them. The *how* is in the named skill reference.
    (`review-workflow.md` §0.)
 3. **Learner says they're stuck?** Read their solution file **before hinting** — one free
    call. (`review-workflow.md` §2.)
-4. **Mentioning a problem by number/name?** It must be a markdown link. (Enforced by
-   `problem_link_reminder.py`.)
+4. **Mentioning a problem by number/name?** It must be a markdown link (`[file] · [LC]`) —
+   **except a recognition probe, which carries its LOCAL file link only, never LC/NC** (the
+   problem page spoils the technique call). (Enforced by `problem_link_reminder.py`.)
 5. **Something got corrected — by you or the learner?** Append a dated entry to
    `.claude/memory/self_eval_log.md` **in the same turn**, and climb the intervention ladder
    (source fix > hook > skill/CLAUDE.md step > memory file). (`feedback_self_evaluation.md`.)
@@ -49,9 +50,18 @@ them. The *how* is in the named skill reference.
    problem with no new date is a missed problem. (`review-workflow.md` schedule integrity.)
 7. **Last session of the week?** Archive this week's schedule AND generate next week's, before
    the commit — both, or neither counts. (`weekly-build.md`.)
-8. **Asked to commit or push?** ⚠️ **Ask first, every time. No exceptions.** Make the edits,
-   say what is staged, and stop; accumulate edits and let them land in one commit when the
-   learner says so. (`feedback_commit_discipline.md`.)
+8. **Asked to commit or push?** ⚠️ **Ask first, every time — EXCEPT on an explicit
+   close-out-and-publish instruction** (*"close out the day/session/week"*, *"wrap up and
+   commit/push"*): that phrase IS standing authorization to commit AND push with no further
+   confirmation — do the pre-commit sweep (`git status` · `restore_history.py` ·
+   `update_review_dates`), then **report what landed**. The trigger is the learner's explicit
+   phrase, never your own read of a "good breakpoint" (that judgement is what caused the
+   31-commit run). Still **hold and ask** if anything is pending: an unrated/uncertain rep, an
+   unsettled schedule/structural decision, a weekly close-out whose build isn't done (gate 7
+   first), an odd git state, or **any irreversible action beyond an ordinary commit+push**
+   (deletions, force-push, history rewrite). A vague close-out (*"call it a night"*) only
+   reports done → still ask. Otherwise accumulate edits into one commit when the learner says
+   so. (`feedback_commit_discipline.md`.)
 9. **Learner asks to start the day / a session (a kickoff)?** Scaffold the **whole day's
    board** — every problem on today's schedule, active block AND both warmup slots — BEFORE
    presenting the board. A message naming a specific problem is **not** a kickoff (scaffold

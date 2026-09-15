@@ -20,8 +20,10 @@ This binds the rule to a MOMENT (the prompt) in a hot tier, the way
 `kickoff-scaffold-gate`.
 
 Warn-only: it injects context and never blocks. Costs no context tokens until it fires,
-and stays silent on a named problem ("let's do 235") or a non-kickoff question ("what's
-the bug in my code") — a hook that cries wolf trains the agent to skim past it.
+and stays silent on a named problem ("let's do 235"), a non-kickoff question ("what's
+the bug in my code"), or a CLOSE-OUT ("close monday session", "wrap up and commit") —
+a hook that cries wolf trains the agent to skim past it. The close-out guard was added
+Sep 14, 2026 after "close monday session" tripped the `<weekday> session` pattern.
 """
 import json
 import re
@@ -46,6 +48,19 @@ KICKOFF_PATTERNS = [
 ]
 KICKOFF = re.compile("|".join(KICKOFF_PATTERNS), re.IGNORECASE | re.DOTALL)
 
+# A CLOSE-OUT is the opposite of a kickoff, but "close monday session" / "close out the
+# session" match the `<weekday> session` / `do…session` kickoff patterns above and used to
+# inject the "scaffold the whole board" reminder at the end of a day (verified Sep 14, 2026
+# on "close monday session"). Close-outs use close/wrap/commit/push framing that a kickoff
+# never does, so a leading close-out verb suppresses the kickoff reminder. This is also the
+# phrase family that carries commit+push authorization (CLAUDE.md gate 8 / decisions.yml
+# `close-out-commit-authorization`), so the two must not be confused.
+CLOSEOUT = re.compile(
+    r"\b(?:clos(?:e|ing)|wrap(?:ping)?(?:\s*up)?|commit|push|"
+    r"call it (?:a )?(?:night|day)|done for (?:the )?(?:day|night))\b",
+    re.IGNORECASE,
+)
+
 # If the prompt names a specific LeetCode problem number, it is a scoped request, not a
 # batch kickoff — scaffold only that. A 1-4 digit run guards against matching dates/years.
 NAMES_A_PROBLEM = re.compile(r"\b\d{1,4}\b")
@@ -69,6 +84,8 @@ def main() -> None:
         return  # Malformed input is not this hook's problem — stay silent.
 
     prompt = payload.get("prompt", "") or ""
+    if CLOSEOUT.search(prompt):
+        return  # "close monday session", "wrap up and commit" — a close-out, never a kickoff
     if not KICKOFF.search(prompt):
         return
     # A kickoff phrase that also names a problem number is ambiguous; the reminder already
