@@ -29,6 +29,22 @@ from typing import List
 
 class Solution:
 
+    # ── Attempt · 2026-09-14 ──────────────
+    def findPeakElement_20260914(self, nums: List[int]) -> int:
+        # binary search to find the first element that matches this criteria
+
+        l, r = 0, len(nums) - 1
+
+        while l < r:
+            m = (l + r) // 2
+            # if our m value is smaller than its immediate neighbors, it cannot be peak
+            # so we go up
+            if nums[m] < nums[m+1]:
+                l = m + 1
+            else:
+                r = m
+        return l
+
     # ── Attempt · 2026-07-16 ──────────────
     def findPeakElement_20260716(self, nums: List[int]) -> int:
         # it's honestly a very strange problem

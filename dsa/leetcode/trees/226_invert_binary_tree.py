@@ -33,6 +33,20 @@ class TreeNode:
         
 class Solution:
 
+    # ── Attempt · 2026-09-14 ──────────────
+    def invertTree_20260914(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
+        # postorder dfs
+        if not root:
+            return None
+
+        left = self.invertTree_20260914(root.left)
+        right = self.invertTree_20260914(root.right)
+
+        root.right = left
+        root.left = right
+
+        return root
+
     # ── Attempt · 2026-07-20 ──────────────
     def invertTree_20260720(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
         if not root:

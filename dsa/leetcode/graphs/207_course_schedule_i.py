@@ -40,6 +40,41 @@ from typing import List
 
 class Solution:
 
+    # ── Attempt · 2026-09-14 ──────────────
+    def canFinish_20260914(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
+        # topological sort
+        # adjMap, queue, numPrereqs, visited, return len(visited) == numCourses
+
+        numPrerequisites = [0] * numCourses
+
+        visited = set()
+
+        adjMap = collections.defaultdict(list)
+
+        for pre, course in prerequisites:
+            adjMap[pre].append(course)
+            numPrerequisites[course]+=1
+        
+        queue = collections.deque()
+
+        for i in range(numCourses):
+            if numPrerequisites[i] == 0:
+                queue.append(i)
+        
+        while queue:
+            # take all courses without prereqs
+            lenQueue = len(queue)
+            for _ in range(lenQueue):
+                currentCourse = queue.popleft()
+                visited.add(currentCourse)
+                # decrement for all courses requiring this course
+                for neighbor in adjMap[currentCourse]:
+                    numPrerequisites[neighbor]-=1
+                    if numPrerequisites[neighbor] == 0:
+                        queue.append(neighbor)
+        
+        return len(visited) == numCourses
+
     # ── Attempt · 2026-07-16 ──────────────
     def canFinish_20260716(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
         # a course can have multiple pre-reqs, so we need an array with number of prereqs

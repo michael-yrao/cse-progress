@@ -22,6 +22,36 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🟡 648. Replace Words (Trie) — 2026-09-14
+**Sticking point**: 🎯 Probe #8 (unseen, label-stripped). Technique call **Trie** fired cold and correct and code was self-written clean, but 🟡 (learner's own downward call): needed multiple hints for direction — an incorrect "needed Word Break" over-association (it's prefix lookup, not segmentation), couldn't produce the Trie-vs-hashset discriminator (one-pass shortest-prefix descent with early exit + shared prefixes), and stalled on the *shortest*-root / "char sequence starting mid-word" handling until the "stop at first `isWord` in a single descent" framing. Complexity landed after tightening: O(L1+L2) time (dict build + sentence scan), O(L1) Trie space. Earned a Trie row; re-rep 2026-09-24. See recognition_gotchas probe #8.
+
+## 🔴 787. Cheapest Flights Within K Stops (Bellman-Ford) — 2026-09-14
+**Topic**: Bellman-Ford — shortest path with an edge-count (≤ k stops) constraint. Was 🟢 s1; slipped to 🔴 (streak reset). Recognition was self-generated and correct, and the `distance.copy()` snapshot instinct (the genuinely hard part of the *k-stops* variant) was his — but the **per-round relaxation mechanism itself was coach-supplied as pseudocode**, which is the "couldn't rebuild the machine" bar. Same signal as 424: recalled the name, couldn't reproduce the algorithm.
+
+### Where did I get stuck?
+- **Tried to drive the rounds with a queue (BFS).** The inner `while queue` popped a node, relaxed neighbors, **and re-appended those neighbors to the same queue** — so a single round drained a growing queue and traversed arbitrarily many hops, destroying the "≤ i edges after round i" guarantee that the whole k-stops bound depends on. A `lenQueue` level-bounding patch made it worse (more bookkeeping, still fighting it).
+- **Parameter shadowing** persisted a full turn: `for src, dst, weight in flights:` rebound the `src`/`dst` arguments, so `queue.append(src)` seeded from the last flight's origin and `distance[dst]` read the wrong cell. He believed it fixed after my first flag; it wasn't (unsaved / mis-mapped) — re-flagged.
+- **Off-by-one** on rounds (`< k` vs `< k+1`) — resolved himself once the invariant was named (k stops = k+1 edges).
+
+### Core Realization
+Bellman-Ford is **not a BFS**. The invariant is: *after round i, `distance[v]` = cheapest cost to reach v using ≤ i edges.* Advancing i→i+1 is one flat pass relaxing **every edge once**, reading last round's snapshot and writing the new one — no queue, no frontier. Relaxing an edge whose source is still `inf` is a no-op, so "iterate all edges" costs nothing and removes the multi-hop bug by construction. The `distance.copy()` is exactly what prevents a round from chaining into the next.
+
+### Code Snippet (the corrected round body — learner-written after the mechanism was walked)
+```python
+while traverseCounter < k + 1:                 # k stops = k+1 edges
+    currentDistanceState = distance.copy()     # snapshot stops multi-hop within a round
+    for source, destination, weight in flights:  # ALL edges, no queue
+        if distance[source] != math.inf:
+            currentDistanceState[destination] = min(
+                currentDistanceState[destination], distance[source] + weight)
+    distance = currentDistanceState
+    traverseCounter += 1
+```
+Complexity clean: **O(E·k)** time (k+1 rounds × all E edges), **O(V)** space (distance + copy). +2 re-rep Wed Sep 16.
+
+## 🟡 743. Network Delay Time (Dijkstra — array-scan) — 2026-09-14
+**Sticking point**: +2 re-rep of Sep 12's 🔴 → 🔴→🟡. Recognition self-generated cold (array Dijkstra ~ Prim's), and the Sep 12 **min-guard** gap is internalized (clean `min(distance[nbr], distance[node]+w)`). Held at 🟡 by a **set-vs-list `visited` slip**: wrote `i not in visited` / `neighbor not in visited` against a `[False]*(n+1)` bool list — a *membership* test over values, so node 1 (`1 == True`) was excluded every iteration and node selection broke; coach-nudged via a value trace, self-corrected to `visited[i] == False`. Complexity right but aggregation needed two prompts: V×O(V) `findUnvisitedMinNode` + O(E) total relax → **O(V²)** time (E ≤ V² dominates), O(V+E) space clean. 🔴→🟡.
+
 ## 🟡 424. Longest Repeating Character Replacement — 2026-09-12
 **Sticking point**: +2 re-measure of Thu's 🔴 — **the spine stuck**: validity `size − maxFreq ≤ k` with maxFreq as a high-water mark, recognition self-generated cold (a big recovery). One execution slip, coach-nudged: `freqMap[r]`/`freqMap[l]` keyed on the **index**, not the char `s[r]`/`s[l]` — so maxFreq never exceeded 1 and the window capped at k+1 (caught via `"AABABBA", k=1`). Complexity: time O(n) itemized (inner `while` amortized — `l` only moves forward). **Fixed-alphabet space missed a 4th time** (said O(n); it's O(1), freqMap ≤ 26 by the uppercase-only constraint) — but he *stated* the ≤26 bound himself under one cue, then mis-framed it as "safer to say O(n)"; corrected to: analyze against the given constraint ⟹ O(1) is the tight/expected answer, O(min(n,Σ)) only if the alphabet were unbounded. Rating capped at 🟡 by the repeat (freebie long spent). 🔴→🟡.
 

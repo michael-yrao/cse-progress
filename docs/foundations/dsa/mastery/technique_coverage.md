@@ -6,12 +6,13 @@
 
 > The tracker is keyed by **problem**; this is keyed by **technique**. Use it at the weekly build to decide what to pull, and at phase exit to check the per-algorithm bar (recognition + execution, ≥1 🟢 each).
 
-> **56/56** techniques started &nbsp;·&nbsp; **1** with no 🟢 &nbsp;·&nbsp; **20** thin &nbsp;·&nbsp; **1** unqueued variant gaps
+> **56/56** techniques started &nbsp;·&nbsp; **2** with no 🟢 &nbsp;·&nbsp; **20** thin &nbsp;·&nbsp; **1** unqueued variant gaps
 
 ## ⚠️ Action list
 
 **No 🟢 — blocks per-algorithm phase exit.** Execution is unproven.
 
+- **Bellman-Ford** (advanced_graphs) — best 🔴 across 787
 - **Divide & Conquer / Sorting** (sorting) — best 🟡 across 912
 
 **Thin — fewer than the 3–4 surface forms a technique needs.** One instance trains recall of that problem, not the skill.
@@ -45,7 +46,7 @@
 
 | Technique | Family | Problems | Best | 🟢 | Variants | Gaps |
 |---|---|---:|:---:|:---:|---|---|
-| Bellman-Ford | advanced_graphs | 1 (787) | 🟢 | ✅ | Standard ×1 · ~~Contrast rep on 743~~ *(queued: `graduates:743`)* | thin (1/3) |
+| Bellman-Ford | advanced_graphs | 1 (787) | 🔴 | ❌ | Standard ×1 · ~~Contrast rep on 743~~ *(queued: `graduates:743`)* | **no-green** · thin (1/3) |
 | Dijkstra | advanced_graphs | 1 (778) | 🟢 | ✅ | — | thin (1/3) |
 | Floyd-Warshall (all-pairs shortest path) | advanced_graphs | 2 (1334, 1462) | 🟢 | ✅ | — | thin (2/3) |
 | Hierholzer (Eulerian path) | advanced_graphs | 2 *+1v* (332, 2097) | 🟢 | ✅ | pre-sorted adjacency ×1 · min-heap ordering ×1 | thin (2/3) |
@@ -60,7 +61,7 @@
 | Prefix/Suffix Products | arrays_and_hash | 1 (238) | 🟢 | ✅ | — | — |
 | Binary Search (exact match) | binary_search | 2 (33, 704) | 🎓 | ✅ | — | — |
 | Binary Search (max boundary) | binary_search | 2 (34, 74) | 🟢 | ✅ | — | thin (2/3) |
-| Binary Search (min boundary) | binary_search | 7 (34, 153, 162, 540, 875, 1011, 2300) | 🟢 | ✅ | — | — |
+| Binary Search (min boundary) | binary_search | 7 (34, 153, 162, 540, 875, 1011, 2300) | 🎓 | ✅ | — | — |
 | Binary Search on Answer | binary_search | 2 (875, 1011) | 🟢 | ✅ | — | thin (2/3) |
 | BFS on Implicit Graph | graphs | 1 (127) | 🟢 | ✅ | — | — |
 | Connected Components | graphs | 2 *+2v* (323, 547) | 🟢 | ✅ | DFS ×1 · BFS ×1 · Union-Find ×1 | thin (2/3) |
@@ -68,9 +69,9 @@
 | Graph Clone (DFS + Hash Map) | graphs | 1 (133) | 🟢 | ✅ | — | — |
 | Graph Cycle Detection (DFS) | graphs | 1 (261) | 🟢 | ✅ | — | — |
 | Grid BFS | graphs | 4 (130, 200, 417, 733) | 🎓 | ✅ | — | — |
-| Grid DFS | graphs | 2 (200, 695) | 🟢 | ✅ | — | thin (2/3) |
+| Grid DFS | graphs | 2 (200, 695) | 🎓 | ✅ | — | thin (2/3) |
 | Multi-source BFS | graphs | 1 (994) | 🟢 | ✅ | — | thin (1/3) |
-| Topological Sort | graphs | 3 (207, 210, 269) | 🟢 | ✅ | Kahn's (BFS) ×3 · ~~DFS postorder~~ *(queued: `graduates:210`)* | — |
+| Topological Sort | graphs | 3 (207, 210, 269) | 🎓 | ✅ | Kahn's (BFS) ×3 · ~~DFS postorder~~ *(queued: `graduates:210`)* | — |
 | Union-Find | graphs | 4 (130, 261, 684, 721) | 🟢 | ✅ | — | — |
 | Heap / Priority Queue | heap | 6 (347, 355, 621, 703, 973, 1046) | 🟢 | ✅ | — | — |
 | Intervals (sort + sweep) | intervals | 3 (56, 57, 435) | 🟢 | ✅ | Merge overlapping (sort by start) ×1 · Insert into sorted (3-phase sweep) ×1 · Interval scheduling (sort by end) ×1 · ~~Max concurrent (sweep line / min-heap of ends)~~ *(queued: `green:435`)* · ~~Two-list intersection (two pointers)~~ *(queued: `green:56`)* | thin (3/5) |
@@ -104,9 +105,10 @@
 
 ## Vocabulary maintenance
 
-**Unmapped tracker rows (3)** — solved but assigned to no technique. Add them to `techniques.yml`, or coverage silently drifts behind the tracker.
+**Unmapped tracker rows (4)** — solved but assigned to no technique. Add them to `techniques.yml`, or coverage silently drifts behind the tracker.
 
 - 1489 Find Critical and Pseudo-Critical Edges in MST (Kruskal)
+- 648 Replace Words
 - 743 Network Delay Time (Dijkstra — array-scan)
 - 743 Network Delay Time (Dijkstra — min-heap)
 
