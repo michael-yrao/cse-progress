@@ -22,6 +22,9 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🟡 55. Jump Game (Greedy) — 2026-09-15
+**Sticking point**: recognition (greedy reachability) was solid, but v1 over-built a `findJumpPoint` chooser and shipped a real bug (returned the loop var `i` instead of the tracked `maxJumpIndex`, so it hopped to farthest *position* not farthest *reach* — fails `[2,3,0,0,0]`). Collapsed to the clean one-variable backward greedy (walk from end, pull `goal` inward, `return goal == 0`) only after the spine hint "you never have to choose which index — track one number." v2 clean; complexity itemized both dims (O(n) single reverse pass, O(1) one scalar).
+
 ## 🟡 648. Replace Words (Trie) — 2026-09-14
 **Sticking point**: 🎯 Probe #8 (unseen, label-stripped). Technique call **Trie** fired cold and correct and code was self-written clean, but 🟡 (learner's own downward call): needed multiple hints for direction — an incorrect "needed Word Break" over-association (it's prefix lookup, not segmentation), couldn't produce the Trie-vs-hashset discriminator (one-pass shortest-prefix descent with early exit + shared prefixes), and stalled on the *shortest*-root / "char sequence starting mid-word" handling until the "stop at first `isWord` in a single descent" framing. Complexity landed after tightening: O(L1+L2) time (dict build + sentence scan), O(L1) Trie space. Earned a Trie row; re-rep 2026-09-24. See recognition_gotchas probe #8.
 

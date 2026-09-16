@@ -60,6 +60,9 @@ NEETCODE_RENAMES = {
     # disagreeing with the link the weekly schedules have used all along.
     "encode-and-decode-string": "string-encode-and-decode",
     "encode-and-decode-strings": "string-encode-and-decode",
+    # 261 Graph Valid Tree: LC title derives "graph-valid-tree"; NeetCode drops the
+    # "graph-" prefix. Found broken 2026-09-15 (learner supplied the real slug).
+    "graph-valid-tree": "valid-tree",
 }
 
 LEETCODE_GRAPHQL = "https://leetcode.com/graphql"

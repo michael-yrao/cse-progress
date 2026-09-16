@@ -22,6 +22,48 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-09-15 ──────────────
+    def findItinerary_stack_20260915(self, tickets: List[List[str]]) -> List[str]:
+        # practicing stack hierholzer today
+        # directed graph with defined starting node
+        # visiting each edge once is exactly hierholzer
+        # this is an eulerian path since we cannot guarantee circling back to the starting node
+        # we are to do stack hierholzer today, so this is an iterative DFS approach
+        # since we need do lexicographical order, we need to sort first
+        # we would sort by destination I believe since we go from JFK, so this would help us find the smallest lexical destination
+        # now the way hierholzer works is we go through the adjMap until there is no more neighbors left
+
+        result = []
+
+        # we need to pop out of adjMap, which means we need smallest on the right side
+        # so do biggest to smallest, thus reverse=True
+        tickets.sort(key=lambda ticket:ticket[1], reverse=True)
+
+        adjMap = collections.defaultdict(list)
+
+        for src, dst in tickets:
+            adjMap[src].append(dst)
+
+        # now we put in JFK in the stack
+        stack = []
+        stack.append("JFK")
+
+        # now we go until we have nothing left in the stack
+
+        while stack:
+            currentAirport = stack[-1]
+            # if we do not have any more neighbors to visit
+            # we add to the result
+            if not adjMap[currentAirport]:
+                result.append(stack.pop())
+            # if it does exist, take the smallest lexicographical edge
+            else:
+                stack.append(adjMap[currentAirport].pop())
+
+        result.reverse()
+
+        return result
+
     # ── Attempt · 2026-09-10 ──────────────
     def findItinerary_20260829_minheap_20260910(self, tickets: List[List[str]]) -> List[str]:
         # Eulerian Path since we need to use all tickets (edges) once and only once

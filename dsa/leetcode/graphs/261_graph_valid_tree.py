@@ -33,6 +33,49 @@ from typing import List
 
 class Solution:
 
+    # ── Attempt · 2026-09-15 ──────────────
+    def validTree_20260915(self, n: int, edges: List[List[int]]) -> bool:
+        # union find method today
+        # for a graph to be a tree, # of edges == n - 1
+        # once we check that, we just need to check to see if everyone is connected via UF without a cycle
+
+        if len(edges) != n - 1:
+            return False
+        
+        rankMap = {}
+        parentMap = {}
+
+        for i in range(n):
+            rankMap[i] = 0
+            parentMap[i] = i
+
+        def find(node):
+            if parentMap[node] != node:
+                parentMap[node] = find(parentMap[node])
+            return parentMap[node]
+        
+        def union(n1,n2):
+            n1r = find(n1)
+            n2r = find(n2)
+            # cycle detected
+            if n1r == n2r:
+                return False
+            if rankMap[n1r] > rankMap[n2r]:
+                parentMap[n2r] = n1r
+            elif rankMap[n1r] < rankMap[n2r]:
+                parentMap[n1r] = n2r
+            else:
+                rankMap[n1r]+=1
+                parentMap[n2r] = n1r
+            return True
+        
+        # now let's go through all edges and connect them
+        for n1, n2 in edges:
+            if not union(n1,n2):
+                return False
+        
+        return True
+
     # ── Attempt · 2026-08-31 ──────────────
     def validTree_20260831(self, n: int, edges: List[List[int]]) -> bool:
         # today we are doing union find
