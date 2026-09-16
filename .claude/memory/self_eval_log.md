@@ -5,6 +5,27 @@
 
 Append-only log of corrections. Governed by [[feedback_self_evaluation]]. Newest at top. Meta-review promotes recurring root causes into rules; entries are never deleted, only re-statused.
 
+## 2026-09-15 [P3] — 261 NeetCode mirror slug wrong (graph-valid-tree → valid-tree)
+Scaffolding 261 derived the NC slug `graph-valid-tree` from the LC title "Graph Valid Tree"; NeetCode drops
+the `graph-` prefix (real slug `valid-tree`). The script already flags NC slugs as unverified (no API), so
+this is the designed failure path, not a regression — but it printed a 404 link on the board. Learner supplied
+the correct slug. Fixed at source (rung 1) same turn: added `"graph-valid-tree": "valid-tree"` to
+`NEETCODE_RENAMES` in `new_problem.py`, per scaffolding.md's "add the entry the moment a premium link is found
+broken." resolved.
+
+## 2026-09-15 [P3] — retry scaffold carried a stale variant tag into the new method name
+Scaffolding the 332 retry produced `findItinerary_20260829_minheap_20260915`: `new_problem.py` reads the
+*existing* method name to build the dated stub, and when that prior name already carries a date+variant
+suffix (`findItinerary_20260829_minheap`) it appends today's date to the whole thing rather than to the base
+`findItinerary`. Result is a misleading name — it said `minheap` on a day whose scheduled variant was the
+stack / pre-sorted-adjacency Hierholzer. Learner caught it ("the name of the method is wrong, it says
+minheap"). Fixed the name in-file by hand → `findItinerary_stack_20260915`. Root: the retry stub-namer has no
+notion of a stable base method name vs. a variant/date suffix, so suffixes accumulate across variant reps.
+Recurrence family: only bites problems practiced across *different* named variants (332 minheap→stack; watch
+743 array-scan vs min-heap, any `⚙️` variant row). Not yet climbed to a source fix — one occurrence; if it
+recurs, `new_problem.py` should strip a trailing `_<8-digit-date>`(+optional variant) before appending, or
+take an explicit `--method`/`--variant` on a retry. open.
+
 ## 2026-09-14 [P2] — probe never linked (asked 3×); "close out the day" commit authorization — two rule changes
 Two rule changes the learner requested at the Sep 14 close-out, both landed same turn (normative sentence +
 feedback memory + dated decisions.yml, per the two-layer rule).

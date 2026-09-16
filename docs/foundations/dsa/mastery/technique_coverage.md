@@ -72,7 +72,7 @@
 | Grid DFS | graphs | 2 (200, 695) | 🎓 | ✅ | — | thin (2/3) |
 | Multi-source BFS | graphs | 1 (994) | 🟢 | ✅ | — | thin (1/3) |
 | Topological Sort | graphs | 3 (207, 210, 269) | 🎓 | ✅ | Kahn's (BFS) ×3 · ~~DFS postorder~~ *(queued: `graduates:210`)* | — |
-| Union-Find | graphs | 4 (130, 261, 684, 721) | 🟢 | ✅ | — | — |
+| Union-Find | graphs | 4 (130, 261, 684, 721) | 🎓 | ✅ | — | — |
 | Heap / Priority Queue | heap | 6 (347, 355, 621, 703, 973, 1046) | 🟢 | ✅ | — | — |
 | Intervals (sort + sweep) | intervals | 3 (56, 57, 435) | 🟢 | ✅ | Merge overlapping (sort by start) ×1 · Insert into sorted (3-phase sweep) ×1 · Interval scheduling (sort by end) ×1 · ~~Max concurrent (sweep line / min-heap of ends)~~ *(queued: `green:435`)* · ~~Two-list intersection (two pointers)~~ *(queued: `green:56`)* | thin (3/5) |
 | Deep Copy via Hash Map | linked_list | 1 (138) | 🟢 | ✅ | — | — |

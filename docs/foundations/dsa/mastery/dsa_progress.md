@@ -66,14 +66,17 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/dsa/mastery/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **121+5** problems &nbsp;·&nbsp; **132+5** solutions &nbsp;·&nbsp; **561+5** reps
+> **121+5** problems &nbsp;·&nbsp; **132+5** solutions &nbsp;·&nbsp; **564+5** reps
 
 | | 🏆 Retired | 🎓 Graduated | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|:---:|
-| **Solutions** | 0 | 12 | 101 | 16 | 3 |
+| **Solutions** | 0 | 13 | 101 | 15 | 3 |
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Rep Date | Rep Dates |
 |---|---|---|---|---|---|---|
+| Medium | [55. Jump Game](https://leetcode.com/problems/jump-game/) | 🟡 | 0 | 2026-09-25 | 2026-09-15 | 2026-09-05, 2026-09-15 |
+| Hard | [332. Reconstruct Itinerary (pre-sorted adjacency)](https://leetcode.com/problems/reconstruct-itinerary/) | 🟢 | 1 | 2026-10-15 | 2026-09-15 | 2026-08-18, 2026-09-05, 2026-09-15 |
+| Medium | [261. Graph Valid Tree (Union-Find)](https://neetcode.io/problems/valid-tree/question) | 🎓 | 3 | 2027-03-14 | 2026-09-15 | 2026-06-19, 2026-06-29, 2026-07-09, 2026-07-18, 2026-08-01, 2026-08-31, 2026-09-15 |
 | Medium | [743. Network Delay Time (Dijkstra — array-scan)](https://leetcode.com/problems/network-delay-time/) | 🟡 | 0 | 2026-09-24 | 2026-09-14 | 2026-09-12, 2026-09-14 |
 | Medium | [648. Replace Words](https://leetcode.com/problems/replace-words/) | 🟡 | 0 | 2026-09-24 | 2026-09-14 | 2026-09-14 |
 | Medium | [787. Cheapest Flights Within K Stops (Bellman-Ford)](https://leetcode.com/problems/cheapest-flights-within-k-stops/) | 🔴 | 0 | 2026-09-16 | 2026-09-14 | 2026-07-14, 2026-07-16, 2026-07-26, 2026-08-05, 2026-08-15, 2026-09-14 |
@@ -105,9 +108,7 @@ Notes for future agents:
 | Medium | [540. Single Element in a Sorted Array](https://leetcode.com/problems/single-element-in-a-sorted-array/) | 🟡 | 0 | 2026-09-16 | 2026-09-06 | 2026-05-02, 2026-06-12, 2026-06-13, 2026-07-17, 2026-07-27, 2026-08-06, 2026-09-06 |
 | Medium | [417. Pacific Atlantic Water Flow (BFS)](https://leetcode.com/problems/pacific-atlantic-water-flow/) | 🟢 | 2 | 2026-11-05 | 2026-09-06 | 2026-06-11, 2026-07-19, 2026-07-31, 2026-09-06 |
 | Easy | [1. Two Sum](https://leetcode.com/problems/two-sum/) | 🎓 | 3 | 2027-03-05 | 2026-09-06 | 2026-01-02, 2026-03-25, 2026-07-14, 2026-09-06 |
-| Medium | [55. Jump Game](https://leetcode.com/problems/jump-game/) | 🟡 | 0 | 2026-09-15 | 2026-09-05 | 2026-09-05 |
 | Medium | [36. Valid Sudoku](https://leetcode.com/problems/valid-sudoku/) | 🟢 | 1 | 2026-10-05 | 2026-09-05 | 2026-01-25, 2026-05-22, 2026-06-30, 2026-07-09, 2026-08-21, 2026-09-05 |
-| Hard | [332. Reconstruct Itinerary (pre-sorted adjacency)](https://leetcode.com/problems/reconstruct-itinerary/) | 🟡 | 0 | 2026-09-15 | 2026-09-05 | 2026-08-18, 2026-09-05 |
 | Hard | [84. Largest Rectangle in Histogram](https://leetcode.com/problems/largest-rectangle-in-histogram/) | 🔴 | 0 | 2026-09-06 | 2026-09-04 | 2026-09-04 |
 | Medium | [1462. Course Schedule IV (Floyd-Warshall / Transitive Closure)](https://leetcode.com/problems/course-schedule-iv/) | 🟢 | 1 | 2026-10-04 | 2026-09-04 | 2026-08-25, 2026-09-04 |
 | Hard | [124. Binary Tree Maximum Path Sum](https://leetcode.com/problems/binary-tree-maximum-path-sum/) | 🟢 | 1 | 2026-10-03 | 2026-09-03 | 2026-07-11, 2026-07-13, 2026-07-23, 2026-08-21, 2026-09-03 |
@@ -118,7 +119,6 @@ Notes for future agents:
 | Medium | [150. Evaluate Reverse Polish Notation](https://leetcode.com/problems/evaluate-reverse-polish-notation/) | 🟢 | 1 | 2026-10-01 | 2026-09-01 | 2026-08-11, 2026-08-21, 2026-09-01 |
 | Medium | [271. Encode and Decode Strings](https://leetcode.com/problems/encode-and-decode-strings/) | 🟢 | 1 | 2026-10-01 | 2026-09-01 | 2026-07-01, 2026-07-03, 2026-07-13, 2026-07-23, 2026-08-02, 2026-08-12, 2026-08-22, 2026-09-01 |
 | Medium | [53. Maximum Subarray (Prefix Sum)](https://leetcode.com/problems/maximum-subarray/) | 🟢 | 1 | 2026-10-01 | 2026-09-01 | 2026-01-08, 2026-04-01, 2026-06-27, 2026-08-20, 2026-08-22, 2026-09-01 |
-| Medium | [261. Graph Valid Tree (Union-Find)](https://neetcode.io/problems/valid-tree/question) | 🟢 | 2 | 2026-10-30 | 2026-08-31 | 2026-06-19, 2026-06-29, 2026-07-09, 2026-07-18, 2026-08-01, 2026-08-31 |
 | Medium | [355. Design Twitter](https://leetcode.com/problems/design-twitter/) | 🟢 | 2 | 2026-10-30 | 2026-08-31 | 2026-06-24, 2026-06-26, 2026-07-06, 2026-07-15, 2026-07-25, 2026-08-31 |
 | Medium | [153. Find Minimum in Rotated Sorted Array](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/) | 🟢 | 3 | 2027-02-26 | 2026-08-30 | 2026-04-21, 2026-07-01, 2026-08-30 |
 | Easy | [543. Diameter of Binary Tree](https://leetcode.com/problems/diameter-of-binary-tree/) | 🟢 | 2 | 2026-10-29 | 2026-08-30 | 2026-04-30, 2026-06-02, 2026-06-12, 2026-06-14, 2026-06-24, 2026-06-26, 2026-07-20, 2026-07-31, 2026-08-30 |
