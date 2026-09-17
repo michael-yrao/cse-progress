@@ -22,6 +22,13 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🟡 34. Find First and Last Position of Element in Sorted Array — 2026-09-16
+**Sticking point**: the two-boundary *structure* was clean and cold (two searches, correct round-down/`r=m` + round-up/`l=m` pairing) — but the **comparison direction was inverted in both loops** (the predicate that *defines* each boundary), needing a failing trace to surface. Self-repaired well via the learner's own reframe — "ask when it is NOT the answer / when can I discard this half" — which is a durable handle for picking predicate direction. Coach-caught, not self-caught → stays 🟡.
+
+## 🟡 540. Single Element in a Sorted Array — 2026-09-16
+**Sticking point (learner-identified, the recurring one)**: snapping to the pair-start with a **value check** (`nums[m]` vs `nums[m+1]`/`nums[m-1]`) instead of the **index/modular** step it actually is (`if m % 2: m -= 1`). The two jobs get fused every time — normalizing the index to a pair boundary (pure parity, no array read) vs. the value comparison that *decides direction* (`nums[m]==nums[m+1]` → go right). This is NOT the `l = m+2` movement (that part is fine); it's using the wrong tool to reach the starting position. **Card to burn in: "snap-to-pair-start is index math (`% 2`), never a value compare; the value compare is only for choosing the side."**
+Context: also blanked on the core hinge idea this rep (*"I don't understand this problem"*) — the pairing invariant (single shifts later pairs from even-start to odd-start; binary-search the flip) was re-taught. **Coach proposed 🔴 (approach supplied); learner overrode 🟡** (will memorize short code for the lock-down). ⚠️ lock-down should test the PICTURE (redraw indexed array, mark single, read the movement), not code recall — rote-green doesn't convert. Durable handle: "binary search for a **boundary/flip**, not a value" (family: 162, First Bad Version, 34 boundaries).
+
 ## 🟡 55. Jump Game (Greedy) — 2026-09-15
 **Sticking point**: recognition (greedy reachability) was solid, but v1 over-built a `findJumpPoint` chooser and shipped a real bug (returned the loop var `i` instead of the tracked `maxJumpIndex`, so it hopped to farthest *position* not farthest *reach* — fails `[2,3,0,0,0]`). Collapsed to the clean one-variable backward greedy (walk from end, pull `goal` inward, `return goal == 0`) only after the spine hint "you never have to choose which index — track one number." v2 clean; complexity itemized both dims (O(n) single reverse pass, O(1) one scalar).
 

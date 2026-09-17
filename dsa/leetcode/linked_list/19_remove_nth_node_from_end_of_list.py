@@ -35,6 +35,36 @@ class ListNode:
         self.next = next
 class Solution:
 
+    # ── Attempt · 2026-09-16 ──────────────
+    def removeNthFromEndRecursion_20260916(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
+        # recursion today
+        # recursion is the more natural way to do this problem
+        # what we are doing is going to the end then start counting
+        # once we hit n + 1, we stop and relink and call it
+
+        counter = 0
+
+        def dfs(node):
+            nonlocal counter
+            if node is None:
+                return
+            
+            dfs(node.next)
+
+            # we are at the end of the list here the first time
+            counter+=1
+
+            if counter == n + 1:
+                if node.next:
+                    node.next = node.next.next
+        
+        # can potentially remove head, so need dummy
+        dummy = ListNode(-1)
+        dummy.next = head
+
+        dfs(dummy)
+        return dummy.next
+
     # ── Attempt · 2026-08-17 ──────────────
     def removeNthFromEndRecursion_20260817(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
         # recursive method first

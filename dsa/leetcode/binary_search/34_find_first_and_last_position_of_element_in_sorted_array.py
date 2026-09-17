@@ -33,6 +33,52 @@ from typing import List, Optional
 
 
 class Solution:
+
+    # ── Attempt · 2026-09-16 ──────────────
+    def searchRange_20260916(self, nums: List[int], target: int) -> List[int]:
+        # min boundary and max boundary binary search
+
+        if not nums:
+            return [-1,-1]
+
+        result = []
+
+        # min boundary, find the target with the smallest index
+        # criteria to move up or down here is if m < 8, it is outside of potential range
+        # [5,7,7,8,8,10]
+        #  l   m r
+
+        l, r = 0, len(nums) - 1
+
+        while l < r:
+            m = (l + r) // 2
+            # if not answer, move up
+            if nums[m] < target:
+                l = m + 1
+            else:
+                r = m
+        
+        if nums[l] == target:
+            result.append(l)
+        else:
+            result.append(-1)
+        
+        l, r = 0, len(nums) - 1
+
+        while l < r:
+            m = (l + r + 1) // 2
+            if nums[m] > target:
+                r = m - 1
+            else:
+                l = m
+        
+        if nums[l] == target:
+            result.append(l)
+        else:
+            result.append(-1)
+        
+        return result
+
     # ── Attempt 1 · 2026-09-06 ────────────────────────────────────────────
     def searchRange(self, nums: List[int], target: int) -> List[int]:
         # we have to find this number twice
