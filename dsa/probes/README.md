@@ -72,11 +72,15 @@ without this table it vanishes from every "problems solved" figure. Two jobs:
 | 4 | 2026-08-19 | 643 Maximum Average Subarray I | Sliding Window | 🟡 | — *(learner overrode the row)* |
 | 5 | 2026-08-21 | 205 Isomorphic Strings | Hash-map bijection | 🟢 | — |
 | 6 | 2026-08-28 | 637 Average of Levels in Binary Tree | Tree BFS (level order) | 🟢 | — |
-| 7 | 2026-09-11 | 547 Number of Provinces | Union-Find (connected components) | 🔴 | ✅ earned |
+| 7 | 2026-09-11 | 547 Number of Provinces | Union-Find (connected components) | 🔴 → 🟡 (re-rep Sep 16) | earned Sep 11 → **dropped Sep 16** (recognition converted) |
 | 8 | 2026-09-14 | 648 Replace Words | Trie (prefix search) | 🟡 | ✅ earned |
 
-**Tally (8 run):** 4 clean 🟢 · 3 earned a row (202, 547, 648) · 1 🟡 overridden (643). **Row-creation rate
-3/8 = 38%** — still under the 85% "pool has stopped teaching" line, so the pool still teaches. Probe #8:
+**Tally (8 run):** 4 clean 🟢 · 3 earned a row at the time (202, 547, 648) · 1 🟡 overridden (643). **Row-creation
+rate 3/8 = 38%** (a *historical* measure — a probe that earned a row taught something, even if the row is later
+retired) — still under the 85% "pool has stopped teaching" line, so the pool still teaches. **Maintained rows now
+2 (202, 648):** 547's row was **dropped Sep 16** after its +2 re-rep converted the recognition (🔴 Floyd-Warshall/grid
+→ 🟡 Union-Find cold-correct); the row existed only to close that recognition gap, and UF is broadly 🟢/🎓, so the
+residual needed no maintenance. Probe #8:
 the technique call (**Trie**) fired cold and correct and the code was self-written clean — but the learner
 self-assessed 🟡 (over-mine), citing multiple hints to get direction: an incorrect "needed Word Break"
 over-association (this is prefix lookup, not segmentation), needing a hint for the Trie-vs-hashset

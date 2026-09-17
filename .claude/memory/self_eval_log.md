@@ -5,6 +5,22 @@
 
 Append-only log of corrections. Governed by [[feedback_self_evaluation]]. Newest at top. Meta-review promotes recurring root causes into rules; entries are never deleted, only re-statused.
 
+## 2026-09-16 [P3] — logged the coach-caught bugs as the sticking point instead of the learner's own recurring failure mode (540)
+Closing 540 🟡, the stuck_log sticking point I wrote headlined the three bugs *I* surfaced (midpoint formula, snap-ordering, `r=m`). The learner corrected: their actual recurring error is narrower and different — using a **value comparison** (`nums[m]` vs `nums[m±1]`) to snap to the pair-start, when that is a pure **index/modular** step; the `l=m+2` movement I'd bundled in was never their issue. The coach's caught-bug list ≠ the learner's repeated failure mode; a stuck_log entry is most valuable when it names the *latter*, which the learner often knows better than the coach. **How to apply:** when logging a non-Clean rep, ask/confirm "what's the part that keeps getting you?" before writing the sticking point, rather than defaulting to the bugs found this rep. Recurrence family: any 🟡/🔴 close-out. Fixed the 540 entry same turn. If it recurs, climb to a review-workflow step ("confirm the learner's own sticking point before writing the stuck_log line"). open.
+
+## 2026-09-16 [P3] — probe 547 left stranded in dsa/probes/ after earning its tracker row (Sep 11)
+547 came back 🔴 as probe #7 on Sep 11 and earned a tracker row that day (dsa_progress.md line 94), but its
+file stayed in `dsa/probes/547_number_of_provinces.py` — **outside `solutions.roots`**, where
+`update_review_dates.py` can neither maintain its review dates nor let `restore_history.py` handle its stash.
+So for five days there was a tracked row with no discoverable file. Caught at the Wed Sep 16 kickoff while
+scaffolding the +2 re-rep; `new_problem.py --probe` correctly refused (file exists → "retry via its normal
+path"), which surfaced the gap. Migrated to `dsa/leetcode/graphs/` (git mv), normalized the probe-banner
+header, scaffolded as a normal retry. The Wed schedule note "earns its permanent row here" was stale (it
+earned it Sep 11, not today). Recurrence family: **any probe that earns a row** — the earn-a-row path has no
+step that migrates the file out of `dsa/probes/`, so every 🟡/🔴 probe strands the same way (202, 648 may be
+stranded too — check). If it recurs, climb to source: `new_problem.py --probe` on a 🟡/🔴 outcome, or a
+close-out sweep, should move the earned file to its canonical path. open.
+
 ## 2026-09-15 [P3] — 261 NeetCode mirror slug wrong (graph-valid-tree → valid-tree)
 Scaffolding 261 derived the NC slug `graph-valid-tree` from the LC title "Graph Valid Tree"; NeetCode drops
 the `graph-` prefix (real slug `valid-tree`). The script already flags NC slugs as unverified (no API), so

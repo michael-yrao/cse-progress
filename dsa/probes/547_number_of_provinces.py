@@ -1,6 +1,6 @@
 """
 547. Number of Provinces   ·   https://leetcode.com/problems/number-of-provinces/
-Pattern: 🎯 RECOGNITION PROBE — you name it. Do not look it up.
+Pattern: graphs
 
 There are n cities. Some of them are connected, while some are not. If city a is
 connected directly with city b, and city b is connected directly with city c, then
@@ -24,9 +24,6 @@ Constraints:
     isConnected[i][j] is 1 or 0
     isConnected[i][i] == 1
     isConnected[i][j] == isConnected[j][i]
-
-Before you write code, state: shape -> technique -> the ONE feature that picks it
-over the nearest alternative.
 """
 # Write everything yourself from here — including any ListNode/TreeNode classes a
 # problem needs. No shared data-model imports (whiteboard fidelity).
@@ -34,6 +31,54 @@ from typing import List
 
 
 class Solution:
+
+    # ── Attempt · 2026-09-16 ──────────────
+    def findCircleNum_20260916(self, isConnected: List[List[int]]) -> int:
+        # union find
+        # we know isConnected is n x n where n is number of cities
+        # we also get the indirect connection for free in UF
+
+        n = len(isConnected)
+
+        rankMap = {}
+        parentMap = {}
+
+        for i in range(n):
+            rankMap[i] = 0
+            parentMap[i] = i
+        
+        def find(node):
+            if parentMap[node] != node:
+                parentMap[node] = find(parentMap[node])
+            return parentMap[node]
+        
+        def union(n1,n2):
+            n1r = find(n1)
+            n2r = find(n2)
+            # cycle found
+            if n1r == n2r:
+                return False
+            if rankMap[n1r] > rankMap[n2r]:
+                parentMap[n2r] = n1r
+            elif rankMap[n1r] < rankMap[n2r]:
+                parentMap[n1r] = n2r
+            else:
+                parentMap[n2r] = n1r
+                rankMap[n1r]+=1
+            return True
+        
+        # let's say we have n components to start
+        numComponents = n
+        
+        # now lets go through the edges here
+        for i in range(n):
+            for j in range(n):
+                # if we can union without forming a cycle, combined components
+                if isConnected[i][j] == 1 and union(i,j):
+                    numComponents-=1
+        
+        return numComponents
+
     def findCircleNum(self, isConnected: List[List[int]]) -> int:
         # First statement of the problem led me to believe it is a Floyd Warshall problem
         # Problem name tells me it is UF, let's do UF

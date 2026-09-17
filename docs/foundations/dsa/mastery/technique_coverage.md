@@ -6,18 +6,18 @@
 
 > The tracker is keyed by **problem**; this is keyed by **technique**. Use it at the weekly build to decide what to pull, and at phase exit to check the per-algorithm bar (recognition + execution, ≥1 🟢 each).
 
-> **56/56** techniques started &nbsp;·&nbsp; **2** with no 🟢 &nbsp;·&nbsp; **20** thin &nbsp;·&nbsp; **1** unqueued variant gaps
+> **56/56** techniques started &nbsp;·&nbsp; **1** with no 🟢 &nbsp;·&nbsp; **20** thin &nbsp;·&nbsp; **1** unqueued variant gaps
 
 ## ⚠️ Action list
 
 **No 🟢 — blocks per-algorithm phase exit.** Execution is unproven.
 
-- **Bellman-Ford** (advanced_graphs) — best 🔴 across 787
 - **Divide & Conquer / Sorting** (sorting) — best 🟡 across 912
 
 **Thin — fewer than the 3–4 surface forms a technique needs.** One instance trains recall of that problem, not the skill.
 
 - **Bellman-Ford** (advanced_graphs) — 1/3: 787
+- **Connected Components** (graphs) — 1/3 (3 rows): 323
 - **Cycle Detection in an Iterated Sequence** (graphs) — 1/2: 202
 - **Dijkstra** (advanced_graphs) — 1/3: 778
 - **Divide & Conquer / Sorting** (sorting) — 1/3: 912
@@ -28,7 +28,6 @@
 - **Stack (expression evaluation)** (stack) — 1/2: 150
 - **Binary Search (max boundary)** (binary_search) — 2/3: 34, 74
 - **Binary Search on Answer** (binary_search) — 2/3: 875, 1011
-- **Connected Components** (graphs) — 2/3 (4 rows): 323, 547
 - **Floyd's Cycle / Midpoint** (linked_list) — 2/3: 141, 143
 - **Floyd-Warshall (all-pairs shortest path)** (advanced_graphs) — 2/3: 1334, 1462
 - **Grid DFS** (graphs) — 2/3: 200, 695
@@ -46,14 +45,14 @@
 
 | Technique | Family | Problems | Best | 🟢 | Variants | Gaps |
 |---|---|---:|:---:|:---:|---|---|
-| Bellman-Ford | advanced_graphs | 1 (787) | 🔴 | ❌ | Standard ×1 · ~~Contrast rep on 743~~ *(queued: `graduates:743`)* | **no-green** · thin (1/3) |
+| Bellman-Ford | advanced_graphs | 1 (787) | 🟢 | ✅ | Standard ×1 · ~~Contrast rep on 743~~ *(queued: `graduates:743`)* | thin (1/3) |
 | Dijkstra | advanced_graphs | 1 (778) | 🟢 | ✅ | — | thin (1/3) |
 | Floyd-Warshall (all-pairs shortest path) | advanced_graphs | 2 (1334, 1462) | 🟢 | ✅ | — | thin (2/3) |
 | Hierholzer (Eulerian path) | advanced_graphs | 2 *+1v* (332, 2097) | 🟢 | ✅ | pre-sorted adjacency ×1 · min-heap ordering ×1 | thin (2/3) |
 | Prim's MST | advanced_graphs | 1 (1584) | 🟢 | ✅ | Prim's MST ×1 · **Kruskal's MST ×0** | thin (1/3) · variant: **Kruskal's MST** |
 | Array/String Fundamentals | arrays_and_hash | 3 (14, 66, 1929) | 🟢 | ✅ | — | — |
 | Boyer-Moore Voting | arrays_and_hash | 2 (169, 229) | 🟢 | ✅ | — | — |
-| Frequency Counting | arrays_and_hash | 2 (49, 242) | 🟢 | ✅ | — | — |
+| Frequency Counting | arrays_and_hash | 2 (49, 242) | 🎓 | ✅ | — | — |
 | Hash Map Lookup | arrays_and_hash | 2 (1, 219) | 🎓 | ✅ | — | — |
 | Hash Set Membership | arrays_and_hash | 3 (36, 128, 217) | 🟢 | ✅ | — | — |
 | In-Place Array Rotation | arrays_and_hash | 1 (189) | 🟢 | ✅ | — | — |
@@ -64,7 +63,7 @@
 | Binary Search (min boundary) | binary_search | 7 (34, 153, 162, 540, 875, 1011, 2300) | 🎓 | ✅ | — | — |
 | Binary Search on Answer | binary_search | 2 (875, 1011) | 🟢 | ✅ | — | thin (2/3) |
 | BFS on Implicit Graph | graphs | 1 (127) | 🟢 | ✅ | — | — |
-| Connected Components | graphs | 2 *+2v* (323, 547) | 🟢 | ✅ | DFS ×1 · BFS ×1 · Union-Find ×1 | thin (2/3) |
+| Connected Components | graphs | 1 *+2v* (323) | 🟢 | ✅ | DFS ×1 · BFS ×1 · Union-Find ×1 | thin (1/3) |
 | Cycle Detection in an Iterated Sequence | graphs | 1 (202) | 🟢 | ✅ | Seen-Set ×1 · ~~Floyd Fast/Slow~~ *(queued: `🟡:202 — ready; rides 202's next rep`)* | thin (1/2) |
 | Graph Clone (DFS + Hash Map) | graphs | 1 (133) | 🟢 | ✅ | — | — |
 | Graph Cycle Detection (DFS) | graphs | 1 (261) | 🟢 | ✅ | — | — |
@@ -116,5 +115,5 @@
 
 - 743 (Dijkstra)
 
-**Not reached yet (1)** — declared in the vocabulary, no tracker row. This is the normal state for curriculum ahead of the learner; it is a roadmap, not a finding.
+**Not reached yet (2)** — declared in the vocabulary, no tracker row. This is the normal state for curriculum ahead of the learner; it is a roadmap, not a finding.
 

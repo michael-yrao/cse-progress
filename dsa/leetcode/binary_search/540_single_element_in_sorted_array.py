@@ -24,6 +24,29 @@ from typing import List
 
 class Solution:
 
+    # ── Attempt · 2026-09-16 ──────────────
+    def singleNonDuplicate_20260916(self, nums: List[int]) -> int:
+        # min boundary binary search
+        # modular check then parity
+
+        l, r = 0, len(nums) - 1
+
+        while l < r:
+            m = (l + r) // 2
+            # if not equal to next, go lower
+            # [1,1,2,3,3,4,4,8,8]
+            #  l     m         r
+            if m%2!=0:
+                m-=1
+            # since we are at start ideally, check equality
+            # so if nums[m] == nums[m+1], this can't be the answer
+            if nums[m] == nums[m+1]:
+                l = m + 2
+            else:
+                r = m
+        
+        return nums[l]
+
     # ── Attempt · 2026-09-06 ──────────────
     def singleNonDuplicate_20260906(self, nums: List[int]) -> int:
         # logn is obviously binary search, specifically lower bound binary search
