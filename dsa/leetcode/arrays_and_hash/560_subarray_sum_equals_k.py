@@ -25,6 +25,33 @@ from typing import List
 
 class Solution:
 
+    # ── Attempt · 2026-09-17 ──────────────
+    def subarraySum_20260917(self, nums: List[int], k: int) -> int:
+         # total number of subarrays whose sum equals k is the nuance of the problem
+        # subarray sum = prefix sum
+        # but to get number of such subarray, let's look a bit further
+        # prefix[j] - prefix[i] = sum
+        # we want all scenarios that fits this. prefix sum specifically gives us O(n^2)
+        # what we can do is store prefix[i] in a diffMap as we iterate through and keep a runningSum
+        # this runningSum will be prefix[j] as we iterate and prefix[i] as we put it into the map
+        # we actually need 0 in here first in case numbers are exactly the same
+        diffMap = collections.defaultdict(int)
+        diffMap[0] = 1
+
+        result = 0
+
+        runningSum = 0
+
+        for num in nums:
+            runningSum+=num
+            # check if prefix[j] - sum is in the diffMap
+            if runningSum - k in diffMap:
+                result+=diffMap[runningSum - k]
+            # regardless, put current runningSum in result
+            diffMap[runningSum]+=1
+        
+        return result
+
     # ── Attempt · 2026-08-18 ──────────────
     def subarraySum_20260818(self, nums: List[int], k: int) -> int:
         # subarray sum instantly means prefix sum

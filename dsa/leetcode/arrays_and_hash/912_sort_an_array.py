@@ -28,6 +28,51 @@ from typing import List
 
 class Solution:
 
+    # ── Attempt · 2026-09-17 ──────────────
+    def sortArrayMergeSort_20260917(self, nums: List[int]) -> List[int]:
+        # doing merge sort today
+        # divide and conquer
+        # key for merge sort is that we are breaking down to smallest component and merge
+        # stopping point is when subarray of nums is size 1, which is auto sorted and work our way back up
+        # one thing we will make sure to do is always do inclusive of left, exclusive of right
+
+        def merge(leftArray, rightArray):
+            result = []
+            li = ri = 0
+            while li < len(leftArray) and ri < len(rightArray):
+                if leftArray[li] < rightArray[ri]:
+                    result.append(leftArray[li])
+                    li+=1
+                else:
+                    result.append(rightArray[ri])
+                    ri+=1
+            
+            # now one of these are out of bounds, so put the rest in result
+            while li < len(leftArray):
+                result.append(leftArray[li])
+                li+=1
+            
+            while ri < len(rightArray):
+                result.append(rightArray[ri])
+                ri+=1
+            
+            return result
+
+        def mergeSort(l,r):
+            # if size 1, we are at base case
+            if r - l == 1:
+                return nums[l:r]
+            # middle like binary search since we are dividing by half each time
+            m = (l + r) // 2
+            leftArray = mergeSort(l,m)
+            rightArray = mergeSort(m,r)
+
+            # now that we have left and right arrays set, let's merge them
+            return merge(leftArray, rightArray)
+
+        # inclusive of left, exclusive of right like how substr works
+        return mergeSort(0,len(nums))
+
     # ── Attempt · 2026-09-07 ──────────────
     def sortArrayMergeSort_20260907(self, nums: List[int]) -> List[int]:
         # merge sort

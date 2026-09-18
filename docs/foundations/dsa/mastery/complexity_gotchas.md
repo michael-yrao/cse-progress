@@ -47,6 +47,7 @@ only the **bound**.
 |---|---|---|---|
 | 743 Network Delay Time (Dijkstra) | **space**: lazy-Dijkstra heap is **O(E)** (E pushes, dedup on pop), not "≤ V nodes". Total space O(V+E) was right; the *attribution* was wrong. Self-corrected on one non-leading nudge | 2026-09-03 | **2026-09-06 ✅ cold re-ask clean** — heap-is-O(E) attributed correctly, unaided |
 | 226 Invert Binary Tree | **space**: gave O(n) but justified it with the *time* reason ("we invert every node"). Space is the **recursion stack = O(h)**, worst-case O(n) on a skewed tree, O(log n) balanced. Number right, attribution wrong — tree-height space category | 2026-09-14 (learner-requested follow-up) | |
+| 912 Sort an Array (Merge Sort) | **space**: called it **O(n log n)** from "the stack calls" — two errors. (1) stack depth is **O(log n)** (halving), not n log n; (2) the stack isn't even dominant — the `merge` result arrays + `nums[l:r]` slices are. The O(n log n) is **total allocated over the whole run**; **peak live** (what space complexity measures) is **O(n)**, since each merge's inputs are freed as it returns. Needed a full **peak-vs-total** re-teach, not a nudge | 2026-09-17 | |
 
 ## 🎯 Cold complexity probes (standing drill, added Sep 6, 2026)
 

@@ -1,4 +1,4 @@
-<!-- reconciled: 2026-09-14 -->
+<!-- reconciled: 2026-09-18 -->
 # Scaffolding a problem
 
 **Open this** before you create or set up any problem file for the learner.
@@ -142,6 +142,24 @@ $ python scripts/links.py 743 332
 [743 Network Delay Time](dsa/leetcode/graphs/743_network_delay_time.py) · [LC](https://leetcode.com/problems/network-delay-time/)
 [332 Reconstruct Itinerary](dsa/leetcode/graphs/332_reconstruct_itinerary.py) · [LC](https://leetcode.com/problems/reconstruct-itinerary/)
 ```
+
+⭐ **"What's left / what else / what's next / remaining / still open?" → run `scripts/remaining.py`,
+NEVER hand-assemble the number list.** `links.py` takes numbers *you* supply, and the moment you pick
+that set from memory of what's been done you can drop an open item — twice in one session on Sep 17,
+2026 (dropped 560, then 721). `remaining.py` removes the recall step: it reads the current week's
+schedule, finds the session-date day-block, and prints the **un-struck** rows (the open board) as the
+same clean `[file]·[LC]` pairs — it calls `links.py`'s `link_line`, so it is spoiler-free and the
+name+links-only rule and the Stop-hook guard both still hold. Run it, paste the lines, add nothing:
+
+```sh
+$ python scripts/remaining.py           # today's open board (session date)
+$ python scripts/remaining.py --date 2026-09-14   # → "Nothing left … ✅" when all struck
+```
+
+**Division of labor:** `remaining.py` when the question is *"what is open right now"* (the open set must
+come from the schedule, not memory). `links.py <n> …` when you already hold the **exact** set — the
+kickoff board right after scaffolding (you have the numbers you just scaffolded) or a single named
+hand-over ("let's do 102"). full rule: [`feedback_lineup_links_only.md`](.claude/memory/feedback_lineup_links_only.md).
 
 ⭐ **Recommend by number, steer by description.** When you suggest what to do next, link **only the pick**
 (name + `[file]·[LC]`); refer to problems you're steering *away from* by **description, not number** — a
