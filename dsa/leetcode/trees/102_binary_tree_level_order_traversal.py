@@ -33,6 +33,34 @@ class TreeNode:
         self.right = right
 class Solution:
 
+    # ── Attempt · 2026-09-17 ──────────────
+    def levelOrder_20260917(self, root: Optional[TreeNode]) -> List[List[int]]:
+        result = []
+
+        if not root:
+            return result
+
+        queue = collections.deque()
+
+        traversal = root
+
+        queue.append(traversal)
+
+        while queue:
+            lenQueue = len(queue)
+            level = []
+            for _ in range(lenQueue):
+                currentNode = queue.popleft()
+                if currentNode:
+                    level.append(currentNode.val)
+                    if currentNode.left:
+                        queue.append(currentNode.left)
+                    if currentNode.right:
+                        queue.append(currentNode.right)
+            result.append(level)
+        
+        return result
+
     # ── Attempt · 2026-07-19 ──────────────
     def levelOrder_20260719(self, root: Optional[TreeNode]) -> List[List[int]]:
        # BFS, returning each level as its own list

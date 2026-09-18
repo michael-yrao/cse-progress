@@ -20,6 +20,34 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-09-17 ──────────────
+    def nonOverlappingIntervals_20260917(self, intervals: List[List[int]]) -> int:
+        # minimum number of intervals to remove means we are maximizing intervals
+        # so how do we know to remove [1,3] here
+        # sorted by end here, remove the first one that overlaps
+        # we need to keep track of prior interval in that case
+        # we are guaranteed to have 1 interval min, so we will initialize there
+
+        intervals.sort(key=lambda interval:interval[1])
+
+        lastIntervalEnd = intervals[0][1]
+
+        removalCount = 0
+
+        # now go through and just remove the first overlap we see
+        # [[1,2][1,3],[2,3],[3,4]]
+        # overlap means current interval's start is less than prior end
+        for i in range(1,len(intervals)):
+            # if start is less than prior end, delete this
+            # don't actually need to delete, so just increment counter
+            if intervals[i][0] < lastIntervalEnd:
+                removalCount+=1
+            # otherwise, move the lastIntervalEnd up
+            else:
+                lastIntervalEnd = intervals[i][1]
+        
+        return removalCount
+
     # ── Attempt · 2026-09-07 ──────────────
     def nonOverlappingIntervals_20260907(self, intervals: List[List[int]]) -> int:
         # we are trying to keep as many intervals as possible

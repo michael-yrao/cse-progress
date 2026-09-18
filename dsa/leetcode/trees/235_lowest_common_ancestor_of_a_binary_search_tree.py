@@ -43,6 +43,22 @@ class TreeNode:
 
 class Solution:
 
+    # ── Attempt · 2026-09-17 ──────────────
+    def lowestCommonAncestor_20260917(self, root: TreeNode, p: TreeNode, q: TreeNode) -> TreeNode:
+        # this is a BST but doesn't say balanced BST
+        # regardless, if both are smaller than root, we go left, if both are bigger, we go right
+        # it allows node to be descendant of itself, so we need to exclude equality when it comes to moving to the left or right
+        # we also know p and q will exist
+        
+        # success scenario is if between including equality
+        if (p.val <= root.val and q.val >= root.val) or (p.val >= root.val and q.val <= root.val):
+            return root
+
+        if p.val < root.val and q.val < root.val:
+            return self.lowestCommonAncestor_20260917(root.left, p, q) # type: ignore
+        if p.val > root.val and q.val > root.val:
+            return self.lowestCommonAncestor_20260917(root.right, p, q) # type: ignore
+
     # ── Attempt · 2026-08-18 ──────────────
     def lowestCommonAncestor_20260818(self, root: TreeNode, p: TreeNode, q: TreeNode) -> TreeNode:
         # BST, so if both are smaller, we go left, if both are bigger we go right

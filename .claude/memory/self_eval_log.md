@@ -1269,3 +1269,67 @@ committed. **Consequence to bake into close-out:** the weekly/session close-out 
 scaffolds (attempt → real row; else remove file AND row) BEFORE the pre-commit discovery runs — otherwise the
 kickoff gate's own upfront scaffolding manufactures phantoms. Candidate: a close-out checklist step or a
 `restore_history`-style guard. Watch at this session's close-out (394 disposable, 1552 intake still open).
+
+---
+
+## 2026-09-17 — Proposed a 🟡 cap citing a rule my own ledger already superseded
+
+**What happened:** On 912 (Merge Sort, 🟡 retry) the code came back blank-page clean except a base-case
+size-formula slip (`r-l+1` vs half-open `r-l`) the learner self-fixed once I localized the line, plus a
+space-complexity miss (O(n log n)-from-stack → needed a full peak-vs-total re-teach). I proposed **stays
+🟡**, framing it as *"a 🟢 wants correct complexity from a blank page; the space miss caps it."* The learner
+pushed back: rewriting clean code just for a complexity miss is no benefit, put it to 🟢.
+
+**The miss:** my framing ("complexity is part of the 🟢 bar") is the **pre-Sep-3 framing**. `complexity_gotchas.md`
+**rule 4** (formalized Sep 3, 2026) already carves out exactly this: *clean code + a Big-O-only miss does NOT
+cap the rating* — the bound is queued to the weekly complexity cleanup, no code re-rep, because re-solving code
+you can already solve just to re-ask its Big-O is churn. I proposed a cap on grounds my own ledger had already
+retired, and only surfaced rule 4 after the learner pushed. A rating proposal is a MECHANICAL pull of a stated
+rule (the config/ledger is the source of truth) — I should have read the ledger before pricing the rep, not
+after being corrected.
+
+**Why it matters:** the complexity gate + rating is the record, and the record is where stringency binds. Citing
+a superseded version of a rule I own is exactly the "silently wrong artifact" failure the two-register table warns
+about — the rating would have been defensible only by coincidence (912 *does* fall outside rule 4's scope because
+the base case needed a fix), but I reached it via wrong reasoning, not that distinction.
+
+**Fix / where it landed:** (1) corrected to the learner in-turn, reframing the open question to the *actual*
+undecided edge rule 4 leaves — does a typo-class slip self-fixed on a one-line pointer count as a "real code fix"
+(rule 2 → cap) or still "clean code" (rule 4 → no cap)? (2) re-pinned that narrower question to the Sep 21 build
+(schedule `📌 PINNED`), replacing my too-broad "does complexity block 🟢" framing. (3) 912 recorded 🟡→🟢 override
+pending the Sep 21 call. **Behavioral rule for myself: before proposing any comfort rating, re-read the governing
+rule at its source (`complexity_gotchas.md` rule 4, the comfort scale) — do not price from memory of the bar.**
+No ladder-climb to a hook/skill edit yet: this is a "read the source before pricing" discipline miss, not a
+missing rule — the rule was there and correct. Reopen if I cite a stale rating rule again.
+
+---
+
+## 2026-09-17 — Dropped a live board item (721) from a "what's left" restate
+
+**What happened:** After 235 the learner asked "what else do we got." Today's board is 435/721/912/235/560/102;
+done so far were 435, 912, 235. The three still open were **721, 560, 102** — but I ran `links.py 560 102`,
+silently omitting 721, and presented only two. The learner caught it ("I don't think I did 721… how come the
+agent didn't pull it in").
+
+**The miss:** a restate/hand-over lineup is **mechanical** — the open set is fully determined by (board minus
+struck-through), so a second competent agent would produce the same list. I built the `links.py` argument list
+from memory instead of deriving it from the schedule's un-struck rows, and dropped one. No judgement was
+involved; this is exactly the "silently wrong artifact" the two-register table warns about — a lineup missing a
+due rep understates the day's remaining work and, left unnoticed, could have walked 721 off the board entirely.
+
+**Fix / where it landed:** corrected the list to 721/560/102 in-turn. **Behavioral rule for myself: derive a
+"what's left" lineup from the schedule file's un-struck rows (grep the day's block for rows without `~~`), never
+from memory of what was done** — then pass exactly those numbers to `links.py`. Candidate escalation if it
+recurs: a tiny `remaining.py` that reads the current week's schedule and prints the un-struck board for the day,
+so the open set is never hand-assembled. Not building it yet (first occurrence); reopen and climb to that script
+if I drop a board item again.
+
+**RECURRED same session (2026-09-17) → climbed the ladder to a source fix.** After 721 I again
+hand-assembled the "what's left" lineup and dropped 560 (said "one left: 102"; the learner caught it,
+"I thought we had 2 more"). Second drop of the same kind in one session ⟹ discipline isn't enough.
+Built [`scripts/remaining.py`](scripts/remaining.py): reads the current week's schedule, finds the
+session-date day-block, prints the UN-STRUCK rows (rows without `~~`) as clean `[file]·[LC]` pairs via
+`links.py`'s `link_line`. Verified: emits exactly the open board (560, 102), says "Nothing left ✅" on a
+fully-struck day, and catches tag-prefixed rows (🔥/🎯/⚙️/🆕/→). **New rule for myself: answer every
+"what's left / what else / what's next" by RUNNING `python scripts/remaining.py`, never by memory.**
+Candidate next rung if it still slips: a Stop-hook check that flags a lineup not sourced from the script.

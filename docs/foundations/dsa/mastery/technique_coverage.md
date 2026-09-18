@@ -6,13 +6,9 @@
 
 > The tracker is keyed by **problem**; this is keyed by **technique**. Use it at the weekly build to decide what to pull, and at phase exit to check the per-algorithm bar (recognition + execution, ≥1 🟢 each).
 
-> **56/56** techniques started &nbsp;·&nbsp; **1** with no 🟢 &nbsp;·&nbsp; **20** thin &nbsp;·&nbsp; **1** unqueued variant gaps
+> **56/56** techniques started &nbsp;·&nbsp; **0** with no 🟢 &nbsp;·&nbsp; **20** thin &nbsp;·&nbsp; **1** unqueued variant gaps
 
 ## ⚠️ Action list
-
-**No 🟢 — blocks per-algorithm phase exit.** Execution is unproven.
-
-- **Divide & Conquer / Sorting** (sorting) — best 🟡 across 912
 
 **Thin — fewer than the 3–4 surface forms a technique needs.** One instance trains recall of that problem, not the skill.
 
@@ -85,14 +81,14 @@
 | Prefix Sum | prefix_sum | 2 (53, 560) | 🟢 | ✅ | — | thin (2/3) |
 | Greedy (single pass) | sliding_window | 6 (45, 55, 122, 134, 763, 846) | 🟢 | ✅ | — | — |
 | Sliding Window | sliding_window | 4 (3, 121, 424, 567) | 🟢 | ✅ | — | — |
-| Divide & Conquer / Sorting | sorting | 1 (912) | 🟡 | ❌ | Merge Sort ×1 · ~~Quick Sort~~ *(queued: `expansion — sorting deep-dive`)* · ~~Radix Sort~~ *(queued: `expansion — sorting deep-dive`)* · ~~Counting Sort~~ *(queued: `expansion — sorting deep-dive`)* · ~~Timsort~~ *(queued: `expansion — sorting deep-dive`)* · ~~D&C on 53~~ *(queued: `rated:912 + surplus>=1`)* | **no-green** · thin (1/3) |
+| Divide & Conquer / Sorting | sorting | 1 (912) | 🟢 | ✅ | Merge Sort ×1 · ~~Quick Sort~~ *(queued: `expansion — sorting deep-dive`)* · ~~Radix Sort~~ *(queued: `expansion — sorting deep-dive`)* · ~~Counting Sort~~ *(queued: `expansion — sorting deep-dive`)* · ~~Timsort~~ *(queued: `expansion — sorting deep-dive`)* · ~~D&C on 53~~ *(queued: `rated:912 + surplus>=1`)* | thin (1/3) |
 | Monotonic Deque | stack | 1 (239) | 🟢 | ✅ | — | — |
 | Monotonic Stack | stack | 6 (84, 496, 503, 739, 853, 901) | 🟢 | ✅ | — | — |
 | Stack (augmented entries) | stack | 1 (155) | 🟢 | ✅ | — | thin (1/2) |
 | Stack (expression evaluation) | stack | 1 (150) | 🟢 | ✅ | — | thin (1/2) |
 | Stack (matching) | stack | 1 (20) | 🟢 | ✅ | — | — |
 | BST Descent | trees | 2 (98, 235) | 🟢 | ✅ | — | — |
-| Tree BFS (level order) | trees | 2 (102, 199) | 🟢 | ✅ | — | thin (2/3) |
+| Tree BFS (level order) | trees | 2 (102, 199) | 🎓 | ✅ | — | thin (2/3) |
 | Tree Construction (Divide & Conquer) | trees | 1 (105) | 🟢 | ✅ | — | — |
 | Tree DFS (recursive) | trees | 6 (100, 104, 110, 226, 572, 1448) | 🎓 | ✅ | — | — |
 | Tree DFS with Postorder Return | trees | 2 (124, 543) | 🟢 | ✅ | — | — |

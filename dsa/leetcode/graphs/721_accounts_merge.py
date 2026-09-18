@@ -65,6 +65,83 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-09-17 ──────────────
+    def accountsMerge_20260917(self, accounts: List[List[str]]) -> List[List[str]]:
+        # we are essentially joining names together that have at least one email in common
+        # names can be the same, so we can't just join based on similar names
+        # what we do is say each email -> account indices
+        # then emails with multiple values, we should union the values (account indices)
+        # now we should combine everyone that has the same root parent and this should give us the end result
+
+        # 0. union find
+
+        accountCount = len(accounts)
+
+        rankMap = {}
+        parentMap = {}
+
+        for i in range(accountCount):
+            rankMap[i] = 0
+            parentMap[i] = i
+        
+        def find(node):
+            if parentMap[node] != node:
+                parentMap[node] = find(parentMap[node])
+            return parentMap[node]
+
+        def union(n1,n2):
+            n1r = find(n1)
+            n2r = find(n2)
+            if n1r == n2r:
+                return False
+            if rankMap[n1r] > rankMap[n2r]:
+                parentMap[n2r] = n1r
+            elif rankMap[n1r] < rankMap[n2r]:
+                parentMap[n1r] = n2r
+            else:
+                rankMap[n1r]+=1
+                parentMap[n2r] = n1r
+            return True
+
+        # 1. create our email -> account indices map
+
+        emailToAccountMap = collections.defaultdict(list)
+
+        for accountIndex in range(len(accounts)):
+            for i in range(1,len(accounts[accountIndex])):
+                emailToAccountMap[accounts[accountIndex][i]].append(accountIndex)
+        
+        # 2. go through emails with multiple indices
+
+        for email in emailToAccountMap:
+            # start at index 1 so we automatically skip over the 0th index and size 1 emails
+            for i in range(1,len(emailToAccountMap[email])):
+                account1 = emailToAccountMap[email][i-1]
+                account2 = emailToAccountMap[email][i]
+                union(account1, account2)
+        
+        # 3. combine everyone that has the same root account
+        # for this, we need a map of root parent -> emails, use a set to help with the dups
+        
+        rootParentToEmailMap = collections.defaultdict(set)
+
+        for accountIndex in range(accountCount):
+            rootAccount = find(accountIndex)
+            subList = accounts[accountIndex][1:]
+            rootParentToEmailMap[rootAccount].update(subList)
+        
+        # 4. construct the result
+
+        result = []
+
+        for key, value in rootParentToEmailMap.items():
+            resultLine = []
+            resultLine.append(accounts[key][0])
+            resultLine.extend(sorted(list(value)))
+            result.append(resultLine)
+
+        return result
+
     # ── Attempt · 2026-09-08 ──────────────
     def accountsMerge_20260908(self, accounts: List[List[str]]) -> List[List[str]]:
         # use the emails as the key for us to do union find

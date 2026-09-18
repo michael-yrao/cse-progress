@@ -578,3 +578,20 @@ decisions:
       Names swapped — you GRADUATE (recurring spot check), then you RETIRE (terminal).
       The labels were originally the other way round.
     affects: [intervals, comfort_scale]
+
+  - id: remaining-board-source-fix
+    date: 2026-09-18
+    summary: >-
+      A "what's left / what else / what's next / remaining" restate is now DERIVED by
+      scripts/remaining.py from the schedule's un-struck rows, not hand-assembled into
+      scripts/links.py. links.py takes numbers the coach supplies, so a restate built by
+      RECALLING what's open can drop an item — done twice in one session Sep 17, 2026 (dropped
+      560, then 721). remaining.py reads the current week's schedule, finds the session-date
+      day-block, and prints the un-struck board as the same [file]·[LC] pairs via link_line, so
+      it is spoiler-free and the name+links-only rule and the Stop-hook guard are unaffected.
+      New coach rule: answer any "what's open now" question by running remaining.py, never from
+      memory; keep links.py for a set you already hold exactly (post-scaffold kickoff, a single
+      named hand-over). Skill-only rung (learner's call) — no hook. No cse.config.yml value
+      changed. Strands any "build a restate lineup by hand into links.py" wording predating this.
+      See references/scaffolding.md, feedback_lineup_links_only.md, self_eval_log 2026-09-17.
+    affects: [scaffolding, lineup_links]

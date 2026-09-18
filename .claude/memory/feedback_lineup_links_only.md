@@ -3,7 +3,7 @@ name: feedback_lineup_links_only
 description: Why a presented lineup is problem-name + links and NOTHING else, and why every on-board problem mention carries the [file]·[LC/NC] pair — the occurrence log behind both
 metadata:
   type: feedback
-reconciled: 2026-09-14
+reconciled: 2026-09-18
 ---
 
 **Operational rule lives in the skill** — `.claude/skills/cse-coach/references/scaffolding.md`
@@ -48,6 +48,17 @@ fixes climbed the ladder:
   shipping DISABLED; taught the day's board Aug 30 so it flags only on-board numbers). Also blocks a
   **broken** `.py` link (Aug 27 — a present-but-dead `../../../` path copied from a schedule row).
 - **Lineup format → source-fixed** (`scripts/links.py`, the name+links-only builder, Sep 4).
+- **"What's left" restate → source-fixed** (`scripts/remaining.py`, Sep 17). `links.py` still takes
+  numbers the coach hand-supplies, so a restate built by *recalling* what's open can drop an item — done
+  **twice in one session Sep 17** (said "one left" omitting 560; then dropped 721 from an earlier restate).
+  `remaining.py` removes the recall: it reads the current week's schedule, finds the session-date
+  day-block, and prints the **un-struck** rows as the same `[file]·[LC]` pairs (via `link_line`), so it is
+  spoiler-free and this rule + the Stop hook are unaffected. New coach rule: answer any "what's left / what
+  else / what's next / remaining" by **running `remaining.py`**, never from memory. Skill-only rung by the
+  learner's call (no hook); the candidate next rung — an "incomplete-board" detector in
+  `problem_link_reminder.py` reusing `todays_board()` — stays noted for if it slips again. See
+  `references/scaffolding.md` ("Presenting the kickoff / lineup board"), `decisions.yml`
+  `remaining-board-source-fix`, self_eval_log 2026-09-17.
 - **Spoiler-column case → Stop hook** `problem_link_reminder.py::spoiler_lineup` (Sep 11). Blocks a
   presented lineup **table** whose scaffold-`.py`-link row carries a *semantic* extra column, a comfort/tag
   emoji, or a technique parenthetical in the title, and routes the re-emit through `scripts/links.py`. Prose

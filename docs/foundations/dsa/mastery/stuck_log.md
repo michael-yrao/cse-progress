@@ -2560,3 +2560,32 @@ a correct bound with an incomplete why is a **pass, not a miss** — no freebie 
 (shaky interval) → re-rep **2026-09-23**. 📌 **Hard-effort data point** (pinned Sep 21 multiplier revisit): ~2
 sessions, heavy back-and-forth, felt-effort HIGH — a real witness that a 🔴/🟡 Hard's 4.5-unit price may under-read
 wall-clock here (though this one *earned* its length).
+
+### 2026-09-17 · 721 Accounts Merge (Union-Find) · 🟡 (stays)
+
+Recognition clean and cold (email→account-indices map, union accounts sharing an email, group by root). UF
+scaffold — find w/ path compression, union by rank — written correct and unaided. Both of this problem's
+**flagged execution traps fired, each coach-localized**:
+- **map keyed by index, not the email string.** Step-1 loop was `for email in range(len(accounts[i]))` →
+  `email` was a position `0,1,2…`, so `emailToAccountMap` grouped accounts by *email slot* not email value
+  (and keyed the name at pos 0). Learner first defended it ("we only care for the line number") — the confusion
+  was key-vs-value: the *value* (accountIndex) was right; the *key* had to be the string. Fixed to
+  `for i in range(1, len(accounts[i]))` keying `accounts[i][i]`.
+- **union on the loop-counter, not the stored value.** `union(i-1, i)` unioned list *positions*; fixed to
+  union `emailToAccountMap[email][i-1]` / `[i]` (self-fixed after the first nudge pointed at the line).
+
+Complexity itemized correctly on structure (UF ~free, steps 1–3 O(E), sort dominates, space O(E), E = total
+emails = n·e). One refinement taught: the sort's log factor is over the **merged group size (up to E)**, not the
+per-account average e — worst case all accounts collapse to one group → **O(E log E)**, not O(E log e).
+
+Two coach-nudged execution fixes on the problem's own known traps ⟹ Shaky. No conversion; re-rep on the short interval.
+
+### 2026-09-17 · 560 Subarray Sum Equals K · 🟢 s1 → 🟡 (reset)
+
+Recognition clean and cold — prefix-sum difference (`prefix[j]-prefix[i]=k`) mapped to a running-sum +
+hashmap-of-seen-prefixes, and the `diffMap[0]=1` seed was reasoned out unprompted (empty prefix, for a
+subarray starting at index 0). One execution bug: the count step did `result += 1` on a hit, but a prefix
+sum can recur, and each earlier occurrence is a distinct valid subarray ending here — so it must add the
+**frequency** `diffMap[runningSum-k]`, not a flat 1. Undercounts whenever `runningSum-k` was seen >1×.
+Coach-localized via a `[1,1,1], k=2` trace (learner fixed it). Complexity itemized correct: time O(n)
+(one pass, O(1) map ops), space O(n) (≤ n distinct prefix sums). One coach-nudged fix ⟹ Shaky; streak reset.
