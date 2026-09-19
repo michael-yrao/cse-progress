@@ -11,10 +11,42 @@ Constraints: 1 <= len(heights) <= 1e5, 0 <= heights[i] <= 1e4.
 """
 # Write everything yourself from here — including any ListNode/TreeNode classes a
 # problem needs. No shared data-model imports (whiteboard fidelity).
+import math
 from typing import List, Optional
 
 
 class Solution:
+
+    # ── Attempt · 2026-09-18 ──────────────
+    def largestRectangleArea_20260918(self, heights: List[int]) -> int:
+        # we should do an increasing monotonic stack
+        # that means we add a -math.inf at the end to make sure we calc in case of permanently increasing
+        # calculate the current boundary area when we break that pattern
+        # so keep track of a maxArea
+        # so when we reach 2 (index 5), we have 6x1, how do we get 5 * 2 in the next pop
+        # stack[-1] holds the left boundary of the window, so i - stack[-1] - 1
+
+        maxArea = 0
+
+        heights.append(-math.inf) # type: ignore
+
+        increasingStack = []
+
+        for i in range(len(heights)):
+            # while we are decreasing, 
+            while increasingStack and heights[i] < heights[increasingStack[-1]]:
+                # current height
+                currentHeightIndex = increasingStack.pop()
+                # width is left boundary (i), right boundary (stack[-1]) now that we popped, then - 1
+                if not increasingStack:
+                    width = i
+                else:
+                    width = i - increasingStack[-1] - 1
+                maxArea = max(maxArea, heights[currentHeightIndex] * width)
+            increasingStack.append(i)
+        
+        return maxArea
+
     # ── Attempt 1 · 2026-09-04 ────────────────────────────────────────────
     def largestRectangleArea(self, heights: List[int]) -> int:
         # in our two pointer method for max area, we didn't have to consider

@@ -29,6 +29,38 @@ from typing import List, Optional
 
 
 class Solution:
+
+    # ── Attempt · 2026-09-18 ──────────────
+    def jump_20260918(self, nums: List[int]) -> int:
+        # prioritize the next index with the highest i + nums[i]
+        # we are guaranteed to be able to reach nums[n - 1]
+        # we will do this like two pointers since we have a range of what we can reach
+        
+        jump = 0
+        
+        left = 0
+        right = left + nums[left]
+
+        # if we don't need to jump, return 0
+        if len(nums) == 1:
+            return 0
+        
+        # only need to reach the last node
+        while right < len(nums) - 1:
+            # can't go anywhere if num at left is zero
+            if nums[left] == 0:
+                return 0
+            nextJumpPoint = left
+            for i in range(left, right+1):
+                currentJumpPotential = i + nums[i]
+                if currentJumpPotential >= nextJumpPoint + nums[nextJumpPoint]:
+                    nextJumpPoint = i
+            jump+=1
+            left = nextJumpPoint
+            right = nextJumpPoint + nums[nextJumpPoint]
+        
+        return jump + 1
+
     # ── Attempt 1 · 2026-09-08 ────────────────────────────────────────────
     def jump(self, nums: List[int]) -> int:
         # in order to jump the minimum amount of times

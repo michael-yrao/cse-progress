@@ -2589,3 +2589,43 @@ sum can recur, and each earlier occurrence is a distinct valid subarray ending h
 **frequency** `diffMap[runningSum-k]`, not a flat 1. Undercounts whenever `runningSum-k` was seen >1×.
 Coach-localized via a `[1,1,1], k=2` trace (learner fixed it). Complexity itemized correct: time O(n)
 (one pass, O(1) map ops), space O(n) (≤ n distinct prefix sums). One coach-nudged fix ⟹ Shaky; streak reset.
+
+### 2026-09-18 · 84 Largest Rectangle in Histogram · 🔴 (stays 🔴, +2 re-rep Sun Sep 20)
+
+**Recognition CONVERTED** from the Sep 4 blank: called *increasing monotonic stack* cold and self-stated,
+and had the sentinel-flush instinct (append a very-small value to force all remaining bars to settle).
+
+**Execution was rebuilt coach-side, not recalled — the reason it stays 🔴:**
+- Opened with the **wrong settling mechanism**: stored popped heights in a `window` list and computed area as
+  `min(window) * len(window)`. Failed on `[2,1,2]` (returns 2, true answer 3): `len(window)` counts bars popped
+  *this cluster* and misses a popped bar's left reach over bars removed in *earlier* iterations. Width must come
+  from index boundaries, not a count.
+- The load-bearing machinery was taught across several turns, not pulled from memory:
+  - **width `= i - stack[-1] - 1`** via the two-walls picture (right wall = current `i` = first shorter bar to
+    the right; left wall = the bar exposed *under* the popped one = first shorter to the left; `-1` because both
+    walls are excluded).
+  - **height = `heights[popped]`, no `min`** — each bar settles its own maximal rectangle once, at its pop; the
+    span between walls is guaranteed ≥ that bar's height.
+  - **pop-first ordering** — `stack.pop()` must remove the top *before* reading `stack[-1]`, because the left
+    wall is the bar underneath (plates analogy landed).
+  - **empty-stack case** — after popping, empty stack ⟹ no shorter bar to the left ⟹ left wall at `-1` ⟹
+    `width = i`.
+- **Self-caught** the one bug after the mechanism was in place: multiplied by `currentHeightIndex` (the index)
+  instead of `heights[currentHeightIndex]` (good catch).
+
+**Complexity clean, both dims, itemized:** time **amortized O(n)** — each index pushed once and popped at most
+once, so total inner-loop work ≤ n (not O(n²)); space **O(n)** — a strictly increasing histogram `[1..n]`
+pushes all n indices before any pop.
+
+Recognition is now solid, so the Sun Sep 20 re-rep isolates **pure execution** — can the settle be rebuilt from
+a blank page. That is the real measure; a 🟡 would have understated how much of the core was coach-supplied.
+
+### 2026-09-18 · 45 Jump Game II · 🟡 (stays 🟡)
+
+Recognition clean/cold — self-stated the greedy "jump to the index with the highest `i+nums[i]`," a valid
+approach. Execution: passed LC but the `[3,0,0,0]` **infinite loop** (max-reacher can be `i` itself → `i`
+never advances) was coach-surfaced, and the fix ("if the current window already covers the last index, it's
+one more jump") was coach-supplied. Complexity misread as O(n)/single-pass; corrected to **O(n²)** worst case
+(inner loop rescans overlapping windows — not a single pass; O(n) only because LC caps `nums[i]≤1000`),
+space O(1). One coach-caught bug + a complexity correction ⟹ Shaky, no conversion. ⚠️ Owes an O(n)
+window-frontier re-teach (Waiting Room) — the linear framing didn't land this session.

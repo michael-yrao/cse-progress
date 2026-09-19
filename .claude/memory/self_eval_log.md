@@ -1333,3 +1333,23 @@ session-date day-block, prints the UN-STRUCK rows (rows without `~~`) as clean `
 fully-struck day, and catches tag-prefixed rows (🔥/🎯/⚙️/🆕/→). **New rule for myself: answer every
 "what's left / what else / what's next" by RUNNING `python scripts/remaining.py`, never by memory.**
 Candidate next rung if it still slips: a Stop-hook check that flags a lineup not sourced from the script.
+
+## 2026-09-18 — Under-read a kickoff as a single-problem request
+**What:** Learner opened with "let's start our friday session, graduate merge sorted list." I treated the named problem ("graduate merge sorted list") as the specific-problem caveat and scaffolded ONLY 21, offering the rest as opt-in. Learner corrected twice ("are the other ones not scaffolded?" → "i said start friday session, everything should be scaffolded").
+**Why it's wrong:** The kickoff phrase "start our friday session" governs; the named problem was an *additional* intent (which rep to prioritize), not a scope-limiter. The caveat is for when a problem name is the WHOLE request ("let's do 235"), not when it rides alongside an explicit session-start. The UserPromptSubmit hook even flagged it as a kickoff — I overrode the hook with my own read.
+**Fix/ladder:** Behavioral, low recurrence so far → memory-file tier. If it recurs: the caveat wording in references/scaffolding.md scope § should be sharpened to "a problem name is a scope-limiter ONLY when no session-start phrase is present in the same message." Watch for a 2nd occurrence before promoting.
+
+## 2026-09-18 — Weekly build mislabeled which VARIANT was due (3 rows, same build)
+**What:** The Sep 14 build's Friday board tagged 21 as "(Iterative)", 206 as "(Recursion)", and 130 as
+"(Union-Find)" — but per the tracker the s2 rep actually due 2026-09-18 was the *other* variant in each case
+(21 Recursion, 206 Iterative, 130 BFS; the tagged variants were either already 🎓 or due weeks later). Caught
+at Friday close-out; corrected the board labels and re-seated the correct variants to Sat.
+**Why it's wrong:** A multi-variant problem (same LC number, e.g. iterative vs recursive) has separate tracker
+rows with separate due dates. The build wrote the variant parenthetical from memory/habit, not from the row
+that was actually coming due — so the board would have sent the learner to re-rep an already-graduated or
+not-yet-due variant. Same failure fired on 3 rows in one build ⟹ systematic, not a one-off slip.
+**Fix/ladder (2 occurrences → climb past memory-file):** the weekly-build step should derive the variant
+parenthetical FROM the due tracker row, never hand-type it. Candidate source fix: have the build pull each
+row's variant label from `dsa_progress.md` by number+due-date rather than free-typing it. Flagged for the
+Sep 21 build — add a "variant label must match the due tracker row" check to weekly-build.md (and consider a
+hook that cross-checks schedule variant tags against the tracker's due row).
