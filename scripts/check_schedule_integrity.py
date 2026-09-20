@@ -149,6 +149,27 @@ def main() -> None:
             if number in listed_numbers and number not in struck_numbers:
                 findings.append(f"attempted {attempted} but its row is not struck — {title[:60]}")
 
+    # 3 — a row DUE within this week but seated on no day of the built board. This is the
+    # 2026-09-14 leak: two overdue 🔴s (84 due Sep 6, 547 due Sep 13) crossed a week boundary
+    # and slipped consecutive builds. Checks 1-2 cannot see it — they reconcile rows that ARE
+    # on the board, and this failure is a row that is on NO board at all. The weekly build's
+    # own rule is "sweep ALL problems with next_review_date <= end of the week"; this asserts
+    # the result of that sweep. A row done earlier this week has its due date advanced past
+    # sunday, so it is not flagged; a deliberate deferral gets a new future date, so it is not
+    # flagged either — only a genuinely-dropped due row surfaces. Reuses effort_budget's row
+    # parser (the same rows behind `--due`, which this diffs against the board, per the entry).
+    try:
+        import effort_budget  # sibling script; import has no side effects
+        for r in effort_budget.parse_rows():
+            if dt.date.fromisoformat(r["due"]) > sunday:
+                continue
+            if int(r["num"]) not in listed_numbers:
+                findings.append(
+                    f"due {r['due']} but seated on no day of {path.name} — "
+                    f"{r['num']} {r['title'][:40]} ({r['comfort']})")
+    except Exception as exc:  # a reuse failure must never break the integrity check
+        print(f"   (overdue-seated check skipped: {exc.__class__.__name__}: {exc})", file=sys.stderr)
+
     if not findings:
         print(f"✅ {path.name}: every done row carries its result, and every rep this week is struck")
         return

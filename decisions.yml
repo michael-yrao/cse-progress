@@ -595,3 +595,19 @@ decisions:
       changed. Strands any "build a restate lineup by hand into links.py" wording predating this.
       See references/scaffolding.md, feedback_lineup_links_only.md, self_eval_log 2026-09-17.
     affects: [scaffolding, lineup_links]
+
+  - id: banned-openers-to-hook
+    date: 2026-09-19
+    summary: >-
+      The banned-openers rule (feedback_explanation_register BANNED OPENERS, Aug 15) moved from PROSE to a
+      Stop HOOK after lapsing >=2x (recurred mid-22 backtracking Sep 19: "Careful —", "Fair —", "Right —").
+      The learner paired it with the advance-tail hook: "remove the prefixing statements that don't add
+      value like how we removed the ending statements." Enforcement now lives in
+      problem_link_reminder.py::banned_opener (fires on Stop, no settings change) — the mirror of
+      advance_prompt_tail at the START of the turn: it blocks an em-dash-dangle interjection ("<opener> —"),
+      the "Right, so" continuation, and fixed throat-clears (So:, Worth noting, Here's the thing, Good
+      question, but) at the start of the message OR any paragraph; a bare "So the invariant …" (no dangle)
+      stays clean. Strands any wording that calls banned-openers a prose-only posture: it is now
+      hook-enforced, and the normative sentence moved to SKILL.md §1 (Register). No cse.config.yml value
+      changed. See SKILL.md §1, feedback_explanation_register.md, self_eval_log 2026-09-19.
+    affects: [explanation_register, hooks]

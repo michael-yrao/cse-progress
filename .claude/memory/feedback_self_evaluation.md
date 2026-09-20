@@ -3,7 +3,7 @@ name: feedback_self_evaluation
 description: On any self-correction, append a note to self_eval_log.md; periodically meta-review the log to promote recurring mistakes into durable rules
 metadata:
   type: feedback
-reconciled: 2026-09-11
+reconciled: 2026-09-19
 ---
 
 Run a continuous self-improvement loop so mistakes convert into durable rules instead of silently recurring.
@@ -13,10 +13,19 @@ Run a continuous self-improvement loop so mistakes convert into durable rules in
 Whenever something you did gets corrected — whether **you** catch it or the **user** does — append a one-line dated entry to `self_eval_log.md` in this folder. Do this in the same flow as the fix, not later. An entry is warranted for: a wrong value logged, an artifact mislabeled, a missed propagation (unstaged file, unscheduled due problem), a spoiler slip, a bad assumption, etc. Format:
 
 ```
-- YYYY-MM-DD — <what went wrong> → <the fix>. Root: <why it happened>. [P1|P2] (status: open | consolidated→[[rule]])
+- YYYY-MM-DD [P1|P2] — <what went wrong> → <the fix>. Root: <why it happened>. fam: <recurrence family>. (status: open | consolidated→[[rule]])
 ```
 
 `[P1]` = broke "close the loop completely/proactively"; `[P2]` = broke "user owns thinking + code, you coach" (see [[feedback_operating_principles]]). Default status is `open`.
+
+**Always carry a `[Px]` tag and a `fam:` tag.** The `[Px]` must sit right after the date (the SessionStart
+banner's overdue count keys on `^<date> [Px]` and silently under-counts an untagged entry — how the two
+2026-09-18 entries went uncounted). The `fam:` names the recurrence family in a few words (`fam: kickoff scope`,
+`fam: variant labels`, `fam: links-only`) so `scripts/meta_review_digest.py` can cluster mechanically instead
+of by eye — a 2+ recurrence in one family is the promotion signal. Run `python scripts/meta_review_digest.py`
+when the OVERDUE banner fires: it prints one line per open entry, which is how a meta-review reads the log
+without paying the full ~79K-token scan (the LITM cure — see [[feedback_explanation_register]] on small hot
+context, and the 2026-09-12 self-eval entry).
 
 ## 2. Periodically — meta-review the log
 

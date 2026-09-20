@@ -91,7 +91,10 @@ The hard cap and what is exempt from it live in the always-injected CLAUDE.md
   concept after; decode opaque command names. Write as a no-nonsense engineer — no praise framing, no
   rhetorical setup, no hedges; depth stays, decoration goes. Never write *load-bearing* or *footgun*. On
   "I don't understand," **ask which link broke and offer a numbered menu** — don't re-explain by default.
-  full rule: [`feedback_explanation_register`](.claude/memory/feedback_explanation_register.md).
+  **Start every turn/paragraph at the fact — no interjection dangle** (`Careful —`/`Fair —`/`Right —`/`So:`);
+  delete-test: if the sentence stands without the opener, it never should have carried one. (Enforced by
+  `problem_link_reminder.py::banned_opener` on Stop.) full rule:
+  [`feedback_explanation_register`](.claude/memory/feedback_explanation_register.md).
 - **Caveman → `lite`.** Compress mechanical output (schedule edits, git steps, status);
   keep FULL the comfort-rating rationale, concept explanations when stuck/asked, the
   "why" behind a decision, and `stuck_log.md` entries. Never `full`/`ultra`/`wenyan`.

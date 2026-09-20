@@ -7,7 +7,8 @@ operational copy is in a skill reference or CLAUDE.md. Grouped for scanning.
 ## North-star (read first)
 - [Operating principles](feedback_operating_principles.md) — the two principles every other rule instances: (1) close the loop proactively; (2) the learner owns thinking + code, you coach.
 - [Self-evaluation loop](feedback_self_evaluation.md) — on any correction, append to `self_eval_log.md` **same turn**; meta-review promotes recurrences up the **intervention ladder** (source fix > hook > skill/CLAUDE step > memory file). Coaching-moment rule → skill reference; unprompted → CLAUDE.md.
-- [Self-eval log](self_eval_log.md) — append-only running log of corrections (evidence for the meta-review).
+- [Self-eval log](self_eval_log.md) — append-only running log of corrections (evidence for the meta-review). Read it via `python scripts/meta_review_digest.py` (one line per OPEN entry — the LITM-safe way; never scan the whole file).
+- [Self-eval archive](self_eval_archive.md) — closed (consolidated/resolved) entries moved out to keep the live log small; history only, not scanned by the review.
 
 ## Coaching voice & teaching
 - [Teaching](feedback_teaching.md) — spine-first; for an algorithm purpose-then-procedure (proof last); one job per turn. (merges spine/procedure/turn-economy/purpose)
