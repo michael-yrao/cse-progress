@@ -5,6 +5,20 @@
 
 Append-only log of corrections. Governed by [[feedback_self_evaluation]]. Newest at top. Meta-review promotes recurring root causes into rules; entries are never deleted, only re-statused.
 
+- **2026-09-20 [P2]** fam:hook-false-fire — The gamification feature (progress.json + the
+  progressiveoverflow.com dashboard) made `rating_gate.py` false-fire on a pure software-deploy report:
+  my status turns now carry the dashboard's own vocabulary (🟢/🟡/🎓 glyphs, "streak", "build clean")
+  next to incidental cue words ("accept the fallback"), which the gate reads as a comfort-rating
+  proposal. No rep was in sight. Same class as the meta-review/self-eval false-fire the hook already
+  exempts (2026-09-19) — a RECORD/REPORT is not a PROPOSAL. Fix (rung 1, source): added a
+  `REPORT_CONTEXT` exemption to `rating_gate.py` keyed on dashboard/deploy terms that cannot occur in a
+  real rep rating (progress.json, progressiveoverflow, dashboard, deploy, raw.githubusercontent, …) —
+  deliberately NOT on streak/pipeline/badge alone, since those appear in genuine rating turns. +4
+  self-tests (3 exemptions, 1 control that still trips); 25/25 pass. General lesson: a feature whose
+  DATA reuses the coach's rating vocabulary will trip vocabulary-matching hooks — exempt on terms unique
+  to the feature's context, never on the shared tokens. See `feedback_ask_complexity.md`,
+  `.claude/hooks/rating_gate.py`.
+
 - **2026-09-20 [P2]** fam:read-before-asserting — Told the learner "cse-progress looks **private**" and built a
   plan branch around a private-source data pipeline, inferring privacy from a *failed* `gh repo view
   michael-yrao/cse-progress` (which failed for auth/other reasons, not visibility). The repo is PUBLIC; the
