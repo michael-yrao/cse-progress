@@ -95,6 +95,7 @@ if [ -n "$GAMIFY_TRIGGER" ]; then
     python3 scripts/gamify.py || true
   fi
   [ -f "progress.json" ] && git add "progress.json"
+  [ -f "progress-summary.json" ] && git add "progress-summary.json"
   [ -f "README.md" ] && git add "README.md"
 fi
 

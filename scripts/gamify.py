@@ -29,10 +29,16 @@ Design constraints this file honours (see docs/ARCHITECTURE.md and CLAUDE.md):
     other script here.
 
 Usage:
-    python scripts/gamify.py                 # write progress.json (+ README badge)
+    python scripts/gamify.py                 # write progress.json + progress-summary.json (+ README badge)
     python scripts/gamify.py --validate       # compute + validate schema, write nothing
     python scripts/gamify.py --banner         # one honest line for the SessionStart hook
     python scripts/gamify.py --stdout         # print the JSON instead of writing it
+
+Two files, one build. progress.json is the full contract (includes `problems[]`, the
+144 KB heavy part). progress-summary.json is the same payload minus `problems[]`, with a
+COMPACT trophyCase (graduated entries drop their timeline/repDates) — a few KB, cheap
+enough for a dashboard landing to fetch on every page view without mounting per-problem
+components. See summary_of().
 """
 from __future__ import annotations
 
@@ -56,6 +62,7 @@ TRACKER = REPO / "docs/foundations/dsa/mastery/dsa_progress.md"
 COVERAGE = REPO / "docs/foundations/dsa/mastery/technique_coverage.md"
 LEETCODE = REPO / "dsa/leetcode"
 OUT = REPO / "progress.json"
+OUT_SUMMARY = REPO / "progress-summary.json"
 README = REPO / "README.md"
 CONFIG = REPO / "cse.config.yml"
 
@@ -447,6 +454,37 @@ def build_payload(today: dt.date | None = None) -> tuple[dict, list[str]]:
     return stats, warnings
 
 
+def summary_of(payload: dict) -> dict:
+    """Derive the lightweight landing contract from the full payload.
+
+    Same aggregates, NO `problems[]` (the 144 KB heavy part) and a COMPACT `trophyCase`:
+    graduated entries drop to `{lcNumber, title, difficulty}` (no timeline/repDates —
+    the per-problem detail the landing never needs). `retired` entries are already
+    compact in the full payload, so they pass through unchanged.
+    """
+    trophy_case = payload.get("trophyCase") or {}
+    compact_graduated = [
+        {"lcNumber": p["lcNumber"], "title": p["title"], "difficulty": p.get("difficulty")}
+        for p in trophy_case.get("graduated") or []
+    ]
+    summary = {
+        "schemaVersion": payload["schemaVersion"],
+        "generatedAt": payload["generatedAt"],
+        "totals": payload["totals"],
+        "pipeline": payload["pipeline"],
+        "difficulty": payload["difficulty"],
+        "streak": payload["streak"],
+        "coverage": payload["coverage"],
+        "onSchedule": payload["onSchedule"],
+        "badges": payload["badges"],
+        "trophyCase": {"graduated": compact_graduated,
+                       "retired": trophy_case.get("retired") or []},
+    }
+    if "warnings" in payload:
+        summary["warnings"] = payload["warnings"]
+    return summary
+
+
 # ── outputs ─────────────────────────────────────────────────────────────────────────
 
 def render_banner(stats: dict) -> str:
@@ -525,8 +563,10 @@ def main() -> None:
               f"{stats['streak']['current']}-day streak", file=sys.stderr)
     else:
         OUT.write_text(payload + "\n", encoding="utf-8")
+        summary_payload = json.dumps(summary_of(stats), ensure_ascii=False, indent=2)
+        OUT_SUMMARY.write_text(summary_payload + "\n", encoding="utf-8")
         changed = update_readme_badge(badge_line(stats, args.repo))
-        print(f"wrote {OUT.relative_to(REPO)} "
+        print(f"wrote {OUT.relative_to(REPO)} + {OUT_SUMMARY.relative_to(REPO)} "
               f"({stats['totals']['reps']} reps, "
               f"{stats['pipeline']['graduated']}🎓 {stats['pipeline']['retired']}🏆, "
               f"{stats['streak']['current']}-day streak)"
