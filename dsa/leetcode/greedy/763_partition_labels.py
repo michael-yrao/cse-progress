@@ -22,11 +22,46 @@ Constraints:
 """
 # Write everything yourself from here — including any ListNode/TreeNode classes a
 # problem needs. No shared data-model imports (whiteboard fidelity).
+from collections import Counter
 import math
 from typing import List, Optional
 
 
 class Solution:
+
+    # ── Attempt · 2026-09-19 ──────────────
+    def partitionLabels_20260919(self, s: str) -> List[int]:
+        # we need frequency of each char
+        # ababcc splits into abab, cc because a and b finished
+        # so when the frequency of the right node is at 0, we count right - left + 1 into the result
+        # keep track of chars we have in the window that are not done yet
+        # we move left over to right + 1 when this happens as well
+        # so kind of a sliding window
+
+        incompleteSet = set()
+
+        freqMap = Counter(s)
+
+        left = right = 0
+
+        result = []
+
+        while right < len(s):
+            # if element is not in set, add it in
+            incompleteSet.add(s[right])
+            freqMap[s[right]]-=1
+            if freqMap[s[right]] == 0:
+                incompleteSet.remove(s[right])
+            if not incompleteSet:
+                lenPartition = right - left + 1
+                result.append(lenPartition)
+                # set left up to right + 1 since we have now covered this section
+                left = right + 1
+            # if not 0 yet, we just continue
+            right+=1
+        
+        return result
+
     # ── Attempt 1 · 2026-09-09 ────────────────────────────────────────────
     def partitionLabels(self, s: str) -> List[int]:
         # this is asking for maximum amount of partitions

@@ -75,7 +75,7 @@
 | HashMap + Doubly Linked List (LRU) | linked_list | 1 (146) | 🟢 | ✅ | — | thin (1/3) |
 | Linked List Arithmetic | linked_list | 1 (2) | 🟢 | ✅ | — | — |
 | Linked List Merge | linked_list | 1 *+1v* (21) | 🎓 | ✅ | Iterative ×1 · Recursion ×1 | — |
-| Linked List Reversal | linked_list | 1 *+1v* (206) | 🟢 | ✅ | Iterative ×1 · Recursion ×1 | — |
+| Linked List Reversal | linked_list | 1 *+1v* (206) | 🎓 | ✅ | Iterative ×1 · Recursion ×1 | — |
 | Remove Nth From End | linked_list | 1 *+1v* (19) | 🟢 | ✅ | Iterative ×1 · Postorder Recursion ×1 · ~~Preorder Recursion~~ *(queued: `expansion — parked Jul 9`)* | — |
 | Kadane | prefix_sum | 1 (53) | 🟢 | ✅ | — | — |
 | Prefix Sum | prefix_sum | 2 (53, 560) | 🟢 | ✅ | — | thin (2/3) |
@@ -94,15 +94,16 @@
 | Tree DFS with Postorder Return | trees | 2 (124, 543) | 🟢 | ✅ | — | — |
 | Trie | tries | 2 (208, 211) | 🟢 | ✅ | — | thin (2/3) |
 | Dutch National Flag | two_pointers | 1 (75) | 🟢 | ✅ | — | — |
-| Fast/Slow In-Place Write | two_pointers | 4 (26, 27, 80, 283) | 🟢 | ✅ | — | — |
+| Fast/Slow In-Place Write | two_pointers | 4 (26, 27, 80, 283) | 🎓 | ✅ | — | — |
 | Prefix/Suffix Max | two_pointers | 1 (42) | 🟢 | ✅ | Array ×1 · ~~Two Pointer~~ *(queued: `graduates:42`)* | — |
 | Two Pointers (converging) | two_pointers | 8 (11, 15, 88, 125, 167, 344, 680, 1768) | 🎓 | ✅ | — | — |
 
 ## Vocabulary maintenance
 
-**Unmapped tracker rows (4)** — solved but assigned to no technique. Add them to `techniques.yml`, or coverage silently drifts behind the tracker.
+**Unmapped tracker rows (5)** — solved but assigned to no technique. Add them to `techniques.yml`, or coverage silently drifts behind the tracker.
 
 - 1489 Find Critical and Pseudo-Critical Edges in MST (Kruskal)
+- 22 Generate Parentheses
 - 648 Replace Words
 - 743 Network Delay Time (Dijkstra — array-scan)
 - 743 Network Delay Time (Dijkstra — min-heap)

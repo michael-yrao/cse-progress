@@ -36,6 +36,27 @@ class ListNode:
 
 class Solution:
 
+    # ── Attempt · 2026-09-19 ──────────────
+    def mergeTwoListsRecursive_20260919(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
+        # trivial problem if iterative, recursive is a bit more fun
+        # O(n) time and space going through both lists with the space for the recursive stack calls
+        
+        # cover base cases where either is None
+        if not list1 and not list2:
+            return None
+        if not list1:
+            return list2
+        if not list2:
+            return list1
+        
+        # now let's check who is smaller now that neither is None
+        if list1.val < list2.val:
+            list1.next = self.mergeTwoListsRecursive_20260919(list1.next, list2)
+            return list1
+        else:
+            list2.next = self.mergeTwoListsRecursive_20260919(list1, list2.next)
+            return list2
+
     # ── Attempt · 2026-08-08 ──────────────
     def mergeTwoLists_20260808(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
         # doing this iteratively today

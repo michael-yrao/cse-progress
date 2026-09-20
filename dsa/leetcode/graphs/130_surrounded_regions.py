@@ -35,6 +35,67 @@ from typing import List
 
 class Solution:
 
+    # ── Attempt · 2026-09-19 ──────────────
+    def solve_20260919(self, board: List[List[str]]) -> None:
+        # so two kinds of O 
+        # the one that is surrounded that need to turn into X
+        # the one that is not surrounded that stays as O
+        # one important thing here is that O at the edges can never be captured
+        # so that is our key here, any components of O that touch the edge is safe
+        # go through the sides, add the Os to a safeQueue, mark all connected as safe
+        # then go through the grid, any Os now turn into Xs
+        # turn the safe tiles back
+        
+        rows = len(board)
+        cols = len(board[0])
+        
+        safeQueue = collections.deque()
+        
+        for row in range(rows):
+            # look at 0th col and cols - 1 col
+            if board[row][0] == 'O':
+                safeQueue.append((row,0))
+            if board[row][cols - 1] == 'O':
+                safeQueue.append((row, cols - 1))
+        
+        for col in range(cols):
+            # look at 0th row and rows - 1 row
+            if board[0][col] == 'O':
+                safeQueue.append((0,col))
+            if board[rows - 1][col] == 'O':
+                safeQueue.append((rows - 1, col))
+        
+        # now let's mark them all as safe
+        
+        neighbors = [[1,0],[-1,0],[0,1],[0,-1]]
+        
+        while safeQueue:
+            lenQueue = len(safeQueue)
+            for _ in range(lenQueue):
+                cr, cc = safeQueue.popleft()
+                # mark as visited, aka safe
+                board[cr][cc] = 'S'
+                # go through neighbors of this node and if they are O, add to the safeQueue
+                for ir, ic in neighbors:
+                    nr = cr + ir
+                    nc = cc + ic
+                    if nr >= 0 and nr < rows and nc >= 0 and nc < cols and board[nr][nc] == 'O':
+                        safeQueue.append((nr,nc))
+        
+        # now that the safe nodes are marked, go through the grid, mark any Os to Xs
+        
+        for row in range(rows):
+            for col in range(cols):
+                if board[row][col] == 'O':
+                    board[row][col] = 'X'
+        
+        # turn the safe nodes back to O
+        
+        for row in range(rows):
+            for col in range(cols):
+                if board[row][col] == 'S':
+                    board[row][col] = 'O'
+
     # ── Attempt · 2026-08-07 ──────────────
     def solve_20260807(self, board: List[List[str]]) -> None:
         """

@@ -23,6 +23,71 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-09-19 ──────────────
+    def validArrangementOfPairs_20260919(self, pairs: List[List[int]]) -> List[List[int]]:
+        # 11 -> 9 -> 4 -> 5 -> 1
+        # the unique numbers are nodes and we are trying to get all the edges
+        # and then construct the edges in an array form for the result
+        # trick to this problem is we don't know the starting or ending point
+        # looking at the example, this is an Eulerian Path
+        # let nodes leaving have -1 edge
+        # let nodes entering have +1 edge
+        # so a starting node in an Eulerian Path would have degree of -1
+        # all the middle nodes would have a degree of 0
+        # the end node would have a degree of +1
+        # example 2 is an example of an Eulerian Circuit
+        # so we can pick anything as our starting node
+        # we can do hierholzer to get our traversal
+        # the reason we do hierholzer is because we are specifically doing single traversal on all edges
+        
+        # stack based hierholzer, so we need an adjMap
+
+        # adjMap for hierholzer
+        adjMap = collections.defaultdict(list)
+
+        # 1. Find our starting and end nodes
+        
+        # startNode is important, endNode is not important in hierholzer since we calc it
+        startNode = pairs[0][0]
+        
+        degreeMap = collections.defaultdict(int)
+
+        for n1, n2 in pairs:
+            degreeMap[n1]-=1
+            degreeMap[n2]+=1
+            adjMap[n1].append(n2)
+        
+        for node, degree in degreeMap.items():
+            if degree == -1:
+                startNode = node
+
+        # 2. now that we know the start node, perform Hierholzer
+        stack = []
+        stack.append(startNode)
+
+        resultNodes = []
+
+        while stack:
+            currentNode = stack[-1]
+            # if this node has no more neighbors, we know it is at finish line
+            if not adjMap[currentNode]:
+                resultNodes.append(stack.pop())
+            # if it does have neighbors, don't pop, just add neighbor in
+            else:
+                stack.append(adjMap[currentNode].pop())
+        
+        # now that we have all the result nodes, reverse to get the actual order
+        resultNodes.reverse()
+
+        # 3. Construct result
+
+        result = []
+
+        for i in range(1,len(resultNodes)):
+            result.append([resultNodes[i-1], resultNodes[i]])
+        
+        return result
+
     # ── Attempt · 2026-09-07 ──────────────
     def validArrangementOfPairs_20260907(self, pairs: List[List[int]]) -> List[List[int]]:
         # since we just did this two days ago, I still remember the numbers are nodes
