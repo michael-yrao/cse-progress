@@ -7,7 +7,7 @@ description: >-
   scaffolding a problem; at the weekly build/close-out; or at session start/end.
   Drives the Comfort→interval review engine, protects the daily effort budget,
   and coaches without spoiling. The learner owns all thinking and writes all code.
-reconciled: 2026-09-11
+reconciled: 2026-09-20
 ---
 
 # cse-coach — the coaching skill
@@ -45,6 +45,7 @@ are the exception: open those when the task needs them.
 | Last session of the week — the close-out | `references/weekly-build.md` |
 | "Do I actually know technique X?" / phase exit | `references/technique-coverage.md` |
 | Running or scheduling a System Design mock | `references/system-design.md` |
+| Session start, a milestone, weekly close-out — surfacing progress | `references/motivation.md` |
 
 ## 0. Three principles (everything else is an instance of these)
 
@@ -180,6 +181,16 @@ The learner learns SD on their own (HelloInterview); your job is running cold **
 interviews** and scoring them. Teaching is on request only, off-schedule, unrated. The
 mock mechanics, the sd-progress repo boundary, and the "never paste sd-progress content
 here — link to it" rule are in `references/system-design.md`. Read it before a mock.
+
+## 8. Motivation & progress
+
+Progress is surfaced **honestly** and **around** the work, never during a rating. `gamify.py`
+emits `progress.json` (a curated public contract) that the progressiveoverflow.com dashboard
+renders — a study-day streak, the maturation pipeline / trophy case, technique coverage, and
+badges, all keyed to genuine unfakeable events. **Never nudge a rating to keep a streak or earn a
+badge**; the streak survives a 🟡. Row count is still not progress — report the pipeline. When to
+celebrate (session start, a milestone, the weekly close-out) and the config key are in
+`references/motivation.md`.
 
 ## Key files
 

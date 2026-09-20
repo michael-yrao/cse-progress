@@ -89,6 +89,25 @@ which the disposable-rep guidance currently handles with a `discovery_skip` stop
 
 ## 🧪 New instruments — soak here first, revisit after ~4 weeks
 
+### 9. Gamification: the progress.json contract + gamify.py generator ⭐
+
+**Added Sep 20, 2026.** `scripts/gamify.py` reads the records every cse-coach repo already has
+(`dsa_progress.md`, `schedules/*.md`, `technique_coverage.md`) and emits `progress.json`, a
+versioned public **data contract** (`progress.schema.json`) that progressiveoverflow.com renders as
+a dashboard. **The general half is strong:** every adopter has the same records and the same
+"is this learner progressing?" question, and the honest-process framing (reward only unfakeable
+events — graduation/retirement/comeback/streak — never a rating or raw volume) is not
+learner-specific. The schema is what makes the site viewer *generic*, so shipping it upstream is
+what lets any adopter's repo render.
+**The specific half to watch:** the per-problem timeline reconstruction depends on this repo's
+schedule format (the `Start`/`End` comfort columns and the `▸ **Wkd Mon D**` day header). Canonical
+would need those conventions declared, or the parser made tolerant of their absence (it already
+degrades to activity dots when a rep has no schedule row).
+**Evidence needed before upstreaming (~4wk):** does the dashboard actually get opened and does it
+change behaviour, or is it a build-once novelty? Does the streak's rest-day allowance feel right, or
+does it either break too easily or never break? Re-assess ~Oct 18, 2026. See [[project_gamification]].
+
+
 ### 6. Recognition probes
 One unseen problem/week, label stripped, disposable (no tracker row on 🟢). **The general trigger is
 already worked out and it is not learner-specific:** recognition reps **ride free on new intake**, and

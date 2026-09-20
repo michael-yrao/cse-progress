@@ -611,3 +611,28 @@ decisions:
       hook-enforced, and the normative sentence moved to SKILL.md §1 (Register). No cse.config.yml value
       changed. See SKILL.md §1, feedback_explanation_register.md, self_eval_log 2026-09-19.
     affects: [explanation_register, hooks]
+
+  - id: gamification-progress-platform
+    date: 2026-09-20
+    summary: >-
+      ADDS a gamification layer, surfaced as an honest-progress dashboard on
+      progressiveoverflow.com. New source-tier tool scripts/gamify.py reads the records that
+      already exist (dsa_progress.md, the weekly schedules, technique_coverage.md) and emits
+      progress.json — a versioned, curated, public DATA CONTRACT (progress.schema.json) that the
+      site renders; it carries aggregate stats, the maturation pipeline, the trophy case,
+      technique coverage, an SR-honest study-day streak, per-problem comfort timelines, and
+      derived badges, but NEVER solution code or stuck-log prose. Wired into .githooks/pre-commit
+      (regenerate on a rep) and surfaced at session start by session_start_memory.py. The design
+      invariant is HONEST PROCESS ONLY: every reward keys off a genuine, unfakeable event (a
+      graduation = 3 cold cleans across spaced intervals, a retirement, a comeback, a study-day
+      streak) — nothing rewards raw volume or a self-reported rating, so nothing pressures a
+      dishonest 🟢. The streak is SR-honest (practice-when-due + a rest-day allowance) so it never
+      pushes daily over-review against the effort budget. New tuned thresholds live ONLY in
+      cse.config.yml `gamification:` (neutral keys — no blank/shaky/clean/graduated substrings,
+      per the Aug 7 glyph-scrape incident); the badge catalog is content in gamify.py. Coaching
+      behaviour (when/how to surface progress honestly) is references/motivation.md (L2). Strands
+      any wording that says the repo has no progress/celebration surface, or that "row count is
+      never reported" without the nuance that the PIPELINE/trophy case (not row count) is the
+      progress signal. Soaks before any PR to canonical cse-coach. See CLAUDE.md, SKILL.md §8,
+      references/motivation.md, project_gamification.md.
+    affects: [gamification, hooks, single_source, upstream]

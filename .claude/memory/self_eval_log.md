@@ -5,6 +5,16 @@
 
 Append-only log of corrections. Governed by [[feedback_self_evaluation]]. Newest at top. Meta-review promotes recurring root causes into rules; entries are never deleted, only re-statused.
 
+- **2026-09-20 [P2]** fam:read-before-asserting — Told the learner "cse-progress looks **private**" and built a
+  plan branch around a private-source data pipeline, inferring privacy from a *failed* `gh repo view
+  michael-yrao/cse-progress` (which failed for auth/other reasons, not visibility). The repo is PUBLIC; the
+  learner corrected it. This is [[feedback_read_before_asserting]] — a command's *failure* answers "the call
+  errored", not "the repo is private", exactly as grep answers "exists" not "what is the state". Cost: a wrong
+  premise (curate-a-public-subset-from-a-private-repo) that would have added needless cross-repo token
+  plumbing. Fix applied same turn: re-planned on the public-repo model (runtime raw fetch, no token). Cheap
+  guard for next time: confirm visibility with `gh repo view --json visibility` (and treat a non-zero exit as
+  UNKNOWN, never as a value) before asserting a repo's state to the learner.
+
 ## 🔬 META-REVIEW 2026-09-19 — the review pipeline itself got instrumented (digest + archive), plus 2 promotions
 
 Triggered by the OVERDUE banner (~14 open since the 2026-09-10 review). Run LITM-safe: clustered from

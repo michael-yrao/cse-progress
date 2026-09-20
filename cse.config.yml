@@ -231,3 +231,23 @@ discovery_skip: [76, 1216, 974, 18, 472, 399]   # 76 Minimum Window Substring �
 self_eval:
   meta_review_days: 14
   open_threshold: 8
+
+# Gamification thresholds — read by scripts/gamify.py, which emits progress.json (the
+# honest-progress data contract the progressiveoverflow.com dashboard renders). Only
+# TUNED NUMBERS live here; the badge catalog (names/icons/descriptions) is content and
+# lives in gamify.py. Decision: `gamification-progress-platform` (decisions.yml).
+#
+# ⚠️ KEYS ARE DELIBERATELY NEUTRAL. None contains the substrings blank/shaky/clean/
+# graduated — those are exactly what update_review_dates.py's fallback config scrape
+# searches for, and on Aug 7, 2026 a word-keyed block was read as INTERVALS and silently
+# corrupted three review dates (see the glyph warning on `effort_budget` above). Keep
+# everything nested under `gamification:` with names that cannot collide.
+gamification:
+  # A study-day streak rewards SHOWING UP, not grinding. `rest_day_allowance` is how many
+  # days may be missed between two study-days without breaking the run — the streak-freeze
+  # idea, sized so the streak never pushes daily over-review against the effort budget
+  # (whose own rule is "never raise the ceiling to catch up").
+  streak_rest_day_allowance: 1
+  streak_milestones: [7, 30, 100]        # 🔥 badge thresholds (study-days)
+  trophy_milestones: [1, 10, 25, 50]     # 💎 badge thresholds (🎓 graduated + 🏆 retired)
+  on_schedule_target: 0.9                # fraction of active rows expected not-overdue

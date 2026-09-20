@@ -1,0 +1,541 @@
+"""Emit an honest-progress data contract (progress.json) for the practice log.
+
+This is the source-tier half of the gamification feature: it reads the records
+that already exist — the DSA tracker, the weekly schedules, the technique-coverage
+view — and emits ONE machine-readable file that a viewer (progressiveoverflow.com)
+renders as a dashboard. Per the intervention ladder, a tool that emits the value
+outranks a rule that asks someone to compute it.
+
+    dsa_progress.md  +  schedules/*.md  +  technique_coverage.md  ->  progress.json
+
+Design constraints this file honours (see docs/ARCHITECTURE.md and CLAUDE.md):
+
+  * HONEST PROCESS ONLY. Every number here is earnable only by genuine learning —
+    showing up (streak), problems maturing up the ladder (pipeline / trophy case),
+    technique breadth (coverage). Nothing rewards raw volume or a self-reported
+    rating, so nothing here creates pressure to inflate a comfort call.
+
+  * SINGLE SOURCE OF TRUTH. Tuned thresholds are read from cse.config.yml's
+    `gamification:` block; a DEFAULT_CONFIG fallback exists only for a pre-config
+    run and ANNOUNCES itself when it fires. The badge CATALOG (names / icons /
+    descriptions) is content, not a tuned number, so it lives here.
+
+  * CURATED / NON-SENSITIVE. progress.json carries aggregate stats, per-problem
+    status and a comfort timeline, and links — never solution code, never
+    stuck-log prose. The source repo can be public without exposing struggle notes.
+
+  * FAIL-SOFT. A parse gap degrades to partial output with a visible note; it never
+    raises out of the hook. Windows cp1252 consoles get force_utf8() like every
+    other script here.
+
+Usage:
+    python scripts/gamify.py                 # write progress.json (+ README badge)
+    python scripts/gamify.py --validate       # compute + validate schema, write nothing
+    python scripts/gamify.py --banner         # one honest line for the SessionStart hook
+    python scripts/gamify.py --stdout         # print the JSON instead of writing it
+"""
+from __future__ import annotations
+
+import argparse
+import datetime as dt
+import json
+import re
+import sys
+from pathlib import Path
+
+import _console
+
+# effort_budget already solves tracker parsing and schedule discovery; reuse it rather
+# than re-deriving the same regexes (DRY, and it keeps the two in lockstep).
+import effort_budget as eb
+
+_console.force_utf8()
+
+REPO = Path(__file__).resolve().parent.parent
+TRACKER = REPO / "docs/foundations/dsa/mastery/dsa_progress.md"
+COVERAGE = REPO / "docs/foundations/dsa/mastery/technique_coverage.md"
+LEETCODE = REPO / "dsa/leetcode"
+OUT = REPO / "progress.json"
+README = REPO / "README.md"
+CONFIG = REPO / "cse.config.yml"
+
+SCHEMA_VERSION = 1
+SITE = "https://progressiveoverflow.com"
+
+# The comfort ladder as an ordinal, so a timeline can be plotted as a step chart.
+# Keyed by glyph, never by the words blank/shaky/clean/graduated (the config scrape
+# hazard — see cse.config.yml). 🏆 Retired is terminal, above 🎓.
+LEVEL = {"🔴": 0, "🟡": 1, "🟢": 2, "🎓": 3, "🏆": 4}
+
+# Announced fallback — used only when cse.config.yml has no `gamification:` block or
+# PyYAML is unavailable. Neutral key names on purpose: none contains the substrings
+# blank/shaky/clean/graduated, which a word-keyed config scrape searches for.
+DEFAULT_CONFIG = {
+    "streak_rest_day_allowance": 1,   # missed days tolerated before a streak breaks
+    "streak_milestones": [7, 30, 100],
+    "trophy_milestones": [1, 10, 25, 50],   # 🎓 + 🏆 combined
+    "on_schedule_target": 0.9,        # fraction of active rows not overdue
+}
+
+
+# ── config ────────────────────────────────────────────────────────────────────────
+
+def load_config() -> tuple[dict, bool]:
+    """Return (gamification config, used_fallback). Tolerant like effort_budget's."""
+    try:
+        import yaml  # noqa: PLC0415
+        loaded = yaml.safe_load(CONFIG.read_text(encoding="utf-8")) or {}
+        cfg = loaded.get("gamification")
+        if not cfg:
+            return dict(DEFAULT_CONFIG), True
+        merged = {**DEFAULT_CONFIG, **cfg}
+        return merged, False
+    except Exception:  # noqa: BLE001 — a missing config is a normal state, not an error
+        return dict(DEFAULT_CONFIG), True
+
+
+# ── retired list + category map (data the tracker table alone does not carry) ───────
+
+RETIRED_ENTRY = re.compile(r"^\s*-\s*(\d+)\.\s*(.+?)\s*(?:—|--)\s*retired\s*(\d{4}-\d{2}-\d{2})",
+                           re.MULTILINE)
+
+
+def parse_retired() -> list[dict]:
+    """The `## 🏆 Retired` plain-bullet list at the tail of the tracker.
+
+    Retired rows leave the 7-column table, so parse_rows() never sees them; they are
+    the terminal trophy tier and belong in the trophy case. `_None yet._` -> [].
+    """
+    try:
+        text = TRACKER.read_text(encoding="utf-8")
+    except OSError:
+        return []
+    m = re.search(r"##\s*🏆\s*Retired(.*)$", text, re.S)
+    if not m:
+        return []
+    return [{"lcNumber": int(n), "title": t.strip(), "retiredOn": d}
+            for n, t, d in RETIRED_ENTRY.findall(m.group(1))]
+
+
+PROBLEM_URL = re.compile(r"\[(\d+)\.[^\]]*\]\((https?://[^)]+)\)")
+
+
+def problem_urls() -> dict[int, str]:
+    """LeetCode number -> its canonical URL, from the tracker's markdown links.
+
+    parse_rows() drops the URL; the dashboard wants it to deep-link each problem, so
+    read it here rather than guessing a slug from the (method-suffixed) title.
+    """
+    try:
+        text = TRACKER.read_text(encoding="utf-8")
+    except OSError:
+        return {}
+    return {int(n): url for n, url in PROBLEM_URL.findall(text)}
+
+
+def category_map() -> dict[int, str]:
+    """LeetCode number -> technique folder, scanned from the solution tree.
+
+    The folder name is the technique (the site's algorithm categories mirror these
+    exactly), so this is how a problem gets grouped and deep-linked to its visualizer.
+    """
+    out: dict[int, str] = {}
+    if not LEETCODE.is_dir():
+        return out
+    for path in LEETCODE.rglob("*.py"):
+        m = re.match(r"(\d+)_", path.name)
+        if m:
+            out.setdefault(int(m.group(1)), path.parent.name)
+    return out
+
+
+# ── schedule index: date -> {problem number -> comfort glyph earned that rep} ───────
+
+def build_schedule_index() -> dict[str, dict[int, str]]:
+    """Reconstruct the comfort EARNED per rep, per problem, from the weekly schedules.
+
+    The tracker stores only a problem's CURRENT comfort; the per-rep history lives in
+    the schedules' End column (`🟢 s1 → 🎓`). Scan every week (live + archive), resolve
+    each daily block's real date from the filename stamp, and record the End glyph
+    (falling back to Start) for each problem number. A rep date with no schedule (the
+    pre-archive era) simply gets no entry — the timeline degrades to an activity dot,
+    it is never fabricated.
+    """
+    index: dict[str, dict[int, str]] = {}
+    for folder in (eb.SCHEDULES, eb.SCHEDULES / "archive"):
+        if not folder.is_dir():
+            continue
+        for path in sorted(folder.glob("*_schedule.md")):
+            stamp = path.name.split("_")[0]
+            if len(stamp) != 8 or not stamp.isdigit():
+                continue
+            try:
+                week_start = dt.date(int(stamp[:4]), int(stamp[4:6]), int(stamp[6:]))
+            except ValueError:
+                continue
+            _scan_week(path, week_start, index)
+    return index
+
+
+def _weekday_lookup(week_start: dt.date) -> dict[tuple[str, str, int], str]:
+    return {(d.strftime("%a"), d.strftime("%b"), d.day): d.isoformat()
+            for d in (week_start + dt.timedelta(days=o) for o in range(7))}
+
+
+def _scan_week(path: Path, week_start: dt.date, index: dict[str, dict[int, str]]) -> None:
+    lookup = _weekday_lookup(week_start)
+    current: str | None = None
+    for line in path.read_text(encoding="utf-8").splitlines():
+        header = eb.DAY_HEADER.search(line)
+        if header:
+            current = lookup.get((header["wd"], header["mon"], int(header["day"])))
+            continue
+        if current is None:
+            continue
+        row = eb.SCHED_ROW.match(line)
+        if not row:
+            continue
+        num = eb.SCHED_NUM.search(row["c1"] or "")
+        if not num:
+            continue
+        end = eb.GLYPH.search(row["c3"] or "")
+        start = eb.GLYPH.search(row["c2"] or "")
+        glyph = (end or start).group(0) if (end or start) else None
+        if glyph:
+            index.setdefault(current, {})[int(num.group(1))] = glyph
+
+
+# ── streak (SR-honest: showing up when due, with a rest-day allowance) ──────────────
+
+def study_days(rows: list[dict]) -> list[dt.date]:
+    seen: set[dt.date] = set()
+    for r in rows:
+        for d in eb._DATE.findall(r.get("reps") or ""):
+            try:
+                seen.add(dt.date.fromisoformat(d))
+            except ValueError:
+                continue
+    return sorted(seen)
+
+
+def compute_streak(days: list[dt.date], allowance: int, today: dt.date) -> dict:
+    """Current + longest study-day streak.
+
+    A streak counts DISTINCT days practiced; consecutive study days belong to the same
+    run when at most `allowance` days were missed between them (the Duolingo streak-freeze
+    idea — but chosen so it never pushes daily grinding against the effort budget, whose
+    own rule is 'never raise the ceiling to catch up'). The current streak is live only
+    if the last study day is itself within the allowance window of today.
+    """
+    if not days:
+        return {"current": 0, "longest": 0, "lastStudyDay": None,
+                "studyDays": 0, "restDayAllowance": allowance}
+    gap = allowance + 1
+    longest = run = 1
+    for prev, cur in zip(days, days[1:]):
+        run = run + 1 if (cur - prev).days <= gap else 1
+        longest = max(longest, run)
+    current = run if (today - days[-1]).days <= gap else 0
+    return {"current": current, "longest": longest,
+            "lastStudyDay": days[-1].isoformat(), "studyDays": len(days),
+            "restDayAllowance": allowance}
+
+
+# ── coverage header ─────────────────────────────────────────────────────────────────
+
+COVERAGE_LINE = re.compile(
+    r"\*\*(\d+)/(\d+)\*\*\s*techniques started.*?\*\*(\d+)\*\*\s*with no.*?"
+    r"\*\*(\d+)\*\*\s*thin.*?\*\*(\d+)\*\*\s*unqueued variant", re.S)
+
+
+def parse_coverage() -> dict | None:
+    try:
+        m = COVERAGE_LINE.search(COVERAGE.read_text(encoding="utf-8"))
+    except OSError:
+        return None
+    if not m:
+        return None
+    started, total, no_green, thin, variant = (int(g) for g in m.groups())
+    return {"total": total, "started": started, "noGreen": no_green,
+            "thin": thin, "variantGaps": variant}
+
+
+# ── the build ───────────────────────────────────────────────────────────────────────
+
+def build_problems(rows: list[dict], sched: dict[str, dict[int, str]],
+                   cats: dict[int, str], urls: dict[int, str]) -> list[dict]:
+    # The schedule index is keyed by problem NUMBER, but a number can carry several rows
+    # (different methods — 21 Recursion vs Iterative, 323 with three variants). The index
+    # cannot say which variant a rep belonged to, so attaching its glyph to every row would
+    # FABRICATE a timeline — the exact thing the docstring promises never to do. For a
+    # multi-row number we degrade the reconstructed comfort to activity dots (null); only
+    # the final point is anchored to each row's own authoritative current comfort.
+    multi = {n for n, c in _count_nums(rows).items() if c > 1}
+    problems = []
+    for r in rows:
+        num = int(r["num"])
+        rep_dates = eb._DATE.findall(r.get("reps") or "")
+        timeline = []
+        for d in rep_dates:
+            glyph = None if num in multi else sched.get(d, {}).get(num)
+            timeline.append({"date": d, "comfort": glyph,
+                             "level": LEVEL.get(glyph) if glyph else None})
+        # The final point is anchored to the tracker's authoritative current comfort,
+        # even when that rep's schedule row could not be read.
+        if timeline and timeline[-1]["comfort"] is None:
+            timeline[-1] = {"date": timeline[-1]["date"], "comfort": r["comfort"],
+                            "level": LEVEL.get(r["comfort"])}
+        problems.append({
+            "lcNumber": num,
+            "title": r["title"].strip(),
+            "url": urls.get(num),
+            "difficulty": r["diff"],
+            "category": cats.get(num),
+            "comfort": r["comfort"],
+            "level": LEVEL.get(r["comfort"]),
+            "streak": r["streak"],
+            "nextReview": r["due"],
+            "repDates": rep_dates,
+            "timeline": timeline,
+        })
+    return problems
+
+
+def _count_nums(rows: list[dict]) -> dict[int, int]:
+    counts: dict[int, int] = {}
+    for r in rows:
+        counts[int(r["num"])] = counts.get(int(r["num"]), 0) + 1
+    return counts
+
+
+def pipeline(rows: list[dict], retired: list[dict]) -> dict:
+    by = {"🔴": 0, "🟡": 0, "🟢": 0, "🎓": 0}
+    green = {"s0": 0, "s1": 0, "s2plus": 0}
+    for r in rows:
+        by[r["comfort"]] = by.get(r["comfort"], 0) + 1
+        if r["comfort"] == "🟢":
+            key = "s0" if r["streak"] == 0 else "s1" if r["streak"] == 1 else "s2plus"
+            green[key] += 1
+    return {"blank": by["🔴"], "shaky": by["🟡"],
+            "clean": {**green, "total": by["🟢"]},
+            "graduated": by["🎓"], "retired": len(retired)}
+
+
+def difficulty_mix(rows: list[dict]) -> dict:
+    mix = {"Easy": 0, "Medium": 0, "Hard": 0}
+    for r in rows:
+        mix[r["diff"]] = mix.get(r["diff"], 0) + 1
+    return mix
+
+
+def on_schedule(rows: list[dict], today: dt.date) -> dict:
+    overdue = due = 0
+    for r in rows:
+        try:
+            nxt = dt.date.fromisoformat(r["due"])
+        except ValueError:
+            continue
+        if nxt < today:
+            overdue += 1
+        elif nxt == today:
+            due += 1
+    return {"totalActive": len(rows), "dueToday": due, "overdue": overdue}
+
+
+def _had_turnaround(problems: list[dict]) -> bool:
+    """Any problem whose timeline went 🔴 ... then later 🟢/🎓 — an earned comeback."""
+    for p in problems:
+        seen_blank = False
+        for pt in p["timeline"]:
+            if pt["comfort"] == "🔴":
+                seen_blank = True
+            elif seen_blank and pt["comfort"] in ("🟢", "🎓"):
+                return True
+    return False
+
+
+def compute_badges(stats: dict, problems: list[dict], cfg: dict) -> list[dict]:
+    """The badge CATALOG. Every trigger keys off a genuine, unfakeable event —
+    a graduation (3 cold cleans across spaced intervals), a retirement, a comeback,
+    a study-day streak — never a raw count of easy greens and never a rating."""
+    pl = stats["pipeline"]
+    trophies = pl["graduated"] + pl["retired"]
+    hard_clean = any(p["difficulty"] == "Hard" and p["comfort"] in ("🟢", "🎓")
+                     for p in problems)
+    cov = stats.get("coverage") or {}
+
+    badges: list[dict] = []
+
+    def add(bid: str, title: str, icon: str, desc: str, earned: bool) -> None:
+        badges.append({"id": bid, "title": title, "icon": icon,
+                       "description": desc, "earned": bool(earned)})
+
+    add("first-clean", "First Cold Solve", "🟢",
+        "Solve one problem clean from a blank page.",
+        pl["clean"]["total"] + pl["graduated"] > 0)
+    add("first-hard-clean", "Hard Mode", "⛰️",
+        "Solve a Hard problem clean, cold.", hard_clean)
+    add("first-graduate", "First Graduation", "🎓",
+        "Graduate a problem — three cold cleans across spaced reviews.",
+        pl["graduated"] >= 1)
+    add("first-retire", "Retired It", "🏆",
+        "Retire a problem — it cleared its spot checks and left rotation for good.",
+        pl["retired"] >= 1)
+    add("comeback", "Comeback", "🔁",
+        "Turn a Blank into a Clean on the same problem.", _had_turnaround(problems))
+    add("all-green", "Full Spectrum", "🌈",
+        "Have at least one clean solve in every technique you have started.",
+        bool(cov) and cov.get("noGreen") == 0 and cov.get("started", 0) > 0)
+
+    for m in sorted(cfg.get("streak_milestones") or []):
+        add(f"streak-{m}", f"{m}-Day Streak", "🔥",
+            f"Practice on {m} study-days without letting the streak lapse.",
+            stats["streak"]["longest"] >= m)
+    for m in sorted(cfg.get("trophy_milestones") or []):
+        add(f"trophies-{m}", f"{m} Mastered", "💎",
+            f"Reach {m} problems graduated or retired.", trophies >= m)
+
+    return badges
+
+
+def build_payload(today: dt.date | None = None) -> tuple[dict, list[str]]:
+    """Return (payload, warnings). Never raises for a missing/partial input."""
+    today = today or dt.date.today()
+    warnings: list[str] = []
+    cfg, fell_back = load_config()
+    if fell_back:
+        warnings.append("cse.config.yml had no `gamification:` block (or PyYAML is "
+                        "missing) — used DEFAULT_CONFIG thresholds.")
+
+    try:
+        rows = eb.parse_rows()
+    except OSError as exc:
+        warnings.append(f"could not read the tracker ({exc}); emitting an empty payload.")
+        rows = []
+
+    retired = parse_retired()
+    cats = category_map()
+    urls = problem_urls()
+    sched = build_schedule_index()
+    coverage = parse_coverage()
+    if coverage is None:
+        warnings.append("technique_coverage.md not readable — coverage omitted.")
+
+    problems = build_problems(rows, sched, cats, urls)
+    days = study_days(rows)
+
+    stats = {
+        "schemaVersion": SCHEMA_VERSION,
+        "generatedAt": today.isoformat(),
+        "totals": {
+            "problems": len({p["lcNumber"] for p in problems}),
+            "solutions": len(problems),
+            "reps": sum(len(p["repDates"]) for p in problems),
+        },
+        "pipeline": pipeline(rows, retired),
+        "difficulty": difficulty_mix(rows),
+        "streak": compute_streak(days, int(cfg["streak_rest_day_allowance"]), today),
+        "coverage": coverage,
+        "onSchedule": on_schedule(rows, today),
+        "trophyCase": {"graduated": [p for p in problems if p["comfort"] == "🎓"],
+                       "retired": retired},
+    }
+    stats["badges"] = compute_badges(stats, problems, cfg)
+    stats["problems"] = problems
+    if warnings:
+        stats["warnings"] = warnings
+    return stats, warnings
+
+
+# ── outputs ─────────────────────────────────────────────────────────────────────────
+
+def render_banner(stats: dict) -> str:
+    s = stats["streak"]
+    pl = stats["pipeline"]
+    trophies = pl["graduated"] + pl["retired"]
+    flame = f"🔥 {s['current']}-day streak" if s["current"] else "no active streak"
+    return f"{flame} · {trophies} mastered (🎓{pl['graduated']} 🏆{pl['retired']}) · " \
+           f"{stats['totals']['reps']} reps — dashboard: {SITE}/progress"
+
+
+def badge_line(stats: dict, owner_repo: str | None) -> str:
+    s = stats["streak"]
+    pl = stats["pipeline"]
+    cov = stats.get("coverage") or {}
+    parts = [f"🔥 {s['current']}-day streak",
+             f"🎓 {pl['graduated']} graduated",
+             f"🏆 {pl['retired']} retired"]
+    if cov:
+        parts.append(f"{cov['started']}/{cov['total']} techniques")
+    href = f"{SITE}/progress"
+    if owner_repo:
+        href += f"?repo={owner_repo}"
+    return f"[![progress]({href}) {' · '.join(parts)}]({href})"
+
+
+def update_readme_badge(line: str) -> bool:
+    """Insert/replace the progress badge between marker comments in README.md.
+
+    Returns True if README changed. No markers and no README -> no-op (never
+    invents a README or clobbers content).
+    """
+    start, end = "<!-- progress-badge:start -->", "<!-- progress-badge:end -->"
+    block = f"{start}\n{line}\n{end}"
+    try:
+        text = README.read_text(encoding="utf-8")
+    except OSError:
+        return False
+    if start in text and end in text:
+        new = re.sub(re.escape(start) + r".*?" + re.escape(end), block, text, flags=re.S)
+    else:
+        return False  # markers absent — leave README alone; opt-in by adding markers
+    if new != text:
+        README.write_text(new, encoding="utf-8")
+        return True
+    return False
+
+
+def main() -> None:
+    ap = argparse.ArgumentParser(description=__doc__,
+                                 formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--banner", action="store_true",
+                    help="print one honest line for the SessionStart hook, then exit")
+    ap.add_argument("--validate", action="store_true",
+                    help="compute + report; write nothing (for tests / CI)")
+    ap.add_argument("--stdout", action="store_true", help="print the JSON, do not write")
+    ap.add_argument("--repo", metavar="OWNER/NAME",
+                    help="owner/name for the badge deep-link (default: none)")
+    ap.add_argument("--today", metavar="YYYY-MM-DD", help="override today's date")
+    args = ap.parse_args()
+
+    today = dt.date.fromisoformat(args.today) if args.today else dt.date.today()
+    stats, warnings = build_payload(today)
+
+    if args.banner:
+        print(render_banner(stats))
+        return
+
+    payload = json.dumps(stats, ensure_ascii=False, indent=2)
+
+    if args.stdout:
+        print(payload)
+    elif args.validate:
+        print(f"valid: {stats['totals']['reps']} reps · "
+              f"{len(stats['problems'])} problems · {len(stats['badges'])} badges · "
+              f"{stats['streak']['current']}-day streak", file=sys.stderr)
+    else:
+        OUT.write_text(payload + "\n", encoding="utf-8")
+        changed = update_readme_badge(badge_line(stats, args.repo))
+        print(f"wrote {OUT.relative_to(REPO)} "
+              f"({stats['totals']['reps']} reps, "
+              f"{stats['pipeline']['graduated']}🎓 {stats['pipeline']['retired']}🏆, "
+              f"{stats['streak']['current']}-day streak)"
+              + (" · README badge updated" if changed else ""))
+
+    # Warnings go to stderr so --stdout / --validate keep a clean JSON stdout.
+    for w in warnings:
+        print(f"  !! {w}", file=sys.stderr)
+
+
+if __name__ == "__main__":
+    main()
