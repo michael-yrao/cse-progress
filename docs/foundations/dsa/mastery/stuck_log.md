@@ -22,6 +22,31 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🔴 22. Generate Parentheses — 2026-09-19
+**Topic**: Backtracking (phase-opening rep, no primer — full approach coach-supplied, hence 🔴)
+### Where did I get stuck?
+The abstract backtracking template didn't land from words alone; two "I don't understand" signals, then an explicit ask for the pseudocode. Once the annotated pseudocode was shown, translation to working code was clean and the concepts were articulated back correctly. So the gap was **first-exposure recall**, not reasoning.
+### Core Realization (the reusable template — this is what to recall cold in 2 days)
+The five questions to instantiate for ANY backtracking problem:
+1. **State / path** — path = the candidate being built; state = the bookkeeping the legality/base-case checks depend on (for 22: `open`/`close` counts). Test for "is this state?": *what would I have to look at to know my legal moves here?*
+2. **Base case** — completion of the candidate, NOT "ran out of structure." Traversal recursion (tree/list DFS) stops on `node is None`; **construction recursion (backtracking) stops when the candidate is complete** (22: `len(path) == 2n`). Ask "what does a finished candidate look like?"
+3. **Choices** — the candidate next moves (22: place `(` or `)`).
+4. **Prune** — which choices are legal (22: `open < n`; `close < open`). Pruning upstream is why the base case only needs a length check — the string is guaranteed well-formed the whole way down.
+5. **Explore/undo** — apply → recurse → undo. With an **immutable** path (string `path + '('`) the undo is automatic; with a **mutable** path (list) you need explicit `append`/`pop`.
+### Code Snippet (the shape)
+```
+if len(path) == 2*n: result.append(path); return
+if open < n:      backtrack(path+'(', open+1, close)
+if close < open:  backtrack(path+')', open, close+1)
+```
+### Complexity (worked through same session, understood)
+- **Time O(4^n / n^1.5) ≈ O(4^n)** — exponential. Reasoning chain the learner built: 2n positions × 2 choices = 2^(2n) = 4^n leaves *unpruned*; pruning restricts to only valid strings, and the count of valid n-pair paren strings **is** the Catalan number C(n) = (2n)!/((n+1)!·n!) ~ 4^n/n^1.5. Key correction that landed: pruning shaves a **polynomial** factor off an exponential — it does NOT cross into polynomial; still exponential.
+- **Space O(n) auxiliary** — the durable insight: **time = node count (exponential), space = tree depth (O(n))**, because DFS keeps only one root-to-leaf branch on the stack at a time (each `return` frees its frame before the next branch). Output excluded; counting it is O(n·4^n/n^1.5).
+- Durable one-liner: *"backtracking time is the node count; backtracking space is the tree depth."*
+
+## 🟡 763. Partition Labels — 2026-09-19
+**Sticking point**: closed a partition on a **single char's** count hitting 0 (`freqMap[s[right]] == 0`), which cuts too early when an earlier char in the window reappears downstream (traced on `"abac"` — cut `"ab"`, but `'a'` returns). Symptom self-diagnosed in the comment ("what if it is a sequence in between"); the fix — a partition closes only when **every open char in the window** is exhausted, tracked with a set (add on entry, drop when count hits 0, cut when empty) — was coach-supplied. Durable handle: "the boundary is a property of the whole window, not the current char." Alt framing (rejected for interview-instinct reasons): greedy last-index `end = max(end, last[c])`, cut at `i == end`.
+
 ## 🟡 34. Find First and Last Position of Element in Sorted Array — 2026-09-16
 **Sticking point**: the two-boundary *structure* was clean and cold (two searches, correct round-down/`r=m` + round-up/`l=m` pairing) — but the **comparison direction was inverted in both loops** (the predicate that *defines* each boundary), needing a failing trace to surface. Self-repaired well via the learner's own reframe — "ask when it is NOT the answer / when can I discard this half" — which is a durable handle for picking predicate direction. Coach-caught, not self-caught → stays 🟡.
 

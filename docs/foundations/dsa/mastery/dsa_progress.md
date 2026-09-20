@@ -66,14 +66,22 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/dsa/mastery/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **120+6** problems &nbsp;·&nbsp; **131+6** solutions &nbsp;·&nbsp; **576+6** reps
+> **121+6** problems &nbsp;·&nbsp; **132+6** solutions &nbsp;·&nbsp; **584+6** reps
 
 | | 🏆 Retired | 🎓 Graduated | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|:---:|
-| **Solutions** | 0 | 15 | 101 | 14 | 1 |
+| **Solutions** | 0 | 19 | 97 | 14 | 2 |
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Rep Date | Rep Dates |
 |---|---|---|---|---|---|---|
+| Medium | [763. Partition Labels](https://leetcode.com/problems/partition-labels/) | 🟡 | 0 | 2026-09-29 | 2026-09-19 | 2026-09-09, 2026-09-19 |
+| Hard | [2097. Valid Arrangement of Pairs](https://leetcode.com/problems/valid-arrangement-of-pairs/) | 🟢 | 1 | 2026-10-19 | 2026-09-19 | 2026-09-05, 2026-09-07, 2026-09-19 |
+| Easy | [496. Next Greater Element I](https://leetcode.com/problems/next-greater-element-i/) | 🟢 | 2 | 2026-11-18 | 2026-09-19 | 2026-07-04, 2026-07-06, 2026-08-06, 2026-08-16, 2026-09-19 |
+| Easy | [206. Reverse Linked List (Iterative)](https://leetcode.com/problems/reverse-linked-list/) | 🎓 | 3 | 2027-03-18 | 2026-09-19 | 2026-04-23, 2026-05-26, 2026-06-12, 2026-06-20, 2026-07-20, 2026-09-19 |
+| Easy | [21. Merge Two Sorted Lists (Recursion)](https://leetcode.com/problems/merge-two-sorted-lists/) | 🎓 | 3 | 2027-03-18 | 2026-09-19 | 2026-05-20, 2026-05-21, 2026-06-12, 2026-06-20, 2026-07-20, 2026-09-19 |
+| Medium | [130. Surrounded Regions (BFS)](https://leetcode.com/problems/surrounded-regions/) | 🎓 | 3 | 2027-03-18 | 2026-09-19 | 2026-06-14, 2026-06-20, 2026-07-20, 2026-09-19 |
+| Easy | [283. Move Zeroes](https://leetcode.com/problems/move-zeroes/) | 🎓 | 3 | 2027-03-18 | 2026-09-19 | 2026-01-10, 2026-04-02, 2026-06-02, 2026-06-12, 2026-07-19, 2026-09-19 |
+| Medium | [22. Generate Parentheses](https://leetcode.com/problems/generate-parentheses/) | 🔴 | 0 | 2026-09-21 | 2026-09-19 | 2026-09-19 |
 | Medium | [45. Jump Game II](https://leetcode.com/problems/jump-game-ii/) | 🟡 | 0 | 2026-09-28 | 2026-09-18 | 2026-09-08, 2026-09-18 |
 | Hard | [84. Largest Rectangle in Histogram](https://leetcode.com/problems/largest-rectangle-in-histogram/) | 🔴 | 0 | 2026-09-20 | 2026-09-18 | 2026-09-04, 2026-09-18 |
 | Medium | [721. Accounts Merge (Union-Find)](https://leetcode.com/problems/accounts-merge/) | 🟡 | 0 | 2026-09-27 | 2026-09-17 | 2026-07-30, 2026-08-09, 2026-09-08, 2026-09-17 |
@@ -105,9 +113,7 @@ Notes for future agents:
 | Medium | [846. Hand of Straights](https://leetcode.com/problems/hand-of-straights/) | 🟡 | 0 | 2026-09-21 | 2026-09-11 | 2026-09-11 |
 | Medium | [134. Gas Station](https://leetcode.com/problems/gas-station/) | 🟡 | 0 | 2026-09-21 | 2026-09-11 | 2026-09-09, 2026-09-11 |
 | Hard | [332. Reconstruct Itinerary (min-heap ordering)](https://leetcode.com/problems/reconstruct-itinerary/) | 🟢 | 1 | 2026-10-10 | 2026-09-10 | 2026-07-22, 2026-07-28, 2026-08-04, 2026-08-29, 2026-08-31, 2026-09-10 |
-| Medium | [763. Partition Labels](https://leetcode.com/problems/partition-labels/) | 🟡 | 0 | 2026-09-19 | 2026-09-09 | 2026-09-09 |
 | Medium | [133. Clone Graph](https://leetcode.com/problems/clone-graph/) | 🟢 | 1 | 2026-10-08 | 2026-09-08 | 2026-06-04, 2026-06-05, 2026-06-07, 2026-08-09, 2026-08-19, 2026-08-29, 2026-09-08 |
-| Hard | [2097. Valid Arrangement of Pairs](https://leetcode.com/problems/valid-arrangement-of-pairs/) | 🟢 | 0 | 2026-09-17 | 2026-09-07 | 2026-09-05, 2026-09-07 |
 | Medium | [57. Insert Interval](https://leetcode.com/problems/insert-interval/) | 🟢 | 1 | 2026-10-07 | 2026-09-07 | 2026-08-26, 2026-08-28, 2026-09-07 |
 | Medium | [739. Daily Temperatures](https://leetcode.com/problems/daily-temperatures/) | 🟢 | 1 | 2026-10-06 | 2026-09-06 | 2026-08-14, 2026-08-27, 2026-09-06 |
 | Hard | [269. Alien Dictionary](https://leetcode.com/problems/alien-dictionary/) | 🟢 | 1 | 2026-10-06 | 2026-09-06 | 2026-07-27, 2026-07-29, 2026-08-07, 2026-08-17, 2026-08-27, 2026-09-06 |
@@ -150,7 +156,6 @@ Notes for future agents:
 | Medium | [2300. Successful Pairs of Spells and Potions](https://leetcode.com/problems/successful-pairs-of-spells-and-potions/) | 🟢 | 2 | 2026-10-17 | 2026-08-18 | 2026-05-03, 2026-06-12, 2026-06-19, 2026-08-18 |
 | Medium | [19. Remove Nth Node From End of List (Iterative)](https://leetcode.com/problems/remove-nth-node-from-end-of-list/) | 🟢 | 2 | 2026-10-16 | 2026-08-17 | 2026-04-29, 2026-05-18, 2026-06-30, 2026-07-09, 2026-08-17 |
 | Medium | [261. Graph Valid Tree (DFS)](https://neetcode.io/problems/valid-tree) | 🟢 | 1 | 2026-09-15 | 2026-08-16 | 2026-06-15, 2026-06-17, 2026-06-21, 2026-06-23, 2026-08-06, 2026-08-16 |
-| Easy | [496. Next Greater Element I](https://leetcode.com/problems/next-greater-element-i/) | 🟢 | 1 | 2026-09-15 | 2026-08-16 | 2026-07-04, 2026-07-06, 2026-08-06, 2026-08-16 |
 | Medium | [208. Implement Trie (Prefix Tree)](https://leetcode.com/problems/implement-trie-prefix-tree/) | 🟢 | 2 | 2026-10-15 | 2026-08-16 | 2026-07-06, 2026-07-08, 2026-07-17, 2026-08-16 |
 | Medium | [75. Sort Colors (Dutch Flag)](https://leetcode.com/problems/sort-colors/) | 🟢 | 2 | 2026-10-15 | 2026-08-16 | 2026-01-08, 2026-04-01, 2026-05-26, 2026-05-28, 2026-06-28, 2026-07-08, 2026-07-17, 2026-08-16 |
 | Medium | [98. Validate Binary Search Tree](https://leetcode.com/problems/validate-binary-search-tree/) | 🟢 | 2 | 2026-10-15 | 2026-08-16 | 2026-05-16, 2026-05-20, 2026-06-30, 2026-07-02, 2026-07-11, 2026-08-16 |
@@ -199,10 +204,6 @@ Notes for future agents:
 | Medium | [189. Rotate Array](https://leetcode.com/problems/rotate-array/) | 🟢 | 2 | 2026-09-24 | 2026-07-26 | 2026-01-11, 2026-04-04, 2026-06-24, 2026-07-26 |
 | Easy | [1046. Last Stone Weight](https://leetcode.com/problems/last-stone-weight/) | 🟢 | 2 | 2026-09-24 | 2026-07-26 | 2026-06-23, 2026-07-26 |
 | Easy | [704. Binary Search](https://leetcode.com/problems/binary-search/) | 🎓 | 3 | 2027-01-22 | 2026-07-26 | 2026-03-09, 2026-04-13, 2026-05-27, 2026-06-27, 2026-07-26 |
-| Easy | [206. Reverse Linked List (Iterative)](https://leetcode.com/problems/reverse-linked-list/) | 🟢 | 2 | 2026-09-18 | 2026-07-20 | 2026-04-23, 2026-05-26, 2026-06-12, 2026-06-20, 2026-07-20 |
-| Easy | [21. Merge Two Sorted Lists (Recursion)](https://leetcode.com/problems/merge-two-sorted-lists/) | 🟢 | 2 | 2026-09-18 | 2026-07-20 | 2026-05-20, 2026-05-21, 2026-06-12, 2026-06-20, 2026-07-20 |
-| Medium | [130. Surrounded Regions (BFS)](https://leetcode.com/problems/surrounded-regions/) | 🟢 | 2 | 2026-09-18 | 2026-07-20 | 2026-06-14, 2026-06-20, 2026-07-20 |
-| Easy | [283. Move Zeroes](https://leetcode.com/problems/move-zeroes/) | 🟢 | 2 | 2026-09-17 | 2026-07-19 | 2026-01-10, 2026-04-02, 2026-06-02, 2026-06-12, 2026-07-19 |
 | Medium | [200. Number of Islands (BFS)](https://leetcode.com/problems/number-of-islands/) | 🟢 | 2 | 2026-09-16 | 2026-07-18 | 2026-05-30, 2026-06-01, 2026-06-07, 2026-07-18 |
 | Medium | [199. Binary Tree Right Side View](https://leetcode.com/problems/binary-tree-right-side-view/) | 🟢 | 2 | 2026-09-12 | 2026-07-14 | 2026-05-09, 2026-06-13, 2026-07-14 |
 

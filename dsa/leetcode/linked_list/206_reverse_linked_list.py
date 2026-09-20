@@ -33,6 +33,20 @@ class ListNode:
 
 class Solution:
 
+    # ── Attempt · 2026-09-19 ──────────────
+    def reverseListIterative_20260919(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        # iterative reversal
+        
+        prev = None
+        
+        while head:
+            nxt = head.next
+            head.next = prev
+            prev = head
+            head = nxt
+        
+        return prev
+
     # ── Attempt · 2026-08-19 ──────────────
     def reverseListRecursion_20260819(self, head: Optional[ListNode]) -> Optional[ListNode]:
         if not head or not head.next:

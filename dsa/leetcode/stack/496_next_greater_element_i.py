@@ -38,8 +38,146 @@ from typing import List
 
 class Solution:
 
-    # ── Attempt · 2026-09-15 ──────────────
-    def nextGreaterElement_20260915(self, nums1: List[int], nums2: List[int]) -> List[int]:
-        pass
+    # ── Attempt · 2026-09-19 ──────────────
+    def nextGreaterElement_20260919(self, nums1: List[int], nums2: List[int]) -> List[int]:
+        # need to find next greater for all elements in nums2 first
+        # then in order to pass these to nums1, we need to store this in a map of nums2[i] -> next greater value
+        # we are given that nums2[i] is unique so storing number is not an issue
+        # now to find next greater, we use monotonically decreasing
+        # nums2 is equal or longer than nums1, so let n = len(nums)
+        # time complexity is O(n) to generate the greater map
+        # map and stack both potentially can take O(n) space
+        # overall time and space: O(n) for both
+        nextGreaterMap = {}
+        
+        decreasingStack = []
+        
+        # construct our next greater map
+        
+        for num in nums2:
+            while decreasingStack and num > decreasingStack[-1]:
+                priorNode = decreasingStack.pop()
+                nextGreaterMap[priorNode] = num
+            decreasingStack.append(num)
+        
+        # now we go through nums1 to find next greatest
+        # if it doesn't exist, it means there is no next greater
+        result = []
+        
+        for num in nums1:
+            if num in nextGreaterMap:
+                result.append(nextGreaterMap[num])
+            else:
+                result.append(-1)
+                
+        return result
 
-# ⤵ prior attempts stashed in dsa/leetcode/.history/496_next_greater_element_i.txt — restored at session end (python scripts/restore_history.py)
+if __name__ == "__main__":
+    nums1 = [4,1,2]
+    nums2 = [1,3,4,2]
+    expected = [-1,3,-1]
+    result = Solution().nextGreaterElement_20260919(nums1,nums2)
+    print(f"nums1: {nums1}\nnums2: {nums2}\nexpected: {expected}\nresult: {result}")
+
+    # ── Attempt · 2026-08-16 ──────────────
+    def nextGreaterElement_20260816(self, nums1: List[int], nums2: List[int]) -> List[int]:
+        # next greater element = monotonic stack
+        # next greater = decreasing stack and we update greater based on top item in stack
+        # we are checking next greater of nums1 based on ordering in nums2
+        # so multiple steps here
+        # 1. find next greater of all values in nums2
+        # 2. all values are given as unique, so we can do map of value -> next greater
+        # we should store index here in the stack 
+
+        decreasingStack = []
+        greaterMap = {}
+
+        for i in range(len(nums2)):
+            # if nums2[i] > top of stack, set its next greater
+            while decreasingStack and nums2[i] > nums2[decreasingStack[-1]]:
+                priorItemIndex = decreasingStack.pop()
+                greaterMap[nums2[priorItemIndex]] = nums2[i]
+            # add i to stack
+            decreasingStack.append(i)
+        
+        result = [-1] * len(nums1)
+        
+        # populate result based on map
+        for i in range(len(nums1)):
+            if nums1[i] in greaterMap:
+                result[i] = greaterMap[nums1[i]]
+        
+        return result
+
+    # ── Attempt · 2026-08-06 ──────────────
+    def nextGreaterElement_20260806(self, nums1: List[int], nums2: List[int]) -> List[int]:
+        # next greater, so monotonic stack
+        # the numbers in nums1 doesn't actually matter too much
+        # we need to find next greater for elements in nums2
+
+        decreasingStack = []
+        nextGreater = {}
+
+        for i in range(len(nums2)):
+            # check if current value is bigger than what is in the stack
+            # if it is, set the prior value's next to current value
+            while decreasingStack and nums2[i] > nums2[decreasingStack[-1]]:
+                priorIndex = decreasingStack.pop()
+                nextGreater[nums2[priorIndex]] = nums2[i]
+            decreasingStack.append(i)
+        
+        result = [-1] * len(nums1)
+        for i in range(len(nums1)):
+            if nums1[i] in nextGreater:
+                result[i] = nextGreater[nums1[i]]
+        
+        return result
+
+    def nextGreaterElement(self, nums1: List[int], nums2: List[int]) -> List[int]:
+        # brute force is to double for loop, when we see the nums1[i] in nums2, we look further right until we find a bigger number giving us O(n^2)
+        # What we should do instead of go through nums2 first and map all next greater element. This is done through a monotonic stack
+        # then all we need to do in nums1 is do a look up
+
+        # we keep track of indices in the monotonic stack
+        increasingStack = []
+        increasingMap = {}
+        for i in range(len(nums2)):
+            # if adding value makes the stack no longer increasing
+            # we pop until we resastisfy the condition
+            while increasingStack and nums2[increasingStack[-1]] < nums2[i]:
+                index = increasingStack.pop()
+                # since nums[index] < nums[i], that means nums[i] is the next greater compared to nums[index]
+                increasingMap[nums2[index]] = nums2[i]
+            increasingStack.append(i)
+        
+        result = []
+        # now we have increasingMap, we just need to go through nums1 once
+        for i in range(len(nums1)):
+            nextGreater = increasingMap.get(nums1[i],-1)
+            result.append(nextGreater)
+        return result
+    def nextGreaterElement_20260706(self, nums1: List[int], nums2: List[int]) -> List[int]:
+        # monotonic stack practice
+        # naive solution is to loop through both nums1 and nums2 and look for next greater giving us O(n^2)
+        # what we can do instead of find all next greater elements first for nums2
+        # we can do this with monotonic decreasing stack and then store as a map {num -> next greater}
+        # then just go through nums1 and look for mapped value
+        nextGreaterMap = {}
+        stack = collections.deque()
+        for i in range(len(nums2)):
+            # if nums2[i] breaks stack's order
+            # it is the next greater element
+            while stack and nums2[i] > stack[-1]:
+                value = stack.pop()
+                nextGreaterMap[value] = nums2[i]
+            stack.append(nums2[i])
+
+        result = []
+
+        for n in nums1:
+            if n not in nextGreaterMap:
+                result.append(-1)
+            else:
+                result.append(nextGreaterMap[n])
+        
+        return result
