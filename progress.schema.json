@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://progressiveoverflow.com/schemas/progress.v1.json",
   "title": "cse-coach progress contract",
-  "description": "The honest-progress data contract emitted by scripts/gamify.py and consumed by the progressiveoverflow.com dashboard. Any repo following the cse-coach schema can emit this file to be renderable. Curated + non-sensitive: aggregate stats, per-problem status and comfort timeline, and derived badges — never solution code or stuck-log prose. schemaVersion is bumped on any breaking change so a viewer can refuse an incompatible file.",
+  "description": "The honest-progress data contract emitted by scripts/gamify.py and consumed by the progressiveoverflow.com dashboard. Any repo following the cse-coach schema can emit this file to be renderable. Curated + non-sensitive: aggregate stats, per-problem status and comfort timeline, and derived badges — never solution code or stuck-log prose. schemaVersion is bumped on any breaking change so a viewer can refuse an incompatible file. gamify.py ALSO emits progress-summary.json alongside this file — see $defs/summary below: same contract minus `problems[]`, with a compact `trophyCase`. The dashboard landing fetches the summary only; the full file (this schema) is fetched on explicit opt-in.",
   "type": "object",
   "required": ["schemaVersion", "generatedAt", "totals", "pipeline", "streak", "problems", "badges"],
   "additionalProperties": true,
@@ -122,6 +122,49 @@
     }
   },
   "definitions": {
+    "summary": {
+      "description": "The shape of progress-summary.json: this contract minus `problems[]`, with a compact `trophyCase` (graduated entries reduced to {lcNumber, title, difficulty} — no timeline/repDates; retired entries unchanged). Written by the same gamify.py run via summary_of().",
+      "type": "object",
+      "required": ["schemaVersion", "generatedAt", "totals", "pipeline", "streak", "badges"],
+      "properties": {
+        "schemaVersion": { "type": "integer", "const": 1 },
+        "generatedAt": { "type": "string", "format": "date" },
+        "totals": { "$ref": "#/properties/totals" },
+        "pipeline": { "$ref": "#/properties/pipeline" },
+        "difficulty": { "$ref": "#/properties/difficulty" },
+        "streak": { "$ref": "#/properties/streak" },
+        "coverage": { "$ref": "#/properties/coverage" },
+        "onSchedule": { "$ref": "#/properties/onSchedule" },
+        "badges": { "$ref": "#/properties/badges" },
+        "trophyCase": {
+          "type": "object",
+          "properties": {
+            "graduated": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "lcNumber": { "type": "integer" },
+                  "title": { "type": "string" },
+                  "difficulty": { "type": "string", "enum": ["Easy", "Medium", "Hard"] }
+                }
+              }
+            },
+            "retired": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "lcNumber": { "type": "integer" },
+                  "title": { "type": "string" },
+                  "retiredOn": { "type": "string", "format": "date" }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "problem": {
       "type": "object",
       "required": ["lcNumber", "title", "comfort", "repDates", "timeline"],

@@ -168,6 +168,59 @@ class BadgeTests(unittest.TestCase):
         self.assertTrue(badges["streak-30"])
 
 
+class SummaryOfTests(unittest.TestCase):
+    def _payload(self):
+        return {
+            "schemaVersion": 1,
+            "generatedAt": "2026-09-20",
+            "totals": {"problems": 1, "solutions": 1, "reps": 2},
+            "pipeline": {"blank": 0, "shaky": 0,
+                         "clean": {"s0": 0, "s1": 0, "s2plus": 0, "total": 0},
+                         "graduated": 1, "retired": 1},
+            "difficulty": {"Easy": 0, "Medium": 1, "Hard": 0},
+            "streak": {"current": 3, "longest": 5, "lastStudyDay": "2026-09-20",
+                       "studyDays": 10, "restDayAllowance": 1},
+            "coverage": {"total": 56, "started": 40, "noGreen": 2, "thin": 3, "variantGaps": 1},
+            "onSchedule": {"totalActive": 10, "dueToday": 1, "overdue": 2},
+            "trophyCase": {
+                "graduated": [{"lcNumber": 206, "title": "Reverse Linked List",
+                               "difficulty": "Easy", "url": "https://x", "comfort": "🎓",
+                               "level": 3, "streak": 3, "nextReview": "2026-10-01",
+                               "repDates": ["2026-01-01"], "timeline": [{"date": "2026-01-01"}]}],
+                "retired": [{"lcNumber": 704, "title": "Binary Search",
+                             "retiredOn": "2026-08-01"}],
+            },
+            "badges": [{"id": "first-graduate", "title": "First Graduation", "earned": True}],
+            "problems": [{"lcNumber": 206, "title": "Reverse Linked List", "comfort": "🎓"}],
+        }
+
+    def test_no_problems_key(self):
+        summary = gamify.summary_of(self._payload())
+        self.assertNotIn("problems", summary)
+
+    def test_keeps_core_aggregates(self):
+        summary = gamify.summary_of(self._payload())
+        for key in ("streak", "pipeline", "badges", "coverage", "totals",
+                    "onSchedule", "difficulty", "schemaVersion", "generatedAt"):
+            self.assertIn(key, summary)
+        self.assertEqual(summary["streak"]["current"], 3)
+        self.assertEqual(summary["badges"][0]["id"], "first-graduate")
+
+    def test_trophy_case_graduated_is_compact(self):
+        summary = gamify.summary_of(self._payload())
+        graduated = summary["trophyCase"]["graduated"]
+        self.assertEqual(len(graduated), 1)
+        self.assertEqual(graduated[0], {"lcNumber": 206, "title": "Reverse Linked List",
+                                        "difficulty": "Easy"})
+        self.assertNotIn("timeline", graduated[0])
+        self.assertNotIn("repDates", graduated[0])
+
+    def test_trophy_case_retired_passes_through(self):
+        summary = gamify.summary_of(self._payload())
+        self.assertEqual(summary["trophyCase"]["retired"],
+                         [{"lcNumber": 704, "title": "Binary Search", "retiredOn": "2026-08-01"}])
+
+
 class PayloadTests(unittest.TestCase):
     def test_build_payload_is_wellformed_and_never_raises(self):
         # Runs against the live repo files; asserts the contract's required keys exist.
