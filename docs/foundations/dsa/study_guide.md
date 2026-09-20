@@ -21,10 +21,45 @@ But depth has diminishing returns *for interviews specifically*. So everything i
 **=== INTERVIEW-ROI LINE ===**
 
 **Below the line (competitive-programming growth; NOT for interview ROI):**
-5. **Tier 2 "further horizon"** (Knowledge Expansion Queue) — sweep line, max-flow, LCA, Mo's algorithm, SOS DP, suffix automaton, Aho-Corasick, persistent structures, etc. Pursue **only** after interview-readiness is solid, and **only** for competitive-programming ambition — near-zero interview payoff. *"Interview-readiness is solid" resolves to the measurable gate in "When to open Tier 1 expansion" below (pull rate + coverage + surplus) — never to an offer or an interview outcome.*
+5. **Tier 2 "further horizon"** (Knowledge Expansion Queue) — sweep line, max-flow, LCA, advanced shortest-path (bidirectional search / Johnson's), Mo's algorithm, SOS DP, suffix automaton, Aho-Corasick, persistent structures, etc. Pursue **only** after interview-readiness is solid, and **only** for competitive-programming ambition — near-zero interview payoff. *"Interview-readiness is solid" resolves to the measurable gate in "When to open Tier 1 expansion" below (pull rate + coverage + surplus) — never to an offer or an interview outcome.*
 6. **Tier 3 "competitive / research horizon"** (Knowledge Expansion Queue) — the deepest layer: HLD, centroid decomposition, link-cut trees, suffix automaton/Eertree, FFT/NTT, MCMF & min-cut modeling, D&C DP / Aliens trick, segment tree beats, 2-SAT, advanced geometry, Sprague–Grundy. ICPC/Codeforces territory — pursued deliberately over months for true competitive-programmer depth. See the Tier 3 section in `mastery/dsa_progress.md`.
 
 **How to use the line:** when deciding whether to learn something, ask *"which side of the line is it, and am I currently optimizing for interviews or competitive depth?"* Don't spend interview-prep time below the line; don't mistake below-the-line mastery for interview readiness. Finish NC150 + Tier 1 before crossing.
+
+**The line is re-evaluated, not fixed — that's why below-the-line items are *named*, not deleted (added Sep 20, 2026).** An item sits below the line because the *current* interview landscape doesn't reward it, not because it's permanently worthless. Everything below is kept in the Knowledge Expansion Queue **named, with a representative problem and a pull-in trigger** precisely so one can be promoted if the landscape shifts — a problem trend, or a domain raising a formerly-niche technique (the way AI-chat workloads are pulling streaming / SSE from a footnote toward table-stakes on the systems side). Promotion is concrete: **add the technique to [`mastery/techniques.yml`](mastery/techniques.yml) and seat a first rep** — until then it lives in the queue only and costs nothing. **A\* is the canonical below-the-line case:** know it exists and can name *when* it would apply — a single target plus an admissible heuristic — but it is never the required answer and doesn't change the asymptotic bound, so it stays Tier 2 (named, not drilled). Full roster lives in the KEQ in [`mastery/dsa_progress.md`](mastery/dsa_progress.md).
+
+### Famous-but-low-ROI — recognize by name, don't drill (added Sep 20, 2026)
+
+A **different axis** from the competitive tiers above: these are algorithms and data structures that are **culturally famous or common in a specific domain** (systems, databases, AI, textbooks) yet are **almost never asked in a coding interview.** The rule for everything in this section: **know the name, one sentence of what it does, and where it lives — never spend a rep drilling it.** If one *does* surface, the accepted answer is nearly always a simpler in-curriculum technique; the payoff is not being caught blank in a conversation or a design discussion. Promote one into `techniques.yml` only if the landscape actually shifts (see "the line is re-evaluated" above).
+
+**Algorithms**
+
+| Technique | What it is | Common in | Interview ROI |
+|---|---|---|---|
+| **Huffman coding** | greedy optimal prefix-code compression | ZIP / JPEG / MP3 | ~0 — at most a conceptual "how does compression work" |
+| **Karatsuba / Strassen** | sub-quadratic big-integer / matrix multiply | textbook divide-and-conquer | ~0 |
+| **Minimax + alpha-beta pruning** | adversarial game-tree search with branch cutoff | chess / game AI | low — [486](https://leetcode.com/problems/predict-the-winner/) / [1140](https://leetcode.com/problems/stone-game-ii/) exist but are graded as DP |
+| **Simulated annealing / genetic / hill-climbing** | metaheuristics for hard or continuous optimization | OR, ML, scheduling | ~0 |
+| **Gradient descent** | iterative continuous optimization | all of ML | ~0 in a DSA interview |
+| **PageRank (power iteration)** | dominant-eigenvector ranking over a graph | search / recsys | ~0 |
+| **Miller-Rabin / Fermat** | probabilistic primality test | cryptography, large primes | ~0 |
+| **Fisher-Yates shuffle** | unbiased in-place shuffle | `random.shuffle`, card games | low — [384](https://leetcode.com/problems/shuffle-an-array/) is the lone instance |
+| **Boyer-Moore string search** | sublinear pattern matching via skip tables | `grep`, text editors | ~0 |
+| **Rabin-Karp (rolling hash)** | hash-based substring / block matching | plagiarism, rsync, dedup | **mid — the closest to the line here**; a real fallback when KMP feels heavy |
+
+⚠️ **Name traps — these *sound* like the list above but sit ABOVE the line (do drill):** **Boyer-Moore *majority vote*** ([169](https://leetcode.com/problems/majority-element/) — unrelated to the string search) · **reservoir sampling** ([382](https://leetcode.com/problems/linked-list-random-node/), Tier 1) · **Sieve of Eratosthenes / Euclid GCD** ([204](https://leetcode.com/problems/count-primes/) and gcd problems — modest but real ROI) · **Kadane's** · **quickselect**.
+
+**Data structures (famous, but you use the library — rarely coded in an interview)**
+
+| Structure | What it is | Common in | Interview ROI |
+|---|---|---|---|
+| **Skip list** | probabilistic ordered structure, O(log n) expected | Redis sorted sets | ~0 — [1206](https://leetcode.com/problems/design-skiplist/) (design) is rare |
+| **B-tree / B+ tree** | high-fanout, disk-oriented balanced tree | DB indexes, filesystems | ~0 to code; central in **SD / DB** discussion |
+| **Red-black / AVL tree** | self-balancing BST | `std::map`, `TreeMap`, kernels | ~0 to code (you use the library); conceptual only |
+| **Bloom filter** | probabilistic set membership, no false negatives | DBs, caches, CDNs | ~0 to code; common in **SD** |
+| **LSM-tree** | write-optimized log-structured merge | RocksDB, Cassandra | ~0; **SD / DB** territory |
+
+The systems-flavored entries (Bloom filter, B-tree, LSM-tree) pay off on the **System Design** side, not here — they're listed only for name-recognition; their real coverage belongs to the SD track.
 
 ---
 
@@ -325,6 +360,17 @@ gated on 778/743 sitting at 🟡+ — which they do.
 > The general shape worth remembering: **curriculum scope and schedulability are separate questions,
 > and capacity decides the second.** Promoting something into a phase says it's worth doing, never
 > that there's room for it this month.
+
+> **Update Sep 20, 2026 — the held Dijkstra consolidation reps are seated, learner's call.** Capacity
+> has room now (the week of Sep 14 built well under ceiling) and Dijkstra still sits **thin (1/3)** in
+> `technique_coverage.md` — one 🟢 (778), 743 mid-conversion. The learner chose **1102 Path With Maximum
+> Minimum Value in place of 1514**: 1102 is a purer Dijkstra variant (**max-min bottleneck** — maximize
+> the smallest edge on the path), a cleaner recognition-gate contrast against 1631's **min-over-max**
+> (minimize the largest edge) than 1514's product/BFS-flavored form. So the deepening pair is now
+> **1631 + 1102** (both declared under Dijkstra in `techniques.yml`), 1514 dropped. Both are
+> **consolidation reps** (gate `green:Dijkstra` already met — 778 is 🟢), targeted at the **week of
+> Sep 21** — the Sep 21 weekly build seats them onto the grid. ⚠️ **1102 is LC-premium**, so its scaffold
+> link resolves to the NeetCode mirror. (No `decisions.yml` entry — adding roadmap problems strands no rule.)
 
 ### Phase exit standard — per algorithm, not per problem (set Jul 26, 2026)
 
