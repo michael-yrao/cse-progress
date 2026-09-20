@@ -78,6 +78,23 @@ SUMMARY_CONTEXT = re.compile(
     re.IGNORECASE,
 )
 
+# A DASHBOARD / DEPLOY report renders comfort glyphs and words like "clean" as DATA, not as a
+# verdict on a rep. Added 2026-09-20: the gamification feature (scripts/gamify.py -> progress.json,
+# the progressiveoverflow.com dashboard) means routine status/deploy reports now carry 🟢/🎓 and
+# "streak" (the dashboard's own vocabulary) alongside incidental cue words ("build clean", "accept
+# the fallback"), which tripped this gate on a pure software-deploy turn — no rep in sight.
+#
+# The discriminators here are terms that CANNOT occur in a real rep-rating proposal: a comfort
+# verdict for a LeetCode rep never mentions progress.json, the dashboard, a deploy, or the site.
+# ⚠️ Deliberately NOT keyed on streak / pipeline / badge / trophy alone — those DO appear in a
+# genuine rating turn ("🟢 s2 → streak 3 → graduates"), so exempting them would open a real hole.
+REPORT_CONTEXT = re.compile(
+    r"progress\.json|progress\.schema|progressiveoverflow|\bdashboard\b|\bgamif\w*"
+    r"|raw\.githubusercontent|contents/progress|refresh button|github pages"
+    r"|\bdeploy(?:ed|ment|s)?\b|pages? deploy",
+    re.IGNORECASE,
+)
+
 # ── Complexity signals in the LEARNER's messages ────────────────────────────────
 BIG_O = re.compile(r"O\s*\(", re.IGNORECASE)
 TIME_SIGNAL = re.compile(
@@ -154,6 +171,8 @@ def learner_text(entries: "list[dict]", turns: int = LOOKBACK_TURNS) -> str:
 def proposes_rating(turn: str) -> bool:
     if SUMMARY_CONTEXT.search(turn):
         return False  # a log / meta-review summary records ratings, it does not propose one
+    if REPORT_CONTEXT.search(turn):
+        return False  # a dashboard / deploy report renders glyphs as data, not a verdict
     return bool(COMFORT.search(turn) and PROPOSE_CUE.search(turn))
 
 
@@ -248,6 +267,17 @@ PROPOSE_CASES = [
      "Logged to self_eval_log.md: 540 🟡 stuck_log fix, proposed as a review-workflow step.", False),
     ("decisions.yml summary with glyphs",
      "decisions.yml: 283/206 🟢→🎓 graduate override recorded; nothing to accept here.", False),
+    # The 2026-09-20 gamification-deploy false positives: status/deploy reports carry the
+    # dashboard's glyphs + "clean"/"accept" but propose no rating. Must NOT trip.
+    ("deploy report with glyphs + cue",
+     "Shipped the dashboard: 🔥 115-day streak, 19 🎓, 97 🟢. Build clean; progress.json live. Accept the fallback design?", False),
+    ("dashboard fetch report",
+     "The progressiveoverflow.com dashboard now fetches progress.json; 🟢/🎓 render. Confirm the push?", False),
+    ("pages deploy summary",
+     "Pages deploy: success. Build clean, 17 tests pass, streak 🔥 shows 🟢/🟡. Rate it?", False),
+    # Control: the same glyphs + cue WITHOUT dashboard/deploy context is still a real proposal.
+    ("real proposal survives the new exemption",
+     "Coded from a blank page, no hints — reads 🟢 s2. Rate it?", True),
 ]
 
 AXES_CASES = [
