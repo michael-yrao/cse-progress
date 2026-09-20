@@ -163,6 +163,28 @@ def meta_review_banner(claude_dir: Path) -> str:
         return ""
 
 
+def progress_banner(claude_dir: Path) -> str:
+    """Return one honest progress line from progress.json, or '' if unavailable.
+
+    Reads the generated contract directly (no subprocess, no import) so a coaching
+    session opens with the streak in view — the Duolingo "here's your streak" moment.
+    Fail-soft to the bone: any problem returns '', because a motivational line must
+    never be the reason a session starts with no rules loaded. The file is regenerated
+    by the pre-commit hook, so it is normally fresh; a stale or missing file just means
+    no banner. Emoji survive emit()'s json.dump escaping (see emit's docstring).
+    """
+    try:
+        data = json.loads((claude_dir.parent / "progress.json").read_text(encoding="utf-8"))
+        streak = data["streak"]["current"]
+        pl = data["pipeline"]
+        reps = data["totals"]["reps"]
+        flame = f"🔥 {streak}-day study streak" if streak else "streak lapsed — a rep today restarts it"
+        return (f"PROGRESS: {flame} · {pl['graduated']}🎓 + {pl['retired']}🏆 mastered · "
+                f"{reps} reps. Full dashboard: progressiveoverflow.com/progress\n\n")
+    except Exception:  # noqa: BLE001 — a missing/partial file is normal, never fatal
+        return ""
+
+
 def emit(context: str) -> None:
     """Write the hook envelope to stdout.
 
@@ -200,7 +222,7 @@ def main() -> None:
         )
         return
 
-    emit(f"{meta_review_banner(claude_dir)}{ALWAYS_ON}\n{index}")
+    emit(f"{meta_review_banner(claude_dir)}{progress_banner(claude_dir)}{ALWAYS_ON}\n{index}")
 
 
 if __name__ == "__main__":

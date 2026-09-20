@@ -1,0 +1,155 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://progressiveoverflow.com/schemas/progress.v1.json",
+  "title": "cse-coach progress contract",
+  "description": "The honest-progress data contract emitted by scripts/gamify.py and consumed by the progressiveoverflow.com dashboard. Any repo following the cse-coach schema can emit this file to be renderable. Curated + non-sensitive: aggregate stats, per-problem status and comfort timeline, and derived badges — never solution code or stuck-log prose. schemaVersion is bumped on any breaking change so a viewer can refuse an incompatible file.",
+  "type": "object",
+  "required": ["schemaVersion", "generatedAt", "totals", "pipeline", "streak", "problems", "badges"],
+  "additionalProperties": true,
+  "properties": {
+    "schemaVersion": { "type": "integer", "const": 1 },
+    "generatedAt": { "type": "string", "format": "date" },
+    "totals": {
+      "type": "object",
+      "required": ["problems", "solutions", "reps"],
+      "properties": {
+        "problems": { "type": "integer", "minimum": 0 },
+        "solutions": { "type": "integer", "minimum": 0 },
+        "reps": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "pipeline": {
+      "type": "object",
+      "description": "Counts along the maturation ladder 🔴 blank -> 🟡 shaky -> 🟢 clean (by streak) -> 🎓 graduated -> 🏆 retired.",
+      "required": ["blank", "shaky", "clean", "graduated", "retired"],
+      "properties": {
+        "blank": { "type": "integer", "minimum": 0 },
+        "shaky": { "type": "integer", "minimum": 0 },
+        "clean": {
+          "type": "object",
+          "required": ["s0", "s1", "s2plus", "total"],
+          "properties": {
+            "s0": { "type": "integer", "minimum": 0 },
+            "s1": { "type": "integer", "minimum": 0 },
+            "s2plus": { "type": "integer", "minimum": 0 },
+            "total": { "type": "integer", "minimum": 0 }
+          }
+        },
+        "graduated": { "type": "integer", "minimum": 0 },
+        "retired": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "difficulty": {
+      "type": "object",
+      "properties": {
+        "Easy": { "type": "integer", "minimum": 0 },
+        "Medium": { "type": "integer", "minimum": 0 },
+        "Hard": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "streak": {
+      "type": "object",
+      "description": "SR-honest study-day streak: rewards practicing when due, with a rest-day allowance, never raw daily grind.",
+      "required": ["current", "longest", "studyDays", "restDayAllowance"],
+      "properties": {
+        "current": { "type": "integer", "minimum": 0 },
+        "longest": { "type": "integer", "minimum": 0 },
+        "lastStudyDay": { "type": ["string", "null"], "format": "date" },
+        "studyDays": { "type": "integer", "minimum": 0 },
+        "restDayAllowance": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "coverage": {
+      "type": ["object", "null"],
+      "description": "Technique breadth, from technique_coverage.md. null when that file was unreadable.",
+      "properties": {
+        "total": { "type": "integer" },
+        "started": { "type": "integer" },
+        "noGreen": { "type": "integer" },
+        "thin": { "type": "integer" },
+        "variantGaps": { "type": "integer" }
+      }
+    },
+    "onSchedule": {
+      "type": "object",
+      "description": "SR adherence gauge derived from each row's Next Review Date vs today.",
+      "properties": {
+        "totalActive": { "type": "integer", "minimum": 0 },
+        "dueToday": { "type": "integer", "minimum": 0 },
+        "overdue": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "trophyCase": {
+      "type": "object",
+      "properties": {
+        "graduated": { "type": "array", "items": { "$ref": "#/definitions/problem" } },
+        "retired": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "lcNumber": { "type": "integer" },
+              "title": { "type": "string" },
+              "retiredOn": { "type": "string", "format": "date" }
+            }
+          }
+        }
+      }
+    },
+    "badges": {
+      "type": "array",
+      "description": "Derived achievements. Every trigger keys off a genuine, unfakeable event (a graduation, a retirement, a comeback, a study-day streak) — never a raw count of easy greens and never a rating.",
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "earned"],
+        "properties": {
+          "id": { "type": "string" },
+          "title": { "type": "string" },
+          "icon": { "type": "string" },
+          "description": { "type": "string" },
+          "earned": { "type": "boolean" }
+        }
+      }
+    },
+    "problems": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/problem" }
+    },
+    "warnings": {
+      "type": "array",
+      "description": "Fail-soft notes about inputs that could not be fully read; a partial file is still valid.",
+      "items": { "type": "string" }
+    }
+  },
+  "definitions": {
+    "problem": {
+      "type": "object",
+      "required": ["lcNumber", "title", "comfort", "repDates", "timeline"],
+      "properties": {
+        "lcNumber": { "type": "integer" },
+        "title": { "type": "string" },
+        "url": { "type": ["string", "null"], "description": "Canonical LeetCode URL for deep-linking." },
+        "difficulty": { "type": "string", "enum": ["Easy", "Medium", "Hard"] },
+        "category": { "type": ["string", "null"] },
+        "comfort": { "type": "string", "enum": ["🔴", "🟡", "🟢", "🎓", "🏆"] },
+        "level": { "type": ["integer", "null"], "description": "Comfort as an ordinal 0-4 for plotting." },
+        "streak": { "type": "integer", "minimum": 0 },
+        "nextReview": { "type": "string", "format": "date" },
+        "repDates": { "type": "array", "items": { "type": "string", "format": "date" } },
+        "timeline": {
+          "type": "array",
+          "description": "Per-rep comfort earned, reconstructed from the weekly schedules. comfort is null where a rep predates the schedule archive — an activity dot, never a fabricated value.",
+          "items": {
+            "type": "object",
+            "required": ["date"],
+            "properties": {
+              "date": { "type": "string", "format": "date" },
+              "comfort": { "type": ["string", "null"] },
+              "level": { "type": ["integer", "null"] }
+            }
+          }
+        }
+      }
+    }
+  }
+}

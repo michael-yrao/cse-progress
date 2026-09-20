@@ -1,0 +1,184 @@
+"""Tests for gamify.py — the honest-progress contract generator.
+
+Stdlib unittest on purpose: this repo has no pytest/CI, and a test that needs an
+uninstalled framework is a test that never runs. Run it with:
+
+    python scripts/test_gamify.py
+
+The functions under test are pure (they take plain dicts), so nothing here touches
+the filesystem — the point is to pin the streak math, the timeline reconstruction,
+and the badge triggers, which are the parts most likely to drift silently.
+"""
+from __future__ import annotations
+
+import datetime as dt
+import unittest
+
+import gamify
+
+
+def _row(num, comfort, streak, diff="Medium", due="2026-12-01", reps=""):
+    return {"num": str(num), "title": f"P{num}", "diff": diff, "comfort": comfort,
+            "streak": streak, "due": due, "reps": reps}
+
+
+class StreakTests(unittest.TestCase):
+    TODAY = dt.date(2026, 9, 20)
+
+    def _days(self, *iso):
+        return [dt.date.fromisoformat(d) for d in iso]
+
+    def test_empty(self):
+        s = gamify.compute_streak([], allowance=1, today=self.TODAY)
+        self.assertEqual((s["current"], s["longest"], s["studyDays"]), (0, 0, 0))
+
+    def test_perfect_consecutive_run(self):
+        days = self._days("2026-09-18", "2026-09-19", "2026-09-20")
+        s = gamify.compute_streak(days, allowance=1, today=self.TODAY)
+        self.assertEqual(s["current"], 3)
+        self.assertEqual(s["longest"], 3)
+
+    def test_rest_day_within_allowance_does_not_break(self):
+        # A single skipped day (gap of 2) is tolerated at allowance=1.
+        days = self._days("2026-09-16", "2026-09-18", "2026-09-20")
+        s = gamify.compute_streak(days, allowance=1, today=self.TODAY)
+        self.assertEqual(s["current"], 3)
+
+    def test_gap_beyond_allowance_breaks(self):
+        # A 3-day gap (Sep 16 -> Sep 20) exceeds allowance=1, so only today counts.
+        days = self._days("2026-09-16", "2026-09-20")
+        s = gamify.compute_streak(days, allowance=1, today=self.TODAY)
+        self.assertEqual(s["current"], 1)
+
+    def test_current_zero_when_last_day_stale(self):
+        # Longest run is preserved, but the streak is not live if the last study day
+        # is beyond the allowance window from today.
+        days = self._days("2026-09-01", "2026-09-02", "2026-09-03")
+        s = gamify.compute_streak(days, allowance=1, today=self.TODAY)
+        self.assertEqual(s["current"], 0)
+        self.assertEqual(s["longest"], 3)
+
+    def test_study_days_counts_distinct_dates(self):
+        days = self._days("2026-09-19", "2026-09-20")
+        s = gamify.compute_streak(days, allowance=1, today=self.TODAY)
+        self.assertEqual(s["studyDays"], 2)
+        self.assertEqual(s["lastStudyDay"], "2026-09-20")
+
+
+class PipelineTests(unittest.TestCase):
+    def test_counts_and_green_streak_split(self):
+        rows = [_row(1, "🔴", 0), _row(2, "🟡", 0), _row(3, "🟢", 0),
+                _row(4, "🟢", 1), _row(5, "🟢", 2), _row(6, "🟢", 5), _row(7, "🎓", 3)]
+        retired = [{"lcNumber": 704}]
+        pl = gamify.pipeline(rows, retired)
+        self.assertEqual(pl["blank"], 1)
+        self.assertEqual(pl["shaky"], 1)
+        self.assertEqual(pl["clean"]["total"], 4)
+        self.assertEqual(pl["clean"]["s0"], 1)
+        self.assertEqual(pl["clean"]["s1"], 1)
+        self.assertEqual(pl["clean"]["s2plus"], 2)   # streak 2 and streak 5
+        self.assertEqual(pl["graduated"], 1)
+        self.assertEqual(pl["retired"], 1)
+
+    def test_difficulty_mix(self):
+        rows = [_row(1, "🟢", 1, "Easy"), _row(2, "🟢", 1, "Hard"), _row(3, "🟡", 0, "Hard")]
+        self.assertEqual(gamify.difficulty_mix(rows), {"Easy": 1, "Medium": 0, "Hard": 2})
+
+    def test_on_schedule_overdue_and_due(self):
+        today = dt.date(2026, 9, 20)
+        rows = [_row(1, "🟢", 1, due="2026-09-19"),   # overdue
+                _row(2, "🟢", 1, due="2026-09-20"),   # due today
+                _row(3, "🟢", 1, due="2026-10-01")]   # future
+        os = gamify.on_schedule(rows, today)
+        self.assertEqual(os["overdue"], 1)
+        self.assertEqual(os["dueToday"], 1)
+        self.assertEqual(os["totalActive"], 3)
+
+
+class TimelineTests(unittest.TestCase):
+    def test_reconstruction_and_anchor(self):
+        rows = [_row(763, "🟡", 0, reps="2026-09-09, 2026-09-19")]
+        sched = {"2026-09-09": {763: "🔴"}, "2026-09-19": {763: "🟡"}}
+        problems = gamify.build_problems(rows, sched, {763: "greedy"},
+                                         {763: "https://leetcode.com/problems/partition-labels/"})
+        tl = problems[0]["timeline"]
+        self.assertEqual([p["comfort"] for p in tl], ["🔴", "🟡"])
+        self.assertEqual([p["level"] for p in tl], [0, 1])
+        self.assertEqual(problems[0]["category"], "greedy")
+        self.assertEqual(problems[0]["url"], "https://leetcode.com/problems/partition-labels/")
+
+    def test_unknown_rep_is_activity_dot_but_last_anchors_to_current(self):
+        rows = [_row(206, "🎓", 3, reps="2026-04-23, 2026-09-19")]
+        sched = {}  # pre-archive: nothing known
+        problems = gamify.build_problems(rows, sched, {}, {})
+        tl = problems[0]["timeline"]
+        self.assertIsNone(tl[0]["comfort"])            # activity dot, never fabricated
+        self.assertEqual(tl[-1]["comfort"], "🎓")       # last point anchors to current comfort
+        self.assertEqual(tl[-1]["level"], 3)
+
+    def test_multi_variant_number_does_not_fabricate(self):
+        # Two rows share number 21 (Recursion vs Iterative). The schedule index is keyed by
+        # number and cannot say which variant a rep was, so reconstructed comfort must degrade
+        # to activity dots (null) — only the final point anchors to each row's own comfort.
+        rows = [_row(21, "🎓", 3, reps="2026-09-19"),
+                _row(21, "🟢", 1, reps="2026-09-19")]
+        sched = {"2026-09-19": {21: "🎓"}}  # would wrongly apply to BOTH without the guard
+        problems = gamify.build_problems(rows, sched, {}, {})
+        self.assertEqual(problems[0]["timeline"][-1]["comfort"], "🎓")   # anchored to its own
+        self.assertEqual(problems[1]["timeline"][-1]["comfort"], "🟢")   # not the other variant
+
+    def test_had_turnaround(self):
+        blank_then_clean = [{"date": "1", "comfort": "🔴"}, {"date": "2", "comfort": "🟢"}]
+        clean_only = [{"date": "1", "comfort": "🟢"}, {"date": "2", "comfort": "🟢"}]
+        self.assertTrue(gamify._had_turnaround([{"timeline": blank_then_clean}]))
+        self.assertFalse(gamify._had_turnaround([{"timeline": clean_only}]))
+
+
+class BadgeTests(unittest.TestCase):
+    CFG = {"streak_milestones": [7, 30], "trophy_milestones": [1, 10]}
+
+    def _stats(self, graduated=0, retired=0, clean_total=0, longest=0, no_green=1):
+        return {
+            "pipeline": {"graduated": graduated, "retired": retired,
+                         "clean": {"total": clean_total}},
+            "streak": {"longest": longest},
+            "coverage": {"noGreen": no_green, "started": 56, "total": 56},
+        }
+
+    def test_locked_when_nothing_earned(self):
+        badges = gamify.compute_badges(self._stats(), [], self.CFG)
+        earned = {b["id"] for b in badges if b["earned"]}
+        self.assertEqual(earned, set())
+
+    def test_graduation_and_trophy_milestones(self):
+        stats = self._stats(graduated=12, retired=0, clean_total=5, no_green=0)
+        problems = [{"difficulty": "Hard", "comfort": "🎓", "timeline": []}]
+        badges = {b["id"]: b["earned"] for b in gamify.compute_badges(stats, problems, self.CFG)}
+        self.assertTrue(badges["first-graduate"])
+        self.assertTrue(badges["trophies-1"])
+        self.assertTrue(badges["trophies-10"])       # 12 >= 10
+        self.assertTrue(badges["first-hard-clean"])  # a Hard at 🎓
+        self.assertTrue(badges["all-green"])         # noGreen == 0
+        self.assertFalse(badges["first-retire"])     # 0 retired
+
+    def test_streak_badges_use_longest(self):
+        stats = self._stats(longest=30)
+        badges = {b["id"]: b["earned"] for b in gamify.compute_badges(stats, [], self.CFG)}
+        self.assertTrue(badges["streak-7"])
+        self.assertTrue(badges["streak-30"])
+
+
+class PayloadTests(unittest.TestCase):
+    def test_build_payload_is_wellformed_and_never_raises(self):
+        # Runs against the live repo files; asserts the contract's required keys exist.
+        payload, _warnings = gamify.build_payload(dt.date(2026, 9, 20))
+        for key in ("schemaVersion", "generatedAt", "totals", "pipeline", "streak",
+                    "problems", "badges"):
+            self.assertIn(key, payload)
+        self.assertEqual(payload["schemaVersion"], gamify.SCHEMA_VERSION)
+        self.assertIsInstance(payload["problems"], list)
+        self.assertIsInstance(payload["badges"], list)
+
+
+if __name__ == "__main__":
+    unittest.main(verbosity=2)
