@@ -6,7 +6,7 @@
 
 > The tracker is keyed by **problem**; this is keyed by **technique**. Use it at the weekly build to decide what to pull, and at phase exit to check the per-algorithm bar (recognition + execution, ≥1 🟢 each).
 
-> **56/56** techniques started &nbsp;·&nbsp; **0** with no 🟢 &nbsp;·&nbsp; **20** thin &nbsp;·&nbsp; **1** unqueued variant gaps
+> **56/56** techniques started &nbsp;·&nbsp; **0** with no 🟢 &nbsp;·&nbsp; **20** thin &nbsp;·&nbsp; **3** unqueued variant gaps
 
 ## ⚠️ Action list
 
@@ -35,6 +35,8 @@
 
 **Unqueued variant gaps — a method never once exercised, and not in any queue.**
 
+- **Dijkstra** — missing **Min-over-max (minimize the maximum edge)**. Exercised: none
+- **Dijkstra** — missing **Max-min bottleneck (maximize the minimum edge)**. Exercised: none
 - **Prim's MST** — missing **Kruskal's MST**. Exercised: Prim's MST ×1
 
 ## Coverage
@@ -42,7 +44,7 @@
 | Technique | Family | Problems | Best | 🟢 | Variants | Gaps |
 |---|---|---:|:---:|:---:|---|---|
 | Bellman-Ford | advanced_graphs | 1 (787) | 🟢 | ✅ | Standard ×1 · ~~Contrast rep on 743~~ *(queued: `graduates:743`)* | thin (1/3) |
-| Dijkstra | advanced_graphs | 1 (778) | 🟢 | ✅ | — | thin (1/3) |
+| Dijkstra | advanced_graphs | 1 (778) | 🟢 | ✅ | **Min-over-max (minimize the maximum edge) ×0** · **Max-min bottleneck (maximize the minimum edge) ×0** | thin (1/3) · variant: **Min-over-max (minimize the maximum edge)** · variant: **Max-min bottleneck (maximize the minimum edge)** |
 | Floyd-Warshall (all-pairs shortest path) | advanced_graphs | 2 (1334, 1462) | 🟢 | ✅ | — | thin (2/3) |
 | Hierholzer (Eulerian path) | advanced_graphs | 2 *+1v* (332, 2097) | 🟢 | ✅ | pre-sorted adjacency ×1 · min-heap ordering ×1 | thin (2/3) |
 | Prim's MST | advanced_graphs | 1 (1584) | 🟢 | ✅ | Prim's MST ×1 · **Kruskal's MST ×0** | thin (1/3) · variant: **Kruskal's MST** |
@@ -112,5 +114,5 @@
 
 - 743 (Dijkstra)
 
-**Not reached yet (2)** — declared in the vocabulary, no tracker row. This is the normal state for curriculum ahead of the learner; it is a roadmap, not a finding.
+**Not reached yet (4)** — declared in the vocabulary, no tracker row. This is the normal state for curriculum ahead of the learner; it is a roadmap, not a finding.
 

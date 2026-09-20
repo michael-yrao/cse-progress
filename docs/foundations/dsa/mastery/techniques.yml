@@ -568,9 +568,14 @@ techniques:
   # ── Advanced graphs ─────────────────────────────────────────────────────────
   - name: Dijkstra
     family: advanced_graphs
+    variants:
+      - {name: Min-over-max (minimize the maximum edge)}
+      - {name: Max-min bottleneck (maximize the minimum edge)}
     problems:
       - {number: 743, method: Dijkstra}
       - {number: 778, method: Dijkstra / Min-Heap}
+      - {number: 1631, method: Dijkstra, variant: Min-over-max (minimize the maximum edge)}
+      - {number: 1102, method: Dijkstra, variant: Max-min bottleneck (maximize the minimum edge)}
 
   - name: Bellman-Ford
     family: advanced_graphs
