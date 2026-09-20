@@ -117,6 +117,20 @@ if echo "$STAGED" | grep -qE "dsa_progress\.md$|design_progress\.md$|^docs/found
   fi
 fi
 
+# Scaffold-lifecycle leaks. Fires when the tracker, a probes/ file, or a leetcode source file
+# is staged — the moments a phantom row (a scaffolded-but-unattempted file discovery turned into
+# a row) or a stranded probe (an earned probe still under dsa/probes/, outside solutions.roots)
+# can appear. Report-only, silent-when-clean. See scripts/check_phantom_scaffolds.py.
+if echo "$STAGED" | grep -qE "dsa_progress\.md$|^dsa/probes/.*\.py$|^dsa/leetcode/.*\.(py|java|ts|js|cpp)$"; then
+  if command -v py >/dev/null 2>&1; then
+    py scripts/check_phantom_scaffolds.py || true
+  elif command -v python >/dev/null 2>&1; then
+    python scripts/check_phantom_scaffolds.py || true
+  elif command -v python3 >/dev/null 2>&1; then
+    python3 scripts/check_phantom_scaffolds.py || true
+  fi
+fi
+
 # Rule reconciliation. Fires ONLY when decisions.yml is staged — i.e. the moment a decision
 # is recorded, which is exactly when the blast radius is worth seeing and when it is cheapest
 # to act on. Running it on every commit would print a 40-line backlog daily until someone

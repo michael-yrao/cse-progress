@@ -65,6 +65,19 @@ PROPOSE_CUE = re.compile(
     re.IGNORECASE,
 )
 
+# A meta / self-eval / log summary QUOTES comfort glyphs as records, not as a live verdict.
+# On 2026-09-19 a meta-review + completion summary tripped this hook: it quoted self_eval_log
+# lines full of 🟢/🟡/🔴 next to words like "override"/"proposed" that describe PAST logged
+# ratings ("912 recorded 🟡→🟢 override pending"), not a rating being proposed now. Same class
+# as the recap and 'rate'-as-frequency exemptions above — a RECORD is not a PROPOSAL. These
+# markers do not occur in an ordinary rep turn, so exempting them opens only a narrow,
+# documented hole (a real rating buried in a meta turn blocks-once at worst if this ever fires).
+SUMMARY_CONTEXT = re.compile(
+    r"meta[-_ ]review|self[-_ ]eval|self_eval_log|self_eval_archive"
+    r"|intervention ladder|consolidated\s*(?:→|->)|decisions\.yml",
+    re.IGNORECASE,
+)
+
 # ── Complexity signals in the LEARNER's messages ────────────────────────────────
 BIG_O = re.compile(r"O\s*\(", re.IGNORECASE)
 TIME_SIGNAL = re.compile(
@@ -139,6 +152,8 @@ def learner_text(entries: "list[dict]", turns: int = LOOKBACK_TURNS) -> str:
 
 
 def proposes_rating(turn: str) -> bool:
+    if SUMMARY_CONTEXT.search(turn):
+        return False  # a log / meta-review summary records ratings, it does not propose one
     return bool(COMFORT.search(turn) and PROPOSE_CUE.search(turn))
 
 
@@ -225,6 +240,14 @@ PROPOSE_CASES = [
     ("probe tally, 'rate' as a frequency",
      "Probes: 🟢 🟢 🟡 🟢 🟢 🟢 — row-creation rate 17%, the pool still teaches.", False),
     ("rate as a decision request", "Coded from a blank page, no hints. Rate it?", True),
+    # The 2026-09-19 meta-review / completion summary false positive: comfort glyphs quoted
+    # from self_eval_log next to record-words ("override"/"proposed"), proposing nothing live.
+    ("meta-review summary, quoted glyphs",
+     "Meta-review: consolidated→ 912 recorded 🟡→🟢 override pending the Sep 21 call. Confirm the commit?", False),
+    ("self-eval log summary",
+     "Logged to self_eval_log.md: 540 🟡 stuck_log fix, proposed as a review-workflow step.", False),
+    ("decisions.yml summary with glyphs",
+     "decisions.yml: 283/206 🟢→🎓 graduate override recorded; nothing to accept here.", False),
 ]
 
 AXES_CASES = [

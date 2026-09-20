@@ -3,7 +3,7 @@ name: feedback_explanation_register
 description: Explanations read as "foreign" when the principle is named before the mechanics are shown and every step is wrapped in why-this-matters framing — show literal values first, name things after, and when they say "I don't understand," ASK which link broke instead of re-explaining; also holds the BANNED VOCABULARY list (load-bearing, footgun, …)
 metadata:
   type: feedback
-reconciled: 2026-09-11
+reconciled: 2026-09-19
 ---
 
 **Operational rule lives in the skill** — `SKILL.md` §1 (Register). This file is the *why* + the banned-vocab list.
@@ -157,3 +157,13 @@ Related, from the same session: **no quiz-scoring cadence** (`gate's closed`, `6
 clipped imperatives** (`Draw it.`, `Go write it.`), and **no theatrical withholding** (*"I'd rather you find
 it than have me name it"*) — dangling an answer costs a round trip and reads as a power move. See the
 Aug 15 entries in `self_eval_log.md`.
+
+**⬆️ Escalated to a hook (2026-09-19).** This banned-openers rule lapsed again mid-22 backtracking (`Careful —`,
+`Fair —`, `Right —` across several turns), the ≥2× prose-lapse threshold on the intervention ladder. The
+learner paired it with the advance-tail hook: *"remove the prefixing statements that don't add value like how
+we removed the ending statements."* So it now lives in **`problem_link_reminder.py::banned_opener`** (rung 2,
+fires on `Stop`, no settings change) — the mirror of `advance_prompt_tail` at the other end of the turn. The
+hook fires on the em-dash dangle (`<opener> —`), the `Right, so` continuation, and fixed throat-clears (`So:`,
+`Worth noting`, `Here's the thing`, `Good question, but`) at the start of the message OR any paragraph; a bare
+`So the invariant …` (no dangle) stays clean. This section stays the *why*; the operational sentence is
+SKILL.md §1 (Register). See `decisions.yml` `banned-openers-to-hook` and the 2026-09-19 self-eval entry.

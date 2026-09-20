@@ -1,4 +1,4 @@
-<!-- reconciled: 2026-09-18 -->
+<!-- reconciled: 2026-09-19 -->
 # Scaffolding a problem
 
 **Open this** before you create or set up any problem file for the learner.
@@ -13,6 +13,13 @@ Set the file up **before** they start — never make them create it or paste the
 
 - **A message naming specific problems scaffolds exactly those.** "I'll do 235", "let's
   do 417 and 543", "235 next" → scaffold those, and nothing else.
+  - ⚠️ **A problem name narrows scope ONLY when NO session-start phrase shares the message.**
+    "let's start our friday session, graduate merge sorted list" is a **kickoff** — the
+    session-start phrase governs, and the named problem is a *priority* (which rep to lead
+    with), not a scope-limiter. Scaffold the WHOLE board. Do not let a named problem downgrade
+    an explicit kickoff to a single-problem request, and do not override the
+    `kickoff_scaffold_reminder.py` flag with your own read (caught Sep 18, 2026 — the hook
+    fired, the read overrode it, only 21 got scaffolded).
 - **Batch the whole day only on a real kickoff:** an explicit "start today" / "start
   (this/the) session" / "start `<day>` session" / "what's up today" / `/start-day`, or a
   first message that asks for *the day* rather than for a problem. **"Start session" is a
@@ -41,7 +48,10 @@ A scaffolded-but-unattempted file is not inert — its blast radius is the track
     2026 on 84 — file deleted, row survived uncommitted for a rep that never happened.)
   - **Grep for a phantom:** `| Unknown | [<n>. …] | 🔴 | 0 | | | |` — **`Unknown`
     difficulty and blank dates**. Blank dates are why it hides (no scheduled demand, never
-    in a due list); only reading the tracker's tail surfaces it.
+    in a due list); only reading the tracker's tail surfaces it. Or run
+    **`python scripts/check_phantom_scaffolds.py`** — it flags phantom rows (empty Rep Dates /
+    `Unknown`) AND stranded probes (an earned probe still under `dsa/probes/`), and runs
+    report-only from pre-commit.
 - **Retry scaffolds move history out of the file.** Scaffolding a retry they didn't ask for
   stashes prior attempts to `.history/`; restore correctly declines an unattempted stub, so
   the file stays blank and the stash ships — a solution file emptied for a rep that never ran.

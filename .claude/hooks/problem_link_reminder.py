@@ -637,6 +637,82 @@ ADVANCE_MESSAGE = (
 )
 
 
+# ── Banned-opener detector ───────────────────────────────────────────────────────
+# The mirror of advance_prompt_tail at the OTHER end of the turn: a turn that corrects
+# something starts with the correction, not with a throat-clearing interjection. The
+# learner banned these Aug 15, 2026 (*"starting a sentence with careful really doesn't
+# add any value ... just get to the meat"*) and again Sep 19, 2026, explicitly pairing
+# it with the advance-tail hook (*"remove the prefixing statements that don't add value
+# like how we removed the ending statements"*). Prose has now lapsed >=2x, which is the
+# intervention ladder's threshold to leave the prose rung, so it becomes a hook.
+#
+# Deliberately narrow, like every detector here (a false positive trains the agent to
+# skim past the hook). The TELL is the em-dash dangle: a banned interjection immediately
+# followed by an em-dash / en-dash / "--" (`Careful -`, `Fair -`, `Right -`), plus the
+# "Right, so" comma continuation and a few fixed throat-clears that cannot be a real
+# sentence start (`So:`, `Worth noting`, `Here's the thing`, `Good question, but`). A
+# bare `So the invariant holds ...` or `Good catch on the boundary.` has no dangle and
+# stays clean. Checked at the start of the message AND of every paragraph (the learner's
+# chosen scope Sep 19), because an opener buried mid-turn is the same throat-clear.
+OPENER_RE = re.compile(
+    r"^(?:"
+    r"(?:careful|no|fair|right|good|ah|well|so|two\s+things|one\s+thing)\s*(?:[—–]|--)"
+    r"|(?:right|good|well|ah|no)\s*,\s*so\b"
+    r"|so\s*:"
+    r"|worth\s+noting\b"
+    r"|here'?s\s+the\s+thing\b"
+    r"|good\s+question,?\s+but\b"
+    r")",
+    re.IGNORECASE,
+)
+
+
+def banned_opener(text: str) -> "list[str]":
+    """Throat-clearing interjections opening the message or any paragraph, or [].
+
+    Returns the offending fragments so the block message can quote them back. Skips
+    fenced code, blockquotes (may quote the learner) and table rows.
+    """
+    found: "list[str]" = []
+    in_fence = False
+    prev_blank = True  # start of text is a paragraph boundary
+    for line in text.splitlines():
+        stripped = line.strip()
+        if stripped.startswith("```"):
+            in_fence = not in_fence
+            prev_blank = False
+            continue
+        if in_fence:
+            prev_blank = False
+            continue
+        if not stripped:
+            prev_blank = True
+            continue
+        if prev_blank and not (stripped.startswith(">") or stripped.startswith("|")):
+            cleaned = re.sub(r"^[>\-*\d.)#\s]+", "", stripped)         # list/quote/heading markers
+            cleaned = cleaned.replace("*", "").replace("`", "").lstrip()  # emphasis / code ticks
+            m = OPENER_RE.match(cleaned)
+            if m:
+                found.append(m.group(0).strip())
+        prev_blank = False
+    return found
+
+
+OPENER_MESSAGE = (
+    "BANNED OPENER -- this turn opens a paragraph with a throat-clearing interjection: "
+    "{openers}.\n"
+    "Start with the fact. These lead-ins delete with zero information loss and read as a "
+    "teacher clearing their throat (feedback_explanation_register.md -> BANNED OPENERS). "
+    "The test: delete the opening clause; if the sentence still stands, it should never "
+    "have carried one -- \"Careful - every car has the same end position\" -> \"Every car "
+    "has the same end position.\"\n"
+    "Re-emit the turn with each flagged paragraph starting at the fact -- drop the "
+    "interjection and the dangling dash. (A bare \"So the invariant holds ...\" with no "
+    "dangle, or \"Good catch\" with no dash, is fine and never fires.)\n"
+    "Rule: .claude/memory/feedback_explanation_register.md"
+)
+
+
 # Re-enabled 2026-08-14 after the 10th lapse got past it. It was disabled on the day it
 # was written because `last_assistant_text()` read only the FINAL assistant entry, which
 # is almost always a `tool_use` record with no text. The replacement above gathers the
@@ -690,6 +766,16 @@ def main() -> None:
     if tail:
         json.dump(
             {"decision": "block", "reason": ADVANCE_MESSAGE.format(tail=tail)},
+            sys.stdout,
+        )
+        return
+
+    # A turn that opens with a throat-clearing interjection buries the fact behind a
+    # deletable lead-in. Board-independent: it reads only the turn's own paragraph starts.
+    openers = banned_opener(text)
+    if openers:
+        json.dump(
+            {"decision": "block", "reason": OPENER_MESSAGE.format(openers=", ".join(f'"{o}"' for o in openers))},
             sys.stdout,
         )
         return
@@ -839,6 +925,32 @@ ADVANCE_CASES = [
 ]
 
 
+# Banned-opener cases for banned_opener. A turn STARTS at the fact; a throat-clearing
+# interjection with an em-dash dangle (or a fixed throat-clear) is the failure. Bare
+# sentence-initial "So"/"Good" with no dangle, and legitimate em-dashes mid-sentence,
+# must stay silent.
+OPENER_CASES = [
+    # (name, text, should_flag)
+    ("Careful - dangle", "Careful — every car has the same end position.", True),
+    ("Fair - dangle", "Fair — the O(n) version drops the rescan.", True),
+    ("Right, so", "Right, so the deque holds indices, not values.", True),
+    ("mid-turn paragraph opener",
+     "The invariant holds at each pop.\n\nRight — that also settles the boundary case.", True),
+    ("So: throat-clear", "So: the amortized cost is O(n).", True),
+    ("Worth noting", "Worth noting the empty-array case returns 0.", True),
+    ("double-hyphen dangle", "No -- the heap holds at most k entries.", True),
+    ("bold-wrapped opener", "**Careful** — the base case is off by one.", True),
+    # Negatives -- must stay silent.
+    ("bare So, no dangle", "So the invariant holds because each index is pushed once.", False),
+    ("Good catch, no dash", "Good catch on the boundary condition.", False),
+    ("em-dash mid-sentence", "The deque is monotonic — that is what makes it O(n).", False),
+    ("no leading interjection", "Every car has the same end position, so they merge.", False),
+    ("code fence with # So", "```python\n# So this is fine inside code\nx = 1\n```", False),
+    ("blockquote learner text", "> Careful — I think the deque is wrong here.", False),
+    ("number-so is not comma-so", "Right now the deque is empty, so we push.", False),
+]
+
+
 def _selftest(transcript: str | None = None) -> int:
     failures = 0
     for name, text, expected in CASES:
@@ -877,6 +989,16 @@ def _selftest(transcript: str | None = None) -> int:
                   f"{advance_prompt_tail(text)!r}")
     failures += advance_failures
     print(f"advance:  {len(ADVANCE_CASES) - advance_failures}/{len(ADVANCE_CASES)} passed")
+
+    opener_failures = 0
+    for name, text, expected in OPENER_CASES:
+        got = bool(banned_opener(text))
+        if got != expected:
+            opener_failures += 1
+            print(f"FAIL  {name}: flag={got}, expected {expected} -> "
+                  f"{banned_opener(text)!r}")
+    failures += opener_failures
+    print(f"opener:   {len(OPENER_CASES) - opener_failures}/{len(OPENER_CASES)} passed")
 
     board_failures = 0
     for name, text, board, expected in BOARD_CASES:

@@ -368,8 +368,15 @@ def existing_method_name(lines: list[str], cls: int) -> str | None:
     frequently disagree (102's method is `levelOrder`, not `binaryTreeLevelOrderTraversal`;
     417's is `pacificAtlantic`), and guessing wrong both mis-names the stub and makes the
     signature lookup miss, dropping the stub to a bare `(self)`. Prefer the unsuffixed
-    original; fall back to a dated variant with its `_YYYYMMDD` stripped. Nested helpers
-    (deeper indent) and `__init__` are skipped.
+    original; fall back to a dated variant with its `_YYYYMMDD` (and any variant token
+    trailing that date) stripped. Nested helpers (deeper indent) and `__init__` are skipped.
+
+    The strip must reach PAST the date to any variant tokens after it: a prior variant rep
+    is named `<base>_<date>_<variant>` (e.g. `findItinerary_20260829_minheap`), and stripping
+    only `_YYYYMMDD$` left that whole string as the "base", so today's date was appended to it
+    → `findItinerary_20260829_minheap_20260915` (self_eval 2026-09-15). The token run is only
+    stripped when it BEGINS with a date, so a legitimately underscored method name that has no
+    date (`two_sum`) is untouched, and `two_sum_20260915` strips just the trailing date.
     """
     method_indent = None
     dated = None
@@ -384,7 +391,7 @@ def existing_method_name(lines: list[str], cls: int) -> str | None:
             method_indent = indent
         if indent != method_indent or nm == "__init__":
             continue
-        base = re.sub(r"_\d{8}$", "", nm)
+        base = re.sub(r"_\d{8}(?:_[a-z0-9]+)*$", "", nm)  # date + any variant tokens after it
         if base == nm:      # unsuffixed original — the canonical name, take it
             return base
         dated = dated or base   # a dated variant only; remember as fallback

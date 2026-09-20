@@ -1,4 +1,4 @@
-<!-- reconciled: 2026-09-12 -->
+<!-- reconciled: 2026-09-19 -->
 # End-of-week close-out & schedule build
 
 **Open this** when today is the last session of the week. **Not for** a mid-week rep (that's
@@ -58,6 +58,26 @@ week's assumptions.
 - **⚠️ Check every active phase has reps on the board.** (Found Aug 9, 2026: `Sliding Window +
   Stack` opened Aug 3 and sat a week with zero of its 8 problems in the tracker — invisible because
   the board was full of legitimate review work.)
+- **⚠️ A variant parenthetical on the board is READ FROM the due tracker row, never hand-typed.** A
+  multi-variant problem (same LC number, e.g. 21 Iterative vs Recursion, 130 Union-Find vs BFS) has a
+  SEPARATE tracker row per variant with its own due date. Seat the variant whose row is actually coming
+  due this week, and copy its label from that row — do not free-type "(Iterative)" from habit. Found
+  Sep 18, 2026: one build tagged 21/206/130 with the *other* variant in each case (already 🎓 or due
+  weeks later), which would have re-repped a graduated or not-yet-due variant. Its sibling in the method
+  NAME is source-fixed (`new_problem.py` strips an accreted `_<date>[_variant]` from the stub name,
+  self_eval 2026-09-15); this is the board LABEL, which is hand-authored — so verify it against the row.
+- **⚠️ Run `python scripts/check_schedule_integrity.py` on the built week.** Beyond the result-writeback
+  checks, it now flags any tracker row DUE within the week that is seated on NO day of the board — the
+  2026-09-14 leak (two overdue 🔴s crossed a week boundary and slipped consecutive builds). Every flagged
+  row must be seated OR have its due date pushed (a deferral gets a new date); a due row on no board is
+  exactly the "nothing dropped without a date" violation.
+- **⚠️ Run `python scripts/check_phantom_scaffolds.py` before the pre-commit discovery.** It flags (a)
+  PHANTOM ROWS — a scaffolded-but-never-attempted file discovery minted a row for (empty Rep Dates /
+  `Unknown` difficulty): record the rep, or delete the file AND the row (deleting the file alone leaves
+  the row, self_eval 2026-08-31); and (b) STRANDED PROBES — an earned probe still under `dsa/probes/`,
+  outside `solutions.roots`, where the tooling can't maintain it (self_eval 2026-09-16): `git mv` it to
+  its canonical `dsa/leetcode/<category>/` path. The upfront kickoff scaffold makes phantoms systematic,
+  so this reconcile runs every close-out.
 - **If the AI pillar is still PARKED, test its activation trigger** (see
   [`project_ai_pillar`](.claude/memory/project_ai_pillar.md)): DP/Backtracking phases closed AND
   `effort_budget.py` shows ≥2 days/week well under the ceiling for 2 weeks. Met → raise starting it
