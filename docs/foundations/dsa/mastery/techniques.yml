@@ -12,6 +12,19 @@
 #                 it is a skill rather than recall of one problem). Drop to 1-2 for
 #                 patterns that are genuinely problem-specific — Dutch National Flag has
 #                 exactly one canonical problem and flagging it "thin" forever is noise.
+#   tier          curriculum tier, for the HONEST denominator (Sep 21, 2026): "core"
+#                 (already-started NC150/pattern-doc techniques — the implicit default
+#                 when a technique carries no `tier:` key, so the 56 pre-existing entries
+#                 above were NOT rewritten), "dp" (the DP framework lenses — knapsack,
+#                 interval DP, LIS, LCS, space compression — plus core 1D/2D DP), "tier1"
+#                 (Knowledge Expansion Queue, ABOVE the interview-ROI line — still shows
+#                 up in hard interviews), "tier2"/"tier3" (BELOW the line — competitive-
+#                 programming horizon only). See study_guide.md's "Interview-ROI Line".
+#                 A `tier` never changes a gap check — `is_started` already gates every
+#                 check off techniques with zero `problems`, which is exactly the state
+#                 every entry below is declared in. Tiering only lets the dashboard show
+#                 breadth as "56 practiced · N above the line · M below" instead of one
+#                 flat fraction that reads misleadingly high OR low either way.
 #   variants      alternative METHODS for the same technique, when exercising both is
 #                 worth an interview rep. A variant with zero problems is a gap.
 #                 `queued: <trigger>` marks one already sitting in the Waiting Room or
@@ -665,3 +678,226 @@ techniques:
       - {name: D&C on 53, queued: "rated:912 + surplus>=1"}
     problems:
       - {number: 912, method: Merge Sort}
+
+  # ══════════════════════════════════════════════════════════════════════════════
+  # NOT-STARTED CURRICULUM (Sep 21, 2026) — the honest denominator.
+  #
+  # Every entry below has NO `problems` key on purpose: `is_started` (technique_coverage.py)
+  # is `bool(self.rows)`, so a technique with nothing solved is `is_started: False` and is
+  # excluded from every gap check (no-green / thin / variant) and from the Action List — it
+  # only adds to the total in the header line and gets one row in the Coverage table with
+  # Gaps = `*not started*`. Enumerated FAITHFULLY from docs/foundations/dsa/study_guide.md
+  # (the Framework-lenses bullet + the Tier 1/2/3 Knowledge Expansion Queue lists) — nothing
+  # here is invented. Promote an entry to "started" the normal way: add its first
+  # `problems:` row once a rep is actually seated (see study_guide.md's promotion note).
+  # ══════════════════════════════════════════════════════════════════════════════
+
+  # ── DP framework lenses + the two core roadmap phases (tier: dp) ────────────────
+  # study_guide.md line 17 ("Framework lenses — knapsack / interval / LIS / space-
+  # compression") + line 269 (2D DP phase names LCS) + the 1D/2D DP roadmap phases
+  # themselves (lines 298/456/461), which are not yet started.
+  - name: Knapsack
+    family: dynamic_programming
+    tier: dp
+    min_problems: 3
+
+  - name: Interval DP
+    family: dynamic_programming
+    tier: dp
+    min_problems: 3
+
+  - name: Longest Increasing Subsequence
+    family: dynamic_programming
+    tier: dp
+    min_problems: 1
+
+  - name: Longest Common Subsequence
+    family: dynamic_programming
+    tier: dp
+    min_problems: 1
+
+  - name: Space Compression
+    family: dynamic_programming
+    tier: dp
+    min_problems: 1
+
+  - name: 1D Dynamic Programming
+    family: dynamic_programming
+    tier: dp
+    min_problems: 3
+
+  - name: 2D Dynamic Programming
+    family: dynamic_programming
+    tier: dp
+    min_problems: 3
+
+  # ── Tier 1 — Knowledge Expansion Queue, ABOVE the interview-ROI line (tier: tier1) ──
+  # study_guide.md line 17: "Tier 1 advanced ... segment tree, Fenwick, KMP, XOR trie,
+  # Manacher's, matrix expo, Tarjan's, meet-in-the-middle, reservoir sampling, difference
+  # array, number theory. Advanced, but still shows up in *hard* interviews."
+  - name: Segment Tree
+    family: expansion
+    tier: tier1
+    min_problems: 1
+
+  - name: Fenwick Tree (BIT)
+    family: expansion
+    tier: tier1
+    min_problems: 1
+
+  - name: KMP
+    family: expansion
+    tier: tier1
+    min_problems: 1
+
+  - name: XOR Trie
+    family: expansion
+    tier: tier1
+    min_problems: 1
+
+  - name: Manacher's Algorithm
+    family: expansion
+    tier: tier1
+    min_problems: 1
+
+  - name: Matrix Exponentiation
+    family: expansion
+    tier: tier1
+    min_problems: 1
+
+  - name: Tarjan's SCC
+    family: expansion
+    tier: tier1
+    min_problems: 1
+
+  - name: Meet-in-the-Middle
+    family: expansion
+    tier: tier1
+    min_problems: 1
+
+  - name: Reservoir Sampling
+    family: expansion
+    tier: tier1
+    min_problems: 1
+
+  - name: Difference Array
+    family: expansion
+    tier: tier1
+    min_problems: 1
+
+  - name: Number Theory
+    family: expansion
+    tier: tier1
+    min_problems: 1
+
+  # ══════════ INTERVIEW-ROI LINE — everything above still pays interview dividends; ══════════
+  # ══════════ everything below is competitive-programming depth only.            ══════════
+
+  # ── Tier 2 — "further horizon", BELOW the line (tier: tier2) ────────────────────
+  # study_guide.md line 20: "sweep line, max-flow, LCA, advanced shortest-path
+  # (bidirectional search / Johnson's), Mo's algorithm, SOS DP, suffix automaton,
+  # Aho-Corasick, persistent structures."
+  - name: Sweep Line
+    family: expansion
+    tier: tier2
+    min_problems: 1
+
+  - name: Max-Flow
+    family: expansion
+    tier: tier2
+    min_problems: 1
+
+  - name: LCA
+    family: expansion
+    tier: tier2
+    min_problems: 1
+
+  - name: Bidirectional Search / Johnson's
+    family: expansion
+    tier: tier2
+    min_problems: 1
+
+  - name: Mo's Algorithm
+    family: expansion
+    tier: tier2
+    min_problems: 1
+
+  - name: SOS DP
+    family: expansion
+    tier: tier2
+    min_problems: 1
+
+  - name: Suffix Automaton
+    family: expansion
+    tier: tier2
+    min_problems: 1
+
+  - name: Aho-Corasick
+    family: expansion
+    tier: tier2
+    min_problems: 1
+
+  - name: Persistent Structures
+    family: expansion
+    tier: tier2
+    min_problems: 1
+
+  # ── Tier 3 — "competitive / research horizon", BELOW the line (tier: tier3) ─────
+  # study_guide.md line 20: "HLD, centroid decomposition, link-cut trees, suffix
+  # automaton/Eertree, FFT/NTT, MCMF & min-cut modeling, D&C DP / Aliens trick, segment
+  # tree beats, 2-SAT, advanced geometry, Sprague-Grundy." (Suffix Automaton is already
+  # declared once, under Tier 2 above — not duplicated here.)
+  - name: Heavy-Light Decomposition
+    family: expansion
+    tier: tier3
+    min_problems: 1
+
+  - name: Centroid Decomposition
+    family: expansion
+    tier: tier3
+    min_problems: 1
+
+  - name: Link-Cut Trees
+    family: expansion
+    tier: tier3
+    min_problems: 1
+
+  - name: Eertree
+    family: expansion
+    tier: tier3
+    min_problems: 1
+
+  - name: FFT/NTT
+    family: expansion
+    tier: tier3
+    min_problems: 1
+
+  - name: MCMF / Min-Cut Modeling
+    family: expansion
+    tier: tier3
+    min_problems: 1
+
+  - name: D&C DP (Aliens Trick)
+    family: expansion
+    tier: tier3
+    min_problems: 1
+
+  - name: Segment Tree Beats
+    family: expansion
+    tier: tier3
+    min_problems: 1
+
+  - name: 2-SAT
+    family: expansion
+    tier: tier3
+    min_problems: 1
+
+  - name: Advanced Geometry
+    family: expansion
+    tier: tier3
+    min_problems: 1
+
+  - name: Sprague-Grundy
+    family: expansion
+    tier: tier3
+    min_problems: 1

@@ -31,7 +31,7 @@
     "restDayAllowance": 1
   },
   "coverage": {
-    "total": 56,
+    "total": 94,
     "started": 56,
     "noGreen": 0,
     "thin": 18,
@@ -921,6 +921,8 @@
     {
       "name": "Bellman-Ford",
       "family": "advanced_graphs",
+      "tier": "core",
+      "started": true,
       "problemCount": 1,
       "problems": [
         787
@@ -933,6 +935,8 @@
     {
       "name": "Dijkstra",
       "family": "advanced_graphs",
+      "tier": "core",
+      "started": true,
       "problemCount": 1,
       "problems": [
         778
@@ -945,6 +949,8 @@
     {
       "name": "Floyd-Warshall (all-pairs shortest path)",
       "family": "advanced_graphs",
+      "tier": "core",
+      "started": true,
       "problemCount": 2,
       "problems": [
         1334,
@@ -958,6 +964,8 @@
     {
       "name": "Hierholzer (Eulerian path)",
       "family": "advanced_graphs",
+      "tier": "core",
+      "started": true,
       "problemCount": 2,
       "problems": [
         332,
@@ -971,6 +979,8 @@
     {
       "name": "Prim's MST",
       "family": "advanced_graphs",
+      "tier": "core",
+      "started": true,
       "problemCount": 1,
       "problems": [
         1584
@@ -983,6 +993,8 @@
     {
       "name": "Array/String Fundamentals",
       "family": "arrays_and_hash",
+      "tier": "core",
+      "started": true,
       "problemCount": 3,
       "problems": [
         14,
@@ -997,6 +1009,8 @@
     {
       "name": "Boyer-Moore Voting",
       "family": "arrays_and_hash",
+      "tier": "core",
+      "started": true,
       "problemCount": 2,
       "problems": [
         169,
@@ -1010,6 +1024,8 @@
     {
       "name": "Frequency Counting",
       "family": "arrays_and_hash",
+      "tier": "core",
+      "started": true,
       "problemCount": 2,
       "problems": [
         49,
@@ -1023,6 +1039,8 @@
     {
       "name": "Hash Map Lookup",
       "family": "arrays_and_hash",
+      "tier": "core",
+      "started": true,
       "problemCount": 2,
       "problems": [
         1,
@@ -1036,6 +1054,8 @@
     {
       "name": "Hash Set Membership",
       "family": "arrays_and_hash",
+      "tier": "core",
+      "started": true,
       "problemCount": 3,
       "problems": [
         36,
@@ -1050,6 +1070,8 @@
     {
       "name": "In-Place Array Rotation",
       "family": "arrays_and_hash",
+      "tier": "core",
+      "started": true,
       "problemCount": 1,
       "problems": [
         189
@@ -1062,6 +1084,8 @@
     {
       "name": "Length-Prefix Encoding",
       "family": "arrays_and_hash",
+      "tier": "core",
+      "started": true,
       "problemCount": 1,
       "problems": [
         271
@@ -1074,6 +1098,8 @@
     {
       "name": "Prefix/Suffix Products",
       "family": "arrays_and_hash",
+      "tier": "core",
+      "started": true,
       "problemCount": 1,
       "problems": [
         238
@@ -1086,6 +1112,8 @@
     {
       "name": "Binary Search (exact match)",
       "family": "binary_search",
+      "tier": "core",
+      "started": true,
       "problemCount": 2,
       "problems": [
         33,
@@ -1099,6 +1127,8 @@
     {
       "name": "Binary Search (max boundary)",
       "family": "binary_search",
+      "tier": "core",
+      "started": true,
       "problemCount": 3,
       "problems": [
         34,
@@ -1113,6 +1143,8 @@
     {
       "name": "Binary Search (min boundary)",
       "family": "binary_search",
+      "tier": "core",
+      "started": true,
       "problemCount": 7,
       "problems": [
         34,
@@ -1131,6 +1163,8 @@
     {
       "name": "Binary Search on Answer",
       "family": "binary_search",
+      "tier": "core",
+      "started": true,
       "problemCount": 3,
       "problems": [
         875,
@@ -1143,8 +1177,466 @@
       "hasVariantGap": false
     },
     {
+      "name": "1D Dynamic Programming",
+      "family": "dynamic_programming",
+      "tier": "dp",
+      "started": false,
+      "problemCount": 0,
+      "problems": [],
+      "bestComfort": null,
+      "hasGreen": false,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "2D Dynamic Programming",
+      "family": "dynamic_programming",
+      "tier": "dp",
+      "started": false,
+      "problemCount": 0,
+      "problems": [],
+      "bestComfort": null,
+      "hasGreen": false,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Interval DP",
+      "family": "dynamic_programming",
+      "tier": "dp",
+      "started": false,
+      "problemCount": 0,
+      "problems": [],
+      "bestComfort": null,
+      "hasGreen": false,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Knapsack",
+      "family": "dynamic_programming",
+      "tier": "dp",
+      "started": false,
+      "problemCount": 0,
+      "problems": [],
+      "bestComfort": null,
+      "hasGreen": false,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Longest Common Subsequence",
+      "family": "dynamic_programming",
+      "tier": "dp",
+      "started": false,
+      "problemCount": 0,
+      "problems": [],
+      "bestComfort": null,
+      "hasGreen": false,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Longest Increasing Subsequence",
+      "family": "dynamic_programming",
+      "tier": "dp",
+      "started": false,
+      "problemCount": 0,
+      "problems": [],
+      "bestComfort": null,
+      "hasGreen": false,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Space Compression",
+      "family": "dynamic_programming",
+      "tier": "dp",
+      "started": false,
+      "problemCount": 0,
+      "problems": [],
+      "bestComfort": null,
+      "hasGreen": false,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "2-SAT",
+      "family": "expansion",
+      "tier": "tier3",
+      "started": false,
+      "problemCount": 0,
+      "problems": [],
+      "bestComfort": null,
+      "hasGreen": false,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Advanced Geometry",
+      "family": "expansion",
+      "tier": "tier3",
+      "started": false,
+      "problemCount": 0,
+      "problems": [],
+      "bestComfort": null,
+      "hasGreen": false,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Aho-Corasick",
+      "family": "expansion",
+      "tier": "tier2",
+      "started": false,
+      "problemCount": 0,
+      "problems": [],
+      "bestComfort": null,
+      "hasGreen": false,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Bidirectional Search / Johnson's",
+      "family": "expansion",
+      "tier": "tier2",
+      "started": false,
+      "problemCount": 0,
+      "problems": [],
+      "bestComfort": null,
+      "hasGreen": false,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Centroid Decomposition",
+      "family": "expansion",
+      "tier": "tier3",
+      "started": false,
+      "problemCount": 0,
+      "problems": [],
+      "bestComfort": null,
+      "hasGreen": false,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "D&C DP (Aliens Trick)",
+      "family": "expansion",
+      "tier": "tier3",
+      "started": false,
+      "problemCount": 0,
+      "problems": [],
+      "bestComfort": null,
+      "hasGreen": false,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Difference Array",
+      "family": "expansion",
+      "tier": "tier1",
+      "started": false,
+      "problemCount": 0,
+      "problems": [],
+      "bestComfort": null,
+      "hasGreen": false,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Eertree",
+      "family": "expansion",
+      "tier": "tier3",
+      "started": false,
+      "problemCount": 0,
+      "problems": [],
+      "bestComfort": null,
+      "hasGreen": false,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "FFT/NTT",
+      "family": "expansion",
+      "tier": "tier3",
+      "started": false,
+      "problemCount": 0,
+      "problems": [],
+      "bestComfort": null,
+      "hasGreen": false,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Fenwick Tree (BIT)",
+      "family": "expansion",
+      "tier": "tier1",
+      "started": false,
+      "problemCount": 0,
+      "problems": [],
+      "bestComfort": null,
+      "hasGreen": false,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Heavy-Light Decomposition",
+      "family": "expansion",
+      "tier": "tier3",
+      "started": false,
+      "problemCount": 0,
+      "problems": [],
+      "bestComfort": null,
+      "hasGreen": false,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "KMP",
+      "family": "expansion",
+      "tier": "tier1",
+      "started": false,
+      "problemCount": 0,
+      "problems": [],
+      "bestComfort": null,
+      "hasGreen": false,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "LCA",
+      "family": "expansion",
+      "tier": "tier2",
+      "started": false,
+      "problemCount": 0,
+      "problems": [],
+      "bestComfort": null,
+      "hasGreen": false,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Link-Cut Trees",
+      "family": "expansion",
+      "tier": "tier3",
+      "started": false,
+      "problemCount": 0,
+      "problems": [],
+      "bestComfort": null,
+      "hasGreen": false,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "MCMF / Min-Cut Modeling",
+      "family": "expansion",
+      "tier": "tier3",
+      "started": false,
+      "problemCount": 0,
+      "problems": [],
+      "bestComfort": null,
+      "hasGreen": false,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Manacher's Algorithm",
+      "family": "expansion",
+      "tier": "tier1",
+      "started": false,
+      "problemCount": 0,
+      "problems": [],
+      "bestComfort": null,
+      "hasGreen": false,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Matrix Exponentiation",
+      "family": "expansion",
+      "tier": "tier1",
+      "started": false,
+      "problemCount": 0,
+      "problems": [],
+      "bestComfort": null,
+      "hasGreen": false,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Max-Flow",
+      "family": "expansion",
+      "tier": "tier2",
+      "started": false,
+      "problemCount": 0,
+      "problems": [],
+      "bestComfort": null,
+      "hasGreen": false,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Meet-in-the-Middle",
+      "family": "expansion",
+      "tier": "tier1",
+      "started": false,
+      "problemCount": 0,
+      "problems": [],
+      "bestComfort": null,
+      "hasGreen": false,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Mo's Algorithm",
+      "family": "expansion",
+      "tier": "tier2",
+      "started": false,
+      "problemCount": 0,
+      "problems": [],
+      "bestComfort": null,
+      "hasGreen": false,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Number Theory",
+      "family": "expansion",
+      "tier": "tier1",
+      "started": false,
+      "problemCount": 0,
+      "problems": [],
+      "bestComfort": null,
+      "hasGreen": false,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Persistent Structures",
+      "family": "expansion",
+      "tier": "tier2",
+      "started": false,
+      "problemCount": 0,
+      "problems": [],
+      "bestComfort": null,
+      "hasGreen": false,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Reservoir Sampling",
+      "family": "expansion",
+      "tier": "tier1",
+      "started": false,
+      "problemCount": 0,
+      "problems": [],
+      "bestComfort": null,
+      "hasGreen": false,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "SOS DP",
+      "family": "expansion",
+      "tier": "tier2",
+      "started": false,
+      "problemCount": 0,
+      "problems": [],
+      "bestComfort": null,
+      "hasGreen": false,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Segment Tree",
+      "family": "expansion",
+      "tier": "tier1",
+      "started": false,
+      "problemCount": 0,
+      "problems": [],
+      "bestComfort": null,
+      "hasGreen": false,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Segment Tree Beats",
+      "family": "expansion",
+      "tier": "tier3",
+      "started": false,
+      "problemCount": 0,
+      "problems": [],
+      "bestComfort": null,
+      "hasGreen": false,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Sprague-Grundy",
+      "family": "expansion",
+      "tier": "tier3",
+      "started": false,
+      "problemCount": 0,
+      "problems": [],
+      "bestComfort": null,
+      "hasGreen": false,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Suffix Automaton",
+      "family": "expansion",
+      "tier": "tier2",
+      "started": false,
+      "problemCount": 0,
+      "problems": [],
+      "bestComfort": null,
+      "hasGreen": false,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Sweep Line",
+      "family": "expansion",
+      "tier": "tier2",
+      "started": false,
+      "problemCount": 0,
+      "problems": [],
+      "bestComfort": null,
+      "hasGreen": false,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Tarjan's SCC",
+      "family": "expansion",
+      "tier": "tier1",
+      "started": false,
+      "problemCount": 0,
+      "problems": [],
+      "bestComfort": null,
+      "hasGreen": false,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "XOR Trie",
+      "family": "expansion",
+      "tier": "tier1",
+      "started": false,
+      "problemCount": 0,
+      "problems": [],
+      "bestComfort": null,
+      "hasGreen": false,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
       "name": "BFS on Implicit Graph",
       "family": "graphs",
+      "tier": "core",
+      "started": true,
       "problemCount": 1,
       "problems": [
         127
@@ -1157,6 +1649,8 @@
     {
       "name": "Connected Components",
       "family": "graphs",
+      "tier": "core",
+      "started": true,
       "problemCount": 1,
       "problems": [
         323
@@ -1169,6 +1663,8 @@
     {
       "name": "Cycle Detection in an Iterated Sequence",
       "family": "graphs",
+      "tier": "core",
+      "started": true,
       "problemCount": 1,
       "problems": [
         202
@@ -1181,6 +1677,8 @@
     {
       "name": "Graph Clone (DFS + Hash Map)",
       "family": "graphs",
+      "tier": "core",
+      "started": true,
       "problemCount": 1,
       "problems": [
         133
@@ -1193,6 +1691,8 @@
     {
       "name": "Graph Cycle Detection (DFS)",
       "family": "graphs",
+      "tier": "core",
+      "started": true,
       "problemCount": 1,
       "problems": [
         261
@@ -1205,6 +1705,8 @@
     {
       "name": "Grid BFS",
       "family": "graphs",
+      "tier": "core",
+      "started": true,
       "problemCount": 4,
       "problems": [
         130,
@@ -1220,6 +1722,8 @@
     {
       "name": "Grid DFS",
       "family": "graphs",
+      "tier": "core",
+      "started": true,
       "problemCount": 2,
       "problems": [
         200,
@@ -1233,6 +1737,8 @@
     {
       "name": "Multi-source BFS",
       "family": "graphs",
+      "tier": "core",
+      "started": true,
       "problemCount": 1,
       "problems": [
         994
@@ -1245,6 +1751,8 @@
     {
       "name": "Topological Sort",
       "family": "graphs",
+      "tier": "core",
+      "started": true,
       "problemCount": 3,
       "problems": [
         207,
@@ -1259,6 +1767,8 @@
     {
       "name": "Union-Find",
       "family": "graphs",
+      "tier": "core",
+      "started": true,
       "problemCount": 4,
       "problems": [
         130,
@@ -1274,6 +1784,8 @@
     {
       "name": "Heap / Priority Queue",
       "family": "heap",
+      "tier": "core",
+      "started": true,
       "problemCount": 6,
       "problems": [
         347,
@@ -1291,6 +1803,8 @@
     {
       "name": "Intervals (sort + sweep)",
       "family": "intervals",
+      "tier": "core",
+      "started": true,
       "problemCount": 3,
       "problems": [
         56,
@@ -1305,6 +1819,8 @@
     {
       "name": "Deep Copy via Hash Map",
       "family": "linked_list",
+      "tier": "core",
+      "started": true,
       "problemCount": 1,
       "problems": [
         138
@@ -1317,6 +1833,8 @@
     {
       "name": "Floyd's Cycle / Midpoint",
       "family": "linked_list",
+      "tier": "core",
+      "started": true,
       "problemCount": 2,
       "problems": [
         141,
@@ -1330,6 +1848,8 @@
     {
       "name": "HashMap + Doubly Linked List (LRU)",
       "family": "linked_list",
+      "tier": "core",
+      "started": true,
       "problemCount": 1,
       "problems": [
         146
@@ -1342,6 +1862,8 @@
     {
       "name": "Linked List Arithmetic",
       "family": "linked_list",
+      "tier": "core",
+      "started": true,
       "problemCount": 1,
       "problems": [
         2
@@ -1354,6 +1876,8 @@
     {
       "name": "Linked List Merge",
       "family": "linked_list",
+      "tier": "core",
+      "started": true,
       "problemCount": 1,
       "problems": [
         21
@@ -1366,6 +1890,8 @@
     {
       "name": "Linked List Reversal",
       "family": "linked_list",
+      "tier": "core",
+      "started": true,
       "problemCount": 1,
       "problems": [
         206
@@ -1378,6 +1904,8 @@
     {
       "name": "Remove Nth From End",
       "family": "linked_list",
+      "tier": "core",
+      "started": true,
       "problemCount": 1,
       "problems": [
         19
@@ -1390,6 +1918,8 @@
     {
       "name": "Kadane",
       "family": "prefix_sum",
+      "tier": "core",
+      "started": true,
       "problemCount": 1,
       "problems": [
         53
@@ -1402,6 +1932,8 @@
     {
       "name": "Prefix Sum",
       "family": "prefix_sum",
+      "tier": "core",
+      "started": true,
       "problemCount": 2,
       "problems": [
         53,
@@ -1415,6 +1947,8 @@
     {
       "name": "Greedy (single pass)",
       "family": "sliding_window",
+      "tier": "core",
+      "started": true,
       "problemCount": 6,
       "problems": [
         45,
@@ -1432,6 +1966,8 @@
     {
       "name": "Sliding Window",
       "family": "sliding_window",
+      "tier": "core",
+      "started": true,
       "problemCount": 4,
       "problems": [
         3,
@@ -1447,6 +1983,8 @@
     {
       "name": "Divide & Conquer / Sorting",
       "family": "sorting",
+      "tier": "core",
+      "started": true,
       "problemCount": 1,
       "problems": [
         912
@@ -1459,6 +1997,8 @@
     {
       "name": "Monotonic Deque",
       "family": "stack",
+      "tier": "core",
+      "started": true,
       "problemCount": 1,
       "problems": [
         239
@@ -1471,6 +2011,8 @@
     {
       "name": "Monotonic Stack",
       "family": "stack",
+      "tier": "core",
+      "started": true,
       "problemCount": 6,
       "problems": [
         84,
@@ -1488,6 +2030,8 @@
     {
       "name": "Stack (augmented entries)",
       "family": "stack",
+      "tier": "core",
+      "started": true,
       "problemCount": 1,
       "problems": [
         155
@@ -1500,6 +2044,8 @@
     {
       "name": "Stack (expression evaluation)",
       "family": "stack",
+      "tier": "core",
+      "started": true,
       "problemCount": 1,
       "problems": [
         150
@@ -1512,6 +2058,8 @@
     {
       "name": "Stack (matching)",
       "family": "stack",
+      "tier": "core",
+      "started": true,
       "problemCount": 1,
       "problems": [
         20
@@ -1524,6 +2072,8 @@
     {
       "name": "BST Descent",
       "family": "trees",
+      "tier": "core",
+      "started": true,
       "problemCount": 2,
       "problems": [
         98,
@@ -1537,6 +2087,8 @@
     {
       "name": "Tree BFS (level order)",
       "family": "trees",
+      "tier": "core",
+      "started": true,
       "problemCount": 2,
       "problems": [
         102,
@@ -1550,6 +2102,8 @@
     {
       "name": "Tree Construction (Divide & Conquer)",
       "family": "trees",
+      "tier": "core",
+      "started": true,
       "problemCount": 1,
       "problems": [
         105
@@ -1562,6 +2116,8 @@
     {
       "name": "Tree DFS (recursive)",
       "family": "trees",
+      "tier": "core",
+      "started": true,
       "problemCount": 6,
       "problems": [
         100,
@@ -1579,6 +2135,8 @@
     {
       "name": "Tree DFS with Postorder Return",
       "family": "trees",
+      "tier": "core",
+      "started": true,
       "problemCount": 2,
       "problems": [
         124,
@@ -1592,6 +2150,8 @@
     {
       "name": "Trie",
       "family": "tries",
+      "tier": "core",
+      "started": true,
       "problemCount": 2,
       "problems": [
         208,
@@ -1605,6 +2165,8 @@
     {
       "name": "Dutch National Flag",
       "family": "two_pointers",
+      "tier": "core",
+      "started": true,
       "problemCount": 1,
       "problems": [
         75
@@ -1617,6 +2179,8 @@
     {
       "name": "Fast/Slow In-Place Write",
       "family": "two_pointers",
+      "tier": "core",
+      "started": true,
       "problemCount": 4,
       "problems": [
         26,
@@ -1632,6 +2196,8 @@
     {
       "name": "Prefix/Suffix Max",
       "family": "two_pointers",
+      "tier": "core",
+      "started": true,
       "problemCount": 1,
       "problems": [
         42
@@ -1644,6 +2210,8 @@
     {
       "name": "Two Pointers (converging)",
       "family": "two_pointers",
+      "tier": "core",
+      "started": true,
       "problemCount": 8,
       "problems": [
         11,
@@ -1851,6 +2419,7 @@
             "title": "Generate Parentheses",
             "technique": "Backtracking",
             "startComfort": "🔴",
+            "difficulty": "Medium",
             "done": false
           },
           {
@@ -1858,6 +2427,7 @@
             "title": "Gas Station",
             "technique": "Greedy",
             "startComfort": "🟡",
+            "difficulty": "Medium",
             "done": false
           },
           {
@@ -1865,6 +2435,7 @@
             "title": "Add and Search Words",
             "technique": "Trie",
             "startComfort": "🟢",
+            "difficulty": "Medium",
             "done": false
           },
           {
@@ -1872,6 +2443,7 @@
             "title": "Swim in Rising Water",
             "technique": "Dijkstra",
             "startComfort": "🟢",
+            "difficulty": "Hard",
             "done": false
           }
         ]
@@ -1887,6 +2459,7 @@
             "title": "Magnetic Force Between Two Balls",
             "technique": "Binary-search",
             "startComfort": "🔴",
+            "difficulty": "Medium",
             "done": false
           },
           {
@@ -1894,6 +2467,7 @@
             "title": "Longest Repeating Character Replacement",
             "technique": "Sliding-window",
             "startComfort": "🟡",
+            "difficulty": "Medium",
             "done": false
           },
           {
@@ -1901,6 +2475,7 @@
             "title": "Network Delay Time (Dijkstra — min-heap)",
             "technique": "Dijkstra",
             "startComfort": "🟡",
+            "difficulty": "Medium",
             "done": false
           },
           {
@@ -1908,6 +2483,7 @@
             "title": "Online Stock Span",
             "technique": "Monotonic-stack",
             "startComfort": "🟢",
+            "difficulty": "Medium",
             "done": false
           }
         ]
@@ -1923,6 +2499,7 @@
             "title": "Find Critical and Pseudo-Critical Edges in MST",
             "technique": "Kruskal",
             "startComfort": "🟡",
+            "difficulty": "Hard",
             "done": false
           },
           {
@@ -1930,6 +2507,7 @@
             "title": "Hand of Straights",
             "technique": "Greedy",
             "startComfort": "🟡",
+            "difficulty": "Medium",
             "done": false
           },
           {
@@ -1937,6 +2515,7 @@
             "title": "Combination Sum",
             "technique": "Backtracking",
             "startComfort": null,
+            "difficulty": null,
             "done": false
           }
         ]
@@ -1952,6 +2531,7 @@
             "title": "Replace Words",
             "technique": "Trie",
             "startComfort": "🟡",
+            "difficulty": "Medium",
             "done": false
           },
           {
@@ -1959,6 +2539,7 @@
             "title": "Network Delay Time (Dijkstra — array-scan)",
             "technique": "Dijkstra",
             "startComfort": "🟡",
+            "difficulty": "Medium",
             "done": false
           },
           {
@@ -1966,6 +2547,7 @@
             "title": "Last Stone Weight",
             "technique": "Heap",
             "startComfort": "🟢",
+            "difficulty": "Easy",
             "done": false
           },
           {
@@ -1973,6 +2555,7 @@
             "title": "Find the City at a Threshold Distance",
             "technique": "Floyd-Warshall",
             "startComfort": "🟢",
+            "difficulty": "Medium",
             "done": false
           },
           {
@@ -1980,6 +2563,7 @@
             "title": "Rotate Array",
             "technique": "Array-rotation",
             "startComfort": "🟢",
+            "difficulty": "Medium",
             "done": false
           },
           {
@@ -1987,6 +2571,7 @@
             "title": "Maximum Subarray",
             "technique": "Kadane",
             "startComfort": "🟢",
+            "difficulty": "Medium",
             "done": false
           },
           {
@@ -1994,6 +2579,7 @@
             "title": "Subtree Of Another Tree",
             "technique": "Tree-DFS",
             "startComfort": "🟢",
+            "difficulty": "Medium",
             "done": false
           }
         ]
@@ -2009,6 +2595,7 @@
             "title": "Jump Game",
             "technique": "Greedy",
             "startComfort": "🟡",
+            "difficulty": "Medium",
             "done": false
           },
           {
@@ -2016,6 +2603,7 @@
             "title": "Maximum Depth of Binary Tree",
             "technique": "Tree-DFS",
             "startComfort": "🟢",
+            "difficulty": "Easy",
             "done": false
           },
           {
@@ -2023,6 +2611,7 @@
             "title": "Permutations",
             "technique": "Backtracking",
             "startComfort": null,
+            "difficulty": null,
             "done": false
           },
           {
@@ -2030,6 +2619,7 @@
             "title": "Koko Eating Bananas",
             "technique": "Binary-search",
             "startComfort": "🟢",
+            "difficulty": "Medium",
             "done": false
           },
           {
@@ -2037,6 +2627,7 @@
             "title": "Min Cost to Connect All Points",
             "technique": "Prim's",
             "startComfort": "🟢",
+            "difficulty": "Medium",
             "done": false
           }
         ]
@@ -2052,6 +2643,7 @@
             "title": "Find First and Last Position in Sorted Array",
             "technique": "Binary-search",
             "startComfort": "🟡",
+            "difficulty": "Medium",
             "done": false
           },
           {
@@ -2059,6 +2651,7 @@
             "title": "Single Element in a Sorted Array",
             "technique": "Binary-search",
             "startComfort": "🟡",
+            "difficulty": "Medium",
             "done": false
           },
           {
@@ -2066,6 +2659,7 @@
             "title": "Majority Element",
             "technique": "Boyer-Moore",
             "startComfort": "🟢",
+            "difficulty": "Easy",
             "done": false
           },
           {
@@ -2073,6 +2667,7 @@
             "title": "Cheapest Flights Within K Stops",
             "technique": "Bellman-Ford",
             "startComfort": "🟢",
+            "difficulty": "Medium",
             "done": false
           },
           {
@@ -2080,6 +2675,7 @@
             "title": "Path With Minimum Effort",
             "technique": "Dijkstra",
             "startComfort": null,
+            "difficulty": null,
             "done": false
           }
         ]
@@ -2095,6 +2691,7 @@
             "title": "Subarray Sum Equals K",
             "technique": "Prefix-sum",
             "startComfort": "🟡",
+            "difficulty": "Medium",
             "done": false
           },
           {
@@ -2102,6 +2699,7 @@
             "title": "Accounts Merge",
             "technique": "Union-Find",
             "startComfort": "🟡",
+            "difficulty": "Medium",
             "done": false
           },
           {
@@ -2109,6 +2707,7 @@
             "title": "Longest Consecutive Sequence",
             "technique": "Hash-set",
             "startComfort": "🟢",
+            "difficulty": "Medium",
             "done": false
           },
           {
@@ -2116,6 +2715,7 @@
             "title": "Number of Islands (BFS)",
             "technique": "BFS",
             "startComfort": "🟢",
+            "difficulty": "Medium",
             "done": false
           },
           {
@@ -2123,6 +2723,7 @@
             "title": "Path With Maximum Minimum Value",
             "technique": "Dijkstra",
             "startComfort": null,
+            "difficulty": null,
             "done": false
           },
           {
@@ -2130,12 +2731,15 @@
             "title": "Invert Binary Tree",
             "technique": "Complexity",
             "startComfort": null,
+            "difficulty": "Easy",
             "done": false
           }
         ]
       }
     ]
   },
+  "effortCeiling": 8.0,
+  "effortFloor": 3.0,
   "badges": [
     {
       "id": "first-clean",

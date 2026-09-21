@@ -248,10 +248,17 @@ def _clean_schedule_title(text: str) -> str:
     return re.sub(r"\s+", " ", first).strip()
 
 
-def _parse_schedule_day_full(path: Path, day: dt.date) -> tuple[list[dict], str | None, float | None]:
+def _parse_schedule_day_full(
+    path: Path, day: dt.date, difficulty_by_num: dict[int, str],
+) -> tuple[list[dict], str | None, float | None]:
     """Like eb.parse_schedule_day, but keeps the day's label and each item's technique +
     a display-clean title — eb's own version only needs the number, the start comfort,
-    and whether a row is done, because that is all effort pricing ever reads."""
+    and whether a row is done, because that is all effort pricing ever reads.
+
+    `difficulty_by_num` joins each item's intrinsic Easy/Medium/Hard from the TRACKER (the
+    schedule file itself carries no difficulty column) — a 🆕 row not yet in dsa_progress.md
+    honestly gets null rather than a guess.
+    """
     wanted = (day.strftime("%a"), day.strftime("%b"), day.day)
     items: list[dict] = []
     label: str | None = None
@@ -281,6 +288,7 @@ def _parse_schedule_day_full(path: Path, day: dt.date) -> tuple[list[dict], str 
         if not cell.strip() or set(cell.strip()) <= {"-", ":"}:
             continue           # blank separator row, or a markdown rule
         num = eb.SCHED_NUM.search(cell)
+        lc_number = int(num.group(1)) if num else None
         start = eb.GLYPH.search(m["c2"] or "")
         text = re.sub(r"\[([^\]]*)\]\([^)]*\)", r"\1", cell)
         text = re.sub(r"~~|\*\*", "", text)
@@ -289,10 +297,11 @@ def _parse_schedule_day_full(path: Path, day: dt.date) -> tuple[list[dict], str 
             # before its number, so eb.SCHED_NUM (by design — see effort_budget.py) can't
             # find one; lcNumber is honestly null rather than guessed, and the dashboard
             # just omits the Visualize/LeetCode deep links for that row.
-            "lcNumber": int(num.group(1)) if num else None,
+            "lcNumber": lc_number,
             "title": _clean_schedule_title(text),
             "technique": (m["c5"] or "").strip() or None,
             "startComfort": start.group(0) if start else None,
+            "difficulty": difficulty_by_num.get(lc_number) if lc_number else None,
             "done": "~~" in cell,
         })
     return items, label, units
@@ -315,10 +324,19 @@ def parse_current_week_schedule(today: dt.date) -> dict | None:
     except (ValueError, IndexError):
         return None
 
+    # num -> Easy/Medium/Hard, joined from the tracker (the schedule file itself has no
+    # difficulty column). A number with several tracker rows (method variants) just takes
+    # the last one parse_rows() yields — difficulty is intrinsic to the LC problem, not the
+    # method, so they should always agree in practice.
+    try:
+        difficulty_by_num = {int(r["num"]): r["diff"] for r in eb.parse_rows()}
+    except OSError:
+        difficulty_by_num = {}
+
     days: list[dict] = []
     for offset in range(7):
         day_date = week_start + dt.timedelta(days=offset)
-        items, label, units = _parse_schedule_day_full(path, day_date)
+        items, label, units = _parse_schedule_day_full(path, day_date, difficulty_by_num)
         days.append({
             "date": day_date.isoformat(),
             "weekday": day_date.strftime("%A"),
@@ -401,6 +419,14 @@ def parse_techniques() -> list[dict]:
     reps) or `—` (no problems yet) — handled by taking the FIRST integer in the cell as the
     count and only the integers INSIDE the parens as the problem list, so those extra tokens
     never get mistaken for a problem number. Fail-soft: an unreadable/missing table -> [].
+
+    `tier` (Sep 21, 2026) is technique_coverage.py's Tier column — "core" for every
+    pre-tiering technique (the column simply never reads empty; technique_coverage.py's
+    `Resolved.tier` defaults not-started-but-untiered entries to "core" too, though there
+    are none). `started` is derived from the Gaps cell's `*not started*` marker rather than
+    re-deriving it from problemCount, so it stays byte-for-byte in lockstep with
+    `is_started` (the exact gate that keeps these techniques out of the Action list) even
+    if that check's definition ever changes.
     """
     try:
         text = COVERAGE.read_text(encoding="utf-8")
@@ -413,9 +439,10 @@ def parse_techniques() -> list[dict]:
     out: list[dict] = []
     for line in TABLE_ROW.findall(section.group(1)):
         cells = [c.strip() for c in line.split("|")]
-        if len(cells) != 7:
+        if len(cells) != 8:
             continue
-        name, family, problems_cell, best_cell, green_cell, _variants_cell, gaps_cell = cells
+        (name, family, tier, problems_cell, best_cell, green_cell,
+         _variants_cell, gaps_cell) = cells
         if name in ("Technique", "") or set(name) <= {"-", ":"}:
             continue  # header / markdown separator row, not data
 
@@ -428,6 +455,8 @@ def parse_techniques() -> list[dict]:
         out.append({
             "name": name,
             "family": family,
+            "tier": tier or "core",
+            "started": "not started" not in gaps_cell,
             "problemCount": problem_count,
             "problems": problems,
             "bestComfort": best.group(0) if best else None,
@@ -603,6 +632,12 @@ def build_payload(today: dt.date | None = None) -> tuple[dict, list[str]]:
     if schedule is None:
         warnings.append("no current weekly schedule file found — schedule omitted.")
 
+    # Today's-board workload bar (Sep 21, 2026): reuse effort_budget.py's OWN config
+    # reader rather than re-deriving the fallback here — it already tolerates a missing
+    # `effort_budget:` block / PyYAML and returns its documented defaults (ceiling 8.0,
+    # floor_min 3.0), which is the single source of truth for these two numbers.
+    effort_cfg = eb.load_config()
+
     problems = build_problems(rows, sched, cats, urls)
     days = study_days(rows)
 
@@ -624,6 +659,8 @@ def build_payload(today: dt.date | None = None) -> tuple[dict, list[str]]:
         "techniques": techniques,
         "studyDays": [d.isoformat() for d in days],
         "schedule": schedule,
+        "effortCeiling": float(effort_cfg["ceiling"]),
+        "effortFloor": float(effort_cfg["floor_min"]),
     }
     stats["badges"] = compute_badges(stats, problems, cfg)
     stats["problems"] = problems
@@ -650,7 +687,8 @@ def summary_of(payload: dict) -> dict:
     `schedule` (the current week's Today's-board slice) rides through whole too — it is
     one week of compact rows, small either way, and the summary is exactly where the
     landing's Today's-board drill reads it from (no separate fetch for "what do I do
-    today").
+    today"). `effortCeiling`/`effortFloor` (two numbers) back the workload bar's
+    Light/Moderate/Heavy band next to it.
     """
     trophy_case = payload.get("trophyCase") or {}
     compact_graduated = [
@@ -675,6 +713,8 @@ def summary_of(payload: dict) -> dict:
         "techniques": payload.get("techniques") or [],
         "studyDays": recent_study_days,
         "schedule": payload.get("schedule"),
+        "effortCeiling": payload.get("effortCeiling"),
+        "effortFloor": payload.get("effortFloor"),
     }
     if "warnings" in payload:
         summary["warnings"] = payload["warnings"]
