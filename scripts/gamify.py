@@ -69,6 +69,13 @@ CONFIG = REPO / "cse.config.yml"
 SCHEMA_VERSION = 1
 SITE = "https://progressiveoverflow.com"
 
+# The summary's studyDays is a ROLLING WINDOW, not the lifetime list: it exists only to draw
+# the site's streak-calendar heatmap (~20 weeks visible), and without a cap it grows by one
+# entry per practice day forever. The lifetime COUNT already lives in streak.studyDays and
+# streak.longest — nothing is lost by trimming the date list itself. 183 days (~26 weeks)
+# gives the calendar a little slack beyond what it renders.
+SUMMARY_STUDY_DAYS_WINDOW = 183
+
 # The comfort ladder as an ordinal, so a timeline can be plotted as a step chart.
 # Keyed by glyph, never by the words blank/shaky/clean/graduated (the config scrape
 # hazard — see cse.config.yml). 🏆 Retired is terminal, above 🎓.
@@ -267,6 +274,60 @@ def parse_coverage() -> dict | None:
             "thin": thin, "variantGaps": variant}
 
 
+# ── per-technique table (the "which 56?" drill behind the coverage header) ──────────
+
+COVERAGE_SECTION = re.compile(r"##\s*Coverage(.*?)(?:\n##\s|\Z)", re.S)
+TABLE_ROW = re.compile(r"^\|(.+)\|\s*$", re.MULTILINE)
+CELL_NUMBER = re.compile(r"\d+")
+PARENTHETICAL = re.compile(r"\((.*?)\)")
+COMFORT_GLYPH = re.compile(r"[🔴🟡🟢🎓🏆]")
+
+
+def parse_techniques() -> list[dict]:
+    """The `## Coverage` per-technique table -> one dict per row.
+
+    Reuses parse_coverage()'s file-read + regex style. The Problems cell carries both a
+    count and a parenthetical of LC numbers, and can carry `*+Nv*` (extra untracked variant
+    reps) or `—` (no problems yet) — handled by taking the FIRST integer in the cell as the
+    count and only the integers INSIDE the parens as the problem list, so those extra tokens
+    never get mistaken for a problem number. Fail-soft: an unreadable/missing table -> [].
+    """
+    try:
+        text = COVERAGE.read_text(encoding="utf-8")
+    except OSError:
+        return []
+    section = COVERAGE_SECTION.search(text)
+    if not section:
+        return []
+
+    out: list[dict] = []
+    for line in TABLE_ROW.findall(section.group(1)):
+        cells = [c.strip() for c in line.split("|")]
+        if len(cells) != 7:
+            continue
+        name, family, problems_cell, best_cell, green_cell, _variants_cell, gaps_cell = cells
+        if name in ("Technique", "") or set(name) <= {"-", ":"}:
+            continue  # header / markdown separator row, not data
+
+        counts = CELL_NUMBER.findall(problems_cell)
+        problem_count = int(counts[0]) if counts else 0
+        paren = PARENTHETICAL.search(problems_cell)
+        problems = [int(n) for n in CELL_NUMBER.findall(paren.group(1))] if paren else []
+        best = COMFORT_GLYPH.search(best_cell)
+
+        out.append({
+            "name": name,
+            "family": family,
+            "problemCount": problem_count,
+            "problems": problems,
+            "bestComfort": best.group(0) if best else None,
+            "hasGreen": "✅" in green_cell,
+            "thin": "thin" in gaps_cell,
+            "hasVariantGap": "variant" in gaps_cell,
+        })
+    return out
+
+
 # ── the build ───────────────────────────────────────────────────────────────────────
 
 def build_problems(rows: list[dict], sched: dict[str, dict[int, str]],
@@ -427,6 +488,7 @@ def build_payload(today: dt.date | None = None) -> tuple[dict, list[str]]:
     coverage = parse_coverage()
     if coverage is None:
         warnings.append("technique_coverage.md not readable — coverage omitted.")
+    techniques = parse_techniques()
 
     problems = build_problems(rows, sched, cats, urls)
     days = study_days(rows)
@@ -446,6 +508,8 @@ def build_payload(today: dt.date | None = None) -> tuple[dict, list[str]]:
         "onSchedule": on_schedule(rows, today),
         "trophyCase": {"graduated": [p for p in problems if p["comfort"] == "🎓"],
                        "retired": retired},
+        "techniques": techniques,
+        "studyDays": [d.isoformat() for d in days],
     }
     stats["badges"] = compute_badges(stats, problems, cfg)
     stats["problems"] = problems
@@ -461,12 +525,22 @@ def summary_of(payload: dict) -> dict:
     graduated entries drop to `{lcNumber, title, difficulty}` (no timeline/repDates —
     the per-problem detail the landing never needs). `retired` entries are already
     compact in the full payload, so they pass through unchanged.
+
+    `techniques` rides along whole (already small — a few KB for ~56 rows) and backs the
+    technique-breadth drill. `studyDays` rides along CAPPED to the last
+    SUMMARY_STUDY_DAYS_WINDOW days — that's all the streak-calendar drill renders, and
+    without a cap this list grows by one entry per practice day forever. The lifetime total
+    is untouched: it lives in `streak.studyDays` (count) and `streak.longest`, both copied
+    through as-is. The full `progress.json` keeps every study day, uncapped.
     """
     trophy_case = payload.get("trophyCase") or {}
     compact_graduated = [
         {"lcNumber": p["lcNumber"], "title": p["title"], "difficulty": p.get("difficulty")}
         for p in trophy_case.get("graduated") or []
     ]
+    generated_at = dt.date.fromisoformat(payload["generatedAt"])
+    cutoff = (generated_at - dt.timedelta(days=SUMMARY_STUDY_DAYS_WINDOW)).isoformat()
+    recent_study_days = [d for d in (payload.get("studyDays") or []) if d >= cutoff]
     summary = {
         "schemaVersion": payload["schemaVersion"],
         "generatedAt": payload["generatedAt"],
@@ -479,6 +553,8 @@ def summary_of(payload: dict) -> dict:
         "badges": payload["badges"],
         "trophyCase": {"graduated": compact_graduated,
                        "retired": trophy_case.get("retired") or []},
+        "techniques": payload.get("techniques") or [],
+        "studyDays": recent_study_days,
     }
     if "warnings" in payload:
         summary["warnings"] = payload["warnings"]
@@ -563,7 +639,10 @@ def main() -> None:
               f"{stats['streak']['current']}-day streak", file=sys.stderr)
     else:
         OUT.write_text(payload + "\n", encoding="utf-8")
-        summary_payload = json.dumps(summary_of(stats), ensure_ascii=False, indent=2)
+        # Compact (no indent), unlike progress.json: nobody reads progress-summary.json as a
+        # human artifact, and it's fetched on every landing view — indentation alone was ~40%
+        # of its bytes once techniques[]/studyDays[] joined the summary (Sep 2026).
+        summary_payload = json.dumps(summary_of(stats), ensure_ascii=False, separators=(",", ":"))
         OUT_SUMMARY.write_text(summary_payload + "\n", encoding="utf-8")
         changed = update_readme_badge(badge_line(stats, args.repo))
         print(f"wrote {OUT.relative_to(REPO)} + {OUT_SUMMARY.relative_to(REPO)} "

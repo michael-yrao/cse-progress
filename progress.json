@@ -917,6 +917,926 @@
     ],
     "retired": []
   },
+  "techniques": [
+    {
+      "name": "Bellman-Ford",
+      "family": "advanced_graphs",
+      "problemCount": 1,
+      "problems": [
+        787
+      ],
+      "bestComfort": "🟢",
+      "hasGreen": true,
+      "thin": true,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Dijkstra",
+      "family": "advanced_graphs",
+      "problemCount": 1,
+      "problems": [
+        778
+      ],
+      "bestComfort": "🟢",
+      "hasGreen": true,
+      "thin": true,
+      "hasVariantGap": true
+    },
+    {
+      "name": "Floyd-Warshall (all-pairs shortest path)",
+      "family": "advanced_graphs",
+      "problemCount": 2,
+      "problems": [
+        1334,
+        1462
+      ],
+      "bestComfort": "🟢",
+      "hasGreen": true,
+      "thin": true,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Hierholzer (Eulerian path)",
+      "family": "advanced_graphs",
+      "problemCount": 2,
+      "problems": [
+        332,
+        2097
+      ],
+      "bestComfort": "🟢",
+      "hasGreen": true,
+      "thin": true,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Prim's MST",
+      "family": "advanced_graphs",
+      "problemCount": 1,
+      "problems": [
+        1584
+      ],
+      "bestComfort": "🟢",
+      "hasGreen": true,
+      "thin": true,
+      "hasVariantGap": true
+    },
+    {
+      "name": "Array/String Fundamentals",
+      "family": "arrays_and_hash",
+      "problemCount": 3,
+      "problems": [
+        14,
+        66,
+        1929
+      ],
+      "bestComfort": "🟢",
+      "hasGreen": true,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Boyer-Moore Voting",
+      "family": "arrays_and_hash",
+      "problemCount": 2,
+      "problems": [
+        169,
+        229
+      ],
+      "bestComfort": "🟢",
+      "hasGreen": true,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Frequency Counting",
+      "family": "arrays_and_hash",
+      "problemCount": 2,
+      "problems": [
+        49,
+        242
+      ],
+      "bestComfort": "🎓",
+      "hasGreen": true,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Hash Map Lookup",
+      "family": "arrays_and_hash",
+      "problemCount": 2,
+      "problems": [
+        1,
+        219
+      ],
+      "bestComfort": "🎓",
+      "hasGreen": true,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Hash Set Membership",
+      "family": "arrays_and_hash",
+      "problemCount": 3,
+      "problems": [
+        36,
+        128,
+        217
+      ],
+      "bestComfort": "🟢",
+      "hasGreen": true,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "In-Place Array Rotation",
+      "family": "arrays_and_hash",
+      "problemCount": 1,
+      "problems": [
+        189
+      ],
+      "bestComfort": "🟢",
+      "hasGreen": true,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Length-Prefix Encoding",
+      "family": "arrays_and_hash",
+      "problemCount": 1,
+      "problems": [
+        271
+      ],
+      "bestComfort": "🟢",
+      "hasGreen": true,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Prefix/Suffix Products",
+      "family": "arrays_and_hash",
+      "problemCount": 1,
+      "problems": [
+        238
+      ],
+      "bestComfort": "🟢",
+      "hasGreen": true,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Binary Search (exact match)",
+      "family": "binary_search",
+      "problemCount": 2,
+      "problems": [
+        33,
+        704
+      ],
+      "bestComfort": "🎓",
+      "hasGreen": true,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Binary Search (max boundary)",
+      "family": "binary_search",
+      "problemCount": 3,
+      "problems": [
+        34,
+        74,
+        1552
+      ],
+      "bestComfort": "🟢",
+      "hasGreen": true,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Binary Search (min boundary)",
+      "family": "binary_search",
+      "problemCount": 7,
+      "problems": [
+        34,
+        153,
+        162,
+        540,
+        875,
+        1011,
+        2300
+      ],
+      "bestComfort": "🎓",
+      "hasGreen": true,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Binary Search on Answer",
+      "family": "binary_search",
+      "problemCount": 3,
+      "problems": [
+        875,
+        1011,
+        1552
+      ],
+      "bestComfort": "🟢",
+      "hasGreen": true,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "BFS on Implicit Graph",
+      "family": "graphs",
+      "problemCount": 1,
+      "problems": [
+        127
+      ],
+      "bestComfort": "🟢",
+      "hasGreen": true,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Connected Components",
+      "family": "graphs",
+      "problemCount": 1,
+      "problems": [
+        323
+      ],
+      "bestComfort": "🟢",
+      "hasGreen": true,
+      "thin": true,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Cycle Detection in an Iterated Sequence",
+      "family": "graphs",
+      "problemCount": 1,
+      "problems": [
+        202
+      ],
+      "bestComfort": "🟢",
+      "hasGreen": true,
+      "thin": true,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Graph Clone (DFS + Hash Map)",
+      "family": "graphs",
+      "problemCount": 1,
+      "problems": [
+        133
+      ],
+      "bestComfort": "🟢",
+      "hasGreen": true,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Graph Cycle Detection (DFS)",
+      "family": "graphs",
+      "problemCount": 1,
+      "problems": [
+        261
+      ],
+      "bestComfort": "🟢",
+      "hasGreen": true,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Grid BFS",
+      "family": "graphs",
+      "problemCount": 4,
+      "problems": [
+        130,
+        200,
+        417,
+        733
+      ],
+      "bestComfort": "🎓",
+      "hasGreen": true,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Grid DFS",
+      "family": "graphs",
+      "problemCount": 2,
+      "problems": [
+        200,
+        695
+      ],
+      "bestComfort": "🎓",
+      "hasGreen": true,
+      "thin": true,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Multi-source BFS",
+      "family": "graphs",
+      "problemCount": 1,
+      "problems": [
+        994
+      ],
+      "bestComfort": "🟢",
+      "hasGreen": true,
+      "thin": true,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Topological Sort",
+      "family": "graphs",
+      "problemCount": 3,
+      "problems": [
+        207,
+        210,
+        269
+      ],
+      "bestComfort": "🎓",
+      "hasGreen": true,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Union-Find",
+      "family": "graphs",
+      "problemCount": 4,
+      "problems": [
+        130,
+        261,
+        684,
+        721
+      ],
+      "bestComfort": "🎓",
+      "hasGreen": true,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Heap / Priority Queue",
+      "family": "heap",
+      "problemCount": 6,
+      "problems": [
+        347,
+        355,
+        621,
+        703,
+        973,
+        1046
+      ],
+      "bestComfort": "🟢",
+      "hasGreen": true,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Intervals (sort + sweep)",
+      "family": "intervals",
+      "problemCount": 3,
+      "problems": [
+        56,
+        57,
+        435
+      ],
+      "bestComfort": "🟢",
+      "hasGreen": true,
+      "thin": true,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Deep Copy via Hash Map",
+      "family": "linked_list",
+      "problemCount": 1,
+      "problems": [
+        138
+      ],
+      "bestComfort": "🟢",
+      "hasGreen": true,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Floyd's Cycle / Midpoint",
+      "family": "linked_list",
+      "problemCount": 2,
+      "problems": [
+        141,
+        143
+      ],
+      "bestComfort": "🟢",
+      "hasGreen": true,
+      "thin": true,
+      "hasVariantGap": false
+    },
+    {
+      "name": "HashMap + Doubly Linked List (LRU)",
+      "family": "linked_list",
+      "problemCount": 1,
+      "problems": [
+        146
+      ],
+      "bestComfort": "🟢",
+      "hasGreen": true,
+      "thin": true,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Linked List Arithmetic",
+      "family": "linked_list",
+      "problemCount": 1,
+      "problems": [
+        2
+      ],
+      "bestComfort": "🟢",
+      "hasGreen": true,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Linked List Merge",
+      "family": "linked_list",
+      "problemCount": 1,
+      "problems": [
+        21
+      ],
+      "bestComfort": "🎓",
+      "hasGreen": true,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Linked List Reversal",
+      "family": "linked_list",
+      "problemCount": 1,
+      "problems": [
+        206
+      ],
+      "bestComfort": "🎓",
+      "hasGreen": true,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Remove Nth From End",
+      "family": "linked_list",
+      "problemCount": 1,
+      "problems": [
+        19
+      ],
+      "bestComfort": "🟢",
+      "hasGreen": true,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Kadane",
+      "family": "prefix_sum",
+      "problemCount": 1,
+      "problems": [
+        53
+      ],
+      "bestComfort": "🟢",
+      "hasGreen": true,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Prefix Sum",
+      "family": "prefix_sum",
+      "problemCount": 2,
+      "problems": [
+        53,
+        560
+      ],
+      "bestComfort": "🟢",
+      "hasGreen": true,
+      "thin": true,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Greedy (single pass)",
+      "family": "sliding_window",
+      "problemCount": 6,
+      "problems": [
+        45,
+        55,
+        122,
+        134,
+        763,
+        846
+      ],
+      "bestComfort": "🟢",
+      "hasGreen": true,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Sliding Window",
+      "family": "sliding_window",
+      "problemCount": 4,
+      "problems": [
+        3,
+        121,
+        424,
+        567
+      ],
+      "bestComfort": "🟢",
+      "hasGreen": true,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Divide & Conquer / Sorting",
+      "family": "sorting",
+      "problemCount": 1,
+      "problems": [
+        912
+      ],
+      "bestComfort": "🟢",
+      "hasGreen": true,
+      "thin": true,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Monotonic Deque",
+      "family": "stack",
+      "problemCount": 1,
+      "problems": [
+        239
+      ],
+      "bestComfort": "🟢",
+      "hasGreen": true,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Monotonic Stack",
+      "family": "stack",
+      "problemCount": 6,
+      "problems": [
+        84,
+        496,
+        503,
+        739,
+        853,
+        901
+      ],
+      "bestComfort": "🟢",
+      "hasGreen": true,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Stack (augmented entries)",
+      "family": "stack",
+      "problemCount": 1,
+      "problems": [
+        155
+      ],
+      "bestComfort": "🟢",
+      "hasGreen": true,
+      "thin": true,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Stack (expression evaluation)",
+      "family": "stack",
+      "problemCount": 1,
+      "problems": [
+        150
+      ],
+      "bestComfort": "🟢",
+      "hasGreen": true,
+      "thin": true,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Stack (matching)",
+      "family": "stack",
+      "problemCount": 1,
+      "problems": [
+        20
+      ],
+      "bestComfort": "🟢",
+      "hasGreen": true,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "BST Descent",
+      "family": "trees",
+      "problemCount": 2,
+      "problems": [
+        98,
+        235
+      ],
+      "bestComfort": "🟢",
+      "hasGreen": true,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Tree BFS (level order)",
+      "family": "trees",
+      "problemCount": 2,
+      "problems": [
+        102,
+        199
+      ],
+      "bestComfort": "🎓",
+      "hasGreen": true,
+      "thin": true,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Tree Construction (Divide & Conquer)",
+      "family": "trees",
+      "problemCount": 1,
+      "problems": [
+        105
+      ],
+      "bestComfort": "🟢",
+      "hasGreen": true,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Tree DFS (recursive)",
+      "family": "trees",
+      "problemCount": 6,
+      "problems": [
+        100,
+        104,
+        110,
+        226,
+        572,
+        1448
+      ],
+      "bestComfort": "🎓",
+      "hasGreen": true,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Tree DFS with Postorder Return",
+      "family": "trees",
+      "problemCount": 2,
+      "problems": [
+        124,
+        543
+      ],
+      "bestComfort": "🟢",
+      "hasGreen": true,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Trie",
+      "family": "tries",
+      "problemCount": 2,
+      "problems": [
+        208,
+        211
+      ],
+      "bestComfort": "🟢",
+      "hasGreen": true,
+      "thin": true,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Dutch National Flag",
+      "family": "two_pointers",
+      "problemCount": 1,
+      "problems": [
+        75
+      ],
+      "bestComfort": "🟢",
+      "hasGreen": true,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Fast/Slow In-Place Write",
+      "family": "two_pointers",
+      "problemCount": 4,
+      "problems": [
+        26,
+        27,
+        80,
+        283
+      ],
+      "bestComfort": "🎓",
+      "hasGreen": true,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Prefix/Suffix Max",
+      "family": "two_pointers",
+      "problemCount": 1,
+      "problems": [
+        42
+      ],
+      "bestComfort": "🟢",
+      "hasGreen": true,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Two Pointers (converging)",
+      "family": "two_pointers",
+      "problemCount": 8,
+      "problems": [
+        11,
+        15,
+        88,
+        125,
+        167,
+        344,
+        680,
+        1768
+      ],
+      "bestComfort": "🎓",
+      "hasGreen": true,
+      "thin": false,
+      "hasVariantGap": false
+    }
+  ],
+  "studyDays": [
+    "2026-01-01",
+    "2026-01-02",
+    "2026-01-03",
+    "2026-01-04",
+    "2026-01-05",
+    "2026-01-06",
+    "2026-01-08",
+    "2026-01-09",
+    "2026-01-10",
+    "2026-01-11",
+    "2026-01-13",
+    "2026-01-15",
+    "2026-01-19",
+    "2026-01-21",
+    "2026-01-24",
+    "2026-01-25",
+    "2026-01-26",
+    "2026-01-28",
+    "2026-01-30",
+    "2026-01-31",
+    "2026-03-09",
+    "2026-03-22",
+    "2026-03-25",
+    "2026-03-26",
+    "2026-03-27",
+    "2026-03-28",
+    "2026-04-01",
+    "2026-04-02",
+    "2026-04-03",
+    "2026-04-04",
+    "2026-04-05",
+    "2026-04-07",
+    "2026-04-09",
+    "2026-04-10",
+    "2026-04-13",
+    "2026-04-14",
+    "2026-04-15",
+    "2026-04-17",
+    "2026-04-19",
+    "2026-04-20",
+    "2026-04-21",
+    "2026-04-22",
+    "2026-04-23",
+    "2026-04-24",
+    "2026-04-26",
+    "2026-04-29",
+    "2026-04-30",
+    "2026-05-01",
+    "2026-05-02",
+    "2026-05-03",
+    "2026-05-09",
+    "2026-05-15",
+    "2026-05-16",
+    "2026-05-18",
+    "2026-05-19",
+    "2026-05-20",
+    "2026-05-21",
+    "2026-05-22",
+    "2026-05-26",
+    "2026-05-27",
+    "2026-05-28",
+    "2026-05-29",
+    "2026-05-30",
+    "2026-05-31",
+    "2026-06-01",
+    "2026-06-02",
+    "2026-06-04",
+    "2026-06-05",
+    "2026-06-06",
+    "2026-06-07",
+    "2026-06-08",
+    "2026-06-09",
+    "2026-06-11",
+    "2026-06-12",
+    "2026-06-13",
+    "2026-06-14",
+    "2026-06-15",
+    "2026-06-16",
+    "2026-06-17",
+    "2026-06-18",
+    "2026-06-19",
+    "2026-06-20",
+    "2026-06-21",
+    "2026-06-22",
+    "2026-06-23",
+    "2026-06-24",
+    "2026-06-25",
+    "2026-06-26",
+    "2026-06-27",
+    "2026-06-28",
+    "2026-06-29",
+    "2026-06-30",
+    "2026-07-01",
+    "2026-07-02",
+    "2026-07-03",
+    "2026-07-04",
+    "2026-07-05",
+    "2026-07-06",
+    "2026-07-07",
+    "2026-07-08",
+    "2026-07-09",
+    "2026-07-10",
+    "2026-07-11",
+    "2026-07-12",
+    "2026-07-13",
+    "2026-07-14",
+    "2026-07-15",
+    "2026-07-16",
+    "2026-07-17",
+    "2026-07-18",
+    "2026-07-19",
+    "2026-07-20",
+    "2026-07-21",
+    "2026-07-22",
+    "2026-07-23",
+    "2026-07-24",
+    "2026-07-25",
+    "2026-07-26",
+    "2026-07-27",
+    "2026-07-28",
+    "2026-07-29",
+    "2026-07-30",
+    "2026-07-31",
+    "2026-08-01",
+    "2026-08-02",
+    "2026-08-03",
+    "2026-08-04",
+    "2026-08-05",
+    "2026-08-06",
+    "2026-08-07",
+    "2026-08-08",
+    "2026-08-09",
+    "2026-08-10",
+    "2026-08-11",
+    "2026-08-12",
+    "2026-08-13",
+    "2026-08-14",
+    "2026-08-15",
+    "2026-08-16",
+    "2026-08-17",
+    "2026-08-18",
+    "2026-08-19",
+    "2026-08-20",
+    "2026-08-21",
+    "2026-08-22",
+    "2026-08-23",
+    "2026-08-24",
+    "2026-08-25",
+    "2026-08-26",
+    "2026-08-27",
+    "2026-08-28",
+    "2026-08-29",
+    "2026-08-30",
+    "2026-08-31",
+    "2026-09-01",
+    "2026-09-02",
+    "2026-09-03",
+    "2026-09-04",
+    "2026-09-05",
+    "2026-09-06",
+    "2026-09-07",
+    "2026-09-08",
+    "2026-09-09",
+    "2026-09-10",
+    "2026-09-11",
+    "2026-09-12",
+    "2026-09-13",
+    "2026-09-14",
+    "2026-09-15",
+    "2026-09-16",
+    "2026-09-17",
+    "2026-09-18",
+    "2026-09-19",
+    "2026-09-20"
+  ],
   "badges": [
     {
       "id": "first-clean",
