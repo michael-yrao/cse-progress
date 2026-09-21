@@ -3,7 +3,7 @@ name: feedback_ask_complexity
 description: after a problem is coded, ASK the learner for time & space complexity before rating — don't state it for them
 metadata:
   type: feedback
-reconciled: 2026-09-06
+reconciled: 2026-09-20
 ---
 
 After a problem is done, **ask the learner to state the time and space complexity themselves**
@@ -152,3 +152,11 @@ why-clause mis-attributed the O(E) (called the heap "≤ V nodes"), self-correct
 nudge. Under the pre-Sep-3 rule this was a 3rd repeat miss → 🟡 cap; under this policy it logged **🟢
 (🟡→🟢)** with the bound queued. This is the exact case the policy is for: the concept, not the code,
 was the gap. [[feedback_let_learner_pace]] · see `decisions.yml` `complexity-cleanup-formalized`.
+
+**Clarification (Sep 20, 2026) — a self-caught typo doesn't count as "the code needed a real fix."** Left
+open on 912 (a no-op for that rep either way); learner's read, adopted: a typo the learner spots and fixes
+themselves, unprompted, on a one-line pointer / index / bound — no logic change, nobody else surfaced it —
+is clean authoring, so the clean-code waiver (rule 4) still holds and it does **not** cap. The picking
+feature is **who surfaced it + whether logic changed**: self-caught & logic-unchanged → clean; coach-/test-
+surfaced or an algorithm-altering fix → a real fix (→ 🟡, waiver broken). Operational home: rule 4 scope in
+`complexity_gotchas.md`; `decisions.yml` `typo-self-fix-not-a-real-fix`.
