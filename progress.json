@@ -1837,6 +1837,305 @@
     "2026-09-19",
     "2026-09-20"
   ],
+  "schedule": {
+    "weekOf": "2026-09-21",
+    "days": [
+      {
+        "date": "2026-09-21",
+        "weekday": "Monday",
+        "label": "22 🔴 re-rep + Greedy/Trie/Dijkstra reviews",
+        "units": 6.8,
+        "items": [
+          {
+            "lcNumber": 22,
+            "title": "Generate Parentheses",
+            "technique": "Backtracking",
+            "startComfort": "🔴",
+            "done": false
+          },
+          {
+            "lcNumber": 134,
+            "title": "Gas Station",
+            "technique": "Greedy",
+            "startComfort": "🟡",
+            "done": false
+          },
+          {
+            "lcNumber": 211,
+            "title": "Add and Search Words",
+            "technique": "Trie",
+            "startComfort": "🟢",
+            "done": false
+          },
+          {
+            "lcNumber": 778,
+            "title": "Swim in Rising Water",
+            "technique": "Dijkstra",
+            "startComfort": "🟢",
+            "done": false
+          }
+        ]
+      },
+      {
+        "date": "2026-09-22",
+        "weekday": "Tuesday",
+        "label": "1552 🔴 re-rep + Sliding Window/Dijkstra/Stack",
+        "units": 7.3,
+        "items": [
+          {
+            "lcNumber": 1552,
+            "title": "Magnetic Force Between Two Balls",
+            "technique": "Binary-search",
+            "startComfort": "🔴",
+            "done": false
+          },
+          {
+            "lcNumber": 424,
+            "title": "Longest Repeating Character Replacement",
+            "technique": "Sliding-window",
+            "startComfort": "🟡",
+            "done": false
+          },
+          {
+            "lcNumber": 743,
+            "title": "Network Delay Time (Dijkstra — min-heap)",
+            "technique": "Dijkstra",
+            "startComfort": "🟡",
+            "done": false
+          },
+          {
+            "lcNumber": 901,
+            "title": "Online Stock Span",
+            "technique": "Monotonic-stack",
+            "startComfort": "🟢",
+            "done": false
+          }
+        ]
+      },
+      {
+        "date": "2026-09-23",
+        "weekday": "Wednesday",
+        "label": "1489 🟡 + moved 846 + Backtracking intake 1",
+        "units": 7.6,
+        "items": [
+          {
+            "lcNumber": 1489,
+            "title": "Find Critical and Pseudo-Critical Edges in MST",
+            "technique": "Kruskal",
+            "startComfort": "🟡",
+            "done": false
+          },
+          {
+            "lcNumber": 846,
+            "title": "Hand of Straights",
+            "technique": "Greedy",
+            "startComfort": "🟡",
+            "done": false
+          },
+          {
+            "lcNumber": null,
+            "title": "Combination Sum",
+            "technique": "Backtracking",
+            "startComfort": null,
+            "done": false
+          }
+        ]
+      },
+      {
+        "date": "2026-09-24",
+        "weekday": "Thursday",
+        "label": "Trie/Dijkstra 🟡 + green batch",
+        "units": 7.0,
+        "items": [
+          {
+            "lcNumber": 648,
+            "title": "Replace Words",
+            "technique": "Trie",
+            "startComfort": "🟡",
+            "done": false
+          },
+          {
+            "lcNumber": 743,
+            "title": "Network Delay Time (Dijkstra — array-scan)",
+            "technique": "Dijkstra",
+            "startComfort": "🟡",
+            "done": false
+          },
+          {
+            "lcNumber": 1046,
+            "title": "Last Stone Weight",
+            "technique": "Heap",
+            "startComfort": "🟢",
+            "done": false
+          },
+          {
+            "lcNumber": 1334,
+            "title": "Find the City at a Threshold Distance",
+            "technique": "Floyd-Warshall",
+            "startComfort": "🟢",
+            "done": false
+          },
+          {
+            "lcNumber": 189,
+            "title": "Rotate Array",
+            "technique": "Array-rotation",
+            "startComfort": "🟢",
+            "done": false
+          },
+          {
+            "lcNumber": 53,
+            "title": "Maximum Subarray",
+            "technique": "Kadane",
+            "startComfort": "🟢",
+            "done": false
+          },
+          {
+            "lcNumber": 572,
+            "title": "Subtree Of Another Tree",
+            "technique": "Tree-DFS",
+            "startComfort": "🟢",
+            "done": false
+          }
+        ]
+      },
+      {
+        "date": "2026-09-25",
+        "weekday": "Friday",
+        "label": "Greedy 🟡 + Backtracking intake 2 + overdue 🟢s seated",
+        "units": 6.9,
+        "items": [
+          {
+            "lcNumber": 55,
+            "title": "Jump Game",
+            "technique": "Greedy",
+            "startComfort": "🟡",
+            "done": false
+          },
+          {
+            "lcNumber": 104,
+            "title": "Maximum Depth of Binary Tree",
+            "technique": "Tree-DFS",
+            "startComfort": "🟢",
+            "done": false
+          },
+          {
+            "lcNumber": null,
+            "title": "Permutations",
+            "technique": "Backtracking",
+            "startComfort": null,
+            "done": false
+          },
+          {
+            "lcNumber": 875,
+            "title": "Koko Eating Bananas",
+            "technique": "Binary-search",
+            "startComfort": "🟢",
+            "done": false
+          },
+          {
+            "lcNumber": 1584,
+            "title": "Min Cost to Connect All Points",
+            "technique": "Prim's",
+            "startComfort": "🟢",
+            "done": false
+          }
+        ]
+      },
+      {
+        "date": "2026-09-26",
+        "weekday": "Saturday",
+        "label": "Binary Search 🟡 + greens + 🆕 1631 Dijkstra consolidation (min-over-max)",
+        "units": 7.9,
+        "items": [
+          {
+            "lcNumber": 34,
+            "title": "Find First and Last Position in Sorted Array",
+            "technique": "Binary-search",
+            "startComfort": "🟡",
+            "done": false
+          },
+          {
+            "lcNumber": 540,
+            "title": "Single Element in a Sorted Array",
+            "technique": "Binary-search",
+            "startComfort": "🟡",
+            "done": false
+          },
+          {
+            "lcNumber": 169,
+            "title": "Majority Element",
+            "technique": "Boyer-Moore",
+            "startComfort": "🟢",
+            "done": false
+          },
+          {
+            "lcNumber": 787,
+            "title": "Cheapest Flights Within K Stops",
+            "technique": "Bellman-Ford",
+            "startComfort": "🟢",
+            "done": false
+          },
+          {
+            "lcNumber": null,
+            "title": "Path With Minimum Effort",
+            "technique": "Dijkstra",
+            "startComfort": null,
+            "done": false
+          }
+        ]
+      },
+      {
+        "date": "2026-09-27",
+        "weekday": "Sunday",
+        "label": "🟡 conversions + 🆕 1102 Dijkstra consolidation (max-min) + complexity cleanup (close-out)",
+        "units": 7.3,
+        "items": [
+          {
+            "lcNumber": 560,
+            "title": "Subarray Sum Equals K",
+            "technique": "Prefix-sum",
+            "startComfort": "🟡",
+            "done": false
+          },
+          {
+            "lcNumber": 721,
+            "title": "Accounts Merge",
+            "technique": "Union-Find",
+            "startComfort": "🟡",
+            "done": false
+          },
+          {
+            "lcNumber": 128,
+            "title": "Longest Consecutive Sequence",
+            "technique": "Hash-set",
+            "startComfort": "🟢",
+            "done": false
+          },
+          {
+            "lcNumber": 200,
+            "title": "Number of Islands (BFS)",
+            "technique": "BFS",
+            "startComfort": "🟢",
+            "done": false
+          },
+          {
+            "lcNumber": null,
+            "title": "Path With Maximum Minimum Value",
+            "technique": "Dijkstra",
+            "startComfort": null,
+            "done": false
+          },
+          {
+            "lcNumber": 226,
+            "title": "Invert Binary Tree",
+            "technique": "Complexity",
+            "startComfort": null,
+            "done": false
+          }
+        ]
+      }
+    ]
+  },
   "badges": [
     {
       "id": "first-clean",

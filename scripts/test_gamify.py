@@ -16,6 +16,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
+import effort_budget as eb
 import gamify
 
 
@@ -243,6 +244,80 @@ class ParseTechniquesTests(unittest.TestCase):
         self.assertEqual(gamify.parse_techniques(), [])
 
 
+class ParseCurrentWeekScheduleTests(unittest.TestCase):
+    """parse_current_week_schedule() against a small 2-day fixture week (not the live repo
+    file) — pins the Today's-board slice: a plain row, a struck/done row (glyph swap-out
+    and title cleanup on a `~~[...]~~` cell), and a 🆕 row with no local file yet (so
+    eb.SCHED_NUM — by design — finds no lcNumber)."""
+
+    FIXTURE = (
+        "## Daily Schedule\n\n"
+        "| Problem | S | E | Next | Technique |\n"
+        "|---|:-:|:-:|:-:|---|\n"
+        "| ▸ **Mon Sep 21** · 6.8 units — Test day one |  |  |  |  |\n"
+        "| ⚠️🔥 [22 Generate Parentheses](../../../dsa/leetcode/backtracking/22_generate_parentheses.py)"
+        " · [LC](https://leetcode.com/problems/generate-parentheses/) | 🔴 | | | Backtracking |\n"
+        "| ~~[100 Same Tree](../../../dsa/leetcode/trees/100_same_tree.py)~~"
+        " · [LC](https://leetcode.com/problems/same-tree/) | 🟢 | 🎓 | 2026-10-01 | Tree-DFS |\n"
+        "| |  |  |  |  |\n"
+        "| ▸ **Tue Sep 22** · 5.0 units — Test day two |  |  |  |  |\n"
+        "| 🆕 39 Combination Sum · [LC](https://leetcode.com/problems/combination-sum/)"
+        " | 🆕 | | | Backtracking |\n"
+    )
+
+    def setUp(self):
+        self._tmpdir = tempfile.TemporaryDirectory()
+        self._orig_schedules = eb.SCHEDULES
+        sched_dir = Path(self._tmpdir.name)
+        (sched_dir / "20260921_schedule.md").write_text(self.FIXTURE, encoding="utf-8")
+        eb.SCHEDULES = sched_dir
+
+    def tearDown(self):
+        eb.SCHEDULES = self._orig_schedules
+        self._tmpdir.cleanup()
+
+    def test_all_seven_days_emitted_with_correct_dates(self):
+        result = gamify.parse_current_week_schedule(dt.date(2026, 9, 21))
+        self.assertIsNotNone(result)
+        self.assertEqual(result["weekOf"], "2026-09-21")
+        self.assertEqual(len(result["days"]), 7)
+        self.assertEqual(result["days"][0]["date"], "2026-09-21")
+        self.assertEqual(result["days"][6]["date"], "2026-09-27")
+
+    def test_monday_items_and_done_row_parsed(self):
+        result = gamify.parse_current_week_schedule(dt.date(2026, 9, 21))
+        mon = result["days"][0]
+        self.assertEqual(mon["weekday"], "Monday")
+        self.assertEqual(mon["units"], 6.8)
+        self.assertEqual(mon["label"], "Test day one")
+        self.assertEqual(len(mon["items"]), 2)
+
+        plain, done = mon["items"]
+        self.assertEqual(plain, {"lcNumber": 22, "title": "Generate Parentheses",
+                                 "technique": "Backtracking", "startComfort": "🔴",
+                                 "done": False})
+        self.assertEqual(done, {"lcNumber": 100, "title": "Same Tree",
+                                "technique": "Tree-DFS", "startComfort": "🟢",
+                                "done": True})
+
+    def test_new_intake_row_has_no_lcnumber_but_keeps_title_and_technique(self):
+        result = gamify.parse_current_week_schedule(dt.date(2026, 9, 21))
+        tue = result["days"][1]
+        self.assertEqual(len(tue["items"]), 1)
+        self.assertEqual(tue["items"][0], {"lcNumber": None, "title": "Combination Sum",
+                                           "technique": "Backtracking", "startComfort": None,
+                                           "done": False})
+
+    def test_day_with_no_block_has_no_items(self):
+        result = gamify.parse_current_week_schedule(dt.date(2026, 9, 21))
+        wed = result["days"][2]
+        self.assertEqual(wed["items"], [])
+
+    def test_no_current_schedule_file_is_none(self):
+        result = gamify.parse_current_week_schedule(dt.date(2030, 1, 1))
+        self.assertIsNone(result)
+
+
 class SummaryOfTests(unittest.TestCase):
     def _payload(self):
         return {
@@ -274,6 +349,11 @@ class SummaryOfTests(unittest.TestCase):
             # exercises the cap in summary_of() without touching the lifetime count, which
             # comes from streak.studyDays (10 above), never from len(this list).
             "studyDays": ["2025-01-01", "2026-09-19", "2026-09-20"],
+            "schedule": {"weekOf": "2026-09-21", "days": [
+                {"date": "2026-09-21", "weekday": "Monday", "label": "Test day", "units": 6.8,
+                 "items": [{"lcNumber": 22, "title": "Generate Parentheses",
+                           "technique": "Backtracking", "startComfort": "🔴", "done": False}]},
+            ]},
             "problems": [{"lcNumber": 206, "title": "Reverse Linked List", "comfort": "🎓"}],
         }
 
@@ -285,7 +365,7 @@ class SummaryOfTests(unittest.TestCase):
         summary = gamify.summary_of(self._payload())
         for key in ("streak", "pipeline", "badges", "coverage", "totals",
                     "onSchedule", "difficulty", "schemaVersion", "generatedAt",
-                    "techniques", "studyDays"):
+                    "techniques", "studyDays", "schedule"):
             self.assertIn(key, summary)
         self.assertEqual(summary["streak"]["current"], 3)
         self.assertEqual(summary["badges"][0]["id"], "first-graduate")
@@ -296,6 +376,17 @@ class SummaryOfTests(unittest.TestCase):
                          [{"name": "Bellman-Ford", "family": "advanced_graphs",
                            "problemCount": 1, "problems": [787], "bestComfort": "🟢",
                            "hasGreen": True, "thin": True, "hasVariantGap": False}])
+
+    def test_schedule_passes_through_unchanged_and_no_problems_leak(self):
+        summary = gamify.summary_of(self._payload())
+        self.assertEqual(summary["schedule"], self._payload()["schedule"])
+        self.assertNotIn("problems", summary)
+
+    def test_schedule_none_when_no_current_week_file(self):
+        payload = self._payload()
+        payload["schedule"] = None
+        summary = gamify.summary_of(payload)
+        self.assertIsNone(summary["schedule"])
 
     def test_study_days_capped_to_the_rolling_window(self):
         # 2025-01-01 is far more than SUMMARY_STUDY_DAYS_WINDOW days before generatedAt
