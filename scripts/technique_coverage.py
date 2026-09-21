@@ -132,6 +132,13 @@ class Resolved:
     name: str
     family: str
     min_problems: int
+    #: Curriculum tier: "core" (already-started NC150/pattern-doc techniques — the
+    #: implicit default for any YAML entry with no `tier:` key), "dp" (DP framework
+    #: lenses), "tier1" (Knowledge Expansion Queue, above the interview-ROI line),
+    #: "tier2"/"tier3" (below the line — competitive-programming horizon). Declared
+    #: purely so the honest denominator can be shown TIERED rather than as one flat
+    #: fraction (see study_guide.md's Interview-ROI Line) — it changes no gap check.
+    tier: str = "core"
     rows: list[Row] = field(default_factory=list)
     variant_rows: dict[str, list[Row]] = field(default_factory=dict)
     queued_variants: dict[str, str] = field(default_factory=dict)
@@ -258,6 +265,7 @@ def resolve(config: dict, rows: list[Row]) -> tuple[list[Resolved], set[str]]:
             name=entry["name"],
             family=entry.get("family", "—"),
             min_problems=entry.get("min_problems", default_min),
+            tier=entry.get("tier") or "core",
         )
         for variant in entry.get("variants", []) or []:
             tech.variant_rows[variant["name"]] = []
@@ -355,8 +363,13 @@ def render(resolved: list[Resolved], rows: list[Row], claimed: set[str]) -> str:
 
     add("## Coverage")
     add("")
-    add("| Technique | Family | Problems | Best | 🟢 | Variants | Gaps |")
-    add("|---|---|---:|:---:|:---:|---|---|")
+    add(
+        "Every declared technique gets a row, started or not — a not-started row's Gaps "
+        "cell reads `*not started*` (never blockers/thin/variant noise; see `is_started`)."
+    )
+    add("")
+    add("| Technique | Family | Tier | Problems | Best | 🟢 | Variants | Gaps |")
+    add("|---|---|---|---:|:---:|:---:|---|---|")
     for t in sorted(resolved, key=lambda t: (t.family, t.name)):
         probs = ", ".join(str(n) for n in t.numbers) or "—"
         if t.variant_rows:
@@ -372,7 +385,7 @@ def render(resolved: list[Resolved], rows: list[Row], claimed: set[str]) -> str:
         else:
             variants = "—"
         add(
-            f"| {t.name} | {t.family} | {t.n_problems}"
+            f"| {t.name} | {t.family} | {t.tier} | {t.n_problems}"
             + (f" *+{len(t.rows) - t.n_problems}v*" if t.has_multi_variant_problem else "")
             + f" ({probs}) | {t.best_comfort} | "
             f"{'✅' if t.has_green else '❌'} | {variants} | {' · '.join(t.gaps) or '—'} |"

@@ -174,17 +174,18 @@ class BadgeTests(unittest.TestCase):
 class ParseTechniquesTests(unittest.TestCase):
     """parse_techniques() against a small fixture table, not the live repo file — pins the
     Problems-cell parsing (count vs. the parenthetical LC list) against the tricky tokens
-    the real table actually contains (*+Nv*, em-dash, tilde-strikeout elsewhere)."""
+    the real table actually contains (*+Nv*, em-dash, tilde-strikeout elsewhere), and (Sep
+    21, 2026) the Tier column + the started/*not started* Gaps marker."""
 
     FIXTURE = """## Coverage
 
-| Technique | Family | Problems | Best | 🟢 | Variants | Gaps |
-|---|---|---:|:---:|:---:|---|---|
-| Hierholzer (Eulerian path) | advanced_graphs | 2 *+1v* (332, 2097) | 🟢 | ✅ | pre-sorted adjacency ×1 | thin (2/3) |
-| Bellman-Ford | advanced_graphs | 1 (787) | 🟢 | ✅ | — | thin (1/3) |
-| Dijkstra | advanced_graphs | 1 (778) | 🟢 | ✅ | **Min-over-max ×0** | variant: **Min-over-max** |
-| Frequency Counting | arrays_and_hash | 2 (49, 242) | 🎓 | ✅ | — | — |
-| Not Started Technique | some_family | — | — | — | — | — |
+| Technique | Family | Tier | Problems | Best | 🟢 | Variants | Gaps |
+|---|---|---|---:|:---:|:---:|---|---|
+| Hierholzer (Eulerian path) | advanced_graphs | core | 2 *+1v* (332, 2097) | 🟢 | ✅ | pre-sorted adjacency ×1 | thin (2/3) |
+| Bellman-Ford | advanced_graphs | core | 1 (787) | 🟢 | ✅ | — | thin (1/3) |
+| Dijkstra | advanced_graphs | core | 1 (778) | 🟢 | ✅ | **Min-over-max ×0** | variant: **Min-over-max** |
+| Frequency Counting | arrays_and_hash | core | 2 (49, 242) | 🎓 | ✅ | — | — |
+| Knapsack | dynamic_programming | dp | 0 (—) | — | ❌ | — | *not started* |
 
 ## Vocabulary maintenance
 
@@ -214,6 +215,18 @@ class ParseTechniquesTests(unittest.TestCase):
         self.assertTrue(row["thin"])
         self.assertFalse(row["hasVariantGap"])
 
+    def test_started_technique_has_tier_core_and_started_true(self):
+        rows = {r["name"]: r for r in gamify.parse_techniques()}
+        row = rows["Bellman-Ford"]
+        self.assertEqual(row["tier"], "core")
+        self.assertTrue(row["started"])
+
+    def test_not_started_technique_has_its_declared_tier_and_started_false(self):
+        rows = {r["name"]: r for r in gamify.parse_techniques()}
+        row = rows["Knapsack"]
+        self.assertEqual(row["tier"], "dp")
+        self.assertFalse(row["started"])
+
     def test_simple_single_problem_row(self):
         rows = {r["name"]: r for r in gamify.parse_techniques()}
         row = rows["Bellman-Ford"]
@@ -226,7 +239,7 @@ class ParseTechniquesTests(unittest.TestCase):
 
     def test_em_dash_row_is_zero_and_empty_not_a_crash(self):
         rows = {r["name"]: r for r in gamify.parse_techniques()}
-        row = rows["Not Started Technique"]
+        row = rows["Knapsack"]
         self.assertEqual(row["problemCount"], 0)
         self.assertEqual(row["problems"], [])
         self.assertIsNone(row["bestComfort"])
@@ -247,8 +260,9 @@ class ParseTechniquesTests(unittest.TestCase):
 class ParseCurrentWeekScheduleTests(unittest.TestCase):
     """parse_current_week_schedule() against a small 2-day fixture week (not the live repo
     file) — pins the Today's-board slice: a plain row, a struck/done row (glyph swap-out
-    and title cleanup on a `~~[...]~~` cell), and a 🆕 row with no local file yet (so
-    eb.SCHED_NUM — by design — finds no lcNumber)."""
+    and title cleanup on a `~~[...]~~` cell), a 🆕 row with no local file yet (so
+    eb.SCHED_NUM — by design — finds no lcNumber), and (Sep 21, 2026) the tracker-joined
+    `difficulty` — including the honest null for a number the tracker doesn't have yet."""
 
     FIXTURE = (
         "## Daily Schedule\n\n"
@@ -259,21 +273,37 @@ class ParseCurrentWeekScheduleTests(unittest.TestCase):
         " · [LC](https://leetcode.com/problems/generate-parentheses/) | 🔴 | | | Backtracking |\n"
         "| ~~[100 Same Tree](../../../dsa/leetcode/trees/100_same_tree.py)~~"
         " · [LC](https://leetcode.com/problems/same-tree/) | 🟢 | 🎓 | 2026-10-01 | Tree-DFS |\n"
+        "| [55 Jump Game](../../../dsa/leetcode/greedy/55_jump_game.py)"
+        " · [LC](https://leetcode.com/problems/jump-game/) | 🟡 | | | Greedy |\n"
         "| |  |  |  |  |\n"
         "| ▸ **Tue Sep 22** · 5.0 units — Test day two |  |  |  |  |\n"
         "| 🆕 39 Combination Sum · [LC](https://leetcode.com/problems/combination-sum/)"
         " | 🆕 | | | Backtracking |\n"
     )
 
+    # Joined by lcNumber into the schedule items above: 22 -> Medium, 100 -> Easy. 39 (the
+    # 🆕 row, no local file yet) is deliberately ABSENT — it must resolve to null, not a guess.
+    TRACKER_FIXTURE = (
+        "| Medium | [22. Generate Parentheses](https://leetcode.com/problems/generate-parentheses/) "
+        "| 🔴 | 0 | 2026-12-01 |\n"
+        "| Easy | [100. Same Tree](https://leetcode.com/problems/same-tree/) "
+        "| 🎓 | 3 | 2026-12-05 |\n"
+    )
+
     def setUp(self):
         self._tmpdir = tempfile.TemporaryDirectory()
         self._orig_schedules = eb.SCHEDULES
+        self._orig_tracker = eb.TRACKER
         sched_dir = Path(self._tmpdir.name)
         (sched_dir / "20260921_schedule.md").write_text(self.FIXTURE, encoding="utf-8")
         eb.SCHEDULES = sched_dir
+        tracker_path = sched_dir / "dsa_progress.md"
+        tracker_path.write_text(self.TRACKER_FIXTURE, encoding="utf-8")
+        eb.TRACKER = tracker_path
 
     def tearDown(self):
         eb.SCHEDULES = self._orig_schedules
+        eb.TRACKER = self._orig_tracker
         self._tmpdir.cleanup()
 
     def test_all_seven_days_emitted_with_correct_dates(self):
@@ -290,15 +320,21 @@ class ParseCurrentWeekScheduleTests(unittest.TestCase):
         self.assertEqual(mon["weekday"], "Monday")
         self.assertEqual(mon["units"], 6.8)
         self.assertEqual(mon["label"], "Test day one")
-        self.assertEqual(len(mon["items"]), 2)
+        self.assertEqual(len(mon["items"]), 3)
 
-        plain, done = mon["items"]
+        plain, done, untracked = mon["items"]
         self.assertEqual(plain, {"lcNumber": 22, "title": "Generate Parentheses",
                                  "technique": "Backtracking", "startComfort": "🔴",
-                                 "done": False})
+                                 "difficulty": "Medium", "done": False})
         self.assertEqual(done, {"lcNumber": 100, "title": "Same Tree",
                                 "technique": "Tree-DFS", "startComfort": "🟢",
-                                "done": True})
+                                "difficulty": "Easy", "done": True})
+        # 55 has a real lcNumber but is deliberately absent from TRACKER_FIXTURE — the
+        # honest-null case for a NUMBER the tracker doesn't have yet (distinct from the
+        # 🆕 case below, where there is no lcNumber to look up at all).
+        self.assertEqual(untracked, {"lcNumber": 55, "title": "Jump Game",
+                                     "technique": "Greedy", "startComfort": "🟡",
+                                     "difficulty": None, "done": False})
 
     def test_new_intake_row_has_no_lcnumber_but_keeps_title_and_technique(self):
         result = gamify.parse_current_week_schedule(dt.date(2026, 9, 21))
@@ -306,7 +342,7 @@ class ParseCurrentWeekScheduleTests(unittest.TestCase):
         self.assertEqual(len(tue["items"]), 1)
         self.assertEqual(tue["items"][0], {"lcNumber": None, "title": "Combination Sum",
                                            "technique": "Backtracking", "startComfort": None,
-                                           "done": False})
+                                           "difficulty": None, "done": False})
 
     def test_day_with_no_block_has_no_items(self):
         result = gamify.parse_current_week_schedule(dt.date(2026, 9, 21))
@@ -341,9 +377,14 @@ class SummaryOfTests(unittest.TestCase):
                              "retiredOn": "2026-08-01"}],
             },
             "badges": [{"id": "first-graduate", "title": "First Graduation", "earned": True}],
-            "techniques": [{"name": "Bellman-Ford", "family": "advanced_graphs",
-                            "problemCount": 1, "problems": [787], "bestComfort": "🟢",
-                            "hasGreen": True, "thin": True, "hasVariantGap": False}],
+            "techniques": [
+                {"name": "Bellman-Ford", "family": "advanced_graphs", "tier": "core",
+                 "started": True, "problemCount": 1, "problems": [787], "bestComfort": "🟢",
+                 "hasGreen": True, "thin": True, "hasVariantGap": False},
+                {"name": "Knapsack", "family": "dynamic_programming", "tier": "dp",
+                 "started": False, "problemCount": 0, "problems": [], "bestComfort": None,
+                 "hasGreen": False, "thin": False, "hasVariantGap": False},
+            ],
             # One date far outside the summary's rolling window (well over
             # SUMMARY_STUDY_DAYS_WINDOW days before generatedAt) plus two recent ones —
             # exercises the cap in summary_of() without touching the lifetime count, which
@@ -352,8 +393,11 @@ class SummaryOfTests(unittest.TestCase):
             "schedule": {"weekOf": "2026-09-21", "days": [
                 {"date": "2026-09-21", "weekday": "Monday", "label": "Test day", "units": 6.8,
                  "items": [{"lcNumber": 22, "title": "Generate Parentheses",
-                           "technique": "Backtracking", "startComfort": "🔴", "done": False}]},
+                           "technique": "Backtracking", "startComfort": "🔴",
+                           "difficulty": "Medium", "done": False}]},
             ]},
+            "effortCeiling": 8.0,
+            "effortFloor": 3.0,
             "problems": [{"lcNumber": 206, "title": "Reverse Linked List", "comfort": "🎓"}],
         }
 
@@ -365,22 +409,28 @@ class SummaryOfTests(unittest.TestCase):
         summary = gamify.summary_of(self._payload())
         for key in ("streak", "pipeline", "badges", "coverage", "totals",
                     "onSchedule", "difficulty", "schemaVersion", "generatedAt",
-                    "techniques", "studyDays", "schedule"):
+                    "techniques", "studyDays", "schedule", "effortCeiling", "effortFloor"):
             self.assertIn(key, summary)
         self.assertEqual(summary["streak"]["current"], 3)
         self.assertEqual(summary["badges"][0]["id"], "first-graduate")
 
-    def test_techniques_pass_through_unchanged(self):
+    def test_techniques_pass_through_unchanged_incl_tier_and_started(self):
         summary = gamify.summary_of(self._payload())
-        self.assertEqual(summary["techniques"],
-                         [{"name": "Bellman-Ford", "family": "advanced_graphs",
-                           "problemCount": 1, "problems": [787], "bestComfort": "🟢",
-                           "hasGreen": True, "thin": True, "hasVariantGap": False}])
+        by_name = {t["name"]: t for t in summary["techniques"]}
+        self.assertEqual(by_name["Bellman-Ford"]["tier"], "core")
+        self.assertTrue(by_name["Bellman-Ford"]["started"])
+        self.assertEqual(by_name["Knapsack"]["tier"], "dp")
+        self.assertFalse(by_name["Knapsack"]["started"])
 
     def test_schedule_passes_through_unchanged_and_no_problems_leak(self):
         summary = gamify.summary_of(self._payload())
         self.assertEqual(summary["schedule"], self._payload()["schedule"])
         self.assertNotIn("problems", summary)
+
+    def test_effort_ceiling_and_floor_pass_through(self):
+        summary = gamify.summary_of(self._payload())
+        self.assertEqual(summary["effortCeiling"], 8.0)
+        self.assertEqual(summary["effortFloor"], 3.0)
 
     def test_schedule_none_when_no_current_week_file(self):
         payload = self._payload()
