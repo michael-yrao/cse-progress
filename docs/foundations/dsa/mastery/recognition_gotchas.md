@@ -533,3 +533,21 @@ condition so it cannot expire silently: **`green:202`**.
     char sequence starts mid-word" — resolved by the "stop at first `isWord` during a single descent"
     framing. Earned a Trie row (was 2/3 → now 3 problems, one 🟡). Contrast probe #7 (547), where the
     **technique itself** was wrong; here only the *reasoning around* a correct call was shaky.
+
+- **2026-09-20 · 78 Subsets** (backtracking intake 2/2, new, no primer) — ✅ **HIT, cold.** Pre-code
+  comment: *"returning all possible subsets is backtracking"* — plus the full 5-question template
+  (path/state/choice/validity/base-case) recalled from 22 (one day prior) and applied to a new problem
+  unaided. Shape cue owned: **"all possible / enumerate every X" ⟹ backtracking**, validity = N/A
+  (no pruning constraint; every leaf is a legal subset). ⚠️ **Recognition ≠ execution (the recurring
+  split):** call solid, but execution (path-copy/aliasing, `append` returns None, base-case off-by-one)
+  + one complexity factor leaned on coach → 🟡. The *recognition* is not the gap here.
+
+- **2026-09-20 · 1552 Magnetic Force Between Two Balls** (re-seat of the Sep 13 max-boundary teach) — ❌
+  **framing MISS.** Opened by trying to binary-search over **positions** (place at start/end, then "the
+  middle," find the closest bucket) — divide-and-conquer on *placement*, not on the answer. The
+  load-bearing reframe — **binary-search the answer *value* (the minimum gap you're maximizing), with a
+  greedy `canPlace(d)` feasibility check** — was coach-supplied, as was the max-boundary *direction* (wrote
+  the inverted min-boundary form despite labeling it "max boundary"). → 🔴, re-rep Sep 22. **Card: "maximize
+  the minimum / minimize the maximum" + a cheap yes/no feasibility check ⟹ binary-search on the ANSWER
+  value, never on array indices/positions.** The tell is a *monotonic* feasibility (small d always works,
+  large d fails) — that yes→no boundary is the search space, and it lives in the value range D, not in n.

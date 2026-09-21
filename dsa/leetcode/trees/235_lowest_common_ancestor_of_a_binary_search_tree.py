@@ -44,7 +44,7 @@ class TreeNode:
 class Solution:
 
     # ── Attempt · 2026-09-17 ──────────────
-    def lowestCommonAncestor_20260917(self, root: TreeNode, p: TreeNode, q: TreeNode) -> TreeNode:
+    def lowestCommonAncestor_20260917(self, root: TreeNode, p: TreeNode, q: TreeNode) -> TreeNode: # type: ignore
         # this is a BST but doesn't say balanced BST
         # regardless, if both are smaller than root, we go left, if both are bigger, we go right
         # it allows node to be descendant of itself, so we need to exclude equality when it comes to moving to the left or right

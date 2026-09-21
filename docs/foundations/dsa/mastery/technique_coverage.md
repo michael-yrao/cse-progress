@@ -6,7 +6,7 @@
 
 > The tracker is keyed by **problem**; this is keyed by **technique**. Use it at the weekly build to decide what to pull, and at phase exit to check the per-algorithm bar (recognition + execution, ≥1 🟢 each).
 
-> **56/56** techniques started &nbsp;·&nbsp; **0** with no 🟢 &nbsp;·&nbsp; **20** thin &nbsp;·&nbsp; **3** unqueued variant gaps
+> **56/56** techniques started &nbsp;·&nbsp; **0** with no 🟢 &nbsp;·&nbsp; **18** thin &nbsp;·&nbsp; **3** unqueued variant gaps
 
 ## ⚠️ Action list
 
@@ -22,8 +22,6 @@
 - **Prim's MST** (advanced_graphs) — 1/3: 1584
 - **Stack (augmented entries)** (stack) — 1/2: 155
 - **Stack (expression evaluation)** (stack) — 1/2: 150
-- **Binary Search (max boundary)** (binary_search) — 2/3: 34, 74
-- **Binary Search on Answer** (binary_search) — 2/3: 875, 1011
 - **Floyd's Cycle / Midpoint** (linked_list) — 2/3: 141, 143
 - **Floyd-Warshall (all-pairs shortest path)** (advanced_graphs) — 2/3: 1334, 1462
 - **Grid DFS** (graphs) — 2/3: 200, 695
@@ -57,9 +55,9 @@
 | Length-Prefix Encoding | arrays_and_hash | 1 (271) | 🟢 | ✅ | — | — |
 | Prefix/Suffix Products | arrays_and_hash | 1 (238) | 🟢 | ✅ | — | — |
 | Binary Search (exact match) | binary_search | 2 (33, 704) | 🎓 | ✅ | — | — |
-| Binary Search (max boundary) | binary_search | 2 (34, 74) | 🟢 | ✅ | — | thin (2/3) |
+| Binary Search (max boundary) | binary_search | 3 (34, 74, 1552) | 🟢 | ✅ | — | — |
 | Binary Search (min boundary) | binary_search | 7 (34, 153, 162, 540, 875, 1011, 2300) | 🎓 | ✅ | — | — |
-| Binary Search on Answer | binary_search | 2 (875, 1011) | 🟢 | ✅ | — | thin (2/3) |
+| Binary Search on Answer | binary_search | 3 (875, 1011, 1552) | 🟢 | ✅ | — | — |
 | BFS on Implicit Graph | graphs | 1 (127) | 🟢 | ✅ | — | — |
 | Connected Components | graphs | 1 *+2v* (323) | 🟢 | ✅ | DFS ×1 · BFS ×1 · Union-Find ×1 | thin (1/3) |
 | Cycle Detection in an Iterated Sequence | graphs | 1 (202) | 🟢 | ✅ | Seen-Set ×1 · ~~Floyd Fast/Slow~~ *(queued: `🟡:202 — ready; rides 202's next rep`)* | thin (1/2) |
@@ -102,17 +100,18 @@
 
 ## Vocabulary maintenance
 
-**Unmapped tracker rows (5)** — solved but assigned to no technique. Add them to `techniques.yml`, or coverage silently drifts behind the tracker.
+**Unmapped tracker rows (6)** — solved but assigned to no technique. Add them to `techniques.yml`, or coverage silently drifts behind the tracker.
 
 - 1489 Find Critical and Pseudo-Critical Edges in MST (Kruskal)
 - 22 Generate Parentheses
 - 648 Replace Words
 - 743 Network Delay Time (Dijkstra — array-scan)
 - 743 Network Delay Time (Dijkstra — min-heap)
+- 78 Subsets
 
 **Method drift (1)** — the tracker HAS a row for this problem, but not with the method the vocabulary declares. Either the parenthetical changed or the YAML names the wrong variant; the technique is not being credited.
 
 - 743 (Dijkstra)
 
-**Not reached yet (4)** — declared in the vocabulary, no tracker row. This is the normal state for curriculum ahead of the learner; it is a roadmap, not a finding.
+**Not reached yet (3)** — declared in the vocabulary, no tracker row. This is the normal state for curriculum ahead of the learner; it is a roadmap, not a finding.
 

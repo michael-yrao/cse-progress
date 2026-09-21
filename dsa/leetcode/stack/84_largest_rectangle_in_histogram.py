@@ -17,6 +17,36 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-09-20 ──────────────
+    def largestRectangleArea_20260920(self, heights: List[int]) -> int:
+        # we want to calculate the area whenever we go down in height, this is increasing stack
+        # what this means is the width is defined by outer boundaries (e.g. current node is right boundary)
+        # so what is our formula for the width: right boundary - left boundary - 1
+        # what this means is left boundary is node's index - 1? <- incorrect, it should be stack[-1]
+        # think of the scenario [2,1,2], the width is 3 for the solution, not 2
+        # we need to add -math.inf to the end in case of the array being increasing in perpetuity
+
+        heights.append(-math.inf) # type: ignore
+
+        maxArea = 0
+        increasingStack = []
+
+        for i in range(len(heights)):
+            # while we are breaking the rules of the increasing stack
+            # pop and calc max area
+            while increasingStack and heights[i] < heights[increasingStack[-1]]:
+                # since we know every element in the stack is increasing
+                # the latest element in the stack is the highest so it is the height
+                heightIndex = increasingStack.pop()
+                height = heights[heightIndex]
+                leftBoundary = increasingStack[-1] if increasingStack else -1
+                rightBoundary = i
+                width = rightBoundary - leftBoundary - 1
+                maxArea = max(maxArea, width * height)
+            increasingStack.append(i)
+        
+        return maxArea
+
     # ── Attempt · 2026-09-18 ──────────────
     def largestRectangleArea_20260918(self, heights: List[int]) -> int:
         # we should do an increasing monotonic stack
