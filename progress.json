@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-20",
+  "generatedAt": "2026-09-21",
   "totals": {
     "problems": 123,
     "solutions": 134,
@@ -39,7 +39,7 @@
   },
   "onSchedule": {
     "totalActive": 134,
-    "dueToday": 0,
+    "dueToday": 5,
     "overdue": 4
   },
   "trophyCase": {

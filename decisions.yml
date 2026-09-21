@@ -667,3 +667,25 @@ decisions:
       clause as covering every edit-after-first-write, including a self-caught cosmetic slip. Operational
       home: rule 4 scope in complexity_gotchas.md; why/history: feedback_ask_complexity.md.
     affects: [complexity_gate, rating]
+
+  - id: eow-close-out-process-sep20
+    date: 2026-09-20
+    summary: >-
+      FOUR standing changes to the Sunday end-of-week close-out (learner's call, Sep 20).
+      (1) COMPLEXITY CHECKS CONSOLIDATED TO SUNDAY — the cold complexity probes no longer seed into
+      weekday warmups; all complexity work (cleanup queue + ~2 probes) now fires in one focused block at
+      the Sunday close-out, so weekday boards carry none and the daily tables stay leaner.
+      (2) SELF-EVAL META-REVIEW + SKILL-UPDATE EVALUATION is now a standing Sunday pass: run
+      meta_review_digest.py, consolidate resolved entries into self_eval_archive.md, and decide any
+      skill/CLAUDE.md updates the open entries warrant IN THAT PASS (the log gets drained on Sunday, not
+      just appended to). (3) The close-out is RUN as plan(Opus) -> execute(Sonnet 5 subagent, mechanical
+      writeback only, no commit/push) -> review + advisor(Opus), extending feedback_execution_workflow.md
+      from the gamification project to the weekly build; only the writeback goes to the subagent, never
+      the planning or a teach/rep. (4) TABLE-SCANNABILITY guardrail — the daily schedule table's Note
+      column carries a short tag only; full per-rep rationale lives in the mastery ledgers, never the
+      board; an overloaded table is a build defect. The exact lean-table format is itself on the Sunday
+      skill-double-check agenda (schedule-generation skill under readability review). No cse.config.yml
+      value changed. Strands any wording that seeds complexity probes into weekday warmups, or that
+      treats the weekly build as a single-model inline task, or that keeps full rep rationale in the
+      board table. Operational home: references/weekly-build.md; why: feedback_execution_workflow.md.
+    affects: [weekly_build, complexity_gate, self_evaluation, execution_workflow]
