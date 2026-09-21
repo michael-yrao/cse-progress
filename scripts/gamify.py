@@ -60,6 +60,7 @@ _console.force_utf8()
 REPO = Path(__file__).resolve().parent.parent
 TRACKER = REPO / "docs/foundations/dsa/mastery/dsa_progress.md"
 COVERAGE = REPO / "docs/foundations/dsa/mastery/technique_coverage.md"
+PROBES_README = REPO / "dsa/probes/README.md"
 LEETCODE = REPO / "dsa/leetcode"
 OUT = REPO / "progress.json"
 OUT_SUMMARY = REPO / "progress-summary.json"
@@ -427,6 +428,10 @@ def parse_techniques() -> list[dict]:
     re-deriving it from problemCount, so it stays byte-for-byte in lockstep with
     `is_started` (the exact gate that keeps these techniques out of the Action list) even
     if that check's definition ever changes.
+
+    `minProblems` (round 3) is the Min column — the per-technique coverage bar
+    (`techniques.yml`'s `min_problems`, 1 for most, up to 5 for one) that makes "thin"
+    self-explanatory as `problemCount / minProblems` instead of a bare, unexplained label.
     """
     try:
         text = COVERAGE.read_text(encoding="utf-8")
@@ -439,13 +444,14 @@ def parse_techniques() -> list[dict]:
     out: list[dict] = []
     for line in TABLE_ROW.findall(section.group(1)):
         cells = [c.strip() for c in line.split("|")]
-        if len(cells) != 8:
+        if len(cells) != 9:
             continue
-        (name, family, tier, problems_cell, best_cell, green_cell,
+        (name, family, tier, min_cell, problems_cell, best_cell, green_cell,
          _variants_cell, gaps_cell) = cells
         if name in ("Technique", "") or set(name) <= {"-", ":"}:
             continue  # header / markdown separator row, not data
 
+        min_problems_match = CELL_NUMBER.search(min_cell)
         counts = CELL_NUMBER.findall(problems_cell)
         problem_count = int(counts[0]) if counts else 0
         paren = PARENTHETICAL.search(problems_cell)
@@ -457,6 +463,7 @@ def parse_techniques() -> list[dict]:
             "family": family,
             "tier": tier or "core",
             "started": "not started" not in gaps_cell,
+            "minProblems": int(min_problems_match.group(0)) if min_problems_match else 3,
             "problemCount": problem_count,
             "problems": problems,
             "bestComfort": best.group(0) if best else None,
@@ -465,6 +472,56 @@ def parse_techniques() -> list[dict]:
             "hasVariantGap": "variant" in gaps_cell,
         })
     return out
+
+
+# ── recognition probes (the "is the pool still teaching?" diagnostic) ───────────────
+
+PROBE_SECTION = re.compile(r"##\s*📒\s*Probe log(.*?)(?:\n##\s|\Z)", re.S)
+PROBE_PROBLEM = re.compile(r"^(\d+)\s+(.+)$")
+
+
+def parse_probes() -> dict | None:
+    """The `dsa/probes/README.md` Probe log table -> {total, cleanRate, items:[...]}.
+
+    Reuses TABLE_ROW/COMFORT_GLYPH (parse_techniques()'s style). Each probe is a cold,
+    label-stripped, disposable rep — a clean 🟢 creates no tracker row (see the README's
+    own docstring), so the tracker's own numbers never see it; this table is the ONLY
+    place it's counted. `result` takes the FIRST comfort glyph in the Result cell — a row
+    that later converted (`🔴 → 🟡 (re-rep Sep 16)`) is scored on what the COLD call
+    actually was, not its eventual outcome. Fail-soft: no table/file -> None.
+    """
+    try:
+        text = PROBES_README.read_text(encoding="utf-8")
+    except OSError:
+        return None
+    section = PROBE_SECTION.search(text)
+    if not section:
+        return None
+
+    items: list[dict] = []
+    for line in TABLE_ROW.findall(section.group(1)):
+        cells = [c.strip() for c in line.split("|")]
+        if len(cells) != 6:
+            continue
+        num, date, problem_cell, technique, result_cell, _tracker_row = cells
+        if num in ("#", "") or set(num) <= {"-", ":"}:
+            continue  # header / markdown separator row, not data
+
+        m = PROBE_PROBLEM.match(problem_cell)
+        glyph = COMFORT_GLYPH.search(result_cell)
+        items.append({
+            "date": date,
+            "lcNumber": int(m.group(1)) if m else None,
+            "title": m.group(2).strip() if m else problem_cell,
+            "technique": technique,
+            "result": glyph.group(0) if glyph else None,
+        })
+
+    if not items:
+        return None
+    total = len(items)
+    clean = sum(1 for it in items if it["result"] == "🟢")
+    return {"total": total, "cleanRate": clean / total, "items": items}
 
 
 # ── the build ───────────────────────────────────────────────────────────────────────
@@ -631,6 +688,9 @@ def build_payload(today: dt.date | None = None) -> tuple[dict, list[str]]:
     schedule = parse_current_week_schedule(today)
     if schedule is None:
         warnings.append("no current weekly schedule file found — schedule omitted.")
+    probes = parse_probes()
+    if probes is None:
+        warnings.append("dsa/probes/README.md Probe log not readable — probes omitted.")
 
     # Today's-board workload bar (Sep 21, 2026): reuse effort_budget.py's OWN config
     # reader rather than re-deriving the fallback here — it already tolerates a missing
@@ -661,6 +721,7 @@ def build_payload(today: dt.date | None = None) -> tuple[dict, list[str]]:
         "schedule": schedule,
         "effortCeiling": float(effort_cfg["ceiling"]),
         "effortFloor": float(effort_cfg["floor_min"]),
+        "probes": probes,
     }
     stats["badges"] = compute_badges(stats, problems, cfg)
     stats["problems"] = problems
@@ -689,6 +750,10 @@ def summary_of(payload: dict) -> dict:
     landing's Today's-board drill reads it from (no separate fetch for "what do I do
     today"). `effortCeiling`/`effortFloor` (two numbers) back the workload bar's
     Light/Moderate/Heavy band next to it.
+
+    `probes` (round 3) rides through whole too — the Probe log is ~1 row/week, small
+    either way, and it's the ONLY place a disposable, cold recognition probe is counted
+    (see parse_probes()'s docstring), so the Recognition tab needs it with no extra fetch.
     """
     trophy_case = payload.get("trophyCase") or {}
     compact_graduated = [
@@ -715,6 +780,7 @@ def summary_of(payload: dict) -> dict:
         "schedule": payload.get("schedule"),
         "effortCeiling": payload.get("effortCeiling"),
         "effortFloor": payload.get("effortFloor"),
+        "probes": payload.get("probes"),
     }
     if "warnings" in payload:
         summary["warnings"] = payload["warnings"]
