@@ -28,6 +28,12 @@ and **enforce** them (the ledger below *is* the per-problem freebie state).
    - **Scope is exactly "clean code + Big-O miss only."** If the code itself needed a real fix, rule 2
      (freebie → 🟡 cap) applies unchanged — a complexity miss riding alongside a code miss is *not*
      waived.
+   - **A self-caught typo on a non-logic line is "clean code," not "a real fix" (Sep 20, 2026).** "The
+     code needed a real fix" means the *logic* was wrong and had to be repaired. A typo the learner
+     spots and corrects themselves, unprompted, on a one-line pointer / index / bound — no algorithm
+     change, nobody else surfaced it — is ordinary clean authoring: it does **not** cap and does **not**
+     break the waiver. The picking feature: **who surfaced it + did logic change.** Self-caught & logic
+     unchanged → clean; coach-/test-surfaced, or the fix altered the algorithm → a real fix (→ 🟡).
    - Still correct the miss in the moment and record it in the ledger; the waiver governs the *rating*
      and the *timing of the re-test*, never whether the concept is tested.
 
@@ -46,9 +52,10 @@ only the **bound**.
 | Problem | Missed bound | Queued | Cleared |
 |---|---|---|---|
 | 743 Network Delay Time (Dijkstra) | **space**: lazy-Dijkstra heap is **O(E)** (E pushes, dedup on pop), not "≤ V nodes". Total space O(V+E) was right; the *attribution* was wrong. Self-corrected on one non-leading nudge | 2026-09-03 | **2026-09-06 ✅ cold re-ask clean** — heap-is-O(E) attributed correctly, unaided |
-| 226 Invert Binary Tree | **space**: gave O(n) but justified it with the *time* reason ("we invert every node"). Space is the **recursion stack = O(h)**, worst-case O(n) on a skewed tree, O(log n) balanced. Number right, attribution wrong — tree-height space category | 2026-09-14 (learner-requested follow-up) | |
-| 912 Sort an Array (Merge Sort) | **space**: called it **O(n log n)** from "the stack calls" — two errors. (1) stack depth is **O(log n)** (halving), not n log n; (2) the stack isn't even dominant — the `merge` result arrays + `nums[l:r]` slices are. The O(n log n) is **total allocated over the whole run**; **peak live** (what space complexity measures) is **O(n)**, since each merge's inputs are freed as it returns. Needed a full **peak-vs-total** re-teach, not a nudge | 2026-09-17 | |
-| 130 Surrounded Regions (BFS) | **time**: O(m·n) is **unconditional** (two full-grid sweeps — border-seed pass + flip pass), NOT "from the all-O worst case" (that reasoning is the *space* bound — the queue holds O(m·n) only when the grid is one big region). Attribution swapped time↔space. Self-flagged at rating Sep 19, queued then | 2026-09-19 | |
+| 226 Invert Binary Tree | **space**: gave O(n) but justified it with the *time* reason ("we invert every node"). Space is the **recursion stack = O(h)**, worst-case O(n) on a skewed tree, O(log n) balanced. Number right, attribution wrong — tree-height space category | 2026-09-14 (learner-requested follow-up) | **2026-09-20 ✅ space cold re-ask clean** — O(h) recursion stack, correctly attributed (exactly the category missed). |
+| 226 Invert Binary Tree | **time**: gave **O(h)**, should be **O(n)** — invert swaps *every* node, so work = n; height only bounds stack depth (the space term), not total work. Mirror of the space slip — traversal *shape* mapped onto the wrong axis. Corrected cold; re-verify next close-out | 2026-09-20 | |
+| 912 Sort an Array (Merge Sort) | **space**: called it **O(n log n)** from "the stack calls" — two errors. (1) stack depth is **O(log n)** (halving), not n log n; (2) the stack isn't even dominant — the `merge` result arrays + `nums[l:r]` slices are. The O(n log n) is **total allocated over the whole run**; **peak live** (what space complexity measures) is **O(n)**, since each merge's inputs are freed as it returns. Needed a full **peak-vs-total** re-teach, not a nudge | 2026-09-17 | **2026-09-20 ✅ cold re-ask clears** — bound O(n), avoided the O(n log n) total-vs-peak trap. Attribution still needed a nudge: the O(n) is the merge arrays (peak-live, inputs freed on return), the call stack is O(log n) — learner pinned the O(n) on the stack. |
+| 130 Surrounded Regions (BFS) | **time**: O(m·n) is **unconditional** (two full-grid sweeps — border-seed pass + flip pass), NOT "from the all-O worst case" (that reasoning is the *space* bound — the queue holds O(m·n) only when the grid is one big region). Attribution swapped time↔space. Self-flagged at rating Sep 19, queued then | 2026-09-19 | **2026-09-20 ✅ cold re-ask clean** — time O(m·n) attributed to the unconditional full sweep, space O(m·n) to the worst-case queue; the time↔space swap now mapped correctly. |
 
 ## 🎯 Cold complexity probes (standing drill, added Sep 6, 2026)
 

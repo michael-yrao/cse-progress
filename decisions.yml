@@ -651,3 +651,19 @@ decisions:
       progress signal. Soaks before any PR to canonical cse-coach. See CLAUDE.md, SKILL.md §8,
       references/motivation.md, project_gamification.md.
     affects: [gamification, hooks, single_source, upstream]
+
+  - id: typo-self-fix-not-a-real-fix
+    date: 2026-09-20
+    summary: >-
+      CLARIFIES the boundary of the clean-code + Big-O-miss waiver (rule 4 /
+      complexity-cleanup-formalized): "the code needed a real fix" — the clause that RE-CAPS a rep —
+      means the LOGIC was wrong and had to be repaired. A typo the learner catches and fixes
+      themselves, unprompted, on a non-logic line (a one-line pointer / index / bound) with no
+      algorithm change and nobody else surfacing it is ordinary clean authoring: it does NOT cap the
+      rating and does NOT break the waiver. The picking feature is WHO SURFACED IT + WHETHER LOGIC
+      CHANGED — self-caught & logic-unchanged → clean; coach-/test-surfaced, or a fix that altered the
+      algorithm → a real fix (→ 🟡). Left open on 912 (a no-op for that rep either way) and delegated
+      to the coach. No cse.config.yml value changed. Strands any wording that reads the "real fix"
+      clause as covering every edit-after-first-write, including a self-caught cosmetic slip. Operational
+      home: rule 4 scope in complexity_gotchas.md; why/history: feedback_ask_complexity.md.
+    affects: [complexity_gate, rating]
