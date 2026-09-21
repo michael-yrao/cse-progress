@@ -2,48 +2,87 @@
   "schemaVersion": 1,
   "generatedAt": "2026-09-20",
   "totals": {
-    "problems": 121,
-    "solutions": 132,
-    "reps": 584
+    "problems": 123,
+    "solutions": 134,
+    "reps": 589
   },
   "pipeline": {
     "blank": 2,
-    "shaky": 14,
+    "shaky": 16,
     "clean": {
       "s0": 1,
-      "s1": 30,
+      "s1": 29,
       "s2plus": 66,
-      "total": 97
+      "total": 96
     },
-    "graduated": 19,
+    "graduated": 20,
     "retired": 0
   },
   "difficulty": {
     "Easy": 34,
-    "Medium": 87,
+    "Medium": 89,
     "Hard": 11
   },
   "streak": {
-    "current": 115,
-    "longest": 115,
-    "lastStudyDay": "2026-09-19",
-    "studyDays": 173,
+    "current": 116,
+    "longest": 116,
+    "lastStudyDay": "2026-09-20",
+    "studyDays": 174,
     "restDayAllowance": 1
   },
   "coverage": {
     "total": 56,
     "started": 56,
     "noGreen": 0,
-    "thin": 20,
+    "thin": 18,
     "variantGaps": 3
   },
   "onSchedule": {
-    "totalActive": 132,
-    "dueToday": 1,
-    "overdue": 6
+    "totalActive": 134,
+    "dueToday": 0,
+    "overdue": 4
   },
   "trophyCase": {
     "graduated": [
+      {
+        "lcNumber": 199,
+        "title": "Binary Tree Right Side View",
+        "url": "https://leetcode.com/problems/binary-tree-right-side-view/",
+        "difficulty": "Medium",
+        "category": "trees",
+        "comfort": "🎓",
+        "level": 3,
+        "streak": 3,
+        "nextReview": "2027-03-19",
+        "repDates": [
+          "2026-05-09",
+          "2026-06-13",
+          "2026-07-14",
+          "2026-09-20"
+        ],
+        "timeline": [
+          {
+            "date": "2026-05-09",
+            "comfort": null,
+            "level": null
+          },
+          {
+            "date": "2026-06-13",
+            "comfort": null,
+            "level": null
+          },
+          {
+            "date": "2026-07-14",
+            "comfort": null,
+            "level": null
+          },
+          {
+            "date": "2026-09-20",
+            "comfort": "🎓",
+            "level": 3
+          }
+        ]
+      },
       {
         "lcNumber": 206,
         "title": "Reverse Linked List (Iterative)",
@@ -973,6 +1012,165 @@
   ],
   "problems": [
     {
+      "lcNumber": 84,
+      "title": "Largest Rectangle in Histogram",
+      "url": "https://leetcode.com/problems/largest-rectangle-in-histogram/",
+      "difficulty": "Hard",
+      "category": "stack",
+      "comfort": "🟡",
+      "level": 1,
+      "streak": 0,
+      "nextReview": "2026-09-30",
+      "repDates": [
+        "2026-09-04",
+        "2026-09-18",
+        "2026-09-20"
+      ],
+      "timeline": [
+        {
+          "date": "2026-09-04",
+          "comfort": "🔴",
+          "level": 0
+        },
+        {
+          "date": "2026-09-18",
+          "comfort": "🔴",
+          "level": 0
+        },
+        {
+          "date": "2026-09-20",
+          "comfort": "🟡",
+          "level": 1
+        }
+      ]
+    },
+    {
+      "lcNumber": 78,
+      "title": "Subsets",
+      "url": "https://leetcode.com/problems/subsets/",
+      "difficulty": "Medium",
+      "category": "backtracking",
+      "comfort": "🟡",
+      "level": 1,
+      "streak": 0,
+      "nextReview": "2026-09-30",
+      "repDates": [
+        "2026-09-20"
+      ],
+      "timeline": [
+        {
+          "date": "2026-09-20",
+          "comfort": "🟡",
+          "level": 1
+        }
+      ]
+    },
+    {
+      "lcNumber": 1552,
+      "title": "Magnetic Force Between Two Balls",
+      "url": "https://leetcode.com/problems/magnetic-force-between-two-balls/",
+      "difficulty": "Medium",
+      "category": "binary_search",
+      "comfort": "🔴",
+      "level": 0,
+      "streak": 0,
+      "nextReview": "2026-09-22",
+      "repDates": [
+        "2026-09-20"
+      ],
+      "timeline": [
+        {
+          "date": "2026-09-20",
+          "comfort": "🔴",
+          "level": 0
+        }
+      ]
+    },
+    {
+      "lcNumber": 138,
+      "title": "Copy List with Random Pointer",
+      "url": "https://leetcode.com/problems/copy-list-with-random-pointer/",
+      "difficulty": "Medium",
+      "category": "linked_list",
+      "comfort": "🟢",
+      "level": 2,
+      "streak": 2,
+      "nextReview": "2026-11-19",
+      "repDates": [
+        "2026-07-03",
+        "2026-07-05",
+        "2026-08-04",
+        "2026-08-13",
+        "2026-09-20"
+      ],
+      "timeline": [
+        {
+          "date": "2026-07-03",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-07-05",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-08-04",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-08-13",
+          "comfort": "🟢",
+          "level": 2
+        },
+        {
+          "date": "2026-09-20",
+          "comfort": "🟢",
+          "level": 2
+        }
+      ]
+    },
+    {
+      "lcNumber": 199,
+      "title": "Binary Tree Right Side View",
+      "url": "https://leetcode.com/problems/binary-tree-right-side-view/",
+      "difficulty": "Medium",
+      "category": "trees",
+      "comfort": "🎓",
+      "level": 3,
+      "streak": 3,
+      "nextReview": "2027-03-19",
+      "repDates": [
+        "2026-05-09",
+        "2026-06-13",
+        "2026-07-14",
+        "2026-09-20"
+      ],
+      "timeline": [
+        {
+          "date": "2026-05-09",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-06-13",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-07-14",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-09-20",
+          "comfort": "🎓",
+          "level": 3
+        }
+      ]
+    },
+    {
       "lcNumber": 763,
       "title": "Partition Labels",
       "url": "https://leetcode.com/problems/partition-labels/",
@@ -1314,33 +1512,6 @@
           "date": "2026-09-18",
           "comfort": "🟡",
           "level": 1
-        }
-      ]
-    },
-    {
-      "lcNumber": 84,
-      "title": "Largest Rectangle in Histogram",
-      "url": "https://leetcode.com/problems/largest-rectangle-in-histogram/",
-      "difficulty": "Hard",
-      "category": "stack",
-      "comfort": "🔴",
-      "level": 0,
-      "streak": 0,
-      "nextReview": "2026-09-20",
-      "repDates": [
-        "2026-09-04",
-        "2026-09-18"
-      ],
-      "timeline": [
-        {
-          "date": "2026-09-04",
-          "comfort": "🔴",
-          "level": 0
-        },
-        {
-          "date": "2026-09-18",
-          "comfort": "🔴",
-          "level": 0
         }
       ]
     },
@@ -2048,7 +2219,7 @@
       "title": "Replace Words",
       "url": "https://leetcode.com/problems/replace-words/",
       "difficulty": "Medium",
-      "category": null,
+      "category": "trie",
       "comfort": "🟡",
       "level": 1,
       "streak": 0,
@@ -4759,45 +4930,6 @@
       ]
     },
     {
-      "lcNumber": 138,
-      "title": "Copy List with Random Pointer",
-      "url": "https://leetcode.com/problems/copy-list-with-random-pointer/",
-      "difficulty": "Medium",
-      "category": "linked_list",
-      "comfort": "🟢",
-      "level": 2,
-      "streak": 1,
-      "nextReview": "2026-09-12",
-      "repDates": [
-        "2026-07-03",
-        "2026-07-05",
-        "2026-08-04",
-        "2026-08-13"
-      ],
-      "timeline": [
-        {
-          "date": "2026-07-03",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-07-05",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-08-04",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-08-13",
-          "comfort": "🟢",
-          "level": 2
-        }
-      ]
-    },
-    {
       "lcNumber": 146,
       "title": "LRU Cache",
       "url": "https://leetcode.com/problems/lru-cache/",
@@ -6418,39 +6550,6 @@
         },
         {
           "date": "2026-07-18",
-          "comfort": "🟢",
-          "level": 2
-        }
-      ]
-    },
-    {
-      "lcNumber": 199,
-      "title": "Binary Tree Right Side View",
-      "url": "https://leetcode.com/problems/binary-tree-right-side-view/",
-      "difficulty": "Medium",
-      "category": "trees",
-      "comfort": "🟢",
-      "level": 2,
-      "streak": 2,
-      "nextReview": "2026-09-12",
-      "repDates": [
-        "2026-05-09",
-        "2026-06-13",
-        "2026-07-14"
-      ],
-      "timeline": [
-        {
-          "date": "2026-05-09",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-06-13",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-07-14",
           "comfort": "🟢",
           "level": 2
         }

@@ -37,6 +37,21 @@
 # "could a rule written before this still read as correct while now being wrong?"
 
 decisions:
+  - id: hard-multiplier-1p3
+    date: 2026-09-20
+    summary: >-
+      CHANGES the effort-budget difficulty multiplier for Hard from 1.5 to 1.3 (cse.config.yml
+      effort_budget.difficulty). Origin: the learner flagged Sep 6 that a 🔴 Hard = 4.5 units = 56%
+      of a day felt top-heavy; pinned for decision at the Sep 21 build. Decided at the Sep 20 close-out.
+      Effect: a 🔴 Hard now prices 3.0×1.3 = 3.9 (was 4.5); 🟡 Hard 2.6 (was 3.0); 🟢 Hard 1.3 (was 1.5).
+      ⚠️ The countervailing evidence is on the record and NOT resolved by this change: 1489 (Hard, Sep 13)
+      ran ~2 sessions with heavy back-and-forth — felt-effort HIGH — a witness that 4.5 may UNDER-read a
+      genuinely long Hard, not over-read it. The learner chose 1.3 anyway (their call on tempo/room). Watch:
+      if Hard days now systematically overrun their priced units, this is the number to revisit. Strands any
+      prose asserting "a 🔴 Hard = 4.5 units." No rule-file sentence changed (the multiplier is a pure config
+      value, single-source-ok). See schedule 20260921 build note.
+    affects: [effort_budget]
+
   - id: close-out-commit-authorization
     date: 2026-09-14
     summary: >-

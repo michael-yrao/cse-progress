@@ -66,14 +66,19 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/dsa/mastery/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **121+6** problems &nbsp;·&nbsp; **132+6** solutions &nbsp;·&nbsp; **584+6** reps
+> **123+6** problems &nbsp;·&nbsp; **134+6** solutions &nbsp;·&nbsp; **589+6** reps
 
 | | 🏆 Retired | 🎓 Graduated | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|:---:|
-| **Solutions** | 0 | 19 | 97 | 14 | 2 |
+| **Solutions** | 0 | 20 | 96 | 16 | 2 |
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Rep Date | Rep Dates |
 |---|---|---|---|---|---|---|
+| Hard | [84. Largest Rectangle in Histogram](https://leetcode.com/problems/largest-rectangle-in-histogram/) | 🟡 | 0 | 2026-09-30 | 2026-09-20 | 2026-09-04, 2026-09-18, 2026-09-20 |
+| Medium | [78. Subsets](https://leetcode.com/problems/subsets/) | 🟡 | 0 | 2026-09-30 | 2026-09-20 | 2026-09-20 |
+| Medium | [1552. Magnetic Force Between Two Balls](https://leetcode.com/problems/magnetic-force-between-two-balls/) | 🔴 | 0 | 2026-09-22 | 2026-09-20 | 2026-09-20 |
+| Medium | [138. Copy List with Random Pointer](https://leetcode.com/problems/copy-list-with-random-pointer/) | 🟢 | 2 | 2026-11-19 | 2026-09-20 | 2026-07-03, 2026-07-05, 2026-08-04, 2026-08-13, 2026-09-20 |
+| Medium | [199. Binary Tree Right Side View](https://leetcode.com/problems/binary-tree-right-side-view/) | 🎓 | 3 | 2027-03-19 | 2026-09-20 | 2026-05-09, 2026-06-13, 2026-07-14, 2026-09-20 |
 | Medium | [763. Partition Labels](https://leetcode.com/problems/partition-labels/) | 🟡 | 0 | 2026-09-29 | 2026-09-19 | 2026-09-09, 2026-09-19 |
 | Hard | [2097. Valid Arrangement of Pairs](https://leetcode.com/problems/valid-arrangement-of-pairs/) | 🟢 | 1 | 2026-10-19 | 2026-09-19 | 2026-09-05, 2026-09-07, 2026-09-19 |
 | Easy | [496. Next Greater Element I](https://leetcode.com/problems/next-greater-element-i/) | 🟢 | 2 | 2026-11-18 | 2026-09-19 | 2026-07-04, 2026-07-06, 2026-08-06, 2026-08-16, 2026-09-19 |
@@ -83,7 +88,6 @@ Notes for future agents:
 | Easy | [283. Move Zeroes](https://leetcode.com/problems/move-zeroes/) | 🎓 | 3 | 2027-03-18 | 2026-09-19 | 2026-01-10, 2026-04-02, 2026-06-02, 2026-06-12, 2026-07-19, 2026-09-19 |
 | Medium | [22. Generate Parentheses](https://leetcode.com/problems/generate-parentheses/) | 🔴 | 0 | 2026-09-21 | 2026-09-19 | 2026-09-19 |
 | Medium | [45. Jump Game II](https://leetcode.com/problems/jump-game-ii/) | 🟡 | 0 | 2026-09-28 | 2026-09-18 | 2026-09-08, 2026-09-18 |
-| Hard | [84. Largest Rectangle in Histogram](https://leetcode.com/problems/largest-rectangle-in-histogram/) | 🔴 | 0 | 2026-09-20 | 2026-09-18 | 2026-09-04, 2026-09-18 |
 | Medium | [721. Accounts Merge (Union-Find)](https://leetcode.com/problems/accounts-merge/) | 🟡 | 0 | 2026-09-27 | 2026-09-17 | 2026-07-30, 2026-08-09, 2026-09-08, 2026-09-17 |
 | Medium | [435. Non-overlapping Intervals](https://leetcode.com/problems/non-overlapping-intervals/) | 🟢 | 1 | 2026-10-17 | 2026-09-17 | 2026-08-26, 2026-08-28, 2026-09-07, 2026-09-17 |
 | Medium | [912. Sort an Array (Merge Sort)](https://leetcode.com/problems/sort-an-array/) | 🟢 | 1 | 2026-10-17 | 2026-09-17 | 2026-01-06, 2026-03-26, 2026-07-15, 2026-07-29, 2026-08-08, 2026-09-07, 2026-09-17 |
@@ -162,7 +166,6 @@ Notes for future agents:
 | Medium | [80. Remove Duplicates from Sorted Array II](https://leetcode.com/problems/remove-duplicates-from-sorted-array-ii/) | 🟢 | 2 | 2026-10-15 | 2026-08-16 | 2026-01-13, 2026-04-13, 2026-06-25, 2026-06-27, 2026-07-11, 2026-08-16 |
 | Medium | [695. Max Area Of Island (DFS)](https://leetcode.com/problems/max-area-of-island/) | 🟢 | 2 | 2026-10-14 | 2026-08-15 | 2026-06-01, 2026-06-17, 2026-08-15 |
 | Medium | [503. Next Greater Element II](https://leetcode.com/problems/next-greater-element-ii/) | 🟢 | 2 | 2026-10-13 | 2026-08-14 | 2026-07-11, 2026-07-21, 2026-07-31, 2026-08-10, 2026-08-14 |
-| Medium | [138. Copy List with Random Pointer](https://leetcode.com/problems/copy-list-with-random-pointer/) | 🟢 | 1 | 2026-09-12 | 2026-08-13 | 2026-07-03, 2026-07-05, 2026-08-04, 2026-08-13 |
 | Medium | [146. LRU Cache](https://leetcode.com/problems/lru-cache/) | 🟢 | 2 | 2026-10-12 | 2026-08-13 | 2026-07-04, 2026-07-07, 2026-07-16, 2026-08-13 |
 | Easy | [121. Best Time to Buy and Sell Stock](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/) | 🟢 | 2 | 2026-10-12 | 2026-08-13 | 2026-04-15, 2026-06-25, 2026-07-03, 2026-07-14, 2026-08-13 |
 | Easy | [680. Valid Palindrome II](https://leetcode.com/problems/valid-palindrome-ii/) | 🟢 | 2 | 2026-10-12 | 2026-08-13 | 2026-04-05, 2026-05-28, 2026-05-30, 2026-06-12, 2026-08-13 |
@@ -205,7 +208,6 @@ Notes for future agents:
 | Easy | [1046. Last Stone Weight](https://leetcode.com/problems/last-stone-weight/) | 🟢 | 2 | 2026-09-24 | 2026-07-26 | 2026-06-23, 2026-07-26 |
 | Easy | [704. Binary Search](https://leetcode.com/problems/binary-search/) | 🎓 | 3 | 2027-01-22 | 2026-07-26 | 2026-03-09, 2026-04-13, 2026-05-27, 2026-06-27, 2026-07-26 |
 | Medium | [200. Number of Islands (BFS)](https://leetcode.com/problems/number-of-islands/) | 🟢 | 2 | 2026-09-16 | 2026-07-18 | 2026-05-30, 2026-06-01, 2026-06-07, 2026-07-18 |
-| Medium | [199. Binary Tree Right Side View](https://leetcode.com/problems/binary-tree-right-side-view/) | 🟢 | 2 | 2026-09-12 | 2026-07-14 | 2026-05-09, 2026-06-13, 2026-07-14 |
 
 ---
 

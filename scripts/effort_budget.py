@@ -82,7 +82,7 @@ def load_config() -> dict:
     """
     defaults = {
         "comfort_units": {"🔴": 3.0, "🟡": 2.0, "🟢": 1.0, "🎓": 0.5},
-        "difficulty": {"Easy": 0.5, "Medium": 1.0, "Hard": 1.5},
+        "difficulty": {"Easy": 0.5, "Medium": 1.0, "Hard": 1.3},   # Hard 1.5→1.3 2026-09-20, mirrors cse.config.yml
         # Familiarity discounting (Sep 3, 2026) — must mirror cse.config.yml, or a machine
         # without PyYAML prices every familiar rep at the old flat rate.
         "green_streak_units": {0: 1.0, 1: 0.8, 2: 0.6},

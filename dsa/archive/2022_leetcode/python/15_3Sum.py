@@ -20,7 +20,7 @@ class Solution:
                     result.add((nums[a],nums[b],nums[c]))
                     b+=1 # Since indices b and c were already used, increment both
                     c-=1
-        return result
+        return result # type: ignore
     
     def threeSumAlternative(self, nums: List[int]) -> List[List[int]]:
         result = []
@@ -54,6 +54,6 @@ class UnitTest(unittest.TestCase):
         inputArray = [-1,0,1,2,-1,-4]
         expectedAnswer = [[-1,-1,2],[-1,0,1]]
         result = Solution().threeSumAlternative(inputArray)
-        self.assertEquals(expectedAnswer,result)
+        self.assertEquals(expectedAnswer,result) # type: ignore
 
 unittest.main()
