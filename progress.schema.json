@@ -115,6 +115,16 @@
       "type": "array",
       "items": { "$ref": "#/definitions/problem" }
     },
+    "techniques": {
+      "type": "array",
+      "description": "Per-technique row from technique_coverage.md's Coverage table — the drill-through detail behind the technique-breadth header. Small (~56 rows); present in BOTH progress.json and progress-summary.json so the technique panel renders instantly with no extra fetch.",
+      "items": { "$ref": "#/definitions/technique" }
+    },
+    "studyDays": {
+      "type": "array",
+      "description": "Sorted distinct ISO dates the learner practiced — the list form behind streak.studyDays (a count). Backs the streak calendar drill. In progress.json (this schema) this is the COMPLETE lifetime list. In progress-summary.json it is a ROLLING WINDOW (the last ~26 weeks / SUMMARY_STUDY_DAYS_WINDOW days, gamify.py's summary_of()) — enough for the calendar, capped so the summary can't grow forever. The lifetime COUNT is unaffected: read streak.studyDays / streak.longest for that, never the length of this array in the summary.",
+      "items": { "type": "string", "format": "date" }
+    },
     "warnings": {
       "type": "array",
       "description": "Fail-soft notes about inputs that could not be fully read; a partial file is still valid.",
@@ -136,6 +146,8 @@
         "coverage": { "$ref": "#/properties/coverage" },
         "onSchedule": { "$ref": "#/properties/onSchedule" },
         "badges": { "$ref": "#/properties/badges" },
+        "techniques": { "$ref": "#/properties/techniques" },
+        "studyDays": { "$ref": "#/properties/studyDays" },
         "trophyCase": {
           "type": "object",
           "properties": {
@@ -163,6 +175,21 @@
             }
           }
         }
+      }
+    },
+    "technique": {
+      "type": "object",
+      "description": "One row of technique_coverage.md's Coverage table.",
+      "required": ["name", "family", "problemCount", "problems", "hasGreen", "thin", "hasVariantGap"],
+      "properties": {
+        "name": { "type": "string" },
+        "family": { "type": "string" },
+        "problemCount": { "type": "integer", "minimum": 0 },
+        "problems": { "type": "array", "items": { "type": "integer" }, "description": "LC numbers inside the table cell's parenthetical; excludes *+Nv* variant-rep annotations." },
+        "bestComfort": { "type": ["string", "null"], "enum": ["🔴", "🟡", "🟢", "🎓", "🏆", null] },
+        "hasGreen": { "type": "boolean" },
+        "thin": { "type": "boolean", "description": "Fewer than the 3-4 surface forms the technique needs." },
+        "hasVariantGap": { "type": "boolean", "description": "A declared method variant has never once been exercised." }
       }
     },
     "problem": {

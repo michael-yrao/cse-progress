@@ -12,7 +12,9 @@ and the badge triggers, which are the parts most likely to drift silently.
 from __future__ import annotations
 
 import datetime as dt
+import tempfile
 import unittest
+from pathlib import Path
 
 import gamify
 
@@ -168,6 +170,79 @@ class BadgeTests(unittest.TestCase):
         self.assertTrue(badges["streak-30"])
 
 
+class ParseTechniquesTests(unittest.TestCase):
+    """parse_techniques() against a small fixture table, not the live repo file — pins the
+    Problems-cell parsing (count vs. the parenthetical LC list) against the tricky tokens
+    the real table actually contains (*+Nv*, em-dash, tilde-strikeout elsewhere)."""
+
+    FIXTURE = """## Coverage
+
+| Technique | Family | Problems | Best | 🟢 | Variants | Gaps |
+|---|---|---:|:---:|:---:|---|---|
+| Hierholzer (Eulerian path) | advanced_graphs | 2 *+1v* (332, 2097) | 🟢 | ✅ | pre-sorted adjacency ×1 | thin (2/3) |
+| Bellman-Ford | advanced_graphs | 1 (787) | 🟢 | ✅ | — | thin (1/3) |
+| Dijkstra | advanced_graphs | 1 (778) | 🟢 | ✅ | **Min-over-max ×0** | variant: **Min-over-max** |
+| Frequency Counting | arrays_and_hash | 2 (49, 242) | 🎓 | ✅ | — | — |
+| Not Started Technique | some_family | — | — | — | — | — |
+
+## Vocabulary maintenance
+
+- some unrelated bullet
+"""
+
+    def setUp(self):
+        self._orig_coverage = gamify.COVERAGE
+        tmp = tempfile.NamedTemporaryFile(
+            mode="w", suffix=".md", delete=False, encoding="utf-8")
+        tmp.write(self.FIXTURE)
+        tmp.close()
+        gamify.COVERAGE = Path(tmp.name)
+
+    def tearDown(self):
+        gamify.COVERAGE.unlink(missing_ok=True)
+        gamify.COVERAGE = self._orig_coverage
+
+    def test_variant_rep_annotation_does_not_pollute_count_or_problems(self):
+        rows = {r["name"]: r for r in gamify.parse_techniques()}
+        row = rows["Hierholzer (Eulerian path)"]
+        self.assertEqual(row["problemCount"], 2)
+        self.assertEqual(row["problems"], [332, 2097])
+        self.assertEqual(row["family"], "advanced_graphs")
+        self.assertEqual(row["bestComfort"], "🟢")
+        self.assertTrue(row["hasGreen"])
+        self.assertTrue(row["thin"])
+        self.assertFalse(row["hasVariantGap"])
+
+    def test_simple_single_problem_row(self):
+        rows = {r["name"]: r for r in gamify.parse_techniques()}
+        row = rows["Bellman-Ford"]
+        self.assertEqual(row["problemCount"], 1)
+        self.assertEqual(row["problems"], [787])
+
+    def test_variant_gap_flag(self):
+        rows = {r["name"]: r for r in gamify.parse_techniques()}
+        self.assertTrue(rows["Dijkstra"]["hasVariantGap"])
+
+    def test_em_dash_row_is_zero_and_empty_not_a_crash(self):
+        rows = {r["name"]: r for r in gamify.parse_techniques()}
+        row = rows["Not Started Technique"]
+        self.assertEqual(row["problemCount"], 0)
+        self.assertEqual(row["problems"], [])
+        self.assertIsNone(row["bestComfort"])
+        self.assertFalse(row["hasGreen"])
+        self.assertFalse(row["thin"])
+        self.assertFalse(row["hasVariantGap"])
+
+    def test_header_and_separator_rows_excluded(self):
+        names = {r["name"] for r in gamify.parse_techniques()}
+        self.assertNotIn("Technique", names)
+        self.assertEqual(len(gamify.parse_techniques()), 5)
+
+    def test_missing_file_fails_soft(self):
+        gamify.COVERAGE = Path(tempfile.gettempdir()) / "no-such-coverage-file.md"
+        self.assertEqual(gamify.parse_techniques(), [])
+
+
 class SummaryOfTests(unittest.TestCase):
     def _payload(self):
         return {
@@ -191,6 +266,14 @@ class SummaryOfTests(unittest.TestCase):
                              "retiredOn": "2026-08-01"}],
             },
             "badges": [{"id": "first-graduate", "title": "First Graduation", "earned": True}],
+            "techniques": [{"name": "Bellman-Ford", "family": "advanced_graphs",
+                            "problemCount": 1, "problems": [787], "bestComfort": "🟢",
+                            "hasGreen": True, "thin": True, "hasVariantGap": False}],
+            # One date far outside the summary's rolling window (well over
+            # SUMMARY_STUDY_DAYS_WINDOW days before generatedAt) plus two recent ones —
+            # exercises the cap in summary_of() without touching the lifetime count, which
+            # comes from streak.studyDays (10 above), never from len(this list).
+            "studyDays": ["2025-01-01", "2026-09-19", "2026-09-20"],
             "problems": [{"lcNumber": 206, "title": "Reverse Linked List", "comfort": "🎓"}],
         }
 
@@ -201,10 +284,31 @@ class SummaryOfTests(unittest.TestCase):
     def test_keeps_core_aggregates(self):
         summary = gamify.summary_of(self._payload())
         for key in ("streak", "pipeline", "badges", "coverage", "totals",
-                    "onSchedule", "difficulty", "schemaVersion", "generatedAt"):
+                    "onSchedule", "difficulty", "schemaVersion", "generatedAt",
+                    "techniques", "studyDays"):
             self.assertIn(key, summary)
         self.assertEqual(summary["streak"]["current"], 3)
         self.assertEqual(summary["badges"][0]["id"], "first-graduate")
+
+    def test_techniques_pass_through_unchanged(self):
+        summary = gamify.summary_of(self._payload())
+        self.assertEqual(summary["techniques"],
+                         [{"name": "Bellman-Ford", "family": "advanced_graphs",
+                           "problemCount": 1, "problems": [787], "bestComfort": "🟢",
+                           "hasGreen": True, "thin": True, "hasVariantGap": False}])
+
+    def test_study_days_capped_to_the_rolling_window(self):
+        # 2025-01-01 is far more than SUMMARY_STUDY_DAYS_WINDOW days before generatedAt
+        # (2026-09-20) and must be dropped; the two recent dates stay.
+        summary = gamify.summary_of(self._payload())
+        self.assertEqual(summary["studyDays"], ["2026-09-19", "2026-09-20"])
+
+    def test_study_days_cap_does_not_touch_the_lifetime_count(self):
+        # The lifetime total lives in streak.studyDays/streak.longest, untouched by the cap
+        # on the summary's date LIST.
+        summary = gamify.summary_of(self._payload())
+        self.assertEqual(summary["streak"]["studyDays"], 10)
+        self.assertEqual(summary["streak"]["longest"], 5)
 
     def test_trophy_case_graduated_is_compact(self):
         summary = gamify.summary_of(self._payload())
