@@ -1,4 +1,4 @@
-<!-- reconciled: 2026-09-19 -->
+<!-- reconciled: 2026-09-20 -->
 # End-of-week close-out & schedule build
 
 **Open this** when today is the last session of the week. **Not for** a mid-week rep (that's
@@ -26,11 +26,13 @@ week's assumptions.
   re-state time + space cold, with the why**. No re-solving; only the bound. Clean → clear the row;
   missed again → keep it queued and escalate to a proper complexity teach on that category. An
   empty queue is a clean pass, not a skip.
-- ⭐ **Seed ~2 cold complexity probes into the week's warmups (Sep 6, 2026).** Distinct from the
-  cleanup queue: a probe fires **cold on any mature 🟢/🎓 solved problem** to keep the miss-cluster
-  categories fresh. Learner states time + space cold on the existing code. **Disposable — only a
-  MISS is carded** (probe ledger in `complexity_gotchas.md`); a repeated same-category miss
-  escalates to a teach. Rides free on warmups, no dedicated slot.
+- ⭐ **Cold complexity probes — fire them at the Sunday close-out, NOT scattered across weekday warmups
+  (consolidated Sep 20, 2026 — STANDING, learner's call).** ~2 probes fire **cold on any mature 🟢/🎓
+  solved problem** to keep the miss-cluster categories fresh; the learner states time + space cold on
+  the existing code. **Disposable — only a MISS is carded** (probe ledger in `complexity_gotchas.md`); a
+  repeated same-category miss escalates to a teach. **ALL complexity checks — these probes AND the
+  cleanup queue above — now live in one focused block on Sunday.** The weekday boards carry none, so the
+  daily tables stay lean and the learner meets complexity work in a single sitting.
 - **⚠️ Refresh the technique comfort audit — `python scripts/technique_comfort_audit.py`.** Comfort
   + coverage auto-roll from the tracker; the **why-lines are hand-authored and preserved** (the
   script names any technique missing one) and the **FUTURE section** (roadmap algorithms not yet
@@ -83,6 +85,47 @@ week's assumptions.
   `effort_budget.py` shows ≥2 days/week well under the ceiling for 2 weeks. Met → raise starting it
   with the learner; not met → say nothing. This is the firing mechanism that keeps "deferred" from
   becoming "forgotten" — don't skip it just because AI isn't on the board.
+
+## ⚙️ How the Sunday close-out is RUN (STANDING, set Sep 20, 2026 — learner's call)
+
+The close-out follows the repo's **plan → execute → review** split, extending
+[`feedback_execution_workflow.md`](.claude/memory/feedback_execution_workflow.md) from the gamification
+project to the weekly build:
+
+| Role | Model | What |
+|---|---|---|
+| **Plan** | Opus | price capacity, read the coverage / ⚠️-Needs-work callout, decide the pulls + day placement — the whole build *design*. Get learner approval. |
+| **Execute** | Sonnet 5 (subagent) | the mechanical writeback ONLY: `git mv` the archive, write the next-week file from the approved plan, run the checker scripts, report the diff. **Never commit/push.** |
+| **Review** | Opus | review the Sonnet diff, run `advisor`, then commit/push per the close-out authorization. |
+
+⭐ Never send the *planning* (judgement) or a *teach/rep* to the subagent — only the mechanical build
+writeback. This is the deliberative-vs-mechanical register split (CLAUDE.md "Two registers").
+
+Two standing passes ride every Sunday close-out:
+
+- **⚠️ Self-eval meta-review + skill-update evaluation (Sunday, set Sep 20, 2026).** Run
+  `python scripts/meta_review_digest.py` (one line per OPEN entry). For each open entry: resolved →
+  consolidate it into `self_eval_archive.md`; still live → decide whether it names a recurring miss that
+  warrants a **skill / CLAUDE.md change** per the intervention ladder, and make that change **in this
+  pass**. A self-eval that sits open for weeks is exactly the failure this pass exists to stop — Sunday
+  is where the log gets drained and the skills get updated *because* of it, not just where entries pile up.
+- **⚠️ Lean daily table — THE FORMAT (set Sep 20, 2026, learner-approved; worked example:
+  `docs/foundations/schedules/20260921_schedule.md`).** The board must read **at a glance.** Columns are
+  **`| Problem | S | E | Next | Technique |`**:
+  - **Problem** — glyph prefix(es) + `[name](file) · [LC](url)` (a variant parenthetical stays, read from
+    the tracker row per the variant rule above);
+  - **S / E** — start / end comfort glyph; **Next** — next-review glyph;
+  - **Technique** — exactly **ONE word** (Backtracking · Dijkstra · Kruskal · Prefix-sum · …), nothing else.
+
+  Three homes, so nothing is lost by leaving the table: *rep rationale* ("was 🔴 Sep 10", "template writable
+  cold?") → the mastery ledgers (`stuck_log.md` · `complexity_gotchas.md` · `recognition_gotchas.md`);
+  *status* (protected / backfill / new / moved / variant / probe / primer) → the **glyph** per the Tags
+  legend, never prose; *a build caveat that truly needs a sentence* (a move + new date, an LC-premium
+  mirror, a scaffold note) → a compact **⚙️ Build notes** list below the table, keyed by problem #. A Note
+  column carrying prose is a **build defect** — trim it. ⚠️ A cold complexity/recognition re-ask that prints
+  its own answer in the board is a **spoiler bug** (found Sep 20 — the 226 row stated "O(n): invert visits
+  every node" next to a *cold* re-ask); the answer stays in the ledger, only the problem + which bound on
+  the board. full rule: `decisions.yml` `eow-close-out-process-sep20`.
 
 **Day order:** within each day, place **all DSA first, SD last** — the SD slot gets the open-ended tail
 (spine-then-pull has no natural stopping point; bounded DSA reps do), so SD also absorbs any overrun. Never
