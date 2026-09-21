@@ -368,8 +368,8 @@ def render(resolved: list[Resolved], rows: list[Row], claimed: set[str]) -> str:
         "cell reads `*not started*` (never blockers/thin/variant noise; see `is_started`)."
     )
     add("")
-    add("| Technique | Family | Tier | Problems | Best | 🟢 | Variants | Gaps |")
-    add("|---|---|---|---:|:---:|:---:|---|---|")
+    add("| Technique | Family | Tier | Min | Problems | Best | 🟢 | Variants | Gaps |")
+    add("|---|---|---|---:|---:|:---:|:---:|---|---|")
     for t in sorted(resolved, key=lambda t: (t.family, t.name)):
         probs = ", ".join(str(n) for n in t.numbers) or "—"
         if t.variant_rows:
@@ -385,7 +385,7 @@ def render(resolved: list[Resolved], rows: list[Row], claimed: set[str]) -> str:
         else:
             variants = "—"
         add(
-            f"| {t.name} | {t.family} | {t.tier} | {t.n_problems}"
+            f"| {t.name} | {t.family} | {t.tier} | {t.min_problems} | {t.n_problems}"
             + (f" *+{len(t.rows) - t.n_problems}v*" if t.has_multi_variant_problem else "")
             + f" ({probs}) | {t.best_comfort} | "
             f"{'✅' if t.has_green else '❌'} | {variants} | {' · '.join(t.gaps) or '—'} |"

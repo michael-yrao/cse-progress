@@ -174,18 +174,19 @@ class BadgeTests(unittest.TestCase):
 class ParseTechniquesTests(unittest.TestCase):
     """parse_techniques() against a small fixture table, not the live repo file — pins the
     Problems-cell parsing (count vs. the parenthetical LC list) against the tricky tokens
-    the real table actually contains (*+Nv*, em-dash, tilde-strikeout elsewhere), and (Sep
-    21, 2026) the Tier column + the started/*not started* Gaps marker."""
+    the real table actually contains (*+Nv*, em-dash, tilde-strikeout elsewhere), the Tier
+    column + the started/*not started* Gaps marker (Sep 21, 2026), and (round 3) the Min
+    column -> minProblems."""
 
     FIXTURE = """## Coverage
 
-| Technique | Family | Tier | Problems | Best | 🟢 | Variants | Gaps |
-|---|---|---|---:|:---:|:---:|---|---|
-| Hierholzer (Eulerian path) | advanced_graphs | core | 2 *+1v* (332, 2097) | 🟢 | ✅ | pre-sorted adjacency ×1 | thin (2/3) |
-| Bellman-Ford | advanced_graphs | core | 1 (787) | 🟢 | ✅ | — | thin (1/3) |
-| Dijkstra | advanced_graphs | core | 1 (778) | 🟢 | ✅ | **Min-over-max ×0** | variant: **Min-over-max** |
-| Frequency Counting | arrays_and_hash | core | 2 (49, 242) | 🎓 | ✅ | — | — |
-| Knapsack | dynamic_programming | dp | 0 (—) | — | ❌ | — | *not started* |
+| Technique | Family | Tier | Min | Problems | Best | 🟢 | Variants | Gaps |
+|---|---|---|---:|---:|:---:|:---:|---|---|
+| Hierholzer (Eulerian path) | advanced_graphs | core | 3 | 2 *+1v* (332, 2097) | 🟢 | ✅ | pre-sorted adjacency ×1 | thin (2/3) |
+| Bellman-Ford | advanced_graphs | core | 3 | 1 (787) | 🟢 | ✅ | — | thin (1/3) |
+| Dijkstra | advanced_graphs | core | 3 | 1 (778) | 🟢 | ✅ | **Min-over-max ×0** | variant: **Min-over-max** |
+| Frequency Counting | arrays_and_hash | core | 2 | 2 (49, 242) | 🎓 | ✅ | — | — |
+| Knapsack | dynamic_programming | dp | 3 | 0 (—) | — | ❌ | — | *not started* |
 
 ## Vocabulary maintenance
 
@@ -226,6 +227,17 @@ class ParseTechniquesTests(unittest.TestCase):
         row = rows["Knapsack"]
         self.assertEqual(row["tier"], "dp")
         self.assertFalse(row["started"])
+
+    def test_min_problems_read_from_the_min_column(self):
+        rows = {r["name"]: r for r in gamify.parse_techniques()}
+        self.assertEqual(rows["Bellman-Ford"]["minProblems"], 3)
+        self.assertEqual(rows["Frequency Counting"]["minProblems"], 2)
+
+    def test_not_started_technique_still_carries_its_declared_min_problems(self):
+        rows = {r["name"]: r for r in gamify.parse_techniques()}
+        row = rows["Knapsack"]
+        self.assertEqual(row["minProblems"], 3)
+        self.assertEqual(row["problemCount"], 0)
 
     def test_simple_single_problem_row(self):
         rows = {r["name"]: r for r in gamify.parse_techniques()}
@@ -354,6 +366,76 @@ class ParseCurrentWeekScheduleTests(unittest.TestCase):
         self.assertIsNone(result)
 
 
+class ParseProbesTests(unittest.TestCase):
+    """parse_probes() against a small fixture Probe log table, not the live repo file —
+    pins the Problem-cell number/title split and (the tricky case) a MULTI-glyph Result
+    cell (`🔴 → 🟡 (re-rep Sep 16)`), which must score the COLD call (the first glyph), not
+    the eventual conversion."""
+
+    FIXTURE = (
+        "## 📒 Probe log — the tally\n\n"
+        "Some prose above the table.\n\n"
+        "| # | Date | Problem | Technique | Result | Tracker row? |\n"
+        "|---|---|---|---|---|---|\n"
+        "| 1 | 2026-08-10 | 977 Squares of a Sorted Array | Two Pointers | 🟢 | — |\n"
+        "| 2 | 2026-08-11 | 202 Happy Number | Cycle Detection (iterated seq) | 🟡 | ✅ earned |\n"
+        "| 3 | 2026-09-11 | 547 Number of Provinces | Union-Find (connected components) "
+        "| 🔴 → 🟡 (re-rep Sep 16) | earned Sep 11 → **dropped Sep 16** |\n\n"
+        "**Tally (3 run):** some prose that must not be parsed as a row.\n\n"
+        "## 🎣 Queued probe candidates\n\n"
+        "unrelated section\n"
+    )
+
+    def setUp(self):
+        self._orig_probes = gamify.PROBES_README
+        tmp = tempfile.NamedTemporaryFile(
+            mode="w", suffix=".md", delete=False, encoding="utf-8")
+        tmp.write(self.FIXTURE)
+        tmp.close()
+        gamify.PROBES_README = Path(tmp.name)
+
+    def tearDown(self):
+        gamify.PROBES_README.unlink(missing_ok=True)
+        gamify.PROBES_README = self._orig_probes
+
+    def test_problem_cell_splits_into_number_and_title(self):
+        probes = gamify.parse_probes()
+        first = probes["items"][0]
+        self.assertEqual(first["lcNumber"], 977)
+        self.assertEqual(first["title"], "Squares of a Sorted Array")
+        self.assertEqual(first["technique"], "Two Pointers")
+        self.assertEqual(first["date"], "2026-08-10")
+
+    def test_multi_glyph_result_scores_the_cold_call_not_the_conversion(self):
+        probes = gamify.parse_probes()
+        converted = probes["items"][2]
+        self.assertEqual(converted["lcNumber"], 547)
+        self.assertEqual(converted["result"], "🔴")  # NOT 🟡 — that's the later conversion
+
+    def test_total_and_clean_rate(self):
+        probes = gamify.parse_probes()
+        self.assertEqual(probes["total"], 3)
+        # 1 of 3 clean (977 is 🟢; 202 is 🟡; 547's COLD call is 🔴).
+        self.assertAlmostEqual(probes["cleanRate"], 1 / 3)
+
+    def test_prose_and_next_section_are_not_parsed_as_rows(self):
+        probes = gamify.parse_probes()
+        self.assertEqual(len(probes["items"]), 3)
+
+    def test_missing_file_is_none(self):
+        gamify.PROBES_README = Path(tempfile.gettempdir()) / "no-such-probes-file.md"
+        self.assertIsNone(gamify.parse_probes())
+
+    def test_no_table_in_file_is_none(self):
+        tmp = tempfile.NamedTemporaryFile(
+            mode="w", suffix=".md", delete=False, encoding="utf-8")
+        tmp.write("# Nothing here\n\nJust prose, no Probe log heading at all.\n")
+        tmp.close()
+        gamify.PROBES_README = Path(tmp.name)
+        self.assertIsNone(gamify.parse_probes())
+        gamify.PROBES_README.unlink(missing_ok=True)
+
+
 class SummaryOfTests(unittest.TestCase):
     def _payload(self):
         return {
@@ -379,11 +461,11 @@ class SummaryOfTests(unittest.TestCase):
             "badges": [{"id": "first-graduate", "title": "First Graduation", "earned": True}],
             "techniques": [
                 {"name": "Bellman-Ford", "family": "advanced_graphs", "tier": "core",
-                 "started": True, "problemCount": 1, "problems": [787], "bestComfort": "🟢",
-                 "hasGreen": True, "thin": True, "hasVariantGap": False},
+                 "started": True, "minProblems": 3, "problemCount": 1, "problems": [787],
+                 "bestComfort": "🟢", "hasGreen": True, "thin": True, "hasVariantGap": False},
                 {"name": "Knapsack", "family": "dynamic_programming", "tier": "dp",
-                 "started": False, "problemCount": 0, "problems": [], "bestComfort": None,
-                 "hasGreen": False, "thin": False, "hasVariantGap": False},
+                 "started": False, "minProblems": 3, "problemCount": 0, "problems": [],
+                 "bestComfort": None, "hasGreen": False, "thin": False, "hasVariantGap": False},
             ],
             # One date far outside the summary's rolling window (well over
             # SUMMARY_STUDY_DAYS_WINDOW days before generatedAt) plus two recent ones —
@@ -398,6 +480,10 @@ class SummaryOfTests(unittest.TestCase):
             ]},
             "effortCeiling": 8.0,
             "effortFloor": 3.0,
+            "probes": {"total": 3, "cleanRate": 1 / 3, "items": [
+                {"date": "2026-08-10", "lcNumber": 977, "title": "Squares of a Sorted Array",
+                 "technique": "Two Pointers", "result": "🟢"},
+            ]},
             "problems": [{"lcNumber": 206, "title": "Reverse Linked List", "comfort": "🎓"}],
         }
 
@@ -409,18 +495,32 @@ class SummaryOfTests(unittest.TestCase):
         summary = gamify.summary_of(self._payload())
         for key in ("streak", "pipeline", "badges", "coverage", "totals",
                     "onSchedule", "difficulty", "schemaVersion", "generatedAt",
-                    "techniques", "studyDays", "schedule", "effortCeiling", "effortFloor"):
+                    "techniques", "studyDays", "schedule", "effortCeiling", "effortFloor",
+                    "probes"):
             self.assertIn(key, summary)
         self.assertEqual(summary["streak"]["current"], 3)
         self.assertEqual(summary["badges"][0]["id"], "first-graduate")
 
-    def test_techniques_pass_through_unchanged_incl_tier_and_started(self):
+    def test_techniques_pass_through_unchanged_incl_tier_started_and_min_problems(self):
         summary = gamify.summary_of(self._payload())
         by_name = {t["name"]: t for t in summary["techniques"]}
         self.assertEqual(by_name["Bellman-Ford"]["tier"], "core")
         self.assertTrue(by_name["Bellman-Ford"]["started"])
+        self.assertEqual(by_name["Bellman-Ford"]["minProblems"], 3)
         self.assertEqual(by_name["Knapsack"]["tier"], "dp")
         self.assertFalse(by_name["Knapsack"]["started"])
+        self.assertEqual(by_name["Knapsack"]["minProblems"], 3)
+
+    def test_probes_pass_through_unchanged(self):
+        summary = gamify.summary_of(self._payload())
+        self.assertEqual(summary["probes"], self._payload()["probes"])
+        self.assertAlmostEqual(summary["probes"]["cleanRate"], 1 / 3)
+
+    def test_probes_none_when_no_probe_log(self):
+        payload = self._payload()
+        payload["probes"] = None
+        summary = gamify.summary_of(payload)
+        self.assertIsNone(summary["probes"])
 
     def test_schedule_passes_through_unchanged_and_no_problems_leak(self):
         summary = gamify.summary_of(self._payload())

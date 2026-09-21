@@ -142,6 +142,16 @@
       "type": "number",
       "description": "The learner's daily effort-budget floor, from cse.config.yml's effort_budget.floor_min (default 3.0 if absent). Backs the Today's-board workload bar's Light band (<= this)."
     },
+    "probes": {
+      "type": ["object", "null"],
+      "description": "The dsa/probes/README.md Probe log — cold, label-stripped, disposable recognition reps. A clean 🟢 probe creates NO tracker row (see the README), so this is the ONLY place it's counted; backs the Recognition tab. null when no Probe log table was found. Present in BOTH progress.json and progress-summary.json (~1 row/week, small either way).",
+      "required": ["total", "cleanRate", "items"],
+      "properties": {
+        "total": { "type": "integer", "minimum": 0 },
+        "cleanRate": { "type": "number", "minimum": 0, "maximum": 1, "description": "count(result == 🟢) / total. The README's own diagnostic: >=0.85 means the pool has stopped teaching (raise difficulty / open the next tier); <=0.70 means real gaps remain." },
+        "items": { "type": "array", "items": { "$ref": "#/definitions/probe" } }
+      }
+    },
     "warnings": {
       "type": "array",
       "description": "Fail-soft notes about inputs that could not be fully read; a partial file is still valid.",
@@ -168,6 +178,7 @@
         "schedule": { "$ref": "#/properties/schedule" },
         "effortCeiling": { "$ref": "#/properties/effortCeiling" },
         "effortFloor": { "$ref": "#/properties/effortFloor" },
+        "probes": { "$ref": "#/properties/probes" },
         "trophyCase": {
           "type": "object",
           "properties": {
@@ -200,18 +211,31 @@
     "technique": {
       "type": "object",
       "description": "One row of technique_coverage.md's Coverage table.",
-      "required": ["name", "family", "tier", "started", "problemCount", "problems", "hasGreen", "thin", "hasVariantGap"],
+      "required": ["name", "family", "tier", "started", "minProblems", "problemCount", "problems", "hasGreen", "thin", "hasVariantGap"],
       "properties": {
         "name": { "type": "string" },
         "family": { "type": "string" },
         "tier": { "type": "string", "enum": ["core", "dp", "tier1", "tier2", "tier3"], "description": "Curriculum tier for the HONEST denominator (Sep 21, 2026): 'core' = already-started NC150/pattern-doc techniques; 'dp' = the not-yet-started DP framework lenses + core 1D/2D DP; 'tier1' = Knowledge Expansion Queue ABOVE the interview-ROI line (still shows up in hard interviews); 'tier2'/'tier3' = BELOW the line, competitive-programming horizon only. See techniques.yml's schema comment and study_guide.md's Interview-ROI Line." },
         "started": { "type": "boolean", "description": "Has the learner solved anything under this technique — technique_coverage.py's `is_started`. false for every declared-but-not-yet-begun tier1/2/3/dp entry; those are excluded from every gap check (no-green/thin/variant) and from the coverage Action list, so a bigger denominator never adds noise." },
+        "minProblems": { "type": "integer", "minimum": 1, "description": "The per-technique coverage bar (techniques.yml's min_problems, default 3, 1-5 declared per technique) — makes 'thin' self-explanatory as problemCount/minProblems instead of a bare label. A not-started technique still carries its declared target (reads 0/minProblems)." },
         "problemCount": { "type": "integer", "minimum": 0 },
         "problems": { "type": "array", "items": { "type": "integer" }, "description": "LC numbers inside the table cell's parenthetical; excludes *+Nv* variant-rep annotations." },
         "bestComfort": { "type": ["string", "null"], "enum": ["🔴", "🟡", "🟢", "🎓", "🏆", null] },
         "hasGreen": { "type": "boolean" },
         "thin": { "type": "boolean", "description": "Fewer than the 3-4 surface forms the technique needs." },
         "hasVariantGap": { "type": "boolean", "description": "A declared method variant has never once been exercised." }
+      }
+    },
+    "probe": {
+      "type": "object",
+      "description": "One row of the Probe log table.",
+      "required": ["date", "lcNumber", "title", "technique", "result"],
+      "properties": {
+        "date": { "type": "string", "format": "date" },
+        "lcNumber": { "type": ["integer", "null"] },
+        "title": { "type": "string" },
+        "technique": { "type": "string" },
+        "result": { "type": ["string", "null"], "enum": ["🔴", "🟡", "🟢", "🎓", "🏆", null], "description": "The FIRST comfort glyph in the Result cell — scored on the COLD call, not a later conversion (e.g. '🔴 → 🟡 (re-rep Sep 16)' reads 🔴)." }
       }
     },
     "scheduleDay": {
