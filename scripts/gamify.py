@@ -219,6 +219,116 @@ def _scan_week(path: Path, week_start: dt.date, index: dict[str, dict[int, str]]
             index.setdefault(current, {})[int(num.group(1))] = glyph
 
 
+# ── this week's board (the "what do I do today" drill) ──────────────────────────────
+
+# The legend's tag glyphs (see any schedule file's "Tags:" line) — stripped from a title's
+# front so the dashboard shows the problem name, not the build-time tag. → is a real arrow,
+# not emoji, but it prefixes a moved row the same way, so it's in the same strip set.
+_SCHEDULE_TAGS = "⚠️🔥🆕🎯⚙️🔤→"
+_LEADING_TAGS = re.compile(rf"^[{re.escape(_SCHEDULE_TAGS)}\s]+")
+_LEADING_NUM = re.compile(r"^\d+\.?\s*")
+DAY_LABEL = re.compile(r"units\s*—\s*(?P<label>[^|]+)")
+
+
+def _clean_schedule_title(text: str) -> str:
+    """Turn a Problem-column cell (already link-unwrapped, `~~`/`**` stripped — see
+    eb.parse_schedule_day) into a display title.
+
+    eb.parse_schedule_day stops at what PRICING needs (the text is only ever printed
+    in a debug line), so it leaves the tag glyphs, the LC number, and the second link's
+    unwrapped anchor text ("· LC") sitting in the string. A dashboard row shows the
+    number and comfort separately, so all three would just be noise here: split off
+    everything from the first " · " on (that is always the `[LC](...)` link, sometimes
+    followed by a build note — neither belongs in the title), then strip a leading tag
+    glyph and a leading LC-number prefix.
+    """
+    first = text.split(" · ")[0]
+    first = _LEADING_TAGS.sub("", first)
+    first = _LEADING_NUM.sub("", first)
+    return re.sub(r"\s+", " ", first).strip()
+
+
+def _parse_schedule_day_full(path: Path, day: dt.date) -> tuple[list[dict], str | None, float | None]:
+    """Like eb.parse_schedule_day, but keeps the day's label and each item's technique +
+    a display-clean title — eb's own version only needs the number, the start comfort,
+    and whether a row is done, because that is all effort pricing ever reads."""
+    wanted = (day.strftime("%a"), day.strftime("%b"), day.day)
+    items: list[dict] = []
+    label: str | None = None
+    units: float | None = None
+    inside = False
+    for line in path.read_text(encoding="utf-8").splitlines():
+        header = eb.DAY_HEADER.search(line)
+        if header:
+            hit = (header["wd"], header["mon"], int(header["day"])) == wanted
+            if hit:
+                inside = True
+                units = float(header["units"]) if header["units"] else None
+                lbl = DAY_LABEL.search(line)
+                label = lbl["label"].strip() if lbl else None
+            elif inside:
+                break          # the next day's header ends this day's block
+            continue
+        if not inside:
+            continue
+        if not line.lstrip().startswith("|"):
+            break              # the daily table ended (see eb.parse_schedule_day's note
+                               # on why this guard matters for the LAST day of a week)
+        m = eb.SCHED_ROW.match(line)
+        if not m:
+            continue
+        cell = m["c1"]
+        if not cell.strip() or set(cell.strip()) <= {"-", ":"}:
+            continue           # blank separator row, or a markdown rule
+        num = eb.SCHED_NUM.search(cell)
+        start = eb.GLYPH.search(m["c2"] or "")
+        text = re.sub(r"\[([^\]]*)\]\([^)]*\)", r"\1", cell)
+        text = re.sub(r"~~|\*\*", "", text)
+        items.append({
+            # A 🆕 row not yet scaffolded to a local solution file has no `[` / `**`
+            # before its number, so eb.SCHED_NUM (by design — see effort_budget.py) can't
+            # find one; lcNumber is honestly null rather than guessed, and the dashboard
+            # just omits the Visualize/LeetCode deep links for that row.
+            "lcNumber": int(num.group(1)) if num else None,
+            "title": _clean_schedule_title(text),
+            "technique": (m["c5"] or "").strip() or None,
+            "startComfort": start.group(0) if start else None,
+            "done": "~~" in cell,
+        })
+    return items, label, units
+
+
+def parse_current_week_schedule(today: dt.date) -> dict | None:
+    """The CURRENT week's `## Daily Schedule` table -> {weekOf, days:[...]} — the compact
+    slice behind the dashboard's Today's-board drill.
+
+    Emits ALL 7 days; it never bakes a server-side "today" into the payload, because the
+    summary is generated on commit but can be VIEWED days later — the client picks its
+    own day by comparing its local date against each day's `date`. Fail-soft: no current
+    schedule file -> None (the caller adds a warning).
+    """
+    path = eb.find_schedule(today)
+    if path is None:
+        return None
+    try:
+        week_start = dt.date(int(path.name[:4]), int(path.name[4:6]), int(path.name[6:8]))
+    except (ValueError, IndexError):
+        return None
+
+    days: list[dict] = []
+    for offset in range(7):
+        day_date = week_start + dt.timedelta(days=offset)
+        items, label, units = _parse_schedule_day_full(path, day_date)
+        days.append({
+            "date": day_date.isoformat(),
+            "weekday": day_date.strftime("%A"),
+            "label": label,
+            "units": units,
+            "items": items,
+        })
+    return {"weekOf": week_start.isoformat(), "days": days}
+
+
 # ── streak (SR-honest: showing up when due, with a rest-day allowance) ──────────────
 
 def study_days(rows: list[dict]) -> list[dt.date]:
@@ -489,6 +599,9 @@ def build_payload(today: dt.date | None = None) -> tuple[dict, list[str]]:
     if coverage is None:
         warnings.append("technique_coverage.md not readable — coverage omitted.")
     techniques = parse_techniques()
+    schedule = parse_current_week_schedule(today)
+    if schedule is None:
+        warnings.append("no current weekly schedule file found — schedule omitted.")
 
     problems = build_problems(rows, sched, cats, urls)
     days = study_days(rows)
@@ -510,6 +623,7 @@ def build_payload(today: dt.date | None = None) -> tuple[dict, list[str]]:
                        "retired": retired},
         "techniques": techniques,
         "studyDays": [d.isoformat() for d in days],
+        "schedule": schedule,
     }
     stats["badges"] = compute_badges(stats, problems, cfg)
     stats["problems"] = problems
@@ -532,6 +646,11 @@ def summary_of(payload: dict) -> dict:
     without a cap this list grows by one entry per practice day forever. The lifetime total
     is untouched: it lives in `streak.studyDays` (count) and `streak.longest`, both copied
     through as-is. The full `progress.json` keeps every study day, uncapped.
+
+    `schedule` (the current week's Today's-board slice) rides through whole too — it is
+    one week of compact rows, small either way, and the summary is exactly where the
+    landing's Today's-board drill reads it from (no separate fetch for "what do I do
+    today").
     """
     trophy_case = payload.get("trophyCase") or {}
     compact_graduated = [
@@ -555,6 +674,7 @@ def summary_of(payload: dict) -> dict:
                        "retired": trophy_case.get("retired") or []},
         "techniques": payload.get("techniques") or [],
         "studyDays": recent_study_days,
+        "schedule": payload.get("schedule"),
     }
     if "warnings" in payload:
         summary["warnings"] = payload["warnings"]
