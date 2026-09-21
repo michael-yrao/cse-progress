@@ -78,3 +78,29 @@ adopter repo site-renderable). Soak first — see [[project-upstream-candidates]
   cannot have its per-rep comfort reconstructed (the schedule index is keyed by number, not method),
   so those rows show dots + a single anchored current-comfort point rather than a full curve. Honest
   by design — see `build_problems` in `gamify.py`.
+
+## ⭐ PINNED TODO — rebalance toward an at-a-glance OVERVIEW (learner feedback, 2026-09-21)
+
+**Feedback:** after the drill-through round the dashboard "feels a bit overloaded now and doesn't give
+enough of the overview feel." The many drillable cards added detail but cost the at-a-glance signal.
+**Do NOT just add more** — the next round is about CURATION: a tight, high-signal landing, detail behind
+drill-downs (which now exist). Not started yet (learner paused; out of tokens).
+
+**The lead idea (learner's):** the dashboard is an easy, high-value way to **show the user their
+SCHEDULE** — "what do I do today / this week." For someone using cse-coach, "today's board + what's due"
+is probably the single most valuable glance. Data already exists: `docs/foundations/schedules/<...>.md`
+(the week's plan) + each row's `nextReview`. Would need a lightweight schedule slice in the
+summary contract (today's / this-week's items — small), same summary-first discipline.
+
+**Brainstorm — "what else offers a lot of value at a glance?" (candidates to weigh next session):**
+- **Today's board / what's due today** ⭐ (the lead idea) — the day's problems + count, from the schedule + due dates.
+- **Next up / one recommended action** — the single highest-value rep now (oldest overdue, or the active block).
+- **On-track status headline** — one line: "on track" vs "behind" (overdue trend / this-week reps vs plan).
+- **This-week ring** — reps or units done this week vs the effort-budget plan (floor/ceiling).
+- **Upcoming reviews (next 7 days)** — a mini timeline of what's coming due.
+- **Weakest spot** — the thinnest technique / the one closest to slipping — one nudge, not the whole list.
+
+**Design principle for the redo:** landing = a handful of overview tiles (streak · today's board · on-track ·
+this-week progress); everything else (pipeline breakdown, technique list, per-problem graphs) stays as
+drill-downs. Keep the summary-first / lightweight rules. Plan it under the standing workflow
+([[feedback-execution-workflow]]) when the learner returns to it.
