@@ -11,10 +11,15 @@ and the badge triggers, which are the parts most likely to drift silently.
 """
 from __future__ import annotations
 
+import contextlib
 import datetime as dt
+import io
+import json
+import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 import effort_budget as eb
 import gamify
@@ -206,7 +211,7 @@ class ParseTechniquesTests(unittest.TestCase):
         gamify.COVERAGE = self._orig_coverage
 
     def test_variant_rep_annotation_does_not_pollute_count_or_problems(self):
-        rows = {r["name"]: r for r in gamify.parse_techniques()}
+        rows = {r["name"]: r for r in gamify.parse_techniques([])}
         row = rows["Hierholzer (Eulerian path)"]
         self.assertEqual(row["problemCount"], 2)
         self.assertEqual(row["problems"], [332, 2097])
@@ -217,40 +222,40 @@ class ParseTechniquesTests(unittest.TestCase):
         self.assertFalse(row["hasVariantGap"])
 
     def test_started_technique_has_tier_core_and_started_true(self):
-        rows = {r["name"]: r for r in gamify.parse_techniques()}
+        rows = {r["name"]: r for r in gamify.parse_techniques([])}
         row = rows["Bellman-Ford"]
         self.assertEqual(row["tier"], "core")
         self.assertTrue(row["started"])
 
     def test_not_started_technique_has_its_declared_tier_and_started_false(self):
-        rows = {r["name"]: r for r in gamify.parse_techniques()}
+        rows = {r["name"]: r for r in gamify.parse_techniques([])}
         row = rows["Knapsack"]
         self.assertEqual(row["tier"], "dp")
         self.assertFalse(row["started"])
 
     def test_min_problems_read_from_the_min_column(self):
-        rows = {r["name"]: r for r in gamify.parse_techniques()}
+        rows = {r["name"]: r for r in gamify.parse_techniques([])}
         self.assertEqual(rows["Bellman-Ford"]["minProblems"], 3)
         self.assertEqual(rows["Frequency Counting"]["minProblems"], 2)
 
     def test_not_started_technique_still_carries_its_declared_min_problems(self):
-        rows = {r["name"]: r for r in gamify.parse_techniques()}
+        rows = {r["name"]: r for r in gamify.parse_techniques([])}
         row = rows["Knapsack"]
         self.assertEqual(row["minProblems"], 3)
         self.assertEqual(row["problemCount"], 0)
 
     def test_simple_single_problem_row(self):
-        rows = {r["name"]: r for r in gamify.parse_techniques()}
+        rows = {r["name"]: r for r in gamify.parse_techniques([])}
         row = rows["Bellman-Ford"]
         self.assertEqual(row["problemCount"], 1)
         self.assertEqual(row["problems"], [787])
 
     def test_variant_gap_flag(self):
-        rows = {r["name"]: r for r in gamify.parse_techniques()}
+        rows = {r["name"]: r for r in gamify.parse_techniques([])}
         self.assertTrue(rows["Dijkstra"]["hasVariantGap"])
 
     def test_em_dash_row_is_zero_and_empty_not_a_crash(self):
-        rows = {r["name"]: r for r in gamify.parse_techniques()}
+        rows = {r["name"]: r for r in gamify.parse_techniques([])}
         row = rows["Knapsack"]
         self.assertEqual(row["problemCount"], 0)
         self.assertEqual(row["problems"], [])
@@ -260,21 +265,64 @@ class ParseTechniquesTests(unittest.TestCase):
         self.assertFalse(row["hasVariantGap"])
 
     def test_header_and_separator_rows_excluded(self):
-        names = {r["name"] for r in gamify.parse_techniques()}
+        names = {r["name"] for r in gamify.parse_techniques([])}
         self.assertNotIn("Technique", names)
-        self.assertEqual(len(gamify.parse_techniques()), 5)
+        self.assertEqual(len(gamify.parse_techniques([])), 5)
 
     def test_missing_file_fails_soft(self):
         gamify.COVERAGE = Path(tempfile.gettempdir()) / "no-such-coverage-file.md"
-        self.assertEqual(gamify.parse_techniques(), [])
+        self.assertEqual(gamify.parse_techniques([]), [])
+
+
+class ParseTechniquesWrongColumnCountTests(unittest.TestCase):
+    """An older technique_coverage.py emitting a 7-column table (no Min / no 🟢 columns)
+    must not silently yield [] with no signal — it warns and returns []."""
+
+    FIXTURE = """## Coverage
+
+| Technique | Family | Min | Problems | Best | Variants | Gaps |
+|---|---|---:|---:|:---:|---|---|
+| Bellman-Ford | advanced_graphs | 3 | 1 (787) | 🟢 | — | thin (1/3) |
+"""
+
+    def setUp(self):
+        self._orig_coverage = gamify.COVERAGE
+        tmp = tempfile.NamedTemporaryFile(
+            mode="w", suffix=".md", delete=False, encoding="utf-8")
+        tmp.write(self.FIXTURE)
+        tmp.close()
+        gamify.COVERAGE = Path(tmp.name)
+
+    def tearDown(self):
+        gamify.COVERAGE.unlink(missing_ok=True)
+        gamify.COVERAGE = self._orig_coverage
+
+    def test_wrong_column_count_returns_empty(self):
+        self.assertEqual(gamify.parse_techniques([]), [])
+
+    def test_wrong_column_count_warns_with_the_actual_count(self):
+        warnings: list[str] = []
+        gamify.parse_techniques(warnings)
+        self.assertEqual(len(warnings), 1)
+        self.assertIn("7 columns", warnings[0])
+        self.assertIn("expected 9", warnings[0])
 
 
 class ParseCurrentWeekScheduleTests(unittest.TestCase):
-    """parse_current_week_schedule() against a small 2-day fixture week (not the live repo
-    file) — pins the Today's-board slice: a plain row, a struck/done row (glyph swap-out
-    and title cleanup on a `~~[...]~~` cell), a 🆕 row with no local file yet (so
-    eb.SCHED_NUM — by design — finds no lcNumber), and (Sep 21, 2026) the tracker-joined
-    `difficulty` — including the honest null for a number the tracker doesn't have yet."""
+    """parse_current_week_schedule() against a small fixture week (not the live repo file)
+    — pins the Today's-board slice: a plain row, a struck/done row (glyph swap-out and
+    title cleanup on a `~~[...]~~` cell), a bare-number 🆕 row (lcNumber via the fallback,
+    url via the row's own [LC] link, kind "new"), a row whose own [LC] link wins over a
+    (deliberately different) urls.get() value, a 🔤 concept-primer row mirroring the
+    archived real one (kind "primer", no lcNumber/url at all), a row struck AHEAD of its
+    tag glyph (`~~🆕 39 ...~~`, real archived history — pins tags/kind survive emphasis
+    ahead of the glyph, and done stays true), and the three Sunday `🎯 ... | Complexity`
+    rows (kind "complexity" beats the 🎯 tag) — together the five `kind` values are all
+    covered. Also pins `_schedule_item_url`'s full 3-way precedence: an NC-only row WITH
+    a tracker entry (the tracker join wins over the row's own NC link) and an NC-only row
+    with NO tracker entry (the NC link is used as the last resort). Also pins the
+    tracker-joined `difficulty` — including the honest null for a number the tracker
+    doesn't have yet."""
 
     FIXTURE = (
         "## Daily Schedule\n\n"
@@ -291,22 +339,75 @@ class ParseCurrentWeekScheduleTests(unittest.TestCase):
         "| ▸ **Tue Sep 22** · 5.0 units — Test day two |  |  |  |  |\n"
         "| 🆕 39 Combination Sum · [LC](https://leetcode.com/problems/combination-sum/)"
         " | 🆕 | | | Backtracking |\n"
+        "| |  |  |  |  |\n"
+        "| ▸ **Thu Sep 24** · 3.0 units — Test day three |  |  |  |  |\n"
+        "| [77 Word Break](../../../dsa/leetcode/dp/77_word_break.py)"
+        " · [LC](https://leetcode.com/problems/word-break/) | 🟡 | | | DP |\n"
+        # Mirrors the archived 🔤 row shape (see docs/foundations/schedules/archive/
+        # 20260907_schedule.md's "Backtracking primer" row): a bare **Bold Title** with no
+        # digit after `**` (so eb.SCHED_NUM finds nothing and the bare-number fallback also
+        # finds nothing, since the title itself starts with a letter, not a number), 🔤 in
+        # both the Problem cell and the S column, and a free-form Technique cell that is
+        # NOT "Complexity" — the only kind/tag branch no other fixture row exercises.
+        "| 🔤 **Two Pointers primer** — before the phase opens Oct 5"
+        " | 🔤 | | | concept overview, no LC number |\n"
+        # Emphasis-before-glyph: several archived weeks strike (or bold, or both) the
+        # WHOLE row ahead of its tag glyph rather than plain — this exact shape is real
+        # history (20260824_schedule.md's struck 🆕 rows), not a hypothetical.
+        "| ~~🆕 39 Combination Sum · [LC](https://leetcode.com/problems/combination-sum/)~~"
+        " | 🆕 | | | Backtracking |\n"
+        "| |  |  |  |  |\n"
+        # NC-only rows (no [LC] at all) — _schedule_item_url's 3-way precedence, per-case:
+        "| ▸ **Fri Sep 25** · 4.0 units — Test day four |  |  |  |  |\n"
+        # 200 IS in the tracker: the tracker join (precedence 2) must win over this row's
+        # own [NC] link (precedence 3) — an NC url must never beat a real LC one.
+        "| [200 Number of Islands](../../../dsa/leetcode/graphs/200_number_of_islands.py)"
+        " · [NC](https://neetcode.io/problems/number-of-islands) | 🟡 | | | BFS |\n"
+        "| |  |  |  |  |\n"
+        "| ▸ **Sat Sep 26** · 4.0 units — Test day five |  |  |  |  |\n"
+        # 269 is NOT in the tracker: nothing outranks the row's own [NC] link, so it's
+        # used as the last resort rather than leaving url null.
+        "| [269 Alien Dictionary](../../../dsa/leetcode/graphs/269_alien_dictionary.py)"
+        " · [NC](https://neetcode.io/problems/foreign-dictionary) | 🟡 | | | Topological Sort |\n"
+        "| |  |  |  |  |\n"
+        "| ▸ **Sun Sep 27** · 2.0 units — Complexity day |  |  |  |  |\n"
+        "| 🎯 [226 Invert Binary Tree](../../../dsa/leetcode/trees/226_invert_binary_tree.py)"
+        " · [LC](https://leetcode.com/problems/invert-binary-tree/) — complexity re-ask (time)"
+        " | 🎯 | | | Complexity |\n"
+        "| 🎯 [98 Validate BST](../../../dsa/leetcode/trees/98_validate_bst.py)"
+        " · [LC](https://leetcode.com/problems/validate-binary-search-tree/) — complexity re-ask (space)"
+        " | 🎯 | | | Complexity |\n"
+        "| 🎯 [543 Diameter of Binary Tree](../../../dsa/leetcode/trees/543_diameter_of_binary_tree.py)"
+        " · [LC](https://leetcode.com/problems/diameter-of-binary-tree/) — complexity re-ask (time)"
+        " | 🎯 | | | Complexity |\n"
     )
 
-    # Joined by lcNumber into the schedule items above: 22 -> Medium, 100 -> Easy. 39 (the
-    # 🆕 row, no local file yet) is deliberately ABSENT — it must resolve to null, not a guess.
+    # Joined by lcNumber into the schedule items above: 22 -> Medium, 100 -> Easy,
+    # 200 -> Medium. 39 (the 🆕 row), 77, and 269 are deliberately ABSENT — 39 must
+    # resolve to null (no tracker entry yet); 77 pins that difficulty and url are joined
+    # independently (77 gets its url from its own [LC] link despite no tracker row); 269
+    # (NC-only, no tracker row) pins the honest-null-turned-NC-last-resort case.
     TRACKER_FIXTURE = (
         "| Medium | [22. Generate Parentheses](https://leetcode.com/problems/generate-parentheses/) "
         "| 🔴 | 0 | 2026-12-01 |\n"
         "| Easy | [100. Same Tree](https://leetcode.com/problems/same-tree/) "
         "| 🎓 | 3 | 2026-12-05 |\n"
+        "| Medium | [200. Number of Islands](https://leetcode.com/problems/number-of-islands/) "
+        "| 🟡 | 1 | 2026-11-01 |\n"
     )
 
     # Joined by lcNumber into the schedule items above, mirroring TRACKER_FIXTURE's own
     # markdown links (problem_urls() reads the same file). 55 and 39 are deliberately
-    # absent — the honest-null cases pinned below.
+    # absent — the honest-null / own-link-only cases pinned below. 77's entry is
+    # deliberately a DIFFERENT url than its row's own [LC] link, to pin that the row's own
+    # [LC] link wins (see _schedule_item_url) rather than this tracker join. 200's entry
+    # pins the OPPOSITE precedence case: this tracker join must win over 200's own [NC]
+    # link (an NC url must never outrank a real LC one). 269 is deliberately absent from
+    # both TRACKER_FIXTURE and here — its own [NC] link is the only source available.
     URLS = {22: "https://leetcode.com/problems/generate-parentheses/",
-            100: "https://leetcode.com/problems/same-tree/"}
+            100: "https://leetcode.com/problems/same-tree/",
+            77: "https://leetcode.com/problems/STALE-SLUG-DO-NOT-PREFER/",
+            200: "https://leetcode.com/problems/number-of-islands/"}
 
     def setUp(self):
         self._tmpdir = tempfile.TemporaryDirectory()
@@ -348,26 +449,128 @@ class ParseCurrentWeekScheduleTests(unittest.TestCase):
                                  "technique": "Backtracking", "startComfort": "🔴",
                                  "difficulty": "Medium",
                                  "url": "https://leetcode.com/problems/generate-parentheses/",
+                                 "tags": ["protected", "backfill"], "kind": "rep",
                                  "done": False})
         self.assertEqual(done, {"lcNumber": 100, "title": "Same Tree",
                                 "technique": "Tree-DFS", "startComfort": "🟢",
                                 "difficulty": "Easy",
                                 "url": "https://leetcode.com/problems/same-tree/",
+                                "tags": [], "kind": "rep",
                                 "done": True})
         # 55 has a real lcNumber but is deliberately absent from TRACKER_FIXTURE — the
-        # honest-null case for a NUMBER the tracker doesn't have yet (distinct from the
-        # 🆕 case below, where there is no lcNumber to look up at all).
+        # honest-null case for `difficulty` (a number the tracker doesn't have yet). `url`
+        # is NOT null, though: 55's row carries its own [LC] link, which _schedule_item_url
+        # reads directly, independently of the (absent) tracker join.
         self.assertEqual(untracked, {"lcNumber": 55, "title": "Jump Game",
                                      "technique": "Greedy", "startComfort": "🟡",
-                                     "difficulty": None, "url": None, "done": False})
+                                     "difficulty": None,
+                                     "url": "https://leetcode.com/problems/jump-game/",
+                                     "tags": [], "kind": "rep",
+                                     "done": False})
 
-    def test_new_intake_row_has_no_lcnumber_but_keeps_title_and_technique(self):
+    def test_new_intake_row_gets_lcnumber_from_fallback_and_url_from_own_link(self):
+        # 🆕 39 has no `[`/`**` before its number, so eb.SCHED_NUM (by design) finds
+        # nothing — but _schedule_item_lc_number's bare-digits fallback still recovers 39
+        # from the tag-stripped title, and _schedule_item_url reads its url straight off
+        # the row's own [LC] link (39 has no TRACKER_FIXTURE/URLS entry at all).
         result = gamify.parse_current_week_schedule(dt.date(2026, 9, 21), self.URLS)
         tue = result["days"][1]
         self.assertEqual(len(tue["items"]), 1)
-        self.assertEqual(tue["items"][0], {"lcNumber": None, "title": "Combination Sum",
+        self.assertEqual(tue["items"][0], {"lcNumber": 39, "title": "Combination Sum",
                                            "technique": "Backtracking", "startComfort": None,
-                                           "difficulty": None, "url": None, "done": False})
+                                           "difficulty": None,
+                                           "url": "https://leetcode.com/problems/combination-sum/",
+                                           "tags": ["new"], "kind": "new",
+                                           "done": False})
+
+    def test_row_own_link_url_wins_over_tracker_join(self):
+        # 77's URLS entry is deliberately a different (stale) url — the row's own [LC]
+        # link must win, per _schedule_item_url's precedence.
+        result = gamify.parse_current_week_schedule(dt.date(2026, 9, 21), self.URLS)
+        thu = result["days"][3]
+        self.assertEqual(len(thu["items"]), 3)
+        self.assertEqual(thu["items"][0], {"lcNumber": 77, "title": "Word Break",
+                                           "technique": "DP", "startComfort": "🟡",
+                                           "difficulty": None,
+                                           "url": "https://leetcode.com/problems/word-break/",
+                                           "tags": [], "kind": "rep",
+                                           "done": False})
+
+    def test_primer_row_has_no_lcnumber_and_kind_primer(self):
+        # The only kind/tag branch ("primer") not otherwise exercised by a real or
+        # synthetic row above. No `[`/`**digit` for eb.SCHED_NUM, and the tag-stripped
+        # title starts with a letter, not a digit, so the bare-number fallback also comes
+        # up empty — lcNumber and url are both honestly null, same as a concept primer
+        # with no attached LC problem.
+        result = gamify.parse_current_week_schedule(dt.date(2026, 9, 21), self.URLS)
+        thu = result["days"][3]
+        self.assertEqual(thu["items"][1], {
+            "lcNumber": None, "title": "Two Pointers primer — before the phase opens Oct 5",
+            "technique": "concept overview, no LC number", "startComfort": None,
+            "difficulty": None, "url": None,
+            "tags": ["primer"], "kind": "primer",
+            "done": False})
+
+    def test_emphasis_before_glyph_does_not_blank_out_tags(self):
+        # `~~🆕 39 ...~~` (whole row struck AHEAD of its tag glyph) is real archived
+        # history (20260824_schedule.md's struck 🆕 rows), not hypothetical — a plain
+        # `cell.lstrip()` would see "~~" first and never reach "🆕", yielding tags: []
+        # and kind: "rep". done stays keyed off the raw "~~" check either way, so pinning
+        # it True here also confirms the emphasis strip in _leading_tags didn't leak into
+        # (or otherwise disturb) done detection.
+        result = gamify.parse_current_week_schedule(dt.date(2026, 9, 21), self.URLS)
+        thu = result["days"][3]
+        self.assertEqual(thu["items"][2], {
+            "lcNumber": 39, "title": "Combination Sum",
+            "technique": "Backtracking", "startComfort": None,
+            "difficulty": None,
+            "url": "https://leetcode.com/problems/combination-sum/",
+            "tags": ["new"], "kind": "new",
+            "done": True})
+
+    def test_complexity_technique_wins_kind_over_the_probe_tag(self):
+        # All three Sunday rows are 🎯-tagged AND carry Technique "Complexity" — kind must
+        # come out "complexity" (the more specific fact), not "probe", and tags still
+        # records the 🎯 glyph regardless of which kind it resolved to.
+        result = gamify.parse_current_week_schedule(dt.date(2026, 9, 21), self.URLS)
+        sun = result["days"][6]
+        self.assertEqual(len(sun["items"]), 3)
+        for item in sun["items"]:
+            self.assertEqual(item["kind"], "complexity")
+            self.assertEqual(item["tags"], ["probe"])
+        self.assertEqual(sun["items"][0]["lcNumber"], 226)
+        self.assertEqual(sun["items"][0]["title"], "Invert Binary Tree")
+        self.assertEqual(sun["items"][0]["url"],
+                          "https://leetcode.com/problems/invert-binary-tree/")
+
+    def test_nc_only_row_loses_to_a_tracker_lc_join(self):
+        # 200's row carries only its own [NC] link, but 200 HAS a tracker entry — the
+        # tracker join (precedence 2) must win over that row's own NC link
+        # (precedence 3): an NC url must never outrank a real LC one.
+        result = gamify.parse_current_week_schedule(dt.date(2026, 9, 21), self.URLS)
+        fri = result["days"][4]
+        self.assertEqual(len(fri["items"]), 1)
+        self.assertEqual(fri["items"][0], {
+            "lcNumber": 200, "title": "Number of Islands",
+            "technique": "BFS", "startComfort": "🟡",
+            "difficulty": "Medium",
+            "url": "https://leetcode.com/problems/number-of-islands/",
+            "tags": [], "kind": "rep",
+            "done": False})
+
+    def test_nc_only_row_with_no_tracker_entry_uses_nc_as_last_resort(self):
+        # 269's row also carries only its own [NC] link, and 269 has NO tracker entry —
+        # nothing outranks the NC link here, so it is used rather than leaving url null.
+        result = gamify.parse_current_week_schedule(dt.date(2026, 9, 21), self.URLS)
+        sat = result["days"][5]
+        self.assertEqual(len(sat["items"]), 1)
+        self.assertEqual(sat["items"][0], {
+            "lcNumber": 269, "title": "Alien Dictionary",
+            "technique": "Topological Sort", "startComfort": "🟡",
+            "difficulty": None,
+            "url": "https://neetcode.io/problems/foreign-dictionary",
+            "tags": [], "kind": "rep",
+            "done": False})
 
     def test_day_with_no_block_has_no_items(self):
         result = gamify.parse_current_week_schedule(dt.date(2026, 9, 21), self.URLS)
@@ -452,6 +655,50 @@ class ParseProbesTests(unittest.TestCase):
         tmp.close()
         gamify.PROBES_README = Path(tmp.name)
         self.assertIsNone(gamify.parse_probes(self.URLS))
+        gamify.PROBES_README.unlink(missing_ok=True)
+
+    # An empty PROBE-log table — the section and its header row exist, but no data rows
+    # yet — is a fresh adopter's first-run state, not a defect: it must NOT collapse to
+    # the same None the missing-file/missing-section cases above return.
+    EMPTY_TABLE_FIXTURE = (
+        "## 📒 Probe log — the tally\n\n"
+        "| # | Date | Problem | Technique | Result | Tracker row? |\n"
+        "|---|---|---|---|---|---|\n"
+    )
+
+    def test_present_but_empty_table_is_zero_payload_not_none(self):
+        tmp = tempfile.NamedTemporaryFile(
+            mode="w", suffix=".md", delete=False, encoding="utf-8")
+        tmp.write(self.EMPTY_TABLE_FIXTURE)
+        tmp.close()
+        gamify.PROBES_README = Path(tmp.name)
+        self.assertEqual(gamify.parse_probes(self.URLS),
+                         {"total": 0, "cleanRate": 0.0, "items": []})
+        gamify.PROBES_README.unlink(missing_ok=True)
+
+    def test_present_but_empty_table_emits_no_warning(self):
+        # Runs the real build_payload() (live repo tracker/schedule/coverage, per the
+        # style of PayloadTests) with only PROBES_README swapped, so this exercises the
+        # actual warnings-list wiring in main()/build_payload, not just parse_probes().
+        tmp = tempfile.NamedTemporaryFile(
+            mode="w", suffix=".md", delete=False, encoding="utf-8")
+        tmp.write(self.EMPTY_TABLE_FIXTURE)
+        tmp.close()
+        gamify.PROBES_README = Path(tmp.name)
+        _payload, warnings = gamify.build_payload(dt.date(2026, 9, 20))
+        self.assertFalse(any("Probe log" in w for w in warnings))
+        gamify.PROBES_README.unlink(missing_ok=True)
+
+    def test_missing_probe_section_still_warns_from_build_payload(self):
+        # The genuinely-wrong case (section header missing entirely) must still warn —
+        # confirms the fix didn't silence a real problem along with the false-positive one.
+        tmp = tempfile.NamedTemporaryFile(
+            mode="w", suffix=".md", delete=False, encoding="utf-8")
+        tmp.write("# Nothing here\n\nJust prose, no Probe log heading at all.\n")
+        tmp.close()
+        gamify.PROBES_README = Path(tmp.name)
+        _payload, warnings = gamify.build_payload(dt.date(2026, 9, 20))
+        self.assertTrue(any("Probe log" in w for w in warnings))
         gamify.PROBES_README.unlink(missing_ok=True)
 
 
@@ -595,6 +842,76 @@ class PayloadTests(unittest.TestCase):
         self.assertEqual(payload["schemaVersion"], gamify.SCHEMA_VERSION)
         self.assertIsInstance(payload["problems"], list)
         self.assertIsInstance(payload["badges"], list)
+
+    def test_build_payload_honours_injected_today(self):
+        # generatedAt must come from the injected `today`, not the wall clock — this is
+        # what makes main()'s session_date resolution (see below) actually take effect
+        # rather than being overridden again inside build_payload.
+        payload, _warnings = gamify.build_payload(dt.date(2026, 9, 20))
+        self.assertEqual(payload["generatedAt"], "2026-09-20")
+
+
+class MainStdoutCleanTests(unittest.TestCase):
+    """main()'s session-date resolution must never leak session_date.resolve_datetime's
+    announcement onto stdout: --stdout must still emit parseable JSON and --banner must
+    still emit exactly one line. The real detect_session_date heuristic depends on the
+    wall clock and git state, so the announcement is FORCED here via a monkeypatched
+    resolve_datetime rather than relying on hitting the real heuristic by chance."""
+
+    @staticmethod
+    def _announcing_resolve_datetime(explicit=None, *, now=None, announce=True):
+        if announce:
+            print("Using session date 2026-09-20 (forced for test). "
+                  "Override with --date if that's wrong.")
+        return dt.datetime(2026, 9, 20)
+
+    def _run_main(self, argv):
+        out, err = io.StringIO(), io.StringIO()
+        with mock.patch.object(sys, "argv", argv), \
+             mock.patch.object(gamify.session_date, "resolve_datetime",
+                               self._announcing_resolve_datetime), \
+             contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
+            gamify.main()
+        return out.getvalue(), err.getvalue()
+
+    def test_stdout_mode_stays_parseable_json_even_when_session_date_announces(self):
+        out, err = self._run_main(["gamify.py", "--stdout"])
+        json.loads(out)  # raises if the announcement leaked into stdout
+        self.assertIn("Using session date", err)
+
+    def test_banner_mode_emits_exactly_one_line_even_when_session_date_announces(self):
+        out, err = self._run_main(["gamify.py", "--banner"])
+        self.assertEqual(len(out.splitlines()), 1)
+        self.assertIn("Using session date", err)
+
+
+class MainDateFlagTests(unittest.TestCase):
+    """--date is the flag name main() actually documents and session_date.resolve_datetime
+    itself references in its announcement ("Override with --date if that's wrong") —
+    --today is kept only as a hidden alias so an existing caller of the old name still
+    works. Both must reach resolve_datetime's `explicit` param identically."""
+
+    def _captured_explicit(self, argv):
+        captured: dict = {}
+
+        def fake_resolve(explicit=None, *, now=None, announce=True):
+            captured["explicit"] = explicit
+            return dt.datetime(2026, 9, 20)
+
+        out, err = io.StringIO(), io.StringIO()
+        with mock.patch.object(sys, "argv", argv), \
+             mock.patch.object(gamify.session_date, "resolve_datetime", fake_resolve), \
+             contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
+            gamify.main()
+        return captured["explicit"]
+
+    def test_date_flag_reaches_resolve_datetime(self):
+        explicit = self._captured_explicit(["gamify.py", "--stdout", "--date", "2026-09-20"])
+        self.assertEqual(explicit, "2026-09-20")
+
+    def test_today_alias_resolves_to_the_same_value_as_date(self):
+        explicit = self._captured_explicit(["gamify.py", "--stdout", "--today", "2026-09-20"])
+        self.assertEqual(explicit, "2026-09-20")
 
 
 if __name__ == "__main__":

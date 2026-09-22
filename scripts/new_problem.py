@@ -391,7 +391,7 @@ def existing_method_name(lines: list[str], cls: int) -> str | None:
             method_indent = indent
         if indent != method_indent or nm == "__init__":
             continue
-        base = re.sub(r"_\d{8}(?:_[a-z0-9]+)*$", "", nm)  # date + any variant tokens after it
+        base = re.sub(r"_\d{8}(?:_[A-Za-z0-9]+)*$", "", nm)  # date + any variant tokens after it
         if base == nm:      # unsuffixed original — the canonical name, take it
             return base
         dated = dated or base   # a dated variant only; remember as fallback

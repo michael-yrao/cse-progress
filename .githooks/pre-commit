@@ -83,10 +83,19 @@ fi
 # dashboard renders) from the tracker + schedules + coverage. Must run AFTER the two blocks
 # above, which rewrite dsa_progress.md and technique_coverage.md; this reads both. Fires when
 # any of its inputs — the tracker, a schedule, the coverage view, or the config thresholds —
-# is staged. Report-only (|| true): a stale dashboard is never a reason to block the day's work.
+# is staged, OR when COVERAGE_TRIGGER fired above: a commit touching only techniques.yml or a
+# solution file regenerates technique_coverage.md via that block but wouldn't otherwise match
+# GAMIFY_TRIGGER's own grep, which silently skipped the contract that reads the coverage it
+# just regenerated. Report-only (|| true): a stale dashboard is never a reason to block the
+# day's work.
 GAMIFY_TRIGGER=$(echo "$STAGED" | grep -E "dsa_progress\.md$|^docs/foundations/schedules/.*\.md$|technique_coverage\.md$|cse\.config\.yml$")
-if [ -n "$GAMIFY_TRIGGER" ]; then
+if [ -n "$GAMIFY_TRIGGER" ] || [ -n "$COVERAGE_TRIGGER" ]; then
   echo "Regenerating progress.json..."
+  # README_HASH_BEFORE guards the README add below: gamify.py rewrites README's badges, and
+  # `git add README.md` unconditionally would also sweep in any unrelated unstaged README
+  # edit the author was mid-way through. Stage it only if gamify.py actually changed it.
+  README_HASH_BEFORE=""
+  [ -f "README.md" ] && README_HASH_BEFORE=$(git hash-object README.md)
   if command -v py >/dev/null 2>&1; then
     py scripts/gamify.py || true
   elif command -v python >/dev/null 2>&1; then
@@ -96,7 +105,10 @@ if [ -n "$GAMIFY_TRIGGER" ]; then
   fi
   [ -f "dashboard/progress.json" ] && git add "dashboard/progress.json"
   [ -f "dashboard/progress-summary.json" ] && git add "dashboard/progress-summary.json"
-  [ -f "README.md" ] && git add "README.md"
+  if [ -f "README.md" ]; then
+    README_HASH_AFTER=$(git hash-object README.md)
+    [ "$README_HASH_BEFORE" != "$README_HASH_AFTER" ] && git add "README.md"
+  fi
 fi
 
 # Single source of truth for tuned values (see CLAUDE.md). Fires when the config, a script

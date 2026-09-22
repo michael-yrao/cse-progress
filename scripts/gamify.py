@@ -33,6 +33,7 @@ Usage:
     python scripts/gamify.py --validate       # compute + validate schema, write nothing
     python scripts/gamify.py --banner         # one honest line for the SessionStart hook
     python scripts/gamify.py --stdout         # print the JSON instead of writing it
+    python scripts/gamify.py --date 2026-09-20  # override the resolved session date
 
 Two files, one build. progress.json is the full contract (includes `problems[]`, the
 144 KB heavy part). progress-summary.json is the same payload minus `problems[]`, with a
@@ -43,6 +44,7 @@ components. See summary_of().
 from __future__ import annotations
 
 import argparse
+import contextlib
 import datetime as dt
 import json
 import re
@@ -54,6 +56,11 @@ import _console
 # effort_budget already solves tracker parsing and schedule discovery; reuse it rather
 # than re-deriving the same regexes (DRY, and it keeps the two in lockstep).
 import effort_budget as eb
+
+# A session that runs past midnight keeps its START date — see session_date.py and
+# feedback_session_dating. main() resolves "today" through it instead of dt.date.today()
+# so gamify doesn't silently roll a late-night regeneration onto the next calendar day.
+import session_date
 
 _console.force_utf8()
 
@@ -234,6 +241,138 @@ _LEADING_TAGS = re.compile(rf"^[{re.escape(_SCHEDULE_TAGS)}\s]+")
 _LEADING_NUM = re.compile(r"^\d+\.?\s*")
 DAY_LABEL = re.compile(r"units\s*—\s*(?P<label>[^|]+)")
 
+# Same legend, named this time (not just stripped): a dashboard row that shows only the
+# cleaned title loses WHY a problem is on today's board, so each glyph also becomes a
+# machine-readable tag string. Some of these glyphs are two codepoints (a base symbol plus
+# a U+FE0F variation selector, e.g. ⚠️/⚙️) — a `for ch in text` scan would split one of
+# those in two and match neither half, so _leading_tags() below matches whole tokens.
+TAG_PROTECTED = "protected"
+TAG_BACKFILL = "backfill"
+TAG_NEW = "new"
+TAG_PROBE = "probe"
+TAG_VARIANT = "variant"
+TAG_PRIMER = "primer"
+TAG_MOVED = "moved"
+TAG_BY_GLYPH = {
+    "⚠️": TAG_PROTECTED,
+    "🔥": TAG_BACKFILL,
+    "🆕": TAG_NEW,
+    "🎯": TAG_PROBE,
+    "⚙️": TAG_VARIANT,
+    "🔤": TAG_PRIMER,
+    "→": TAG_MOVED,
+}
+# Longest-first so a two-codepoint glyph is never accidentally matched by its own leading
+# codepoint alone.
+_TAG_TOKEN = re.compile("|".join(re.escape(g) for g in sorted(TAG_BY_GLYPH, key=len, reverse=True)))
+# A row's tag glyph is sometimes written struck (`~~`) or bolded (`**`) rather than plain
+# — several older archived weeks do this (e.g. `~~🆕 39 ...~~`, `~~**🎯 Probe #3**~~`, even
+# stacking both markers). `+` so a run of either marker, in either order, is consumed in
+# one go.
+_LEADING_EMPHASIS = re.compile(r"^(?:~~|\*\*)+")
+
+KIND_REP = "rep"
+KIND_COMPLEXITY = "complexity"
+# KIND_NEW/KIND_PRIMER/KIND_PROBE deliberately don't exist: those three `kind` values are
+# always exactly the TAG_NEW/TAG_PRIMER/TAG_PROBE tag word, so reusing the tag constant
+# keeps the two in lockstep instead of two literals that could drift apart.
+TECHNIQUE_COMPLEXITY = "complexity"
+
+
+def _leading_tags(cell: str) -> list[str]:
+    """The row's build-time tags, read off the Problem cell's leading glyph run (see the
+    legend on any schedule file's "Tags:" line) and named via TAG_BY_GLYPH.
+
+    Matches whole glyph tokens left-to-right rather than iterating characters, because a
+    two-codepoint glyph (⚠️, ⚙️) would otherwise be split into a base codepoint plus a
+    stray U+FE0F variation selector that matches nothing.
+
+    A glyph is sometimes struck or bolded rather than written plain — a row may be
+    written `~~🆕 39 ...~~` (the whole row struck ahead of its tag) or, stacked with
+    another tag, `🔥 ~~🎯 ...~~` — so a leading `~~`/`**` run is stripped (_LEADING_EMPHASIS)
+    before EVERY glyph match attempt, not just once at the very front of the cell.
+    """
+    tags: list[str] = []
+    rest = cell.lstrip()
+    while True:
+        rest = _LEADING_EMPHASIS.sub("", rest).lstrip()
+        token = _TAG_TOKEN.match(rest)
+        if not token:
+            break
+        tags.append(TAG_BY_GLYPH[token.group(0)])
+        rest = rest[token.end():].lstrip()
+    return tags
+
+
+def _schedule_item_kind(technique: str | None, tags: list[str]) -> str:
+    """rep|new|probe|complexity|primer for one schedule item.
+
+    `complexity` is checked BEFORE any tag: the three Sunday complexity re-ask rows are
+    both 🎯-tagged (they're still a cold-call-style probe) AND carry `Complexity` in the
+    Technique cell, and Complexity is the more specific fact about what the row actually
+    tests. Checking the 🎯 tag first would silently reclassify those rows as an ordinary
+    probe and lose that distinction on the dashboard.
+    """
+    if technique is not None and technique.strip().lower() == TECHNIQUE_COMPLEXITY:
+        return KIND_COMPLEXITY
+    if TAG_NEW in tags:
+        return TAG_NEW
+    if TAG_PRIMER in tags:
+        return TAG_PRIMER
+    if TAG_PROBE in tags:
+        return TAG_PROBE
+    return KIND_REP
+
+
+_LEADING_SCHED_NUM = re.compile(r"^\s*(\d+)\b")
+
+
+def _schedule_item_lc_number(cell: str, text: str) -> int | None:
+    """lcNumber for one schedule item: eb.SCHED_NUM first (the same parse effort_budget.py
+    prices with, so pricing and the dashboard never disagree on the common case), then a
+    fallback for a bare-number 🆕 intake row, which has no `[`/`**` before its number for
+    SCHED_NUM to find (by design — see effort_budget.py; that miss is fine for PRICING,
+    which only needs to know a row exists, not its number).
+
+    The fallback reads off `text` — the tag-stripped, link-unwrapped title string
+    _clean_schedule_title also starts from — so a leading tag glyph never gets misread as
+    part of the number.
+    """
+    num = eb.SCHED_NUM.search(cell)
+    if num:
+        return int(num.group(1))
+    stripped = _LEADING_TAGS.sub("", text)
+    fallback = _LEADING_SCHED_NUM.match(stripped)
+    return int(fallback.group(1)) if fallback else None
+
+
+_ROW_OWN_LC_URL = re.compile(r"\[LC\]\((https?://[^)]+)\)")
+_ROW_OWN_NC_URL = re.compile(r"\[NC\]\((https?://[^)]+)\)")
+
+
+def _schedule_item_url(cell: str, lc_number: int | None, urls: dict[int, str]) -> str | None:
+    """Canonical LeetCode/NeetCode URL for one schedule item, in precedence order:
+
+    1. The row's own `[LC](...)` link straight off the raw cell — a 🆕 row not yet in the
+       tracker has no other way to get a URL, and a tracked row's own link is the more
+       current fact about THIS occurrence if the two ever disagree.
+    2. The tracker join by lcNumber (urls.get, from problem_urls()) — a LeetCode URL.
+    3. The row's own `[NC](...)` link, LAST resort only: a NeetCode mirror is used when
+       the LC problem is premium-gated (e.g. this week's 1102 build note), so it is real
+       but weaker evidence than either LC source above — the dashboard renders this field
+       as "LeetCode ↗", and an NC url must never win over an actual LC one.
+
+    Honest null when none of the three has one.
+    """
+    lc = _ROW_OWN_LC_URL.search(cell)
+    if lc:
+        return lc.group(1)
+    tracked = urls.get(lc_number) if lc_number else None
+    if tracked:
+        return tracked
+    nc = _ROW_OWN_NC_URL.search(cell)
+    return nc.group(1) if nc else None
+
 
 def _clean_schedule_title(text: str) -> str:
     """Turn a Problem-column cell (already link-unwrapped, `~~`/`**` stripped — see
@@ -256,16 +395,17 @@ def _clean_schedule_title(text: str) -> str:
 def _parse_schedule_day_full(
     path: Path, day: dt.date, difficulty_by_num: dict[int, str], urls: dict[int, str],
 ) -> tuple[list[dict], str | None, float | None]:
-    """Like eb.parse_schedule_day, but keeps the day's label and each item's technique +
-    a display-clean title — eb's own version only needs the number, the start comfort,
-    and whether a row is done, because that is all effort pricing ever reads.
+    """Like eb.parse_schedule_day, but keeps the day's label and each item's technique,
+    tags, kind and a display-clean title — eb's own version only needs the number, the
+    start comfort, and whether a row is done, because that is all effort pricing ever
+    reads.
 
     `difficulty_by_num` joins each item's intrinsic Easy/Medium/Hard from the TRACKER (the
-    schedule file itself carries no difficulty column) — a 🆕 row not yet in dsa_progress.md
-    honestly gets null rather than a guess. `urls` (from problem_urls()) joins each item's
-    canonical LeetCode URL the same way — the site's own AlgorithmMeta.id is a shortened
-    route slug, not the LC slug, so it cannot build a correct link itself; a 🆕 row with no
-    lc_number honestly gets null rather than a guess.
+    schedule file itself carries no difficulty column) — a number the tracker doesn't have
+    yet honestly gets null rather than a guess. `urls` (from problem_urls()) is the
+    fallback source for each item's canonical LeetCode URL — see _schedule_item_url,
+    which prefers the row's own link first; the site's own AlgorithmMeta.id is a
+    shortened route slug, not the LC slug, so it cannot build a correct link itself.
     """
     wanted = (day.strftime("%a"), day.strftime("%b"), day.day)
     items: list[dict] = []
@@ -295,22 +435,26 @@ def _parse_schedule_day_full(
         cell = m["c1"]
         if not cell.strip() or set(cell.strip()) <= {"-", ":"}:
             continue           # blank separator row, or a markdown rule
-        num = eb.SCHED_NUM.search(cell)
-        lc_number = int(num.group(1)) if num else None
-        start = eb.GLYPH.search(m["c2"] or "")
+        # text is computed before lcNumber because _schedule_item_lc_number's fallback
+        # (a bare-number 🆕 row) reads off this same tag-stripped, link-unwrapped string.
         text = re.sub(r"\[([^\]]*)\]\([^)]*\)", r"\1", cell)
         text = re.sub(r"~~|\*\*", "", text)
+        lc_number = _schedule_item_lc_number(cell, text)
+        start = eb.GLYPH.search(m["c2"] or "")
+        technique = (m["c5"] or "").strip() or None
+        tags = _leading_tags(cell)
         items.append({
-            # A 🆕 row not yet scaffolded to a local solution file has no `[` / `**`
-            # before its number, so eb.SCHED_NUM (by design — see effort_budget.py) can't
-            # find one; lcNumber is honestly null rather than guessed, and the dashboard
-            # just omits the Visualize/LeetCode deep links for that row.
+            # lcNumber is honestly null only when NEITHER eb.SCHED_NUM nor the bare-number
+            # fallback finds one (see _schedule_item_lc_number) — the dashboard then omits
+            # that row's Visualize/LeetCode deep links.
             "lcNumber": lc_number,
             "title": _clean_schedule_title(text),
-            "technique": (m["c5"] or "").strip() or None,
+            "technique": technique,
             "startComfort": start.group(0) if start else None,
             "difficulty": difficulty_by_num.get(lc_number) if lc_number else None,
-            "url": urls.get(lc_number) if lc_number else None,
+            "url": _schedule_item_url(cell, lc_number, urls),
+            "tags": tags,
+            "kind": _schedule_item_kind(technique, tags),
             "done": "~~" in cell,
         })
     return items, label, units
@@ -420,8 +564,13 @@ CELL_NUMBER = re.compile(r"\d+")
 PARENTHETICAL = re.compile(r"\((.*?)\)")
 COMFORT_GLYPH = re.compile(r"[🔴🟡🟢🎓🏆]")
 
+# The `## Coverage` table's fixed schema: Technique, Family, Tier, Min, Problems, Best,
+# 🟢, Variants, Gaps. Not a cse.config.yml value — it's technique_coverage.py's own output
+# shape, not a tuned threshold.
+COVERAGE_TABLE_COLUMNS = 9
 
-def parse_techniques() -> list[dict]:
+
+def parse_techniques(warnings: list[str]) -> list[dict]:
     """The `## Coverage` per-technique table -> one dict per row.
 
     Reuses parse_coverage()'s file-read + regex style. The Problems cell carries both a
@@ -429,6 +578,13 @@ def parse_techniques() -> list[dict]:
     reps) or `—` (no problems yet) — handled by taking the FIRST integer in the cell as the
     count and only the integers INSIDE the parens as the problem list, so those extra tokens
     never get mistaken for a problem number. Fail-soft: an unreadable/missing table -> [].
+
+    The HEADER row's own cell count is checked against COVERAGE_TABLE_COLUMNS before any
+    row is parsed: an older technique_coverage.py emitting a different column count would
+    otherwise have every row silently skipped by the per-row count check below, losing the
+    whole table with no signal. That mismatch pushes one message onto `warnings` (mutated
+    in place, like build_payload's own local list) and returns [] rather than a partial,
+    possibly-misaligned table.
 
     `tier` (Sep 21, 2026) is technique_coverage.py's Tier column — "core" for every
     pre-tiering technique (the column simply never reads empty; technique_coverage.py's
@@ -450,10 +606,21 @@ def parse_techniques() -> list[dict]:
     if not section:
         return []
 
+    rows = TABLE_ROW.findall(section.group(1))
+    if not rows:
+        return []
+    header_columns = len(rows[0].split("|"))
+    if header_columns != COVERAGE_TABLE_COLUMNS:
+        warnings.append(
+            f"technique_coverage.md Coverage table has {header_columns} columns, "
+            f"expected {COVERAGE_TABLE_COLUMNS} — regenerate it with "
+            "scripts/technique_coverage.py; techniques omitted.")
+        return []
+
     out: list[dict] = []
-    for line in TABLE_ROW.findall(section.group(1)):
+    for line in rows:
         cells = [c.strip() for c in line.split("|")]
-        if len(cells) != 9:
+        if len(cells) != COVERAGE_TABLE_COLUMNS:
             continue
         (name, family, tier, min_cell, problems_cell, best_cell, green_cell,
          _variants_cell, gaps_cell) = cells
@@ -497,9 +664,16 @@ def parse_probes(urls: dict[int, str]) -> dict | None:
     own docstring), so the tracker's own numbers never see it; this table is the ONLY
     place it's counted. `result` takes the FIRST comfort glyph in the Result cell — a row
     that later converted (`🔴 → 🟡 (re-rep Sep 16)`) is scored on what the COLD call
-    actually was, not its eventual outcome. Fail-soft: no table/file -> None. `urls` (from
-    problem_urls()) joins each item's canonical LeetCode URL — see problem_urls()'s
-    docstring for why the site can't derive this itself.
+    actually was, not its eventual outcome. `urls` (from problem_urls()) joins each item's
+    canonical LeetCode URL — see problem_urls()'s docstring for why the site can't derive
+    this itself.
+
+    Fail-soft, but the TWO empty cases mean different things and must not collapse to the
+    same result: a missing file or a missing `## 📒 Probe log` section is something wrong
+    (-> None, and main() warns) — but a fresh adopter checkout has the file and the
+    section with a header row and NO data rows yet, which is not wrong at all, just day
+    one (-> the zero payload below, no warning). Warning on day one would be the first
+    thing a new user sees from an otherwise-honest tool.
     """
     try:
         text = PROBES_README.read_text(encoding="utf-8")
@@ -531,7 +705,10 @@ def parse_probes(urls: dict[int, str]) -> dict | None:
         })
 
     if not items:
-        return None
+        # File and section both present; the table just has no data rows yet (a fresh
+        # adopter checkout). That's not an error — see the docstring — so it gets the
+        # zero payload, not None (which main() would report as a warning).
+        return {"total": 0, "cleanRate": 0.0, "items": []}
     total = len(items)
     clean = sum(1 for it in items if it["result"] == "🟢")
     return {"total": total, "cleanRate": clean / total, "items": items}
@@ -697,7 +874,7 @@ def build_payload(today: dt.date | None = None) -> tuple[dict, list[str]]:
     coverage = parse_coverage()
     if coverage is None:
         warnings.append("technique_coverage.md not readable — coverage omitted.")
-    techniques = parse_techniques()
+    techniques = parse_techniques(warnings)
     schedule = parse_current_week_schedule(today, urls)
     if schedule is None:
         warnings.append("no current weekly schedule file found — schedule omitted.")
@@ -707,8 +884,9 @@ def build_payload(today: dt.date | None = None) -> tuple[dict, list[str]]:
 
     # Today's-board workload bar (Sep 21, 2026): reuse effort_budget.py's OWN config
     # reader rather than re-deriving the fallback here — it already tolerates a missing
-    # `effort_budget:` block / PyYAML and returns its documented defaults (ceiling 8.0,
-    # floor_min 3.0), which is the single source of truth for these two numbers.
+    # `effort_budget:` block / PyYAML and returns its documented defaults for
+    # `effort_budget.ceiling` / `effort_budget.floor_min` (cse.config.yml), which is the
+    # single source of truth for these two numbers.
     effort_cfg = eb.load_config()
 
     problems = build_problems(rows, sched, cats, urls)
@@ -858,10 +1036,20 @@ def main() -> None:
     ap.add_argument("--stdout", action="store_true", help="print the JSON, do not write")
     ap.add_argument("--repo", metavar="OWNER/NAME",
                     help="owner/name for the badge deep-link (default: none)")
-    ap.add_argument("--today", metavar="YYYY-MM-DD", help="override today's date")
+    # --date (not --today) so it matches the flag session_date.resolve_datetime tells the
+    # user to pass when it announces a guess ("Override with --date if that's wrong") —
+    # --today is kept as a hidden alias so any existing caller of the old name still works.
+    ap.add_argument("--date", dest="date", metavar="YYYY-MM-DD",
+                    help="override the resolved session date (YYYY-MM-DD or YYYYMMDD)")
+    ap.add_argument("--today", dest="date", help=argparse.SUPPRESS)
     args = ap.parse_args()
 
-    today = dt.date.fromisoformat(args.today) if args.today else dt.date.today()
+    # session_date.resolve_datetime announces its heuristic guess with a bare print() —
+    # stdout, the same stream --stdout/--banner use for their own payload. Redirected to
+    # stderr here so the announcement stays visible (CLAUDE.md's fallback-must-announce
+    # rule) without corrupting --stdout's JSON or adding a line to --banner's one line.
+    with contextlib.redirect_stdout(sys.stderr):
+        today = session_date.resolve_datetime(args.date).date()
     stats, warnings = build_payload(today)
 
     if args.banner:

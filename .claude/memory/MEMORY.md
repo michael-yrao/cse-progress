@@ -74,6 +74,7 @@ operational copy is in a skill reference or CLAUDE.md. Grouped for scanning.
 - [Pull-map expansion TODO](project_pull_map_expansion_todo.md) — extend `pull_interview.py`'s pattern map to expansion techniques once the learner starts retiring them.
 - [Upstream candidates](project_upstream_candidates.md) — staging list of findings to PR to canonical cse-coach (defects ship now, instruments soak ~4wk).
 - [Gamification](project_gamification.md) — honest-progress layer (streak, maturation pipeline, trophy case, coverage, badges) → `progress.json` contract rendered on progressiveoverflow.com; reward only unfakeable events, never a rating; row count still isn't progress.
+- [Site refresh Sep 21-22 — shipped + follow-ups](project_site_refresh_resume.md) — what landed in the three repos; the optional cleanup list and pre-existing quirks still open.
 - [Execution workflow](feedback_execution_workflow.md) — GLOBAL, all non-trivial work: tech lead (session: Fable/Opus) plans + reviews + runs `advisor`; Opus team leads at 2:1 supervise Sonnet engineers who implement (no commit/push).
 - [Global .claude versioned](project_global_claude_unversioned.md) — CLOSED Sep 21: `~/.claude/` rules/agents/hooks/settings.json are versioned in-place in the private repo `michael-yrao/claude-dotfiles`; edits there need their own commit+push.
 

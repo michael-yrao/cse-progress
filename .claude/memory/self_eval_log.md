@@ -5,20 +5,6 @@
 
 Append-only log of corrections. Governed by [[feedback_self_evaluation]]. Newest at top. Meta-review promotes recurring root causes into rules; entries are never deleted, only re-statused.
 
-- **2026-09-20 [P2]** fam:hook-false-fire — The gamification feature (progress.json + the
-  progressiveoverflow.com dashboard) made `rating_gate.py` false-fire on a pure software-deploy report:
-  my status turns now carry the dashboard's own vocabulary (🟢/🟡/🎓 glyphs, "streak", "build clean")
-  next to incidental cue words ("accept the fallback"), which the gate reads as a comfort-rating
-  proposal. No rep was in sight. Same class as the meta-review/self-eval false-fire the hook already
-  exempts (2026-09-19) — a RECORD/REPORT is not a PROPOSAL. Fix (rung 1, source): added a
-  `REPORT_CONTEXT` exemption to `rating_gate.py` keyed on dashboard/deploy terms that cannot occur in a
-  real rep rating (progress.json, progressiveoverflow, dashboard, deploy, raw.githubusercontent, …) —
-  deliberately NOT on streak/pipeline/badge alone, since those appear in genuine rating turns. +4
-  self-tests (3 exemptions, 1 control that still trips); 25/25 pass. General lesson: a feature whose
-  DATA reuses the coach's rating vocabulary will trip vocabulary-matching hooks — exempt on terms unique
-  to the feature's context, never on the shared tokens. See `feedback_ask_complexity.md`,
-  `.claude/hooks/rating_gate.py`.
-
 - **2026-09-20 [P2]** fam:read-before-asserting — Told the learner "cse-progress looks **private**" and built a
   plan branch around a private-source data pipeline, inferring privacy from a *failed* `gh repo view
   michael-yrao/cse-progress` (which failed for auth/other reasons, not visibility). The repo is PUBLIC; the
@@ -1162,30 +1148,10 @@ Sep 21 build — add a "variant label must match the due tracker row" check to w
 hook that cross-checks schedule variant tags against the tracker's due row).
 **consolidated→** (2026-09-19, clustered with 09-15 as the variant-label family): `weekly-build.md` now requires the board variant parenthetical to be READ FROM the due tracker row (never hand-typed), and the method-NAME sibling is source-fixed in `new_problem.py` (see the 09-15 entry). A cross-check hook stays a candidate if the hand-typed board label slips again. fam: variant labels.
 
-## 2026-09-20 [P2] — Weekly build dropped a planned intake row (78 Subsets), learner caught it
-**What:** The Sep 14 build's week goal named "exactly 2 intakes (22 Generate Parentheses, then 78 Subsets)" and the Sun Sep 20 day-header read "2nd Backtracking intake + 1552 re-seat + deferred green carries" — but **no row for 78 was ever placed** on the Sunday board (nor tracker, nor file). The Sunday block held only 84, 1552, 138, 199. The learner noticed mid-session ("i thought we had another backtracking problem today"). Scaffolded 78, seated the row, re-priced note.
-**Why it's wrong:** A day-header that promises a problem the row-list omits is a silent under-build — the board is the executable list, the header is prose; when they disagree the promised rep just vanishes. Same shape as the 09-18 variant-label miss (build prose not matching the actual rows) but here the row is *absent*, not mislabeled. Only the learner's memory recovered it; nothing in the pipeline flagged header-vs-rows drift.
-**Fix/ladder:** First occurrence of *this* exact shape (header names a rep with no matching row) → memory-file + note for the Sep 21 build. Candidate source fix if it recurs: extend `check_schedule_integrity.py` to cross-check each day-header's named problems against that block's actual rows (it already checks deferred-without-date and phantom scaffolds). Watch for a 2nd occurrence before promoting to a hook. fam: build header-vs-rows drift.
-
-## 2026-09-20 [P2] — Sep 20 build dropped the DIRECTED Dijkstra reps (1102 + 1631), learner caught it
-**What:** `study_guide.md` (updated Sep 20, learner's call) declared 1631 + 1102 under Dijkstra in `techniques.yml` and stated *"targeted at the week of Sep 21 — the Sep 21 weekly build seats them onto the grid."* The Sep 20 build (which built `20260921_schedule.md`) placed **neither** — not on the grid, not in the Waiting Room. The learner caught it asking "where did 1102/1631 end up going?" They were floating: declared, promised, seated nowhere.
-**Why it's wrong:** Same family as the 09-20 (78 Subsets absent) and 09-18 (variant mislabeled) misses — a documented intake directive with no matching row. Here the directive lived one layer out, in `study_guide.md` ("seats them onto the grid at the Sep 21 build"), so even a header-vs-rows check wouldn't catch it. A promised consolidation rep that lands on no grid silently evaporates; only the learner's memory recovered it. Compounded: the coach's own light-day fill (1135/753) papered the gap with *different* problems, hiding the leak.
-**Fix/ladder (2nd occurrence of directed-intake-with-no-row → climb past memory-file):** extend `check_schedule_integrity.py` to flag any problem declared in `techniques.yml`/`study_guide.md` as "targeted at week <date>" that sits on no schedule grid by that week's build. Immediate fix: seat 1102+1631 onto the Sep 21 week; revert the coach's over-cap 1135/753 fill (the ≤2/wk consolidation budget belongs to the directed pair). fam: build directed-intake-drift.
-
-## 2026-09-21 [P3] — Plan assumed `Agent(engineer)` frontmatter restricts a subagent's spawns; docs say it is ignored there
-**What:** The execution-workflow pyramid plan specified `tools: Agent(engineer), ...` on `~/.claude/agents/team-lead.md` as a source-level guarantee that a team lead can only spawn `engineer` agents. The Sonnet engineer fetched the sub-agents docs before writing and found the parenthesised allowlist applies only to a main-thread `claude --agent`; in a subagent definition the type list is silently ignored. It fell back to plain `Agent` + a body-level convention, as the plan's own fallback clause allowed.
-**Why it's wrong:** An unenforced restriction that *looks* enforced is worse than none — the plan nearly shipped a false guarantee. The plan did flag the uncertainty and pre-authorised the fallback, so the pipeline caught it; but the verification-by-docs should have happened at plan time, not been delegated to the engineer.
-**Fix/ladder:** First occurrence → memory-file tier. Habit: when a plan leans on a harness feature for enforcement, confirm it against the docs *before* ExitPlanMode (the claude-code-guide agent is read-only and cheap). The "spawn engineer only" rule is now a stated convention in `team-lead.md`; if a lead ever spawns a generic agent, promote to a hook that inspects Agent-call `subagent_type` from inside a lead. fam: unverified-enforcement assumption.
-
-## 2026-09-21 [P2] — Claimed `disallowedTools` made "a lead never writes" a source-level guarantee; Bash still writes
-**What:** Same session, same commit as the entry above. `~/.claude/agents/team-lead.md` was written with `disallowedTools: Write, Edit, NotebookEdit` and `tools:` including `Bash`, and I then asserted in three durable places — `decisions.yml` (`execution-workflow-pyramid-sep21`), `feedback_execution_workflow.md`'s why-clause ("source-level tool restrictions beat a prose 'never writes'"), and the rule file's Agent-definitions section — that the roles are *enforced* rather than conventional. The `advisor` review caught it: Bash writes files via sed/heredoc/redirect, and this session's own auto-mode instructions actively tell agents to edit that way. The definition blocks the tools, not the capability.
-**Why it's wrong:** Identical failure shape to the `Agent(engineer)` entry logged minutes earlier — a harness feature assumed to enforce something, asserted as fact in the record, without checking what it actually does. Bash has to stay (the lead needs it to run tests, which is its review job), so the defect was never the config; it was the claim. An enforcement story that reads as airtight is worse than an honest convention, because nobody re-checks a guarantee.
-**Fix/ladder (2nd occurrence, same day, same family → climb past memory-file):** wording corrected in all four places to name what is enforced (model pin; Write/Edit/NotebookEdit removed) versus what is held by convention (no writing through Bash, spawn `engineer` only). Promoted habit, now in the rule file itself: a plan that leans on a harness feature for enforcement must verify the feature against the docs BEFORE ExitPlanMode, and the record must state enforced-vs-convention explicitly. If a third occurrence lands, the fix is a checklist line in the plan template rather than more prose. fam: unverified-enforcement assumption.
-
 ## 2026-09-21 — mispredicted `git status --short` output; reminder hook false-positive
 - **What:** Told the learner to expect "exactly eight lines" from `git status --short`; it shows 5 because untracked directories collapse to one line. Learner paused to ask. Contents were correct, the format claim was not.
 - **Also observed:** the global `execution_workflow_reminder.py` fired on "before i move forward, is this expected" — the `move` cue matched and no suppressor word was present. Second data point for the leaky-regex finding.
-- **Fix:** verified with `git status --short -uall` (8 files) + `git check-ignore` on secrets. Regex narrowing is already queued as part of the enforcement-layer work.
+- **Fix:** verified with `git status --short -uall` (8 files) + `git check-ignore` on secrets. Regex narrowing is already queued as part of the enforcement-layer work. fam: predicted-tool-output.
 
 ## 2026-09-21 [P2] — Explained a resume bullet's claim as fact; learner said the claim itself was false
 **What:** Learner asked what "approval workflow" meant in the EquityZen bullet of `career/resume_draft_2026_onepage.md`. The coach explained it as a maker-checker control as if the bullet were true, adding only a trailing "only you can confirm". Learner: "not really true, that is true for RETINA, not EquityZen." The claim had sat in both drafts (one-page since Sep 4, full draft since Jun 29) and had just been carried into the new Sep 21 docx/PDF unchallenged.
@@ -1195,9 +1161,46 @@ hook that cross-checks schedule variant tags against the tracker's due row).
 ## 2026-09-21 [P3] — heredoc backslash collapsed twice while patching a temp trace line
 - **What:** Two consecutive Bash heredoc patches to `role_gate.py` produced a SyntaxError: the tool pipeline collapsed a doubled backslash before Python saw it, so a two-character newline escape became a real newline in the written source. Second attempt repeated the same construct. Third attempt built the token with `chr(92)` and worked.
 - **Why it matters:** the retry repeated the failing construct instead of changing it; the tests caught both, so nothing landed, but it cost two turns.
-- **Fix/ladder (memory-file tier):** when writing source through a heredoc, never rely on backslash escapes surviving — build escape sequences with `chr()` or use the Write/Edit tool. Also the moment to hand a small edit to an engineer rather than fight the pipeline inline.
+- **Fix/ladder (memory-file tier):** when writing source through a heredoc, never rely on backslash escapes surviving — build escape sequences with `chr()` or use the Write/Edit tool. Also the moment to hand a small edit to an engineer rather than fight the pipeline inline. fam: heredoc-escape-collapse.
 
-## 2026-09-21 [near-miss, fam: unverified-enforcement assumption] — frontmatter hooks planned as the enforcement wiring
-- **What:** The approved plan wired the deny gates via agent-frontmatter `hooks:` blocks, verified against the docs (the sub-agents page shows the exact syntax). The first engineer's rule-file text asserted the gates were "wired into each agent's own frontmatter" as enforced. A live probe in review showed the frontmatter hook never fired; the settings.json path did.
-- **Why it's a near-miss, not a 3rd occurrence:** the docs check that the 2nd-occurrence entry promoted was done, and the claim was caught in review before anything was committed. What the docs check could not catch is the harness disagreeing with the docs.
-- **Fix/ladder (source tier):** the rule file now states "Verified by live probe, not by docs" as the standard for any enforcement wiring — a spawn-and-watch probe is the check, and it is part of the Review step, not optional.
+## 2026-09-21 [P1] fam: read-before-asserting — Briefed a lead that cse-coach was "git main, clean at start"; it carried an uncommitted prior port round
+**What:** The L3 brief asserted cse-coach was clean at VERSION 0.4.1. I had run `git log` there earlier in the session but never `git status`; the working tree held six modified files and an untracked `scripts/remaining.py` from an earlier, uncommitted promotion (0.4.0 -> 0.4.1). Two of those files were on the port list. The lead caught it by running `git status` itself and re-briefed its engineers to diff against the working tree.
+**Why it's wrong:** A brief is a MECHANICAL artifact — a second agent with the same inputs should produce the same brief — and "clean" is a one-command fact I stated from memory of a different command. Same family as the 09-20 private-repo inference: a state claim inferred from adjacent evidence instead of read. Cost: nothing landed wrong (the lead verified), but a lead that trusted the brief would have reverted landed hunks.
+**Fix/ladder:** 2nd occurrence in this family within two days -> promote past memory-file. Candidate rung-3 step for the plan/brief template: every repo a brief names gets its `git status --short` pasted INTO the brief, never described. Reopen and climb to that checklist line at the next meta-review if a third lands.
+
+## 2026-09-21 [P1] fam: lead-forced-handback — All three `team-lead` agents handed back mid-flight before their engineers reported, three times in one session
+**What:** L1, L2 and L3 each spawned their two engineers in the background and then ended their turn; the harness returned a "final report" containing no diff and no verification, and each had to be resumed by message (L2 and L1 twice). Nothing was lost — resumes worked and the leads reported honestly that nothing was done — but every hand-back cost a round trip and one lead explicitly said the handback was forced, not chosen.
+**Why it matters:** The lead definition's contract is "report a consolidated diff + review notes"; a turn that ends with children still running cannot satisfy it. This is structural (the agent ends its turn when its own tool calls are exhausted), so prose in the brief ("do not hand back until both report") did not prevent it on the third try either.
+**Fix/ladder (rung 1, agent definition — lives in `~/.claude/agents/team-lead.md`, the private claude-dotfiles repo, needs its own commit):** instruct the lead to spawn engineers with `run_in_background: false` when it has nothing else to do but wait (or to spawn both in the background and then block on the first with a foreground call), so its turn cannot end before the reports exist. Until that lands, the tech lead resumes leads on each premature handback. Logged here because the evidence is in this session; the normative change goes in the agent file.
+
+## 🔬 META-REVIEW 2026-09-21 — schedule build-drift got a source fix; the unverified-enforcement family closed same-day
+
+Triggered by the OVERDUE banner (10 open since the 2026-09-19 review). Clustered from
+`python scripts/meta_review_digest.py`, per the standing convention.
+
+**Promotions (2+ recurrence → up the ladder):**
+1. **Build header-vs-rows drift** (09-20 78 Subsets absent + 09-20 1102/1631 Dijkstra absent = 2×) →
+   **source fix**: `scripts/check_schedule_integrity.py` gained a 4th check, `header_vs_rows()` — any
+   LC number named in a day-header's label or the week's **Goal** paragraph that appears on no row of
+   that week's Daily Schedule is now flagged, report-only. Reuses `eb.DAY_HEADER`/`eb.SCHED_ROW`; a new
+   bare-leading-number fallback (`ROW_TAG_PREFIX`/`ROW_BARE_NUMBER`) is required because a 🆕 intake row
+   carries no `[`/`**` before its number for the existing `MENTION` regex to find. Verified silent on
+   the live current week, including the four bare-numbered 🆕 rows (39, 46, 1631, 1102). Does NOT close
+   the 1102/1631 entry's own residual gap — a directive stated only in `study_guide.md`/`techniques.yml`,
+   never reaching a day header or the Goal paragraph, is still invisible to this check.
+2. **Unverified-enforcement assumption** (09-21 `Agent(engineer)` frontmatter + 09-21 `disallowedTools`
+   + 09-21 near-miss frontmatter-`hooks:` = 3×, one with a malformed tag the digest's counter missed) →
+   already **source-fixed same day**: `~/.claude/rules/execution-workflow.md` now states "Verified by
+   live probe, not by docs" as the standard for any enforcement-wiring claim (`role-gate-deny-hooks-sep21`).
+   All three marked consolidated→ that fix.
+3. **hook-false-fire** (rating_gate.py on the deploy report, 09-20) — verified the `REPORT_CONTEXT` fix
+   is present in this repo's copy (absent from cse-coach's), so marked consolidated→ as shipped.
+
+**Bookkeeping:** all 6 consolidated entries above moved to `self_eval_archive.md`. The 2 previously
+untagged 09-21 singletons (git-status line-count miss, heredoc backslash collapse) got `fam:` tags
+(`predicted-tool-output`, `heredoc-escape-collapse`) and stay open, first occurrences. Left open,
+unchanged: resume-claim-verification (09-21) and read-before-asserting/private-source (09-20) —
+each already tagged, each a first occurrence.
+
+**Deferred (unchanged from 09-19):** the ~80 pre-09-10 open one-offs stay deferred, optional
+batch-archiving cleanup, not mechanical. Cadence reset.

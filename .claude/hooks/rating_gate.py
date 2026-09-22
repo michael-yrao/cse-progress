@@ -88,6 +88,14 @@ SUMMARY_CONTEXT = re.compile(
 # verdict for a LeetCode rep never mentions progress.json, the dashboard, a deploy, or the site.
 # ⚠️ Deliberately NOT keyed on streak / pipeline / badge / trophy alone — those DO appear in a
 # genuine rating turn ("🟢 s2 → streak 3 → graduates"), so exempting them would open a real hole.
+#
+# Scoped to the PARAGRAPH, not the whole turn: `proposes_rating` splits the turn on blank
+# lines and tests only the paragraphs that do NOT match REPORT_CONTEXT. Matching the whole
+# turn was itself a defect — a turn that mentions a deploy AND, in a separate paragraph,
+# genuinely proposes a rating ("Shipped the dashboard... \n\n Time O(n)... space O(1) — 🟢
+# proposed. Confirm?") let the real proposal slip past ungated. SUMMARY_CONTEXT stays
+# turn-wide below: a meta/self-eval summary quotes glyphs as records throughout, so no
+# paragraph of it is a live proposal either.
 REPORT_CONTEXT = re.compile(
     r"progress\.json|progress\.schema|progressiveoverflow|\bdashboard\b|\bgamif\w*"
     r"|raw\.githubusercontent|contents/progress|refresh button|github pages"
@@ -171,9 +179,10 @@ def learner_text(entries: "list[dict]", turns: int = LOOKBACK_TURNS) -> str:
 def proposes_rating(turn: str) -> bool:
     if SUMMARY_CONTEXT.search(turn):
         return False  # a log / meta-review summary records ratings, it does not propose one
-    if REPORT_CONTEXT.search(turn):
-        return False  # a dashboard / deploy report renders glyphs as data, not a verdict
-    return bool(COMFORT.search(turn) and PROPOSE_CUE.search(turn))
+    paragraphs = re.split(r"\n\s*\n", turn)
+    non_report = [p for p in paragraphs if not REPORT_CONTEXT.search(p)]
+    remainder = "\n\n".join(non_report)  # dashboard/deploy paragraphs dropped, rest kept
+    return bool(COMFORT.search(remainder) and PROPOSE_CUE.search(remainder))
 
 
 def missing_axes(learner: str) -> "list[str]":
@@ -278,6 +287,12 @@ PROPOSE_CASES = [
     # Control: the same glyphs + cue WITHOUT dashboard/deploy context is still a real proposal.
     ("real proposal survives the new exemption",
      "Coded from a blank page, no hints — reads 🟢 s2. Rate it?", True),
+    # Paragraph scoping: a deploy-report paragraph PLUS a separate paragraph that genuinely
+    # proposes a rating — the whole-turn exemption used to swallow the real proposal too.
+    ("deploy paragraph + separate real proposal, paragraph-scoped",
+     "Shipped the dashboard: 🔥 115-day streak, 19 🎓, 97 🟢. Build clean; progress.json live."
+     "\n\n"
+     "Time O(n) because one pass; space O(1) — 🟢 proposed. Confirm?", True),
 ]
 
 AXES_CASES = [

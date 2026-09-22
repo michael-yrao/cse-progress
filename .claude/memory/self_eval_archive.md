@@ -10,6 +10,56 @@ The live log keeps all OPEN entries and every META-REVIEW section.
 
 ---
 
+Moved at the 2026-09-21 meta-review (original log order preserved):
+
+- **2026-09-20 [P2]** fam:hook-false-fire — The gamification feature (progress.json + the
+  progressiveoverflow.com dashboard) made `rating_gate.py` false-fire on a pure software-deploy report:
+  my status turns now carry the dashboard's own vocabulary (🟢/🟡/🎓 glyphs, "streak", "build clean")
+  next to incidental cue words ("accept the fallback"), which the gate reads as a comfort-rating
+  proposal. No rep was in sight. Same class as the meta-review/self-eval false-fire the hook already
+  exempts (2026-09-19) — a RECORD/REPORT is not a PROPOSAL. Fix (rung 1, source): added a
+  `REPORT_CONTEXT` exemption to `rating_gate.py` keyed on dashboard/deploy terms that cannot occur in a
+  real rep rating (progress.json, progressiveoverflow, dashboard, deploy, raw.githubusercontent, …) —
+  deliberately NOT on streak/pipeline/badge alone, since those appear in genuine rating turns. +4
+  self-tests (3 exemptions, 1 control that still trips); 25/25 pass. General lesson: a feature whose
+  DATA reuses the coach's rating vocabulary will trip vocabulary-matching hooks — exempt on terms unique
+  to the feature's context, never on the shared tokens. See `feedback_ask_complexity.md`,
+  `.claude/hooks/rating_gate.py`. **consolidated→** `.claude/hooks/rating_gate.py` `REPORT_CONTEXT`
+  (Sep 20) — verified present in this repo's copy (a diff against cse-coach's copy shows it absent
+  there), so the fix already ships here.
+
+## 2026-09-20 [P2] — Weekly build dropped a planned intake row (78 Subsets), learner caught it
+**What:** The Sep 14 build's week goal named "exactly 2 intakes (22 Generate Parentheses, then 78 Subsets)" and the Sun Sep 20 day-header read "2nd Backtracking intake + 1552 re-seat + deferred green carries" — but **no row for 78 was ever placed** on the Sunday board (nor tracker, nor file). The Sunday block held only 84, 1552, 138, 199. The learner noticed mid-session ("i thought we had another backtracking problem today"). Scaffolded 78, seated the row, re-priced note.
+**Why it's wrong:** A day-header that promises a problem the row-list omits is a silent under-build — the board is the executable list, the header is prose; when they disagree the promised rep just vanishes. Same shape as the 09-18 variant-label miss (build prose not matching the actual rows) but here the row is *absent*, not mislabeled. Only the learner's memory recovered it; nothing in the pipeline flagged header-vs-rows drift.
+**Fix/ladder:** First occurrence of *this* exact shape (header names a rep with no matching row) → memory-file + note for the Sep 21 build. Candidate source fix if it recurs: extend `check_schedule_integrity.py` to cross-check each day-header's named problems against that block's actual rows (it already checks deferred-without-date and phantom scaffolds). Watch for a 2nd occurrence before promoting to a hook. fam: build header-vs-rows drift.
+**consolidated→** `check_schedule_integrity.py` header-vs-rows check (2026-09-21, check 4) — flags any LC number named in a day-header's label or the week's **Goal** paragraph that appears on no row anywhere in that week's Daily Schedule; report-only, reuses `eb.DAY_HEADER`/`eb.SCHED_ROW`. Clustered with the 1102/1631 entry below (2+ = source fix).
+
+## 2026-09-20 [P2] — Sep 20 build dropped the DIRECTED Dijkstra reps (1102 + 1631), learner caught it
+**What:** `study_guide.md` (updated Sep 20, learner's call) declared 1631 + 1102 under Dijkstra in `techniques.yml` and stated *"targeted at the week of Sep 21 — the Sep 21 weekly build seats them onto the grid."* The Sep 20 build (which built `20260921_schedule.md`) placed **neither** — not on the grid, not in the Waiting Room. The learner caught it asking "where did 1102/1631 end up going?" They were floating: declared, promised, seated nowhere.
+**Why it's wrong:** Same family as the 09-20 (78 Subsets absent) and 09-18 (variant mislabeled) misses — a documented intake directive with no matching row. Here the directive lived one layer out, in `study_guide.md` ("seats them onto the grid at the Sep 21 build"), so even a header-vs-rows check wouldn't catch it. A promised consolidation rep that lands on no grid silently evaporates; only the learner's memory recovered it. Compounded: the coach's own light-day fill (1135/753) papered the gap with *different* problems, hiding the leak.
+**Fix/ladder (2nd occurrence of directed-intake-with-no-row → climb past memory-file):** extend `check_schedule_integrity.py` to flag any problem declared in `techniques.yml`/`study_guide.md` as "targeted at week <date>" that sits on no schedule grid by that week's build. Immediate fix: seat 1102+1631 onto the Sep 21 week; revert the coach's over-cap 1135/753 fill (the ≤2/wk consolidation budget belongs to the directed pair). fam: build directed-intake-drift.
+**consolidated→** `check_schedule_integrity.py` header-vs-rows check (2026-09-21, check 4) — covers the general shape of this family (a build promise unmatched by a row) at the schedule-file layer: 1102/1631 now have both a Goal-paragraph/day-header mention AND a seated row, so a future drop would be caught. Residual gap this check does NOT close: this entry's own promise lived one layer further out, in `study_guide.md`/`techniques.yml`, before it ever reached the schedule file — a header/Goal-scoped check cannot see that layer, exactly as this entry's "Why it's wrong" already noted. The immediate fix (seating 1102/1631) landed by hand at the Sep 21 build.
+
+## 2026-09-21 [P3] — Plan assumed `Agent(engineer)` frontmatter restricts a subagent's spawns; docs say it is ignored there
+**What:** The execution-workflow pyramid plan specified `tools: Agent(engineer), ...` on `~/.claude/agents/team-lead.md` as a source-level guarantee that a team lead can only spawn `engineer` agents. The Sonnet engineer fetched the sub-agents docs before writing and found the parenthesised allowlist applies only to a main-thread `claude --agent`; in a subagent definition the type list is silently ignored. It fell back to plain `Agent` + a body-level convention, as the plan's own fallback clause allowed.
+**Why it's wrong:** An unenforced restriction that *looks* enforced is worse than none — the plan nearly shipped a false guarantee. The plan did flag the uncertainty and pre-authorised the fallback, so the pipeline caught it; but the verification-by-docs should have happened at plan time, not been delegated to the engineer.
+**Fix/ladder:** First occurrence → memory-file tier. Habit: when a plan leans on a harness feature for enforcement, confirm it against the docs *before* ExitPlanMode (the claude-code-guide agent is read-only and cheap). The "spawn engineer only" rule is now a stated convention in `team-lead.md`; if a lead ever spawns a generic agent, promote to a hook that inspects Agent-call `subagent_type` from inside a lead. fam: unverified-enforcement assumption.
+**consolidated→** `~/.claude/rules/execution-workflow.md` "Verified by live probe" (role-gate-deny-hooks-sep21) — an enforcement-wiring claim is now checked by spawning an agent and watching the deny land, not by the docs alone.
+
+## 2026-09-21 [P2] — Claimed `disallowedTools` made "a lead never writes" a source-level guarantee; Bash still writes
+**What:** Same session, same commit as the entry above. `~/.claude/agents/team-lead.md` was written with `disallowedTools: Write, Edit, NotebookEdit` and `tools:` including `Bash`, and I then asserted in three durable places — `decisions.yml` (`execution-workflow-pyramid-sep21`), `feedback_execution_workflow.md`'s why-clause ("source-level tool restrictions beat a prose 'never writes'"), and the rule file's Agent-definitions section — that the roles are *enforced* rather than conventional. The `advisor` review caught it: Bash writes files via sed/heredoc/redirect, and this session's own auto-mode instructions actively tell agents to edit that way. The definition blocks the tools, not the capability.
+**Why it's wrong:** Identical failure shape to the `Agent(engineer)` entry logged minutes earlier — a harness feature assumed to enforce something, asserted as fact in the record, without checking what it actually does. Bash has to stay (the lead needs it to run tests, which is its review job), so the defect was never the config; it was the claim. An enforcement story that reads as airtight is worse than an honest convention, because nobody re-checks a guarantee.
+**Fix/ladder (2nd occurrence, same day, same family → climb past memory-file):** wording corrected in all four places to name what is enforced (model pin; Write/Edit/NotebookEdit removed) versus what is held by convention (no writing through Bash, spawn `engineer` only). Promoted habit, now in the rule file itself: a plan that leans on a harness feature for enforcement must verify the feature against the docs BEFORE ExitPlanMode, and the record must state enforced-vs-convention explicitly. If a third occurrence lands, the fix is a checklist line in the plan template rather than more prose. fam: unverified-enforcement assumption.
+**consolidated→** `~/.claude/rules/execution-workflow.md` "Verified by live probe" (role-gate-deny-hooks-sep21) — the deny gates that make this enforced-vs-convention distinction actually true (Write/Edit/NotebookEdit removed from the lead, state-changing git denied for both roles) shipped the same day, verified by spawn-and-watch rather than by docs.
+
+## 2026-09-21 [near-miss, fam: unverified-enforcement assumption] — frontmatter hooks planned as the enforcement wiring
+- **What:** The approved plan wired the deny gates via agent-frontmatter `hooks:` blocks, verified against the docs (the sub-agents page shows the exact syntax). The first engineer's rule-file text asserted the gates were "wired into each agent's own frontmatter" as enforced. A live probe in review showed the frontmatter hook never fired; the settings.json path did.
+- **Why it's a near-miss, not a 3rd occurrence:** the docs check that the 2nd-occurrence entry promoted was done, and the claim was caught in review before anything was committed. What the docs check could not catch is the harness disagreeing with the docs.
+- **Fix/ladder (source tier):** the rule file now states "Verified by live probe, not by docs" as the standard for any enforcement wiring — a spawn-and-watch probe is the check, and it is part of the Review step, not optional.
+- **consolidated→** `~/.claude/rules/execution-workflow.md` "Verified by live probe" (role-gate-deny-hooks-sep21) — this near-miss is the entry that produced the fix; formally marked so the meta-review clusters it with the other two occurrences of the family.
+
+---
+
 ## 2026-09-15 [P3] — 261 NeetCode mirror slug wrong (graph-valid-tree → valid-tree)
 Scaffolding 261 derived the NC slug `graph-valid-tree` from the LC title "Graph Valid Tree"; NeetCode drops
 the `graph-` prefix (real slug `valid-tree`). The script already flags NC slugs as unverified (no API), so

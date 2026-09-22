@@ -761,3 +761,41 @@ decisions:
       convention" for the named patterns. Normative home: ~/.claude/rules/execution-workflow.md (Agent
       definitions section); why: feedback_execution_workflow.md.
     affects: [execution_workflow]
+
+  - id: schedule-item-kind-tags-sep21
+    date: 2026-09-21
+    summary: >-
+      ADDS two ADDITIVE fields to the progress.json schedule-item contract (dashboard/progress.schema.json,
+      scripts/gamify.py): `tags` (the row's build-time tag glyphs, named — protected/backfill/new/probe/
+      variant/primer/moved) and `kind` (rep|new|probe|complexity|primer — the single most-specific
+      classification of the row). `kind` checks `complexity` BEFORE any tag: the Sunday complexity re-ask
+      rows are also 🎯-tagged, but Technique="Complexity" is the more specific fact, and this is the site's
+      half of the eow-close-out-process-sep20 complexity-consolidation decision — the dashboard now
+      surfaces which rows are that consolidated Sunday block rather than showing them as an ordinary
+      probe. Both fields are additive only; the six existing required fields (lcNumber, title, technique,
+      startComfort, difficulty, done) are unchanged, so nothing that already reads the prior contract
+      breaks. Also hardened lcNumber/url extraction with a bare-number fallback so a 🆕 intake row (no
+      `[`/`**` before its number — no local file to link yet) still yields a real lcNumber/url off its own
+      row instead of nulling both out. No cse.config.yml value changed. Strands any wording that says a
+      schedule item carries only the original six fields, or that a 🆕 row's lcNumber/url is
+      unconditionally null. See dashboard/progress.schema.json, scripts/gamify.py,
+      project_gamification.md.
+    affects: [gamification, scheduling]
+
+  - id: coach-gamification-promoted-sep21
+    date: 2026-09-21
+    summary: >-
+      WAIVES the ~4-week soak that gamification-progress-platform (Sep 20) and
+      project_upstream_candidates.md §9 set for scripts/gamify.py + progress.schema.json as a "new
+      instrument" (original re-assessment target ~Oct 18, 2026). project_gamification.md's own "Upstream"
+      note says the schema + generator "make any adopter repo site-renderable" — that promise reads as
+      true today but stays FALSE for every other adopter until the generator itself ships to canonical
+      cse-coach, and a soak that never uploads it keeps deferring the one thing the promise depends on.
+      §9 is reclassified from "soaking instrument" to SHIPPED, alongside the Sep 21
+      schedule-item-kind-tags contract addition. Does NOT waive soak for anything else in the gamification
+      feature — the site's tabs/Library-nav/repo-picker curation round is a display concern on
+      progressiveoverflow.com, not the generator, and is unaffected by this waiver. No cse.config.yml
+      value changed. Strands any wording that still calls gamify.py/progress.schema.json a soaking
+      instrument or not-yet-upstream-eligible. See project_upstream_candidates.md §9,
+      project_gamification.md.
+    affects: [gamification, scheduling]
