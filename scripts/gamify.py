@@ -62,8 +62,12 @@ TRACKER = REPO / "docs/foundations/dsa/mastery/dsa_progress.md"
 COVERAGE = REPO / "docs/foundations/dsa/mastery/technique_coverage.md"
 PROBES_README = REPO / "dsa/probes/README.md"
 LEETCODE = REPO / "dsa/leetcode"
-OUT = REPO / "progress.json"
-OUT_SUMMARY = REPO / "progress-summary.json"
+# The generated contract lives under dashboard/ (moved out of the repo root Sep 21, 2026 to
+# keep root uncluttered). The website fetches dashboard/progress-summary.json first, with the
+# old root path as a fallback, so this relocation is backward-compatible.
+DASHBOARD = REPO / "dashboard"
+OUT = DASHBOARD / "progress.json"
+OUT_SUMMARY = DASHBOARD / "progress-summary.json"
 README = REPO / "README.md"
 CONFIG = REPO / "cse.config.yml"
 
@@ -873,6 +877,7 @@ def main() -> None:
               f"{len(stats['problems'])} problems · {len(stats['badges'])} badges · "
               f"{stats['streak']['current']}-day streak", file=sys.stderr)
     else:
+        DASHBOARD.mkdir(parents=True, exist_ok=True)
         OUT.write_text(payload + "\n", encoding="utf-8")
         # Compact (no indent), unlike progress.json: nobody reads progress-summary.json as a
         # human artifact, and it's fetched on every landing view — indentation alone was ~40%
