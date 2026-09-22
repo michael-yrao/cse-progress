@@ -23,6 +23,58 @@ Constraints:
 """
 
 
+# ── Attempt · 2026-09-21 ──────────────
+# NOTE: suffix any helper class you write (Node, TrieNode, …) with _20260921 too — an undated helper collides with the restored canonical one.
+class TrieNode_20260921:
+    def __init__(self):
+        # char -> TrieNode_20260921
+        self.children = {}
+        self.isWord = False
+
+class WordDictionary_20260921:
+
+    def __init__(self):
+        self.root = TrieNode_20260921()
+
+    def addWord(self, word: str) -> None:
+        traversal = self.root
+        for char in word:
+            if char not in traversal.children:
+                traversal.children[char] = TrieNode_20260921()
+            traversal = traversal.children[char]
+        traversal.isWord = True
+
+    def search(self, word: str) -> bool:
+        # searching with a wildcard means we need to be able to do a sweep of all chars and then go as deep as possible from all the possibilities when we see a wildcard
+        # we will use indices to avoid splicing the word into more substrings
+        # we will also need traversal node for us to move forward
+        traversal = self.root
+        def dfs(node, index):
+            # three possibilities
+            # 1. not period and not in children = False
+            # 2. not period and in children = continue the loop
+            # 3. period, dfs on next index and all of traversal.children
+            for i in range(index, len(word)):
+                # case 1
+                if word[i] != '.' and word[i] not in node.children:
+                    return False
+                # case 2
+                if word[i] in node.children:
+                    node = node.children[word[i]]
+                # case 3
+                if word[i] == '.':
+                    # go through all child TrieNodes of node
+                    for childNode in node.children.values():
+                        # if we found a result from dfs, we return True
+                        if dfs(childNode, i + 1):
+                            return True
+                    # if we went through all the children and did not find a result
+                    # return false
+                    return False
+            return node.isWord
+        
+        return dfs(traversal,0)
+
 # ── Attempt · 2026-08-22 ──────────────
 # NOTE: suffix any helper class you write (Node, TrieNode, …) with _20260822 too — an undated helper collides with the restored canonical one.
 class TrieNode_20260822:

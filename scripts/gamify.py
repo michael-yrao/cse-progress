@@ -250,7 +250,7 @@ def _clean_schedule_title(text: str) -> str:
 
 
 def _parse_schedule_day_full(
-    path: Path, day: dt.date, difficulty_by_num: dict[int, str],
+    path: Path, day: dt.date, difficulty_by_num: dict[int, str], urls: dict[int, str],
 ) -> tuple[list[dict], str | None, float | None]:
     """Like eb.parse_schedule_day, but keeps the day's label and each item's technique +
     a display-clean title — eb's own version only needs the number, the start comfort,
@@ -258,7 +258,10 @@ def _parse_schedule_day_full(
 
     `difficulty_by_num` joins each item's intrinsic Easy/Medium/Hard from the TRACKER (the
     schedule file itself carries no difficulty column) — a 🆕 row not yet in dsa_progress.md
-    honestly gets null rather than a guess.
+    honestly gets null rather than a guess. `urls` (from problem_urls()) joins each item's
+    canonical LeetCode URL the same way — the site's own AlgorithmMeta.id is a shortened
+    route slug, not the LC slug, so it cannot build a correct link itself; a 🆕 row with no
+    lc_number honestly gets null rather than a guess.
     """
     wanted = (day.strftime("%a"), day.strftime("%b"), day.day)
     items: list[dict] = []
@@ -303,19 +306,21 @@ def _parse_schedule_day_full(
             "technique": (m["c5"] or "").strip() or None,
             "startComfort": start.group(0) if start else None,
             "difficulty": difficulty_by_num.get(lc_number) if lc_number else None,
+            "url": urls.get(lc_number) if lc_number else None,
             "done": "~~" in cell,
         })
     return items, label, units
 
 
-def parse_current_week_schedule(today: dt.date) -> dict | None:
+def parse_current_week_schedule(today: dt.date, urls: dict[int, str]) -> dict | None:
     """The CURRENT week's `## Daily Schedule` table -> {weekOf, days:[...]} — the compact
     slice behind the dashboard's Today's-board drill.
 
     Emits ALL 7 days; it never bakes a server-side "today" into the payload, because the
     summary is generated on commit but can be VIEWED days later — the client picks its
     own day by comparing its local date against each day's `date`. Fail-soft: no current
-    schedule file -> None (the caller adds a warning).
+    schedule file -> None (the caller adds a warning). `urls` (from problem_urls()) is
+    threaded through to each item — see _parse_schedule_day_full.
     """
     path = eb.find_schedule(today)
     if path is None:
@@ -337,7 +342,7 @@ def parse_current_week_schedule(today: dt.date) -> dict | None:
     days: list[dict] = []
     for offset in range(7):
         day_date = week_start + dt.timedelta(days=offset)
-        items, label, units = _parse_schedule_day_full(path, day_date, difficulty_by_num)
+        items, label, units = _parse_schedule_day_full(path, day_date, difficulty_by_num, urls)
         days.append({
             "date": day_date.isoformat(),
             "weekday": day_date.strftime("%A"),
@@ -480,7 +485,7 @@ PROBE_SECTION = re.compile(r"##\s*📒\s*Probe log(.*?)(?:\n##\s|\Z)", re.S)
 PROBE_PROBLEM = re.compile(r"^(\d+)\s+(.+)$")
 
 
-def parse_probes() -> dict | None:
+def parse_probes(urls: dict[int, str]) -> dict | None:
     """The `dsa/probes/README.md` Probe log table -> {total, cleanRate, items:[...]}.
 
     Reuses TABLE_ROW/COMFORT_GLYPH (parse_techniques()'s style). Each probe is a cold,
@@ -488,7 +493,9 @@ def parse_probes() -> dict | None:
     own docstring), so the tracker's own numbers never see it; this table is the ONLY
     place it's counted. `result` takes the FIRST comfort glyph in the Result cell — a row
     that later converted (`🔴 → 🟡 (re-rep Sep 16)`) is scored on what the COLD call
-    actually was, not its eventual outcome. Fail-soft: no table/file -> None.
+    actually was, not its eventual outcome. Fail-soft: no table/file -> None. `urls` (from
+    problem_urls()) joins each item's canonical LeetCode URL — see problem_urls()'s
+    docstring for why the site can't derive this itself.
     """
     try:
         text = PROBES_README.read_text(encoding="utf-8")
@@ -509,12 +516,14 @@ def parse_probes() -> dict | None:
 
         m = PROBE_PROBLEM.match(problem_cell)
         glyph = COMFORT_GLYPH.search(result_cell)
+        lc_number = int(m.group(1)) if m else None
         items.append({
             "date": date,
-            "lcNumber": int(m.group(1)) if m else None,
+            "lcNumber": lc_number,
             "title": m.group(2).strip() if m else problem_cell,
             "technique": technique,
             "result": glyph.group(0) if glyph else None,
+            "url": urls.get(lc_number) if lc_number else None,
         })
 
     if not items:
@@ -685,10 +694,10 @@ def build_payload(today: dt.date | None = None) -> tuple[dict, list[str]]:
     if coverage is None:
         warnings.append("technique_coverage.md not readable — coverage omitted.")
     techniques = parse_techniques()
-    schedule = parse_current_week_schedule(today)
+    schedule = parse_current_week_schedule(today, urls)
     if schedule is None:
         warnings.append("no current weekly schedule file found — schedule omitted.")
-    probes = parse_probes()
+    probes = parse_probes(urls)
     if probes is None:
         warnings.append("dsa/probes/README.md Probe log not readable — probes omitted.")
 

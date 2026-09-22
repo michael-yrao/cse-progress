@@ -551,3 +551,10 @@ condition so it cannot expire silently: **`green:202`**.
   the minimum / minimize the maximum" + a cheap yes/no feasibility check ⟹ binary-search on the ANSWER
   value, never on array indices/positions.** The tell is a *monotonic* feasibility (small d always works,
   large d fails) — that yes→no boundary is the search space, and it lives in the value range D, not in n.
+
+- **2026-09-21 · 134 Gas Station** — **name-only miss, code correct.** Called it *"Kadane's greedy."* The
+  running-sum-with-reset *shape* was recalled correctly, but the label is wrong: Kadane maximizes a subarray
+  **sum**; this finds a valid **start index**. Correct call: **greedy, picked by the feasibility guarantee —
+  if `sum(gas) ≥ sum(cost)` a start exists, and it's the index right after the last point the running tank
+  went negative.** Card: *running total + reset the anchor on a dip* is a motif shared by Kadane, gas-station,
+  and max-circular-subarray — the picking feature is **what you return** (a max sum vs. the reset index).

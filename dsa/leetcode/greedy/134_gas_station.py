@@ -29,6 +29,34 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-09-21 ──────────────
+    def gasStation_20260921(self, gas: List[int], cost: List[int]) -> int:
+        # if we just pretend these two are summed up
+        # [-2,-2,-2,3,3]
+        # first thing is sum of cost must be equal or less than gas
+        # we know it is not index 0, 1, 2 because it is less than 0
+        # now let's look at example 2, [-1,-1,1] which falls under the first premise
+        # this is Kadane's greedy algorithm, we find the first that meets this criteria
+
+        if sum(gas) < sum(cost):
+            return -1
+        
+        totalGas = 0
+        startingPoint = 0
+
+        for i in range(len(gas)):
+            totalGas+=(gas[i] - cost[i])
+            # if total is less than 0, we def cannot start here
+            if totalGas < 0:
+                startingPoint = i + 1
+                totalGas = 0
+        
+        # if we moved to beyond end of the list, we also cannot complete
+        if startingPoint == len(gas):
+            return -1
+        
+        return startingPoint
+
     # ── Attempt · 2026-09-11 ──────────────
     def gasStation_20260911(self, gas: List[int], cost: List[int]) -> int:
         # we want to maximize our tank before the highest cost

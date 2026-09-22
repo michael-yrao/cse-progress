@@ -40,6 +40,46 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-09-21 ──────────────
+    def swimInWater_20260921(self, grid: List[List[int]]) -> int:
+        # we wait to go for the earliest one available
+        # but we need to reserve the ability to backtrack if we hit a deadend
+        # we are also looking for the min time, so this is dijkstra's
+        # with only positive nodes and definitive starting and end node
+        # specifically today we are doing minHeap dijkstra
+        # so we will do a minHeap, adjMap is given and visited
+
+        rows = len(grid)
+        cols = len(grid[0])
+
+        time = 0
+
+        visited = set()
+
+        minHeap = []
+
+        heapq.heappush(minHeap,(grid[0][0],0,0))
+
+        neighbors = [[1,0],[-1,0],[0,1],[0,-1]]
+
+        while minHeap:
+            # if we are permitted to go, let's traverse as far as we can and add neighbors
+            while time >= minHeap[0][0]:
+                currentNode, cr, cc = heapq.heappop(minHeap)
+                # mark node as visited
+                visited.add((cr,cc))
+                # check if we visited end node yet
+                if (rows-1, cols-1) in visited:
+                    return time
+                # now let's go through the neighbors of cr, cc
+                for ir,ic in neighbors:
+                    nr, nc = cr + ir, cc + ic
+                    if nr >= 0 and nr < rows and nc >= 0 and nc < cols and (nr,nc) not in visited:
+                        heapq.heappush(minHeap, (grid[nr][nc], nr, nc))
+            time+=1
+        
+        return -1
+
     # ── Attempt · 2026-08-22 ──────────────
     # ── RECOGNITION — fill BEFORE coding, before the coach says anything ──
     #   shape cues seen →

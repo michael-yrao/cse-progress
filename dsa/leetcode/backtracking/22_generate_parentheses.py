@@ -20,6 +20,37 @@ from typing import List, Optional
 
 
 class Solution:
+
+    # ── Attempt · 2026-09-21 ──────────────
+    def generateParenthesis_20260921(self, n: int) -> List[str]:
+        # generating all combinations = backtracking
+        # let's define the elements we need to complete this
+        # path = the current string we have generated, since string is immutable, we do not need a copy
+        # state = how many open and closed parentheses do we have
+        # choice = choose to add an open or closed parentheses
+        # validity = we can place an open parentheses if openState < n and we can place a closed parentheses if openState > closedState
+        # base case = len(path) == 2 * n
+
+        result = []
+
+        def backtrack(path, openState, closedState):
+            if len(path) == 2 * n:
+                result.append(path)
+                return
+            
+            # validity and choice
+
+            # choose to add open parentheses
+            if openState < n:
+                backtrack(path + '(', openState + 1, closedState)
+            
+            # choose to add closed parentheses
+            if openState > closedState:
+                backtrack(path + ')', openState, closedState + 1)
+        
+        backtrack('',0,0)
+        return result
+
     # ── Attempt 1 · 2026-09-19 ────────────────────────────────────────────
     def generateParenthesis(self, n: int) -> List[str]:
         # the two options we have are open or close parentheses
