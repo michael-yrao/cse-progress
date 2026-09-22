@@ -55,3 +55,21 @@ schedule file from the approved plan, run the checker scripts — no commit/push
 diff + runs `advisor`, then commits/pushes. ⭐ Only the mechanical writeback goes to the subagent — never
 the planning, and never a teach or a rep. Operational home for the build steps:
 `.claude/skills/cse-coach/references/weekly-build.md`. See `decisions.yml` `eow-close-out-process-sep20`.
+
+**Hardened 2026-09-21 from reminder-only to tool-level deny gates** (learner's call: "tackle the
+enforcement layer first"). `~/.claude/hooks/role_gate.py` is a PreToolUse hook wired ONCE in
+`~/.claude/settings.json` (matcher `Write|Edit|NotebookEdit|Bash`). Settings hooks fire inside
+subagents with `agent_type` set, so one script branches per role: team-lead is denied file-write tools,
+Bash writes matching a named pattern list, and all state-changing git; engineer is denied state-changing
+git; the tech lead (no `agent_type`) gets a warn-only note on its first write of a session. What is
+still convention: any Bash write path not in the pattern list; a lead spawning only `engineer`.
+**Evidence that matters:** (1) agent-frontmatter `hooks:` blocks did NOT fire — an engineer spawned
+after the edit ran `git add --dry-run` unblocked and a trace line showed the hook was never invoked;
+the settings.json path denied the same command with the correct reason. Docs said frontmatter hooks
+work; the harness disagreed. Enforcement wiring is proven by a live probe, never by docs. (2) The
+agent-row UI label reads the SESSION model ("engineer · Fable 5.1"), not the pinned one; the subagent
+transcript's `model` field is the ground truth and showed `claude-sonnet-5` on every engineer turn.
+(3) The prompt reminder's trivial-suppressor was leaky both ways (silenced "implement X, here's how";
+fired on "before i move forward, is this expected") and, in its first rewrite, silenced "can you
+implement X" — now polite openers are stripped and an implementation verb in first position wins.
+See `decisions.yml` `role-gate-deny-hooks-sep21`.
