@@ -1,5 +1,5 @@
 # MICHAEL RAO
-(646) 240-1135 | cn.yrao@gmail.com | New York, NY | github.com/michael-yrao
+(646) 240-1135 | yao.michael.rao@gmail.com | New York, NY | github.com/michael-yrao
 
 ---
 
@@ -33,7 +33,7 @@ Senior full-stack developer and squad lead with 9+ years of experience in financ
 **EquityZen Acquisition**
 - Led cross-functional Agile squad through end-to-end technical delivery of Morgan Stanley's ~$100M EquityZen acquisition, coordinating workstreams across data migration, systems integration, and operational cutover
 - Engineered automated reconciliation pipelines in Python to validate financial data integrity across acquired systems, achieving zero accounting discrepancies at cutover
-- Engineered an audited C# application that enables Operations to execute, review, and audit acquisition-related accounting adjustments — with approval workflows and a full audit trail ensuring regulatory traceability
+- Engineered an audited C# application that enables Operations to execute, review, and audit acquisition-related accounting adjustments — with a full audit trail ensuring regulatory traceability
 
 **FA Notes System — Canadian Expansion (MSWC)**
 - Led expansion of the FA Notes platform to support Canadian regulatory and compensation models, enabling MSWC to onboard its first Canadian-based FA Recruit Team
@@ -80,7 +80,7 @@ Dean's List: Fall 2013, Spring 2013, Fall 2014, Spring 2014
 
 ## PROJECTS
 
-**Progressive Overflow** — [progressiveoverflow.com](https://progressiveoverflow.com) | 2023–Present  
+**Progressive Overflow** — Independent project | 2023–Present  
 Interactive algorithm visualization platform built in Angular with TypeScript. 68+ problems across 8 algorithm categories with animated step-by-step generators.
 
 ---
