@@ -689,3 +689,20 @@ decisions:
       treats the weekly build as a single-model inline task, or that keeps full rep rationale in the
       board table. Operational home: references/weekly-build.md; why: feedback_execution_workflow.md.
     affects: [weekly_build, complexity_gate, self_evaluation, execution_workflow]
+
+  - id: execution-workflow-global-sep21
+    date: 2026-09-21
+    summary: >-
+      The plan(Opus) -> implement(Sonnet subagent) -> review+advisor(Opus) workflow is now GLOBAL and
+      STRONGLY ENFORCED (learner's call, Sep 21), broadened from the gamification/site-integration scope
+      (eow-close-out-process-sep20 / feedback_execution_workflow.md) to ALL non-trivial work across every
+      repo. The normative SSOT moved OUT of the opt-in memory file into an always-on global rule,
+      ~/.claude/rules/execution-workflow.md (auto-injected in every repo), enforced by a global
+      UserPromptSubmit hook, ~/.claude/hooks/execution_workflow_reminder.py, that injects a reminder on a
+      non-trivial implementation prompt and stays silent on trivial one-liners, pure reads/questions, and
+      close-outs. TRIGGER = non-trivial work only (multi-step / design-bearing / multi-file); trivial
+      edits and reads run inline. CARVE-OUT unchanged: never delegate a teach/explanation/coaching
+      answer/rep to a subagent. feedback_execution_workflow.md is now the why/evidence layer only.
+      Strands any wording that treats the workflow as gamification-scoped or as living only in the memory
+      file. why: feedback_execution_workflow.md.
+    affects: [execution_workflow]

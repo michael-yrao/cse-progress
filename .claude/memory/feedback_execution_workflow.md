@@ -1,10 +1,23 @@
 ---
 name: feedback-execution-workflow
-description: Opus plans, Sonnet 5 implements, Opus reviews + runs advisor before any commit/push — for the gamification / site-integration project AND the weekly EOW schedule build
+description: Opus plans, Sonnet implements, Opus reviews + runs advisor before any commit/push — GLOBAL, for all non-trivial work (evidence/why for the always-on gate in ~/.claude/rules/execution-workflow.md)
 metadata:
   type: feedback
-reconciled: 2026-09-20
+reconciled: 2026-09-21
 ---
+**NORMATIVE SSOT is the always-on global rule** `~/.claude/rules/execution-workflow.md` (auto-injected
+in every repo), enforced by the global `UserPromptSubmit` hook
+`~/.claude/hooks/execution_workflow_reminder.py`. This file is the *why/evidence/occurrence* layer only —
+it must never be the only place the rule is stated.
+
+**Broadened 2026-09-21 by the learner:** from the gamification/site-integration scope to **all
+non-trivial work, across every repo** (global), **strongly enforced** (gate + reminder hook), triggered
+on **non-trivial work only** (trivial one-liners/typos/reads run inline). See `decisions.yml`
+`execution-workflow-global-sep21`.
+
+**Refined 2026-09-21:** the Opus role never writes implementation — it plans/supervises/advises/reviews/
+integrates only; all edits go to Sonnet engineer subagents (spawn as many as needed).
+
 **Set 2026-09-20 by the learner** for the gamification / site-integration work (cse-progress
 `progress.json` + the progressiveoverflow.com dashboard).
 
