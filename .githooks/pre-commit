@@ -94,8 +94,8 @@ if [ -n "$GAMIFY_TRIGGER" ]; then
   elif command -v python3 >/dev/null 2>&1; then
     python3 scripts/gamify.py || true
   fi
-  [ -f "progress.json" ] && git add "progress.json"
-  [ -f "progress-summary.json" ] && git add "progress-summary.json"
+  [ -f "dashboard/progress.json" ] && git add "dashboard/progress.json"
+  [ -f "dashboard/progress-summary.json" ] && git add "dashboard/progress-summary.json"
   [ -f "README.md" ] && git add "README.md"
 fi
 
