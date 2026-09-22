@@ -1187,3 +1187,12 @@ hook that cross-checks schedule variant tags against the tracker's due row).
 - **Also observed:** the global `execution_workflow_reminder.py` fired on "before i move forward, is this expected" — the `move` cue matched and no suppressor word was present. Second data point for the leaky-regex finding.
 - **Fix:** verified with `git status --short -uall` (8 files) + `git check-ignore` on secrets. Regex narrowing is already queued as part of the enforcement-layer work.
 
+## 2026-09-21 [P3] — heredoc backslash collapsed twice while patching a temp trace line
+- **What:** Two consecutive Bash heredoc patches to `role_gate.py` produced a SyntaxError: the tool pipeline collapsed a doubled backslash before Python saw it, so a two-character newline escape became a real newline in the written source. Second attempt repeated the same construct. Third attempt built the token with `chr(92)` and worked.
+- **Why it matters:** the retry repeated the failing construct instead of changing it; the tests caught both, so nothing landed, but it cost two turns.
+- **Fix/ladder (memory-file tier):** when writing source through a heredoc, never rely on backslash escapes surviving — build escape sequences with `chr()` or use the Write/Edit tool. Also the moment to hand a small edit to an engineer rather than fight the pipeline inline.
+
+## 2026-09-21 [near-miss, fam: unverified-enforcement assumption] — frontmatter hooks planned as the enforcement wiring
+- **What:** The approved plan wired the deny gates via agent-frontmatter `hooks:` blocks, verified against the docs (the sub-agents page shows the exact syntax). The first engineer's rule-file text asserted the gates were "wired into each agent's own frontmatter" as enforced. A live probe in review showed the frontmatter hook never fired; the settings.json path did.
+- **Why it's a near-miss, not a 3rd occurrence:** the docs check that the 2nd-occurrence entry promoted was done, and the claim was caught in review before anything was committed. What the docs check could not catch is the harness disagreeing with the docs.
+- **Fix/ladder (source tier):** the rule file now states "Verified by live probe, not by docs" as the standard for any enforcement wiring — a spawn-and-watch probe is the check, and it is part of the Review step, not optional.

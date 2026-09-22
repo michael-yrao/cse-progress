@@ -742,3 +742,22 @@ decisions:
       "update"), and enforcement is still reminder-only for the tech lead and convention-only for
       Bash-writes by leads — the PreToolUse deny hooks (agent_type-scoped) are the next step, not yet built.
     affects: [execution_workflow]
+
+  - id: role-gate-deny-hooks-sep21
+    date: 2026-09-21
+    summary: >-
+      Execution-workflow enforcement hardened from a warn-only prompt reminder to tool-level DENY gates
+      (learner's call, Sep 21). ~/.claude/hooks/role_gate.py is a PreToolUse hook wired once in
+      ~/.claude/settings.json (matcher Write|Edit|NotebookEdit|Bash); it branches on the agent_type
+      field: team-lead denied Write/Edit/NotebookEdit, Bash writes matching a named pattern list, and
+      all state-changing git; engineer denied state-changing git; tech lead (no agent_type) gets a
+      warn-only note on its first write of a session. Still convention: unlisted Bash write paths, and
+      a lead spawning only engineer agents. FINDINGS: agent-frontmatter hooks: blocks did not fire in a
+      live probe and are not used (enforcement wiring is proven by spawning an agent and watching the
+      deny land, never by docs alone); the agent-row UI label shows the session model, not the pinned
+      one (transcript model field is ground truth; every engineer turn was claude-sonnet-5); the prompt
+      reminder's suppressor was rewritten (polite openers stripped, implementation verb first wins,
+      question shapes start-anchored). Strands the pyramid-sep21 wording that "not writing via Bash is
+      convention" for the named patterns. Normative home: ~/.claude/rules/execution-workflow.md (Agent
+      definitions section); why: feedback_execution_workflow.md.
+    affects: [execution_workflow]
