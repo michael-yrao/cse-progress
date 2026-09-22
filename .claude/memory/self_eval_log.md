@@ -1186,3 +1186,4 @@ hook that cross-checks schedule variant tags against the tracker's due row).
 - **What:** Told the learner to expect "exactly eight lines" from `git status --short`; it shows 5 because untracked directories collapse to one line. Learner paused to ask. Contents were correct, the format claim was not.
 - **Also observed:** the global `execution_workflow_reminder.py` fired on "before i move forward, is this expected" — the `move` cue matched and no suppressor word was present. Second data point for the leaky-regex finding.
 - **Fix:** verified with `git status --short -uall` (8 files) + `git check-ignore` on secrets. Regex narrowing is already queued as part of the enforcement-layer work.
+
