@@ -706,3 +706,24 @@ decisions:
       Strands any wording that treats the workflow as gamification-scoped or as living only in the memory
       file. why: feedback_execution_workflow.md.
     affects: [execution_workflow]
+
+  - id: execution-workflow-pyramid-sep21
+    date: 2026-09-21
+    summary: >-
+      The execution workflow widens from two tiers (Opus plans/reviews, Sonnet implements) to a THREE-TIER
+      PYRAMID (learner's call, Sep 21, on moving to the Max plan): TECH LEAD = the orchestrating session
+      (Fable on Max; Opus otherwise) — advises/plans/supervises/reviews/integrates, never writes;
+      TEAM LEAD = an Opus subagent that owns one plan slice and supervises + reviews its engineers, never
+      writes; ENGINEER = a Sonnet subagent that implements, never commits/pushes. SPAWN RULE 2:1 — 1
+      engineer is supervised by the tech lead directly; n >= 2 engineers get ceil(n/2) team leads, at most
+      2 engineers per lead. SUBAGENTS ARE NEVER FABLE — Fable is reserved for the orchestrating session;
+      leads are Opus, engineers are Sonnet, pinned in the definitions (never model inherit, never a
+      fable model override on an Agent call). Roles are enforced as custom agent definitions
+      ~/.claude/agents/team-lead.md and engineer.md: each pins its model, and team-lead.md also removes
+      Write/Edit/NotebookEdit — but the lead keeps Bash for test runs, so not writing via Bash is
+      convention, not an enforced guarantee. Spawn by name, never a generic agent + model. Trigger,
+      carve-outs (never delegate a
+      teach/rep) and the review + advisor gate are unchanged. Strands any wording that names Opus as the sole planner/reviewer or that treats
+      "spawn several Sonnet engineers" as a flat fan-out with no lead. Normative home:
+      ~/.claude/rules/execution-workflow.md; why: feedback_execution_workflow.md.
+    affects: [execution_workflow]

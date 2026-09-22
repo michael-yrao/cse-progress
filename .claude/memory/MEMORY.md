@@ -74,7 +74,8 @@ operational copy is in a skill reference or CLAUDE.md. Grouped for scanning.
 - [Pull-map expansion TODO](project_pull_map_expansion_todo.md) — extend `pull_interview.py`'s pattern map to expansion techniques once the learner starts retiring them.
 - [Upstream candidates](project_upstream_candidates.md) — staging list of findings to PR to canonical cse-coach (defects ship now, instruments soak ~4wk).
 - [Gamification](project_gamification.md) — honest-progress layer (streak, maturation pipeline, trophy case, coverage, badges) → `progress.json` contract rendered on progressiveoverflow.com; reward only unfakeable events, never a rating; row count still isn't progress.
-- [Execution workflow](feedback_execution_workflow.md) — gamification/site-integration work **AND the weekly EOW build**: Opus plans, Sonnet 5 subagent implements (no commit/push), Opus reviews + runs `advisor` before any commit/push.
+- [Execution workflow](feedback_execution_workflow.md) — GLOBAL, all non-trivial work: tech lead (session: Fable/Opus) plans + reviews + runs `advisor`; Opus team leads at 2:1 supervise Sonnet engineers who implement (no commit/push).
+- [Global .claude unversioned](project_global_claude_unversioned.md) — OPEN: the execution-workflow rule, hook, and agent definitions live only in `~/.claude/`, which is not a git repo — a reinstall silently drops the whole enforcement layer.
 
 ## Retired (history only — not active; in `retired/`, out of automated scope)
 - `feedback_daily_cap` (stub) — daily problem COUNT, superseded by the effort budget (units).
