@@ -235,7 +235,8 @@
         "lcNumber": { "type": ["integer", "null"] },
         "title": { "type": "string" },
         "technique": { "type": "string" },
-        "result": { "type": ["string", "null"], "enum": ["🔴", "🟡", "🟢", "🎓", "🏆", null], "description": "The FIRST comfort glyph in the Result cell — scored on the COLD call, not a later conversion (e.g. '🔴 → 🟡 (re-rep Sep 16)' reads 🔴)." }
+        "result": { "type": ["string", "null"], "enum": ["🔴", "🟡", "🟢", "🎓", "🏆", null], "description": "The FIRST comfort glyph in the Result cell — scored on the COLD call, not a later conversion (e.g. '🔴 → 🟡 (re-rep Sep 16)' reads 🔴)." },
+        "url": { "type": ["string", "null"], "description": "Canonical LeetCode URL, joined by lcNumber from the tracker's markdown links (problem_urls()). null when the number has no tracker entry yet." }
       }
     },
     "scheduleDay": {
@@ -260,6 +261,7 @@
         "technique": { "type": ["string", "null"] },
         "startComfort": { "type": ["string", "null"], "enum": ["🔴", "🟡", "🟢", "🎓", null], "description": "The comfort glyph as written at the weekly build (col S) — null for a 🆕/🎯-tagged row, which carries no prior comfort." },
         "difficulty": { "type": ["string", "null"], "enum": ["Easy", "Medium", "Hard", null], "description": "Joined from the tracker's Difficulty column by lcNumber (the schedule file itself has no difficulty column) — null when the number isn't in dsa_progress.md yet (e.g. a 🆕 intake row)." },
+        "url": { "type": ["string", "null"], "description": "Canonical LeetCode URL, joined by lcNumber from the tracker's markdown links (problem_urls()) — the site's own AlgorithmMeta.id is a shortened route slug, not the LC slug, so it cannot build this link itself. null for a 🆕 row with no lcNumber, or a number not yet in dsa_progress.md." },
         "done": { "type": "boolean", "description": "True when the row is struck through (`~~...~~`) in the source table." }
       }
     },

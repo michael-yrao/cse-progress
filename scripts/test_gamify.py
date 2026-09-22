@@ -302,24 +302,33 @@ class ParseCurrentWeekScheduleTests(unittest.TestCase):
         "| 🎓 | 3 | 2026-12-05 |\n"
     )
 
+    # Joined by lcNumber into the schedule items above, mirroring TRACKER_FIXTURE's own
+    # markdown links (problem_urls() reads the same file). 55 and 39 are deliberately
+    # absent — the honest-null cases pinned below.
+    URLS = {22: "https://leetcode.com/problems/generate-parentheses/",
+            100: "https://leetcode.com/problems/same-tree/"}
+
     def setUp(self):
         self._tmpdir = tempfile.TemporaryDirectory()
         self._orig_schedules = eb.SCHEDULES
         self._orig_tracker = eb.TRACKER
+        self._orig_gamify_tracker = gamify.TRACKER
         sched_dir = Path(self._tmpdir.name)
         (sched_dir / "20260921_schedule.md").write_text(self.FIXTURE, encoding="utf-8")
         eb.SCHEDULES = sched_dir
         tracker_path = sched_dir / "dsa_progress.md"
         tracker_path.write_text(self.TRACKER_FIXTURE, encoding="utf-8")
         eb.TRACKER = tracker_path
+        gamify.TRACKER = tracker_path
 
     def tearDown(self):
         eb.SCHEDULES = self._orig_schedules
         eb.TRACKER = self._orig_tracker
+        gamify.TRACKER = self._orig_gamify_tracker
         self._tmpdir.cleanup()
 
     def test_all_seven_days_emitted_with_correct_dates(self):
-        result = gamify.parse_current_week_schedule(dt.date(2026, 9, 21))
+        result = gamify.parse_current_week_schedule(dt.date(2026, 9, 21), self.URLS)
         self.assertIsNotNone(result)
         self.assertEqual(result["weekOf"], "2026-09-21")
         self.assertEqual(len(result["days"]), 7)
@@ -327,7 +336,7 @@ class ParseCurrentWeekScheduleTests(unittest.TestCase):
         self.assertEqual(result["days"][6]["date"], "2026-09-27")
 
     def test_monday_items_and_done_row_parsed(self):
-        result = gamify.parse_current_week_schedule(dt.date(2026, 9, 21))
+        result = gamify.parse_current_week_schedule(dt.date(2026, 9, 21), self.URLS)
         mon = result["days"][0]
         self.assertEqual(mon["weekday"], "Monday")
         self.assertEqual(mon["units"], 6.8)
@@ -337,32 +346,36 @@ class ParseCurrentWeekScheduleTests(unittest.TestCase):
         plain, done, untracked = mon["items"]
         self.assertEqual(plain, {"lcNumber": 22, "title": "Generate Parentheses",
                                  "technique": "Backtracking", "startComfort": "🔴",
-                                 "difficulty": "Medium", "done": False})
+                                 "difficulty": "Medium",
+                                 "url": "https://leetcode.com/problems/generate-parentheses/",
+                                 "done": False})
         self.assertEqual(done, {"lcNumber": 100, "title": "Same Tree",
                                 "technique": "Tree-DFS", "startComfort": "🟢",
-                                "difficulty": "Easy", "done": True})
+                                "difficulty": "Easy",
+                                "url": "https://leetcode.com/problems/same-tree/",
+                                "done": True})
         # 55 has a real lcNumber but is deliberately absent from TRACKER_FIXTURE — the
         # honest-null case for a NUMBER the tracker doesn't have yet (distinct from the
         # 🆕 case below, where there is no lcNumber to look up at all).
         self.assertEqual(untracked, {"lcNumber": 55, "title": "Jump Game",
                                      "technique": "Greedy", "startComfort": "🟡",
-                                     "difficulty": None, "done": False})
+                                     "difficulty": None, "url": None, "done": False})
 
     def test_new_intake_row_has_no_lcnumber_but_keeps_title_and_technique(self):
-        result = gamify.parse_current_week_schedule(dt.date(2026, 9, 21))
+        result = gamify.parse_current_week_schedule(dt.date(2026, 9, 21), self.URLS)
         tue = result["days"][1]
         self.assertEqual(len(tue["items"]), 1)
         self.assertEqual(tue["items"][0], {"lcNumber": None, "title": "Combination Sum",
                                            "technique": "Backtracking", "startComfort": None,
-                                           "difficulty": None, "done": False})
+                                           "difficulty": None, "url": None, "done": False})
 
     def test_day_with_no_block_has_no_items(self):
-        result = gamify.parse_current_week_schedule(dt.date(2026, 9, 21))
+        result = gamify.parse_current_week_schedule(dt.date(2026, 9, 21), self.URLS)
         wed = result["days"][2]
         self.assertEqual(wed["items"], [])
 
     def test_no_current_schedule_file_is_none(self):
-        result = gamify.parse_current_week_schedule(dt.date(2030, 1, 1))
+        result = gamify.parse_current_week_schedule(dt.date(2030, 1, 1), self.URLS)
         self.assertIsNone(result)
 
 
@@ -398,33 +411,39 @@ class ParseProbesTests(unittest.TestCase):
         gamify.PROBES_README.unlink(missing_ok=True)
         gamify.PROBES_README = self._orig_probes
 
+    # Joined by lcNumber into the items below — only 977 has a URL, pinning the honest-null
+    # case for a probe number the tracker doesn't carry a link for.
+    URLS = {977: "https://leetcode.com/problems/squares-of-a-sorted-array/"}
+
     def test_problem_cell_splits_into_number_and_title(self):
-        probes = gamify.parse_probes()
+        probes = gamify.parse_probes(self.URLS)
         first = probes["items"][0]
         self.assertEqual(first["lcNumber"], 977)
         self.assertEqual(first["title"], "Squares of a Sorted Array")
         self.assertEqual(first["technique"], "Two Pointers")
         self.assertEqual(first["date"], "2026-08-10")
+        self.assertEqual(first["url"], "https://leetcode.com/problems/squares-of-a-sorted-array/")
 
     def test_multi_glyph_result_scores_the_cold_call_not_the_conversion(self):
-        probes = gamify.parse_probes()
+        probes = gamify.parse_probes(self.URLS)
         converted = probes["items"][2]
         self.assertEqual(converted["lcNumber"], 547)
         self.assertEqual(converted["result"], "🔴")  # NOT 🟡 — that's the later conversion
+        self.assertIsNone(converted["url"])  # absent from URLS — honest null, not a guess
 
     def test_total_and_clean_rate(self):
-        probes = gamify.parse_probes()
+        probes = gamify.parse_probes(self.URLS)
         self.assertEqual(probes["total"], 3)
         # 1 of 3 clean (977 is 🟢; 202 is 🟡; 547's COLD call is 🔴).
         self.assertAlmostEqual(probes["cleanRate"], 1 / 3)
 
     def test_prose_and_next_section_are_not_parsed_as_rows(self):
-        probes = gamify.parse_probes()
+        probes = gamify.parse_probes(self.URLS)
         self.assertEqual(len(probes["items"]), 3)
 
     def test_missing_file_is_none(self):
         gamify.PROBES_README = Path(tempfile.gettempdir()) / "no-such-probes-file.md"
-        self.assertIsNone(gamify.parse_probes())
+        self.assertIsNone(gamify.parse_probes(self.URLS))
 
     def test_no_table_in_file_is_none(self):
         tmp = tempfile.NamedTemporaryFile(
@@ -432,7 +451,7 @@ class ParseProbesTests(unittest.TestCase):
         tmp.write("# Nothing here\n\nJust prose, no Probe log heading at all.\n")
         tmp.close()
         gamify.PROBES_README = Path(tmp.name)
-        self.assertIsNone(gamify.parse_probes())
+        self.assertIsNone(gamify.parse_probes(self.URLS))
         gamify.PROBES_README.unlink(missing_ok=True)
 
 

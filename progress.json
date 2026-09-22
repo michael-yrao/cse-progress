@@ -4,16 +4,16 @@
   "totals": {
     "problems": 123,
     "solutions": 134,
-    "reps": 589
+    "reps": 593
   },
   "pipeline": {
-    "blank": 2,
-    "shaky": 16,
+    "blank": 1,
+    "shaky": 15,
     "clean": {
-      "s0": 1,
-      "s1": 29,
-      "s2plus": 66,
-      "total": 96
+      "s0": 2,
+      "s1": 28,
+      "s2plus": 68,
+      "total": 98
     },
     "graduated": 20,
     "retired": 0
@@ -24,10 +24,10 @@
     "Hard": 11
   },
   "streak": {
-    "current": 116,
-    "longest": 116,
-    "lastStudyDay": "2026-09-20",
-    "studyDays": 174,
+    "current": 117,
+    "longest": 117,
+    "lastStudyDay": "2026-09-21",
+    "studyDays": 175,
     "restDayAllowance": 1
   },
   "coverage": {
@@ -39,7 +39,7 @@
   },
   "onSchedule": {
     "totalActive": 134,
-    "dueToday": 5,
+    "dueToday": 1,
     "overdue": 4
   },
   "trophyCase": {
@@ -2497,7 +2497,8 @@
     "2026-09-17",
     "2026-09-18",
     "2026-09-19",
-    "2026-09-20"
+    "2026-09-20",
+    "2026-09-21"
   ],
   "schedule": {
     "weekOf": "2026-09-21",
@@ -2514,7 +2515,8 @@
             "technique": "Backtracking",
             "startComfort": "🔴",
             "difficulty": "Medium",
-            "done": false
+            "url": "https://leetcode.com/problems/generate-parentheses/",
+            "done": true
           },
           {
             "lcNumber": 134,
@@ -2522,7 +2524,8 @@
             "technique": "Greedy",
             "startComfort": "🟡",
             "difficulty": "Medium",
-            "done": false
+            "url": "https://leetcode.com/problems/gas-station/",
+            "done": true
           },
           {
             "lcNumber": 211,
@@ -2530,7 +2533,8 @@
             "technique": "Trie",
             "startComfort": "🟢",
             "difficulty": "Medium",
-            "done": false
+            "url": "https://leetcode.com/problems/design-add-and-search-words-data-structure/",
+            "done": true
           },
           {
             "lcNumber": 778,
@@ -2538,7 +2542,8 @@
             "technique": "Dijkstra",
             "startComfort": "🟢",
             "difficulty": "Hard",
-            "done": false
+            "url": "https://leetcode.com/problems/swim-in-rising-water/",
+            "done": true
           }
         ]
       },
@@ -2554,6 +2559,7 @@
             "technique": "Binary-search",
             "startComfort": "🔴",
             "difficulty": "Medium",
+            "url": "https://leetcode.com/problems/magnetic-force-between-two-balls/",
             "done": false
           },
           {
@@ -2562,6 +2568,7 @@
             "technique": "Sliding-window",
             "startComfort": "🟡",
             "difficulty": "Medium",
+            "url": "https://leetcode.com/problems/longest-repeating-character-replacement/",
             "done": false
           },
           {
@@ -2570,6 +2577,7 @@
             "technique": "Dijkstra",
             "startComfort": "🟡",
             "difficulty": "Medium",
+            "url": "https://leetcode.com/problems/network-delay-time/",
             "done": false
           },
           {
@@ -2578,6 +2586,7 @@
             "technique": "Monotonic-stack",
             "startComfort": "🟢",
             "difficulty": "Medium",
+            "url": "https://leetcode.com/problems/online-stock-span/",
             "done": false
           }
         ]
@@ -2594,6 +2603,7 @@
             "technique": "Kruskal",
             "startComfort": "🟡",
             "difficulty": "Hard",
+            "url": "https://leetcode.com/problems/find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree/",
             "done": false
           },
           {
@@ -2602,6 +2612,7 @@
             "technique": "Greedy",
             "startComfort": "🟡",
             "difficulty": "Medium",
+            "url": "https://leetcode.com/problems/hand-of-straights/",
             "done": false
           },
           {
@@ -2610,6 +2621,7 @@
             "technique": "Backtracking",
             "startComfort": null,
             "difficulty": null,
+            "url": null,
             "done": false
           }
         ]
@@ -2626,6 +2638,7 @@
             "technique": "Trie",
             "startComfort": "🟡",
             "difficulty": "Medium",
+            "url": "https://leetcode.com/problems/replace-words/",
             "done": false
           },
           {
@@ -2634,6 +2647,7 @@
             "technique": "Dijkstra",
             "startComfort": "🟡",
             "difficulty": "Medium",
+            "url": "https://leetcode.com/problems/network-delay-time/",
             "done": false
           },
           {
@@ -2642,6 +2656,7 @@
             "technique": "Heap",
             "startComfort": "🟢",
             "difficulty": "Easy",
+            "url": "https://leetcode.com/problems/last-stone-weight/",
             "done": false
           },
           {
@@ -2650,6 +2665,7 @@
             "technique": "Floyd-Warshall",
             "startComfort": "🟢",
             "difficulty": "Medium",
+            "url": "https://leetcode.com/problems/find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance/",
             "done": false
           },
           {
@@ -2658,6 +2674,7 @@
             "technique": "Array-rotation",
             "startComfort": "🟢",
             "difficulty": "Medium",
+            "url": "https://leetcode.com/problems/rotate-array/",
             "done": false
           },
           {
@@ -2666,6 +2683,7 @@
             "technique": "Kadane",
             "startComfort": "🟢",
             "difficulty": "Medium",
+            "url": "https://leetcode.com/problems/maximum-subarray/",
             "done": false
           },
           {
@@ -2674,6 +2692,7 @@
             "technique": "Tree-DFS",
             "startComfort": "🟢",
             "difficulty": "Medium",
+            "url": "https://leetcode.com/problems/subtree-of-another-tree/",
             "done": false
           }
         ]
@@ -2690,6 +2709,7 @@
             "technique": "Greedy",
             "startComfort": "🟡",
             "difficulty": "Medium",
+            "url": "https://leetcode.com/problems/jump-game/",
             "done": false
           },
           {
@@ -2698,6 +2718,7 @@
             "technique": "Tree-DFS",
             "startComfort": "🟢",
             "difficulty": "Easy",
+            "url": "https://leetcode.com/problems/maximum-depth-of-binary-tree/",
             "done": false
           },
           {
@@ -2706,6 +2727,7 @@
             "technique": "Backtracking",
             "startComfort": null,
             "difficulty": null,
+            "url": null,
             "done": false
           },
           {
@@ -2714,6 +2736,7 @@
             "technique": "Binary-search",
             "startComfort": "🟢",
             "difficulty": "Medium",
+            "url": "https://leetcode.com/problems/koko-eating-bananas/",
             "done": false
           },
           {
@@ -2722,6 +2745,7 @@
             "technique": "Prim's",
             "startComfort": "🟢",
             "difficulty": "Medium",
+            "url": "https://leetcode.com/problems/min-cost-to-connect-all-points/",
             "done": false
           }
         ]
@@ -2738,6 +2762,7 @@
             "technique": "Binary-search",
             "startComfort": "🟡",
             "difficulty": "Medium",
+            "url": "https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/",
             "done": false
           },
           {
@@ -2746,6 +2771,7 @@
             "technique": "Binary-search",
             "startComfort": "🟡",
             "difficulty": "Medium",
+            "url": "https://leetcode.com/problems/single-element-in-a-sorted-array/",
             "done": false
           },
           {
@@ -2754,6 +2780,7 @@
             "technique": "Boyer-Moore",
             "startComfort": "🟢",
             "difficulty": "Easy",
+            "url": "https://leetcode.com/problems/majority-element/",
             "done": false
           },
           {
@@ -2762,6 +2789,7 @@
             "technique": "Bellman-Ford",
             "startComfort": "🟢",
             "difficulty": "Medium",
+            "url": "https://leetcode.com/problems/cheapest-flights-within-k-stops/",
             "done": false
           },
           {
@@ -2770,6 +2798,7 @@
             "technique": "Dijkstra",
             "startComfort": null,
             "difficulty": null,
+            "url": null,
             "done": false
           }
         ]
@@ -2786,6 +2815,7 @@
             "technique": "Prefix-sum",
             "startComfort": "🟡",
             "difficulty": "Medium",
+            "url": "https://leetcode.com/problems/subarray-sum-equals-k/",
             "done": false
           },
           {
@@ -2794,6 +2824,7 @@
             "technique": "Union-Find",
             "startComfort": "🟡",
             "difficulty": "Medium",
+            "url": "https://leetcode.com/problems/accounts-merge/",
             "done": false
           },
           {
@@ -2802,6 +2833,7 @@
             "technique": "Hash-set",
             "startComfort": "🟢",
             "difficulty": "Medium",
+            "url": "https://leetcode.com/problems/longest-consecutive-sequence/",
             "done": false
           },
           {
@@ -2810,6 +2842,7 @@
             "technique": "BFS",
             "startComfort": "🟢",
             "difficulty": "Medium",
+            "url": "https://leetcode.com/problems/number-of-islands/",
             "done": false
           },
           {
@@ -2818,6 +2851,7 @@
             "technique": "Dijkstra",
             "startComfort": null,
             "difficulty": null,
+            "url": null,
             "done": false
           },
           {
@@ -2826,6 +2860,25 @@
             "technique": "Complexity",
             "startComfort": null,
             "difficulty": "Easy",
+            "url": "https://leetcode.com/problems/invert-binary-tree/",
+            "done": false
+          },
+          {
+            "lcNumber": 211,
+            "title": "Add and Search Words",
+            "technique": "Complexity",
+            "startComfort": null,
+            "difficulty": "Medium",
+            "url": "https://leetcode.com/problems/design-add-and-search-words-data-structure/",
+            "done": false
+          },
+          {
+            "lcNumber": 778,
+            "title": "Swim in Rising Water",
+            "technique": "Complexity",
+            "startComfort": null,
+            "difficulty": "Hard",
+            "url": "https://leetcode.com/problems/swim-in-rising-water/",
             "done": false
           }
         ]
@@ -2843,56 +2896,64 @@
         "lcNumber": 977,
         "title": "Squares of a Sorted Array",
         "technique": "Two Pointers",
-        "result": "🟢"
+        "result": "🟢",
+        "url": null
       },
       {
         "date": "2026-08-11",
         "lcNumber": 202,
         "title": "Happy Number",
         "technique": "Cycle Detection (iterated seq)",
-        "result": "🟡"
+        "result": "🟡",
+        "url": "https://leetcode.com/problems/happy-number/"
       },
       {
         "date": "2026-08-16",
         "lcNumber": 69,
         "title": "Sqrt(x)",
         "technique": "Binary Search on Answer",
-        "result": "🟢"
+        "result": "🟢",
+        "url": null
       },
       {
         "date": "2026-08-19",
         "lcNumber": 643,
         "title": "Maximum Average Subarray I",
         "technique": "Sliding Window",
-        "result": "🟡"
+        "result": "🟡",
+        "url": null
       },
       {
         "date": "2026-08-21",
         "lcNumber": 205,
         "title": "Isomorphic Strings",
         "technique": "Hash-map bijection",
-        "result": "🟢"
+        "result": "🟢",
+        "url": null
       },
       {
         "date": "2026-08-28",
         "lcNumber": 637,
         "title": "Average of Levels in Binary Tree",
         "technique": "Tree BFS (level order)",
-        "result": "🟢"
+        "result": "🟢",
+        "url": null
       },
       {
         "date": "2026-09-11",
         "lcNumber": 547,
         "title": "Number of Provinces",
         "technique": "Union-Find (connected components)",
-        "result": "🔴"
+        "result": "🔴",
+        "url": null
       },
       {
         "date": "2026-09-14",
         "lcNumber": 648,
         "title": "Replace Words",
         "technique": "Trie (prefix search)",
-        "result": "🟡"
+        "result": "🟡",
+        "url": "https://leetcode.com/problems/replace-words/"
       }
     ]
   },
@@ -2990,6 +3051,174 @@
     }
   ],
   "problems": [
+    {
+      "lcNumber": 22,
+      "title": "Generate Parentheses",
+      "url": "https://leetcode.com/problems/generate-parentheses/",
+      "difficulty": "Medium",
+      "category": "backtracking",
+      "comfort": "🟢",
+      "level": 2,
+      "streak": 0,
+      "nextReview": "2026-10-01",
+      "repDates": [
+        "2026-09-19",
+        "2026-09-21"
+      ],
+      "timeline": [
+        {
+          "date": "2026-09-19",
+          "comfort": "🔴",
+          "level": 0
+        },
+        {
+          "date": "2026-09-21",
+          "comfort": "🟢",
+          "level": 2
+        }
+      ]
+    },
+    {
+      "lcNumber": 134,
+      "title": "Gas Station",
+      "url": "https://leetcode.com/problems/gas-station/",
+      "difficulty": "Medium",
+      "category": "greedy",
+      "comfort": "🟢",
+      "level": 2,
+      "streak": 1,
+      "nextReview": "2026-10-21",
+      "repDates": [
+        "2026-09-09",
+        "2026-09-11",
+        "2026-09-21"
+      ],
+      "timeline": [
+        {
+          "date": "2026-09-09",
+          "comfort": "🔴",
+          "level": 0
+        },
+        {
+          "date": "2026-09-11",
+          "comfort": "🟡",
+          "level": 1
+        },
+        {
+          "date": "2026-09-21",
+          "comfort": "🟢",
+          "level": 2
+        }
+      ]
+    },
+    {
+      "lcNumber": 778,
+      "title": "Swim in Rising Water (Dijkstra / Min-Heap)",
+      "url": "https://leetcode.com/problems/swim-in-rising-water/",
+      "difficulty": "Hard",
+      "category": "graphs",
+      "comfort": "🟢",
+      "level": 2,
+      "streak": 2,
+      "nextReview": "2026-11-20",
+      "repDates": [
+        "2026-07-23",
+        "2026-08-02",
+        "2026-08-12",
+        "2026-08-22",
+        "2026-09-21"
+      ],
+      "timeline": [
+        {
+          "date": "2026-07-23",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-08-02",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-08-12",
+          "comfort": "🟡",
+          "level": 1
+        },
+        {
+          "date": "2026-08-22",
+          "comfort": "🟢",
+          "level": 2
+        },
+        {
+          "date": "2026-09-21",
+          "comfort": "🟢",
+          "level": 2
+        }
+      ]
+    },
+    {
+      "lcNumber": 211,
+      "title": "Design Add and Search Words Data Structure",
+      "url": "https://leetcode.com/problems/design-add-and-search-words-data-structure/",
+      "difficulty": "Medium",
+      "category": "trie",
+      "comfort": "🟢",
+      "level": 2,
+      "streak": 2,
+      "nextReview": "2026-11-20",
+      "repDates": [
+        "2026-07-09",
+        "2026-07-11",
+        "2026-07-21",
+        "2026-07-23",
+        "2026-08-02",
+        "2026-08-12",
+        "2026-08-22",
+        "2026-09-21"
+      ],
+      "timeline": [
+        {
+          "date": "2026-07-09",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-07-11",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-07-21",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-07-23",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-08-02",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-08-12",
+          "comfort": "🟡",
+          "level": 1
+        },
+        {
+          "date": "2026-08-22",
+          "comfort": "🟢",
+          "level": 2
+        },
+        {
+          "date": "2026-09-21",
+          "comfort": "🟢",
+          "level": 2
+        }
+      ]
+    },
     {
       "lcNumber": 84,
       "title": "Largest Rectangle in Histogram",
@@ -3443,27 +3672,6 @@
           "date": "2026-09-19",
           "comfort": "🎓",
           "level": 3
-        }
-      ]
-    },
-    {
-      "lcNumber": 22,
-      "title": "Generate Parentheses",
-      "url": "https://leetcode.com/problems/generate-parentheses/",
-      "difficulty": "Medium",
-      "category": "backtracking",
-      "comfort": "🔴",
-      "level": 0,
-      "streak": 0,
-      "nextReview": "2026-09-21",
-      "repDates": [
-        "2026-09-19"
-      ],
-      "timeline": [
-        {
-          "date": "2026-09-19",
-          "comfort": "🔴",
-          "level": 0
         }
       ]
     },
@@ -4666,33 +4874,6 @@
         "2026-09-11"
       ],
       "timeline": [
-        {
-          "date": "2026-09-11",
-          "comfort": "🟡",
-          "level": 1
-        }
-      ]
-    },
-    {
-      "lcNumber": 134,
-      "title": "Gas Station",
-      "url": "https://leetcode.com/problems/gas-station/",
-      "difficulty": "Medium",
-      "category": "greedy",
-      "comfort": "🟡",
-      "level": 1,
-      "streak": 0,
-      "nextReview": "2026-09-21",
-      "repDates": [
-        "2026-09-09",
-        "2026-09-11"
-      ],
-      "timeline": [
-        {
-          "date": "2026-09-09",
-          "comfort": "🔴",
-          "level": 0
-        },
         {
           "date": "2026-09-11",
           "comfort": "🟡",
@@ -6033,45 +6214,6 @@
       ]
     },
     {
-      "lcNumber": 778,
-      "title": "Swim in Rising Water (Dijkstra / Min-Heap)",
-      "url": "https://leetcode.com/problems/swim-in-rising-water/",
-      "difficulty": "Hard",
-      "category": "graphs",
-      "comfort": "🟢",
-      "level": 2,
-      "streak": 1,
-      "nextReview": "2026-09-21",
-      "repDates": [
-        "2026-07-23",
-        "2026-08-02",
-        "2026-08-12",
-        "2026-08-22"
-      ],
-      "timeline": [
-        {
-          "date": "2026-07-23",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-08-02",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-08-12",
-          "comfort": "🟡",
-          "level": 1
-        },
-        {
-          "date": "2026-08-22",
-          "comfort": "🟢",
-          "level": 2
-        }
-      ]
-    },
-    {
       "lcNumber": 3,
       "title": "Longest Substring Without Repeating Characters",
       "url": "https://leetcode.com/problems/longest-substring-without-repeating-characters/",
@@ -6096,63 +6238,6 @@
           "date": "2026-07-23",
           "comfort": null,
           "level": null
-        },
-        {
-          "date": "2026-08-22",
-          "comfort": "🟢",
-          "level": 2
-        }
-      ]
-    },
-    {
-      "lcNumber": 211,
-      "title": "Design Add and Search Words Data Structure",
-      "url": "https://leetcode.com/problems/design-add-and-search-words-data-structure/",
-      "difficulty": "Medium",
-      "category": "trie",
-      "comfort": "🟢",
-      "level": 2,
-      "streak": 1,
-      "nextReview": "2026-09-21",
-      "repDates": [
-        "2026-07-09",
-        "2026-07-11",
-        "2026-07-21",
-        "2026-07-23",
-        "2026-08-02",
-        "2026-08-12",
-        "2026-08-22"
-      ],
-      "timeline": [
-        {
-          "date": "2026-07-09",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-07-11",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-07-21",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-07-23",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-08-02",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-08-12",
-          "comfort": "🟡",
-          "level": 1
         },
         {
           "date": "2026-08-22",
