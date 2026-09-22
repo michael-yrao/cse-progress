@@ -1,18 +1,24 @@
 ---
 name: project-global-claude-unversioned
-description: OPEN — the execution-workflow enforcement layer lives in ~/.claude/, which is not a git repo, so none of it is versioned, backed up, or synced across machines
+description: CLOSED 2026-09-21 — the execution-workflow enforcement layer in ~/.claude/ is now versioned in the private repo michael-yrao/claude-dotfiles (whitelist .gitignore, in-place, no sync script)
 metadata:
   type: project
 reconciled: 2026-09-21
 ---
-The entire enforcement layer for the execution workflow lives in `~/.claude/`: the normative SSOT
-`rules/execution-workflow.md`, the reminder hook `hooks/execution_workflow_reminder.py`, and the agent
-definitions `agents/team-lead.md` + `agents/engineer.md`. `~/.claude/` is not a git repo — none of this
-is versioned, backed up, or synced across machines. The versioned artifact in cse-progress
-(`decisions.yml`, `.claude/memory/feedback_execution_workflow.md`) is only the why/evidence layer.
+The enforcement layer for the execution workflow lives in `~/.claude/`: the normative SSOT
+`rules/execution-workflow.md`, the reminder hook `hooks/execution_workflow_reminder.py`, the agent
+definitions `agents/team-lead.md` + `agents/engineer.md`, and `settings.json` (which wires the hook).
 
-**Consequence:** a machine reinstall or a lost profile silently drops the rule, the hook, and both agent
-definitions — the memory file keeps describing a workflow that nothing enforces anymore.
+**Resolved 2026-09-21:** `~/.claude/` was made a git repo IN PLACE with a whitelist `.gitignore`
+(`*` then re-include `rules/`, `agents/`, `hooks/`, `settings.json`), pushed to the private repo
+`https://github.com/michael-yrao/claude-dotfiles`. Credentials, `projects/`, history, caches, and the
+third-party plugin dump (`agents.disabled/`, `commands.disabled/`, `scripts/`, the ECC README files) are
+never tracked. Chosen over "commit copies into cse-progress + sync script" because that creates a second
+copy of the rule — the single-source failure the repo's own architecture warns about.
 
-**Fix undecided.** Options: a dotfiles repo for `~/.claude/`, or committing copies into cse-progress with
-a sync script. See [[feedback-execution-workflow]].
+**Standing obligation:** any edit to a file under `~/.claude/rules|agents|hooks` or to `settings.json`
+needs a commit + push in `~/.claude/` too — it is a separate repo, and the pre-commit sweep in
+cse-progress does not see it. Check with `git -C ~/.claude status -sb`.
+
+**Restore on a fresh machine:** `git init -b main` in `~/.claude`, add the remote, `git fetch origin`,
+`git checkout -b main origin/main`. See [[feedback-execution-workflow]].

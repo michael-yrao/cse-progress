@@ -727,3 +727,18 @@ decisions:
       "spawn several Sonnet engineers" as a flat fan-out with no lead. Normative home:
       ~/.claude/rules/execution-workflow.md; why: feedback_execution_workflow.md.
     affects: [execution_workflow]
+
+  - id: enforcement-layer-versioned-sep21
+    date: 2026-09-21
+    summary: >-
+      The execution-workflow enforcement layer (~/.claude/rules/, agents/, hooks/, settings.json) is now
+      VERSIONED (learner's call, Sep 21): ~/.claude/ was made a git repo in place with a whitelist
+      .gitignore and pushed to the private repo michael-yrao/claude-dotfiles. Chosen over committing
+      copies into cse-progress with a sync script, which would have created a second copy of the rule
+      (single-source violation). Consequence: an edit to any of those files needs its own commit + push
+      in ~/.claude/ — the cse-progress pre-commit sweep does not see that repo. Closes the OPEN item in
+      project_global_claude_unversioned.md. Also recorded there: the reminder hook's trivial-suppressor
+      is leaky (fires on "before i move forward, is this expected"; silenced by any "how"/"check"/
+      "update"), and enforcement is still reminder-only for the tech lead and convention-only for
+      Bash-writes by leads — the PreToolUse deny hooks (agent_type-scoped) are the next step, not yet built.
+    affects: [execution_workflow]
