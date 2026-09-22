@@ -163,8 +163,34 @@ def meta_review_banner(claude_dir: Path) -> str:
         return ""
 
 
+# The gap compute_streak (scripts/gamify.py) allows between the last study day and
+# "today" before a streak counts as lapsed: `allowance + 1` there, kept as a named
+# constant here rather than copied inline (see check_single_source.py).
+_STREAK_LIVE_GRACE_DAYS = 1
+
+
+def _streak_is_live(streak: dict, today: _dt.date) -> "bool | None":
+    """Mirror compute_streak's liveness check (scripts/gamify.py) without importing it.
+
+    A streak is live iff the last study day is within `restDayAllowance + grace` days of
+    today — the same window compute_streak uses to decide whether `current` resets to 0
+    at the NEXT regeneration. Reading `current` alone is generation-time only: it can
+    still show a positive number days after it went stale, because nothing regenerates
+    progress.json between sessions.
+
+    Returns None (rather than raising) when `lastStudyDay`/`restDayAllowance` is missing
+    or unparseable, so the caller can fail-soft to the pre-existing behaviour.
+    """
+    try:
+        last_study_day = _dt.date.fromisoformat(streak["lastStudyDay"])
+        allowance = int(streak["restDayAllowance"])
+    except (KeyError, TypeError, ValueError):
+        return None
+    return (today - last_study_day).days <= allowance + _STREAK_LIVE_GRACE_DAYS
+
+
 def progress_banner(claude_dir: Path) -> str:
-    """Return one honest progress line from progress.json, or '' if unavailable.
+    """Return one honest progress line from dashboard/progress.json, or '' if unavailable.
 
     Reads the generated contract directly (no subprocess, no import) so a coaching
     session opens with the streak in view — the Duolingo "here's your streak" moment.
@@ -172,13 +198,26 @@ def progress_banner(claude_dir: Path) -> str:
     never be the reason a session starts with no rules loaded. The file is regenerated
     by the pre-commit hook, so it is normally fresh; a stale or missing file just means
     no banner. Emoji survive emit()'s json.dump escaping (see emit's docstring).
+
+    Path note: gamify.py moved its output from repo-root `progress.json` to
+    `dashboard/progress.json` on 2026-09-21; this reads the current location. No root
+    fallback — there is no root copy left to fall back to.
     """
     try:
-        data = json.loads((claude_dir.parent / "progress.json").read_text(encoding="utf-8"))
+        data = json.loads((claude_dir.parent / "dashboard" / "progress.json")
+                          .read_text(encoding="utf-8"))
         streak = data["streak"]["current"]
         pl = data["pipeline"]
         reps = data["totals"]["reps"]
-        flame = f"🔥 {streak}-day study streak" if streak else "streak lapsed — a rep today restarts it"
+        # `current` is only as fresh as the last regeneration; re-check liveness against
+        # "today" rather than trusting a number that can be days stale (see
+        # _streak_is_live). live=None (fields missing/unparseable) falls back to the
+        # pre-existing streak-truthiness check, never a crash.
+        live = _streak_is_live(data["streak"], _dt.date.today())
+        if streak and live is not False:
+            flame = f"🔥 {streak}-day study streak"
+        else:
+            flame = "streak lapsed — a rep today restarts it"
         return (f"PROGRESS: {flame} · {pl['graduated']}🎓 + {pl['retired']}🏆 mastered · "
                 f"{reps} reps. Full dashboard: progressiveoverflow.com/progress\n\n")
     except Exception:  # noqa: BLE001 — a missing/partial file is normal, never fatal

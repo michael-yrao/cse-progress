@@ -38,9 +38,21 @@ SCHEDULES = REPO_ROOT / "docs" / "foundations" / "schedules"
 
 # A day-block header: `| ▸ **Thu Sep 17** · 7.7 units — ...`. We match on the date fragment.
 DAY_HEADER = re.compile(r"▸\s*\*\*[^*]*\*\*")
-# A problem row: `| [560 Subarray Sum ...](...path...) · [LC](...) | ... |`. The leading `[`
-# (optionally after tag glyphs like 🔥 🎯 ⚙️ 🆕 → ) carries the number.
-ROW_NUMBER = re.compile(r"^\|\s*(?:[^\[\]|]*?\s)?\[(\d{1,4})\s")
+# Tag glyphs a row can carry before its number — the schedule's own "Tags:" legend:
+# 🔥 backfill · 🎯 probe · ⚙️ variant · 🆕 new · → moved · ⚠️ protected · 🔤 primer.
+ROW_TAG_GLYPHS = "🔥🎯⚙️🆕→⚠️🔤"
+# A problem row's number: `[N ` for a linked row, with ANY non-bracket prefix allowed in
+# front of it (the original, permissive shape — a tag glyph, a review marker like `🔁 `,
+# a probe label like `🎯 **PROBE #6** — `, ...): `| [560 Subarray Sum ...](...path...) ·
+# [LC](...) | ... |`. Or a bare `N ` for a 🆕 intake with no local file yet to link
+# (`| 🆕 39 Combination Sum · [LC](...) | ... |`) — with no bracket to anchor on, this
+# branch requires at least ONE of the legend glyphs above, so a plain summary/carry-table
+# row (`| 5 overdue rows | 9.0 |`, `| 743 Network Delay Time | Aug 4 |`) is never misread
+# as a problem row. Exactly one of the two capture groups fills, depending on which shape
+# matched.
+ROW_NUMBER = re.compile(
+    rf"^\|\s*(?:(?:[^\[\]|]*?\s)?\[(\d{{1,4}})\s|(?:[{ROW_TAG_GLYPHS}]\s*)+(\d{{1,4}})\s)"
+)
 
 
 def current_schedule(session: str) -> Path | None:
@@ -81,7 +93,7 @@ def unstruck_numbers(schedule: Path, label: str) -> list[str] | None:
             continue
         if "~~" in line:  # struck through = done, skip
             continue
-        numbers.append(m.group(1))
+        numbers.append(m.group(1) or m.group(2))
     return numbers if found_block else None
 
 

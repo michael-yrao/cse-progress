@@ -772,7 +772,24 @@ def main() -> None:
 
     # A turn that opens with a throat-clearing interjection buries the fact behind a
     # deletable lead-in. Board-independent: it reads only the turn's own paragraph starts.
+    # Computed alongside the unlinked-number check below (not returned on early) so a
+    # turn that trips BOTH gets one combined block instead of the opener hiding the
+    # number gate behind a second round-trip.
     openers = banned_opener(text)
+
+    nums = unlinked_problem_numbers(text, todays_board())
+    # Already handed over in the last few turns? The file hunt is already saved.
+    nums = [n for n in nums if n not in recently_linked(payload.get("transcript_path", ""))]
+
+    if openers and nums:
+        reason = (
+            OPENER_MESSAGE.format(openers=", ".join(f'"{o}"' for o in openers))
+            + "\n\n"
+            + MESSAGE.format(nums=", ".join(nums))
+        )
+        json.dump({"decision": "block", "reason": reason}, sys.stdout)
+        return
+
     if openers:
         json.dump(
             {"decision": "block", "reason": OPENER_MESSAGE.format(openers=", ".join(f'"{o}"' for o in openers))},
@@ -780,9 +797,6 @@ def main() -> None:
         )
         return
 
-    nums = unlinked_problem_numbers(text, todays_board())
-    # Already handed over in the last few turns? The file hunt is already saved.
-    nums = [n for n in nums if n not in recently_linked(payload.get("transcript_path", ""))]
     if not nums:
         return
 
@@ -821,6 +835,15 @@ CASES = [
     # Aug 15, 2026: the false positive that forced a link onto a verification count.
     ("randomized test count", "Verified this problem on 3000 randomized cases, zero mismatches.", False),
     ("case count", "The rep passed 500 cases and 250 runs on the board.", False),
+]
+
+# Combined-block cases: a turn that trips BOTH the banned-opener AND the unlinked-number
+# detector must get ONE block naming both, not just the opener (the defect this closes —
+# the opener return used to short-circuit before the number check ever ran).
+COMBINED_CASES = [
+    # (name, text, board)
+    ("opener + bare number, both fire",
+     "Right — still on the board: 155 Min Stack.", {"155"}),
 ]
 
 # Board filtering is exercised separately: every entry in CASES runs with board=None,
@@ -999,6 +1022,17 @@ def _selftest(transcript: str | None = None) -> int:
                   f"{banned_opener(text)!r}")
     failures += opener_failures
     print(f"opener:   {len(OPENER_CASES) - opener_failures}/{len(OPENER_CASES)} passed")
+
+    combined_failures = 0
+    for name, text, board in COMBINED_CASES:
+        openers = banned_opener(text)
+        nums = unlinked_problem_numbers(text, board)
+        if not (openers and nums):
+            combined_failures += 1
+            print(f"FAIL  {name}: openers={openers}, nums={nums} -- both must be non-empty "
+                  "for main() to emit the combined block")
+    failures += combined_failures
+    print(f"combined: {len(COMBINED_CASES) - combined_failures}/{len(COMBINED_CASES)} passed")
 
     board_failures = 0
     for name, text, board, expected in BOARD_CASES:

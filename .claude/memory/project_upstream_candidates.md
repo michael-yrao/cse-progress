@@ -3,7 +3,7 @@ name: project-upstream-candidates
 description: Findings from cse-progress that belong in canonical cse-coach, split into shipped-behaviour defects (send now) and new instruments (soak first)
 metadata:
   type: project
-reconciled: 2026-09-06
+reconciled: 2026-09-21
 ---
 
 **Started Aug 9, 2026.** Upstream flow is a **deliberate human PR**, never automatic — one learner's
@@ -90,6 +90,20 @@ which the disposable-rep guidance currently handles with a `discovery_skip` stop
 ## 🧪 New instruments — soak here first, revisit after ~4 weeks
 
 ### 9. Gamification: the progress.json contract + gamify.py generator ⭐
+
+**✅ SHIPPED Sep 21, 2026 (`coach-gamification-promoted-sep21`) — soak WAIVED.** project_gamification.md's
+own note below says the schema + generator "make any adopter repo site-renderable"; that promise stays
+false for every other adopter until the generator ships upstream, so soaking it here indefinitely
+defers the one thing the promise depends on. Port list (what upstreams, beyond the Aug 21 base
+already covered by §"SHIPPED Aug 21" further down): `scripts/gamify.py` (the generator itself, incl.
+this session's `_leading_tags`/`_schedule_item_kind`/`_schedule_item_lc_number`/`_schedule_item_url`
+bare-🆕-row handling), `dashboard/progress.schema.json` (incl. the additive `tags`/`kind` fields,
+`schedule-item-kind-tags-sep21`), `effort_budget.parse_rows` reuse, `_console.force_utf8()`, the
+`.githooks/pre-commit` regeneration wiring, and `session_start_memory.py`'s fail-soft read. **NOT
+ported:** the site half (progressiveoverflow.com — tabs/Library-nav/repo-picker curation) is a display
+concern, not the generator/contract, and stays local; the specific-half caveat below (this repo's
+schedule conventions) is unchanged and still the thing a canonical adopter would need to declare or
+tolerate the absence of.
 
 **Added Sep 20, 2026.** `scripts/gamify.py` reads the records every cse-coach repo already has
 (`dsa_progress.md`, `schedules/*.md`, `technique_coverage.md`) and emits `progress.json`, a

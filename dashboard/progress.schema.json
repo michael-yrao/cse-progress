@@ -256,12 +256,14 @@
       "description": "One row of a schedule day's Daily Schedule table.",
       "required": ["lcNumber", "title", "technique", "startComfort", "difficulty", "done"],
       "properties": {
-        "lcNumber": { "type": ["integer", "null"], "description": "null for a 🆕 intake row not yet scaffolded to a local solution file — the row's Problem cell has no `[` / `**` before its number for eb.SCHED_NUM to find (by design, mirrors effort_budget.py)." },
+        "lcNumber": { "type": ["integer", "null"], "description": "Read via eb.SCHED_NUM first (the same parse effort_budget.py prices with); if that finds no `[`/`**` before the number (by design, mirrors effort_budget.py — e.g. a bare-number 🆕 intake row), falls back to a leading-digits match on the tag-stripped, link-unwrapped title. null only when neither finds a number." },
         "title": { "type": "string" },
         "technique": { "type": ["string", "null"] },
         "startComfort": { "type": ["string", "null"], "enum": ["🔴", "🟡", "🟢", "🎓", null], "description": "The comfort glyph as written at the weekly build (col S) — null for a 🆕/🎯-tagged row, which carries no prior comfort." },
         "difficulty": { "type": ["string", "null"], "enum": ["Easy", "Medium", "Hard", null], "description": "Joined from the tracker's Difficulty column by lcNumber (the schedule file itself has no difficulty column) — null when the number isn't in dsa_progress.md yet (e.g. a 🆕 intake row)." },
-        "url": { "type": ["string", "null"], "description": "Canonical LeetCode URL, joined by lcNumber from the tracker's markdown links (problem_urls()) — the site's own AlgorithmMeta.id is a shortened route slug, not the LC slug, so it cannot build this link itself. null for a 🆕 row with no lcNumber, or a number not yet in dsa_progress.md." },
+        "url": { "type": ["string", "null"], "description": "Prefers the row's own `[LC](...)`/`[NC](...)` link straight off the Problem cell; falls back to the tracker join by lcNumber (problem_urls()) — the site's own AlgorithmMeta.id is a shortened route slug, not the LC slug, so it cannot build this link itself. null when neither source has one." },
+        "tags": { "type": "array", "items": { "type": "string" }, "description": "Build-time tags read off the row's leading glyphs: ⚠️→protected, 🔥→backfill, 🆕→new, 🎯→probe, ⚙️→variant, 🔤→primer, →→moved." },
+        "kind": { "type": "string", "enum": ["rep", "new", "probe", "complexity", "primer"], "description": "complexity when the Technique cell is 'Complexity' (checked before any tag, since a complexity re-ask row is also 🎯-tagged); else new/primer/probe from the row's tags; else rep." },
         "done": { "type": "boolean", "description": "True when the row is struck through (`~~...~~`) in the source table." }
       }
     },

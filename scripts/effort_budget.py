@@ -26,9 +26,11 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import contextlib
 import datetime as dt
 import math
 import re
+import sys
 from pathlib import Path
 
 # Git runs hooks with a cp1252 console on Windows; the first emoji printed would
@@ -36,6 +38,8 @@ from pathlib import Path
 import _console
 
 _console.force_utf8()
+
+import session_date
 
 REPO = Path(__file__).resolve().parent.parent
 TRACKER = REPO / "docs/foundations/dsa/mastery/dsa_progress.md"
@@ -557,12 +561,19 @@ def main() -> None:
     ap.add_argument("--due", metavar="YYYY-MM-DD",
                     help="list everything due on or before this date, priced")
     ap.add_argument("--today", metavar="YYYY-MM-DD",
-                    help="override today's date (default: system date)")
+                    help="override the resolved session date (default: detected session "
+                         "date, not just the system clock — see session_date.py)")
     args = ap.parse_args()
 
     cfg = load_config()
     rows = parse_rows()
-    today = dt.date.fromisoformat(args.today) if args.today else dt.date.today()
+    # Resolved the way every other date-touching script here does (session_date.py):
+    # a session past midnight keeps its START date. session_date.resolve_datetime
+    # announces a heuristic guess with a bare print() to stdout — redirected to stderr
+    # so it never lands inside this script's own stdout report (mirrors gamify.py
+    # main()'s identical redirect).
+    with contextlib.redirect_stdout(sys.stderr):
+        today = session_date.resolve_datetime(args.today).date()
 
     if args.schedule_day is not None:
         target = dt.date.fromisoformat(args.schedule_day) if args.schedule_day else today

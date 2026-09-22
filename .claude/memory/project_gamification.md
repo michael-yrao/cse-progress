@@ -3,7 +3,7 @@ name: project-gamification
 description: Honest-progress gamification (streak, maturation pipeline, trophy case, coverage, badges) emitted as progress.json and rendered on progressiveoverflow.com; reward only unfakeable events, never a rating
 metadata:
   type: project
-reconciled: 2026-09-20
+reconciled: 2026-09-21
 ---
 
 **Started Sep 20, 2026**, from the learner's ask: "gamify cse-coach — achievements/milestones,
@@ -78,13 +78,28 @@ adopter repo site-renderable). Soak first — see [[project-upstream-candidates]
   cannot have its per-rep comfort reconstructed (the schedule index is keyed by number, not method),
   so those rows show dots + a single anchored current-comfort point rather than a full curve. Honest
   by design — see `build_problems` in `gamify.py`.
+- **`difficulty` is null for a 🆕 row.** Difficulty is joined from the TRACKER by lcNumber
+  (`dsa_progress.md` has no difficulty column of its own to read); a 🆕 intake row hasn't earned a
+  tracker row yet, so it honestly gets null rather than a guess. `startComfort` is null for the same
+  reason on a 🆕/🎯-tagged row. `lcNumber`/`url` no longer null the same way (see
+  `schedule-item-kind-tags-sep21`) — a bare-numbered 🆕 row's own `[LC]`/`[NC]` link now yields both.
 
-## ⭐ PINNED TODO — rebalance toward an at-a-glance OVERVIEW (learner feedback, 2026-09-21)
+## ✅ Done Sep 21 — curation round (tabs, Library nav, repo picker)
+
+The PINNED TODO below is RESOLVED: the curation redo it called for shipped same day as tabs (to
+separate the at-a-glance landing from drill-down detail), Library navigation, and a repo picker.
+Same session, the schedule-item contract gained `tags`/`kind` (additive fields — see `decisions.yml`
+`schedule-item-kind-tags-sep21`), and the "new instrument" soak on `scripts/gamify.py`/
+`progress.schema.json` was waived (`coach-gamification-promoted-sep21`) — see
+[[project_upstream_candidates]] §9. The brainstorm/design-principle notes below are kept as the
+record of what was weighed, not as a still-open ask.
+
+## ⭐ PINNED TODO (RESOLVED Sep 21) — rebalance toward an at-a-glance OVERVIEW (learner feedback, 2026-09-21)
 
 **Feedback:** after the drill-through round the dashboard "feels a bit overloaded now and doesn't give
 enough of the overview feel." The many drillable cards added detail but cost the at-a-glance signal.
 **Do NOT just add more** — the next round is about CURATION: a tight, high-signal landing, detail behind
-drill-downs (which now exist). Not started yet (learner paused; out of tokens).
+drill-downs (which now exist). Shipped same day as the tabs/Library-nav/repo-picker curation round above.
 
 **The lead idea (learner's):** the dashboard is an easy, high-value way to **show the user their
 SCHEDULE** — "what do I do today / this week." For someone using cse-coach, "today's board + what's due"

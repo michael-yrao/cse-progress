@@ -61,7 +61,7 @@ def is_closed(body: str) -> bool:
         return False                       # explicit open marker beats a prose "resolved"
     lines = [ln for ln in body.strip().splitlines() if ln.strip()]
     tail = " ".join(lines[-2:]) if lines else ""
-    return bool(RESOLVED_TAIL.search(tail.strip()) or re.search(r"(?<![a-z])resolved\b", tail, re.I))
+    return bool(RESOLVED_TAIL.search(tail.strip()))
 
 
 # A recurrence-family tag, either the prose form or the shorthand this script promotes.
