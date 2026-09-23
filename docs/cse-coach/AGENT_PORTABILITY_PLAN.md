@@ -1,6 +1,6 @@
 # Agent portability plan — cse-coach on Copilot and Cursor
 
-**Status:** approved 2026-09-22 · Phase 0 DONE (same push) · Phase 1 DONE 2026-09-23 · Phase 2 IN PROGRESS (E4 Cursor bridge built, unverified; Copilot spike hook ready, awaiting a live session; E3 not started) · Phase 3 NOT STARTED
+**Status:** approved 2026-09-22 · Phase 0 DONE (same push) · Phase 1 DONE 2026-09-23 · Phase 2 IN PROGRESS (E4 Cursor bridge built, unverified; Copilot spike hook ready, awaiting a live session; E3 not started) · Phase 3 IN PROGRESS (Claude Code probe passed; Copilot CLI, VS Code, Cursor open)
 **Written:** 2026-09-22 · **Owner:** whichever session picks up the next phase (see §0)
 
 ## 0. Picking this up (any agent, any session)
@@ -186,7 +186,7 @@ into `decisions.yml`:
 - [ ] VS Code Copilot Chat: same skill listing; `AGENTS.md` loads with `chat.useAgentsMdFile`.
 - [ ] Cursor: skill listed; `AGENTS.md` loaded; the shadow transcript accumulates; the Stop gate's
       `followup_message` fires exactly once on a deliberate violation.
-- [ ] Claude Code: `CLAUDE.md` with `@AGENTS.md` still injects every gate (the SessionStart hook output is
+- [x] Claude Code (2026-09-23, evidence in `decisions.yml` `agents-md-hub-sep22`): `CLAUDE.md` with `@AGENTS.md` still injects every gate (the SessionStart hook output is
       unchanged) and `reconcile.py --check` / `check_single_source.py --check` are green.
 
 ## 8. Later (out of scope now)
