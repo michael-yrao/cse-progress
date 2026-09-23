@@ -115,19 +115,26 @@ def tracker_title_url(number: str) -> tuple[str | None, str | None]:
     return None, None
 
 
+def resolve_title_url(number: str, path: Path | None) -> tuple[str | None, str | None]:
+    """(title, url) for `number`: the file's own docstring header first, the tracker
+    second — the one implementation of that precedence. `link_line()` below calls this
+    too, and `export_showcase.py` reuses it rather than re-deriving the same order.
+    """
+    file_title, file_url = header_title_url(path) if path else (None, None)
+    track_title, track_url = tracker_title_url(number)
+    return file_title or track_title, file_url or track_url
+
+
 def link_line(number: str) -> str | None:
     """The `[file] · [LC|NC]` line for `number`, or None if nothing on disk knows it.
 
     Path is ALWAYS repo-root-relative (the fix). Title/URL prefer the file header, then the
-    tracker. A problem with no file yields no file link — that is new_problem.py's job (it
-    prints LINKS: on the scaffold), so we say so rather than invent a path.
+    tracker (resolve_title_url). A problem with no file yields no file link — that is
+    new_problem.py's job (it prints LINKS: on the scaffold), so we say so rather than
+    invent a path.
     """
     path = find_file(number)
-    file_title, file_url = header_title_url(path) if path else (None, None)
-    track_title, track_url = tracker_title_url(number)
-
-    title = file_title or track_title
-    url = file_url or track_url
+    title, url = resolve_title_url(number, path)
 
     if path is None:
         if url:

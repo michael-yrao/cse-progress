@@ -122,8 +122,12 @@ So a rule change lands in CLAUDE.md (or the skill reference) in the **same edit*
 hasn't been read against it. ⚠️ **CLAUDE.md and the skill files are IN SCOPE** — always injected, so a
 stale rule here is obeyed over a correct one anywhere else.
 
+The same discipline covers `dashboard/showcase.yml` (which attempt the site's grounded-solutions
+visualizers show per problem) — see `decisions.yml` `showcase-contract`.
+
 ```sh
 python scripts/check_single_source.py --check    # exit 1 on a copied value (script-vs-config = hard; prose = advisory)
+python scripts/export_showcase.py --check         # exit 1 on a showcase.yml pick that no longer resolves
 python scripts/reconcile.py                       # what hasn't been read against which decision
 ```
 

@@ -823,3 +823,35 @@ decisions:
       2026-09-23: all 18 docs pass, so scripts/check_cheatsheets.py --check is promoted from
       report-only to blocking in pre-commit as of the commit landing this Phase C follow-up.
     affects: [gamification]
+
+  - id: showcase-contract
+    date: 2026-09-22
+    summary: >-
+      The progressiveoverflow.com algorithm visualizers stop storing a hand-pasted copy of the learner's
+      Python: the site never carries solution code of its own again. cse-progress instead emits
+      `dashboard/showcase.json` (schema `dashboard/showcase.schema.json`) from a new hand-curated manifest
+      `dashboard/showcase.yml` — one entry per (lcNumber, variant), picking a specific attempt/method by
+      symbol name (every attempt already lives in ONE file as a dated method inside `class Solution:`, or
+      a dated class for a design problem, so "pick a version" means picking a method/class by name, not a
+      commit). `scripts/export_showcase.py` reads the manifest + the live solution files and emits a
+      byte-identical (EOL-normalized), line-numbered slice per entry — `container` (the `class Solution:`
+      header), `attempt` (the picked def/class, its leading `#`-comment banner folded in), and any
+      `helper` segments — so the site can render code provably identical to what's in the repo instead of
+      a driftable copy, and link straight to the real GitHub line range. `scripts/showcase_candidates.py`
+      is the new read-only tool that surfaces candidates (comment density, attempt date, RECOGNITION
+      notes) for a human to pick from; it never writes the manifest itself. Unlike `gamify.py`,
+      `export_showcase.py` is deliberately NOT fail-soft: an unresolvable manifest entry (unknown symbol,
+      a twin problem number missing its required `file:`, a container mismatch, a stale committed
+      `showcase.json`) is a hard failure (`--check` exits 1), because a stale or wrong showcase contract
+      is exactly the drift this tool exists to remove. Renaming or deleting a manifest-selected
+      symbol/method is now a BREAKING CHANGE, surfaced immediately by `--check` (wired into
+      `.githooks/pre-commit`, report-only) and by the site's own scheduled groundedness check — this
+      strands any prose that still describes the site as storing or hand-copying solution code, or that
+      describes cse-progress's showcase.json as anything other than the one contract that deliberately
+      carries verbatim, curated source (progress.json stays code-free and curated the other way — no
+      solution code, ever). `links.py` gained `resolve_title_url(number, path)` (header-over-tracker,
+      extracted out of `link_line()`, which now calls it too — one implementation of that precedence,
+      reused by `export_showcase.py`). No `cse.config.yml` value changed. See `dashboard/showcase.yml`,
+      `scripts/export_showcase.py`, `scripts/showcase_candidates.py`, `dashboard/showcase.schema.json`,
+      `.claude/memory/project_gamification.md`.
+    affects: [gamification]
