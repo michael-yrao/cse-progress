@@ -1,19 +1,19 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-21",
+  "generatedAt": "2026-09-22",
   "totals": {
     "problems": 123,
     "solutions": 134,
-    "reps": 593
+    "reps": 597
   },
   "pipeline": {
-    "blank": 1,
+    "blank": 0,
     "shaky": 15,
     "clean": {
       "s0": 2,
-      "s1": 28,
+      "s1": 29,
       "s2plus": 68,
-      "total": 98
+      "total": 99
     },
     "graduated": 20,
     "retired": 0
@@ -24,10 +24,10 @@
     "Hard": 11
   },
   "streak": {
-    "current": 117,
-    "longest": 117,
-    "lastStudyDay": "2026-09-21",
-    "studyDays": 175,
+    "current": 118,
+    "longest": 118,
+    "lastStudyDay": "2026-09-22",
+    "studyDays": 176,
     "restDayAllowance": 1
   },
   "coverage": {
@@ -39,8 +39,8 @@
   },
   "onSchedule": {
     "totalActive": 134,
-    "dueToday": 1,
-    "overdue": 4
+    "dueToday": 0,
+    "overdue": 5
   },
   "trophyCase": {
     "graduated": [
@@ -2498,7 +2498,8 @@
     "2026-09-18",
     "2026-09-19",
     "2026-09-20",
-    "2026-09-21"
+    "2026-09-21",
+    "2026-09-22"
   ],
   "schedule": {
     "weekOf": "2026-09-21",
@@ -2576,7 +2577,7 @@
               "backfill"
             ],
             "kind": "rep",
-            "done": false
+            "done": true
           },
           {
             "lcNumber": 424,
@@ -2587,7 +2588,7 @@
             "url": "https://leetcode.com/problems/longest-repeating-character-replacement/",
             "tags": [],
             "kind": "rep",
-            "done": false
+            "done": true
           },
           {
             "lcNumber": 743,
@@ -2600,7 +2601,7 @@
               "variant"
             ],
             "kind": "rep",
-            "done": false
+            "done": true
           },
           {
             "lcNumber": 901,
@@ -2611,7 +2612,7 @@
             "url": "https://leetcode.com/problems/online-stock-span/",
             "tags": [],
             "kind": "rep",
-            "done": false
+            "done": true
           }
         ]
       },
@@ -2985,6 +2986,19 @@
             ],
             "kind": "complexity",
             "done": false
+          },
+          {
+            "lcNumber": 743,
+            "title": "Network Delay Time",
+            "technique": "Complexity",
+            "startComfort": null,
+            "difficulty": "Medium",
+            "url": "https://leetcode.com/problems/network-delay-time/",
+            "tags": [
+              "probe"
+            ],
+            "kind": "complexity",
+            "done": false
           }
         ]
       }
@@ -3156,6 +3170,216 @@
     }
   ],
   "problems": [
+    {
+      "lcNumber": 1552,
+      "title": "Magnetic Force Between Two Balls",
+      "url": "https://leetcode.com/problems/magnetic-force-between-two-balls/",
+      "difficulty": "Medium",
+      "category": "binary_search",
+      "comfort": "🟡",
+      "level": 1,
+      "streak": 0,
+      "nextReview": "2026-10-02",
+      "repDates": [
+        "2026-09-20",
+        "2026-09-22"
+      ],
+      "timeline": [
+        {
+          "date": "2026-09-20",
+          "comfort": "🔴",
+          "level": 0
+        },
+        {
+          "date": "2026-09-22",
+          "comfort": "🟡",
+          "level": 1
+        }
+      ]
+    },
+    {
+      "lcNumber": 424,
+      "title": "Longest Repeating Character Replacement",
+      "url": "https://leetcode.com/problems/longest-repeating-character-replacement/",
+      "difficulty": "Medium",
+      "category": "sliding_window",
+      "comfort": "🟢",
+      "level": 2,
+      "streak": 1,
+      "nextReview": "2026-10-22",
+      "repDates": [
+        "2026-04-19",
+        "2026-07-02",
+        "2026-07-10",
+        "2026-07-17",
+        "2026-07-27",
+        "2026-08-28",
+        "2026-08-31",
+        "2026-09-10",
+        "2026-09-12",
+        "2026-09-22"
+      ],
+      "timeline": [
+        {
+          "date": "2026-04-19",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-07-02",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-07-10",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-07-17",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-07-27",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-08-28",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-08-31",
+          "comfort": "🟡",
+          "level": 1
+        },
+        {
+          "date": "2026-09-10",
+          "comfort": "🔴",
+          "level": 0
+        },
+        {
+          "date": "2026-09-12",
+          "comfort": "🟡",
+          "level": 1
+        },
+        {
+          "date": "2026-09-22",
+          "comfort": "🟢",
+          "level": 2
+        }
+      ]
+    },
+    {
+      "lcNumber": 743,
+      "title": "Network Delay Time (Dijkstra — min-heap)",
+      "url": "https://leetcode.com/problems/network-delay-time/",
+      "difficulty": "Medium",
+      "category": "graphs",
+      "comfort": "🟢",
+      "level": 2,
+      "streak": 1,
+      "nextReview": "2026-10-22",
+      "repDates": [
+        "2026-07-15",
+        "2026-07-25",
+        "2026-08-04",
+        "2026-08-14",
+        "2026-08-24",
+        "2026-09-03",
+        "2026-09-12",
+        "2026-09-22"
+      ],
+      "timeline": [
+        {
+          "date": "2026-07-15",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-07-25",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-08-04",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-08-14",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-08-24",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-09-03",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-09-12",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-09-22",
+          "comfort": "🟢",
+          "level": 2
+        }
+      ]
+    },
+    {
+      "lcNumber": 901,
+      "title": "Online Stock Span",
+      "url": "https://leetcode.com/problems/online-stock-span/",
+      "difficulty": "Medium",
+      "category": "stack",
+      "comfort": "🟡",
+      "level": 1,
+      "streak": 0,
+      "nextReview": "2026-10-02",
+      "repDates": [
+        "2026-07-12",
+        "2026-07-14",
+        "2026-08-13",
+        "2026-08-23",
+        "2026-09-22"
+      ],
+      "timeline": [
+        {
+          "date": "2026-07-12",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-07-14",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-08-13",
+          "comfort": "🟡",
+          "level": 1
+        },
+        {
+          "date": "2026-08-23",
+          "comfort": "🟢",
+          "level": 2
+        },
+        {
+          "date": "2026-09-22",
+          "comfort": "🟡",
+          "level": 1
+        }
+      ]
+    },
     {
       "lcNumber": 22,
       "title": "Generate Parentheses",
@@ -3375,27 +3599,6 @@
           "date": "2026-09-20",
           "comfort": "🟡",
           "level": 1
-        }
-      ]
-    },
-    {
-      "lcNumber": 1552,
-      "title": "Magnetic Force Between Two Balls",
-      "url": "https://leetcode.com/problems/magnetic-force-between-two-balls/",
-      "difficulty": "Medium",
-      "category": "binary_search",
-      "comfort": "🔴",
-      "level": 0,
-      "streak": 0,
-      "nextReview": "2026-09-22",
-      "repDates": [
-        "2026-09-20"
-      ],
-      "timeline": [
-        {
-          "date": "2026-09-20",
-          "comfort": "🔴",
-          "level": 0
         }
       ]
     },
@@ -4801,132 +5004,6 @@
       ]
     },
     {
-      "lcNumber": 743,
-      "title": "Network Delay Time (Dijkstra — min-heap)",
-      "url": "https://leetcode.com/problems/network-delay-time/",
-      "difficulty": "Medium",
-      "category": "graphs",
-      "comfort": "🟡",
-      "level": 1,
-      "streak": 0,
-      "nextReview": "2026-09-22",
-      "repDates": [
-        "2026-07-15",
-        "2026-07-25",
-        "2026-08-04",
-        "2026-08-14",
-        "2026-08-24",
-        "2026-09-03",
-        "2026-09-12"
-      ],
-      "timeline": [
-        {
-          "date": "2026-07-15",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-07-25",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-08-04",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-08-14",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-08-24",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-09-03",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-09-12",
-          "comfort": "🟡",
-          "level": 1
-        }
-      ]
-    },
-    {
-      "lcNumber": 424,
-      "title": "Longest Repeating Character Replacement",
-      "url": "https://leetcode.com/problems/longest-repeating-character-replacement/",
-      "difficulty": "Medium",
-      "category": "sliding_window",
-      "comfort": "🟡",
-      "level": 1,
-      "streak": 0,
-      "nextReview": "2026-09-22",
-      "repDates": [
-        "2026-04-19",
-        "2026-07-02",
-        "2026-07-10",
-        "2026-07-17",
-        "2026-07-27",
-        "2026-08-28",
-        "2026-08-31",
-        "2026-09-10",
-        "2026-09-12"
-      ],
-      "timeline": [
-        {
-          "date": "2026-04-19",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-07-02",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-07-10",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-07-17",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-07-27",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-08-28",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-08-31",
-          "comfort": "🟡",
-          "level": 1
-        },
-        {
-          "date": "2026-09-10",
-          "comfort": "🔴",
-          "level": 0
-        },
-        {
-          "date": "2026-09-12",
-          "comfort": "🟡",
-          "level": 1
-        }
-      ]
-    },
-    {
       "lcNumber": 239,
       "title": "Sliding Window Maximum",
       "url": "https://leetcode.com/problems/sliding-window-maximum/",
@@ -6271,45 +6348,6 @@
           "date": "2026-07-24",
           "comfort": null,
           "level": null
-        },
-        {
-          "date": "2026-08-23",
-          "comfort": "🟢",
-          "level": 2
-        }
-      ]
-    },
-    {
-      "lcNumber": 901,
-      "title": "Online Stock Span",
-      "url": "https://leetcode.com/problems/online-stock-span/",
-      "difficulty": "Medium",
-      "category": "stack",
-      "comfort": "🟢",
-      "level": 2,
-      "streak": 1,
-      "nextReview": "2026-09-22",
-      "repDates": [
-        "2026-07-12",
-        "2026-07-14",
-        "2026-08-13",
-        "2026-08-23"
-      ],
-      "timeline": [
-        {
-          "date": "2026-07-12",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-07-14",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-08-13",
-          "comfort": "🟡",
-          "level": 1
         },
         {
           "date": "2026-08-23",

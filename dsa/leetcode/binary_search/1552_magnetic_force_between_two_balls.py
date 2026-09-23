@@ -17,6 +17,49 @@ from typing import List, Optional
 
 
 class Solution:
+
+    # ── Attempt · 2026-09-22 ──────────────
+    def maxDistance_20260922(self, position: List[int], m: int) -> int:
+        # the entire array's position is kinda irrelevant
+        # the picture in example 1 is what we'd like to visualize, which means we need to sort first
+        # now with this sorted, we are trying to maximize the min magnetic force after placing m balls
+        # so let's ignore the baskets for now
+        # if we can put balls anywhere, this would just be binary search based on wherever we lock down m
+        # so we try to do the same thing still, but since we can't place m just anywhere, we ask if it is possible to get this result. we want to maximize so we want to do max boundary binary search
+        # if we look at example 1, it actually uses the positions, not the indices, so we do binary search on the answer
+
+        position.sort()
+
+        l, r = 1, position[-1] - position[0]
+
+        # in order to see if we can achieve this force
+        # we need to place m number of balls here
+        # we always place a node on the bottom because this is the smallest we can do
+        # then from here, we check if placing a ball in the next index can give us force
+        # if yes, place it, otherwise, move on
+        # we do need to keep track of how many balls we placed
+        def canAchieve(force):
+            lastBallPosition = position[0]
+            ballsPlaced = 1
+            # position[-1] + 1, so we include position[-1]
+            for i in range(1, len(position)):
+                if position[i] - lastBallPosition >= force:
+                    lastBallPosition = position[i]
+                    ballsPlaced+=1
+            
+            return ballsPlaced >= m
+        
+
+        while l < r:
+            mid = (l + r + 1) // 2
+            # if we are able to place all balls and achieve mid, keep as result
+            if canAchieve(mid):
+                l = mid
+            else:
+                r = mid - 1
+        
+        return l
+
     # ── Attempt 1 · 2026-09-20 ────────────────────────────────────────────
     def maxDistance(self, position: List[int], m: int) -> int:
         # so we want to maximize the force that we can get from placing m balls in these positions
