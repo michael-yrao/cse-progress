@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "hooks": {
+    "beforeSubmitPrompt": [
+      {
+        "type": "command",
+        "command": "python scripts/hooks/cursor_bridge.py beforeSubmitPrompt",
+        "timeout": 10
+      }
+    ],
+    "afterAgentResponse": [
+      {
+        "type": "command",
+        "command": "python scripts/hooks/cursor_bridge.py afterAgentResponse",
+        "timeout": 10
+      }
+    ],
+    "stop": [
+      {
+        "type": "command",
+        "command": "python scripts/hooks/cursor_bridge.py stop",
+        "timeout": 10,
+        "loop_limit": 1
+      }
+    ],
+    "sessionStart": [
+      {
+        "type": "command",
+        "command": "python scripts/hooks/cursor_bridge.py sessionStart",
+        "timeout": 10
+      }
+    ],
+    "postToolUse": [
+      {
+        "type": "command",
+        "command": "python scripts/hooks/cursor_bridge.py postToolUse",
+        "timeout": 10
+      }
+    ]
+  }
+}
