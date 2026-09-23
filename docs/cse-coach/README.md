@@ -13,6 +13,7 @@ DSA, system design, or AI engineering belongs in [`../foundations/`](../foundati
 | File | What it's for |
 |------|---------------|
 | [`ROADMAP.md`](ROADMAP.md) | The "make this forkable" backlog — separating framework from personal data |
+| [`AGENT_PORTABILITY_PLAN.md`](AGENT_PORTABILITY_PLAN.md) | Approved plan for running cse-coach on Copilot and Cursor — hub `AGENTS.md`, spec-clean skill, hook bridges, live-probe checklist |
 
 ## On ROADMAP.md's shelf life
 

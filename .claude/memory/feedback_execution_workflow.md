@@ -1,9 +1,9 @@
 ---
 name: feedback-execution-workflow
-description: Tech lead plans, Opus team leads supervise Sonnet engineers who implement, tech lead reviews + runs advisor before any commit/push — GLOBAL, three-tier pyramid at a 2:1 spawn ratio, for all non-trivial work (evidence/why for the always-on gate in ~/.claude/rules/execution-workflow.md)
+description: Tech lead plans, Opus team leads supervise Sonnet engineers who implement, the leads themselves review before any commit/push (no separate advisor since 2026-09-22) — GLOBAL, three-tier pyramid at a 2:1 spawn ratio, for all non-trivial work (evidence/why for the always-on gate in ~/.claude/rules/execution-workflow.md)
 metadata:
   type: feedback
-reconciled: 2026-09-21
+reconciled: 2026-09-22
 ---
 **NORMATIVE SSOT is the always-on global rule** `~/.claude/rules/execution-workflow.md` (auto-injected
 in every repo), enforced by the global `UserPromptSubmit` hook
@@ -36,7 +36,7 @@ integrates only; all edits go to Sonnet engineer subagents (spawn as many as nee
 
 | Tier | Model | What |
 |---|---|---|
-| Tech lead | the session (Fable on Max, Opus otherwise) | explore, design, write the plan, get approval, review every diff, run `advisor`, integrate |
+| Tech lead | the session (Fable on Max, Opus otherwise) | explore, design, write the plan, get approval, review every diff, integrate |
 | Team lead | Opus (`team-lead` agent) | own one plan slice, brief/supervise ≤ 2 engineers, review their diffs, report up |
 | Engineer | Sonnet (`engineer` agent) | execute a brief — edits, tests, build; report the diff |
 
@@ -45,14 +45,19 @@ faster/cheaper one, with an Opus review gate so nothing lands unreviewed. Mirror
 deliberative-vs-mechanical register split.
 
 **How to apply:** Opus spawns a Sonnet 5 subagent (`model: "sonnet"`) with the approved plan as its
-brief; the subagent does NOT commit/push; Opus reviews, runs `advisor`, then commits/pushes per the
+brief; the subagent does NOT commit/push; Opus reviews the diff itself, then commits/pushes per the
 standing no-PR instruction.
+
+**`advisor` retired 2026-09-22 (learner's call):** the reviewer IS the lead — the tech lead reviews the
+consolidated diff, a team lead reviews its engineers' diffs. There is no separate review agent or tool;
+`project_site_refresh_resume.md` had already recorded that nothing stood behind the name. See
+`decisions.yml` `advisor-retired-sep22`.
 
 **Extended 2026-09-20 to the weekly EOW schedule build** (learner's call). The Sunday close-out runs the
 same split: **Opus** prices/designs the build (capacity, pulls, day placement — the judgement), a
 **Sonnet 5 subagent** does the mechanical writeback only (`git mv` the archive, write the next-week
 schedule file from the approved plan, run the checker scripts — no commit/push), **Opus** reviews the
-diff + runs `advisor`, then commits/pushes. ⭐ Only the mechanical writeback goes to the subagent — never
+diff, then commits/pushes. ⭐ Only the mechanical writeback goes to the subagent — never
 the planning, and never a teach or a rep. Operational home for the build steps:
 `.claude/skills/cse-coach/references/weekly-build.md`. See `decisions.yml` `eow-close-out-process-sep20`.
 

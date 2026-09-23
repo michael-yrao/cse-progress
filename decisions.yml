@@ -799,3 +799,18 @@ decisions:
       instrument or not-yet-upstream-eligible. See project_upstream_candidates.md §9,
       project_gamification.md.
     affects: [gamification, scheduling]
+
+  - id: advisor-retired-sep22
+    date: 2026-09-22
+    summary: >-
+      RETIRES the `advisor` step from the execution workflow (learner's call, Sep 22). The reviewer is the
+      lead itself: the tech lead reviews the consolidated diff, a team lead reviews its engineers' diffs,
+      before any commit/push. No separate review agent or tool ever stood behind the name in this repo
+      (project_site_refresh_resume.md recorded that on Sep 21). Edited in the same push:
+      ~/.claude/rules/execution-workflow.md (tech-lead row + the Review bullet) and
+      ~/.claude/hooks/execution_workflow_reminder.py (docstring + reminder text) in claude-dotfiles;
+      feedback_execution_workflow.md, MEMORY.md, weekly-build.md's Review row and
+      project_site_refresh_resume.md here. Strands any wording that says "run `advisor`". Also the
+      commit that lands docs/cse-coach/AGENT_PORTABILITY_PLAN.md (Copilot + Cursor portability plan,
+      approved Sep 22, not yet implemented — Phase 1 brief is in the plan).
+    affects: [execution_workflow]
