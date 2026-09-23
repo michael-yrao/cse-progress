@@ -1210,3 +1210,8 @@ each already tagged, each a first occurrence.
 
 **Deferred (unchanged from 09-19):** the ~80 pre-09-10 open one-offs stay deferred, optional
 batch-archiving cleanup, not mechanical. Cadence reset.
+
+## 2026-09-23 [P1] fam: lead-forced-handback — The single `team-lead` handed back three times before its engineers reported (2nd session in this family)
+**What:** One lead, two background engineers; the lead's turn ended the moment its spawns were issued, and again on each resume while the engineers were still running. Its actual review only happened on the fourth resume, after both engineers had reported to the tech lead directly. Nothing was lost; every resume cost a round trip.
+**Why it recurred:** The 09-21 entry's rung-1 fix (spawn engineers with `run_in_background: false`, or block on the first with a foreground call) was proposed but never written into `~/.claude/agents/team-lead.md` — a grep for `run_in_background`/`hand back`/`foreground` in that file finds nothing today. Prose in the brief did not prevent it, as 09-21 already predicted.
+**Fix/ladder:** 2nd session, 6 occurrences total -> the proposed rung-1 edit is now overdue, not optional: add to the team-lead agent definition "spawn engineers with `run_in_background: false` (or block on the first with a foreground call) so the turn cannot end before their reports exist". Lives in the private claude-dotfiles repo, needs its own commit; proposed to the learner in the 09-23 end-status board report. Close this entry when that edit is verified by a live spawn, per the "verified by live probe" standard.

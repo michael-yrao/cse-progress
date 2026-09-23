@@ -208,6 +208,17 @@ def _weekday_lookup(week_start: dt.date) -> dict[tuple[str, str, int], str]:
             for d in (week_start + dt.timedelta(days=o) for o in range(7))}
 
 
+def _end_glyph(cell: str | None) -> str | None:
+    """The first comfort glyph (🔴🟡🟢🎓) in a schedule cell, or None for a glyph-less one
+    (`unrated`, `—`, `✅ delivered`, empty). Self-contained (only eb.GLYPH) so it ports
+    verbatim wherever a schedule cell needs the same read — the comfort timeline's End
+    column here, and the board slice's endComfort in _schedule_item_outcome below."""
+    if not cell:
+        return None
+    match = eb.GLYPH.search(cell)
+    return match.group(0) if match else None
+
+
 def _scan_week(path: Path, week_start: dt.date, index: dict[str, dict[int, str]]) -> None:
     lookup = _weekday_lookup(week_start)
     current: str | None = None
@@ -224,9 +235,7 @@ def _scan_week(path: Path, week_start: dt.date, index: dict[str, dict[int, str]]
         num = eb.SCHED_NUM.search(row["c1"] or "")
         if not num:
             continue
-        end = eb.GLYPH.search(row["c3"] or "")
-        start = eb.GLYPH.search(row["c2"] or "")
-        glyph = (end or start).group(0) if (end or start) else None
+        glyph = _end_glyph(row["c3"]) or _end_glyph(row["c2"])
         if glyph:
             index.setdefault(current, {})[int(num.group(1))] = glyph
 
@@ -392,12 +401,51 @@ def _clean_schedule_title(text: str) -> str:
     return re.sub(r"\s+", " ", first).strip()
 
 
+# The E cell's outcome note (`s0`/`s1`/`s2`/`prov`/`dropped`) is written after the glyph,
+# sometimes with a leading arrow (`🟡→dropped`) rather than a space — both are stripped
+# before the note is kept.
+_NOTE_LEADING_STRIP = re.compile(r"^[\s→—]+")
+_WHITESPACE_RUN = re.compile(r"\s+")
+# The Next cell counts only when it is NOTHING BUT an ISO date — a free-form note
+# ("Sep 14 phase") is not a schedulable review date.
+_FULL_ISO_DATE = re.compile(r"\d{4}-\d{2}-\d{2}")
+# Matches the scheduleItem.endNote schema maxLength (dashboard/progress.schema.json) —
+# the real vocabulary (s0/s1/s2/prov/dropped) never approaches this, so a cap is simpler
+# than a truncation policy that never actually fires.
+END_NOTE_MAX_LENGTH = 16
+
+
+def _schedule_item_outcome(end_cell: str | None, next_cell: str | None) -> dict:
+    """The per-rep outcome earned on a schedule row, for the board slice: `{endComfort,
+    endNote, nextReview}` (all None for a glyph-less/blank row).
+
+    endComfort: the first comfort glyph in the E cell — UNLIKE the comfort-timeline read
+    (_scan_week), this never falls back to the Start glyph, so the board shows only what
+    was actually earned this rep, never the start comfort carried forward as if earned.
+    endNote: only set when endComfort is non-null — the E cell with that glyph removed, a
+    leading arrow/dash/space run stripped, internal whitespace collapsed to one space,
+    lowercased, and capped at END_NOTE_MAX_LENGTH chars. nextReview: the Next cell iff,
+    once stripped, it is nothing but an ISO date.
+    """
+    end_comfort = _end_glyph(end_cell)
+    end_note = None
+    if end_comfort:
+        remainder = (end_cell or "").replace(end_comfort, "", 1)
+        remainder = _NOTE_LEADING_STRIP.sub("", remainder)
+        remainder = _WHITESPACE_RUN.sub(" ", remainder).strip().lower()
+        end_note = remainder[:END_NOTE_MAX_LENGTH] if remainder else None
+    stripped_next = (next_cell or "").strip()
+    next_review = stripped_next if _FULL_ISO_DATE.fullmatch(stripped_next) else None
+    return {"endComfort": end_comfort, "endNote": end_note, "nextReview": next_review}
+
+
 def _parse_schedule_day_full(
     path: Path, day: dt.date, difficulty_by_num: dict[int, str], urls: dict[int, str],
 ) -> tuple[list[dict], str | None, float | None]:
     """Like eb.parse_schedule_day, but keeps the day's label and each item's technique,
-    tags, kind and a display-clean title — eb's own version only needs the number, the
-    start comfort, and whether a row is done, because that is all effort pricing ever
+    tags, kind, a display-clean title, and the per-rep outcome (endComfort/endNote/
+    nextReview, from _schedule_item_outcome) — eb's own version only needs the number,
+    the start comfort, and whether a row is done, because that is all effort pricing ever
     reads.
 
     `difficulty_by_num` joins each item's intrinsic Easy/Medium/Hard from the TRACKER (the
@@ -456,6 +504,7 @@ def _parse_schedule_day_full(
             "tags": tags,
             "kind": _schedule_item_kind(technique, tags),
             "done": "~~" in cell,
+            **_schedule_item_outcome(m["c3"], m["c4"]),
         })
     return items, label, units
 

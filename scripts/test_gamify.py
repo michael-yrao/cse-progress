@@ -450,13 +450,18 @@ class ParseCurrentWeekScheduleTests(unittest.TestCase):
                                  "difficulty": "Medium",
                                  "url": "https://leetcode.com/problems/generate-parentheses/",
                                  "tags": ["protected", "backfill"], "kind": "rep",
-                                 "done": False})
+                                 "done": False,
+                                 "endComfort": None, "endNote": None, "nextReview": None})
+        # The 100 row's E cell is "🎓" (no trailing note) and Next is "2026-10-01" — pins
+        # endComfort/nextReview are emitted, and a glyph with nothing following it yields
+        # endNote null rather than an empty string.
         self.assertEqual(done, {"lcNumber": 100, "title": "Same Tree",
                                 "technique": "Tree-DFS", "startComfort": "🟢",
                                 "difficulty": "Easy",
                                 "url": "https://leetcode.com/problems/same-tree/",
                                 "tags": [], "kind": "rep",
-                                "done": True})
+                                "done": True,
+                                "endComfort": "🎓", "endNote": None, "nextReview": "2026-10-01"})
         # 55 has a real lcNumber but is deliberately absent from TRACKER_FIXTURE — the
         # honest-null case for `difficulty` (a number the tracker doesn't have yet). `url`
         # is NOT null, though: 55's row carries its own [LC] link, which _schedule_item_url
@@ -466,7 +471,8 @@ class ParseCurrentWeekScheduleTests(unittest.TestCase):
                                      "difficulty": None,
                                      "url": "https://leetcode.com/problems/jump-game/",
                                      "tags": [], "kind": "rep",
-                                     "done": False})
+                                     "done": False,
+                                     "endComfort": None, "endNote": None, "nextReview": None})
 
     def test_new_intake_row_gets_lcnumber_from_fallback_and_url_from_own_link(self):
         # 🆕 39 has no `[`/`**` before its number, so eb.SCHED_NUM (by design) finds
@@ -481,7 +487,8 @@ class ParseCurrentWeekScheduleTests(unittest.TestCase):
                                            "difficulty": None,
                                            "url": "https://leetcode.com/problems/combination-sum/",
                                            "tags": ["new"], "kind": "new",
-                                           "done": False})
+                                           "done": False,
+                                           "endComfort": None, "endNote": None, "nextReview": None})
 
     def test_row_own_link_url_wins_over_tracker_join(self):
         # 77's URLS entry is deliberately a different (stale) url — the row's own [LC]
@@ -494,7 +501,8 @@ class ParseCurrentWeekScheduleTests(unittest.TestCase):
                                            "difficulty": None,
                                            "url": "https://leetcode.com/problems/word-break/",
                                            "tags": [], "kind": "rep",
-                                           "done": False})
+                                           "done": False,
+                                           "endComfort": None, "endNote": None, "nextReview": None})
 
     def test_primer_row_has_no_lcnumber_and_kind_primer(self):
         # The only kind/tag branch ("primer") not otherwise exercised by a real or
@@ -509,7 +517,8 @@ class ParseCurrentWeekScheduleTests(unittest.TestCase):
             "technique": "concept overview, no LC number", "startComfort": None,
             "difficulty": None, "url": None,
             "tags": ["primer"], "kind": "primer",
-            "done": False})
+            "done": False,
+            "endComfort": None, "endNote": None, "nextReview": None})
 
     def test_emphasis_before_glyph_does_not_blank_out_tags(self):
         # `~~🆕 39 ...~~` (whole row struck AHEAD of its tag glyph) is real archived
@@ -526,7 +535,8 @@ class ParseCurrentWeekScheduleTests(unittest.TestCase):
             "difficulty": None,
             "url": "https://leetcode.com/problems/combination-sum/",
             "tags": ["new"], "kind": "new",
-            "done": True})
+            "done": True,
+            "endComfort": None, "endNote": None, "nextReview": None})
 
     def test_complexity_technique_wins_kind_over_the_probe_tag(self):
         # All three Sunday rows are 🎯-tagged AND carry Technique "Complexity" — kind must
@@ -556,7 +566,8 @@ class ParseCurrentWeekScheduleTests(unittest.TestCase):
             "difficulty": "Medium",
             "url": "https://leetcode.com/problems/number-of-islands/",
             "tags": [], "kind": "rep",
-            "done": False})
+            "done": False,
+            "endComfort": None, "endNote": None, "nextReview": None})
 
     def test_nc_only_row_with_no_tracker_entry_uses_nc_as_last_resort(self):
         # 269's row also carries only its own [NC] link, and 269 has NO tracker entry —
@@ -570,7 +581,8 @@ class ParseCurrentWeekScheduleTests(unittest.TestCase):
             "difficulty": None,
             "url": "https://neetcode.io/problems/foreign-dictionary",
             "tags": [], "kind": "rep",
-            "done": False})
+            "done": False,
+            "endComfort": None, "endNote": None, "nextReview": None})
 
     def test_day_with_no_block_has_no_items(self):
         result = gamify.parse_current_week_schedule(dt.date(2026, 9, 21), self.URLS)
@@ -580,6 +592,74 @@ class ParseCurrentWeekScheduleTests(unittest.TestCase):
     def test_no_current_schedule_file_is_none(self):
         result = gamify.parse_current_week_schedule(dt.date(2030, 1, 1), self.URLS)
         self.assertIsNone(result)
+
+
+class ScheduleItemOutcomeTests(unittest.TestCase):
+    """_schedule_item_outcome(end_cell, next_cell) — pure, no file IO. Pins the real E-cell
+    vocabulary (s0/s1/s2/prov/dropped) seen across every week since the Aug 17 format, and
+    the glyph-less cells (unrated/—/✅ delivered/empty) that must yield three nulls."""
+
+    def test_glyph_with_streak_note_and_a_full_next_date(self):
+        self.assertEqual(gamify._schedule_item_outcome("🟢 s2", "2026-10-21"),
+                          {"endComfort": "🟢", "endNote": "s2", "nextReview": "2026-10-21"})
+
+    def test_glyph_with_prov_note_and_no_next_date(self):
+        self.assertEqual(gamify._schedule_item_outcome("🟢 prov", ""),
+                          {"endComfort": "🟢", "endNote": "prov", "nextReview": None})
+
+    def test_bare_glyph_with_a_next_date(self):
+        self.assertEqual(gamify._schedule_item_outcome("🟡", "2026-09-30"),
+                          {"endComfort": "🟡", "endNote": None, "nextReview": "2026-09-30"})
+
+    def test_arrow_prefixed_note_is_stripped_to_dropped(self):
+        self.assertEqual(gamify._schedule_item_outcome("🟡→dropped", ""),
+                          {"endComfort": "🟡", "endNote": "dropped", "nextReview": None})
+
+    def test_unrated_has_no_glyph_so_everything_is_null(self):
+        self.assertEqual(gamify._schedule_item_outcome("unrated", ""),
+                          {"endComfort": None, "endNote": None, "nextReview": None})
+
+    def test_em_dash_has_no_glyph_so_everything_is_null(self):
+        self.assertEqual(gamify._schedule_item_outcome("—", ""),
+                          {"endComfort": None, "endNote": None, "nextReview": None})
+
+    def test_checkmark_delivered_has_no_glyph_so_everything_is_null(self):
+        self.assertEqual(gamify._schedule_item_outcome("✅ delivered", ""),
+                          {"endComfort": None, "endNote": None, "nextReview": None})
+
+    def test_both_cells_empty_is_all_null(self):
+        self.assertEqual(gamify._schedule_item_outcome("", ""),
+                          {"endComfort": None, "endNote": None, "nextReview": None})
+
+    def test_free_form_next_cell_does_not_full_match_a_date(self):
+        self.assertEqual(gamify._schedule_item_outcome("🟢", "Sep 14 phase"),
+                          {"endComfort": "🟢", "endNote": None, "nextReview": None})
+
+    def test_note_whitespace_collapsed_and_lowercased(self):
+        self.assertEqual(gamify._schedule_item_outcome(" 🟢  S1 ", ""),
+                          {"endComfort": "🟢", "endNote": "s1", "nextReview": None})
+
+
+class ScanWeekEndGlyphFallbackTests(unittest.TestCase):
+    """_scan_week still falls back to the Start glyph when the End cell is empty — guards
+    the _end_glyph refactor. Only the board slice (_schedule_item_outcome, above) refuses
+    that fallback; the comfort timeline still wants SOME glyph recorded per rep."""
+
+    def test_falls_back_to_start_glyph_when_end_cell_is_empty(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "20260921_schedule.md"
+            path.write_text(
+                "## Daily Schedule\n\n"
+                "| Problem | S | E | Next | Technique |\n"
+                "|---|:-:|:-:|:-:|---|\n"
+                "| ▸ **Mon Sep 21** · 6.8 units — Test day |  |  |  |  |\n"
+                "| [22 Generate Parentheses](../../../dsa/leetcode/backtracking/22_x.py)"
+                " | 🔴 | | | Backtracking |\n",
+                encoding="utf-8",
+            )
+            index: dict[str, dict[int, str]] = {}
+            gamify._scan_week(path, dt.date(2026, 9, 21), index)
+            self.assertEqual(index, {"2026-09-21": {22: "🔴"}})
 
 
 class ParseProbesTests(unittest.TestCase):
