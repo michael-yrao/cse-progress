@@ -65,6 +65,22 @@ progressiveoverflow.com/learn is a hand-written cheat sheet in the site repo
 A JSON Schema (`dashboard/cheat-sheets.schema.json`) pins this, mirroring how `progress.schema.json` pins the
 progress contract. Additive changes bump nothing; a field removal bumps `schemaVersion`.
 
+**Deltas accepted from the Phase B build (Sep 22, 2026):**
+
+- `signals[].page?: boolean` and `notWhen[].technique` may be a plain **label** with `page: false` (heap,
+  Boyer-Moore, cyclic sort, two heaps, quickselect, Dijkstra, Bellman-Ford, BFS, "DFS/BFS") — for a
+  neighbour that has no technique page. The generator emits an id when a technique doc with that slug
+  exists, else the label + `page: false`; the validator does **not** fail on a label.
+- `keyProblems[].title` must be the **real LeetCode title** — the site derives the LeetCode URL from it
+  when it has no visualizer for that number. "Remove Duplicates" or "Diameter" 404s.
+- The B2 seed carries tech-lead-authored content that the docs do not yet have: every `picking.feature` and
+  `notWhen`, every per-variant complexity line, pitfalls for backtracking / binary-search / recursion /
+  sliding-window / two-pointer, six `whenToUse` sentences, and a full Prim's template. **C1 copies these
+  INTO the docs** (the seed is the source for that pass); the C2 generator must then reproduce the seed.
+- `techniques.yml` has no entry for `backtracking` or `recursion`; C1 adds both (family keys as in the
+  seed). `dummy-node → linked_list`, `memoization → dynamic_programming / dp`, `tree-dfs ↔ "Tree DFS
+  (recursive)"` were guesses that C1 confirms or corrects in the same pass.
+
 ## The markdown contract (what each technique doc must carry)
 
 The docs stay prose for the learner; the generator reads **only** these headings and ignores everything else
