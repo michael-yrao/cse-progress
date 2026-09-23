@@ -2,7 +2,9 @@
 
 Union-Find tracks a partition of elements into disjoint groups, supporting two near-O(1) operations: **find** (which group is x in?) and **union** (merge two groups). With path compression + union by rank, both are effectively O(α(n)) ≈ O(1).
 
-## When to reach for it (recognition signal)
+## When to reach for it
+
+Union-Find tracks a partition of elements into disjoint groups, supporting two near-O(1) operations: find (which group is x in?) and union (merge two groups). With path compression + union by rank, both are effectively O(α(n)) ≈ O(1).
 
 - "are these two connected?" / "how many connected components?"
 - grouping / clustering elements as edges arrive (dynamic connectivity)
@@ -12,7 +14,15 @@ Union-Find tracks a partition of elements into disjoint groups, supporting two n
 
 If the problem is about *connectivity* and edges come one at a time, Union-Find usually beats DFS/BFS.
 
-## Template
+## Picking feature
+
+Edges arrive ONE AT A TIME, or the only question is "are these two in the same group?" — union-find answers it in near-O(1) per edge without ever walking the graph.
+
+- **not DFS/BFS** — the graph is given whole and you need to WALK it (a path, an order, levels) — group membership alone is not the question
+- **not topological-sort** — edges are directed and the question is order, not connectivity
+
+
+## Template: Template
 
 ```python
 parent = list(range(n))
@@ -35,6 +45,7 @@ def union(a, b):
         rank[ra] += 1
     return True
 ```
+Complexity: O(α(n)) per op time · O(n) space — With path compression + union by rank, both find and union are effectively O(α(n)) ≈ O(1); the parent and rank arrays are the only state
 
 ## Two facts worth memorizing
 
@@ -42,6 +53,12 @@ def union(a, b):
 - **`union` returning False = the two were already connected** = for an undirected graph, this edge closes a cycle. That's the whole trick behind Redundant Connection.
 
 ## Practice
+
+- LC 323 — Number of Connected Components in an Undirected Graph
+- LC 261 — Graph Valid Tree
+- LC 684 — Redundant Connection
+- LC 130 — Surrounded Regions
+- LC 547 — Number of Provinces
 
 | Problem | NC150? | Wrinkle |
 |---|---|---|

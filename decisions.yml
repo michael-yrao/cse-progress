@@ -799,3 +799,27 @@ decisions:
       instrument or not-yet-upstream-eligible. See project_upstream_candidates.md §9,
       project_gamification.md.
     affects: [gamification, scheduling]
+
+  - id: learn-cheatsheet-contract-sep22
+    date: 2026-09-22
+    summary: >-
+      The 18 technique docs (docs/foundations/dsa/patterns/techniques/) gained a machine-read
+      markdown contract — five exact headings (When to reach for it / Picking feature /
+      Template: <title> + a Complexity line / Common pitfalls / Practice) — parsed by the new
+      scripts/build_cheatsheets.py into dashboard/cheat-sheets.json (the schema itself,
+      cheat-sheets.schema.json, is copied verbatim from scripts/fixtures/ alongside it), the
+      same source-tier/dashboard-tier split gamify.py established for progress.json.
+      scripts/check_cheatsheets.py --check validates the contract, wired report-only in
+      pre-commit (like check_single_source.py) until all 18 docs pass. techniques.yml gained a
+      `doc:` join key (one entry per technique doc) so family/tier resolve without a second
+      copy of that vocabulary. progressiveoverflow.com's /learn stops carrying its own
+      hand-written cheat-sheet copy (10 data-structure-keyed entries) and fetches this file
+      instead, falling back to a bundled copy — see docs/cse-coach/learn_cheatsheet_plan.md
+      (Phase C). No cse.config.yml value changed. Strands any wording that still calls /learn's
+      cheat sheet hand-maintained, or that says the technique docs carry no machine-read
+      contract, or that the docs' Picking-feature/notWhen/per-variant-complexity content
+      doesn't exist yet (the plan's Phase-B seed authored it; C1 copies it into the docs). See
+      scripts/build_cheatsheets.py, scripts/check_cheatsheets.py, project_gamification.md.
+      2026-09-23: all 18 docs pass, so scripts/check_cheatsheets.py --check is promoted from
+      report-only to blocking in pre-commit as of the commit landing this Phase C follow-up.
+    affects: [gamification]

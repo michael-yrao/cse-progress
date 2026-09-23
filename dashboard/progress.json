@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-21",
+  "generatedAt": "2026-09-23",
   "totals": {
     "problems": 123,
     "solutions": 134,
@@ -31,16 +31,16 @@
     "restDayAllowance": 1
   },
   "coverage": {
-    "total": 94,
-    "started": 56,
+    "total": 98,
+    "started": 59,
     "noGreen": 0,
-    "thin": 18,
+    "thin": 19,
     "variantGaps": 3
   },
   "onSchedule": {
     "totalActive": 134,
     "dueToday": 1,
-    "overdue": 4
+    "overdue": 9
   },
   "trophyCase": {
     "graduated": [
@@ -1123,6 +1123,22 @@
       "hasVariantGap": false
     },
     {
+      "name": "Backtracking",
+      "family": "backtracking",
+      "tier": "core",
+      "started": true,
+      "minProblems": 3,
+      "problemCount": 2,
+      "problems": [
+        22,
+        78
+      ],
+      "bestComfort": "🟢",
+      "hasGreen": true,
+      "thin": true,
+      "hasVariantGap": false
+    },
+    {
       "name": "Binary Search (exact match)",
       "family": "binary_search",
       "tier": "core",
@@ -1264,6 +1280,19 @@
       "tier": "dp",
       "started": false,
       "minProblems": 1,
+      "problemCount": 0,
+      "problems": [],
+      "bestComfort": null,
+      "hasGreen": false,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Memoization",
+      "family": "dynamic_programming",
+      "tier": "dp",
+      "started": false,
+      "minProblems": 3,
       "problemCount": 0,
       "problems": [],
       "bestComfort": null,
@@ -1899,6 +1928,23 @@
       "hasVariantGap": false
     },
     {
+      "name": "Dummy Node",
+      "family": "linked_list",
+      "tier": "core",
+      "started": true,
+      "minProblems": 3,
+      "problemCount": 3,
+      "problems": [
+        2,
+        19,
+        21
+      ],
+      "bestComfort": "🎓",
+      "hasGreen": true,
+      "thin": false,
+      "hasVariantGap": false
+    },
+    {
       "name": "Floyd's Cycle / Midpoint",
       "family": "linked_list",
       "tier": "core",
@@ -2018,6 +2064,23 @@
       "bestComfort": "🟢",
       "hasGreen": true,
       "thin": true,
+      "hasVariantGap": false
+    },
+    {
+      "name": "Recursion",
+      "family": "recursion",
+      "tier": "core",
+      "started": true,
+      "minProblems": 3,
+      "problemCount": 3,
+      "problems": [
+        19,
+        21,
+        206
+      ],
+      "bestComfort": "🎓",
+      "hasGreen": true,
+      "thin": false,
       "hasVariantGap": false
     },
     {

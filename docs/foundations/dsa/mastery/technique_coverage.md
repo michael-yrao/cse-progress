@@ -6,7 +6,7 @@
 
 > The tracker is keyed by **problem**; this is keyed by **technique**. Use it at the weekly build to decide what to pull, and at phase exit to check the per-algorithm bar (recognition + execution, ≥1 🟢 each).
 
-> **56/94** techniques started &nbsp;·&nbsp; **0** with no 🟢 &nbsp;·&nbsp; **18** thin &nbsp;·&nbsp; **3** unqueued variant gaps
+> **59/98** techniques started &nbsp;·&nbsp; **0** with no 🟢 &nbsp;·&nbsp; **19** thin &nbsp;·&nbsp; **3** unqueued variant gaps
 
 ## ⚠️ Action list
 
@@ -22,6 +22,7 @@
 - **Prim's MST** (advanced_graphs) — 1/3: 1584
 - **Stack (augmented entries)** (stack) — 1/2: 155
 - **Stack (expression evaluation)** (stack) — 1/2: 150
+- **Backtracking** (backtracking) — 2/3: 22, 78
 - **Floyd's Cycle / Midpoint** (linked_list) — 2/3: 141, 143
 - **Floyd-Warshall (all-pairs shortest path)** (advanced_graphs) — 2/3: 1334, 1462
 - **Grid DFS** (graphs) — 2/3: 200, 695
@@ -56,6 +57,7 @@ Every declared technique gets a row, started or not — a not-started row's Gaps
 | In-Place Array Rotation | arrays_and_hash | core | 1 | 1 (189) | 🟢 | ✅ | — | — |
 | Length-Prefix Encoding | arrays_and_hash | core | 1 | 1 (271) | 🟢 | ✅ | — | — |
 | Prefix/Suffix Products | arrays_and_hash | core | 1 | 1 (238) | 🟢 | ✅ | — | — |
+| Backtracking | backtracking | core | 3 | 2 (22, 78) | 🟢 | ✅ | — | thin (2/3) |
 | Binary Search (exact match) | binary_search | core | 2 | 2 (33, 704) | 🎓 | ✅ | — | — |
 | Binary Search (max boundary) | binary_search | core | 3 | 3 (34, 74, 1552) | 🟢 | ✅ | — | — |
 | Binary Search (min boundary) | binary_search | core | 3 | 7 (34, 153, 162, 540, 875, 1011, 2300) | 🎓 | ✅ | — | — |
@@ -66,6 +68,7 @@ Every declared technique gets a row, started or not — a not-started row's Gaps
 | Knapsack | dynamic_programming | dp | 3 | 0 (—) | — | ❌ | — | *not started* |
 | Longest Common Subsequence | dynamic_programming | dp | 1 | 0 (—) | — | ❌ | — | *not started* |
 | Longest Increasing Subsequence | dynamic_programming | dp | 1 | 0 (—) | — | ❌ | — | *not started* |
+| Memoization | dynamic_programming | dp | 3 | 0 (—) | — | ❌ | — | *not started* |
 | Space Compression | dynamic_programming | dp | 1 | 0 (—) | — | ❌ | — | *not started* |
 | 2-SAT | expansion | tier3 | 1 | 0 (—) | — | ❌ | — | *not started* |
 | Advanced Geometry | expansion | tier3 | 1 | 0 (—) | — | ❌ | — | *not started* |
@@ -111,6 +114,7 @@ Every declared technique gets a row, started or not — a not-started row's Gaps
 | Heap / Priority Queue | heap | core | 3 | 6 (347, 355, 621, 703, 973, 1046) | 🟢 | ✅ | — | — |
 | Intervals (sort + sweep) | intervals | core | 5 | 3 (56, 57, 435) | 🟢 | ✅ | Merge overlapping (sort by start) ×1 · Insert into sorted (3-phase sweep) ×1 · Interval scheduling (sort by end) ×1 · ~~Max concurrent (sweep line / min-heap of ends)~~ *(queued: `green:435`)* · ~~Two-list intersection (two pointers)~~ *(queued: `green:56`)* | thin (3/5) |
 | Deep Copy via Hash Map | linked_list | core | 1 | 1 (138) | 🟢 | ✅ | — | — |
+| Dummy Node | linked_list | core | 3 | 3 *+2v* (2, 19, 21) | 🎓 | ✅ | — | — |
 | Floyd's Cycle / Midpoint | linked_list | core | 3 | 2 (141, 143) | 🟢 | ✅ | — | thin (2/3) |
 | HashMap + Doubly Linked List (LRU) | linked_list | core | 3 | 1 (146) | 🟢 | ✅ | — | thin (1/3) |
 | Linked List Arithmetic | linked_list | core | 1 | 1 (2) | 🟢 | ✅ | — | — |
@@ -119,6 +123,7 @@ Every declared technique gets a row, started or not — a not-started row's Gaps
 | Remove Nth From End | linked_list | core | 1 | 1 *+1v* (19) | 🟢 | ✅ | Iterative ×1 · Postorder Recursion ×1 · ~~Preorder Recursion~~ *(queued: `expansion — parked Jul 9`)* | — |
 | Kadane | prefix_sum | core | 1 | 1 (53) | 🟢 | ✅ | — | — |
 | Prefix Sum | prefix_sum | core | 3 | 2 (53, 560) | 🟢 | ✅ | — | thin (2/3) |
+| Recursion | recursion | core | 3 | 3 (19, 21, 206) | 🎓 | ✅ | — | — |
 | Greedy (single pass) | sliding_window | core | 1 | 6 (45, 55, 122, 134, 763, 846) | 🟢 | ✅ | — | — |
 | Sliding Window | sliding_window | core | 3 | 4 (3, 121, 424, 567) | 🟢 | ✅ | — | — |
 | Divide & Conquer / Sorting | sorting | core | 3 | 1 (912) | 🟢 | ✅ | Merge Sort ×1 · ~~Quick Sort~~ *(queued: `expansion — sorting deep-dive`)* · ~~Radix Sort~~ *(queued: `expansion — sorting deep-dive`)* · ~~Counting Sort~~ *(queued: `expansion — sorting deep-dive`)* · ~~Timsort~~ *(queued: `expansion — sorting deep-dive`)* · ~~D&C on 53~~ *(queued: `rated:912 + surplus>=1`)* | thin (1/3) |
@@ -140,14 +145,12 @@ Every declared technique gets a row, started or not — a not-started row's Gaps
 
 ## Vocabulary maintenance
 
-**Unmapped tracker rows (6)** — solved but assigned to no technique. Add them to `techniques.yml`, or coverage silently drifts behind the tracker.
+**Unmapped tracker rows (4)** — solved but assigned to no technique. Add them to `techniques.yml`, or coverage silently drifts behind the tracker.
 
 - 1489 Find Critical and Pseudo-Critical Edges in MST (Kruskal)
-- 22 Generate Parentheses
 - 648 Replace Words
 - 743 Network Delay Time (Dijkstra — array-scan)
 - 743 Network Delay Time (Dijkstra — min-heap)
-- 78 Subsets
 
 **Method drift (1)** — the tracker HAS a row for this problem, but not with the method the vocabulary declares. Either the parenthetical changed or the YAML names the wrong variant; the technique is not being credited.
 

@@ -2,13 +2,25 @@
 
 A **topological sort** orders the nodes of a **directed acyclic graph (DAG)** so every edge `u → v` has `u` before `v`. It answers "given dependencies, what's a valid order?" — and, as a side effect, detects cycles (a cyclic graph has *no* valid ordering).
 
-## When to reach for it (recognition signal)
+## When to reach for it
+
+A topological sort orders the nodes of a directed acyclic graph (DAG) so every edge u → v has u before v. It answers "given dependencies, what's a valid order?" — and, as a side effect, detects cycles (a cyclic graph has no valid ordering).
 
 - "prerequisites" / "dependencies" / "build order" / "course schedule"
 - "can you finish all tasks given these constraints?" (= is the graph a DAG?)
 - any "do A before B" ordering over a directed graph
 
-## Form 1 — Kahn's algorithm (BFS on indegrees)
+## Picking feature
+
+A DIRECTED dependency graph and the question is an order (or whether one exists) — every edge u → v is a "u before v" constraint, and a cycle means no answer.
+
+- **not union-find** — edges are undirected and the question is connectivity, not order
+- **not tree-bfs** — the question is fewest steps, not a valid ordering — plain BFS without the indegree bookkeeping
+
+
+## Template: Kahn's algorithm (BFS on indegrees)
+
+*When:* Repeatedly remove nodes with no remaining prerequisites (indegree 0).
 
 Repeatedly remove nodes with **no remaining prerequisites** (indegree 0).
 
@@ -33,8 +45,11 @@ while q:
 # if len(order) < n → a cycle exists (some nodes never hit indegree 0)
 return order if len(order) == n else []
 ```
+Complexity: O(V + E) time · O(V + E) space — each node is enqueued once and each edge decremented once; adjacency lists plus the indegree array
 
-## Form 2 — DFS postorder (reverse)
+## Template: DFS postorder (reverse)
+
+*When:* Finish a node only after all its descendants; the reverse of finish order is a topo order.
 
 Finish a node only after all its descendants; the **reverse of finish order** is a topo order. Cycle detection needs a 3-state color (unvisited / in-progress / done): revisiting an *in-progress* node = back edge = cycle.
 
@@ -54,6 +69,7 @@ def dfs(u):
     return True
 # run dfs on every WHITE node; final answer is order reversed
 ```
+Complexity: O(V + E) time · O(V + E) space — every node and edge is visited once; the colour array plus the recursion stack
 
 ## Which form to use
 
@@ -61,6 +77,11 @@ def dfs(u):
 - **DFS** if you're already doing DFS or want the classic postorder framing. The GRAY/BLACK cycle detection is the part people forget.
 
 ## Practice
+
+- LC 207 — Course Schedule
+- LC 210 — Course Schedule II
+- LC 269 — Alien Dictionary
+- LC 310 — Minimum Height Trees
 
 | Problem | NC150? | Wrinkle |
 |---|---|---|

@@ -8,6 +8,16 @@
 #   name          canonical technique name. This is the vocabulary — keep it stable;
 #                 everything downstream keys off it.
 #   family        grouping for the report, roughly the dsa/leetcode/<folder> pattern.
+#   doc           the /learn cheat-sheet's join key (Sep 23, 2026 — see
+#                 docs/cse-coach/learn_cheatsheet_plan.md): the technique doc's filename
+#                 stem under docs/foundations/dsa/patterns/techniques/ (underscores, e.g.
+#                 `doc: two_pointer`). scripts/build_cheatsheets.py reads a doc's family/
+#                 tier by joining on this key and raises a hard BuildError if zero or more
+#                 than one entry in this file carries a given `doc:` — a vocabulary bug,
+#                 not a content gap. Exactly one entry per technique doc (18 docs today);
+#                 not every entry needs one (sub-variant entries like "Binary Search (min
+#                 boundary)" don't — the doc is joined once, from its single best-matching
+#                 entry).
 #   min_problems  coverage bar. Defaults to 3 (a technique needs 3-4 surface forms before
 #                 it is a skill rather than recall of one problem). Drop to 1-2 for
 #                 patterns that are genuinely problem-specific — Dutch National Flag has
@@ -111,6 +121,7 @@ techniques:
   # ── Two pointers ────────────────────────────────────────────────────────────
   - name: Two Pointers (converging)
     family: two_pointers
+    doc: two_pointer
     problems:
       - {number: 125}
       - {number: 344}
@@ -147,6 +158,7 @@ techniques:
   # ── Sliding window ──────────────────────────────────────────────────────────
   - name: Sliding Window
     family: sliding_window
+    doc: sliding_window
     problems:
       - {number: 3}
       - {number: 424}
@@ -174,6 +186,7 @@ techniques:
   # with the bar met and could not surface a breadth gap even in principle.
   - name: Intervals (sort + sweep)
     family: intervals
+    doc: intervals
     min_problems: 5
     variants:
       - {name: "Merge overlapping (sort by start)"}
@@ -191,6 +204,7 @@ techniques:
   # coverage review: a LeetCode topic tag exists that can actually source it).
   - name: Prefix Sum
     family: prefix_sum
+    doc: prefix_sum
     problems:
       - {number: 560}
       - {number: 53, method: Prefix Sum}
@@ -227,6 +241,7 @@ techniques:
   # non-exact match binary searches."* Correct, and none of it was visible from the file.
   - name: Binary Search (exact match)
     family: binary_search
+    doc: binary_search
     min_problems: 2
     problems:
       - {number: 704}    # the base rung — target present or not
@@ -323,6 +338,7 @@ techniques:
 
   - name: Monotonic Stack
     family: stack
+    doc: monotonic_stack
     problems:
       - {number: 496}
       - {number: 503}
@@ -349,8 +365,28 @@ techniques:
       - {number: 239}
 
   # ── Linked list ─────────────────────────────────────────────────────────────
+  # Added for the /learn cheat-sheet contract (Sep 23, 2026) — dummy_node.md carried no
+  # techniques.yml entry (the plan's guess was "linked_list", confirmed here since every
+  # other linked-list technique already uses that family). Credits, by bare number (the
+  # dummy-node pattern applies regardless of which method the row's parenthetical names),
+  # each of 21, 19, 2, 83, 82, 86 that has a dsa_progress.md row: 21 (Merge Two Sorted
+  # Lists), 19 (Remove Nth Node From End), 2 (Add Two Numbers). 83, 82, 86 have no row in
+  # the tracker yet, so they're left out rather than credited speculatively. Each number
+  # credited here is already credited elsewhere too (Linked List Merge, Remove Nth From
+  # End, Linked List Arithmetic) — crediting one number to more than one entry is this
+  # file's normal model (200 credits both DFS and BFS the same way), not double-counting.
+  - name: Dummy Node
+    family: linked_list
+    tier: core
+    doc: dummy_node
+    problems:
+      - {number: 21}
+      - {number: 19}
+      - {number: 2}
+
   - name: Linked List Reversal
     family: linked_list
+    doc: in_place_reversal
     min_problems: 1
     variants:
       - {name: Iterative}
@@ -384,6 +420,7 @@ techniques:
   # coverage review: a LeetCode topic tag exists that can actually source it).
   - name: Floyd's Cycle / Midpoint
     family: linked_list
+    doc: fast_slow_pointer
     problems:
       - {number: 141}
       - {number: 143}
@@ -410,6 +447,7 @@ techniques:
   # ── Trees ───────────────────────────────────────────────────────────────────
   - name: Tree DFS (recursive)
     family: trees
+    doc: tree_dfs
     problems:
       - {number: 226}
       - {number: 104}
@@ -429,6 +467,7 @@ techniques:
   # coverage review: a LeetCode topic tag exists that can actually source it).
   - name: Tree BFS (level order)
     family: trees
+    doc: tree_bfs
     problems:
       - {number: 102}
       - {number: 199}
@@ -556,6 +595,7 @@ techniques:
 
   - name: Union-Find
     family: graphs
+    doc: union_find
     problems:
       - {number: 130, method: Union-Find}
       - {number: 261, method: Union-Find}
@@ -564,6 +604,7 @@ techniques:
 
   - name: Topological Sort
     family: graphs
+    doc: topological_sort
     variants:
       - {name: Kahn's (BFS)}
       - {name: DFS postorder, queued: "graduates:210"}
@@ -606,6 +647,7 @@ techniques:
   # miss: opened on Union-Find; execution clean). Gives the technique a 2nd surface form.
   - name: Floyd-Warshall (all-pairs shortest path)
     family: advanced_graphs
+    doc: floyd_warshall
     problems:
       - {number: 1334, method: Floyd-Warshall}
       - {number: 1462, method: Floyd-Warshall / Transitive Closure}
@@ -653,6 +695,7 @@ techniques:
   # min_problems dropped Aug 15, 2026 — same rule as Floyd-Warshall above.
   - name: Prim's MST
     family: advanced_graphs
+    doc: prims_mst
     variants:
       - {name: Prim's MST}
       - {name: Kruskal's MST}
@@ -663,6 +706,42 @@ techniques:
       # own row, Aug 31 week) rather than a 2nd 1584 entry — one number can't carry
       # two method parentheticals on a single row, and a duplicate just drifts.
       - {number: 1584, method: Prim's MST}
+
+  # ── Backtracking ────────────────────────────────────────────────────────────
+  # Added for the /learn cheat-sheet contract (Sep 23, 2026) — backtracking.md carried no
+  # techniques.yml entry at all. Credits 78 (Subsets, active 🟡 row) and 22 (Generate
+  # Parentheses, active 🟢 row) — the two dsa_progress.md rows that exist among the classic
+  # backtracking set (46, 39, 40, 17, 22, 51, 90, 131, 79, 78; 1216 backtracking is
+  # phase-gated Blank, not solved, so it earns no credit). Below the file's `defaults:
+  # min_problems` bar until more of that set is solved; the coverage report correctly
+  # flags it thin rather than not-started.
+  - name: Backtracking
+    family: backtracking
+    tier: core
+    doc: backtracking
+    problems:
+      - {number: 78}
+      - {number: 22}
+
+  # ── Recursion ───────────────────────────────────────────────────────────────
+  # Added for the /learn cheat-sheet contract (Sep 23, 2026) — recursion.md carried no
+  # techniques.yml entry at all. Credits every dsa_progress.md row whose title parenthetical
+  # names Recursion: 21 (Merge Two Sorted Lists), 19 (Remove Nth Node From End, Postorder
+  # Recursion), 206 (Reverse Linked List). Each is already credited elsewhere too (Linked
+  # List Merge, Remove Nth From End, Linked List Reversal) — crediting one number to more
+  # than one entry is this file's normal model (200 credits both DFS and BFS the same way),
+  # not double-counting. 19's Preorder Recursion row was parked OUT of the review table on
+  # Jul 9 (three variants were rotating; iterative + postorder stayed active, preorder did
+  # not) and Remove Nth From End above already declares it a `queued` variant rather than a
+  # credited problem — this entry follows that same call and does not credit it either.
+  - name: Recursion
+    family: recursion
+    tier: core
+    doc: recursion
+    problems:
+      - {number: 21, method: Recursion}
+      - {number: 19, method: Postorder Recursion}
+      - {number: 206, method: Recursion}
 
   # ── Sorting & divide and conquer ────────────────────────────────────────────
   # Bar raised to the file default of 3 on Aug 16, 2026 (tier A/B of the
@@ -696,6 +775,18 @@ techniques:
   # study_guide.md line 17 ("Framework lenses — knapsack / interval / LIS / space-
   # compression") + line 269 (2D DP phase names LCS) + the 1D/2D DP roadmap phases
   # themselves (lines 298/456/461), which are not yet started.
+  # Added for the /learn cheat-sheet contract (Sep 23, 2026) — memoization.md carried no
+  # techniques.yml entry (the plan's guess was "dynamic_programming / dp", confirmed here:
+  # the doc's own seed family/tier are exactly that). problems: [] because its one seed key
+  # problem (680, Valid Palindrome II) is already credited to "Two Pointers (converging)"
+  # above with no memoization-specific tag in dsa_progress.md — and, like every entry in
+  # this not-started block, nothing is credited yet. Accurate, not a gap to fill.
+  - name: Memoization
+    family: dynamic_programming
+    tier: dp
+    doc: memoization
+    problems: []
+
   - name: Knapsack
     family: dynamic_programming
     tier: dp

@@ -9,6 +9,25 @@ Two ways in, one source of truth:
 
 Rule of thumb: **know the move → open a technique. Know the shape → open a hub. Know neither → cheatsheet.** Techniques are never duplicated; hubs only link.
 
+## The machine-readable contract
+
+Every file under `techniques/` is also read by a script: `scripts/build_cheatsheets.py` generates
+progressiveoverflow.com/learn's technique cheat sheet from these docs, so the docs stay the single
+source of truth (per CLAUDE.md) instead of the site hand-maintaining its own copy. It reads exactly
+five `##` headings per doc — everything else (the deep-dive "Understanding …" / "Key Insights"
+sections) is prose for the learner and is ignored:
+
+- **`## When to reach for it`** — first paragraph, then one bullet per recognition signal
+- **`## Picking feature`** — the discriminating feature, then `- **not <technique>** — <because>` per neighbour it's *not*
+- **`## Template: <title>`** — one per variant, its python fence followed immediately by a `Complexity: <time> time · <space> space — <why>` line
+- **`## Common pitfalls`** — one bullet per pitfall
+- **`## Practice`** — one `LC <n> — <title>` bullet per key problem
+
+`python scripts/check_cheatsheets.py --check` validates every doc against this contract; it is
+blocking from the pre-commit hook as of Sep 23, 2026, now that all technique docs pass. See
+[`docs/cse-coach/learn_cheatsheet_plan.md`](../../../cse-coach/learn_cheatsheet_plan.md) for the full
+contract and why it's headings, not a sidecar file.
+
 ## By data structure (the "shape" lens)
 
 | Hub | Techniques it points to |

@@ -2,14 +2,23 @@
 
 Visit nodes **level by level** using a queue. The trick that makes "per level" work is snapshotting the queue length at the start of each level.
 
-## When to reach for it (recognition signal)
+## When to reach for it
+
+Visit nodes level by level using a queue. The trick that makes "per level" work is snapshotting the queue length at the start of each level.
 
 - "level order" / "group values by depth"
 - shortest path / **minimum depth** (BFS finds the nearest first)
 - right/left side view, largest value per level, zigzag
 - anything "by distance from the root"
 
-## Template — the level-size snapshot
+## Picking feature
+
+The question is PER LEVEL (widths, right-side view, zigzag) or FEWEST EDGES from the root — only a queue processes nodes in distance order.
+
+- **not tree-dfs** — the parent's answer depends on the children's (height, diameter, validate) — that is postorder, and BFS has no notion of "children first"
+
+
+## Template: Template — the level-size snapshot
 
 ```python
 from collections import deque
@@ -28,6 +37,7 @@ def level_order(root):
         result.append(level)
     return result
 ```
+Complexity: O(n) time · O(w) space — each node is enqueued once; the queue holds one level at a time, up to the tree's maximum width w (≈ n/2 for a full tree)
 
 `for _ in range(len(q))` freezes the count *before* you enqueue the next level — that's what separates one level from the next.
 
@@ -38,6 +48,12 @@ def level_order(root):
 - **Zigzag** → reverse `level` on alternate depths
 
 ## Practice
+
+- LC 102 — Binary Tree Level Order Traversal
+- LC 199 — Binary Tree Right Side View
+- LC 515 — Find Largest Value in Each Tree Row
+- LC 111 — Minimum Depth of Binary Tree
+- LC 297 — Serialize and Deserialize Binary Tree
 
 | Problem | NC150? | Wrinkle |
 |---|---|---|

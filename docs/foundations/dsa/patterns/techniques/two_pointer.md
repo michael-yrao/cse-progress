@@ -1,5 +1,21 @@
 # Two Pointers Patterns
 
+## When to reach for it
+
+Use two pointers on a sorted array or string when searching for a pair, triplet, or re-arranging elements in-place — it collapses an O(n²) nested search to O(n).
+
+- Sorted array + "find a pair/triple summing to target"
+- Sorted Sequence Pairs
+- Node Loop / Middle Node
+- In-place Content Removal
+
+## Picking feature
+
+Sorted (or sortable) input where moving ONE index in a known direction can only change the comparison one way — that monotonic response is what lets two indices replace a nested loop.
+
+- **not sliding-window** — the pair must be a contiguous RUN, not two arbitrary positions
+- **not binary-search** — you need one boundary index, not a pair
+
 ## Quick Reference
 
 
@@ -11,7 +27,9 @@
 
 ---
 
-## 1. Opposite Ends Pattern
+## Template: Opposite Ends Pattern
+
+*When:* Finding pairs or checking symmetries in sorted structural constraints.
 
 **Use Case**: Finding pairs or checking symmetries in sorted structural constraints.
 
@@ -37,12 +55,15 @@ def two_sum_sorted(numbers: list[int], target: int) -> list[int]:
             r -= 1  # Sum too large, move right pointer leftward
     return []
 ```
+Complexity: O(n) time · O(1) space — the pointers close by at least one step per iteration
 
 **Example**: [LeetCode 167 - Two Sum II - Input Array Is Sorted](https://leetcode.com)
 
 ---
 
-## 2. Fast & Slow Pointer Pattern (Tortoise and Hare)
+## Template: Fast & Slow Pointer Pattern (Tortoise and Hare)
+
+*When:* Detecting structural loops, intersections, or calculating dynamic midpoints.
 
 **Use Case**: Detecting structural loops, intersections, or calculating dynamic midpoints.
 
@@ -64,12 +85,15 @@ def has_cycle(head: Optional[ListNode]) -> bool:
             return True         # Fast caught up to slow (cycle detected)
     return False
 ```
+Complexity: O(n) time · O(1) space — fast traverses the list in at most n/2 steps; two references
 
 **Example**: [LeetCode 141 - Linked List Cycle](https://leetcode.com)
 
 ---
 
-## 3. Separation Pattern
+## Template: Separation Pattern
+
+*When:* Modifying arrays in-place while separating elements based on content.
 
 **Use Case**: Modifying arrays in-place while separating elements based on content.
 
@@ -91,6 +115,7 @@ def remove_duplicates(nums: list[int]) -> int:
             nums[slow] = nums[fast]  # Overwrite with new item
     return slow + 1
 ```
+Complexity: O(n) time · O(1) space — fast scans once; slow only advances on a keeper — in place
 
 **Example**: [LeetCode 26 - Remove Duplicates from Sorted Array](https://leetcode.com)
 
@@ -177,3 +202,17 @@ def move_zeroes(nums: list[int]) -> None:
 | **Opposite Ends** | Same velocity, converging vectors | Everything outside `[l, r]` is fully processed |
 | **Fast & Slow** | 2x structural variation divergence | Distance between pointers increases by 1 step every loop |
 | **Separation** | Fast scans, slow acts as insertion line | Elements before `slow` match target criteria |
+
+## Practice
+
+- LC 167 — Two Sum II - Input Array Is Sorted
+- LC 141 — Linked List Cycle
+- LC 26 — Remove Duplicates from Sorted Array
+- LC 75 — Sort Colors
+
+## Common pitfalls
+
+- Applying two pointers to an unsorted array without sorting first — produces wrong results
+- Not skipping duplicate values in 3Sum — the output will contain duplicate triplets
+- Infinite loop from failing to advance a pointer after processing a match
+- Off-by-one: use left < right (not <=) when the pointers must not cross

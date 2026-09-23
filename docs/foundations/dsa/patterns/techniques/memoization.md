@@ -1,5 +1,20 @@
 # Top-Down Memoization Patterns
 
+## When to reach for it
+
+A recursive search re-solves the same sub-state many times — cache the answer per state so each state is computed once, turning exponential branching into polynomial work.
+
+- Overlapping subproblems / "min/max/count ways" with optimal substructure
+- Subproblem inputs match exactly regardless of branch path
+- Space coordinates are identical but resource budgets shift
+
+## Picking feature
+
+Overlapping subproblems with optimal substructure: the same (index, budget, …) state recurs, and the whole answer is built from the answers to parts. If states never repeat, it is plain backtracking.
+
+- **not backtracking** — every candidate must be LISTED, not counted or optimized — a cache cannot shrink an output that is itself exponential
+- **not sliding-window** — the question is about a CONTIGUOUS subarray — that is a window, not a subsequence
+
 ## Quick Reference
 
 
@@ -10,7 +25,9 @@
 
 ---
 
-## 1. State Snapshot Memoization
+## Template: State Snapshot Memoization
+
+*When:* Caching multi-variable combinations to completely skip computing previously encountered paths.
 
 **Use Case**: Caching multi-variable combinations to completely skip computing previously encountered paths.
 
@@ -41,12 +58,15 @@ def valid_palindrome_snapshot(s: str, skip: int) -> bool:
         return True
     return backtrack(0, len(s) - 1, skip)
 ```
+Complexity: O(n² · k) time · O(n² · k) space — each (l, r, skips) triple is solved once and cached; the memo can hold every triple
 
 **Example**: [LeetCode 680 - Valid Palindrome II (Extended Variant)](https://leetcode.com)
 
 ---
 
-## 2. Pruning Boundaries Memoization
+## Template: Pruning Boundaries Memoization
+
+*When:* Optimizing multi-dimensional space bounds by tracking and comparing resource variables.
 
 **Use Case**: Optimizing multi-dimensional space bounds by tracking and comparing resource variables.
 
@@ -78,6 +98,7 @@ def valid_palindrome_pruned(s: str, skip: int) -> bool:
         return True
     return backtrack(0, len(s) - 1, skip)
 ```
+Complexity: O(n²) time · O(n²) space — the memo is keyed by (l, r) only — a revisit with no more budget than before is cut off, so each pair expands at most once per improving budget
 
 **Example**: [LeetCode 680 - Valid Palindrome II (Pruned Variant)](https://leetcode.com)
 
@@ -143,3 +164,14 @@ def rob(nums: list[int]) -> int:
 |----------|-------------------------------|----------------------------|
 | **Un-memoized Search** | Runs deep subproblem analysis to completion | Re-runs the exact same deep analysis from scratch |
 | **Memoized Search** | Runs deep analysis and saves value to `dict` | Hits the `dict` and returns the value instantly in \(O(1)\) |
+
+## Practice
+
+- LC 680 — Valid Palindrome II
+
+## Common pitfalls
+
+- Wrong base cases — the most common cause of off-by-one errors in DP
+- Under-specified state — if two different situations share the same key, the memo returns wrong answers
+- Confusing subsequence (DP, non-contiguous) with subarray (sliding window, contiguous)
+- Memoizing on a key that omits a variable the answer depends on (e.g. caching (l, r) when the skip budget matters) — the pruned form is only correct because it stores the BEST budget seen

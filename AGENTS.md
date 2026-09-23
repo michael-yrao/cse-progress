@@ -33,6 +33,7 @@ problem statements, no recaps. Rules unchanged — only verbosity drops.
 - `CLAUDE.md` — always-on gates, repo-maintenance rules, pointers (thin)
 - `cse.config.yml` — engine settings
 - `scripts/update_review_dates.py` — Comfort→interval engine (runs on commit)
+- `scripts/gamify.py` — emits `dashboard/progress.json` (the honest-progress dashboard), regenerated on commit via the pre-commit hook; `scripts/build_cheatsheets.py` emits `dashboard/cheat-sheets.json` (the `/learn` technique cheat sheet) from the technique docs the same way — generated, not hand-maintained — but only on a deliberate run, not on commit
 - `docs/foundations/dsa/mastery/dsa_progress.md` — the DSA tracker
 - the SD tracker moved Aug 15, 2026 → [`sd-progress`](https://github.com/michael-yrao/sd-progress) `mastery/design_progress.md` (same engine, its own copy)
 - `docs/foundations/schedules/<YYYYMMDD>_schedule.md` — the week's plan (all tracks)

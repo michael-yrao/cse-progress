@@ -2,7 +2,9 @@
 
 A **monotonic stack** is a stack kept in sorted order (strictly/weakly increasing or decreasing) by popping any element that would break the order *before* pushing the new one. It answers "nearest greater/smaller element" queries for every element in **O(n) total** instead of O(n²).
 
-## When to reach for it (recognition signal)
+## When to reach for it
+
+A monotonic stack is a stack kept in sorted order (strictly/weakly increasing or decreasing) by popping any element that would break the order before pushing the new one. It answers "nearest greater/smaller element" queries for every element in O(n) total instead of O(n²).
 
 Use a monotonic stack when, for each element, you need the **nearest element to one side that is greater or smaller**. Tells:
 
@@ -13,7 +15,15 @@ Use a monotonic stack when, for each element, you need the **nearest element to 
 
 If brute force is "for each element, scan outward until I find a bigger/smaller one" (O(n²)), a monotonic stack collapses it to O(n).
 
-## The template
+## Picking feature
+
+For each element you need the NEAREST greater/smaller to one side — the stack discards anything that can never be an answer again, so every index is pushed and popped once.
+
+- **not sliding-window** — the question is the longest/shortest contiguous run meeting a condition, not a per-element nearest neighbour
+- **not heap** — you need the global max/min at any moment, not the nearest one per position
+
+
+## Template: The template
 
 Store **indices, not values** (so you can compute distances/widths). One pass:
 
@@ -26,6 +36,7 @@ for i, x in enumerate(arr):
     stack.append(i)
 # anything left on the stack has no next-greater element
 ```
+Complexity: O(n) time · O(n) space — every index is pushed once and popped at most once; the stack can hold all n on a sorted input
 
 ### The only two knobs
 
@@ -46,7 +57,15 @@ leftover 4,3 → no next greater (-1)
 result: idx1→2, idx2→4, idx0→4, idx3→-1, idx4→-1
 ```
 
-## Practice ladder (easy → hard)
+## Practice
+
+- LC 496 — Next Greater Element I
+- LC 739 — Daily Temperatures
+- LC 503 — Next Greater Element II
+- LC 901 — Online Stock Span
+- LC 853 — Car Fleet
+- LC 84 — Largest Rectangle in Histogram
+- LC 239 — Sliding Window Maximum
 
 Each step adds exactly one wrinkle. Do 496 → 739 first; they teach the core.
 
@@ -66,7 +85,7 @@ Each step adds exactly one wrinkle. Do 496 → 739 first; they teach the core.
 - **Forgetting leftovers** — elements still on the stack at the end have no next-greater/smaller; handle them (often `-1` or the array boundary).
 - **Wrong direction** — "previous" queries iterate right→left (or check the stack *before* popping for the element that remains below).
 
-## Related technique: monotonic deque (moving-window max/min)
+## Template: Monotonic deque (moving-window max/min)
 
 Same family, one crucial difference. When you need the **max or min over a sliding window** (not "nearest greater to one side"), use a **monotonic deque** — a double-ended queue that pops from *both* ends:
 
@@ -88,6 +107,7 @@ for i, x in enumerate(arr):
     if i >= k - 1:
         res.append(arr[dq[0]])      # front = max of current window
 ```
+Complexity: O(n) time · O(k) space — each index enters and leaves the deque once; at most k indices are alive at a time
 
 - **239. Sliding Window Maximum** (Hard) — **in NC150 (Sliding Window block)**. The canonical monotonic-deque problem.
 

@@ -1,4 +1,23 @@
-# Interval Patterns
+# Intervals
+
+## When to reach for it
+
+Sort the intervals, then sweep left-to-right keeping a small piece of state.
+
+- Intervals: "merge/insert overlapping" (→ a set)
+- Intervals: "max that fit" / "min to remove" / "min arrows" (→ a number)
+- "merge/combine overlapping intervals"
+- "insert an interval and merge"
+- "max intervals that fit" / "min to remove/erase"
+- "min rooms / max overlap / peak concurrency"
+- "does this new booking conflict?"
+
+## Picking feature
+
+The sort key follows the goal, never the input: merging (the answer is a SET of intervals) sorts by START; scheduling (the answer is a NUMBER — keep / remove / count) sorts by END.
+
+- **not sliding-window** — the input is a contiguous run over one array, not a list of ranges to sort
+- **not heap** — you must count SIMULTANEOUS overlaps (meeting rooms II) — a min-heap of end times, not a merge
 
 ## The one decision that categorizes everything
 
@@ -48,7 +67,9 @@ example for the endpoint case before you pick `<` or `<=`.
 
 ---
 
-## 1. Merge overlapping — sort by START
+## Template: Merge overlapping — sort by START
+
+*When:* collapse a set of intervals so no two overlap ("merge all overlapping intervals")
 
 **Use case**: collapse a set of intervals so no two overlap ("merge all overlapping intervals").
 
@@ -73,12 +94,15 @@ for start, end in intervals:
         result.append([start, end])
 return result
 ```
+Complexity: O(n log n) time · O(n) space — the sort dominates; the sweep is O(n) and the output holds up to n merged intervals
 
 **Why sort by start works**: once sorted by start, any interval that overlaps a previous one
 overlaps the *most recent* one — so you only ever compare against `result[-1]`, never the whole
 list. The start is already the smallest, so merging only ever grows the **end**.
 
-### 1b. Insert into a sorted interval list — the three-phase sweep
+## Template: Insert into a sorted interval list — the three-phase sweep
+
+*When:* a sorted, non-overlapping list is given; insert one new interval (57 Insert Interval)
 
 **Use case**: a sorted, non-overlapping list is given; insert one new interval (57 Insert Interval).
 
@@ -107,6 +131,7 @@ while i < n:
     result.append(intervals[i]); i += 1
 return result
 ```
+Complexity: O(n) time · O(1) space — the list is already sorted and non-overlapping, so no sort — one sweep with constant state beyond the output
 
 **The load-bearing idea**: the new interval has exactly **one home**, at the boundary between
 the "before" group and the "after" group. Placing it once, outside the loops, is what makes it
@@ -115,7 +140,9 @@ correct — and it automatically handles the case where the new interval belongs
 
 ---
 
-## 2. Interval scheduling — sort by END
+## Template: Interval scheduling — sort by END
+
+*When:* keep the maximum number of non-overlapping intervals, or (the mirror image) remove the minimum number so the rest don't overlap
 
 **Use case**: keep the maximum number of non-overlapping intervals, or (the mirror image) remove
 the minimum number so the rest don't overlap. Recognize *either* phrasing — they're the same
@@ -143,6 +170,7 @@ for start, end in intervals:
         removed += 1
 return removed
 ```
+Complexity: O(n log n) time · O(1) space — sort by end, then one sweep holding only the current frontier end
 
 **Why sort by end (the reusable intuition)**: think of booking one meeting room to fit the most
 meetings. When you commit to an interval, its only *cost* is **when it frees the room** — its end.
@@ -218,3 +246,14 @@ Read the **goal verb**, then pick the sort key:
 
 *(Uncategorized interval problems get mapped in [techniques.yml](../../mastery/techniques.yml) as
 they're solved — same rule as any new problem.)*
+
+## Practice
+
+- LC 56 — Merge Intervals
+- LC 57 — Insert Interval
+- LC 435 — Non-overlapping Intervals
+
+## Common pitfalls
+
+- Touching endpoints — is `[1,2]` vs `[2,3]` an overlap? It depends on the problem, and it is almost always stated. Use `<` vs `<=` accordingly. Getting this comparator wrong is the single most common interval bug.
+- The overlap comparator (`<` vs `<=`) is decided by the statement, not by habit. Touching endpoints are the classic off-by-one — check the problem's own example.

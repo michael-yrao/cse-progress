@@ -1,5 +1,18 @@
 # Binary Search Patterns
 
+## When to reach for it
+
+Binary search works on any monotonic yes/no boundary, not just sorted arrays. Use it when you can test a candidate answer cheaply and the search space is sorted or monotonically structured.
+
+- Sorted, or "smallest/largest x that works", or "find position"
+
+## Picking feature
+
+A yes/no predicate that flips exactly once across the search space — a sorted array, or a monotonic answer space like "can finish at speed k" — so halving the range is safe.
+
+- **not two-pointer** — you need a PAIR of positions meeting a condition, not one boundary — sorted input alone doesn't make it a binary search
+- **not sliding-window** — the thing you want is a contiguous run whose validity changes as it grows, not a single index
+
 ## Quick Reference
 
 | Pattern | Loop | Midpoint | Use Case |
@@ -10,7 +23,9 @@
 
 ---
 
-## 1. Exact Value Search
+## Template: Exact Value Search
+
+*When:* Find an exact target value in the array
 
 **Use Case**: Find an exact target value in the array
 
@@ -29,12 +44,15 @@ elif nums[mid] > target:
 else:
     l = mid + 1  # Search right
 ```
+Complexity: O(log n) time · O(1) space — each step halves the candidate range; only two indices are held
 
 **Example**: [LeetCode 704 - Binary Search](https://leetcode.com/problems/binary-search/)
 
 ---
 
-## 2. Minimum Boundary Search (First True Position)
+## Template: Minimum Boundary Search (First True Position)
+
+*When:* Find the leftmost position where a monotonic predicate is true
 
 **Use Case**: Find the leftmost position where a monotonic predicate is true
 
@@ -51,12 +69,15 @@ if is_valid(mid):  # Predicate is true
 else:  # Predicate is false
     l = mid + 1  # Move past mid, search right
 ```
+Complexity: O(log n · c) time · O(1) space — log n probes, each paying one predicate check costing c; `r = mid` keeps the valid candidate inside the range
 
 **Example**: [LeetCode 34 - Find First and Last Position](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/)
 
 ---
 
-## 3. Maximum Boundary Search (Last True Position)
+## Template: Maximum Boundary Search (Last True Position)
+
+*When:* Find the rightmost position where a monotonic predicate is true
 
 **Use Case**: Find the rightmost position where a monotonic predicate is true
 
@@ -73,6 +94,7 @@ if is_valid(mid):  # Predicate is true
 else:  # Predicate is false
     r = mid - 1  # Move before mid, search left
 ```
+Complexity: O(log n · c) time · O(1) space — mirror of the minimum form — log n probes, each paying the predicate; `l = mid` keeps the last valid candidate
 
 **Example**: [LeetCode 74 - Search a 2D Matrix](https://leetcode.com/problems/search-a-2d-matrix/)
 
@@ -175,3 +197,17 @@ To identify `is_valid(mid)` in a problem:
 | Last true | `l < r` | `(l+r+1)//2` | `l = mid` | `r = mid-1` |
 
 The bias ensures the loop converges to the correct boundary **without getting stuck**.
+
+## Practice
+
+- LC 704 — Binary Search
+- LC 34 — Find First and Last Position of Element in Sorted Array
+- LC 74 — Search a 2D Matrix
+
+## Common pitfalls
+
+- left <= right (find exact) vs left < right (find boundary) — mixing them causes off-by-one
+- right = mid vs right = mid − 1 — if mid can be the answer, use right = mid
+- Max-boundary form: with `l = mid` compute `mid = (l + r + 1) // 2`, or the loop never terminates when `l == r − 1`
+- Rotated sorted array: identify which half is sorted first, then decide which side the target is on
+- Integer overflow on mid — (left + right) // 2 is safe in Python; in Java/C++ use left + (right − left) / 2
