@@ -42,6 +42,41 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-09-22 ──────────────
+    def networkDelayTime_20260922(self, times: List[List[int]], n: int, k: int) -> int:
+        # minHeap dijkstra variant today
+        # minHeap means it is similar to a BFS, so we use minHeap instead of queue
+        # we still use adjMap and visited, we mark as visited on pop not on insert
+
+        visited = set()
+
+        adjMap = collections.defaultdict(list)
+
+        for src, dst, time in times:
+            adjMap[src].append((dst,time))
+
+        minHeap = []
+
+        heapq.heappush(minHeap,(0,k))
+        
+        overallTime = 0
+
+        while minHeap:
+            currentTime, currentNode = heapq.heappop(minHeap)
+            if currentNode not in visited:
+                overallTime = currentTime
+                visited.add(currentNode)
+                
+                # go through neighbors
+                for neighbor, neighborTime in adjMap[currentNode]:
+                    if neighbor not in visited:
+                        updatedWeight = currentTime + neighborTime
+                        heapq.heappush(minHeap, (updatedWeight, neighbor))
+        
+        if len(visited) == n:
+            return overallTime
+        return -1
+
     # ── Attempt · 2026-09-14 ──────────────
     def networkDelayTime_20260914(self, times: List[List[int]], n: int, k: int) -> int:
         # we are doing array variation of Dijkstra today

@@ -66,21 +66,24 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/dsa/mastery/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **123+6** problems &nbsp;·&nbsp; **134+6** solutions &nbsp;·&nbsp; **593+6** reps
+> **123+6** problems &nbsp;·&nbsp; **134+6** solutions &nbsp;·&nbsp; **597+6** reps
 
 | | 🏆 Retired | 🎓 Graduated | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|:---:|
-| **Solutions** | 0 | 20 | 98 | 15 | 1 |
+| **Solutions** | 0 | 20 | 99 | 15 | 0 |
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Rep Date | Rep Dates |
 |---|---|---|---|---|---|---|
+| Medium | [1552. Magnetic Force Between Two Balls](https://leetcode.com/problems/magnetic-force-between-two-balls/) | 🟡 | 0 | 2026-10-02 | 2026-09-22 | 2026-09-20, 2026-09-22 |
+| Medium | [424. Longest Repeating Character Replacement](https://leetcode.com/problems/longest-repeating-character-replacement/) | 🟢 | 1 | 2026-10-22 | 2026-09-22 | 2026-04-19, 2026-07-02, 2026-07-10, 2026-07-17, 2026-07-27, 2026-08-28, 2026-08-31, 2026-09-10, 2026-09-12, 2026-09-22 |
+| Medium | [743. Network Delay Time (Dijkstra — min-heap)](https://leetcode.com/problems/network-delay-time/) | 🟢 | 1 | 2026-10-22 | 2026-09-22 | 2026-07-15, 2026-07-25, 2026-08-04, 2026-08-14, 2026-08-24, 2026-09-03, 2026-09-12, 2026-09-22 |
+| Medium | [901. Online Stock Span](https://leetcode.com/problems/online-stock-span/) | 🟡 | 0 | 2026-10-02 | 2026-09-22 | 2026-07-12, 2026-07-14, 2026-08-13, 2026-08-23, 2026-09-22 |
 | Medium | [22. Generate Parentheses](https://leetcode.com/problems/generate-parentheses/) | 🟢 | 0 | 2026-10-01 | 2026-09-21 | 2026-09-19, 2026-09-21 |
 | Medium | [134. Gas Station](https://leetcode.com/problems/gas-station/) | 🟢 | 1 | 2026-10-21 | 2026-09-21 | 2026-09-09, 2026-09-11, 2026-09-21 |
 | Hard | [778. Swim in Rising Water (Dijkstra / Min-Heap)](https://leetcode.com/problems/swim-in-rising-water/) | 🟢 | 2 | 2026-11-20 | 2026-09-21 | 2026-07-23, 2026-08-02, 2026-08-12, 2026-08-22, 2026-09-21 |
 | Medium | [211. Design Add and Search Words Data Structure](https://leetcode.com/problems/design-add-and-search-words-data-structure/) | 🟢 | 2 | 2026-11-20 | 2026-09-21 | 2026-07-09, 2026-07-11, 2026-07-21, 2026-07-23, 2026-08-02, 2026-08-12, 2026-08-22, 2026-09-21 |
 | Hard | [84. Largest Rectangle in Histogram](https://leetcode.com/problems/largest-rectangle-in-histogram/) | 🟡 | 0 | 2026-09-30 | 2026-09-20 | 2026-09-04, 2026-09-18, 2026-09-20 |
 | Medium | [78. Subsets](https://leetcode.com/problems/subsets/) | 🟡 | 0 | 2026-09-30 | 2026-09-20 | 2026-09-20 |
-| Medium | [1552. Magnetic Force Between Two Balls](https://leetcode.com/problems/magnetic-force-between-two-balls/) | 🔴 | 0 | 2026-09-22 | 2026-09-20 | 2026-09-20 |
 | Medium | [138. Copy List with Random Pointer](https://leetcode.com/problems/copy-list-with-random-pointer/) | 🟢 | 2 | 2026-11-19 | 2026-09-20 | 2026-07-03, 2026-07-05, 2026-08-04, 2026-08-13, 2026-09-20 |
 | Medium | [199. Binary Tree Right Side View](https://leetcode.com/problems/binary-tree-right-side-view/) | 🎓 | 3 | 2027-03-19 | 2026-09-20 | 2026-05-09, 2026-06-13, 2026-07-14, 2026-09-20 |
 | Medium | [763. Partition Labels](https://leetcode.com/problems/partition-labels/) | 🟡 | 0 | 2026-09-29 | 2026-09-19 | 2026-09-09, 2026-09-19 |
@@ -114,8 +117,6 @@ Notes for future agents:
 | Hard | [1489. Find Critical and Pseudo-Critical Edges in MST (Kruskal)](https://leetcode.com/problems/find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree/) | 🟡 | 0 | 2026-09-23 | 2026-09-13 | 2026-09-13 |
 | Medium | [56. Merge Intervals](https://leetcode.com/problems/merge-intervals/) | 🟢 | 1 | 2026-10-13 | 2026-09-13 | 2026-08-24, 2026-09-03, 2026-09-13 |
 | Medium | [167. Two Sum II](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/) | 🎓 | 3 | 2027-03-11 | 2026-09-12 | 2026-01-19, 2026-07-14, 2026-09-12 |
-| Medium | [743. Network Delay Time (Dijkstra — min-heap)](https://leetcode.com/problems/network-delay-time/) | 🟡 | 0 | 2026-09-22 | 2026-09-12 | 2026-07-15, 2026-07-25, 2026-08-04, 2026-08-14, 2026-08-24, 2026-09-03, 2026-09-12 |
-| Medium | [424. Longest Repeating Character Replacement](https://leetcode.com/problems/longest-repeating-character-replacement/) | 🟡 | 0 | 2026-09-22 | 2026-09-12 | 2026-04-19, 2026-07-02, 2026-07-10, 2026-07-17, 2026-07-27, 2026-08-28, 2026-08-31, 2026-09-10, 2026-09-12 |
 | Hard | [239. Sliding Window Maximum](https://leetcode.com/problems/sliding-window-maximum/) | 🟢 | 1 | 2026-10-11 | 2026-09-11 | 2026-08-20, 2026-08-22, 2026-09-01, 2026-09-11 |
 | Medium | [846. Hand of Straights](https://leetcode.com/problems/hand-of-straights/) | 🟡 | 0 | 2026-09-21 | 2026-09-11 | 2026-09-11 |
 | Hard | [332. Reconstruct Itinerary (min-heap ordering)](https://leetcode.com/problems/reconstruct-itinerary/) | 🟢 | 1 | 2026-10-10 | 2026-09-10 | 2026-07-22, 2026-07-28, 2026-08-04, 2026-08-29, 2026-08-31, 2026-09-10 |
@@ -147,7 +148,6 @@ Notes for future agents:
 | Medium | [572. Subtree Of Another Tree](https://leetcode.com/problems/subtree-of-another-tree/) | 🟢 | 1 | 2026-09-24 | 2026-08-25 | 2026-05-02, 2026-06-12, 2026-08-15, 2026-08-25 |
 | Medium | [33. Search in Rotated Sorted Array](https://leetcode.com/problems/search-in-rotated-sorted-array/) | 🟢 | 2 | 2026-10-23 | 2026-08-24 | 2026-05-29, 2026-06-15, 2026-06-25, 2026-07-04, 2026-08-24 |
 | Medium | [567. Permutation in String](https://leetcode.com/problems/permutation-in-string/) | 🟢 | 2 | 2026-10-22 | 2026-08-23 | 2026-04-20, 2026-07-02, 2026-07-12, 2026-07-24, 2026-08-23 |
-| Medium | [901. Online Stock Span](https://leetcode.com/problems/online-stock-span/) | 🟢 | 1 | 2026-09-22 | 2026-08-23 | 2026-07-12, 2026-07-14, 2026-08-13, 2026-08-23 |
 | Medium | [3. Longest Substring Without Repeating Characters](https://leetcode.com/problems/longest-substring-without-repeating-characters/) | 🟢 | 2 | 2026-10-21 | 2026-08-22 | 2026-04-17, 2026-07-23, 2026-08-22 |
 | Medium | [15. 3Sum](https://leetcode.com/problems/3sum/) | 🟢 | 2 | 2026-10-21 | 2026-08-22 | 2026-01-19, 2026-04-07, 2026-05-30, 2026-07-24, 2026-08-22 |
 | Medium | [210. Course Schedule II](https://leetcode.com/problems/course-schedule-ii/) | 🟢 | 2 | 2026-10-21 | 2026-08-22 | 2026-06-09, 2026-06-13, 2026-07-24, 2026-08-22 |

@@ -36,6 +36,21 @@ Constraints:
 """
 
 
+# ── Attempt · 2026-09-22 ──────────────
+class StockSpanner_20260922:
+# in example 1, if we do a traditional decreasingStack, we lose the details to populate 4 for 75
+# we need to be able to store the detail somewhere, where do we store that? we store as tuple
+    def __init__(self):
+        self.decreasingStack = []
+
+    def next(self, price: int) -> int:
+        priceSpan = 1
+        while self.decreasingStack and price >= self.decreasingStack[-1][0]:
+            priorValue, priorSpan = self.decreasingStack.pop()
+            priceSpan+=priorSpan
+        self.decreasingStack.append((price, priceSpan))
+        return priceSpan
+
 # ── Attempt · 2026-08-23 ──────────────
 class StockSpanner_20260823:
 # this is clearly a monotonic stack problem
