@@ -1,8 +1,8 @@
 # Plan: rebuild `/learn` as a technique cheat sheet, generated from this repo
 
 **Status:** APPROVED Sep 22, 2026. Phase B shipped Sep 22 (site branch `learn-cheatsheet-b`, PR #2).
-Phase C implemented Sep 23 (this branch: docs contract + generator; site branch `learn-cheatsheet-c`:
-fetch switch) — pending merge of both.
+Phase C shipped Sep 23 to `main` of both repos (docs contract + generator here; fetch switch on the
+site). Route D (personal-miss layer) remains open.
 **Route chosen:** B (richer schema + technique-keyed UI) then C (single source in cse-progress).
 Route D (personal-miss layer from `recognition_gotchas.md` / `stuck_log.md`) is explicitly out of scope
 here; the contract below leaves room for it.
