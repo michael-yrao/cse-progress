@@ -32,6 +32,31 @@ import math
 
 class Solution:
 
+    # ── Attempt · 2026-09-22 ──────────────
+    def characterReplacement_20260922(self, s: str, k: int) -> int:
+        # our longest is constrained by maxFreq + k
+        # this maxFreq is maxFreq across the entire string, so we don't really need to ensure it is the max in current window
+        freqMap = collections.defaultdict(int)
+
+        maxFreq = -math.inf
+        longest = 0
+        l = r = 0
+
+        while r < len(s):
+            freqMap[s[r]]+=1
+            maxFreq = max(maxFreq, freqMap[s[r]])
+            # while we are out of bounds, remove from maxFreq until we are within bound
+            # we do this because we only care for maxFreq + k
+            while r - l + 1 > maxFreq + k:
+                freqMap[s[l]]-=1
+                l+=1
+                maxFreq = max(maxFreq, freqMap[s[r]])
+            # now that we know we are valid, update longest
+            longest = max(longest, r - l + 1)
+            r+=1
+
+        return longest
+
     # ── Attempt · 2026-09-12 ──────────────
     def characterReplacement_20260912(self, s: str, k: int) -> int:
         # most freq char + k is our ceiling for each window
