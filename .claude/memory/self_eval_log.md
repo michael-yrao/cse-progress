@@ -5,6 +5,12 @@
 
 Append-only log of corrections. Governed by [[feedback_self_evaluation]]. Newest at top. Meta-review promotes recurring root causes into rules; entries are never deleted, only re-statused.
 
+- **2026-09-23 [P3]** fam:read-before-asserting — The site plan asserted "no spec hard-codes the 95/120
+  counts" after grepping specs for those literals, then 28 new registry entries broke 2 `today-board` tests:
+  its fixture used LC 22 as the row with NO visualizer route, and 22 gained a page. The grep answered "no
+  literal totals", not "no spec depends on registry MEMBERSHIP". Caught by my own full-suite run before
+  commit; fixed at the fixture (lcNumber 9999, commented as deliberately unregistered). Rule of thumb when
+  adding registry members: grep specs for the member keys (`lcNumber: <n>`) too, not just the totals.
 - **2026-09-20 [P2]** fam:read-before-asserting — Told the learner "cse-progress looks **private**" and built a
   plan branch around a private-source data pipeline, inferring privacy from a *failed* `gh repo view
   michael-yrao/cse-progress` (which failed for auth/other reasons, not visibility). The repo is PUBLIC; the
