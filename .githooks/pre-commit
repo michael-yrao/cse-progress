@@ -111,6 +111,29 @@ if [ -n "$GAMIFY_TRIGGER" ] || [ -n "$COVERAGE_TRIGGER" ]; then
   fi
 fi
 
+# Grounded-solutions showcase contract. Regenerates dashboard/showcase.json (the verbatim
+# code slices the progressiveoverflow.com visualizers fetch at runtime) from
+# dashboard/showcase.yml + the live solution files. Fires when a solution file, the
+# manifest, or the generator itself is staged — the three places a pick can drift from
+# reality. Also runs `--check` report-only: unlike the other blocks above, a bad showcase
+# pick doesn't block the commit here (the commit still lands; CI/the site's own scheduled
+# check is the harder gate), but the report is worth seeing at commit time.
+SHOWCASE_TRIGGER=$(echo "$STAGED" | grep -E "^dsa/leetcode/.*\.py$|dashboard/showcase\.yml$|scripts/export_showcase\.py$")
+if [ -n "$SHOWCASE_TRIGGER" ]; then
+  echo "Regenerating showcase.json..."
+  if command -v py >/dev/null 2>&1; then
+    py scripts/export_showcase.py || true
+    py scripts/export_showcase.py --check || true
+  elif command -v python >/dev/null 2>&1; then
+    python scripts/export_showcase.py || true
+    python scripts/export_showcase.py --check || true
+  elif command -v python3 >/dev/null 2>&1; then
+    python3 scripts/export_showcase.py || true
+    python3 scripts/export_showcase.py --check || true
+  fi
+  [ -f "dashboard/showcase.json" ] && git add "dashboard/showcase.json"
+fi
+
 # Single source of truth for tuned values (see CLAUDE.md). Fires when the config, a script
 # that carries defaults, or a rules document is staged — i.e. exactly the three places a
 # value can be copied to. Reports; never blocks.

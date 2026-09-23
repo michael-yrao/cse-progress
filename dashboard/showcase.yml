@@ -1,0 +1,697 @@
+# The curated pick for the site's grounded-solutions showcase: one entry per (lc, variant).
+# `variant` is the site's SolutionVariant.variant (kebab-case approach name, never a date).
+# `container` defaults to "Solution" when omitted; an explicit `container: null` means the
+# symbol IS a top-level class (a design problem — the class itself, not one of its methods).
+# `file:` is REQUIRED only when a problem number has more than one solution file on disk (a
+# "twin"). `helpers:` names extra module-level symbols (e.g. a linked-list node class) that
+# are emitted as their own segments alongside the attempt.
+#
+# scripts/export_showcase.py --check refuses anything it can't resolve against the live
+# solution files; see decisions.yml `showcase-contract` and scripts/showcase_candidates.py
+# (the read-only tool that surfaces candidates for this file).
+schemaVersion: 1
+entries:
+  - lc: 733
+    variant: bfs
+    symbol: floodFill_20260628
+    # why: early return when colors match, marks at enqueue so nothing is enqueued twice,
+    # every step commented.
+
+  - lc: 200
+    variant: bfs
+    symbol: numIslands
+    # why: self-contained bfs(row, col) helper, directions and the "unvisited island -> bfs"
+    # rule commented.
+
+  - lc: 200
+    variant: dfs
+    symbol: numIslandsDFS
+    # why: every base case has its own comment.
+
+  - lc: 146
+    variant: hashmap-dll
+    container: null
+    symbol: LRUCache
+    helpers: [Node_20260704]
+    # why: dummy head/tail and MRU/LRU explained inline.
+
+  - lc: 1216
+    variant: backtracking
+    file: dsa/leetcode/backtracking/1216_valid_palindrome_iii.py   # twin: also exists under 1d_dynamic_programming/
+    symbol: kPalindrome
+    # why: the plain two-pointer backtracking, with the "which side to skip" reasoning; the
+    # DP file's kPalindromeMemo reads a memo it never writes, so it is not actually memoized.
+
+  - lc: 1216
+    variant: cache
+    file: dsa/leetcode/1d_dynamic_programming/1216_valid_palindrome_iii.py
+    symbol: kPalindromeDP
+    # why: the @cache version explains the complexity drop.
+
+  - lc: 901
+    variant: monotonic-stack
+    container: null
+    symbol: StockSpanner_20260823
+    # why: the (value, span) tuple insight and the while-loop are commented.
+
+  # ── arrays-hash ──
+
+  - lc: 122
+    variant: greedy
+    symbol: maxProfit
+    # why: "only buy if we make profit immediately"
+
+  - lc: 1929
+    variant: modulo-fill
+    symbol: getConcatenationNonPython
+    # why: create a list of size len(nums)*2
+
+  - lc: 11
+    variant: two-pointers
+    symbol: maxArea
+    # why: full plan in comments before the loop
+
+  - lc: 217
+    variant: set-iteration
+    symbol: containsDuplicate
+    # why: since we only care about if it contains duplicates
+
+  - lc: 217
+    variant: length-check
+    symbol: containsDuplicateAlternative
+    # why: since we only care about if it contains duplicates
+
+  - lc: 271
+    variant: length-prefix
+    container: null
+    symbol: Solution_20260802
+    # why: class-level framing + immutability + two-pointer decode comments
+
+  - lc: 49
+    variant: sort-key-map
+    symbol: groupAnagrams
+    # why: explains the KeyError init
+
+  - lc: 49
+    variant: defaultdict
+    symbol: groupAnagramsAlternative
+    # why: preferred concise and idiomatic code since
+
+  - lc: 14
+    variant: vertical-scan
+    symbol: longestCommonPrefix
+    # why: iterates strs[0], each exit explained
+
+  - lc: 128
+    variant: hashset
+    symbol: longestConsecutive_20260629
+    # why: the set converts nums first (handles duplicates); only advances from a
+    # sequence's start element.
+
+  - lc: 128
+    variant: endpoint-map
+    symbol: longestConsecutiveMap
+    # why: numMap[n-1] = length ending at n-1
+
+  - lc: 229
+    variant: freq-map
+    symbol: majorityElement
+    # why: all return keys must have size bigger than minSize
+
+  - lc: 229
+    variant: boyer-moore
+    symbol: majorityElementBoyerMoore
+    # why: all return keys must have size bigger than minSize
+
+  - lc: 169
+    variant: freq-map
+    symbol: majorityElement
+    # why: not sure if we need both result and maxCount, TBD
+
+  - lc: 169
+    variant: boyer-moore
+    symbol: majorityElementBoyerMoore
+    # why: boyer-moore algorithm assumes a single max exists
+
+  - lc: 66
+    variant: carry
+    symbol: plusOne_20260622
+    # why: only special case is if all numbers are 9
+
+  - lc: 238
+    variant: prefix-suffix
+    symbol: productExceptSelf_20260724
+    # why: worked example table
+
+  - lc: 238
+    variant: o1-space
+    symbol: productExceptSelfPrefixSumEfficient
+    # why: prefix is stored into result on the first pass, then a second pass
+    # multiplies in a running suffix -- O(1) extra space.
+
+  - lc: 27
+    variant: write-pointer
+    symbol: removeElement_20260626
+    # why: two pointer
+
+  - lc: 189
+    variant: three-reversals
+    symbol: rotate_20260624
+    # why: state table
+
+  - lc: 912
+    variant: merge-sort
+    symbol: sortArrayMergeSort_20260725
+    # why: "D&C is a strategy not a framework"; slice-based
+
+  - lc: 75
+    variant: dutch-flag
+    symbol: sortColors_20260816
+    # why: Dutch Flag algorithm
+
+  - lc: 75
+    variant: bucket-sort
+    symbol: sortColorsBucketSort
+    # why: just 3 colors, so a straight count/bucket sort works before writing them
+    # back.
+
+  - lc: 560
+    variant: prefix-map
+    symbol: subarraySum_20260628
+    # why: subarray sum is always some form of prefix sum
+
+  - lc: 347
+    variant: min-heap
+    symbol: topKFrequent_20260530
+    # why: We can have create a frequency map first
+
+  - lc: 1
+    variant: hash-map
+    symbol: twoSumSolution1
+    # why: num[i] + num[j] = target
+
+  - lc: 242
+    variant: hash-map
+    symbol: isAnagram
+    # why: anagrams are same length
+
+  - lc: 242
+    variant: sort
+    symbol: isAnagramPython
+    # why: one-liner: sorted(s) == sorted(t) is the idiomatic Python anagram check.
+
+  - lc: 36
+    variant: multi-pass
+    symbol: isValidSudoku
+    # why: 3 validations
+
+  - lc: 36
+    variant: single-loop
+    symbol: isValidSudoku_20260821
+    # why: RECOGNITION block + one check per map
+
+
+  # ── binary-search ──
+
+  - lc: 704
+    variant: iterative
+    symbol: loopSearch
+    # why: l,r,mid
+
+  - lc: 704
+    variant: recursive
+    symbol: recursiveSearch
+    # why: binary search rewritten recursively -- same l/r/mid halving, base case
+    # returns -1.
+
+  - lc: 1011
+    variant: capacity-search
+    symbol: shipWithinDays_20260612
+    # why: min capacity can't be less than the heaviest single package; max is
+    # shipping everything in one day -- that's the search boundary.
+
+  - lc: 153
+    variant: min-boundary
+    symbol: findMin
+    # why: similar to searching for an element in a rotated array
+
+  - lc: 162
+    variant: min-boundary
+    symbol: findPeakElement
+    # why: key is that a peak must exist
+
+  - lc: 875
+    variant: answer-space
+    symbol: minEatingSpeed_20260703
+    # why: so we can assume max eating speed needed is max(piles)
+
+  - lc: 74
+    variant: two-phase
+    symbol: searchMatrix_20260826
+    # why: binary search the row by its first element, then binary search that row
+    # for the exact value.
+
+  - lc: 33
+    variant: pivot-then-search
+    symbol: search_20260824
+    # why: two stepper
+
+  - lc: 540
+    variant: pair-parity
+    symbol: singleNonDuplicate_20260610
+    # why: logn + O(1) space means binary search; the even/odd-index parity rule at
+    # the midpoint is worked out with an example array.
+
+  - lc: 2300
+    variant: sort-min-boundary
+    symbol: successfulPairs_20260619
+    # why: result size = spells size
+
+
+  # ── dynamic-programming (PILOT) ──
+
+
+  # ── graphs ──
+
+  - lc: 787
+    variant: bellman-ford
+    symbol: findCheapestPrice_20260815
+    # why: Bellman-Ford, k+1 rounds; no visited set (revisits are allowed to find a
+    # faster path), and flights doubles as the adjacency map.
+
+  - lc: 133
+    variant: dfs-map
+    symbol: cloneGraph
+    helpers: [Node]
+    # why: deep-copies every node up front into an oldToNew map, then rewires each
+    # new node's neighbors from that map.
+
+  - lc: 210
+    variant: topological
+    symbol: findOrder_20260822
+    # why: topological sort
+
+  - lc: 207
+    variant: topological
+    symbol: canFinish_20260613
+    # why: need to know all courses we can take first
+
+  - lc: 261
+    variant: dfs
+    symbol: validTree_20260617
+    # why: a graph is a tree iff there's no back-edge to any node other than the one
+    # you arrived from -- tracks the parent to exclude it.
+
+  - lc: 261
+    variant: union-find
+    symbol: validTree_20260619_UnionFind
+    # why: a tree is non-cyclic and is connected to every node
+
+  - lc: 695
+    variant: dfs-visited
+    symbol: maxAreaOfIsland_20260617
+    # why: Find island, count number of nodes visited on this DFS
+
+  - lc: 1584
+    variant: prims-array
+    symbol: minCostConnectPoints_20260811
+    # why: Prim's with a distance array — getCandidate/relax helpers, each step commented
+
+  - lc: 1584
+    variant: prims-heap
+    symbol: minCostConnectPoints
+    # why: Prim's with a min-heap, reasoned from Dijkstra's; the undated first attempt
+
+  - lc: 743
+    variant: dijkstra
+    symbol: networkDelayTime_20260715
+    # why: Dijkstra's algorithm is a modified BFS
+
+  - lc: 323
+    variant: union-find
+    symbol: countComponents_20260619_UnionFind
+    # why: union find solution
+
+  - lc: 323
+    variant: bfs
+    symbol: countComponents_20260706
+    # why: BFS method
+
+  - lc: 417
+    variant: reverse-dfs
+    symbol: pacificAtlantic_20260611
+    # why: DFS runs from each ocean's border inward (not from the interior), then
+    # intersects which cells reached both.
+
+  - lc: 684
+    variant: union-find
+    symbol: findRedundantConnection_20260622
+    # why: trees are connected and have no cycles
+
+  - lc: 994
+    variant: multi-source-bfs
+    symbol: orangesRotting_20260625
+    # why: multi-origin BFS
+
+  - lc: 130
+    variant: union-find
+    symbol: solve_20260621_UnionFind
+    # why: explains the virtual node + 2D↔1D both ways
+
+  - lc: 130
+    variant: bfs
+    symbol: solve_20260919
+    # why: so two kinds of O
+
+
+  # ── greedy ──
+
+  - lc: 53
+    variant: prefix-min
+    symbol: maxSubArray_20260820
+    # why: subarray sum = prefixSum
+
+  - lc: 53
+    variant: kadane
+    symbol: maxSubarrayKadaneV2
+    # why: the classic max(n, currentSum + n) form, with the "why restart" comment
+
+  - lc: 621
+    variant: heap-simulation
+    symbol: leastInterval
+    # why: minimizing number of intervals needed
+
+  - lc: 621
+    variant: heap-bulk
+    symbol: leastInterval_20260809
+    # why: we know the task with the most freq is the bottleneck
+
+
+  # ── heap ──
+
+  - lc: 355
+    variant: heap-feed
+    container: null
+    symbol: Twitter
+    # why: negated timestamps in a max-heap, pop the ten newest in order, and the user is
+    # unioned into relevantUsers explicitly. (Twitter_20260626 reverses the popped list and
+    # so returns the feed oldest-first — a bug, so it is not the showcase pick.)
+
+  - lc: 973
+    variant: max-heap-k
+    symbol: kClosest_20260703
+    # why: kth closest so we need to use a heap
+
+  - lc: 703
+    variant: min-heap-k
+    container: null
+    symbol: KthLargest
+    # why: a size-k min-heap keeps the kth-largest at the top; add() pushes then pops
+    # down to size k.
+
+  - lc: 1046
+    variant: max-heap
+    symbol: lastStoneWeight_20260726
+    # why: choosing heaviest = maxHeap
+
+
+  # ── linked-list ──
+
+  - lc: 2
+    variant: elementary-add
+    symbol: addTwoNumbers_20260705_elegant
+    helpers: [ListNode]
+    # why: slightly cleaner version of linked list arithmetic
+
+  - lc: 138
+    variant: two-pass-map
+    symbol: copyRandomList_20260804
+    helpers: [Node]
+    # why: an old-to-new node map is built first, then next/random pointers are
+    # relinked through that map.
+
+  - lc: 141
+    variant: floyd
+    symbol: hasCycle_20260701
+    # why: floyd's cycle detection algorithm
+
+  - lc: 21
+    variant: iterative
+    symbol: mergeTwoLists
+    helpers: [ListNode]
+    # why: creating new linked list
+
+  - lc: 21
+    variant: recursive
+    symbol: mergeTwoListsRecursive
+    # why: since we are merging, we have to do forward-order
+
+  - lc: 19
+    variant: two-pass
+    symbol: removeNthFromEndTwoIteration
+    # why: We need to get prev of the node and the next of the node
+
+  - lc: 19
+    variant: one-pass
+    symbol: removeNthFromEnd
+    helpers: [ListNode]
+    # why: two pointers n apart; when the right one reaches the end, the left one
+    # sits at the node to remove.
+
+  - lc: 19
+    variant: recursion
+    symbol: removeNthFromEndRecursion
+    helpers: [ListNode]
+    # why: we still need a dummy node in case of head removal
+
+  - lc: 143
+    variant: mid-reverse-merge
+    symbol: reorderList_20260725
+    # why: 1 -> 2 -> 3 -> 4
+
+  - lc: 206
+    variant: iterative
+    symbol: reverseListIterative
+    # why: prev/current pointers with a temp swap: save next, repoint current.next
+    # backward, advance both.
+
+  - lc: 206
+    variant: recursive
+    symbol: reverseListRecursion
+    # why: base case to stop at the last node
+
+
+  # ── sliding-window ──
+
+  - lc: 121
+    variant: two-pointers
+    symbol: maxProfit
+    # why: keep track of current max
+
+  - lc: 219
+    variant: window-set
+    symbol: containsNearbyDuplicate_20260704
+    # why: sliding window, use a set
+
+  - lc: 424
+    variant: freq-window
+    symbol: characterReplacement_20260710
+    # why: window stays valid while freq(mostCommonChar) + k >= window length;
+    # shrinks from the left otherwise.
+
+  - lc: 567
+    variant: fixed-window
+    symbol: checkInclusion
+    # why: basically we are looking for some form of s1 in s2
+
+
+  # ── stack ──
+
+  - lc: 496
+    variant: monotonic-stack
+    symbol: nextGreaterElement_20260919
+    # why: need to find next greater for all elements in nums2 first
+
+  - lc: 503
+    variant: circular-stack
+    symbol: nextGreaterElements_20260731
+    # why: next greater is classic monotonic stack things
+
+  - lc: 20
+    variant: stack
+    symbol: isValid_20260808
+    # why: we keep a map of what is valid
+
+  - lc: 20
+    variant: stack-set
+    symbol: isValidSet
+    # why: basically a bunch of if else statements
+
+
+  # ── trees (TreeNode helper only where constructed: 105) ──
+
+  - lc: 110
+    variant: postorder
+    symbol: isBalanced
+    # why: postorder DFS: only after both subtree heights return can the difference
+    # at this node be checked.
+
+  - lc: 102
+    variant: bfs
+    symbol: levelOrder
+    # why: this is just bfs
+
+  - lc: 124
+    variant: postorder
+    symbol: maxPathSum
+    # why: postorder DFS; each side's max path is clamped at 0 so a negative subtree
+    # can't pull the sum down.
+
+  - lc: 199
+    variant: bfs-last
+    symbol: rightSideView
+    # why: if we do bfs, it's just the last element we see each time
+
+  - lc: 105
+    variant: recursive-split
+    symbol: buildTree
+    helpers: [TreeNode]
+    # why: preorder = root, left, right
+
+  - lc: 1448
+    variant: iterative-dfs
+    symbol: goodNodes
+    # why: iterative postorder-style DFS with an explicit stack tracking the
+    # max-so-far down each path.
+
+  - lc: 543
+    variant: postorder
+    symbol: diameterOfBinaryTree_20260614
+    # why: postorder DFS returning height; diameter at each node is left height +
+    # right height.
+
+  - lc: 226
+    variant: postorder
+    symbol: invertTree
+    # why: processing children first
+
+  - lc: 235
+    variant: iterative
+    symbol: lowestCommonAncestor_20260612
+    # why: While we can generate the BST with inorder DFS
+
+  - lc: 104
+    variant: postorder
+    symbol: maxDepth
+    # why: max depth = dfs
+
+  - lc: 100
+    variant: preorder
+    symbol: isSameTree
+    # why: preorder DFS: checks the current pair first, then only recurses while they
+    # still match.
+
+  - lc: 572
+    variant: bfs-dfs
+    symbol: isSubtree
+    # why: so this is like a combo problem
+
+  - lc: 98
+    variant: iterative-bounds
+    symbol: isValidBST_iterativeDFS
+    # why: iterative DFS carrying an explicit (low, high) bound per node, tightened
+    # as it descends.
+
+
+  # ── trie ──
+
+  - lc: 211
+    variant: wildcard-dfs
+    container: null
+    symbol: WordDictionary_20260812
+    helpers: [TrieNode_20260812]
+    # why: create root of the trie
+
+  - lc: 208
+    variant: children-map
+    container: null
+    symbol: Trie
+    helpers: [TrieNode]
+    # why: if we haven't seen this char yet
+
+
+  # ── two-pointers ──
+
+  - lc: 18
+    variant: sort-two-pointers
+    symbol: fourSum_20260727
+    # why: treat like 3sum
+
+  - lc: 88
+    variant: merge-from-back
+    symbol: merge
+    # why: start sorting and merging from the end
+
+  - lc: 1768
+    variant: alternating
+    symbol: mergeAlternately
+    # why: two pointers advance through both words in lockstep, then the longer
+    # word's leftover tail is appended.
+
+  - lc: 283
+    variant: two-pointers
+    symbol: moveZeroes_20260919
+    # why: left marks the next zero-write slot, right scans ahead -- O(n) time, O(1)
+    # space.
+
+  - lc: 80
+    variant: two-pointers
+    symbol: removeDuplicates_20260627
+    # why: we know first 2 characters will never get removed
+
+  - lc: 26
+    variant: two-pointers
+    symbol: removeDuplicates_20260805
+    # why: basic two pointers
+
+  - lc: 344
+    variant: two-pointers
+    symbol: reverseString
+    # why: classic two-pointer in-place swap, converging l/r until they cross.
+
+  - lc: 15
+    variant: sort-two-pointers
+    symbol: threeSumSet
+    # why: the no-set variant carries a suspect dedupe line (k+=1)
+
+  - lc: 42
+    variant: prefix-arrays
+    symbol: trap
+    # why: water at index i = min(leftMax, rightMax) - height[i], computed from two
+    # precomputed prefix arrays.
+
+  - lc: 42
+    variant: two-pointers
+    symbol: trapTwoPointer
+    # why: same leftMax/rightMax intuition as the prefix-array version, but updates
+    # the running max in place instead of storing full arrays.
+
+  - lc: 167
+    variant: two-pointers
+    symbol: twoSum
+    # why: Since we know it's sorted
+
+  - lc: 680
+    variant: skip-check
+    symbol: validPalindromeVariation
+    # why: main scenarios that come to mind are these
+
+  - lc: 125
+    variant: clean-then-scan
+    symbol: isPalindrome
+    # why: clean string to alphabet only
+
+  - lc: 125
+    variant: no-cleaning
+    symbol: isPalindromeNoCleaning
+    # why: get to alphanumeric for both l and r
