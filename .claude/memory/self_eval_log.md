@@ -1204,3 +1204,8 @@ each already tagged, each a first occurrence.
 
 **Deferred (unchanged from 09-19):** the ~80 pre-09-10 open one-offs stay deferred, optional
 batch-archiving cleanup, not mechanical. Cadence reset.
+
+## 2026-09-22 [P2] fam: hook-false-fire — rating_gate.py blocked a planning turn that proposed no rating
+**What:** The Stop hook blocked the agent-portability plan summary. The turn contained "spec-clean" (matched by the COMFORT regex `\bclean\b`, since `-` is a word boundary) and "approve"/"confirm" (the proposal cue). No rep, no rating, no learner in the loop. Re-sending passed, as designed (one block only).
+**Why it matters:** Third false-fire in this family (09-20 deploy report → `REPORT_CONTEXT`; now a planning turn). Each one is a paragraph the coach has to resend, and a hook that cries wolf gets skimmed past — the docstring's own warning.
+**Fix/ladder (source fix, queued):** the comfort-word alternation must not match a hyphen-joined token — either require `(?<![\w-])` before and `(?![\w-])` after the word, or match the emoji/streak forms only when a word form is hyphen-adjacent. Add "spec-clean … approve" as a must-NOT-fire case beside the existing tests. Scheduled as Phase 1 / E2 in `docs/cse-coach/AGENT_PORTABILITY_PLAN.md`. (status: open — closes when that lands)

@@ -12,6 +12,10 @@ Claude Code.
 > plain markdown). [`CLAUDE.md`](CLAUDE.md) is now thin — the always-on gates + repo-maintenance
 > rules + pointers; read it too, but the engine is in the skill.
 
+> **Open work on this file:** [`docs/cse-coach/AGENT_PORTABILITY_PLAN.md`](docs/cse-coach/AGENT_PORTABILITY_PLAN.md)
+> makes `AGENTS.md` the single always-on layer for Copilot, Cursor and Claude Code. Its Status line says
+> which phase is next; §0 there is how to pick it up.
+
 ## The contract (essentials)
 1. **Comfort = infer, then confirm.** After a problem, infer 🟢 Clean / 🟡 Shaky /
    🔴 Blank from the session and **propose it for confirmation** — don't ask an open
