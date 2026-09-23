@@ -2585,7 +2585,10 @@
               "backfill"
             ],
             "kind": "rep",
-            "done": true
+            "done": true,
+            "endComfort": "🟢",
+            "endNote": "prov",
+            "nextReview": "2026-10-01"
           },
           {
             "lcNumber": 134,
@@ -2596,7 +2599,10 @@
             "url": "https://leetcode.com/problems/gas-station/",
             "tags": [],
             "kind": "rep",
-            "done": true
+            "done": true,
+            "endComfort": "🟢",
+            "endNote": null,
+            "nextReview": "2026-10-21"
           },
           {
             "lcNumber": 211,
@@ -2607,7 +2613,10 @@
             "url": "https://leetcode.com/problems/design-add-and-search-words-data-structure/",
             "tags": [],
             "kind": "rep",
-            "done": true
+            "done": true,
+            "endComfort": "🟢",
+            "endNote": "s2",
+            "nextReview": "2026-11-20"
           },
           {
             "lcNumber": 778,
@@ -2618,7 +2627,10 @@
             "url": "https://leetcode.com/problems/swim-in-rising-water/",
             "tags": [],
             "kind": "rep",
-            "done": true
+            "done": true,
+            "endComfort": "🟢",
+            "endNote": "s2",
+            "nextReview": "2026-11-20"
           }
         ]
       },
@@ -2640,7 +2652,10 @@
               "backfill"
             ],
             "kind": "rep",
-            "done": true
+            "done": true,
+            "endComfort": "🟡",
+            "endNote": null,
+            "nextReview": "2026-10-02"
           },
           {
             "lcNumber": 424,
@@ -2651,7 +2666,10 @@
             "url": "https://leetcode.com/problems/longest-repeating-character-replacement/",
             "tags": [],
             "kind": "rep",
-            "done": true
+            "done": true,
+            "endComfort": "🟢",
+            "endNote": "s1",
+            "nextReview": "2026-10-22"
           },
           {
             "lcNumber": 743,
@@ -2664,7 +2682,10 @@
               "variant"
             ],
             "kind": "rep",
-            "done": true
+            "done": true,
+            "endComfort": "🟢",
+            "endNote": "s1",
+            "nextReview": "2026-10-22"
           },
           {
             "lcNumber": 901,
@@ -2675,7 +2696,10 @@
             "url": "https://leetcode.com/problems/online-stock-span/",
             "tags": [],
             "kind": "rep",
-            "done": true
+            "done": true,
+            "endComfort": "🟡",
+            "endNote": null,
+            "nextReview": "2026-10-02"
           }
         ]
       },
@@ -2694,7 +2718,10 @@
             "url": "https://leetcode.com/problems/find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree/",
             "tags": [],
             "kind": "rep",
-            "done": false
+            "done": false,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
           },
           {
             "lcNumber": 846,
@@ -2707,7 +2734,10 @@
               "moved"
             ],
             "kind": "rep",
-            "done": false
+            "done": false,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
           },
           {
             "lcNumber": 39,
@@ -2720,7 +2750,10 @@
               "new"
             ],
             "kind": "new",
-            "done": false
+            "done": false,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
           }
         ]
       },
@@ -2739,7 +2772,10 @@
             "url": "https://leetcode.com/problems/replace-words/",
             "tags": [],
             "kind": "rep",
-            "done": false
+            "done": false,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
           },
           {
             "lcNumber": 743,
@@ -2752,7 +2788,10 @@
               "variant"
             ],
             "kind": "rep",
-            "done": false
+            "done": false,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
           },
           {
             "lcNumber": 1046,
@@ -2763,7 +2802,10 @@
             "url": "https://leetcode.com/problems/last-stone-weight/",
             "tags": [],
             "kind": "rep",
-            "done": false
+            "done": false,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
           },
           {
             "lcNumber": 1334,
@@ -2774,7 +2816,10 @@
             "url": "https://leetcode.com/problems/find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance/",
             "tags": [],
             "kind": "rep",
-            "done": false
+            "done": false,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
           },
           {
             "lcNumber": 189,
@@ -2785,7 +2830,10 @@
             "url": "https://leetcode.com/problems/rotate-array/",
             "tags": [],
             "kind": "rep",
-            "done": false
+            "done": false,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
           },
           {
             "lcNumber": 53,
@@ -2796,7 +2844,10 @@
             "url": "https://leetcode.com/problems/maximum-subarray/",
             "tags": [],
             "kind": "rep",
-            "done": false
+            "done": false,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
           },
           {
             "lcNumber": 572,
@@ -2807,7 +2858,10 @@
             "url": "https://leetcode.com/problems/subtree-of-another-tree/",
             "tags": [],
             "kind": "rep",
-            "done": false
+            "done": false,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
           }
         ]
       },
@@ -2826,7 +2880,10 @@
             "url": "https://leetcode.com/problems/jump-game/",
             "tags": [],
             "kind": "rep",
-            "done": false
+            "done": false,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
           },
           {
             "lcNumber": 104,
@@ -2837,7 +2894,10 @@
             "url": "https://leetcode.com/problems/maximum-depth-of-binary-tree/",
             "tags": [],
             "kind": "rep",
-            "done": false
+            "done": false,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
           },
           {
             "lcNumber": 46,
@@ -2850,7 +2910,10 @@
               "new"
             ],
             "kind": "new",
-            "done": false
+            "done": false,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
           },
           {
             "lcNumber": 875,
@@ -2863,7 +2926,10 @@
               "backfill"
             ],
             "kind": "rep",
-            "done": false
+            "done": false,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
           },
           {
             "lcNumber": 1584,
@@ -2876,7 +2942,10 @@
               "backfill"
             ],
             "kind": "rep",
-            "done": false
+            "done": false,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
           }
         ]
       },
@@ -2895,7 +2964,10 @@
             "url": "https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/",
             "tags": [],
             "kind": "rep",
-            "done": false
+            "done": false,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
           },
           {
             "lcNumber": 540,
@@ -2906,7 +2978,10 @@
             "url": "https://leetcode.com/problems/single-element-in-a-sorted-array/",
             "tags": [],
             "kind": "rep",
-            "done": false
+            "done": false,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
           },
           {
             "lcNumber": 169,
@@ -2917,7 +2992,10 @@
             "url": "https://leetcode.com/problems/majority-element/",
             "tags": [],
             "kind": "rep",
-            "done": false
+            "done": false,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
           },
           {
             "lcNumber": 787,
@@ -2928,7 +3006,10 @@
             "url": "https://leetcode.com/problems/cheapest-flights-within-k-stops/",
             "tags": [],
             "kind": "rep",
-            "done": false
+            "done": false,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
           },
           {
             "lcNumber": 1631,
@@ -2941,7 +3022,10 @@
               "new"
             ],
             "kind": "new",
-            "done": false
+            "done": false,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
           }
         ]
       },
@@ -2960,7 +3044,10 @@
             "url": "https://leetcode.com/problems/subarray-sum-equals-k/",
             "tags": [],
             "kind": "rep",
-            "done": false
+            "done": false,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
           },
           {
             "lcNumber": 721,
@@ -2971,7 +3058,10 @@
             "url": "https://leetcode.com/problems/accounts-merge/",
             "tags": [],
             "kind": "rep",
-            "done": false
+            "done": false,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
           },
           {
             "lcNumber": 128,
@@ -2982,7 +3072,10 @@
             "url": "https://leetcode.com/problems/longest-consecutive-sequence/",
             "tags": [],
             "kind": "rep",
-            "done": false
+            "done": false,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
           },
           {
             "lcNumber": 200,
@@ -2996,7 +3089,10 @@
               "variant"
             ],
             "kind": "rep",
-            "done": false
+            "done": false,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
           },
           {
             "lcNumber": 1102,
@@ -3009,7 +3105,10 @@
               "new"
             ],
             "kind": "new",
-            "done": false
+            "done": false,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
           },
           {
             "lcNumber": 226,
@@ -3022,7 +3121,10 @@
               "probe"
             ],
             "kind": "complexity",
-            "done": false
+            "done": false,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
           },
           {
             "lcNumber": 211,
@@ -3035,7 +3137,10 @@
               "probe"
             ],
             "kind": "complexity",
-            "done": false
+            "done": false,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
           },
           {
             "lcNumber": 778,
@@ -3048,7 +3153,10 @@
               "probe"
             ],
             "kind": "complexity",
-            "done": false
+            "done": false,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
           },
           {
             "lcNumber": 743,
@@ -3061,7 +3169,10 @@
               "probe"
             ],
             "kind": "complexity",
-            "done": false
+            "done": false,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
           }
         ]
       }

@@ -855,3 +855,27 @@ decisions:
       `scripts/export_showcase.py`, `scripts/showcase_candidates.py`, `dashboard/showcase.schema.json`,
       `.claude/memory/project_gamification.md`.
     affects: [gamification]
+
+  - id: schedule-item-end-status-sep23
+    date: 2026-09-23
+    summary: >-
+      ADDS three ADDITIVE fields to the progress.json schedule-item contract (dashboard/progress.schema.json,
+      scripts/gamify.py): `endComfort` (the first comfort glyph in the row's E cell, or null — never falling
+      back to startComfort, so the board shows only what was actually earned this rep, not the start comfort
+      carried forward as if it were the outcome), `endNote` (the E cell's free-form note after its glyph,
+      stripped/collapsed/lowercased, maxLength 16 — vocabulary seen in real weeks: s0, s1, s2, prov,
+      dropped — emitted ONLY when endComfort is non-null, null otherwise even if the raw cell had trailing
+      text), and `nextReview` (the row's Next cell iff, once stripped, it is nothing but an ISO date; null
+      for a free-form or blank Next cell). Closes the gap where a board row showed a rep was done but never
+      how it ended — the E glyph and Next date were already parsed for the comfort timeline
+      (`_scan_week`/`build_schedule_index`) but never emitted on the board slice
+      (`_parse_schedule_day_full`). `_scan_week`'s own End-glyph read is refactored onto the same new
+      `_end_glyph()` helper (with its start-glyph fallback preserved there — only the board slice refuses
+      the fallback), and the new `_schedule_item_outcome()` helper is self-contained (only `eb.GLYPH` + `re`)
+      so it ports verbatim to `cse-coach/scripts/gamify.py`. All three fields are additive only; the six
+      existing required fields (lcNumber, title, technique, startComfort, difficulty, done) are unchanged,
+      so nothing that already reads the prior contract breaks. No `cse.config.yml` value changed. Strands
+      any wording that says a board/schedule item carries only its start comfort, or that the E
+      glyph/Next date are parsed only for the comfort timeline and never exposed on the board. See
+      `dashboard/progress.schema.json`, `scripts/gamify.py`, `.claude/memory/project_gamification.md`.
+    affects: [gamification, scheduling]

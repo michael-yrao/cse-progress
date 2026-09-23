@@ -264,7 +264,10 @@
         "url": { "type": ["string", "null"], "description": "Prefers the row's own `[LC](...)`/`[NC](...)` link straight off the Problem cell; falls back to the tracker join by lcNumber (problem_urls()) — the site's own AlgorithmMeta.id is a shortened route slug, not the LC slug, so it cannot build this link itself. null when neither source has one." },
         "tags": { "type": "array", "items": { "type": "string" }, "description": "Build-time tags read off the row's leading glyphs: ⚠️→protected, 🔥→backfill, 🆕→new, 🎯→probe, ⚙️→variant, 🔤→primer, →→moved." },
         "kind": { "type": "string", "enum": ["rep", "new", "probe", "complexity", "primer"], "description": "complexity when the Technique cell is 'Complexity' (checked before any tag, since a complexity re-ask row is also 🎯-tagged); else new/primer/probe from the row's tags; else rep." },
-        "done": { "type": "boolean", "description": "True when the row is struck through (`~~...~~`) in the source table." }
+        "done": { "type": "boolean", "description": "True when the row is struck through (`~~...~~`) in the source table." },
+        "endComfort": { "type": ["string", "null"], "enum": ["🔴", "🟡", "🟢", "🎓", null], "description": "The comfort glyph as written at the END of the rep (col E) — the E cell is usually blank until the row is done, so this is usually null until then, but it is read off the cell's own content and never falls back to startComfort: a done row whose E cell carries no glyph still reads null, so the board shows only what was actually earned." },
+        "endNote": { "type": ["string", "null"], "maxLength": 16, "description": "The E cell's free-form note after its glyph, stripped/collapsed/lowercased — vocabulary seen in real weeks: s0, s1, s2, prov, dropped. Only ever set when endComfort is non-null; null otherwise, even if the raw cell had trailing text." },
+        "nextReview": { "type": ["string", "null"], "format": "date", "description": "The row's Next-review date (col Next) iff that cell is, once stripped, nothing but an ISO date; null for a free-form or blank Next cell." }
       }
     },
     "problem": {
