@@ -52,6 +52,28 @@ while len(visited) < V:
 
 ---
 
+## Template: The procedure
+
+```python
+def prim_mst(adj: list[list[int]]) -> int:      # adj[u][v] = weight; dense matrix input
+    V = len(adj)
+    in_tree = [False] * V
+    best = [float('inf')] * V                    # cheapest known edge INTO each node from the tree
+    best[0] = 0                                  # start anywhere
+    total = 0
+    for _ in range(V):
+        u = min((v for v in range(V) if not in_tree[v]), key=lambda v: best[v])
+        in_tree[u] = True
+        total += best[u]                          # this edge joins the tree
+        for v in range(V):                        # relax: is there a cheaper way INTO v now?
+            if not in_tree[v] and adj[u][v] < best[v]:
+                best[v] = adj[u][v]
+    return total
+```
+Complexity: O(V²) time · O(V) space — V rounds, each doing two O(V) scans (find-the-min, then relax); the dist array plus the visited set.
+
+---
+
 ## 3. The invariant — and what it forbids
 
 > **`dist[i]` is the weight of the cheapest single edge that would attach node `i` to the component
@@ -118,7 +140,7 @@ because the edges are implied rather than given.
 
 ---
 
-## 5. Implementation gotchas
+## Common pitfalls
 
 - **Relax only unvisited nodes.** A visited node's `dist` is already spent; letting it drop later corrupts the
   final `sum(dist)`.
@@ -128,12 +150,19 @@ because the edges are implied rather than given.
 - **Negative weights are fine.** Prim's compares edges; it never sums them into a path, so there's nothing for
   a negative edge to break. *(This is the opposite of the shortest-path algorithms.)*
 - **Disconnected input** ⟹ no spanning tree exists. 1584 can't hit this (a complete graph is always
-  connected), but a general graph can: the min-picker would return a node whose `dist` is still `∞`.
+  connected), but a general graph can: the min-picker would return a node whose `dist` is still ∞.
 - **Ties don't matter.** Any minimum-weight choice is fine; MSTs aren't unique when weights repeat.
 
 ---
 
-## 6. Recognition triggers
+## When to reach for it
+
+You have a connected weighted graph and want to keep every node reachable while paying as little total edge weight as possible.
+
+- connect all points/nodes at minimum total cost
+- minimum cost to make all X connected
+- Weights given as coordinates rather than an edge list
+- Undirected + weighted + wants a structure, not a path
 
 | Signal | Reading |
 |---|---|
@@ -147,9 +176,16 @@ because the edges are implied rather than given.
 question about the **whole graph**. A shortest-path question names a **source** (and usually a target). If a
 problem statement never names a source node, you're almost certainly not in shortest-path territory.
 
+## Picking feature
+
+The objective is the cheapest set of edges that keeps EVERYTHING connected — a cost over the whole graph, not a distance from one source.
+
+- **not Dijkstra / shortest path** — the question is the cheapest ROUTE between nodes — a source-relative distance; an MST is not a shortest-path tree
+- **not union-find** — Kruskal's (sort the edges, union-find) is the other MST — reach for it on a sparse edge list; Prim's O(V²) wins on a dense graph or a point set
+
 ---
 
-## Problems
+## Practice
 
 - [1584. Min Cost to Connect All Points](../../../../../dsa/leetcode/graphs/1584_min_cost_to_connect_all_points.py)
   — array version, complete graph. *(🟡 Aug 1, 2026 — the relaxation-assignment bug above.)*

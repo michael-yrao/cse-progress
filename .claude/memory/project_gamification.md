@@ -56,6 +56,12 @@ schedules' End column; a rep predating the schedule archive degrades to an activ
 fabricated value. **Curated:** no solution code, no stuck-log prose — the public repo exposes
 aggregate + status, not struggle notes.
 
+A second, sibling contract (`learn-cheatsheet-contract-sep22`, `decisions.yml`) follows the same
+source-tier/dashboard-tier split for `/learn`: `scripts/build_cheatsheets.py` reads the technique
+docs + `intuition_cheatsheet.md` + `techniques.yml` and emits `dashboard/cheat-sheets.json` +
+`dashboard/cheat-sheets.schema.json`, validated by `scripts/check_cheatsheets.py` — blocking in
+pre-commit as of Sep 23, 2026, now that all 18 docs pass.
+
 ## The site half (progressiveoverflow.com)
 
 A generic **progress viewer** feature/route: own repo by default, `?repo=owner/name` for any public

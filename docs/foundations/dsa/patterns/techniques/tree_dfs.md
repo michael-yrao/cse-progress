@@ -2,13 +2,22 @@
 
 Explore one branch fully before backtracking, via recursion (call stack) or an explicit stack. The **order you process the node relative to its children** — pre / in / post — is the whole choice.
 
-## When to reach for it (recognition signal)
+## When to reach for it
+
+Explore one branch fully before backtracking, via recursion (call stack) or an explicit stack. The order you process the node relative to its children — pre / in / post — is the whole choice.
 
 - compute a property that depends on children (height, balanced, diameter) → **postorder**
 - need parent context available before children → **preorder**
 - need sorted output from a **BST**, or validate BST → **inorder**
 
-## The three orders (recursive)
+## Picking feature
+
+The order is fixed by which way the information flows: POSTORDER when the parent's answer needs the children's answers first (height, balanced, diameter); INORDER when a BST must read out sorted (validate, kth-smallest).
+
+- **not tree-bfs** — the question is level-by-level or minimum depth — depth-first walks a whole branch before the next, so levels blur
+
+
+## Template: The three orders (recursive)
 
 ```python
 def pre(node):   # Root, Left, Right
@@ -23,13 +32,14 @@ def post(node):  # Left, Right, Root   — child results ready before parent
     if not node: return
     post(node.left); post(node.right); visit(node)
 ```
+Complexity: O(n) time · O(h) space — every node is visited once; the recursion depth is the tree height h (n in the worst, skewed case)
 
 ## Two facts that pick the order for you
 
 - **Postorder = "compute from children."** Height, balanced-check, diameter, subtree sums — anything where the parent's answer needs the children's answers first.
 - **Inorder of a BST is sorted.** Validate-BST and kth-smallest fall out of this — but the comparison must sit *between* the left and right recursion (carry a running `prev`), not before/after both.
 
-## Common DFS shapes
+## Template: Common DFS shapes
 
 ```python
 def height(node):                      # postorder
@@ -42,8 +52,16 @@ def is_valid_bst(node, lo=float('-inf'), hi=float('inf')):
     return (is_valid_bst(node.left, lo, node.val) and
             is_valid_bst(node.right, node.val, hi))
 ```
+Complexity: O(n) time · O(h) space — the same single visit per node; the bounds passed down add O(1) per frame
 
 ## Practice
+
+- LC 104 — Maximum Depth of Binary Tree
+- LC 110 — Balanced Binary Tree
+- LC 543 — Diameter of Binary Tree
+- LC 98 — Validate Binary Search Tree
+- LC 226 — Invert Binary Tree
+- LC 236 — Lowest Common Ancestor of a Binary Tree
 
 | Problem | NC150? | Order |
 |---|---|---|

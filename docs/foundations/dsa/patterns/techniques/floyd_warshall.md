@@ -30,7 +30,9 @@ That failure is the reason this algorithm exists. See §7 for the worked counter
 
 ---
 
-## 2. The procedure
+## Template: The procedure
+
+*When:* let one node at a time become a legal stopover
 
 **Step 1 — build the table.**
 
@@ -42,13 +44,14 @@ dist[i][j] = infinity   when there is no direct edge
 
 **Step 2 — let one node at a time become a legal stopover.**
 
-```
+```python
 for k in all nodes:            # the stopover — MUST be outermost
     for i in all nodes:
         for j in all nodes:
             if dist[i][k] + dist[k][j] < dist[i][j]:
                 dist[i][j] = dist[i][k] + dist[k][j]
 ```
+Complexity: O(n³) time · O(n²) space — Three nested loops, each over all n nodes; every (k, i, j) triple is one constant-time comparison, independent of edge count (time). The table; in-place updating means no second copy (space).
 
 Read the loop body in plain words: *"I'm now allowing trips that stop at k. Does that make the
 i → j trip cheaper?"*
@@ -187,7 +190,7 @@ is not *whether* you reached it, or *by which route*, but **what it cost**.
 
 ---
 
-## 8. Implementation gotchas
+## Common pitfalls
 
 - **`float('inf')` is safe to add in Python** — `inf + inf` is `inf`, no overflow. In a fixed-width
   integer language use a sentinel like `1e9` and guard against `sentinel + sentinel` wrapping.
@@ -202,7 +205,9 @@ is not *whether* you reached it, or *by which route*, but **what it cost**.
 
 ---
 
-## 9. Recognition triggers
+## When to reach for it
+
+You need all pairs, n is small (≲ 400), or the graph is dense
 
 Reach for this when you see:
 
@@ -215,9 +220,20 @@ Reach for this when you see:
 **Anti-trigger:** unweighted graph → BFS. Single source → Dijkstra or Bellman-Ford. Don't pay `n³`
 for a question that only ever asked about one starting point.
 
+## Picking feature
+
+All pairs, small or dense graph
+
+- **not Dijkstra** — One source, non-negative weights
+- **not Bellman-Ford** — One source, negative weights allowed
+- **not BFS** — the graph is unweighted (or every edge costs the same) — plain BFS gives shortest paths in O(V + E) without any shortest-path machinery
+- **not Dijkstra** — All pairs, large sparse graph, non-negative — n × Dijkstra wins over O(n³)
+
 ---
 
-## Problems
+## Practice
+
+- LC 1334 — Find the City With the Smallest Number of Neighbors at a Threshold Distance
 
 | Problem | Notes |
 |---|---|

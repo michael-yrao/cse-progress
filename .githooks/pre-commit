@@ -131,6 +131,27 @@ if [ -n "$SSOT_TRIGGER" ]; then
   fi
 fi
 
+# /learn cheat-sheet contract (learn-cheatsheet-contract-sep22 — decisions.yml). Fires when
+# a technique doc, the signal table, the technique vocabulary, or either generator script is
+# staged — the inputs scripts/build_cheatsheets.py reads. Blocking as of Sep 23, 2026: all 18
+# technique docs pass `--check` (see check_cheatsheets.py's own docstring), so a contract
+# violation now fails the commit instead of just being reported. It does NOT regenerate
+# dashboard/cheat-sheets.json here — unlike progress.json, that stays a deliberate run, not
+# an on-commit side effect (see the plan, docs/cse-coach/learn_cheatsheet_plan.md).
+CHEATSHEET_TRIGGER=$(echo "$STAGED" | grep -E "^docs/foundations/dsa/patterns/techniques/.*\.md$|intuition_cheatsheet\.md$|techniques\.yml$|^scripts/(build|check)_cheatsheets\.py$")
+if [ -n "$CHEATSHEET_TRIGGER" ]; then
+  if command -v py >/dev/null 2>&1; then
+    py scripts/check_cheatsheets.py --check || exit 1
+  elif command -v python >/dev/null 2>&1; then
+    python scripts/check_cheatsheets.py --check || exit 1
+  elif command -v python3 >/dev/null 2>&1; then
+    python3 scripts/check_cheatsheets.py --check || exit 1
+  else
+    echo "Error: Python not found. Cannot run the cheat-sheet contract check." >&2
+    exit 1
+  fi
+fi
+
 # Schedule integrity. Fires when a rating lands (the tracker) or the board is edited — the two
 # ways a done rep and its schedule row can drift apart. Checks only the CURRENT week's file:
 # a struck row must carry its End + Next, and a rep the tracker dates inside this week must be

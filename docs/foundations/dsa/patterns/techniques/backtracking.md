@@ -1,5 +1,19 @@
 # Backtracking Patterns
 
+## When to reach for it
+
+Enumerate every candidate by extending a partial choice one step, recursing, then undoing it — the answer is the set of all arrangements, not a single best one.
+
+- "All subsets / permutations / combinations", "find every way"
+- Explicit Item Resequencing
+- Structural Choice Sequence Steps
+
+## Picking feature
+
+The output is EVERY valid arrangement (all subsets / permutations / combinations), so exponential work is unavoidable — choose, recurse, un-choose.
+
+- **not memoization** — the question is a count / min / max over choices and the same sub-state recurs — cache states instead of enumerating every path
+
 ## Quick Reference
 
 
@@ -10,7 +24,9 @@
 
 ---
 
-## 1. Permutations Pattern
+## Template: Permutations Pattern
+
+*When:* Finding every possible layout variation of an items list where ordering determines unique results.
 
 **Use Case**: Finding every possible layout variation of an items list where ordering determines unique results.
 
@@ -40,12 +56,15 @@ def permute(nums: list[int]) -> list[list[int]]:
     backtrack([])
     return result
 ```
+Complexity: O(n · n!) time · O(n) space — n! complete permutations, each copied in O(n); the path and the recursion depth are both O(n) (the output list itself is not counted)
 
 **Example**: [LeetCode 46 - Permutations](https://leetcode.com)
 
 ---
 
-## 2. Combinations and Subsets Pattern
+## Template: Combinations and Subsets Pattern
+
+*When:* Generating all variations of variable-length groupings where sequence arrangement is irrelevant.
 
 **Use Case**: Generating all variations of variable-length groupings where sequence arrangement is irrelevant.
 
@@ -72,6 +91,7 @@ def subsets(nums: list[int]) -> list[list[int]]:
     backtrack(0, [])
     return result
 ```
+Complexity: O(n · 2ⁿ) time · O(n) space — 2ⁿ subsets, each copied in up to O(n); recursion depth never exceeds n
 
 **Example**: [LeetCode 78 - Subsets](https://leetcode.com)
 
@@ -141,3 +161,15 @@ def letter_combinations(digits: str) -> list[str]:
 |----------|------------------|----------------------|
 | **Permutations** | Loop all elements on every step | Skip if item already exists in `current_path` |
 | **Combinations** | Loop forward from `start_index` | Items behind the boundary index are dropped entirely |
+
+## Practice
+
+- LC 46 — Permutations
+- LC 78 — Subsets
+
+## Common pitfalls
+
+- Appending the mutable path itself instead of a copy — every stored result later mutates into the same list
+- Permutations restart `i` at 0 with a used-check; subsets start at `start_index` — mixing the two loop bounds yields duplicates or missing sets
+- Forgetting to undo the choice after the recursive call (the `pop`) — the path leaks into sibling branches
+- Skipping duplicates needs a sort first plus `if i > start and nums[i] == nums[i-1]: continue` — without the sort the check is meaningless

@@ -1,5 +1,19 @@
 # 🧠 Recursion & Call Stack Traversal Patterns
 
+## When to reach for it
+
+The structure is self-similar (a list is a node plus a smaller list; a tree is a root plus subtrees) and the work at each node is the same — let the call stack carry the position instead of an explicit loop.
+
+- Pipeline/Chain Construction
+- End-Relative Analytics
+
+## Picking feature
+
+Where the work sits relative to the recursive call is the whole decision: BEFORE it (head / pre-order) when the current node decides what comes next; AFTER it (tail / post-order) when you need the answer from the end first.
+
+- **not tree-dfs** — the structure is a TREE — same idea, but the pre / in / post vocabulary is the one to reason with
+- **not memoization** — the recursion revisits the same state — add a cache or the call tree explodes
+
 ## Quick Reference
 
 
@@ -10,7 +24,9 @@
 
 ---
 
-## 1. Head Recursion (Pre-Order Execution)
+## Template: Head Recursion (Pre-Order Execution)
+
+*When:* Building structural pipelines forward, or executing state evaluations on the way down toward the base case.
 
 **Use Case**: Building structural pipelines forward, or executing state evaluations on the way down toward the base case.
 
@@ -37,12 +53,15 @@ def mergeTwoLists(self, list1: ListNode, list2: ListNode) -> ListNode:
         list2.next = self.mergeTwoLists(list1, list2.next)
         return list2 # Return current node as the confirmed segment head
 ```
+Complexity: O(n + m) time · O(n + m) space — one frame per node of the merged output; the call stack is the extra space
 
 **Example**: [LeetCode 21 - Merge Two Sorted Lists](https://leetcode.com)
 
 ---
 
-## 2. Tail Recursion (Post-Order Execution)
+## Template: Tail Recursion (Post-Order Execution)
+
+*When:* Traversing to an unknown endpoint (like a tail pointer) first, then running evaluations backward relative to that end boundary.
 
 **Use Case**: Traversing to an unknown endpoint (like a tail pointer) first, then running evaluations backward relative to that end boundary.
 
@@ -75,6 +94,7 @@ def removeNthFromEnd(self, head: ListNode, n: int) -> ListNode:
     dummy.next = helper(head)
     return dummy.next
 ```
+Complexity: O(n) time · O(n) space — walks to the tail then unwinds — every node costs one frame
 
 **Example**: [LeetCode 19 - Remove Nth Node From End of List](https://leetcode.com)
 
@@ -118,6 +138,18 @@ def maxDepthTail(self, root: TreeNode) -> int:
 | :--- | :--- |
 | **Pipeline/Chain Construction** | If current nodes must immediately resolve their connections to lookups before evaluating children, choose **Head**. |
 | **End-Relative Analytics** | If constraints require metric calculations relative to an unknown end boundary, choose **Tail**. |
+
+## Practice
+
+- LC 21 — Merge Two Sorted Lists
+- LC 19 — Remove Nth Node From End of List
+
+## Common pitfalls
+
+- No base case, or a base case placed after the recursive call — the stack overflows before it is ever checked
+- Putting the work before the call when the answer needs the tail first (or vice versa) — the order of those two lines IS the algorithm
+- Python's recursion limit (~1000 frames) — a 10⁴-node list needs the iterative form
+- Mutating shared state (a counter, a list) across frames without meaning to — pass it explicitly or hold it on `self` on purpose
 
 ---
 
