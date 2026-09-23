@@ -845,5 +845,9 @@ decisions:
       any value, per single-source-of-truth. No cse.config.yml value changed. Strands any wording that
       calls AGENTS.md "thin", that calls CLAUDE.md the sole always-on file, or that says Copilot/Cursor
       cannot read the skill or the hub. See AGENTS.md, CLAUDE.md, docs/cse-coach/AGENT_PORTABILITY_PLAN.md
-      §5, project_multi_agent_portability.md.
+      §5, project_multi_agent_portability.md. PHASE 3 PROBE, Claude Code (2026-09-23, commit a31bc60):
+      a fresh `claude -p` session in the worktree, asked with no tools to list the always-on gates from its
+      injected instructions, returned all nine trigger lines verbatim and attributed them to AGENTS.md via
+      CLAUDE.md's `@AGENTS.md` import; the SessionStart hook output still restates the gate set (14,127
+      chars, names AGENTS.md); check_single_source.py --check green, reconcile.py exit 0.
     affects: [operating_principles, hooks, single_source, agent_portability, execution_workflow]
