@@ -1,6 +1,6 @@
 ---
 name: project-grounded-solutions
-description: Sep 22-23, 2026 — the site's 95 visualizers now render the learner's code verbatim from cse-progress via dashboard/showcase.json (the "groundedness meter", held at 100% by CI); how the pick was made, the judgement calls, and what is still open
+description: Sep 22-23, 2026 — the site's 95 visualizers now render the learner's code verbatim from cse-progress via dashboard/showcase.json (the "groundedness meter", held at 100% by CI), plus 28 code-only entries added Sep 23 for problems with no visualizer yet (148 entries, 123 problems total); how the pick was made, the judgement calls, and what is still open
 metadata:
   type: project
 reconciled: 2026-09-23
@@ -35,7 +35,8 @@ step anchor resolves to exactly one row (or an explicit `nth`).
 
 ## The judgement calls (the learner delegated the pick to the tech lead)
 
-- 120 contract entries for 120 site variants: one per distinct approach the learner actually wrote.
+- 148 contract entries for 123 problems (95 visualized + 28 code-only added 2026-09-23): one entry
+  per distinct approach the learner actually wrote.
   Three site variants had no learner counterpart and were removed: 76 Minimum Window Substring's
   only variant (the learner's file has `return "TBD"` and a method named Incorrect — the page is
   gone from the site), 219's HashMap variant, 141's Hash Set variant.
@@ -68,3 +69,5 @@ problem with no header line has neither; the site falls back to a search URL).
   only, not groundedness).
 - The site's main checkout carried unrelated uncommitted brand/logo work throughout; it was never
   touched by this job and must be merged by the learner.
+- 846 and 1489 are tracked but excluded from the showcase — the 2026-09-23 working tree replaced
+  their committed solutions with 2-line stubs; add them once the rep lands.

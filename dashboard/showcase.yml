@@ -695,3 +695,146 @@ entries:
     variant: no-cleaning
     symbol: isPalindromeNoCleaning
     # why: get to alphanumeric for both l and r
+
+  - lc: 3
+    variant: set-window
+    symbol: lengthOfLongestSubstring_20260822
+    # why: a dynamic window over a set; the -inf empty-string guard is explained.
+
+  - lc: 22
+    variant: backtracking
+    symbol: generateParenthesis
+    # why: state/path/legality/base case spelled out on every branch.
+
+  - lc: 34
+    variant: boundary-binary-search
+    symbol: searchRange_20260916
+    # why: min-boundary then max-boundary search, the (l+r+1)//2 trick explained.
+
+  - lc: 45
+    variant: greedy-range
+    symbol: jump
+    # why: the two-pointer reach window narrated step by step.
+
+  - lc: 55
+    variant: max-reach
+    symbol: jumpGame
+    # why: canonical forward maxReach; notes the wrong first instinct.
+
+  - lc: 56
+    variant: sort-merge
+    symbol: merge_20260903
+    # why: derives why sort-by-start and the merge criterion from examples.
+
+  - lc: 57
+    variant: three-pass
+    symbol: insertInterval_20260828
+    # why: the overlap rule derived from both examples, a 4-step plan.
+
+  - lc: 78
+    variant: include-exclude
+    symbol: subsets
+    # why: path/state/choice/base case listed; copy-per-branch explained.
+
+  - lc: 84
+    variant: monotonic-stack
+    symbol: largestRectangleArea
+    # why: why an increasing stack works, the standard 0 sentinel.
+
+  - lc: 127
+    variant: bfs-wildcard
+    symbol: ladderLength_20260902
+    # why: wildcard adjMap plus level-by-level BFS.
+
+  - lc: 134
+    variant: greedy-reset
+    symbol: gasStation_20260921
+    # why: the sum(gas) < sum(cost) guard and the reset rule.
+
+  - lc: 150
+    variant: stack
+    symbol: evalRPN_20260821
+    # why: operators set; pop-two-push-one commented.
+
+  - lc: 155
+    variant: pair-min
+    container: null
+    symbol: MinStack
+    # why: (value, min-so-far) tuples, push branches commented.
+
+  - lc: 202
+    variant: seen-set
+    symbol: isHappy_20260902
+    # why: short and correct; the other attempt carries an empty RECOGNITION banner.
+
+  - lc: 239
+    variant: monotonic-deque
+    symbol: maxSlidingWindow_20260822
+    # why: heap-vs-deque reasoning, both pop sides explained.
+
+  - lc: 269
+    variant: kahn-bfs
+    symbol: alienOrder_20260906
+    # why: first-diff rule, prefix failure case, Kahn's queue.
+
+  - lc: 332
+    variant: hierholzer-stack
+    symbol: findItinerary_stack_20260915
+    # why: iterative Hierholzer with reverse-sorted adjacency.
+
+  - lc: 435
+    variant: sort-by-end
+    symbol: nonOverlappingIntervals
+    # why: lkgEnd with the >= case justified by example 3.
+
+  - lc: 648
+    variant: trie
+    symbol: replaceWords
+    helpers: [TrieNode]
+    # why: builds the trie it uses; TrieNode is constructed here so it is a helper
+    # segment.
+
+  - lc: 721
+    variant: union-find
+    symbol: accountsMerge_20260917
+    # why: numbered steps 0-4, union by rank plus path compression.
+
+  - lc: 739
+    variant: monotonic-stack
+    symbol: dailyTemperatures_20260906
+    # why: forward decreasing stack, result written on pop.
+
+  - lc: 763
+    variant: last-index
+    symbol: partitionLabels
+    # why: last-index map, the canonical approach.
+
+  - lc: 778
+    variant: dijkstra-heap
+    symbol: swimInWater_20260822
+    # why: end checked at pop; BFS-vs-Dijkstra visited note.
+
+  - lc: 853
+    variant: sort-stack
+    symbol: carFleet_20260829
+    # why: sort by position desc, time-to-target stack.
+
+  - lc: 1334
+    variant: floyd-warshall
+    symbol: findTheCity_20260825
+    # why: FW derivation plus the <= tie rule for the larger index.
+
+  - lc: 1462
+    variant: floyd-warshall
+    symbol: courseScheduleIv_20260904
+    # why: transitive closure as FW on a 0/1 matrix.
+
+  - lc: 1552
+    variant: binary-search-answer
+    symbol: maxDistance_20260922
+    # why: binary search on the answer with canAchieve.
+
+  - lc: 2097
+    variant: hierholzer-stack
+    symbol: validArrangementOfPairs_20260907
+    # why: degree rule for the start node, then Hierholzer.

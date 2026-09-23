@@ -73,3 +73,11 @@ transcript's `model` field is the ground truth and showed `claude-sonnet-5` on e
 fired on "before i move forward, is this expected") and, in its first rewrite, silenced "can you
 implement X" — now polite openers are stripped and an implementation verb in first position wins.
 See `decisions.yml` `role-gate-deny-hooks-sep21`.
+
+**Observed 2026-09-23 — a team lead cannot block on its engineers.** A `team-lead` that spawns its two
+engineers in the background is force-handed-back as soon as its own turn ends, with the engineers still
+running; the engineers' completion reports then route to the TECH LEAD (the spawner's spawner), not back
+to the lead. So the lead's review step only happens if the tech lead resumes it via `SendMessage` after
+both engineer reports have arrived ("both engineers done; review now"). Budget for it: each lead costs two
+extra hand-backs (interim + final) and the tech lead does the collation. The engineers themselves, and
+the lead's review once resumed, worked as designed — including a lead sending fixes back to an engineer.
