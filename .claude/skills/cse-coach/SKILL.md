@@ -7,7 +7,7 @@ description: >-
   scaffolding a problem; at the weekly build/close-out; or at session start/end.
   Drives the Comfort→interval review engine, protects the daily effort budget,
   and coaches without spoiling. The learner owns all thinking and writes all code.
-reconciled: 2026-09-20
+metadata: {reconciled: "2026-09-20"}
 ---
 
 # cse-coach — the coaching skill
@@ -201,4 +201,4 @@ celebrate (session start, a milestone, the weekly close-out) and the config key 
 - `docs/foundations/dsa/mastery/technique_coverage.md` — generated coverage view
 - `docs/foundations/dsa/study_guide.md` — master plan / backlog recovery
 - `docs/foundations/schedules/<YYYYMMDD>_schedule.md` — the week's plan (both tracks)
-- `docs/foundations/system_design/mastery/design_progress.md` — SD mock tracker
+- the SD tracker moved Aug 15, 2026 → [`sd-progress`](https://github.com/michael-yrao/sd-progress) `mastery/design_progress.md` — SD mock tracker (same engine, its own copy)

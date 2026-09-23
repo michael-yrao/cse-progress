@@ -43,8 +43,15 @@ import sys
 
 # ── Rating-proposal detection ───────────────────────────────────────────────────
 # A comfort verdict: the emoji, the streak-tagged emoji, or the word.
+#
+# ⚠️ The word form uses `(?<![\w-])...(?![\w-])`, NOT `\b...\b`: a hyphen is not a word
+# character, so `\bclean\b` treats the `-` in "spec-clean" as a boundary and matches the
+# word anyway. That false-fired on the 2026-09-22 agent-portability plan summary turn
+# ("spec-clean frontmatter" + "confirm" elsewhere in the turn) — no rep, no rating, no
+# learner in the loop. Excluding a hyphen on both sides closes that hole while a genuine
+# standalone word ("rate this clean.") still matches. See self_eval_log.md 2026-09-22.
 COMFORT = re.compile(
-    r"🟢|🟡|🔴|🎓|\b(?:clean|shaky|blank)\b|\bs[0-2]\b", re.IGNORECASE
+    r"🟢|🟡|🔴|🎓|(?<![\w-])(?:clean|shaky|blank)(?![\w-])|\bs[0-2]\b", re.IGNORECASE
 )
 # A cue that the turn is PROPOSING a rating — i.e. asking the learner to DECIDE, which is the
 # defining feature of a proposal (workflow step 4: "propose it for confirmation"). A recap only
@@ -293,6 +300,14 @@ PROPOSE_CASES = [
      "Shipped the dashboard: 🔥 115-day streak, 19 🎓, 97 🟢. Build clean; progress.json live."
      "\n\n"
      "Time O(n) because one pass; space O(1) — 🟢 proposed. Confirm?", True),
+    # The 2026-09-22 agent-portability plan summary false positive: "spec-clean" is a
+    # hyphen-joined token, not the standalone comfort word, so it must not feed COMFORT
+    # even though the turn separately carries a real propose cue ("confirm"). Must NOT trip.
+    ("hyphen-joined comfort word, not a real proposal",
+     "Status: approved 2026-09-22 — spec-clean frontmatter, no mirror. Confirm the layout?", False),
+    # Control: the bare, standalone word still counts as a comfort verdict.
+    ("standalone comfort word survives the hyphen exclusion",
+     "I'd rate this clean. Confirm?", True),
 ]
 
 AXES_CASES = [

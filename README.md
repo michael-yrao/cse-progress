@@ -3,7 +3,8 @@
 A personal, spaced-repetition study system for technical-interview prep. Solutions are written by
 hand; a comfort-based schedule decides *what to review when*. Drive it conversationally from
 [Claude Code](https://claude.com/claude-code) (recommended), where the coaching engine loads as a
-skill — or another agent (Copilot, caveman) via [`AGENTS.md`](AGENTS.md) for a lower-credit option.
+skill — or another agent (Copilot, Cursor), both of which read [`AGENTS.md`](AGENTS.md), the
+always-on hub every agent shares.
 
 <!-- progress-badge:start -->
 [![progress](https://progressiveoverflow.com/progress) 🔥 117-day streak · 🎓 20 graduated · 🏆 0 retired · 56/94 techniques](https://progressiveoverflow.com/progress)
@@ -45,7 +46,7 @@ docs/foundations/
   schedules/                 # weekly cross-pillar plans (+ archive/)
 scripts/                     # tracker, effort budget, integrity + single-source checks
 .claude/                     # the cse-coach skill, agent memory, git hooks
-CLAUDE.md · AGENTS.md        # always-on rules · agent-agnostic entry point
+AGENTS.md · CLAUDE.md        # always-on hub (all agents) · Claude Code import + Claude-only specifics
 ```
 
 ## Setup (one-time per machine)
@@ -58,7 +59,7 @@ Full notes: [`docs/SETUP.md`](docs/SETUP.md).
 
 ## Start here
 
-- [`CLAUDE.md`](CLAUDE.md) — the always-on rules · [`SKILL.md`](.claude/skills/cse-coach/SKILL.md) — the coaching engine
+- [`AGENTS.md`](AGENTS.md) — the always-on rules · [`SKILL.md`](.claude/skills/cse-coach/SKILL.md) — the coaching engine
 - [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — how the rules are tiered against a context budget
 - DSA plan: [`study_guide.md`](docs/foundations/dsa/study_guide.md) · pattern library: [`patterns/README.md`](docs/foundations/dsa/patterns/README.md)
 - Template roadmap: [`docs/cse-coach/ROADMAP.md`](docs/cse-coach/ROADMAP.md)

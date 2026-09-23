@@ -120,7 +120,7 @@ fi
 # block a commit gets disabled within a week — at which point the check exists and never
 # fires, which is the failure it was written to prevent. The exact half (script defaults vs
 # config) is loud enough to act on: it prints ❌ and names both files.
-SSOT_TRIGGER=$(echo "$STAGED" | grep -E "cse\.config\.yml$|^scripts/.*\.py$|CLAUDE\.md$|^docs/foundations/.*\.md$")
+SSOT_TRIGGER=$(echo "$STAGED" | grep -E "cse\.config\.yml$|^scripts/.*\.py$|CLAUDE\.md$|AGENTS\.md$|^docs/foundations/.*\.md$")
 if [ -n "$SSOT_TRIGGER" ]; then
   if command -v py >/dev/null 2>&1; then
     py scripts/check_single_source.py || true

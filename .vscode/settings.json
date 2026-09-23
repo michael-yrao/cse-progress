@@ -4,7 +4,11 @@
   },
   "editor.showFoldingControls": "always",
   "editor.foldingHighlight": true,
-  "editor.foldingStrategy": "auto"
+  "editor.foldingStrategy": "auto",
+  // Makes VS Code Copilot Chat read AGENTS.md as its always-on instructions file — the
+  // native path Copilot's own coding agent already uses. Part of the agent-portability hub
+  // (docs/cse-coach/AGENT_PORTABILITY_PLAN.md, Phase 1, decisions.yml agents-md-hub-sep22).
+  "chat.useAgentsMdFile": true
 
   // Prior-attempt spoilers are no longer hidden by a fold. On a retry,
   // scripts/new_problem.py MOVES the prior attempts out of the file into

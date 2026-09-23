@@ -27,7 +27,10 @@ The framework transfers as-is; the data needs a blank-slate path.
 ### Phase 2 — Onboarding
 - [ ] `setup.sh` (or `make setup`): activate `core.hooksPath`, scaffold empty tracker/schedule from templates, sanity-check Python.
 - [ ] Human-facing "Getting Started" guide (README already covers structure; add a first-week walkthrough).
-- [ ] Generalize `CLAUDE.md` — it's agent-facing and personal; split into (a) reusable workflow conventions, (b) my personal preferences.
+- [x] Generalize `CLAUDE.md` — split into (a) reusable workflow conventions (now `AGENTS.md`, the
+      always-on hub for every agent) and (b) Claude-Code-specific preferences (the shrunk `CLAUDE.md`,
+      which imports `AGENTS.md`). Landed as Phase 1 of `AGENT_PORTABILITY_PLAN.md`,
+      `decisions.yml` `agents-md-hub-sep22`.
 
 ### Phase 3 — Genericize hardcoded assumptions
 - [ ] Config for cadence/daily-cap/intervals (currently baked into `study_guide.md` + `scripts/`).

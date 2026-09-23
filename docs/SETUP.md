@@ -146,3 +146,30 @@ whole point.
 
 If the token cost bites, drop `compact` from the fire list first — startup/resume/clear are the
 load-bearing ones.
+
+## 5. Per-agent one-time setup
+
+Step 1 (`git config core.hooksPath .githooks`) is the one setup step every agent needs — it
+is a git-level config, not agent-specific. Everything below is what's *additionally* true
+for the agent you're driving the repo from. See `AGENTS.md` §1 for the full "which agent
+reads what" table this summarizes, and the portability plan
+(`docs/cse-coach/AGENT_PORTABILITY_PLAN.md`) for what's still unverified.
+
+- **Claude Code:** nothing further — `.claude/settings.json` is committed, so the hooks in
+  §2–4 above and the skill auto-load both work on clone/pull with no manual step.
+- **GitHub Copilot (VS Code):** set `chat.useAgentsMdFile: true` so Copilot Chat reads
+  `AGENTS.md` (already set in the committed `.vscode/settings.json` — nothing to do on a
+  normal clone). Per Copilot's own docs it also scans `.claude/skills/`, so the coaching
+  skill may already auto-load; that is documented, not yet verified. Hook enforcement
+  (`.github/hooks/*.json`) does not exist yet — Phase 2 of the portability plan.
+- **GitHub Copilot (CLI / cloud agent):** reads `AGENTS.md` natively; no extra step. Same
+  unverified-skill-discovery and no-hooks-yet caveats as above.
+- **Cursor:** reads `AGENTS.md` natively; no extra step. Per Cursor's own docs it scans
+  `.claude/skills/` too (documented, not yet verified). No hook bridge exists yet, and per
+  the portability plan §6 one of the nine gates (the kickoff-scaffold reminder, gate 9) has
+  no mechanized path on Cursor even once bridges land, because Cursor's prompt-submit hook
+  cannot inject context — it stays prose-only there.
+
+No claim above is a "works on X" statement; each is either how Claude Code is already wired,
+or what the other agents' own documentation says, unconfirmed by a live run in this repo. The
+portability plan's Phase 3 checklist is what turns "documented" into "verified."
