@@ -1,6 +1,6 @@
 # Agent portability plan — cse-coach on Copilot and Cursor
 
-**Status:** approved 2026-09-22 · Phase 0 DONE (same push) · Phase 1 NOT STARTED · Phase 2 NOT STARTED · Phase 3 NOT STARTED
+**Status:** approved 2026-09-22 · Phase 0 DONE (same push) · Phase 1 DONE 2026-09-23 · Phase 2 IN PROGRESS (E4 Cursor bridge built, unverified; Copilot spike hook ready, awaiting a live session; E3 not started) · Phase 3 NOT STARTED
 **Written:** 2026-09-22 · **Owner:** whichever session picks up the next phase (see §0)
 
 ## 0. Picking this up (any agent, any session)
@@ -68,6 +68,11 @@ kickoff reminder has no equivalent.
 5. This machine has `core.symlinks=false`, so symlinked skill dirs are not an option.
 6. Incidental: `rating_gate.py` false-fired on this plan's summary turn — `\bclean\b` matched "spec-clean"
    and the proposal cue matched "approve". Logged in `self_eval_log.md` 2026-09-22; fix is in Phase 1.
+
+*Amended 2026-09-23 (Phase 1 review):* finding 2's stale SD tracker path was in `SKILL.md`'s key-files
+list, not `AGENTS.md` — fixed there. Finding 6's "approve" was a misreading: `PROPOSE_CUE` has no such
+alternative; the false-fire was the hyphen bug alone. Cost note: the hub puts ~16.6KB always-on on
+Claude Code (was ~10.5KB); the rest is gate and single-source text, deliberately not cut.
 
 ## 3. Decisions
 
@@ -163,6 +168,13 @@ before this file exists.
 - `sessionStart` → `session_start_memory.py` (`additional_context`). `postToolUse` → `scaffold_links_reminder.py`.
 - The kickoff reminder has no Cursor equivalent (prompt hooks can't inject). It stays prose in `AGENTS.md`
   gate 9; the §1 table says so.
+
+*Amended 2026-09-23:* E4 was built before the Copilot spike, on the learner's call. The spike only
+decides Copilot's transcript format, and the Cursor bridge reads its own shadow transcript, so it doesn't
+depend on the spike. Tested against synthetic payloads and the real, unmodified Stop hooks only;
+unverified until §7. Correction to §1: Cursor's common input fields do include `transcript_path`
+(possibly null, in Cursor's own format, not Claude's). The §1 cell "no transcript" should read "no
+Claude-shape transcript". The shadow design stands.
 
 ## 7. Phase 3 — verification by live probe (the standard set on 2026-09-21)
 

@@ -5,7 +5,7 @@ metadata:
   type: project
 reconciled: 2026-09-22
 ---
-**State (2026-09-22):** plan approved and committed; Phase 0 (advisor retired) done; Phases 1–3 not started.
+**State (2026-09-23):** Phases 0–1 done; Phase 2 in progress; Phase 3 not started.
 The plan file's Status line is the only status field — read it, never this line, for what is done.
 
 **Where:** [`docs/cse-coach/AGENT_PORTABILITY_PLAN.md`](../../docs/cse-coach/AGENT_PORTABILITY_PLAN.md).
