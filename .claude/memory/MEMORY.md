@@ -75,7 +75,8 @@ operational copy is in a skill reference or CLAUDE.md. Grouped for scanning.
 - [Upstream candidates](project_upstream_candidates.md) — staging list of findings to PR to canonical cse-coach (defects ship now, instruments soak ~4wk).
 - [Gamification](project_gamification.md) — honest-progress layer (streak, maturation pipeline, trophy case, coverage, badges) → `progress.json` contract rendered on progressiveoverflow.com; reward only unfakeable events, never a rating; row count still isn't progress.
 - [Site refresh Sep 21-22 — shipped + follow-ups](project_site_refresh_resume.md) — what landed in the three repos; the optional cleanup list and pre-existing quirks still open.
-- [Execution workflow](feedback_execution_workflow.md) — GLOBAL, all non-trivial work: tech lead (session: Fable/Opus) plans + reviews + runs `advisor`; Opus team leads at 2:1 supervise Sonnet engineers who implement (no commit/push).
+- [Execution workflow](feedback_execution_workflow.md) — GLOBAL, all non-trivial work: tech lead (session: Fable/Opus) plans + reviews (no separate advisor since Sep 22); Opus team leads at 2:1 supervise Sonnet engineers who implement (no commit/push).
+- [Agent portability (OPEN)](project_agent_portability.md) — cse-coach on Copilot + Cursor; the plan file `docs/cse-coach/AGENT_PORTABILITY_PLAN.md` is the single status record — Phase 0 done Sep 22, Phases 1–3 not started; §0 there is the pickup procedure.
 - [Global .claude versioned](project_global_claude_unversioned.md) — CLOSED Sep 21: `~/.claude/` rules/agents/hooks/settings.json are versioned in-place in the private repo `michael-yrao/claude-dotfiles`; edits there need their own commit+push.
 
 ## Retired (history only — not active; in `retired/`, out of automated scope)

@@ -95,7 +95,7 @@ workflow (`~/.claude/rules/execution-workflow.md`):
 |---|---|---|
 | **Plan** | tech lead (the session) | price capacity, read the coverage / ⚠️-Needs-work callout, decide the pulls + day placement — the whole build *design*. Get learner approval. |
 | **Execute** | `engineer` agent (Sonnet) | the mechanical writeback ONLY: `git mv` the archive, write the next-week file from the approved plan, run the checker scripts, report the diff. **Never commit/push.** |
-| **Review** | tech lead (the session) | review the engineer's diff, run `advisor`, then commit/push per the close-out authorization. |
+| **Review** | tech lead (the session) | review the engineer's diff yourself, then commit/push per the close-out authorization. |
 
 The build is one engineer's worth of writeback — under the spawn rule (2:1) that means no team lead; the
 tech lead supervises the engineer directly.
