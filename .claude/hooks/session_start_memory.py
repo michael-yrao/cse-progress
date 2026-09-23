@@ -61,24 +61,25 @@ ALWAYS-ON GATES — each is bound to a MOMENT, not a topic. Check the trigger, n
 1. About to propose a comfort rating (green/yellow/red)? -> The COMPLEXITY GATE is already overdue.
    Time AND space, each with an itemized why-clause, from the learner, BEFORE the rating. It fires on
    the rep, not the ritual: "what's wrong with my code" with no scaffold and no kickoff is still a rep.
-   Step 1 of CLAUDE.md's LeetCode Review Workflow. (Skipped entirely 2026-08-02.)
+   Gate 1 of AGENTS.md; review-workflow.md §1. (Skipped entirely 2026-08-02.)
 2. Something you did just got corrected — by the learner OR by you, unprompted? -> Append a dated entry
    to .claude/memory/self_eval_log.md IN THE SAME TURN. A sentence in chat is not a fix; it dies with
    the context window. (Caught-then-not-logged 2026-08-02.)
 3. Fixing a recurring miss? -> Climb the intervention ladder: source fix > hook > skill reference /
-   CLAUDE.md step > memory file. A coaching-moment rule belongs in a skill reference (it loads at that
-   moment); an unprompted one in CLAUDE.md. A rule that lapsed twice as prose won't be fixed by better prose.
+   AGENTS.md step > memory file. A coaching-moment rule belongs in a skill reference (it loads at that
+   moment); an unprompted one in AGENTS.md (the always-on hub). A rule that lapsed twice as prose won't
+   be fixed by better prose.
 4. Asked to close out / commit / push / archive? -> Verify it against the visible state of the work
    first, and ASK if they disagree. If any part of a turn contains fabricated tool output, none of that
    turn is evidence. (2 occurrences in one day.)
 5. Handing over a retry? -> Problem number and links only. No prior rating, no prior failure category,
    no "where the rep lives" — that is stuck_log content and it pre-localizes the rep. (2 occurrences.)
 6. Last session of the week? -> Archive this week's schedule AND generate next week's, before the
-   commit. Both, or neither counts. Step 7 of CLAUDE.md's LeetCode Review Workflow. (Missed 2026-08-02.)
+   commit. Both, or neither counts. Gate 7 of AGENTS.md; weekly-build.md. (Missed 2026-08-02.)
 7. Learner asks to start the day / a session (a kickoff)? -> Scaffold the WHOLE day's board (every
    problem on today's schedule, active block AND both warmups) BEFORE presenting it. A message naming
    a specific problem is NOT a kickoff -- scaffold only that. (Presented-not-scaffolded Sep 12 AND 13,
-   2026; the reference-tier fix lapsed in a day. Gate 9 of CLAUDE.md; kickoff_scaffold_reminder.py.)
+   2026; the reference-tier fix lapsed in a day. Gate 9 of AGENTS.md; kickoff_scaffold_reminder.py.)
 
 Load the individual memory file before acting on any rule you are unsure about. Index follows.
 """
@@ -156,7 +157,7 @@ def meta_review_banner(claude_dir: Path) -> str:
         return (
             "!! SELF-EVAL META-REVIEW OVERDUE (" + "; ".join(why) + "). Before other work, cluster the "
             "open entries in .claude/memory/self_eval_log.md by root cause and promote any 2+ recurrence "
-            "up the ladder (source fix > hook > skill reference / CLAUDE.md step > memory file); then "
+            "up the ladder (source fix > hook > skill reference / AGENTS.md step > memory file); then "
             "archive consolidated entries. See feedback_self_evaluation.md.\n\n"
         )
     except Exception:

@@ -814,3 +814,36 @@ decisions:
       commit that lands docs/cse-coach/AGENT_PORTABILITY_PLAN.md (Copilot + Cursor portability plan,
       approved Sep 22, not yet implemented — Phase 1 brief is in the plan).
     affects: [execution_workflow]
+
+  - id: agents-md-hub-sep22
+    date: 2026-09-23
+    summary: >-
+      Phase 1 of docs/cse-coach/AGENT_PORTABILITY_PLAN.md (approved Sep 22): AGENTS.md becomes the single
+      always-on hub for every agent, in agent-neutral wording — the nine gates, "two registers", agent
+      memory, single source of truth, and the token-discipline cap, plus a new "which agent reads what"
+      table (Claude Code / Copilot / Cursor skill dirs, always-on file, hook config, and event names, per
+      each agent's own docs). CLAUDE.md SHRINKS to `@AGENTS.md` + a Claude-Code-only section (skill
+      auto-load, the `.claude/settings.json` hook-to-gate map, caveman lite); AGENTS.md is now what
+      CLAUDE.md used to be for `reconcile.py` purposes — the always-injected copy obeyed on any conflict.
+      `.github/copilot-instructions.md` REWRITTEN as a shim (read AGENTS.md; the skill auto-loads from
+      `.claude/skills/`; Copilot's own hook bridge is `.github/hooks/*.json`, planned for Phase 2, not yet
+      built) — it previously restated the review intervals and called CLAUDE.md "the full workflow", both
+      stale within weeks; that drift is the reason a shim replaced it. `.vscode/settings.json` gains
+      `chat.useAgentsMdFile: true` (merged, not clobbered) so VS Code Copilot Chat reads AGENTS.md
+      natively. docs/SETUP.md gains a per-agent one-time-setup section; docs/ARCHITECTURE.md's four-tier
+      model is re-keyed on AGENTS.md and gains a paragraph on how a tier degrades per agent (the Interrupts
+      tier exists only on Claude Code today; where absent, a gate is still stated at L1 but relies on
+      recall, not a block — permanently for the kickoff-scaffold gate on Cursor, whose prompt-submit hook
+      cannot inject context, per D3/§6 of the plan). ⚠️ NO "works on Copilot/Cursor" claim is made anywhere
+      in this change — every table row and hook-enforcement note is phrased as documented-from-vendor-docs,
+      not verified; verification is Phase 3's live-probe checklist, still open. The old AGENTS.md's "other
+      agents can't invoke skills" line and its "Recommended: Claude Code" callout are DROPPED as superseded
+      by the new §1 table, which states the more accurate (and appropriately hedged) current picture
+      instead. Fixes an incidental bug found while rewriting: the old AGENTS.md's SD-cadence line restated
+      a value (`twice_weekly`) that cse.config.yml no longer holds (`system_design.cadence` is
+      `mock_plus_deep_dive` since sd-rebuilt-as-mocks, Aug 13) — now points at the key instead of stating
+      any value, per single-source-of-truth. No cse.config.yml value changed. Strands any wording that
+      calls AGENTS.md "thin", that calls CLAUDE.md the sole always-on file, or that says Copilot/Cursor
+      cannot read the skill or the hub. See AGENTS.md, CLAUDE.md, docs/cse-coach/AGENT_PORTABILITY_PLAN.md
+      §5, project_multi_agent_portability.md.
+    affects: [operating_principles, hooks, single_source, agent_portability, execution_workflow]

@@ -70,6 +70,11 @@ RULE_GLOBS = (
     # the retired-vocabulary list has no entry for a superseded PHRASING of a workflow step.
     # Recording the decision and letting THIS file fall out of date is what surfaces it.
     "CLAUDE.md",
+    # AGENTS.md became the always-on hub for every agent, Claude Code included (D2,
+    # agents-md-hub-sep22) — it carries the gates CLAUDE.md used to, so it is IN SCOPE for
+    # exactly the reason CLAUDE.md is: a stale copy here is obeyed by whichever agent reads
+    # it before anyone notices.
+    "AGENTS.md",
     # The coaching engine moved into the skill (2026-09-10). Its rules are opt-in reads, so a
     # decision that postdates a reference file's `reconciled:` is the signal that the skill has
     # not been read against the change — the same temporal check CLAUDE.md gets. SKILL.md carries
@@ -81,9 +86,39 @@ RULE_GLOBS = (
 #: reconciled — back-dating it would destroy the history it exists to hold.
 RULE_EXCLUDE = ("self_eval_log.md", "MEMORY.md", "decisions.yml")
 
+#: Top-level frontmatter form (`reconciled: 2026-09-20`) — every memory file's own shape.
+#: Kept as a FALLBACK once a file has a `metadata:` block (agentskills.io's spec puts
+#: `reconciled` under `metadata:`; a bare top-level key is rejected by a strict host).
 FRONTMATTER_FIELD = re.compile(r"^reconciled:\s*(\d{4}-\d{2}-\d{2})\s*$", re.M)
-#: Same assertion for a file with no YAML frontmatter (CLAUDE.md, and any normative doc).
+#: Spec-shaped forms: `metadata: {reconciled: "2026-09-20"}` (flow, one line — SKILL.md's
+#: own shape) or a block mapping (`metadata:\n  reconciled: "2026-09-20"`). Read either;
+#: `stamp()` preserves whichever shape a file already has, and only picks a shape when
+#: writing the field fresh — flow-style `metadata:` for SKILL.md (D1's spec-clean form is
+#: scoped to the skill), top-level `reconciled:` for every other file. D1 does not touch
+#: the ~60 memory files' own top-level frontmatter, so `stamp()` must not migrate them.
+METADATA_FLOW_FIELD = re.compile(
+    r'^metadata:\s*\{[^}]*\breconciled:\s*"?(\d{4}-\d{2}-\d{2})"?[^}]*\}\s*$', re.M
+)
+METADATA_BLOCK_FIELD = re.compile(
+    r'^metadata:[ \t]*$\n(?:^[ \t]+\S.*$\n?)*?^[ \t]+reconciled:\s*"?(\d{4}-\d{2}-\d{2})"?[ \t]*$',
+    re.M,
+)
+#: Same assertion for a file with no YAML frontmatter (CLAUDE.md, AGENTS.md, and any other
+#: normative doc).
 COMMENT_FIELD = re.compile(r"<!--\s*reconciled:\s*(\d{4}-\d{2}-\d{2})\s*-->")
+
+
+def _replace_captured_date(pattern: re.Pattern, text: str, when: dt.date) -> str:
+    """Swap just the captured date (group 1) inside `pattern`'s first match in `text`.
+
+    Rewriting by span, not by substring-replace, so a date that happens to recur inside
+    the same match (unlikely, but this is a date string) can never be swapped twice.
+    """
+    m = pattern.search(text)
+    if not m:
+        return text
+    start, end = m.span(1)
+    return text[:start] + str(when) + text[end:]
 
 
 def load_decisions() -> list[dict]:
@@ -123,7 +158,14 @@ def reconciled_date(path: Path) -> dt.date | None:
         head = text[:end] if end != -1 else text
     else:
         head = text[:400]
-    m = FRONTMATTER_FIELD.search(head) or COMMENT_FIELD.search(text)
+    # metadata.reconciled (spec-shaped) wins; a bare top-level `reconciled:` is the
+    # pre-spec fallback for files (memory files) that have not moved under `metadata:`.
+    m = (
+        METADATA_FLOW_FIELD.search(head)
+        or METADATA_BLOCK_FIELD.search(head)
+        or FRONTMATTER_FIELD.search(head)
+        or COMMENT_FIELD.search(text)
+    )
     if not m:
         return None
     try:
@@ -154,10 +196,24 @@ def stamp(path: Path, when: dt.date) -> bool:
     if end == -1:
         return False
     head, rest = text[:end], text[end:]
-    if FRONTMATTER_FIELD.search(head):
+
+    if METADATA_FLOW_FIELD.search(head):
+        new_head = _replace_captured_date(METADATA_FLOW_FIELD, head, when)
+    elif METADATA_BLOCK_FIELD.search(head):
+        new_head = _replace_captured_date(METADATA_BLOCK_FIELD, head, when)
+    elif FRONTMATTER_FIELD.search(head):
+        # A file already carrying the pre-spec top-level key keeps it there. D1 (spec-clean
+        # frontmatter) is scoped to the skill; migrating this for every memory file with a
+        # top-level `reconciled:` was the wrong scope — ~60 of them have one, and a
+        # `--stamp-all` run would have silently rewritten every one of their frontmatter blocks.
         new_head = FRONTMATTER_FIELD.sub(f"reconciled: {when}", head)
+    elif path.name == "SKILL.md":
+        # No existing field: SKILL.md is the one file D1 puts under `metadata:` (flow style).
+        new_head = head.rstrip("\n") + f'\nmetadata: {{reconciled: "{when}"}}'
     else:
+        # Every other file with no existing field keeps the original top-level form.
         new_head = head.rstrip("\n") + f"\nreconciled: {when}"
+
     if new_head == head:
         return False
     path.write_text(new_head + rest, encoding="utf-8", newline="\n")
