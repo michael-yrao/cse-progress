@@ -62,6 +62,12 @@ import effort_budget as eb
 # so gamify doesn't silently roll a late-night regeneration onto the next calendar day.
 import session_date
 
+# "Which file is problem N" comes from links.solution_files() (keyed by the leading number,
+# same walk as links.find_file) — reused rather than re-globbed here so a problem's `file`
+# field can never disagree with the `[file]` link the coach pastes in chat. (seed_bigo.py
+# still carries its own one-off glob; folding it onto links is a follow-up.)
+import links
+
 _console.force_utf8()
 
 REPO = Path(__file__).resolve().parent.parent
@@ -441,6 +447,7 @@ def _schedule_item_outcome(end_cell: str | None, next_cell: str | None) -> dict:
 
 def _parse_schedule_day_full(
     path: Path, day: dt.date, difficulty_by_num: dict[int, str], urls: dict[int, str],
+    files: dict[int, list[Path]] | None = None,
 ) -> tuple[list[dict], str | None, float | None]:
     """Like eb.parse_schedule_day, but keeps the day's label and each item's technique,
     tags, kind, a display-clean title, and the per-rep outcome (endComfort/endNote/
@@ -454,8 +461,11 @@ def _parse_schedule_day_full(
     fallback source for each item's canonical LeetCode URL — see _schedule_item_url,
     which prefers the row's own link first; the site's own AlgorithmMeta.id is a
     shortened route slug, not the LC slug, so it cannot build a correct link itself.
+    `files` (from links.solution_files()) gives each item its `file` — the learner's own
+    solution path (see solution_path) — null for a row with no number or no file yet.
     """
     wanted = (day.strftime("%a"), day.strftime("%b"), day.day)
+    files = files or {}
     items: list[dict] = []
     label: str | None = None
     units: float | None = None
@@ -501,6 +511,7 @@ def _parse_schedule_day_full(
             "startComfort": start.group(0) if start else None,
             "difficulty": difficulty_by_num.get(lc_number) if lc_number else None,
             "url": _schedule_item_url(cell, lc_number, urls),
+            "file": solution_path(lc_number, files) if lc_number else None,
             "tags": tags,
             "kind": _schedule_item_kind(technique, tags),
             "done": "~~" in cell,
@@ -509,15 +520,17 @@ def _parse_schedule_day_full(
     return items, label, units
 
 
-def parse_current_week_schedule(today: dt.date, urls: dict[int, str]) -> dict | None:
+def parse_current_week_schedule(today: dt.date, urls: dict[int, str],
+                                files: dict[int, list[Path]] | None = None) -> dict | None:
     """The CURRENT week's `## Daily Schedule` table -> {weekOf, days:[...]} — the compact
     slice behind the dashboard's Today's-board drill.
 
     Emits ALL 7 days; it never bakes a server-side "today" into the payload, because the
     summary is generated on commit but can be VIEWED days later — the client picks its
     own day by comparing its local date against each day's `date`. Fail-soft: no current
-    schedule file -> None (the caller adds a warning). `urls` (from problem_urls()) is
-    threaded through to each item — see _parse_schedule_day_full.
+    schedule file -> None (the caller adds a warning). `urls` (from problem_urls()) and
+    `files` (from links.solution_files()) are threaded through to each item — see
+    _parse_schedule_day_full.
     """
     path = eb.find_schedule(today)
     if path is None:
@@ -539,7 +552,8 @@ def parse_current_week_schedule(today: dt.date, urls: dict[int, str]) -> dict | 
     days: list[dict] = []
     for offset in range(7):
         day_date = week_start + dt.timedelta(days=offset)
-        items, label, units = _parse_schedule_day_full(path, day_date, difficulty_by_num, urls)
+        items, label, units = _parse_schedule_day_full(path, day_date, difficulty_by_num,
+                                                       urls, files)
         days.append({
             "date": day_date.isoformat(),
             "weekday": day_date.strftime("%A"),
@@ -765,8 +779,30 @@ def parse_probes(urls: dict[int, str]) -> dict | None:
 
 # ── the build ───────────────────────────────────────────────────────────────────────
 
+def solution_path(num: int, files: dict[int, list[Path]],
+                  warnings: list[str] | None = None) -> str | None:
+    """Repo-relative POSIX path of `num`'s solution file (from links.solution_files()),
+    or None when no file exists under the configured roots. A PATH, never code —
+    progress.json stays code-free (decisions.yml `showcase-contract`); the site turns it
+    into a `blob/<branch>/<path>` link so every row can point at the learner's own file
+    even before any curated showcase entry exists.
+
+    A twin (two files for one number, e.g. 1216) takes the first sorted path — the same
+    rule as `links.find_file` — and records one warning per number so the choice is never
+    silent. The map lookup is O(1); the glob ran once, in build_payload."""
+    paths = files.get(num) or []
+    if not paths:
+        return None
+    if len(paths) > 1 and warnings is not None:
+        joined = ", ".join(p.relative_to(REPO).as_posix() for p in paths)
+        warnings.append(f"{num}: {len(paths)} solution files ({joined}) — `file` uses the first.")
+    return paths[0].relative_to(REPO).as_posix()
+
+
 def build_problems(rows: list[dict], sched: dict[str, dict[int, str]],
-                   cats: dict[int, str], urls: dict[int, str]) -> list[dict]:
+                   cats: dict[int, str], urls: dict[int, str],
+                   files: dict[int, list[Path]] | None = None,
+                   warnings: list[str] | None = None) -> list[dict]:
     # The schedule index is keyed by problem NUMBER, but a number can carry several rows
     # (different methods — 21 Recursion vs Iterative, 323 with three variants). The index
     # cannot say which variant a rep belonged to, so attaching its glyph to every row would
@@ -774,9 +810,15 @@ def build_problems(rows: list[dict], sched: dict[str, dict[int, str]],
     # multi-row number we degrade the reconstructed comfort to activity dots (null); only
     # the final point is anchored to each row's own authoritative current comfort.
     multi = {n for n, c in _count_nums(rows).items() if c > 1}
+    files = files or {}
+    # One twin warning per NUMBER, not per row: a multi-variant number (21 Recursion vs
+    # Iterative) has several tracker rows but only one file lookup worth reporting.
+    twin_warned: set[int] = set()
     problems = []
     for r in rows:
         num = int(r["num"])
+        file_rel = solution_path(num, files, None if num in twin_warned else warnings)
+        twin_warned.add(num)
         rep_dates = eb._DATE.findall(r.get("reps") or "")
         timeline = []
         for d in rep_dates:
@@ -792,6 +834,7 @@ def build_problems(rows: list[dict], sched: dict[str, dict[int, str]],
             "lcNumber": num,
             "title": r["title"].strip(),
             "url": urls.get(num),
+            "file": file_rel,
             "difficulty": r["diff"],
             "category": cats.get(num),
             "comfort": r["comfort"],
@@ -919,12 +962,13 @@ def build_payload(today: dt.date | None = None) -> tuple[dict, list[str]]:
     retired = parse_retired()
     cats = category_map()
     urls = problem_urls()
+    files = links.solution_files()   # one glob; every row and board item reads this map
     sched = build_schedule_index()
     coverage = parse_coverage()
     if coverage is None:
         warnings.append("technique_coverage.md not readable — coverage omitted.")
     techniques = parse_techniques(warnings)
-    schedule = parse_current_week_schedule(today, urls)
+    schedule = parse_current_week_schedule(today, urls, files)
     if schedule is None:
         warnings.append("no current weekly schedule file found — schedule omitted.")
     probes = parse_probes(urls)
@@ -938,7 +982,7 @@ def build_payload(today: dt.date | None = None) -> tuple[dict, list[str]]:
     # single source of truth for these two numbers.
     effort_cfg = eb.load_config()
 
-    problems = build_problems(rows, sched, cats, urls)
+    problems = build_problems(rows, sched, cats, urls, files, warnings)
     days = study_days(rows)
 
     stats = {

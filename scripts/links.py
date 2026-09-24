@@ -65,6 +65,31 @@ def source_roots() -> list[Path]:
     return [REPO_ROOT / DEFAULT_ROOT]
 
 
+_LEADING_NUMBER = re.compile(r"^(\d{1,4})_")
+
+
+def solution_files() -> dict[int, list[Path]]:
+    """Every solution file under every configured root, keyed by its leading problem
+    number: `{39: [<root>/backtracking/39_combination_sum.py], ...}`, each list sorted.
+
+    ONE glob for the whole tree — `gamify.py` needs a path for ~130 tracker rows on every
+    commit, and `export_showcase.py`'s auto-fill (stage 2) needs the same map to find files
+    with no manifest entry. The NUMBER is the identity (same rule as new_problem.py's twin
+    check); a number with two files is a twin, and the caller decides what to do with it
+    (`find_file` warns and takes the first).
+    """
+    files: dict[int, list[Path]] = {}
+    # Roots in config order, sorted WITHIN each root — the same order `find_file` walks, so
+    # a twin resolves to the same first file here as there (a final cross-root sort would
+    # not, once a second root is configured).
+    for root in source_roots():
+        for path in sorted(root.glob("*/*.py")):
+            m = _LEADING_NUMBER.match(path.name)
+            if m:
+                files.setdefault(int(m.group(1)), []).append(path)
+    return files
+
+
 def find_file(number: str) -> Path | None:
     """The solution file for `number`, or None. The NUMBER is the identity (same rule as
     new_problem.py's twin check), so glob `<root>/*/<number>_*.py` across every root.

@@ -23,6 +23,7 @@ from unittest import mock
 
 import effort_budget as eb
 import gamify
+import links
 
 
 def _row(num, comfort, streak, diff="Medium", due="2026-12-01", reps=""):
@@ -449,6 +450,7 @@ class ParseCurrentWeekScheduleTests(unittest.TestCase):
                                  "technique": "Backtracking", "startComfort": "🔴",
                                  "difficulty": "Medium",
                                  "url": "https://leetcode.com/problems/generate-parentheses/",
+                                 "file": None,
                                  "tags": ["protected", "backfill"], "kind": "rep",
                                  "done": False,
                                  "endComfort": None, "endNote": None, "nextReview": None})
@@ -459,6 +461,7 @@ class ParseCurrentWeekScheduleTests(unittest.TestCase):
                                 "technique": "Tree-DFS", "startComfort": "🟢",
                                 "difficulty": "Easy",
                                 "url": "https://leetcode.com/problems/same-tree/",
+                                "file": None,
                                 "tags": [], "kind": "rep",
                                 "done": True,
                                 "endComfort": "🎓", "endNote": None, "nextReview": "2026-10-01"})
@@ -470,6 +473,7 @@ class ParseCurrentWeekScheduleTests(unittest.TestCase):
                                      "technique": "Greedy", "startComfort": "🟡",
                                      "difficulty": None,
                                      "url": "https://leetcode.com/problems/jump-game/",
+                                     "file": None,
                                      "tags": [], "kind": "rep",
                                      "done": False,
                                      "endComfort": None, "endNote": None, "nextReview": None})
@@ -486,6 +490,7 @@ class ParseCurrentWeekScheduleTests(unittest.TestCase):
                                            "technique": "Backtracking", "startComfort": None,
                                            "difficulty": None,
                                            "url": "https://leetcode.com/problems/combination-sum/",
+                                           "file": None,
                                            "tags": ["new"], "kind": "new",
                                            "done": False,
                                            "endComfort": None, "endNote": None, "nextReview": None})
@@ -500,6 +505,7 @@ class ParseCurrentWeekScheduleTests(unittest.TestCase):
                                            "technique": "DP", "startComfort": "🟡",
                                            "difficulty": None,
                                            "url": "https://leetcode.com/problems/word-break/",
+                                           "file": None,
                                            "tags": [], "kind": "rep",
                                            "done": False,
                                            "endComfort": None, "endNote": None, "nextReview": None})
@@ -516,6 +522,7 @@ class ParseCurrentWeekScheduleTests(unittest.TestCase):
             "lcNumber": None, "title": "Two Pointers primer — before the phase opens Oct 5",
             "technique": "concept overview, no LC number", "startComfort": None,
             "difficulty": None, "url": None,
+            "file": None,
             "tags": ["primer"], "kind": "primer",
             "done": False,
             "endComfort": None, "endNote": None, "nextReview": None})
@@ -534,6 +541,7 @@ class ParseCurrentWeekScheduleTests(unittest.TestCase):
             "technique": "Backtracking", "startComfort": None,
             "difficulty": None,
             "url": "https://leetcode.com/problems/combination-sum/",
+            "file": None,
             "tags": ["new"], "kind": "new",
             "done": True,
             "endComfort": None, "endNote": None, "nextReview": None})
@@ -565,6 +573,7 @@ class ParseCurrentWeekScheduleTests(unittest.TestCase):
             "technique": "BFS", "startComfort": "🟡",
             "difficulty": "Medium",
             "url": "https://leetcode.com/problems/number-of-islands/",
+            "file": None,
             "tags": [], "kind": "rep",
             "done": False,
             "endComfort": None, "endNote": None, "nextReview": None})
@@ -580,6 +589,7 @@ class ParseCurrentWeekScheduleTests(unittest.TestCase):
             "technique": "Topological Sort", "startComfort": "🟡",
             "difficulty": None,
             "url": "https://neetcode.io/problems/foreign-dictionary",
+            "file": None,
             "tags": [], "kind": "rep",
             "done": False,
             "endComfort": None, "endNote": None, "nextReview": None})
@@ -592,6 +602,111 @@ class ParseCurrentWeekScheduleTests(unittest.TestCase):
     def test_no_current_schedule_file_is_none(self):
         result = gamify.parse_current_week_schedule(dt.date(2030, 1, 1), self.URLS)
         self.assertIsNone(result)
+
+    def test_items_carry_solution_file_from_the_files_map(self):
+        # `files` (links.solution_files()) joins each item's own solution path by lcNumber;
+        # a number with no file — and a row with no number at all (the 🔤 primer) — is an
+        # honest null, never a guessed path.
+        files = {22: [gamify.REPO / "dsa/leetcode/backtracking/22_generate_parentheses.py"],
+                 100: [gamify.REPO / "dsa/leetcode/trees/100_same_tree.py"]}
+        result = gamify.parse_current_week_schedule(dt.date(2026, 9, 21), self.URLS, files)
+        plain, done, untracked = result["days"][0]["items"]
+        self.assertEqual(plain["file"], "dsa/leetcode/backtracking/22_generate_parentheses.py")
+        self.assertEqual(done["file"], "dsa/leetcode/trees/100_same_tree.py")
+        self.assertIsNone(untracked["file"])                  # 55: no file yet
+        primer = result["days"][3]["items"][1]
+        self.assertIsNone(primer["lcNumber"])
+        self.assertIsNone(primer["file"])                     # no number → no lookup
+
+
+class SolutionFilesTests(unittest.TestCase):
+    """links.solution_files() — the map gamify reads: keyed by the file's leading number,
+    non-numbered files skipped, roots walked in config order and sorted within each root
+    (so a twin's first path is the same one links.find_file returns)."""
+
+    def setUp(self):
+        self._tmp = tempfile.TemporaryDirectory()
+        root_a = Path(self._tmp.name) / "a"
+        root_b = Path(self._tmp.name) / "b"
+        for rel in ("graphs/200_islands.py", "trees/100_same_tree.py", "trees/notes.py",
+                    "z_late/1216_twin.py"):
+            (root_a / rel).parent.mkdir(parents=True, exist_ok=True)
+            (root_a / rel).write_text("", encoding="utf-8")
+        (root_b / "dp").mkdir(parents=True)
+        (root_b / "dp/1216_twin.py").write_text("", encoding="utf-8")
+        self._patches = [
+            mock.patch.object(links, "source_roots", return_value=[root_a, root_b]),
+            # find_file's twin warning prints paths relative to the repo root; point it at
+            # the temp tree so the fixture roots are inside it.
+            mock.patch.object(links, "REPO_ROOT", Path(self._tmp.name)),
+        ]
+        for patch in self._patches:
+            patch.start()
+        self.root_a, self.root_b = root_a, root_b
+
+    def tearDown(self):
+        for patch in self._patches:
+            patch.stop()
+        self._tmp.cleanup()
+
+    def test_keys_by_leading_number_and_skips_unnumbered_files(self):
+        files = links.solution_files()
+        self.assertEqual(sorted(files), [100, 200, 1216])
+        self.assertEqual(files[100], [self.root_a / "trees/100_same_tree.py"])
+
+    def test_twin_order_is_config_root_order_and_matches_find_file(self):
+        files = links.solution_files()
+        self.assertEqual(files[1216], [self.root_a / "z_late/1216_twin.py",
+                                       self.root_b / "dp/1216_twin.py"])
+        with contextlib.redirect_stderr(io.StringIO()):
+            self.assertEqual(links.find_file("1216"), files[1216][0])
+
+
+class SolutionPathTests(unittest.TestCase):
+    """solution_path()/build_problems() — the `file` field: a repo-relative POSIX path from
+    the links.solution_files() map, null when absent, and a twin (two files for one number,
+    e.g. 1216) takes the FIRST sorted path with exactly one warning per number."""
+
+    FILES = {763: [gamify.REPO / "dsa/leetcode/greedy/763_partition_labels.py"],
+             1216: [gamify.REPO / "dsa/leetcode/1d_dynamic_programming/1216_valid_palindrome_iii.py",
+                    gamify.REPO / "dsa/leetcode/backtracking/1216_valid_palindrome_iii.py"]}
+
+    def test_path_is_repo_relative_posix(self):
+        self.assertEqual(gamify.solution_path(763, self.FILES),
+                         "dsa/leetcode/greedy/763_partition_labels.py")
+
+    def test_missing_file_is_none_and_warns_nothing(self):
+        warnings: list[str] = []
+        self.assertIsNone(gamify.solution_path(999, self.FILES, warnings))
+        self.assertEqual(warnings, [])
+
+    def test_twin_takes_first_and_warns_once(self):
+        warnings: list[str] = []
+        self.assertEqual(gamify.solution_path(1216, self.FILES, warnings),
+                         "dsa/leetcode/1d_dynamic_programming/1216_valid_palindrome_iii.py")
+        self.assertEqual(len(warnings), 1)
+        self.assertIn("1216", warnings[0])
+        self.assertIn("2 solution files", warnings[0])
+
+    def test_build_problems_emits_file_and_one_twin_warning_per_number(self):
+        rows = [_row(763, "🟡", 0, reps="2026-09-19"),
+                _row(1216, "🟡", 0, reps="2026-09-19"),      # twin, two tracker rows
+                _row(1216, "🔴", 0, reps="2026-09-19"),
+                _row(999, "🟢", 1, reps="2026-09-19")]        # no file
+        warnings: list[str] = []
+        problems = gamify.build_problems(rows, {}, {}, {}, self.FILES, warnings)
+        by_num = {}
+        for p in problems:
+            by_num.setdefault(p["lcNumber"], []).append(p["file"])
+        self.assertEqual(by_num[763], ["dsa/leetcode/greedy/763_partition_labels.py"])
+        self.assertEqual(by_num[1216],
+                         ["dsa/leetcode/1d_dynamic_programming/1216_valid_palindrome_iii.py"] * 2)
+        self.assertEqual(by_num[999], [None])
+        self.assertEqual(len(warnings), 1)                    # once per NUMBER, not per row
+
+    def test_build_problems_without_a_files_map_is_all_null(self):
+        problems = gamify.build_problems([_row(763, "🟡", 0, reps="2026-09-19")], {}, {}, {})
+        self.assertIsNone(problems[0]["file"])
 
 
 class ScheduleItemOutcomeTests(unittest.TestCase):

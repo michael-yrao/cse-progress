@@ -3,7 +3,7 @@ name: project-grounded-solutions
 description: Sep 22-23, 2026 — the site's 95 visualizers now render the learner's code verbatim from cse-progress via dashboard/showcase.json (the "groundedness meter", held at 100% by CI), plus 28 code-only entries added Sep 23 for problems with no visualizer yet (148 entries, 123 problems total); how the pick was made, the judgement calls, and what is still open
 metadata:
   type: project
-reconciled: 2026-09-23
+reconciled: 2026-09-24
 ---
 
 **Plan:** `~/.claude/plans/vectorized-growing-abelson.md` (approved Sep 22). Workflow: tech lead
@@ -83,5 +83,12 @@ so the learner didn't hand-write 130 entries — but every seeded bound is tagge
   only, not groundedness).
 - The site's main checkout carried unrelated uncommitted brand/logo work throughout; it was never
   touched by this job and must be merged by the learner.
-- 846 and 1489 are tracked but excluded from the showcase — the 2026-09-23 working tree replaced
-  their committed solutions with 2-line stubs; add them once the rep lands.
+- (updated Sep 24) 39, 846 and 1489 landed in `4ca481f` (Sep 23) but have NO `showcase.yml`
+  entry, so no code reaches the site — and the site has no surface at all for a problem without a
+  visualizer (the 28 code-only entries render nowhere). Stage 1 fix (Sep 24): progress.json's new
+  `file` field → a `src` GitHub link on every Progress row (`decisions.yml`
+  `progress-solution-file-sep24`). Stage 2, deferred until the learner has seen the link: an
+  auto-filled `variant: auto` showcase entry per uncurated file (pick via
+  `export_bigo.latest_dated_attempt`, skip `is_scaffold`, skip `discovery_skip`, manifest entries
+  win) + an inline code viewer on Problems-tab row expand. Open choice for stage 2: latest attempt
+  only vs one entry per attempt. Plan: `~/.claude/plans/can-we-find-a-vast-flask.md`.

@@ -267,7 +267,8 @@
         "done": { "type": "boolean", "description": "True when the row is struck through (`~~...~~`) in the source table." },
         "endComfort": { "type": ["string", "null"], "enum": ["🔴", "🟡", "🟢", "🎓", null], "description": "The comfort glyph as written at the END of the rep (col E) — the E cell is usually blank until the row is done, so this is usually null until then, but it is read off the cell's own content and never falls back to startComfort: a done row whose E cell carries no glyph still reads null, so the board shows only what was actually earned." },
         "endNote": { "type": ["string", "null"], "maxLength": 16, "description": "The E cell's free-form note after its glyph, stripped/collapsed/lowercased — vocabulary seen in real weeks: s0, s1, s2, prov, dropped. Only ever set when endComfort is non-null; null otherwise, even if the raw cell had trailing text." },
-        "nextReview": { "type": ["string", "null"], "format": "date", "description": "The row's Next-review date (col Next) iff that cell is, once stripped, nothing but an ISO date; null for a free-form or blank Next cell." }
+        "nextReview": { "type": ["string", "null"], "format": "date", "description": "The row's Next-review date (col Next) iff that cell is, once stripped, nothing but an ISO date; null for a free-form or blank Next cell." },
+        "file": { "type": ["string", "null"], "description": "Repo-relative POSIX path of the learner's own solution file for this number (links.solution_files(), keyed by lcNumber; a twin takes the first sorted path); null when no file exists under the configured source roots. A PATH, never code — progress.json stays code-free; the site turns it into a blob/<branch>/<path> link. Null when the row has no lcNumber." }
       }
     },
     "problem": {
@@ -277,6 +278,7 @@
         "lcNumber": { "type": "integer" },
         "title": { "type": "string" },
         "url": { "type": ["string", "null"], "description": "Canonical LeetCode URL for deep-linking." },
+        "file": { "type": ["string", "null"], "description": "Repo-relative POSIX path of the learner's own solution file for this number (links.solution_files(), keyed by lcNumber; a twin takes the first sorted path); null when no file exists under the configured source roots. A PATH, never code — progress.json stays code-free; the site turns it into a blob/<branch>/<path> link." },
         "difficulty": { "type": "string", "enum": ["Easy", "Medium", "Hard"] },
         "category": { "type": ["string", "null"] },
         "comfort": { "type": "string", "enum": ["🔴", "🟡", "🟢", "🎓", "🏆"] },
