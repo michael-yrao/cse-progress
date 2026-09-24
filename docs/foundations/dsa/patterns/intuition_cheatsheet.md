@@ -1,6 +1,6 @@
 # Intuition Cheatsheet
 
-Fast triage: scan the **signal** column for a clue that matches your problem, then jump to the technique. Use this when you don't yet know what a problem wants. (Know the move → open a [technique](techniques/) directly; know the data shape → open a [hub](data-structures/).)
+Fast triage: scan the **signal** column for a clue that matches your problem, then jump to the technique — or walk the [decision tree](#decision-tree) below, shape first. Use this when you don't yet know what a problem wants. (Know the move → open a [technique](techniques/) directly; know the data shape → open a [hub](data-structures/).)
 
 ## Signal → technique
 
@@ -31,6 +31,51 @@ Fast triage: scan the **signal** column for a clue that matches your problem, th
 | "Kth largest" and you want O(n) average, no full sort | quickselect | *below* |
 
 When totally stuck: **can I sort?** If the answer is a count, order doesn't matter, validity is monotonic, or brute force is O(n²) — sorting often unlocks two-pointer / binary-search / greedy.
+
+## Decision tree
+
+The same triage as the table above, ordered the way the recognition gate asks it: **shape first,
+then the cue, then the technique.** Walk down; every leaf is a technique.
+
+- What is the **shape** of the input?
+  - Array / string
+    - Sorted — or can you sort it?
+      - Pair/triple summing to a target → [two pointers](techniques/two_pointer.md) (converge from ends)
+      - "Smallest/largest x that works", or find a position → [binary search](techniques/binary_search.md) (min/max boundary)
+    - "Contiguous subarray/substring" + a constraint (≤ k distinct, sum, longest/shortest) → [sliding window](techniques/sliding_window.md)
+    - "Subarray sums to k" / many range-sum queries → [prefix sum](techniques/prefix_sum.md) (+ hashmap)
+    - "Next greater/smaller", spans, histogram, temperatures → [monotonic stack](techniques/monotonic_stack.md)
+    - "Max/min in every window of size k" → [monotonic deque](techniques/monotonic_stack.md)
+    - Values are `1..n`, find the missing / duplicate → **cyclic sort**
+    - "Majority element" (> n/2 or > n/3) → **Boyer-Moore voting**
+    - "Kth largest / smallest", "top k", "k closest"
+      - O(n log k) is fine → **heap**
+      - want O(n) average, no full sort → **quickselect**
+  - Intervals
+    - "Merge/insert overlapping" (the answer is a set) → [sort by start, sweep](techniques/intervals.md)
+    - "Max that fit" / "min to remove" / "min arrows" (the answer is a number) → [sort by end, greedy frontier](techniques/intervals.md)
+  - Linked list
+    - "Cycle?", "middle", find the duplicate number → [fast & slow pointers](techniques/fast_slow_pointer.md)
+    - "Reverse", reorder, palindrome → [in-place reversal](techniques/in_place_reversal.md)
+    - Head may change (insert/delete at front, merge) → [dummy node](techniques/dummy_node.md)
+  - Tree
+    - Property that depends on children (height, balanced, diameter) → [DFS postorder](techniques/tree_dfs.md)
+    - BST "sorted output" or "validate" → [DFS inorder](techniques/tree_dfs.md)
+    - "Level by level" / shortest # of steps → [BFS](techniques/tree_bfs.md)
+  - Graph (edges, a grid, or "connected?")
+    - "Connected?", how many groups/components, cycle in an **undirected** graph → [union-find](techniques/union_find.md)
+    - "Prerequisites", ordering, "can you finish" (a DAG) → [topological sort](techniques/topological_sort.md)
+    - Shortest path — are the edges weighted?
+      - unweighted / uniform cost → [BFS](techniques/tree_bfs.md)
+      - weighted, non-negative → **Dijkstra**
+      - negative weights, or ≤ k hops → **Bellman-Ford**
+      - every pair of nodes → [Floyd-Warshall](techniques/floyd_warshall.md)
+    - Cheapest way to connect every node (MST) → [Prim's](techniques/prims_mst.md)
+  - A stream (values arrive one at a time)
+    - "Running median" → **two heaps**
+  - No structure stands out — what is the **ask**?
+    - "All" subsets / permutations / combinations, "find every way" → [backtracking](techniques/backtracking.md)
+    - Min / max / count ways, with overlapping subproblems → [DP](techniques/memoization.md) (memoization)
 
 ## Single-trick techniques (recall by name)
 

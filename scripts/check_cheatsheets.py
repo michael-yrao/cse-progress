@@ -6,7 +6,7 @@ contract" section: docs/cse-coach/learn_cheatsheet_plan.md).
     python scripts/check_cheatsheets.py --check      # exit 1 on a hard contract violation
 
 Reuses build_cheatsheets.py's own parser (imported, never duplicated — the parser is the
-arbiter of the contract, per the plan). Four hard checks:
+arbiter of the contract, per the plan). Six hard checks:
 
   1. a technique doc missing a required heading (When to reach for it / Picking feature /
      Common pitfalls / Practice / at least one Template: …);
@@ -14,6 +14,11 @@ arbiter of the contract, per the plan). Four hard checks:
   3. a Practice section that resolves to zero key problems;
   4. an intuition_cheatsheet.md signal row whose Doc column links `techniques/<x>.md` for
      an `<x>` that doesn't actually exist as a file.
+  5. the `## Decision tree` section: missing entirely, a malformed/dangling bullet (the
+     parser's own `problems`), a root that is itself a leaf, an inner node with no
+     children, or a linked leaf whose `techniques/<stem>.md` doesn't exist.
+  6. coverage: every `signals[].reach` (the table) must appear as a decision-tree leaf
+     `reach` — a table row with no leaf is a finding.
 
 A row/bullet that does NOT link a technique page is a LABEL (heap, Boyer-Moore voting, …)
 and is always allowed — there is no hardcoded label list; "is it a label" is simply "did the
@@ -71,6 +76,61 @@ def check_doc(path: Path) -> list[str]:
             + check_practice_nonempty(path, sections))
 
 
+def _decision_section() -> tuple[dict | None, list[str]]:
+    """Parse `## Decision tree` once: (root node or `None`, findings so far). Findings
+    cover a missing section, the parser's own fail-soft `problems` (a malformed or
+    dangling bullet, zero/multiple roots), and a root that is itself a leaf."""
+    lines = bc.find_h2_section_raw(bc.read_text(bc.INTUITION_DOC), bc.DECISION_TREE_HEADING)
+    if lines is None:
+        return None, [f"intuition_cheatsheet.md: missing '## {bc.DECISION_TREE_HEADING}' "
+                      f"section"]
+    problems: list[str] = []
+    root = bc.parse_decision_tree(lines, problems)
+    if root is not None and "children" not in root:
+        problems.append("decision tree: root bullet is a leaf, expected an inner node")
+    return root, problems
+
+
+def check_no_dangling_branches(node: dict) -> list[str]:
+    if "children" not in node:
+        return []
+    findings = []
+    if not node["children"]:
+        findings.append(f"decision tree: inner node '{node['label']}' has no children")
+    for child in node["children"]:
+        findings.extend(check_no_dangling_branches(child))
+    return findings
+
+
+def check_decision_leaf_links(root: dict) -> list[str]:
+    findings = []
+    for leaf in bc.decision_tree_leaves(root):
+        if leaf.get("page") is False:
+            continue
+        slug = leaf["reach"].replace("-", "_")
+        if not bc.is_technique_doc(slug):
+            findings.append(f"decision tree: leaf '{leaf['label']}' links "
+                            f"'techniques/{slug}.md', which does not exist")
+    return findings
+
+
+def check_decision_tree() -> list[str]:
+    root, findings = _decision_section()
+    if root is None:
+        return findings
+    return findings + check_no_dangling_branches(root) + check_decision_leaf_links(root)
+
+
+def check_signal_coverage() -> list[str]:
+    root, _findings = _decision_section()
+    if root is None:
+        return []  # the missing/malformed section itself is reported by check_decision_tree
+    tree_reach = {leaf["reach"] for leaf in bc.decision_tree_leaves(root)}
+    table_reach = {row["reach"] for row in bc.parse_signal_table()}
+    return [f"intuition_cheatsheet.md: signal row reaches '{r}', which has no matching "
+            f"decision-tree leaf" for r in sorted(table_reach - tree_reach)]
+
+
 def check_signal_links() -> list[str]:
     lines = bc.find_h2_section_raw(bc.read_text(bc.INTUITION_DOC), bc.SIGNAL_TABLE_HEADING) or []
     findings = []
@@ -88,6 +148,8 @@ def collect_findings() -> list[str]:
     for path in bc.discover_technique_docs():
         findings.extend(check_doc(path))
     findings.extend(check_signal_links())
+    findings.extend(check_decision_tree())
+    findings.extend(check_signal_coverage())
     return findings
 
 
@@ -103,7 +165,8 @@ def main() -> None:
         for f in findings:
             print(f"   {f}")
     else:
-        print("✅ every technique doc + the signals table satisfies the cheat-sheet contract")
+        print("✅ every technique doc + the signals table + the decision tree satisfies "
+              "the cheat-sheet contract")
 
     if args.check and findings:
         sys.exit(1)

@@ -22,6 +22,7 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 import build_cheatsheets as bc
 import check_cheatsheets as cc
@@ -302,6 +303,245 @@ class SignalTableResolutionTests(unittest.TestCase):
         self.assertEqual(bc.REACH_NOTE_OVERRIDES["DP (memoization)"], "DP")
 
 
+# ── decision tree fixtures ────────────────────────────────────────────────────────────
+
+# Covers: 2-space indent (the outer list), a blank line inside the list (never ends it), a
+# continuation line joined onto an inner node's own label, a leaf whose label carries its
+# own parenthetical plus a trailing note, a bold no-page leaf, a `?` question label, and
+# trailing prose after the list (ends it, excluded from the parsed bullets).
+DECISION_TREE_SECTION = """## Decision tree
+
+Intro prose describing the tree; not part of the list.
+
+- What is the **shape**?
+  - Array / string
+    - Sorted — or can you sort it?
+      continuation text that joins onto the sorted bullet's own label
+      - Pair/triple summing to a target → [two pointers](techniques/two_pointer.md) (converge from ends)
+    - "Kth largest / smallest" → **heap**
+
+  - Linked list
+    - "Reverse" (in place) → [in-place reversal](techniques/in_place_reversal.md) (rewire next)
+
+Trailing prose that should never be treated as a bullet.
+
+## Single-trick techniques
+
+unrelated section, must not be parsed as part of the tree
+"""
+
+# Covers: a consistent 4-space-per-level indent (tolerance beyond the doc's usual 2).
+FOUR_SPACE_DECISION_TREE_SECTION = """## Decision tree
+
+- Root question?
+    - Child one
+        - Leaf one → [two pointers](techniques/two_pointer.md)
+    - Child two → **heap**
+
+## Next
+"""
+
+# Two root bullets at indent 0 — parse_decision_tree must reject this.
+TWO_ROOTS_DECISION_TREE_SECTION = """## Decision tree
+
+- Root one
+  - child one → **heap**
+- Root two
+  - child two → **quickselect**
+
+## Next
+"""
+
+# An arrow present but neither a link nor a bold tail follows it.
+MALFORMED_LEAF_DECISION_TREE_SECTION = """## Decision tree
+
+- Root question?
+  - Something → not a link or bold
+
+## Next
+"""
+
+
+def _decision_tree_lines(section_text: str) -> list[str]:
+    return bc.find_h2_section_raw(section_text, bc.DECISION_TREE_HEADING)
+
+
+def assert_valid_decision_node(node: dict, path: str = "root") -> None:
+    """Hand-rolled recursive check that `node` (and everything under it) matches the
+    schema's decisionNode `oneOf`: a leaf carries exactly {label, reach, reachLabel,
+    note[, page]} (and `page`, if present, is `False`); an inner node carries exactly
+    {label, children} with at least one child, each itself valid."""
+    is_leaf, is_inner = "reach" in node, "children" in node
+    assert is_leaf != is_inner, f"{path}: must be a leaf XOR an inner node, got {node!r}"
+    if is_leaf:
+        assert set(node) <= {"label", "reach", "reachLabel", "note", "page"}, path
+        assert isinstance(node["label"], str) and isinstance(node["reach"], str), path
+        assert isinstance(node["reachLabel"], str), path
+        assert isinstance(node["note"], str), path
+        assert "page" not in node or node["page"] is False, path
+    else:
+        assert set(node) == {"label", "children"}, path
+        assert isinstance(node["children"], list) and node["children"], path
+        for i, child in enumerate(node["children"]):
+            assert_valid_decision_node(child, f"{path}.children[{i}]")
+
+
+class DecisionTreeParserTests(unittest.TestCase):
+    def test_depth_and_continuation_are_preserved(self):
+        root = bc.parse_decision_tree(_decision_tree_lines(DECISION_TREE_SECTION))
+        self.assertEqual(root["label"], "What is the shape?")
+        array_string = root["children"][0]
+        self.assertEqual(array_string["label"], "Array / string")
+        sorted_node = array_string["children"][0]
+        self.assertEqual(sorted_node["label"], "Sorted — or can you sort it? continuation "
+                                               "text that joins onto the sorted bullet's "
+                                               "own label")
+        self.assertEqual(len(sorted_node["children"]), 1)
+
+    def test_blank_line_inside_list_does_not_end_it(self):
+        root = bc.parse_decision_tree(_decision_tree_lines(DECISION_TREE_SECTION))
+        # "Linked list" sits AFTER the blank line inside the list; if the blank line had
+        # ended the list it would never make it into the tree.
+        labels = [c["label"] for c in root["children"]]
+        self.assertIn("Linked list", labels)
+
+    def test_trailing_prose_after_the_list_is_excluded(self):
+        items = bc.collect_nested_bullets(_decision_tree_lines(DECISION_TREE_SECTION))
+        joined = " ".join(text for _indent, text in items)
+        self.assertNotIn("Trailing prose", joined)
+
+    def test_link_leaf_id_and_note(self):
+        root = bc.parse_decision_tree(_decision_tree_lines(DECISION_TREE_SECTION))
+        sorted_node = root["children"][0]["children"][0]
+        leaf = sorted_node["children"][0]
+        self.assertEqual(leaf, {"label": "Pair/triple summing to a target",
+                                "reach": "two-pointer", "reachLabel": "two pointers",
+                                "note": "converge from ends"})
+
+    def test_leaf_label_with_its_own_parenthetical_plus_trailing_note(self):
+        root = bc.parse_decision_tree(_decision_tree_lines(DECISION_TREE_SECTION))
+        linked_list = root["children"][1]
+        leaf = linked_list["children"][0]
+        self.assertEqual(leaf, {"label": '"Reverse" (in place)',
+                                "reach": "in-place-reversal",
+                                "reachLabel": "in-place reversal", "note": "rewire next"})
+
+    def test_bold_leaf_is_page_false_with_empty_note(self):
+        root = bc.parse_decision_tree(_decision_tree_lines(DECISION_TREE_SECTION))
+        heap_leaf = root["children"][0]["children"][1]
+        self.assertEqual(heap_leaf, {"label": '"Kth largest / smallest"', "reach": "heap",
+                                     "reachLabel": "heap", "note": "", "page": False})
+
+    def test_reach_label_is_the_authors_link_or_bold_text(self):
+        root = bc.parse_decision_tree(_decision_tree_lines(DECISION_TREE_SECTION))
+        link_leaf = root["children"][0]["children"][0]["children"][0]
+        self.assertEqual(link_leaf["reachLabel"], "two pointers")
+        bold_leaf = root["children"][0]["children"][1]
+        self.assertEqual(bold_leaf["reachLabel"], bold_leaf["reach"])
+
+    def test_question_label_keeps_its_question_mark(self):
+        root = bc.parse_decision_tree(_decision_tree_lines(DECISION_TREE_SECTION))
+        self.assertTrue(root["label"].endswith("?"))
+
+    def test_clean_runs_on_labels_and_notes_not_on_the_stem(self):
+        section = """## Decision tree
+
+- Root question?
+  - **Bold** cue → [*two* pointers](techniques/two_pointer.md) (a *clean* note)
+
+## Next
+"""
+        root = bc.parse_decision_tree(_decision_tree_lines(section))
+        leaf = root["children"][0]
+        self.assertEqual(leaf["label"], "Bold cue")
+        self.assertEqual(leaf["note"], "a clean note")
+        self.assertEqual(leaf["reach"], "two-pointer")
+        self.assertEqual(leaf["reachLabel"], "two pointers")
+
+    def test_four_space_indent_is_tolerated(self):
+        root = bc.parse_decision_tree(_decision_tree_lines(FOUR_SPACE_DECISION_TREE_SECTION))
+        self.assertEqual(root["label"], "Root question?")
+        self.assertEqual(len(root["children"]), 2)
+        child_one = root["children"][0]
+        self.assertEqual(child_one["children"][0]["reach"], "two-pointer")
+        self.assertEqual(root["children"][1]["reach"], "heap")
+
+    def test_malformed_leaf_fails_soft_and_is_reported(self):
+        problems: list[str] = []
+        root = bc.parse_decision_tree(
+            _decision_tree_lines(MALFORMED_LEAF_DECISION_TREE_SECTION), problems)
+        self.assertTrue(any("malformed leaf" in p for p in problems))
+        leaf = root["children"][0]
+        self.assertEqual(leaf["page"], False)
+        self.assertEqual(leaf["reachLabel"], leaf["reach"])
+
+    def test_two_roots_is_rejected(self):
+        problems: list[str] = []
+        root = bc.parse_decision_tree(
+            _decision_tree_lines(TWO_ROOTS_DECISION_TREE_SECTION), problems)
+        self.assertIsNone(root)
+        self.assertTrue(any("exactly one root" in p for p in problems))
+
+    def test_arrow_inside_label_with_link_tail_splits_at_the_last_arrow(self):
+        section = """## Decision tree
+
+- Root question?
+  - a → b cue → [two pointers](techniques/two_pointer.md) (note)
+
+## Next
+"""
+        root = bc.parse_decision_tree(_decision_tree_lines(section))
+        leaf = root["children"][0]
+        self.assertEqual(leaf, {"label": "a → b cue", "reach": "two-pointer",
+                                "reachLabel": "two pointers", "note": "note"})
+
+    def test_arrow_inside_label_without_a_tail_is_malformed_and_orphans_its_children(self):
+        section = """## Decision tree
+
+- Root?
+  - a → b cue
+    - orphan child → **heap**
+
+## Next
+"""
+        problems: list[str] = []
+        root = bc.parse_decision_tree(_decision_tree_lines(section), problems)
+        self.assertTrue(any("malformed leaf" in p for p in problems))
+        self.assertTrue(any("nested under a leaf, dropped" in p for p in problems))
+        self.assertEqual(root["children"],
+                         [{"label": "a", "reach": "b cue", "reachLabel": "b cue",
+                           "note": "", "page": False}])
+
+    def test_missing_section_is_a_warning_and_none(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            doc = Path(tmp) / "fixture.md"
+            doc.write_text("# X\n\nno decision tree here\n", encoding="utf-8")
+            with patch.object(bc, "INTUITION_DOC", doc):
+                warnings: list[str] = []
+                tree = bc.build_decision_tree(warnings)
+        self.assertIsNone(tree)
+        self.assertTrue(any("Decision tree" in w for w in warnings))
+
+    def test_missing_section_makes_build_payload_omit_the_key(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            doc = Path(tmp) / "fixture.md"
+            doc.write_text("# X\n\nno decision tree here\n", encoding="utf-8")
+            with patch.object(bc, "INTUITION_DOC", doc):
+                payload = bc.build_payload(dt.datetime(2026, 1, 1, tzinfo=dt.timezone.utc), [])
+        self.assertNotIn("decisionTree", payload)
+
+    def test_decision_tree_leaves_flattens_dfs(self):
+        root = bc.parse_decision_tree(_decision_tree_lines(FOUR_SPACE_DECISION_TREE_SECTION))
+        leaves = bc.decision_tree_leaves(root)
+        self.assertEqual([leaf["reach"] for leaf in leaves], ["two-pointer", "heap"])
+
+    def test_real_doc_decision_tree_matches_the_schema_shape(self):
+        warnings: list[str] = []
+        tree = bc.build_decision_tree(warnings)
+        self.assertIsNotNone(tree)
+        assert_valid_decision_node(tree)
+
+
 class CheckCheatsheetsValidatorTests(unittest.TestCase):
     """check_cheatsheets.py's hard-failure conditions, via real temp files (it reads
     paths, not strings)."""
@@ -342,6 +582,51 @@ class CheckCheatsheetsValidatorTests(unittest.TestCase):
         # The real intuition_cheatsheet.md is untouched by the concurrent doc re-head, so
         # this is a genuine assertion, not a placeholder.
         self.assertEqual(cc.check_signal_links(), [])
+
+    def test_decision_tree_missing_section_is_flagged(self):
+        doc = "# X\n\nno decision tree here\n"
+        with tempfile.TemporaryDirectory() as tmp:
+            with patch.object(bc, "INTUITION_DOC", self._write(tmp, doc)):
+                findings = cc.check_decision_tree()
+        self.assertTrue(any("Decision tree" in f for f in findings))
+
+    def test_decision_tree_unknown_doc_link_is_flagged(self):
+        doc = ("## Decision tree\n\n"
+              "- Root?\n"
+              "  - Some cue → [nope](techniques/does_not_exist.md)\n")
+        with tempfile.TemporaryDirectory() as tmp:
+            with patch.object(bc, "INTUITION_DOC", self._write(tmp, doc)):
+                findings = cc.check_decision_tree()
+        self.assertTrue(any("does_not_exist.md" in f for f in findings))
+
+    def test_decision_tree_childless_inner_node_is_flagged(self):
+        doc = ("## Decision tree\n\n"
+              "- Root?\n"
+              "  - Leaf one → **heap**\n"
+              "  - Childless question?\n")
+        with tempfile.TemporaryDirectory() as tmp:
+            with patch.object(bc, "INTUITION_DOC", self._write(tmp, doc)):
+                findings = cc.check_decision_tree()
+        self.assertTrue(any("has no children" in f for f in findings))
+
+    def test_signal_coverage_gap_is_flagged(self):
+        doc = ("## Signal → technique\n\n"
+              "| What you see in the prompt | Reach for | Doc |\n"
+              "|---|---|---|\n"
+              "| a sorted pair | two pointers (converge from ends) | "
+              "[two_pointer](techniques/two_pointer.md) |\n"
+              "| a stray signal | mystery move | *below* |\n\n"
+              "## Decision tree\n\n"
+              "- Root?\n"
+              "  - Only leaf → [two pointers](techniques/two_pointer.md)\n")
+        with tempfile.TemporaryDirectory() as tmp:
+            with patch.object(bc, "INTUITION_DOC", self._write(tmp, doc)):
+                findings = cc.check_signal_coverage()
+        self.assertTrue(any("mystery move" in f for f in findings))
+
+    def test_decision_tree_and_coverage_are_clean_on_the_real_doc(self):
+        self.assertEqual(cc.check_decision_tree(), [])
+        self.assertEqual(cc.check_signal_coverage(), [])
 
 
 # ── golden: build from the REAL docs, compare to the seed ───────────────────────────

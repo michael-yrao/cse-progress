@@ -28,6 +28,11 @@ blocking from the pre-commit hook as of Sep 23, 2026, now that all technique doc
 [`docs/cse-coach/learn_cheatsheet_plan.md`](../../../cse-coach/learn_cheatsheet_plan.md) for the full
 contract and why it's headings, not a sidecar file.
 
+- **`intuition_cheatsheet.md`'s own `## Decision tree`** — a single nested bullet list (shape → cue →
+  technique) generated into the same `dashboard/cheat-sheets.json`'s `decisionTree` (leaves shaped
+  `{label, reach, reachLabel, note, page?}`), for `/learn`'s Table ↔ Tree toggle; validated by the
+  same script.
+
 ## By data structure (the "shape" lens)
 
 | Hub | Techniques it points to |

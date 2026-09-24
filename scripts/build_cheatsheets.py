@@ -3,6 +3,7 @@ learn-cheatsheet plan — see docs/cse-coach/learn_cheatsheet_plan.md).
 
     docs/foundations/dsa/patterns/techniques/*.md
       + intuition_cheatsheet.md's Signal -> technique table
+      + intuition_cheatsheet.md's Decision tree bullet list
       + techniques.yml (family/tier, joined by a `doc:` key)
     ->  dashboard/cheat-sheets.json  +  dashboard/cheat-sheets.schema.json
 
@@ -94,6 +95,22 @@ SIGNAL_TABLE_HEADING = "Signal → technique"
 SIGNAL_ROW_RE = re.compile(r"^\|(.+)\|\s*$")
 SIGNAL_DOC_LINK_RE = re.compile(r"\[[^\]]+\]\(techniques/([^)]+)\.md\)")
 PAREN_RE = re.compile(r"^(.*?)\s*\((.*)\)\s*$")
+
+# ── decision tree (intuition_cheatsheet.md) ──────────────────────────────────────────
+
+DECISION_TREE_HEADING = "Decision tree"
+LEAF_ARROW = " → "
+TAB_WIDTH = 4
+BULLET_LINE_RE = re.compile(r"^(?P<indent>\s*)- (?P<text>.*)$")
+# A leaf bullet's tail is either a `[text](techniques/<stem>.md)` link or a `**bold**`
+# no-page label, optionally followed by a `(<note>)` parenthetical. The label is matched
+# lazily so a ` → ` that appears INSIDE the label (there is none today, but the grammar
+# must not assume it) only ever splits at the tail the anchored end forces it to.
+DECISION_LEAF_RE = re.compile(
+    r"^(?P<label>.+?)" + re.escape(LEAF_ARROW) +
+    r"(?:\[(?P<text>[^\]]+)\]\(techniques/(?P<stem>[^)]+)\.md\)|\*\*(?P<bold>[^*]+)\*\*)"
+    r"(?:\s+\((?P<note>.*)\))?\s*$"
+)
 
 # A leading emoji run (e.g. recursion.md's "# 🧠 Recursion & …") plus the whitespace after
 # it. Ranges cover the common emoji blocks (misc symbols/dingbats, supplemental
@@ -510,6 +527,130 @@ def parse_signal_table() -> list[dict]:
     return [build_signal_entry(cells) for cells in parse_signal_rows(lines)]
 
 
+# ── decision tree (intuition_cheatsheet.md) ────────────────────────────────────────────
+
+def collect_nested_bullets(lines: list[str]) -> list[tuple[int, str]]:
+    """The first (nested) `- ` bullet list anywhere in `lines` (prose before it is
+    skipped) as `(indent, text)` per bullet, tabs expanded to 4 columns. A blank line is
+    skipped, never ends the list; a line indented deeper than its bullet's own indent is a
+    continuation, joined onto it with one space. Ends at the first indent-0 non-bullet
+    line seen after the list starts, or a ``` fence."""
+    items: list[tuple[int, str]] = []
+    current_indent: int | None = None
+    current_text: str | None = None
+    started = False
+    for raw_line in lines:
+        line = raw_line.expandtabs(TAB_WIDTH)
+        stripped = line.strip()
+        if stripped.startswith("```"):
+            break
+        if not stripped:
+            continue
+        bullet = BULLET_LINE_RE.match(line)
+        if bullet:
+            started = True
+            if current_text is not None:
+                items.append((current_indent, current_text))
+            current_indent = len(bullet.group("indent"))
+            current_text = bullet.group("text").strip()
+            continue
+        if not started:
+            continue
+        line_indent = len(line) - len(line.lstrip(" "))
+        if current_text is not None and line_indent > current_indent:
+            current_text = f"{current_text} {stripped}"
+            continue
+        break
+    if current_text is not None:
+        items.append((current_indent, current_text))
+    return items
+
+
+def parse_decision_bullet(raw: str, problems: list[str]) -> dict:
+    """One bullet's text -> a tree node (`clean()` runs on label/note AFTER the arrow
+    split, never on a link's stem): no arrow -> an inner node with no children yet; a
+    resolvable `[text](techniques/<stem>.md)` tail -> a linked leaf, `reachLabel` = the
+    link's own text (`reach` stays the id/route key); a `**bold**` tail -> a no-page leaf
+    with `reachLabel == reach`. An arrow present but not matching either tail shape is
+    fail-soft: it becomes a no-page leaf (split naively on the arrow, `reachLabel ==
+    reach`) and is reported in `problems`."""
+    if LEAF_ARROW not in raw:
+        return {"label": clean(raw), "children": []}
+    match = DECISION_LEAF_RE.match(raw)
+    if not match:
+        problems.append(f"decision tree: malformed leaf '{raw}'")
+        label_part, _, reach_part = raw.partition(LEAF_ARROW)
+        reach = clean(reach_part)
+        return {"label": clean(label_part), "reach": reach, "reachLabel": reach,
+                "note": "", "page": False}
+    label = clean(match.group("label"))
+    note = clean(match.group("note") or "")
+    stem = match.group("stem")
+    if stem is not None:
+        return {"label": label, "reach": stem.replace("_", "-"),
+                "reachLabel": clean(match.group("text")), "note": note}
+    bold = clean(match.group("bold"))
+    return {"label": label, "reach": bold, "reachLabel": bold, "note": note,
+            "page": False}
+
+
+def nest_decision_bullets(items: list[tuple[int, str]], problems: list[str]) -> list[dict]:
+    """Indentation-stack walk from flat `(indent, raw)` bullets to root node(s): a bullet
+    nests under the nearest still-open ancestor with a strictly smaller indent (tolerant
+    of 2- or 4-space steps and odd sibling indents). A bullet nested under an already-built
+    leaf is dropped, with a `problems` line, instead of silently becoming its child."""
+    roots: list[dict] = []
+    stack: list[tuple[int, dict]] = []
+    for indent, raw in items:
+        node = parse_decision_bullet(raw, problems)
+        while stack and stack[-1][0] >= indent:
+            stack.pop()
+        if not stack:
+            roots.append(node)
+        else:
+            parent = stack[-1][1]
+            if "children" in parent:
+                parent["children"].append(node)
+            else:
+                problems.append(f"decision tree: bullet nested under a leaf, dropped: '{raw}'")
+        stack.append((indent, node))
+    return roots
+
+
+def parse_decision_tree(lines: list[str], problems: list[str] | None = None) -> dict | None:
+    """The section body -> its single root node, or `None` (with a `problems` line) when
+    the bullet list has zero or more than one root."""
+    findings = problems if problems is not None else []
+    roots = nest_decision_bullets(collect_nested_bullets(lines), findings)
+    if len(roots) != 1:
+        findings.append(f"decision tree: expected exactly one root bullet, found {len(roots)}")
+        return None
+    return roots[0]
+
+
+def decision_tree_leaves(node: dict) -> list[dict]:
+    """DFS flatten of every leaf under `node` (inclusive) — used by the coverage check and
+    by the tests; an inner node's own `label` never appears in the result."""
+    if "children" not in node:
+        return [node]
+    leaves: list[dict] = []
+    for child in node["children"]:
+        leaves.extend(decision_tree_leaves(child))
+    return leaves
+
+
+def build_decision_tree(warnings: list[str]) -> dict | None:
+    lines = find_h2_section_raw(read_text(INTUITION_DOC), DECISION_TREE_HEADING)
+    if lines is None:
+        warnings.append(f"'## {DECISION_TREE_HEADING}' section missing from "
+                        f"{INTUITION_DOC.name}")
+        return None
+    problems: list[str] = []
+    tree = parse_decision_tree(lines, problems)
+    warnings.extend(problems)
+    return tree
+
+
 # ── the build ─────────────────────────────────────────────────────────────────────────
 
 def build_payload(now: dt.datetime, warnings: list[str]) -> dict:
@@ -517,16 +658,24 @@ def build_payload(now: dt.datetime, warnings: list[str]) -> dict:
     techniques = [build_technique(p, entries) for p in discover_technique_docs()]
     for entry in techniques:
         warnings.extend(technique_warnings(entry))
-    return {
+    payload = {
         "schemaVersion": SCHEMA_VERSION,
         "generatedAt": now.strftime("%Y-%m-%dT%H:%M:%SZ"),
         "signals": parse_signal_table(),
         "techniques": techniques,
     }
+    decision_tree = build_decision_tree(warnings)
+    if decision_tree is not None:
+        payload["decisionTree"] = decision_tree
+    return payload
 
 
 def write_schema_copy() -> None:
-    OUT_SCHEMA.write_text(read_text(SCHEMA_FIXTURE), encoding="utf-8")
+    # A byte copy, not a text round-trip: `write_text` on Windows re-expands `\n` to
+    # `\r\n`, which would make this copy differ from SCHEMA_FIXTURE byte-for-byte even
+    # though nothing about its content changed (the two files are meant to be identical —
+    # `cmp scripts/fixtures/cheat-sheets.schema.json dashboard/cheat-sheets.schema.json`).
+    OUT_SCHEMA.write_bytes(SCHEMA_FIXTURE.read_bytes())
 
 
 def main() -> None:
@@ -545,17 +694,18 @@ def main() -> None:
 
     text = json.dumps(payload, indent=2, ensure_ascii=False) + "\n"
     n_tech, n_sig = len(payload["techniques"]), len(payload["signals"])
+    tree_note = " · decision tree" if "decisionTree" in payload else ""
 
     if args.stdout:
         print(text)
     elif args.validate:
-        print(f"valid: {n_tech} techniques · {n_sig} signals", file=sys.stderr)
+        print(f"valid: {n_tech} techniques · {n_sig} signals{tree_note}", file=sys.stderr)
     else:
         DASHBOARD.mkdir(parents=True, exist_ok=True)
         OUT.write_text(text, encoding="utf-8")
         write_schema_copy()
         print(f"wrote {OUT.relative_to(REPO)} + {OUT_SCHEMA.relative_to(REPO)} "
-              f"({n_tech} techniques, {n_sig} signals)")
+              f"({n_tech} techniques, {n_sig} signals{tree_note})")
 
     for w in warnings:
         print(f"  !! {w}", file=sys.stderr)

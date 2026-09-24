@@ -83,6 +83,12 @@ progress contract. Additive changes bump nothing; a field removal bumps `schemaV
   seed). `dummy-node → linked_list`, `memoization → dynamic_programming / dp`, `tree-dfs ↔ "Tree DFS
   (recursive)"` were guesses that C1 confirms or corrects in the same pass.
 
+**Delta accepted Sep 23, 2026 — the decision tree:** the contract gains `decisionTree` (additive,
+`schemaVersion` stays 1), a recursive `{label, children}` / `{label, reach, reachLabel, note, page?}`
+tree mirroring the same table's triage, shape-first, for `/learn`'s Table ↔ Tree toggle. It is generated from
+`intuition_cheatsheet.md`'s new `## Decision tree` bullet list (see the markdown contract below), never
+hand-authored, and every `signals[].reach` must appear as a tree leaf `reach` (the coverage check).
+
 ## The markdown contract (what each technique doc must carry)
 
 The docs stay prose for the learner; the generator reads **only** these headings and ignores everything else
@@ -99,6 +105,15 @@ The docs stay prose for the learner; the generator reads **only** these headings
 `scripts/check_cheatsheets.py --check` fails on any missing required heading, a template without a
 complexity line, or a `not <technique>` slug that doesn't resolve. It runs report-only from the pre-commit
 hook first (like `check_single_source.py`), and is promoted to blocking once all 18 docs pass.
+
+**`intuition_cheatsheet.md`'s own `## Decision tree` heading (added Sep 23, 2026):** one nested bullet
+list, single root, 2-space indent per level (tolerant of 4). A bullet with no ` → ` tail is an inner node
+(`{label, children}`, and must have ≥ 1 child); a bullet ending `→ [<text>](techniques/<stem>.md)` or
+`→ **<label>**`, optionally followed by `(<note>)`, is a leaf (`{label, reach, reachLabel, note, page?}`,
+`reachLabel` = the link/bold text as written) — the same id/label resolution rule as the signal table's
+Doc column. `check_cheatsheets.py --check` also fails on a missing section, a malformed or dangling
+bullet, a root that's itself a leaf, an inner node with no children, a leaf link that doesn't resolve,
+or a signal-table `reach` with no matching tree leaf.
 
 **Why headings, not a sidecar YAML:** a sidecar would be a *third* copy of templates and pitfalls. The
 headings keep one file per technique that is both the learner's doc and the site's source; the validator
