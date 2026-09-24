@@ -944,3 +944,30 @@ decisions:
       `scripts/seed_bigo.py`, `dashboard/big-o.schema.json`,
       `.claude/memory/project_grounded_solutions.md`.
     affects: [gamification]
+
+  - id: progress-solution-file-sep24
+    date: 2026-09-24
+    summary: >-
+      ADDS one ADDITIVE field, `file`, to the progress.json `problem` and `scheduleItem` contracts
+      (dashboard/progress.schema.json, scripts/gamify.py): the repo-relative POSIX path of the learner's
+      own solution file for that lcNumber, or null when none exists under the configured source roots.
+      Resolved from a NEW `links.solution_files()` (one glob over `cse.config.yml` `solutions.roots`,
+      keyed by the file's leading number — the same identity rule as `links.find_file` /
+      new_problem.py's twin check); a twin (two files for one number, e.g. 1216) takes the first sorted
+      path with one gamify warning per number. WHY: progressiveoverflow.com's Progress page (Problems
+      tab + Today board) carried a LeetCode link and, for the ~95 visualized problems, a `</>`
+      walkthrough — but no link to the learner's own file at all, so a problem with no visualizer and
+      no curated `showcase.yml` entry (39, 846, 1489 on Sep 23) showed nothing beyond a comfort glyph.
+      The site now renders a muted `src` link → `github.com/<owner>/<repo>/blob/<branch>/<file>`
+      (honouring `?repo=`) on every row that has a file — zero curation, published by the same
+      pre-commit gamify run that already fires on any staged solution file. This is STAGE 1 of the
+      learner's Sep 24 ask ("automatically upload solution files if they are new … or link to the
+      solution in my github"); stage 2 (an auto-filled showcase entry per uncurated file + an inline
+      code viewer on row expand) is deliberately DEFERRED until the learner has seen how the link
+      reads. `file` is a PATH, never code — progress.json stays code-free (`showcase-contract`).
+      No `cse.config.yml` value changed. Strands any prose saying a progress row / board item carries
+      only a LeetCode link, or that a problem reaches the site only through `showcase.yml`. See
+      `dashboard/progress.schema.json`, `scripts/gamify.py`, `scripts/links.py`,
+      `.claude/memory/project_gamification.md`, `.claude/memory/project_grounded_solutions.md`,
+      `~/.claude/plans/can-we-find-a-vast-flask.md`.
+    affects: [gamification]

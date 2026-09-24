@@ -3,7 +3,7 @@ name: project-gamification
 description: Honest-progress gamification (streak, maturation pipeline, trophy case, coverage, badges) emitted as progress.json and rendered on progressiveoverflow.com; reward only unfakeable events, never a rating
 metadata:
   type: project
-reconciled: 2026-09-23
+reconciled: 2026-09-24
 ---
 
 **Started Sep 20, 2026**, from the learner's ask: "gamify cse-coach — achievements/milestones,
@@ -58,7 +58,16 @@ aggregate + status, not struggle notes. (`dashboard/showcase.json`, below, is th
 exception to "no solution code" — a different contract, for a different feature.) The board slice
 (`schedule.days[].items[]`) also now carries each done row's per-rep outcome — `endComfort`/
 `endNote`/`nextReview`, additive fields alongside the existing start comfort (`decisions.yml`
-`schedule-item-end-status-sep23`).
+`schedule-item-end-status-sep23`). **Sep 24, 2026 — `file` (additive, both `problems[]` and the
+board slice):** the repo-relative path of the learner's own solution file, from the new
+`links.solution_files()` map (one glob, keyed by leading number; a twin takes the first sorted path
+and warns once). A PATH, never code — the site turns it into a muted `src` link to the GitHub blob on
+every Problems-tab row and Today-board item, honouring `?repo=`. Why: before this, a problem with no
+visualizer and no curated `showcase.yml` entry showed nothing on the site beyond a comfort glyph
+(39/846/1489 after the Sep 23 session), and the only way in was a hand-written manifest entry per
+problem. This is stage 1 of "auto-publish new solutions"; stage 2 (auto-filled showcase entries +
+inline code on row expand) waits on the learner seeing the link first — plan:
+`~/.claude/plans/can-we-find-a-vast-flask.md`. Decision: `decisions.yml` `progress-solution-file-sep24`.
 
 ## The showcase half — grounded solutions (Sep 22, 2026)
 
