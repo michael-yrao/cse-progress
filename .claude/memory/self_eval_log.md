@@ -1243,3 +1243,4 @@ batch-archiving cleanup, not mechanical. Cadence reset.
 **What:** I corrected the learner's O(E²) to O(E·(E+V)) and space O(E) to O(E+V). They asked why V. Explaining it, I saw that connectivity absorbs V, so their bounds were right. My extra V term was a loose correction presented as their miss.
 **Why:** Priced the per-build `UF(n)` init without applying the problem's constraints. That's the same "analyze against the GIVEN constraint" lesson the 424 ledger row teaches the learner.
 **Fix/ladder:** Habit (rung 4): before correcting a bound, apply the problem's constraints to both the learner's bound and mine. First occurrence. The complexity card for 1489 records only the real miss (the 2E+1 build count).
+
