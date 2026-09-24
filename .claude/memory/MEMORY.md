@@ -59,6 +59,7 @@ operational copy is in a skill reference or CLAUDE.md. Grouped for scanning.
 ## Session hygiene
 - [Commit discipline](feedback_commit_discipline.md) — ask before every commit/push; accumulate into one commit; git-status sweep; close-out ≠ permission. (merges 3)
 - [Verify terminal actions](feedback_verify_terminal_actions.md) — never close out/commit/push/archive on an instruction that contradicts the visible work; a turn with fabricated output is evidence for nothing.
+- [Resume claims](feedback_resume_claims.md) — every number/claim touched in-session gets an explicit "is this accurate?" before the docx/PDF build; inherited prose is not evidence. (Sep 21 + Sep 23 misses)
 - [Session dating](feedback_session_dating.md) — date by study session, not wall clock; a past-midnight session keeps its start date (source-fixed in the scripts).
 
 ## Project state (standing)

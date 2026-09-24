@@ -5,7 +5,7 @@
 
 ## SUMMARY
 
-Senior full-stack developer and squad lead with 9+ years in financial technology at Morgan Stanley, currently leading a Snowflake fee-revenue and financial reporting platform for Wealth Management leadership and the CFO organization. Has delivered five financial platforms end-to-end, each replacing an external system against a regulatory or acquisition deadline.
+Senior full-stack developer and squad lead shipping production LLM agents. Leads WM Finance's slice of Finance Command Center, a Snowflake Cortex AI agent gated by a golden set, LLM-as-judge grading, and a precision-weighted F1 score. 9+ years at Morgan Stanley building the reporting platforms and ETL it runs on.
 
 
 ---
@@ -13,9 +13,9 @@ Senior full-stack developer and squad lead with 9+ years in financial technology
 ## SKILLS
 
 **Languages:** C#, Python, Java, TypeScript, SQL, Shell
-**Frameworks & Tools:** .NET, ReactJS, Node.js, FastAPI, Flutter, WPF, ASP.NET
+**Frameworks & Tools:** .NET, ReactJS, Node.js, FastAPI, Podman, Flutter, WPF, ASP.NET
 **Data & Cloud:** Snowflake, DB2, Teradata, MongoDB, AWS, Autosys, Git
-**Practices:** Agile/Scrum, trunk-based development, CI/CD, MVVM, ETL pipeline design
+**Practices:** Agile/Scrum, CI/CD, MVVM, ETL pipeline design, trunk-based development
 
 ---
 
@@ -24,17 +24,17 @@ Senior full-stack developer and squad lead with 9+ years in financial technology
 ### Morgan Stanley — Senior Full-Stack Developer, Squad Lead
 New York, NY | Oct 2023 – Present · *Manages 4 engineers; delivery owner for WM Financial Technology.*
 
-**Advisory Fee & Financial Reporting Platform (Snowflake)**
-- Designed and built a Snowflake platform reporting advisory fee, AUM, and ROA across ~$3 trillion in client assets to WM leadership and the CFO organization, retiring manual Excel-driven EUC processes <!-- METRIC: add one shipped number if any — e.g. "eliminating N monthly EUCs" / "adopted by N leaders" / "cutting reporting turnaround from X to Y" -->
-- Piloting a ReactJS/FastAPI application with a Snowflake Cortex Agent chat that lets 11 finance users, including the WM CFO, query fee, AUM, and ROA data in natural language — powered by Semantic Views, Skills, and Dynamic Tables <!-- swap "Piloting" -> "Delivered" once GA -->
-- Built the agent's eval harness and guardrails with guidance from Snowflake forward-deployed engineers (FDEs): a 68-question golden set with reference SQL and expected figures, LLM-as-judge grading, and finance SME review — a 99% accuracy bar gates release sign-off, re-run on every semantic-model, Skill, or prompt change; the agent declines out-of-scope and restricted-data questions
+**Finance Command Center — WM Finance Cortex AI Agent (Snowflake)**
+- Retired manual Excel-driven EUC process by designing and building a Podman-containerized ReactJS/FastAPI/Snowflake platform reporting Return on Assets (ROA) and Assets under Management (AUM) across ~$3 trillion in client assets to WM leadership and the CFO organization <!-- METRIC: add one shipped number if any — e.g. "eliminating N monthly EUCs" / "adopted by N leaders" / "cutting reporting turnaround from X to Y" -->
+- Layered a Snowflake Cortex Agent chat on the platform so 11 finance users, including the WM CFO, self-serve ROA and AUM questions in natural language instead of requesting reports — built on Semantic Views, Skills, and Dynamic Tables, with guardrails that decline out-of-scope and restricted-data questions <!-- swap "Piloting" -> "Delivered" once GA -->
+- Built the agent's eval harness with guidance from Snowflake FDEs: a 68-question golden set with reference SQL and expected figures, LLM-as-judge grading, and finance SME review — re-run on every semantic-model, Skill, or prompt change, with GA gated on a 0.70 F1 Score tuned for precision over recall plus 100% groundedness
 
 **EquityZen Acquisition**
-- Led technical delivery of the acquisition's data migration, systems integration, and cutover; Python reconciliation pipelines hit zero accounting discrepancies at cutover
-- Built a C# application for Operations to post and audit acquisition accounting adjustments with a full audit trail
+- Led the squad integrating EquityZen's books into Morgan Stanley's general ledger — built the Teradata/Python journal-ingestion ETL on Autosys and the in-house framework with simulation and posting modes, plus Python reconciliation that reconciled every accounting break to zero before cutover
+- Built a C# .NET WPF trial-balance application where Finance Controllers review the simulated EquityZen numbers and adjust account mappings before the ETL posts them to the GL
 
 **FA Notes System — Canadian Expansion (MSWC)**
-- Expanded the FA Notes platform to Canadian regulatory and compensation models — jurisdiction-configurable controls, audit logging, and full loan lifecycle tracking — enabling MSWC's first Canadian FA Recruit onboarding
+- Built the Canadian extension of the ASP.NET FA Notes platform — loan lifecycle engine, Canadian regulatory and compensation rules, audit logging, and reporting feeds — enabling MSWC's first Canadian FA Recruit onboarding
 
 ### Progressive Overflow — Owner & Developer
 Remote | Apr 2023 – Sep 2023

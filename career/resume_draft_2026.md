@@ -5,16 +5,16 @@
 
 ## SUMMARY
 
-Senior full-stack developer and squad lead with 9+ years of experience in financial technology at Morgan Stanley. Deep expertise in accounting systems, data migration, and financial platform engineering. Currently leading an accounting architecture modernization onto Snowflake and an in-house accounting engine. Delivered five end-to-end system migrations and greenfield builds at Morgan Stanley, each tied to a regulatory deadline or acquisition — across financial data, compliance controls, and cross-functional teams.
+Senior full-stack developer and squad lead with 9+ years of experience in financial technology at Morgan Stanley. Deep expertise in accounting systems, data migration, and financial platform engineering. Currently leading an accounting architecture modernization onto Snowflake and an in-house accounting engine. Delivered five end-to-end system migrations and greenfield builds at Morgan Stanley — spanning acquisition integrations, a Canadian expansion, and the retirement of manual accounting processes — across financial data, compliance controls, and cross-functional teams.
 
 ---
 
 ## SKILLS
 
 **Languages:** Java, Python, C#, TypeScript, SQL, Shell  
-**Frameworks & Tools:** .NET, Node.js, Express, Angular, Flutter, WPF, ASP.NET  
+**Frameworks & Tools:** .NET, Node.js, Express, Podman, Angular, Flutter, WPF, ASP.NET  
 **Data & Cloud:** Snowflake, DB2, Teradata, MongoDB, AWS, Autosys, Git  
-**Practices:** Agile/Scrum, trunk-based development, CI/CD, MVVM, ETL pipeline design  
+**Practices:** Agile/Scrum, CI/CD, MVVM, ETL pipeline design, trunk-based development  
 
 ---
 
@@ -32,14 +32,13 @@ Senior full-stack developer and squad lead with 9+ years of experience in financ
 
 **EquityZen Acquisition**
 - Led cross-functional Agile squad through end-to-end technical delivery of Morgan Stanley's ~$100M EquityZen acquisition, coordinating workstreams across data migration, systems integration, and operational cutover
-- Engineered automated reconciliation pipelines in Python to validate financial data integrity across acquired systems, achieving zero accounting discrepancies at cutover
-- Engineered an audited C# application that enables Operations to execute, review, and audit acquisition-related accounting adjustments — with a full audit trail ensuring regulatory traceability
+- Engineered automated reconciliation pipelines in Python to validate financial data integrity across acquired systems, surfacing every accounting break and reconciling to zero before cutover
+- Engineered a C# .NET WPF trial-balance application where Finance Controllers review simulated EquityZen numbers and adjust account mappings before the ETL posts them to the GL
 
 **FA Notes System — Canadian Expansion (MSWC)**
-- Led expansion of the FA Notes platform to support Canadian regulatory and compensation models, enabling MSWC to onboard its first Canadian-based FA Recruit Team
+- Built the Canadian extension of the ASP.NET FA Notes platform — Canadian regulatory and compensation rules, audit logging, reporting feeds, and payroll, GL, and HR integrations — enabling MSWC to onboard its first Canadian-based FA Recruit Team
 - Delivered end-to-end loan lifecycle tracking for Canadian FA notes — covering issuance, disbursement, and repayment — supporting the inaugural note on the MSWC platform
 - Implemented jurisdiction-specific controls, audit logging, and operational reporting to satisfy Canadian regulatory requirements ahead of pilot go-live
-- Designed the system to be jurisdiction-configurable, establishing a reusable foundation for scaling the recruit programme beyond the initial pilot cohort
 
 ---
 
