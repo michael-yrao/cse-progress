@@ -1,0 +1,886 @@
+# The Big-O Trainer's manifest: one entry per LeetCode number (or per twin file, keyed
+# `lc:variant`), picking which real attempt answers its time/space question.
+# `symbol`/`container` default the same way dashboard/showcase.yml's do — the latest
+# DATED attempt in the file, ties -> the symbol lowest in the file; an entry only needs
+# an explicit `symbol:` when nothing in its file is dated. `time`/`space` must be a label
+# from scripts/export_bigo.py's COMPLEXITY_POOL, or `TODO` for a bound not yet filled in.
+#
+# Seeded once from the site's own per-problem complexity metadata and its 26 existing
+# question explanations by scripts/seed_bigo.py — every seeded entry is tagged "seeded
+# from site — verify"; a TODO bound or a bare qualifier note is the learner's own rep to
+# fill in, not this script's guess. See decisions.yml `bigo-contract`.
+schemaVersion: 1
+entries:
+
+  # ── 1d_dynamic_programming ──
+  - lc: 1216
+    # seeded from site — verify (src/app/algorithms/dynamic-programming/valid-palindrome-iii.steps.ts: O(n²·k)/O(n²·k))
+    variant: cache
+    file: dsa/leetcode/1d_dynamic_programming/1216_valid_palindrome_iii.py
+    symbol: kPalindromeDP
+    time: O(n²·k)
+    space: O(n²·k)
+
+
+  # ── arrays_and_hash ──
+  - lc: 1
+    # seeded from site — verify (src/app/algorithms/arrays-hash/two-sum.steps.ts: O(n)/O(n))
+    time: O(n)
+    space: O(n)
+    note: >-
+      Find two indices in an array whose values sum to a target.
+    whyTime: >-
+      One pass through n elements. Each hash map lookup and insert is O(1), so the loop runs
+      in O(n) total.
+    whySpace: >-
+      The hash map stores at most n entries (one per element), so space is O(n).
+
+  - lc: 11
+    # seeded from site — verify (src/app/algorithms/arrays-hash/container-with-most-water.steps.ts: O(n)/O(1))
+    time: O(n)
+    space: O(1)
+
+  - lc: 14
+    # seeded from site — verify (src/app/algorithms/arrays-hash/longest-common-prefix.steps.ts: O(m·n)/O(1))
+    time: O(m·n)
+    space: O(1)
+
+  - lc: 36
+    # seeded from site — verify (src/app/algorithms/arrays-hash/valid-sudoku.steps.ts: O(1)/O(1))
+    time: O(1)
+    space: O(1)
+
+  - lc: 49
+    # seeded from site — verify (src/app/algorithms/arrays-hash/group-anagrams.steps.ts: O(n·k log k)/O(n·k))
+    time: O(n·k log k)
+    space: O(n·k)
+    note: >-
+      Group strings that are anagrams of each other, using a sorted key.
+    whyTime: >-
+      For each of the n strings, sorting takes O(k log k) where k is the string length. Total:
+      O(n·k log k).
+    whySpace: >-
+      The hash map stores all n strings, each of length up to k. Space is O(n·k).
+
+  - lc: 66
+    # seeded from site — verify (src/app/algorithms/arrays-hash/plus-one.steps.ts: O(n)/O(1))
+    time: O(n)
+    space: O(1)
+
+  - lc: 75
+    # seeded from site — verify (src/app/algorithms/arrays-hash/sort-colors.steps.ts: O(n)/O(1))
+    time: O(n)
+    space: O(1)
+
+  - lc: 122
+    # seeded from site — verify (src/app/algorithms/arrays-hash/best-time-buy-sell-stock-ii.steps.ts: O(n)/O(1))
+    time: O(n)
+    space: O(1)
+
+  - lc: 128
+    # seeded from site — verify (src/app/algorithms/arrays-hash/longest-consecutive-sequence.steps.ts: O(n)/O(n))
+    time: O(n)
+    space: O(n)
+    note: >-
+      Find the length of the longest consecutive integer sequence in an unsorted array.
+    whyTime: >-
+      Each number is the start of a sequence at most once. The inner while-loop extends each
+      sequence, but across all iterations its total steps equal n. Overall: O(n).
+    whySpace: >-
+      The set holds all n numbers — O(n) space.
+
+  - lc: 169
+    # seeded from site — verify (src/app/algorithms/arrays-hash/majority-element.steps.ts: O(n)/O(1))
+    time: O(n)
+    space: O(1)
+
+  - lc: 189
+    # seeded from site — verify (src/app/algorithms/arrays-hash/rotate-array.steps.ts: O(n)/O(1))
+    time: O(n)
+    space: O(1)
+
+  - lc: 217
+    # seeded from site — verify (src/app/algorithms/arrays-hash/contains-duplicate.steps.ts: O(n)/O(n))
+    time: O(n)
+    space: O(n)
+    note: >-
+      Return true if any value appears at least twice in an array.
+    whyTime: >-
+      One pass. Each set lookup and add is O(1) on average, giving O(n) overall.
+    whySpace: >-
+      The set can hold up to n distinct elements in the worst case, so space is O(n).
+
+  - lc: 229
+    # seeded from site — verify (src/app/algorithms/arrays-hash/majority-element-ii.steps.ts: O(n)/O(1))
+    time: O(n)
+    space: O(1)
+
+  - lc: 238
+    # seeded from site — verify (src/app/algorithms/arrays-hash/product-of-array-except-self.steps.ts: O(n)/O(n))
+    time: O(n)
+    space: O(n)
+    note: >-
+      Return an array where each element is the product of all other elements (no division,
+      O(1) extra space).
+    whyTime: >-
+      Two passes through the array, each O(n). Total: O(n).
+    whySpace: >-
+      The output array does not count as extra space by convention. Only two scalar
+      accumulators (prefix, suffix) are used — O(1).
+
+  - lc: 242
+    # seeded from site — verify (src/app/algorithms/arrays-hash/valid-anagram.steps.ts: O(n)/O(n))
+    time: O(n)
+    space: O(n)
+
+  - lc: 271
+    # seeded from site — verify (src/app/algorithms/arrays-hash/encode-and-decode-strings.steps.ts: O(n)/O(n))
+    time: O(n)
+    space: O(n)
+
+  - lc: 347
+    # seeded from site — verify (src/app/algorithms/arrays-hash/top-k-frequent-elements.steps.ts: O(n log k)/O(n))
+    time: O(n log k)
+    space: O(n)
+    note: >-
+      Return the k most frequent elements using a min-heap of size k.
+    whyTime: >-
+      Building the frequency map is O(n). For each of the up to n unique elements we push/pop
+      a heap of size k — O(log k) per operation, O(n log k) total.
+    whySpace: >-
+      The frequency map stores up to n entries — O(n). The heap holds at most k+1 elements at
+      a time — O(k). The map dominates: O(n).
+
+  - lc: 560
+    # seeded from site — verify (src/app/algorithms/arrays-hash/subarray-sum-equals-k.steps.ts: O(n)/O(n))
+    time: O(n)
+    space: O(n)
+
+  - lc: 912
+    # seeded from site — verify (src/app/algorithms/arrays-hash/sort-an-array.steps.ts: O(n log n)/O(n))
+    time: O(n log n)
+    space: O(n)
+
+  - lc: 974
+    time: TODO  # no site match — fill in
+    space: TODO  # no site match — fill in
+
+  - lc: 1929
+    # seeded from site — verify (src/app/algorithms/arrays-hash/concatenation-of-array.steps.ts: O(n)/O(n))
+    time: O(n)
+    space: O(n)
+
+
+  # ── backtracking ──
+  - lc: 22
+    # seeded from site — verify (src/app/algorithms/backtracking/generate-parentheses.steps.ts: O(4ⁿ / √n)/O(n))
+    time: TODO  # site said 'O(4ⁿ / √n)'
+    space: O(n)
+
+  - lc: 39
+    time: TODO  # no site match — fill in
+    space: TODO  # no site match — fill in
+
+  - lc: 78
+    # seeded from site — verify (src/app/algorithms/backtracking/subsets.steps.ts: O(n · 2ⁿ)/O(n · 2ⁿ))
+    time: O(n·2ⁿ)
+    space: O(n·2ⁿ)
+
+  - lc: 1216
+    # seeded from site — verify (src/app/algorithms/dynamic-programming/valid-palindrome-iii.steps.ts: O(n²·k)/O(n²·k))
+    variant: backtracking
+    file: dsa/leetcode/backtracking/1216_valid_palindrome_iii.py
+    symbol: kPalindrome
+    # the site's pair above is the memoized DP's; this is the plain two-pointer
+    # backtracking (exponential) — fill in by hand, 2026-09-24
+    time: TODO
+    space: TODO
+
+
+  # ── binary_search ──
+  - lc: 33
+    # seeded from site — verify (src/app/algorithms/binary-search/search-in-rotated-sorted-array.steps.ts: O(log n)/O(1))
+    time: O(log n)
+    space: O(1)
+    note: >-
+      Search for a target in a rotated sorted array using binary search.
+    whyTime: >-
+      First, find the rotation index k with binary search — O(log n). Then run binary search
+      on each of the two halves — O(log n) each. Total: O(log n).
+    whySpace: >-
+      Both the rotation-finding loop and the binary searches are iterative. Only pointer
+      variables — no auxiliary data structures. Space is O(1).
+
+  - lc: 34
+    # seeded from site — verify (src/app/algorithms/binary-search/find-first-and-last-position.steps.ts: O(log n)/O(1))
+    time: O(log n)
+    space: O(1)
+
+  - lc: 74
+    # seeded from site — verify (src/app/algorithms/binary-search/search-a-2d-matrix.steps.ts: O(log(m·n))/O(1))
+    time: O(log(m·n))
+    space: O(1)
+
+  - lc: 153
+    # seeded from site — verify (src/app/algorithms/binary-search/find-minimum-in-rotated-sorted-array.steps.ts: O(log n)/O(1))
+    time: O(log n)
+    space: O(1)
+
+  - lc: 162
+    # seeded from site — verify (src/app/algorithms/binary-search/find-peak-element.steps.ts: O(log n)/O(1))
+    time: O(log n)
+    space: O(1)
+
+  - lc: 540
+    # seeded from site — verify (src/app/algorithms/binary-search/single-element-in-sorted-array.steps.ts: O(log n)/O(1))
+    time: O(log n)
+    space: O(1)
+
+  - lc: 704
+    # seeded from site — verify (src/app/algorithms/binary-search/binary-search.steps.ts: O(log n)/O(1))
+    time: O(log n)
+    space: O(1)
+    note: >-
+      Find a target value in a sorted array.
+    whyTime: >-
+      Each iteration halves the search space. Starting from n, after k iterations only n/2ᵏ
+      elements remain, so k = log₂(n) iterations suffice — O(log n).
+    whySpace: >-
+      Only the l, r, and mid variables. Space is O(1).
+
+  - lc: 875
+    # seeded from site — verify (src/app/algorithms/binary-search/koko-eating-bananas.steps.ts: O(n log m)/O(1))
+    time: O(n log m)
+    space: O(1)
+    note: >-
+      Find the minimum eating speed such that all piles are finished in h hours.
+    whyTime: >-
+      Binary search over speeds 1..m (where m = max pile) runs O(log m) iterations. Each
+      iteration scans all n piles to compute hours. Total: O(n log m).
+    whySpace: >-
+      Only scalar variables are used. Space is O(1).
+
+  - lc: 1011
+    # seeded from site — verify (src/app/algorithms/binary-search/capacity-to-ship-packages.steps.ts: O(n log m)/O(1))
+    time: O(n log m)
+    space: O(1)
+
+  - lc: 1552
+    # seeded from site — verify (src/app/algorithms/binary-search/magnetic-force-between-two-balls.steps.ts: O(n log n + n log R)/O(1))
+    time: TODO  # site said 'O(n log n + n log R)'
+    space: O(1)
+
+  - lc: 2300
+    # seeded from site — verify (src/app/algorithms/binary-search/successful-pairs-spells-potions.steps.ts: O(n log n)/O(n))
+    time: O(n log n)
+    space: O(n)
+
+
+  # ── graphs ──
+  - lc: 127
+    # seeded from site — verify (src/app/algorithms/graphs/word-ladder.steps.ts: O(n · L²)/O(n · L²))
+    time: O(n·L²)
+    space: O(n·L²)
+
+  - lc: 130
+    # seeded from site — verify (src/app/algorithms/graphs/surrounded-regions.steps.ts: O(m × n)/O(m × n))
+    time: O(m·n)
+    space: O(m·n)
+
+  - lc: 133
+    # seeded from site — verify (src/app/algorithms/graphs/clone-graph.steps.ts: O(V+E)/O(V))
+    time: O(V+E)
+    space: O(V)
+    note: >-
+      Deep-copy an undirected graph, visiting each node exactly once.
+    whyTime: >-
+      Each vertex is cloned once (O(V)) and each edge is traversed once when building neighbor
+      lists (O(E)). Total: O(V+E).
+    whySpace: >-
+      The old_to_new map holds one entry per vertex — O(V). The DFS call stack is at most O(V)
+      deep. Space: O(V).
+
+  - lc: 200
+    # seeded from site — verify (src/app/algorithms/graphs/number-of-islands.steps.ts: O(m × n)/O(m × n))
+    time: O(m·n)
+    space: O(m·n)
+    note: >-
+      Count connected components of land cells ("1") in a grid.
+    whyTime: >-
+      Every cell is added to the visited set at most once. DFS processes each cell exactly
+      once. With m rows and n columns, total work is O(m×n).
+    whySpace: >-
+      The visited set stores up to m×n coordinates. The DFS call stack can reach depth m×n in
+      the worst case (e.g., all land in one connected spiral). Both contribute O(m×n) space.
+
+  - lc: 202
+    # seeded from site — verify (src/app/algorithms/arrays-hash/happy-number.steps.ts: O(log n)/O(log n))
+    time: O(log n)
+    space: O(log n)
+
+  - lc: 207
+    # seeded from site — verify (src/app/algorithms/graphs/course-schedule.steps.ts: O(V+E)/O(V+E))
+    time: O(V+E)
+    space: O(V+E)
+    note: >-
+      Determine if all courses can be finished given their prerequisites (detect if a valid
+      ordering exists).
+    whyTime: >-
+      Building the adjacency list and prereq counter is O(E). BFS (Kahn\
+    whySpace: >-
+      The adjacency list stores all edges O(E), the prereq counter and queue store all nodes
+      O(V). Total: O(V+E).
+
+  - lc: 210
+    # seeded from site — verify (src/app/algorithms/graphs/course-schedule-ii.steps.ts: O(V+E)/O(V+E))
+    time: O(V+E)
+    space: O(V+E)
+
+  - lc: 261
+    # seeded from site — verify (src/app/algorithms/graphs/graph-valid-tree.steps.ts: O(n + e)/O(n + e))
+    time: O(V+E)
+    space: O(V+E)
+
+  - lc: 269
+    # seeded from site — verify (src/app/algorithms/graphs/alien-dictionary.steps.ts: O(C)/O(1))
+    time: TODO  # site said 'O(C)'
+    space: O(1)
+
+  - lc: 323
+    # seeded from site — verify (src/app/algorithms/graphs/number-of-connected-components.steps.ts: O(n + e)/O(n + e))
+    time: O(V+E)
+    space: O(V+E)
+
+  - lc: 332
+    # seeded from site — verify (src/app/algorithms/graphs/reconstruct-itinerary.steps.ts: O(E log E)/O(E))
+    time: O(E log E)
+    space: O(E)
+
+  - lc: 399
+    time: TODO  # no site match — fill in
+    space: TODO  # no site match — fill in
+
+  - lc: 417
+    # seeded from site — verify (src/app/algorithms/graphs/pacific-atlantic-water-flow.steps.ts: O(m × n)/O(m × n))
+    time: O(m·n)
+    space: O(m·n)
+
+  - lc: 684
+    # seeded from site — verify (src/app/algorithms/graphs/redundant-connection.steps.ts: O(n · α(n))/O(n))
+    time: O(n·α(n))
+    space: O(n)
+
+  - lc: 695
+    # seeded from site — verify (src/app/algorithms/graphs/max-area-of-island.steps.ts: O(m × n)/O(m × n))
+    time: O(m·n)
+    space: O(m·n)
+
+  - lc: 721
+    # seeded from site — verify (src/app/algorithms/graphs/accounts-merge.steps.ts: O(NK log NK)/O(NK))
+    time: TODO  # site said 'O(NK log NK)'
+    space: TODO  # site said 'O(NK)'
+
+  - lc: 733
+    # seeded from site — verify (src/app/algorithms/graphs/flood-fill.steps.ts: O(m × n)/O(m × n))
+    time: O(m·n)
+    space: O(m·n)
+
+  - lc: 743
+    # seeded from site — verify (src/app/algorithms/graphs/network-delay-time.steps.ts: O(E log V)/O(V + E))
+    time: O(E log V)
+    space: O(V+E)
+
+  - lc: 778
+    # seeded from site — verify (src/app/algorithms/graphs/swim-in-rising-water.steps.ts: O(n² log n)/O(n²))
+    time: O(n² log n)
+    space: O(n²)
+
+  - lc: 787
+    # seeded from site — verify (src/app/algorithms/graphs/cheapest-flights-within-k-stops.steps.ts: O(k · E)/O(n))
+    time: O(k·E)
+    space: O(n)
+
+  - lc: 994
+    # seeded from site — verify (src/app/algorithms/graphs/rotting-oranges.steps.ts: O(m × n)/O(m × n))
+    time: O(m·n)
+    space: O(m·n)
+    note: >-
+      Find the minimum time (in minutes) for all fresh oranges to rot via BFS spreading.
+    whyTime: >-
+      Every cell is enqueued at most once. With m rows and n columns, total work is O(m×n).
+    whySpace: >-
+      The BFS queue can hold up to m×n cells in the worst case — O(m×n) space.
+
+  - lc: 1334
+    # seeded from site — verify (src/app/algorithms/graphs/find-the-city.steps.ts: O(n³)/O(n²))
+    time: O(n³)
+    space: O(n²)
+
+  - lc: 1462
+    # seeded from site — verify (src/app/algorithms/graphs/course-schedule-iv.steps.ts: O(n³ + q)/O(n²))
+    time: TODO  # site said 'O(n³ + q)'
+    space: O(n²)
+
+  - lc: 1489
+    time: TODO  # no site match — fill in
+    space: TODO  # no site match — fill in
+
+  - lc: 1584
+    # seeded from site — verify (src/app/algorithms/graphs/min-cost-connect-all-points.steps.ts: O(n²)/O(n))
+    time: O(n²)
+    space: O(n)
+
+  - lc: 2097
+    # seeded from site — verify (src/app/algorithms/graphs/valid-arrangement-of-pairs.steps.ts: O(E)/O(E))
+    time: O(E)
+    space: O(E)
+
+
+  # ── greedy ──
+  - lc: 45
+    # seeded from site — verify (src/app/algorithms/greedy/jump-game-ii.steps.ts: O(n)/O(1))
+    time: O(n)
+    space: O(1)
+
+  - lc: 53
+    # seeded from site — verify (src/app/algorithms/greedy/maximum-subarray.steps.ts: O(n)/O(1))
+    time: O(n)
+    space: O(1)
+    whyTime: >-
+      Single pass through n elements, each requiring O(1) work. Total: O(n).
+    whySpace: >-
+      Only two scalar variables (max_sum, current_sum). Space is O(1).
+
+  - lc: 55
+    # seeded from site — verify (src/app/algorithms/greedy/jump-game.steps.ts: O(n)/O(1))
+    time: O(n)
+    space: O(1)
+
+  - lc: 56
+    # seeded from site — verify (src/app/algorithms/greedy/merge-intervals.steps.ts: O(n log n)/O(n))
+    time: O(n log n)
+    space: O(n)
+
+  - lc: 57
+    # seeded from site — verify (src/app/algorithms/greedy/insert-interval.steps.ts: O(n)/O(n))
+    time: O(n)
+    space: O(n)
+
+  - lc: 121
+    # seeded from site — verify (src/app/algorithms/sliding-window/best-time-buy-sell-stock.steps.ts: O(n)/O(1))
+    time: O(n)
+    space: O(1)
+    note: >-
+      Find the maximum profit from a single buy-sell of a stock given daily prices.
+    whyTime: >-
+      Single pass through the prices array. The right pointer r advances each iteration, so
+      the loop runs n-1 times — O(n).
+    whySpace: >-
+      Only three scalar variables (current_max, l, r). Space is O(1).
+
+  - lc: 134
+    # seeded from site — verify (src/app/algorithms/greedy/gas-station.steps.ts: O(n)/O(1))
+    time: O(n)
+    space: O(1)
+
+  - lc: 435
+    # seeded from site — verify (src/app/algorithms/greedy/non-overlapping-intervals.steps.ts: O(n log n)/O(1))
+    time: O(n log n)
+    space: O(1)
+
+  - lc: 621
+    # seeded from site — verify (src/app/algorithms/greedy/task-scheduler.steps.ts: O(n)/O(1))
+    time: O(n)
+    space: O(1)
+
+  - lc: 763
+    # seeded from site — verify (src/app/algorithms/greedy/partition-labels.steps.ts: O(n)/O(1))
+    time: O(n)
+    space: O(1)
+
+  - lc: 846
+    time: TODO  # no site match — fill in
+    space: TODO  # no site match — fill in
+
+
+  # ── heap ──
+  - lc: 355
+    # seeded from site — verify (src/app/algorithms/heap/design-twitter.steps.ts: getNewsFeed O(t log t)/O(users + tweets))
+    time: TODO  # site said 'getNewsFeed O(t log t)'
+    space: TODO  # site said 'O(users + tweets)'
+
+  - lc: 703
+    # seeded from site — verify (src/app/algorithms/heap/kth-largest-element-in-stream.steps.ts: O(log k) per add/O(k))
+    time: O(log k)
+    space: O(k)
+    note: >-
+      per add
+
+  - lc: 973
+    # seeded from site — verify (src/app/algorithms/heap/k-closest-points-to-origin.steps.ts: O(n log k)/O(k))
+    time: O(n log k)
+    space: O(k)
+
+  - lc: 1046
+    # seeded from site — verify (src/app/algorithms/heap/last-stone-weight.steps.ts: O(n log n)/O(n))
+    time: O(n log n)
+    space: O(n)
+
+
+  # ── linked_list ──
+  - lc: 2
+    # seeded from site — verify (src/app/algorithms/linked-list/add-two-numbers.steps.ts: O(max(m, n))/O(max(m, n)))
+    time: O(max(m, n))
+    space: O(max(m, n))
+
+  - lc: 19
+    # seeded from site — verify (src/app/algorithms/linked-list/remove-nth-node-from-end.steps.ts: O(n)/O(1))
+    time: O(n)
+    space: O(1)
+    note: >-
+      Remove the nth node from the end of a linked list in a single pass.
+    whyTime: >-
+      The fast pointer advances n steps, then both pointers walk the rest of the list — at
+      most L steps total where L is the list length. Single pass: O(n).
+    whySpace: >-
+      Only the dummy node and two pointer variables. Space is O(1).
+
+  - lc: 21
+    # seeded from site — verify (src/app/algorithms/linked-list/merge-two-sorted-lists.steps.ts: O(m+n)/O(1))
+    time: O(n + m)
+    space: O(1)
+    note: >-
+      Merge two sorted linked lists into one sorted list in-place.
+    whyTime: >-
+      Each node from both lists is visited at most once. With m and n nodes respectively,
+      total work is O(m+n).
+    whySpace: >-
+      Only the dummy head and current pointer — no new nodes are created. Space is O(1).
+
+  - lc: 138
+    # seeded from site — verify (src/app/algorithms/linked-list/copy-list-with-random-pointer.steps.ts: O(n)/O(n))
+    time: O(n)
+    space: O(n)
+
+  - lc: 141
+    # seeded from site — verify (src/app/algorithms/linked-list/linked-list-cycle.steps.ts: O(n)/O(1))
+    time: O(n)
+    space: O(1)
+    note: >-
+      Detect whether a linked list contains a cycle using fast/slow pointers.
+    whyTime: >-
+      If there is no cycle, fast reaches None in O(n) steps. If there is a cycle, slow and
+      fast meet within O(n) steps of fast entering the cycle. Total: O(n).
+    whySpace: >-
+      Only two pointer variables — no visited set needed. Space is O(1), which is the
+      advantage of this approach over a hash set.
+
+  - lc: 143
+    # seeded from site — verify (src/app/algorithms/linked-list/reorder-list.steps.ts: O(n)/O(1))
+    time: O(n)
+    space: O(1)
+
+  - lc: 146
+    # seeded from site — verify (src/app/algorithms/linked-list/lru-cache.steps.ts: O(1)/O(capacity))
+    time: O(1)
+    space: TODO  # site said 'O(capacity)'
+
+  - lc: 206
+    # seeded from site — verify (src/app/algorithms/linked-list/reverse-linked-list.steps.ts: O(n)/O(1))
+    time: O(n)
+    space: O(1)
+    note: >-
+      Reverse a singly linked list in-place (iterative approach).
+    whyTime: >-
+      Each node is visited exactly once. The loop runs n times, giving O(n).
+    whySpace: >-
+      Only prev, current, and temp pointers are used. No extra data structures. Space is O(1).
+
+
+  # ── sliding_window ──
+  - lc: 3
+    # seeded from site — verify (src/app/algorithms/sliding-window/longest-substring-without-repeating-characters.steps.ts: O(n)/O(min(n, alphabet)))
+    time: O(n)
+    space: TODO  # site said 'O(min(n, alphabet))'
+
+  - lc: 76
+    symbol: minWindowIncorrect
+    time: TODO  # no site match — fill in
+    space: TODO  # no site match — fill in
+
+  - lc: 219
+    # seeded from site — verify (src/app/algorithms/sliding-window/contains-duplicate-ii.steps.ts: O(n)/O(min(n,k)))
+    time: O(n)
+    space: O(min(n, k))
+
+  - lc: 424
+    # seeded from site — verify (src/app/algorithms/sliding-window/longest-repeating-char-replacement.steps.ts: O(n)/O(1))
+    time: O(n)
+    space: O(1)
+
+  - lc: 567
+    # seeded from site — verify (src/app/algorithms/sliding-window/permutation-in-string.steps.ts: O(n)/O(1))
+    time: O(n)
+    space: O(1)
+
+
+  # ── stack ──
+  - lc: 20
+    # seeded from site — verify (src/app/algorithms/stack/valid-parentheses.steps.ts: O(n)/O(n))
+    time: O(n)
+    space: O(n)
+    note: >-
+      Determine whether a string of brackets is valid (correctly matched and ordered).
+    whyTime: >-
+      Each character is processed once. Every append and pop is O(1), giving O(n) total.
+    whySpace: >-
+      In the worst case (all open brackets), the stack holds n items — O(n) space.
+
+  - lc: 84
+    # seeded from site — verify (src/app/algorithms/stack/largest-rectangle-in-histogram.steps.ts: O(n)/O(n))
+    time: O(n)
+    space: O(n)
+
+  - lc: 150
+    # seeded from site — verify (src/app/algorithms/stack/evaluate-reverse-polish-notation.steps.ts: O(n)/O(n))
+    time: O(n)
+    space: O(n)
+
+  - lc: 155
+    # seeded from site — verify (src/app/algorithms/stack/min-stack.steps.ts: O(1) per operation/O(n))
+    time: O(1)
+    space: O(n)
+    note: >-
+      per operation
+
+  - lc: 239
+    # seeded from site — verify (src/app/algorithms/stack/sliding-window-maximum.steps.ts: O(n)/O(k))
+    time: O(n)
+    space: O(k)
+
+  - lc: 496
+    # seeded from site — verify (src/app/algorithms/stack/next-greater-element-i.steps.ts: O(n + m)/O(n))
+    time: O(n + m)
+    space: O(n)
+
+  - lc: 503
+    # seeded from site — verify (src/app/algorithms/stack/next-greater-element-ii.steps.ts: O(n)/O(n))
+    time: O(n)
+    space: O(n)
+
+  - lc: 739
+    # seeded from site — verify (src/app/algorithms/stack/daily-temperatures.steps.ts: O(n)/O(n))
+    time: O(n)
+    space: O(n)
+
+  - lc: 853
+    # seeded from site — verify (src/app/algorithms/stack/car-fleet.steps.ts: O(n log n)/O(n))
+    time: O(n log n)
+    space: O(n)
+
+  - lc: 901
+    # seeded from site — verify (src/app/algorithms/stack/online-stock-span.steps.ts: O(1) amortized/O(n))
+    time: O(1)
+    space: O(n)
+    note: >-
+      amortized
+
+
+  # ── trees ──
+  - lc: 98
+    # seeded from site — verify (src/app/algorithms/trees/validate-bst.steps.ts: O(n)/O(h))
+    time: O(n)
+    space: O(h)
+
+  - lc: 100
+    # seeded from site — verify (src/app/algorithms/trees/same-tree.steps.ts: O(n)/O(h))
+    time: O(n)
+    space: O(h)
+
+  - lc: 102
+    # seeded from site — verify (src/app/algorithms/trees/binary-tree-level-order-traversal.steps.ts: O(n)/O(n))
+    time: O(n)
+    space: O(n)
+    note: >-
+      Collect the values of a binary tree level by level using BFS.
+    whyTime: >-
+      Every node is enqueued and dequeued exactly once. Total: O(n).
+    whySpace: >-
+      The queue holds at most one full level at a time. In the widest level of a balanced
+      binary tree, that is n/2 nodes — O(n) space.
+
+  - lc: 104
+    # seeded from site — verify (src/app/algorithms/trees/maximum-depth-binary-tree.steps.ts: O(n)/O(h))
+    time: O(n)
+    space: O(h)
+    note: >-
+      Find the maximum depth of a binary tree using recursion.
+    whyTime: >-
+      Every node is visited exactly once. n nodes → O(n) total work.
+    whySpace: >-
+      The recursion depth equals the height of the tree. In the worst case (a skewed tree with
+      n nodes all in one branch), the call stack holds n frames — O(n). For a balanced tree,
+      this is O(log n).
+
+  - lc: 105
+    # seeded from site — verify (src/app/algorithms/trees/construct-tree-preorder-inorder.steps.ts: O(n²)/O(n))
+    time: O(n²)
+    space: O(n)
+
+  - lc: 110
+    # seeded from site — verify (src/app/algorithms/trees/balanced-binary-tree.steps.ts: O(n)/O(h))
+    time: O(n)
+    space: O(h)
+
+  - lc: 124
+    # seeded from site — verify (src/app/algorithms/trees/binary-tree-maximum-path-sum.steps.ts: O(n)/O(h))
+    time: O(n)
+    space: O(h)
+
+  - lc: 199
+    # seeded from site — verify (src/app/algorithms/trees/binary-tree-right-side-view.steps.ts: O(n)/O(n))
+    time: O(n)
+    space: O(n)
+
+  - lc: 226
+    # seeded from site — verify (src/app/algorithms/trees/invert-binary-tree.steps.ts: O(n)/O(h))
+    time: O(n)
+    space: O(h)
+
+  - lc: 235
+    # seeded from site — verify (src/app/algorithms/trees/lowest-common-ancestor-bst.steps.ts: O(h)/O(1))
+    time: O(h)
+    space: O(1)
+
+  - lc: 543
+    # seeded from site — verify (src/app/algorithms/trees/diameter-of-binary-tree.steps.ts: O(n)/O(h))
+    time: O(n)
+    space: O(h)
+
+  - lc: 572
+    # seeded from site — verify (src/app/algorithms/trees/subtree-of-another-tree.steps.ts: O(m·n)/O(m+n))
+    time: O(m·n)
+    space: O(n + m)
+
+  - lc: 1448
+    # seeded from site — verify (src/app/algorithms/trees/count-good-nodes.steps.ts: O(n)/O(h))
+    time: O(n)
+    space: O(h)
+
+
+  # ── trie ──
+  - lc: 208
+    # seeded from site — verify (src/app/algorithms/trie/implement-trie.steps.ts: O(L) per op/O(total chars))
+    time: TODO  # site said 'O(L) per op'
+    space: TODO  # site said 'O(total chars)'
+    note: >-
+      per op
+
+  - lc: 211
+    # seeded from site — verify (src/app/algorithms/trie/design-add-and-search-words.steps.ts: O(len) add/O(total chars))
+    time: TODO  # site said 'O(len) add'
+    space: TODO  # site said 'O(total chars)'
+    note: >-
+      add
+
+  - lc: 648
+    # seeded from site — verify (src/app/algorithms/trie/replace-words.steps.ts: O(D + S)/O(D))
+    symbol: replaceWords
+    time: TODO  # site said 'O(D + S)'
+    space: TODO  # site said 'O(D)'
+
+
+  # ── tries ──
+  - lc: 472
+    time: TODO  # no site match — fill in
+    space: TODO  # no site match — fill in
+
+
+  # ── two_pointers ──
+  - lc: 15
+    # seeded from site — verify (src/app/algorithms/two-pointers/three-sum.steps.ts: O(n²)/O(n))
+    time: O(n²)
+    space: O(n)
+    note: >-
+      Find all unique triplets in a sorted array that sum to zero.
+    whyTime: >-
+      Sorting is O(n log n). The outer loop runs n times; for each index, the two-pointer
+      sweep is O(n). Total: O(n²) dominates.
+    whySpace: >-
+      The solution_set stores the output (excluded by convention). The sort uses O(log n) call
+      stack space. Space is O(log n).
+
+  - lc: 18
+    # seeded from site — verify (src/app/algorithms/two-pointers/four-sum.steps.ts: O(n³)/O(n))
+    time: O(n³)
+    space: O(n)
+
+  - lc: 26
+    # seeded from site — verify (src/app/algorithms/two-pointers/remove-duplicates-sorted-array.steps.ts: O(n)/O(1))
+    time: O(n)
+    space: O(1)
+
+  - lc: 27
+    # seeded from site — verify (src/app/algorithms/arrays-hash/remove-element.steps.ts: O(n)/O(1))
+    time: O(n)
+    space: O(1)
+
+  - lc: 42
+    # seeded from site — verify (src/app/algorithms/two-pointers/trapping-rain-water.steps.ts: O(n)/O(1))
+    time: O(n)
+    space: O(1)
+    note: >-
+      Calculate how much water is trapped between elevation bars (two-pointer approach).
+    whyTime: >-
+      Each element is processed once by the left or right pointer. Single pass → O(n).
+    whySpace: >-
+      Only l, r, left_max, right_max, and res — all scalars. Space is O(1).
+
+  - lc: 80
+    # seeded from site — verify (src/app/algorithms/two-pointers/remove-duplicates-sorted-array-ii.steps.ts: O(n)/O(1))
+    time: O(n)
+    space: O(1)
+
+  - lc: 88
+    # seeded from site — verify (src/app/algorithms/two-pointers/merge-sorted-array.steps.ts: O(m+n)/O(1))
+    time: O(n + m)
+    space: O(1)
+
+  - lc: 125
+    # seeded from site — verify (src/app/algorithms/two-pointers/valid-palindrome.steps.ts: O(n)/O(n))
+    time: O(n)
+    space: O(n)
+    note: >-
+      Check whether a string is a palindrome ignoring non-alphanumeric characters.
+    whyTime: >-
+      Each character is visited at most once by the left or right pointer, so the total work
+      is O(n).
+    whySpace: >-
+      Only two pointer variables and a constant-size helper — no extra data structures. Space
+      is O(1).
+
+  - lc: 167
+    # seeded from site — verify (src/app/algorithms/two-pointers/two-sum-ii.steps.ts: O(n)/O(1))
+    time: O(n)
+    space: O(1)
+
+  - lc: 283
+    # seeded from site — verify (src/app/algorithms/two-pointers/move-zeros.steps.ts: O(n)/O(1))
+    time: O(n)
+    space: O(1)
+
+  - lc: 344
+    # seeded from site — verify (src/app/algorithms/two-pointers/reverse-string.steps.ts: O(n)/O(1))
+    time: O(n)
+    space: O(1)
+
+  - lc: 680
+    # seeded from site — verify (src/app/algorithms/two-pointers/valid-palindrome-ii.steps.ts: O(n)/O(1))
+    time: O(n)
+    space: O(1)
+
+  - lc: 1768
+    # seeded from site — verify (src/app/algorithms/two-pointers/merge-strings-alternately.steps.ts: O(n)/O(n))
+    time: O(n)
+    space: O(n)
+

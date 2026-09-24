@@ -81,3 +81,11 @@ to the lead. So the lead's review step only happens if the tech lead resumes it 
 both engineer reports have arrived ("both engineers done; review now"). Budget for it: each lead costs two
 extra hand-backs (interim + final) and the tech lead does the collation. The engineers themselves, and
 the lead's review once resumed, worked as designed — including a lead sending fixes back to an engineer.
+
+**Observed 2026-09-23 (later, games slice) — a workaround that lets the lead stay resident.** The lead
+had each engineer create an empty done-marker file in the session scratchpad on completion and waited
+for both markers with a short `ping`-sleep loop in Bash, so its own turn never ended while engineers were
+still running. Both engineer reports then came back to the lead as designed, the lead ran its review and
+one rejection round per engineer, and the tech lead received a single consolidated hand-back — no interim
+hand-backs, no `SendMessage` resume. Cost: engineers flag the marker request as unusual (harmless, the
+files sit outside the repo). Prefer this over the resume dance when a lead supervises two engineers.

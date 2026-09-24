@@ -61,6 +61,20 @@ step anchor resolves to exactly one row (or an explicit `nth`).
 names (`bfs`, `union-find`, `prims-heap`), never dates. `title` and `url` are nullable (a retired
 problem with no header line has neither; the site falls back to a search URL).
 
+## Big-O trainer contract (Sep 24)
+
+A second contract, mirroring the one above: `dashboard/bigo.yml` (hand-curated pick + correct
+time/space bounds) → `scripts/export_bigo.py` → `dashboard/big-o.json`, which the site's Big-O
+Trainer deals from instead of its old hand-written 26-question paraphrase array. Same pick
+mechanics as showcase (latest dated attempt, ties → lowest symbol in the file, an undated file
+needs an explicit `symbol:`), plus a canonical label pool so the site can check an answer by exact
+string equality against spellings the source material writes inconsistently (`O(m × n)`,
+`O(V + E)`, `O(1) amortized`). `scripts/seed_bigo.py` seeded the manifest once from the site's own
+per-problem `timeComplexity`/`spaceComplexity` metadata and its 26 existing question explanations,
+so the learner didn't hand-write 130 entries — but every seeded bound is tagged "verify" and a
+`TODO` bound is skipped (never emitted) until the learner fills it in as a rep. Decision record:
+`decisions.yml` `bigo-contract`.
+
 ## Follow-ups left open
 - (closed Sep 23) 18 Four Sum had no LeetCode URL anywhere — it is retired, so no tracker row;
   the learner supplied the URL and it now lives in the file's docstring header line.
