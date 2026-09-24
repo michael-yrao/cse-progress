@@ -134,6 +134,30 @@ if [ -n "$SHOWCASE_TRIGGER" ]; then
   [ -f "dashboard/showcase.json" ] && git add "dashboard/showcase.json"
 fi
 
+# Big-O trainer contract. Regenerates dashboard/big-o.json (the site's Big-O Trainer deck —
+# real code slices + seeded canonical-label answers) from dashboard/bigo.yml + the live solution
+# files, mirroring the showcase block above. Fires when a solution file, the manifest, either
+# generator (export_bigo.py reads es.read_lines/symbol_table; export_showcase.py changes can
+# change what those return), the complexity-miss ledger (isMiss), or the tracker (difficulty) is
+# staged — the places a pick or a derived field can drift from reality. Report-only, same as
+# showcase: a bad Big-O pick doesn't block the commit, but the report is worth seeing at commit
+# time. See decisions.yml `bigo-contract`.
+BIGO_TRIGGER=$(echo "$STAGED" | grep -E "^dsa/leetcode/.*\.py$|dashboard/bigo\.yml$|scripts/export_bigo\.py$|scripts/export_showcase\.py$|complexity_gotchas\.md$|dsa_progress\.md$")
+if [ -n "$BIGO_TRIGGER" ]; then
+  echo "Regenerating big-o.json..."
+  if command -v py >/dev/null 2>&1; then
+    py scripts/export_bigo.py || true
+    py scripts/export_bigo.py --check || true
+  elif command -v python >/dev/null 2>&1; then
+    python scripts/export_bigo.py || true
+    python scripts/export_bigo.py --check || true
+  elif command -v python3 >/dev/null 2>&1; then
+    python3 scripts/export_bigo.py || true
+    python3 scripts/export_bigo.py --check || true
+  fi
+  [ -f "dashboard/big-o.json" ] && git add "dashboard/big-o.json"
+fi
+
 # Single source of truth for tuned values (see CLAUDE.md). Fires when the config, a script
 # that carries defaults, or a rules document is staged — i.e. exactly the three places a
 # value can be copied to. Reports; never blocks.

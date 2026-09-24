@@ -338,6 +338,16 @@ def normalize_entry(raw: dict, file_rel: str) -> dict:
 _FILE_LEADING_NUM = re.compile(r"^(\d+)_")
 
 
+def check_leading_number(path: Path, lc: int, key: str) -> None:
+    """The resolved file's leading `<n>_` number must equal the manifest entry's own
+    `lc` — catches a manifest entry pointing at the wrong file (or a stale `file:`
+    override) even though the path happens to still resolve to a real file."""
+    leading = _FILE_LEADING_NUM.match(path.name)
+    if not leading or int(leading.group(1)) != lc:
+        raise ShowcaseError(
+            f"{key}: lc {lc} does not match the leading number of file '{path.name}'")
+
+
 def resolve_source_file(raw: dict) -> Path:
     """The solution file for one manifest entry: the explicit `file:` when given
     (validated to exist and sit under a configured source root), else the unique file
@@ -401,10 +411,7 @@ def build_payload(manifest: dict, today: dt.date) -> tuple[dict, list[str]]:
         seen_keys.add(key)
 
         path = resolve_source_file(raw)
-        leading = _FILE_LEADING_NUM.match(path.name)
-        if not leading or int(leading.group(1)) != lc:
-            raise ShowcaseError(
-                f"{key}: lc {lc} does not match the leading number of file '{path.name}'")
+        check_leading_number(path, lc, key)
 
         if path not in file_cache:
             lines = read_lines(path)
@@ -433,61 +440,65 @@ def build_payload(manifest: dict, today: dt.date) -> tuple[dict, list[str]]:
 _REQUIRED_EXISTING_ENTRY_KEYS = ("key", "file", "segments")
 
 
-def _existing_shape_error(existing: object) -> str | None:
+def _existing_shape_error(existing: object, label: str = "showcase.json") -> str | None:
     """The first way `existing` (already `json.loads`-parsed) fails to be a well-formed
     showcase.json, as one human-readable reason — or None when its shape is sound enough
     for `_stale_reasons` to compare field by field. A hand-corrupted file must produce
     this one clean reason, never a bare traceback: `--check` fails loudly, not crashes.
 
+    `label` names the file in every reason (a caller emitting a different contract, e.g.
+    big-o.json, passes its own).
+
     Not validated: a non-string `key` or `file` value on an otherwise well-shaped entry —
     either still crashes downstream (`e["key"]` inside a dict comprehension; `REPO /
     file_rel`)."""
     if not isinstance(existing, dict):
-        return f"showcase.json: top level must be an object (got {type(existing).__name__})"
+        return f"{label}: top level must be an object (got {type(existing).__name__})"
 
     entries = existing.get("entries")
     if not isinstance(entries, list):
-        return f"showcase.json: 'entries' must be a list (got {type(entries).__name__})"
+        return f"{label}: 'entries' must be a list (got {type(entries).__name__})"
 
     for index, entry in enumerate(entries):
         if not isinstance(entry, dict):
-            return f"showcase.json: entry {index} must be an object (got {type(entry).__name__})"
+            return f"{label}: entry {index} must be an object (got {type(entry).__name__})"
         missing = [k for k in _REQUIRED_EXISTING_ENTRY_KEYS if k not in entry]
         if missing:
             missing_desc = ", ".join(f"'{k}'" for k in missing)
-            return f"showcase.json: entry {index} missing {missing_desc}"
+            return f"{label}: entry {index} missing {missing_desc}"
         if not isinstance(entry["segments"], list):
-            return (f"showcase.json: entry {index} ('{entry['key']}') 'segments' must be "
+            return (f"{label}: entry {index} ('{entry['key']}') 'segments' must be "
                      f"a list (got {type(entry['segments']).__name__})")
         for seg_index, seg in enumerate(entry["segments"]):
             if not isinstance(seg, dict) or not isinstance(seg.get("startLine"), int):
-                return (f"showcase.json: entry {index} ('{entry['key']}') segment "
+                return (f"{label}: entry {index} ('{entry['key']}') segment "
                         f"{seg_index} has a missing/null/non-integer 'startLine'")
     return None
 
 
-def _load_existing(existing_path: Path) -> tuple[dict | None, list[str]]:
+def _load_existing(existing_path: Path, label: str = "showcase.json") -> tuple[dict | None, list[str]]:
     """(existing, reasons): parses and shape-validates `existing_path`. `existing` is
     None whenever `reasons` is non-empty — the caller checks `reasons` first, so it can
-    never read a partially-validated `existing`."""
+    never read a partially-validated `existing`. `label` is forwarded to
+    `_existing_shape_error` (see there)."""
     try:
         existing = json.loads(existing_path.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError) as exc:
         return None, [f"cannot read existing {existing_path}: {exc}"]
 
-    shape_error = _existing_shape_error(existing)
+    shape_error = _existing_shape_error(existing, label)
     if shape_error:
         return None, [shape_error]
     return existing, []
 
 
-def _stale_reasons(payload: dict, existing_path: Path) -> list[str]:
+def _stale_reasons(payload: dict, existing_path: Path, label: str = "showcase.json") -> list[str]:
     """Every way the file at `existing_path` (the committed showcase.json) could have
     drifted from reality: the manifest's entry set changed, a recorded segment no longer
     matches its live source file, or any other field differs from a fresh rebuild. A
     malformed `existing_path` (see `_existing_shape_error`) is reported the same way —
-    one clean reason — rather than raised."""
-    existing, load_reasons = _load_existing(existing_path)
+    one clean reason — rather than raised. `label` names the file in every reason."""
+    existing, load_reasons = _load_existing(existing_path, label)
     if load_reasons:
         return load_reasons
 
@@ -522,7 +533,7 @@ def _stale_reasons(payload: dict, existing_path: Path) -> list[str]:
 
     for key in new_by_key.keys() & old_by_key.keys():
         if new_by_key[key] != old_by_key[key]:
-            reasons.append(f"{key}: entry differs from the committed showcase.json — regenerate")
+            reasons.append(f"{key}: entry differs from the committed {label} — regenerate")
 
     return reasons
 

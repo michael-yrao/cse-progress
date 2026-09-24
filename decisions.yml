@@ -909,3 +909,38 @@ decisions:
       `.claude/memory/feedback_ask_complexity.md`.
     supersedes: [complexity-cleanup-formalized]
     affects: [complexity_gate, ratings, complexity_gotchas, feedback_ask_complexity, weekly_closeout]
+
+  - id: bigo-contract
+    date: 2026-09-24
+    summary: >-
+      ADDS the site's Big-O Trainer as a second grounded-code contract, mirroring `showcase-contract`
+      (Sep 22): a new hand-curated manifest `dashboard/bigo.yml` → `scripts/export_bigo.py` →
+      `dashboard/big-o.json`, deployed by the site as a picker (All/Easy/Medium/Hard + a "my complexity
+      misses" toggle) dealing a capped run from the learner's own solution files, replacing the trainer's
+      old hand-written 26-question paraphrase array (`big-o-questions.data.ts`, retired once
+      `scripts/seed_bigo.py` has consumed it). PICK RULE: each entry resolves to the latest DATED attempt
+      in its file (by the symbol's `_YYYYMMDD` suffix or its banner comment — `es.attempt_date`); a tie
+      (same date, e.g. a helper class + its Solution) is broken by the symbol LOWEST IN THE FILE; a file
+      with no dated attempt at all (648, 76, both 1216 twins) requires an explicit `symbol:` in the
+      manifest instead — a hard error otherwise. LABELS: one ordered canonical pool
+      (`export_bigo.COMPLEXITY_POOL`) replaces the site's inconsistent spellings (`O(m × n)`, `O(V + E)`,
+      `O(1) amortized`); the site checks answers by EXACT STRING EQUALITY against the pool, and each
+      question's 4 options are seeded deterministically (`random.Random(f"{key}|{axis}|{correct}")`) —
+      confusable distractors first, topped up from nearby pool labels — so the same entry always offers
+      the same distractors.
+      `isMiss` is read from `docs/foundations/dsa/mastery/complexity_gotchas.md`'s cleanup-queue + ledger
+      tables (`parse_miss_numbers`); `difficulty` is joined from the tracker via
+      `effort_budget.parse_rows()` (NOT `technique_coverage.py`, which `pip install`s on import — mirrors
+      `gamify.py`'s existing avoidance). A manifest entry whose bound is `TODO` (unmapped or unseeded) is
+      SKIPPED with a warning, never emitted — filling `TODO` bounds and verifying the seeded ones is left
+      to the learner as an ordinary rep, never delegated (coaching carve-out; the plan only seeds).
+      `scripts/export_showcase.py` gained a `label: str = "showcase.json"` kwarg (threaded through the
+      shared `--check`/staleness helpers so their messages read correctly when reused for `big-o.json`)
+      and a factored `check_leading_number(path, lc, key)`, both reused by `export_bigo.py`. Hook wiring
+      is REPORT-ONLY, same as `showcase-contract` (`.githooks/pre-commit`, `|| true` on regenerate and
+      `--check`). No `cse.config.yml` value changed. Strands any prose that still describes the Big-O
+      trainer as a fixed hand-written 26-question set, or that says the trainer's questions are paraphrased
+      rather than the learner's real code. See `dashboard/bigo.yml`, `scripts/export_bigo.py`,
+      `scripts/seed_bigo.py`, `dashboard/big-o.schema.json`,
+      `.claude/memory/project_grounded_solutions.md`.
+    affects: [gamification]
