@@ -21,7 +21,7 @@ operational copy is in a skill reference or CLAUDE.md. Grouped for scanning.
 
 ## Rating & gates
 - [Recognition gate](feedback_recognition_gate.md) — front-gate: shape→technique+why (their pre-code comment); shape cues only, never candidate techniques.
-- [Ask for complexity](feedback_ask_complexity.md) — gate: time + space, each with a why-clause, before any rating; clean-code + Big-O-miss → EOW cleanup, not a cap.
+- [Ask for complexity](feedback_ask_complexity.md) — gate: time + space, each with a why-clause, before any rating; the rating ignores Big-O entirely (2026-09-23) — every miss → EOW cleanup, never a cap.
 - [Infer comfort](feedback_infer_comfort.md) — read Clean/Shaky/Blank from the session, propose for confirmation; rate hint-volume; flag a dishonest 🟢.
 - [Provisional Clean](feedback_provisional_clean.md) — a 🟢 straight after a 🔴 logs Streak 0 (lock-down), not Streak 1; only Blank→Clean is provisional.
 - [Coding rules](feedback_coding_rules.md) — coding is the only path to 🟢; whiteboard fidelity (inline node defs); coach never edits `.py`; explicit-over-terse. (merges 5)

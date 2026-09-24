@@ -32,10 +32,11 @@ gets skimmed past:
   - a single block only. If both axes really were given without the literal words (rare —
     "O(n) then O(1)"), the re-send passes. One nudge, never a wall.
 
-NOT in scope: whether the stated complexity is CORRECT, or whether the freebie ledger was
-read. Those are judgement (the coach's job, and the freebie-ledger rule lives in
-`feedback_ask_complexity`). This hook enforces only that both axes were ASKED FOR and given
-before the rating — the mechanizable half.
+NOT in scope: whether the stated complexity is CORRECT. That's judgement (the coach's job).
+The rating itself ignores complexity entirely (2026-09-23) — a miss is corrected, carded in
+complexity_gotchas.md, and queued for the end-of-week cleanup, never a rating input; that
+scoring rule lives in `feedback_ask_complexity`. This hook enforces only that both axes were
+ASKED FOR and given before the rating — the mechanizable half.
 """
 import json
 import re
@@ -215,8 +216,8 @@ MESSAGE = (
     "It was run backwards on 15 (Aug 22) and 127 (Aug 23) — rating first, gate as a "
     "formality.\n"
     "DO NOT rate yet. Ask the learner for {missing} (each itemized), wait for their answer, "
-    "and — if a bound is a miss — read that problem's row in complexity_gotchas.md BEFORE "
-    "proposing, so the freebie state is known. Only then propose the rating.\n"
+    "and — if a bound is a miss — correct it and card it in complexity_gotchas.md. The miss "
+    "never changes the rating (2026-09-23); only then propose it, on recognition + code.\n"
     "If the learner genuinely already stated both axes above (just without the words "
     '"time"/"space"), re-send — this blocks once.\n'
     "Rule: .claude/memory/feedback_ask_complexity.md"

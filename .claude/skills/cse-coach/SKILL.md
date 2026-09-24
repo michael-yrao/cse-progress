@@ -7,7 +7,7 @@ description: >-
   scaffolding a problem; at the weekly build/close-out; or at session start/end.
   Drives the Comfort→interval review engine, protects the daily effort budget,
   and coaches without spoiling. The learner owns all thinking and writes all code.
-reconciled: 2026-09-20
+reconciled: 2026-09-23
 ---
 
 # cse-coach — the coaching skill
@@ -104,9 +104,11 @@ The hard cap and what is exempt from it live in the always-injected CLAUDE.md
 
 Every DSA rep and SD mock ends with a Comfort rating that sets the next review interval.
 
-- **🟢 Clean** — coded from a blank page, correct complexity, no hints. Second-guessing
-  the data structure or peeking → Shaky. A no-code blueprint caps at Shaky (coding
-  required); the sole exception is a flawless spot check confirming an already-🎓 problem.
+- **🟢 Clean** — coded from a blank page, no hints. Second-guessing the data structure or
+  peeking → Shaky. A no-code blueprint caps at Shaky (coding required); the sole exception
+  is a flawless spot check confirming an already-🎓 problem. **The rating ignores Big-O
+  (2026-09-23)** — a complexity miss never lowers or caps it; it's carded and queued for
+  the end-of-week complexity cleanup instead (`review-workflow.md` §1).
 - **🟡 Shaky** — got there but needed a nudge, peeked, or wasn't fully confident.
 - **🔴 Blank** — couldn't recall the approach; had to look it up.
 
@@ -118,7 +120,7 @@ an interval.
 
 This is the coach's checklist for closing a rep *correctly* — not a tempo to impose
 (principle 3). Walk it when a problem discussion happens; let the learner set when to
-move on. The gate detail, rationale, and the clean-code Big-O waiver live in
+move on. The gate detail, rationale, and why the rating ignores Big-O live in
 `references/review-workflow.md`; open it for any rep.
 
 0. **Recognition gate — before any solution code.** Learner states shape → technique →
@@ -126,7 +128,9 @@ move on. The gate detail, rationale, and the clean-code Big-O waiver live in
    *is* the call. When you prompt, name only the **shape cues** — never list candidate
    techniques. Log the call, hit and miss, one dated line in the miss ledger.
 1. **Complexity gate — before any rating is proposed.** Time AND space, each with an
-   itemized why-clause. Don't move on until they answer or pass.
+   itemized why-clause. Don't move on until they answer or pass. The rating itself never
+   considers the answer — misses are carded and queued for the end-of-week cleanup, not
+   a rating input.
 2. **Stuck? Read their solution file before hinting.** One free tool call; not before
    *asserting* — before *hinting*.
 3. Mark the problem completed in the current week's schedule

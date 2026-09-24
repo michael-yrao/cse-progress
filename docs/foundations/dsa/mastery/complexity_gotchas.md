@@ -1,50 +1,45 @@
-# Complexity Gotchas — reference card + freebie ledger
+# Complexity Gotchas — reference card + miss ledger
 
 Two jobs in one file: **teach** the recurring time/space traps (reread it like a Recall Card),
-and **enforce** them (the ledger below *is* the per-problem freebie state).
+and **track** them (the ledger below records every miss, category, and repeat).
 
 ## The rule (how complexity is enforced)
 
 1. **Gate — every rep, no skip.** State **time AND space, each with an itemized why-clause** —
    *"O(1), one fixed 26-array"*, not a bare *"O(1)"*. Naming each contributor is what catches the
    miss. No rep is logged until this is answered (or explicitly passed).
-2. **Per-problem freebie, then it counts.** Each miss on a problem → corrected + added to the ledger.
-   No rating hit **until the freebie is spent**, then a further miss on the **same problem** → **caps
-   that rep at 🟡**.
-   - **Review problem: 1 freebie.**
-   - **New problem (first-ever attempt): 2 freebies** — first exposure means learning the algorithm
-     *and* its analysis at once, so it gets extra grace.
+2. **The rating ignores Big-O (2026-09-23) — generalizes the Sep 3, 2026 clean-code-only waiver
+   below to every rep.** A wrong, prompted, or taught complexity bound never lowers or caps the
+   rating; rate on recognition + code only. Each miss is still **corrected + added to the ledger**,
+   and **queued for the end-of-week complexity cleanup** (below) — the gate and the correction
+   always happen, the miss is just never a rating input.
+   - A real fix to the **code** can still affect the rating through the code criterion — that's the
+     code being shaky, not the complexity miss capping it.
+   - **A self-caught typo on a non-logic line is clean authoring, not a real fix (Sep 20, 2026).**
+     A typo the learner spots and corrects themselves, unprompted, on a one-line pointer / index /
+     bound — no algorithm change, nobody else surfaced it — doesn't lower the rating via the code
+     criterion. The picking feature: **who surfaced it + did logic change.** Self-caught & logic
+     unchanged → clean; coach-/test-surfaced, or the fix altered the algorithm → a real fix.
 
 3. **Guide, don't just catch.** At complexity time, use the trigger→cue map below to *prompt* the right
    analysis (the cue, never the answer). On a **new problem** cue **proactively, before they answer**
    (teaching); on a **review** ask **cold** and cue the *why* only on a bare symbol or a miss (testing).
 
-4. ⭐ **Clean code + Big-O miss does NOT cap the rating (formalized Sep 3, 2026 — supersedes the 🟡 cap
-   in rule 2 for this case only).** When **recognition AND code were clean off a blank page** and the
-   *only* miss was a complexity bound, rate the rep on the code (a clean rep is 🟢) and **do not cap**.
-   Re-repping clean code just to re-ask its Big-O is churn — you re-solve a problem you can already
-   solve. Instead the missed bound is **queued for the end-of-week complexity cleanup** (below): the
-   concept is still tested, just decoupled from the code rep and done cheaply off-rep.
-   - **Scope is exactly "clean code + Big-O miss only."** If the code itself needed a real fix, rule 2
-     (freebie → 🟡 cap) applies unchanged — a complexity miss riding alongside a code miss is *not*
-     waived.
-   - **A self-caught typo on a non-logic line is "clean code," not "a real fix" (Sep 20, 2026).** "The
-     code needed a real fix" means the *logic* was wrong and had to be repaired. A typo the learner
-     spots and corrects themselves, unprompted, on a one-line pointer / index / bound — no algorithm
-     change, nobody else surfaced it — is ordinary clean authoring: it does **not** cap and does **not**
-     break the waiver. The picking feature: **who surfaced it + did logic change.** Self-caught & logic
-     unchanged → clean; coach-/test-surfaced, or the fix altered the algorithm → a real fix (→ 🟡).
-   - Still correct the miss in the moment and record it in the ledger; the waiver governs the *rating*
-     and the *timing of the re-test*, never whether the concept is tested.
+4. ⭐ **Historical origin of rule 2 — the Sep 3, 2026 clean-code waiver (superseded, kept for
+   context).** Before 2026-09-23, a Big-O miss only skipped the cap when recognition AND code were
+   both clean off a blank page; a miss riding alongside a real code fix kept the old freebie→🟡 cap.
+   Rule 2 above removes that scope condition — the cap on a complexity miss is retired entirely, for
+   every rep. See `decisions.yml` `complexity-cleanup-formalized` (original) and
+   `rating-ignores-complexity` (generalization).
 
-The gate and the correction always happen; the freebie/cap only governs the *rating consequence*.
+The gate and the correction always happen; a complexity miss never governs the rating.
 
-## ⏳ End-of-week complexity cleanup queue (added Sep 3, 2026)
+## ⏳ End-of-week complexity cleanup queue (added Sep 3, 2026; widened to every rep's misses, 2026-09-23)
 
-Problems whose **code was clean but a Big-O bound was missed** (rule 4). At the **end-of-week close-out**
-(CLAUDE.md workflow step 7 / the weekly build), the coach fires each queued problem cold: *"re-open your
-code for X and give me time + space, with the why."* No re-solving — the code already exists; this tests
-only the **bound**.
+Every problem with a missed Big-O bound (rule 2), regardless of whether the code was clean. At the
+**end-of-week close-out** (CLAUDE.md workflow step 7 / the weekly build), the coach fires each queued
+problem cold: *"re-open your code for X and give me time + space, with the why."* No re-solving — the
+code already exists; this tests only the **bound**.
 - **Clean → clear the row** (concept stuck).
 - **Missed again → keep it queued** and flag it: a bound that fails a second cold re-explain is a real
   gap, not churn — escalate to a proper complexity teach on that category, don't just re-queue silently.
@@ -59,6 +54,9 @@ only the **bound**.
 | 211 Add and Search Words (Trie + wildcard DFS) | **space**: gave **O(h)** (stack ≈ trie height / word length). Wrong axis — only a **wildcard** recurses; a normal char advances `node` inside the *same* frame. So stack depth = **number of dots k**, → **O(k)**, and with k ≤ 2 that's O(1) auxiliary. Recursion-stack family: depth is set by the *branching* positions, not the word length. Coach-surfaced | 2026-09-21 | |
 | 778 Swim in Rising Water (Dijkstra / min-heap) | **space**: attribution wobble (bound O(V) was numerically right on a grid). Two slips: (1) called the heap "vertices" → implies ≤ V, but with **no dedup-before-push** a cell is re-pushed per neighbor, so the heap holds **O(E)** entries — the exact 743 lesson (heap = O(E) pushes, dedup-on-pop); (2) briefly put a **`log` into a space bound** (log is per-op *time*, not stored count). Correct: `visited` O(V) + heap O(E) = **O(V+E)**, → O(V) on a grid. Coach-nudged | 2026-09-21 | |
 | 743 Network Delay Time (Dijkstra, min-heap) — **RECURRENCE** | **space**: itemized visited + adjMap, omitted the heap; on prompt said heap "maxes to O(V)". Lazy Dijkstra has no decrease-key: a node is re-pushed per relaxing edge, stale entries skipped on pop ⟹ heap **O(E)**. Total O(V+E) right, attribution wrong — the exact Sep 3 miss, cleared cold Sep 6, decayed (also slipped on 778). ⚠️ Miss again → escalate to a lazy-vs-eager heap-sizing teach | 2026-09-22 | |
+| 39 Combination Sum (backtracking, pick-next loop) | **time + space, taught on request**: depth d = target ÷ min(candidates) (not len(candidates)); pick-next is **O(n^d · d)** time (n-way branching, O(d) `sum`/copy per call), stack **O(d)**; take/skip is O(2^(d+n) · d). Backtracking-tree category: depth × branching × work per node | 2026-09-23 | |
+| 846 Hand of Straights | **time**: gave the group-marking loop **O(n·k)**. Actually **O(n)** in total, because each `freqMap[i] -= 1` uses up one card, so it can run at most n times across all calls. Total **O(n log n)**, from the sort. Then answered "n − k" to the total-decrements prompt; corrected to n. Amortized-by-budget category (same shape as the 901/739 each-element-once argument). Space O(n) correct | 2026-09-23 | |
+| 1489 Critical/Pseudo-Critical MST Edges | **time**: priced one Kruskal build (O(E), near-O(1) UF) and stopped — missed that it runs **2E+1 times** (base + E exclude + E include) → **O(E²)** (connected ⟹ E ≥ V−1 absorbs the O(V) `UF(n)` init; sort O(E log E) dominated). Found on one "count the calls" prompt. Space O(E) right. Repeated-subroutine category: cost of one call × number of calls | 2026-09-23 | |
 
 ## 🎯 Cold complexity probes (standing drill, added Sep 6, 2026)
 
@@ -198,9 +196,12 @@ nodes are rare.
 > **Interview line:** *"Heapify is O(n), not O(n log n), because sift-down cost is a node's height above
 > the leaves and half the nodes are leaves. The expensive nodes are rare — only the root pays log n."*
 
-## Ledger (freebie state — being here = freebie spent)
+## Ledger (miss history — kept for the category transfer, not a rating cap)
 
-A problem in this table has used its one free complexity miss. The **next** miss on it caps the rep at 🟡.
+A problem in this table has recorded at least one complexity miss. **A repeat miss no longer caps the
+rep (retired 2026-09-23)** — the table now exists to track the transfer (does a category recur across
+problems?), not to gate the rating. Rows dated before 2026-09-23 describe the cap as it worked then;
+read them as history.
 
 | Problem | Category | Said → Actual | First-miss date | Freebie |
 |---|---|---|---|---|
@@ -406,7 +407,10 @@ characters). **Cue: before naming `n`, ask "what does one unit of work touch?"**
 | 846 Hand of Straights (**new**) | **amortized vs per-call worst case (time)** — *same category as 901/239* | Read the `while`-in-`for` as O(n²)/O(n·k) — this was the block on executing at all. **Actual O(n log n):** the sort dominates; the greedy consume is amortized O(n) because there are only **n/k group-starts** (each `isStraightHand` decrements exactly k cards, each card once ever), so `(n/k)·O(k) = O(n)`; the outer loop's other iterations hit the `count>0` guard at O(1). Space **O(n)** (the Counter) — stated correctly and for the right reason. ⭐ **Same amortization 239 needed in this very session** — the count/deque guard is what stops re-processing a consumed element, and the cost is *total body executions*, not outer×inner. New problem ⟹ double freebie. Learner flagged complexity as *the* struggle here → amortized analysis is a live cluster; candidate for the EOW cleanup + a cold probe. | 2026-09-11 | **1 of 2** *(new-problem double freebie)* |
 | 1489 Critical & Pseudo-Critical Edges (**new**) | **"no extra space" over an allocated structure + recursion stack (itemization, not value)** — the 853/332 shape | **Time correct and self-derived:** `O(E² + E log E)` — E edges × two full Kruskal passes each in the classification loop, over an `O(E log E)` sort, so `O(E²)` dominates. The per-op union-find cost was correctly folded in as α(V)≈const (path compression + union-by-rank). **Space bound `O(E)` was right, but the why was *"the two helpers use no extra space"*** — which skips (a) each helper allocating a fresh `UF(n)` = two O(V) maps, and (b) `find` being **recursive** = O(V) stack worst case. Both are real allocations; the bound stays O(E) only because a connected graph has E≥V−1 ⇒ V=O(E), so the O(V) terms fold in. ⭐ **Cue (same as 853/332): name every structure you allocate *and* the recursion stack, then say which term dominates — don't reach the right number via "nothing extra."** Per the 853 precedent (correct bound, incomplete itemization = coaching nudge) this is a **PASS**, freebie **not** spent. Rating was 🟡 on execution regardless. | 2026-09-13 | **pass — unspent (still 2 of 2 available)** |
 | 1552 Magnetic Force Between Two Balls | **binary search on the ANSWER (time)**, the 1011 category | `log n` → **`O(n log n + n · log k)`**, k = `position[-1] − position[0]` ≤ 1e9. The search halves the **gap range**, not the array; n enters only through the feasibility scan | 2026-09-20 | **spent → REPEAT 2026-09-22** (rep already 🟡 on code fixes; cap moot) |
+| 39 Combination Sum | backtracking-tree size (**time + space**) | not attempted → **O(n^d · d)** / O(d), d = target ÷ min | 2026-09-23 | n/a (retired) |
+| 846 Hand of Straights | amortized total work (**time**) | O(n·k) → **O(n)** for marking (≤ n decrements total), O(n log n) overall | 2026-09-23 | n/a (retired) |
+| 1489 Critical/Pseudo-Critical MST Edges | repeated-subroutine multiplier (**time**) | O(E log E) → **O(E²)** (2E+1 builds × O(E)) | 2026-09-23 | n/a (retired) |
 
-<!-- Add a row on every first-time complexity miss. A repeat miss on a problem ALREADY here caps that
-rep at 🟡 (freebie spent) — note the repeat in the schedule/stuck_log where the rating is recorded.
-The card grows only on a NEW problem's first miss, so it stays short. -->
+<!-- Add a row on every first-time complexity miss. Since 2026-09-23 a repeat miss never caps the
+rep (decisions.yml `rating-ignores-complexity`) — note the repeat on the row and queue it for the
+end-of-week cleanup. The card grows only on a NEW problem's first miss, so it stays short. -->
