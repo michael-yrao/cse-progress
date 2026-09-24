@@ -32,6 +32,36 @@ Constraints:
 import math
 from typing import List, Optional
 
+# ── Attempt · 2026-09-23 ──────────────
+class UF_20260923:
+    def __init__(self, n):
+        self.numComponents = n
+        self.parentMap = {}
+        self.rankMap = {}
+        for i in range(n):
+            self.parentMap[i] = i
+            self.rankMap[i] = 0
+        
+    def find(self,node):
+        if self.parentMap[node] != node:
+            self.parentMap[node] = self.find(self.parentMap[node])
+        return self.parentMap[node]
+    
+    def union(self,n1,n2):
+        n1r = self.find(n1)
+        n2r = self.find(n2)
+        if n1r == n2r:
+            return False
+        if self.rankMap[n1r] > self.rankMap[n2r]:
+            self.parentMap[n2r] = n1r
+        elif self.rankMap[n1r] < self.rankMap[n2r]:
+            self.parentMap[n1r] = n2r
+        else:
+            self.rankMap[n1r]+=1
+            self.parentMap[n2r] = n1r
+        self.numComponents-=1
+        return True
+
 class UF:
 # we will use a UF helper class
 # we need the typical UF objects but we also need a numComponents so we know if we are fully connected
@@ -65,7 +95,97 @@ class UF:
         self.numComponents-=1
         return True
 
+
 class Solution:
+    def findCriticalAndPseudoCriticalEdges_20260923(self, n: int, edges: list[list[int]]) -> list[list[int]]:
+        # critical = this edge must exist in every MST possible
+        # pseudo-critical = this edge exist in some MST
+        # MST with the smallest weight is our base case
+        # if we exclude an edge and the weight goes up, it is critical
+        # we can find the edge using the index, the index actually is important by this, so we need to keep the index when we sort, create new edges array with it in there
+        # Kruskal's algorithm for MST
+
+        # add original index into edges
+        for i, sublist in enumerate(edges):
+            sublist.append(i)
+
+        # sort the edges by the smallest weight
+        edges.sort(key=lambda edge:edge[2])
+
+        # 1. Build method to exclude an edge and give the weight of the MST without this edge
+
+        def build_mst_exclude_edge(edge_index):
+            overallWeight = 0
+            uf = UF_20260923(n)
+            for i in range(len(edges)):
+                src = edges[i][0]
+                dst = edges[i][1]
+                weight = edges[i][2]
+                # skip this index
+                if i == edge_index:
+                    continue
+                if uf.union(src,dst):
+                    overallWeight+=weight
+            if uf.numComponents == 1:
+                return overallWeight
+            return math.inf
+
+        # 2. Build method to must include an edge and give the weight of the MST that must include this edge
+
+        def build_mst_include_edge(edge_index):
+            uf = UF_20260923(n)
+            # include this index by starting the weight with it
+            overallWeight = edges[edge_index][2]
+            # union the nodes of this index immediately
+            uf.union(edges[edge_index][0], edges[edge_index][1])
+            # now we go through rest of edges
+            for i in range(len(edges)):
+                src = edges[i][0]
+                dst = edges[i][1]
+                weight = edges[i][2]
+                # skip this index
+                if i == edge_index:
+                    continue
+                if uf.union(src,dst):
+                    overallWeight+=weight
+            if uf.numComponents == 1:
+                return overallWeight
+            return math.inf
+
+        # 3. Build our base MST
+
+        base_mst_weight = build_mst_exclude_edge(-1)
+
+        # 4. compare all other possible MST to base MST if we were to exclude each, this helps us generate our critical edges
+        # criticalEdges need to a set so that when we check for pseudo critical, it's constant time
+        
+        critical_edges = set()
+
+        for i in range(len(edges)):
+            mst_weight_without_i = build_mst_exclude_edge(i)
+            if mst_weight_without_i > base_mst_weight:
+                critical_edges.add(edges[i][3])
+
+        # 5. pseudo-critical edges
+        # we can note that some edges might never appear in MST
+        # if i include an edge that is never part of a MST, 
+        # the value would be too big, so we don't care for those, 
+        # we only want the edges that give us value equal to base_mst_weight
+        # but this also includes critical edges, so make sure to exclude those
+
+        pseudo_critical_edges = set()
+
+        for i in range(len(edges)):
+            mst_weight_with_i = build_mst_include_edge(i)
+            if mst_weight_with_i == base_mst_weight and edges[i][3] not in critical_edges:
+                pseudo_critical_edges.add(edges[i][3])
+
+        result = []
+
+        result.append(list(critical_edges))
+        result.append(list(pseudo_critical_edges))
+        return result                
+
     def findCriticalAndPseudoCriticalEdges(self, n: int, edges: List[List[int]]) -> List[List[int]]:
         # MST, so Prim's or Kruskal but we are specifically saying some edges are pseudo-critical
         # so we need to be able to ban specific edges, thus it has to be UF and Kruskal

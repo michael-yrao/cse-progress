@@ -2,12 +2,12 @@
   "schemaVersion": 1,
   "generatedAt": "2026-09-23",
   "totals": {
-    "problems": 123,
-    "solutions": 134,
-    "reps": 597
+    "problems": 124,
+    "solutions": 135,
+    "reps": 600
   },
   "pipeline": {
-    "blank": 0,
+    "blank": 1,
     "shaky": 15,
     "clean": {
       "s0": 2,
@@ -20,14 +20,14 @@
   },
   "difficulty": {
     "Easy": 34,
-    "Medium": 89,
+    "Medium": 90,
     "Hard": 11
   },
   "streak": {
-    "current": 118,
-    "longest": 118,
-    "lastStudyDay": "2026-09-22",
-    "studyDays": 176,
+    "current": 119,
+    "longest": 119,
+    "lastStudyDay": "2026-09-23",
+    "studyDays": 177,
     "restDayAllowance": 1
   },
   "coverage": {
@@ -38,9 +38,9 @@
     "variantGaps": 3
   },
   "onSchedule": {
-    "totalActive": 134,
-    "dueToday": 1,
-    "overdue": 5
+    "totalActive": 135,
+    "dueToday": 0,
+    "overdue": 4
   },
   "trophyCase": {
     "graduated": [
@@ -2562,7 +2562,8 @@
     "2026-09-19",
     "2026-09-20",
     "2026-09-21",
-    "2026-09-22"
+    "2026-09-22",
+    "2026-09-23"
   ],
   "schedule": {
     "weekOf": "2026-09-21",
@@ -2718,10 +2719,10 @@
             "url": "https://leetcode.com/problems/find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree/",
             "tags": [],
             "kind": "rep",
-            "done": false,
-            "endComfort": null,
+            "done": true,
+            "endComfort": "🟡",
             "endNote": null,
-            "nextReview": null
+            "nextReview": "2026-10-03"
           },
           {
             "lcNumber": 846,
@@ -2734,26 +2735,26 @@
               "moved"
             ],
             "kind": "rep",
-            "done": false,
-            "endComfort": null,
+            "done": true,
+            "endComfort": "🟡",
             "endNote": null,
-            "nextReview": null
+            "nextReview": "2026-10-03"
           },
           {
             "lcNumber": 39,
             "title": "Combination Sum",
             "technique": "Backtracking",
             "startComfort": null,
-            "difficulty": null,
+            "difficulty": "Medium",
             "url": "https://leetcode.com/problems/combination-sum/",
             "tags": [
               "new"
             ],
             "kind": "new",
-            "done": false,
-            "endComfort": null,
+            "done": true,
+            "endComfort": "🔴",
             "endNote": null,
-            "nextReview": null
+            "nextReview": "2026-09-25"
           }
         ]
       },
@@ -2868,8 +2869,8 @@
       {
         "date": "2026-09-25",
         "weekday": "Friday",
-        "label": "Greedy 🟡 + Backtracking intake 2 + overdue 🟢s seated",
-        "units": 6.9,
+        "label": "over ceiling, learner-accepted Wed · Greedy 🟡 + 39 🔴 re-rep + Backtracking intake 2 + overdue 🟢s seated",
+        "units": 10.5,
         "items": [
           {
             "lcNumber": 55,
@@ -2910,6 +2911,23 @@
               "new"
             ],
             "kind": "new",
+            "done": false,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
+          },
+          {
+            "lcNumber": 39,
+            "title": "Combination Sum",
+            "technique": "Backtracking",
+            "startComfort": "🔴",
+            "difficulty": "Medium",
+            "url": "https://leetcode.com/problems/combination-sum/",
+            "tags": [
+              "protected",
+              "backfill"
+            ],
+            "kind": "rep",
             "done": false,
             "endComfort": null,
             "endNote": null,
@@ -3344,6 +3362,81 @@
     }
   ],
   "problems": [
+    {
+      "lcNumber": 39,
+      "title": "Combination Sum",
+      "url": "https://leetcode.com/problems/combination-sum/",
+      "difficulty": "Medium",
+      "category": "backtracking",
+      "comfort": "🔴",
+      "level": 0,
+      "streak": 0,
+      "nextReview": "2026-09-25",
+      "repDates": [
+        "2026-09-23"
+      ],
+      "timeline": [
+        {
+          "date": "2026-09-23",
+          "comfort": "🔴",
+          "level": 0
+        }
+      ]
+    },
+    {
+      "lcNumber": 846,
+      "title": "Hand of Straights",
+      "url": "https://leetcode.com/problems/hand-of-straights/",
+      "difficulty": "Medium",
+      "category": "greedy",
+      "comfort": "🟡",
+      "level": 1,
+      "streak": 0,
+      "nextReview": "2026-10-03",
+      "repDates": [
+        "2026-09-11",
+        "2026-09-23"
+      ],
+      "timeline": [
+        {
+          "date": "2026-09-11",
+          "comfort": "🟡",
+          "level": 1
+        },
+        {
+          "date": "2026-09-23",
+          "comfort": "🟡",
+          "level": 1
+        }
+      ]
+    },
+    {
+      "lcNumber": 1489,
+      "title": "Find Critical and Pseudo-Critical Edges in MST (Kruskal)",
+      "url": "https://leetcode.com/problems/find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree/",
+      "difficulty": "Hard",
+      "category": "graphs",
+      "comfort": "🟡",
+      "level": 1,
+      "streak": 0,
+      "nextReview": "2026-10-03",
+      "repDates": [
+        "2026-09-13",
+        "2026-09-23"
+      ],
+      "timeline": [
+        {
+          "date": "2026-09-13",
+          "comfort": "🟡",
+          "level": 1
+        },
+        {
+          "date": "2026-09-23",
+          "comfort": "🟡",
+          "level": 1
+        }
+      ]
+    },
     {
       "lcNumber": 1552,
       "title": "Magnetic Force Between Two Balls",
@@ -5091,27 +5184,6 @@
       ]
     },
     {
-      "lcNumber": 1489,
-      "title": "Find Critical and Pseudo-Critical Edges in MST (Kruskal)",
-      "url": "https://leetcode.com/problems/find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree/",
-      "difficulty": "Hard",
-      "category": "graphs",
-      "comfort": "🟡",
-      "level": 1,
-      "streak": 0,
-      "nextReview": "2026-09-23",
-      "repDates": [
-        "2026-09-13"
-      ],
-      "timeline": [
-        {
-          "date": "2026-09-13",
-          "comfort": "🟡",
-          "level": 1
-        }
-      ]
-    },
-    {
       "lcNumber": 56,
       "title": "Merge Intervals",
       "url": "https://leetcode.com/problems/merge-intervals/",
@@ -5213,27 +5285,6 @@
           "date": "2026-09-11",
           "comfort": "🟢",
           "level": 2
-        }
-      ]
-    },
-    {
-      "lcNumber": 846,
-      "title": "Hand of Straights",
-      "url": "https://leetcode.com/problems/hand-of-straights/",
-      "difficulty": "Medium",
-      "category": "greedy",
-      "comfort": "🟡",
-      "level": 1,
-      "streak": 0,
-      "nextReview": "2026-09-21",
-      "repDates": [
-        "2026-09-11"
-      ],
-      "timeline": [
-        {
-          "date": "2026-09-11",
-          "comfort": "🟡",
-          "level": 1
         }
       ]
     },

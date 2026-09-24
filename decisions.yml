@@ -879,3 +879,28 @@ decisions:
       glyph/Next date are parsed only for the comfort timeline and never exposed on the board. See
       `dashboard/progress.schema.json`, `scripts/gamify.py`, `.claude/memory/project_gamification.md`.
     affects: [gamification, scheduling]
+
+  - id: rating-ignores-complexity
+    date: 2026-09-23
+    summary: >-
+      The comfort rating no longer considers complexity AT ALL. The complexity gate itself is
+      unchanged — the coach still asks the learner for time AND space, each with an itemized
+      why-clause, before every rating (rating_gate.py unchanged). What changes is the consequence: a
+      wrong, prompted, or taught Big-O bound never lowers or caps the rating, on any rep. Rating is
+      judged on recognition + code only. Every complexity miss is still corrected, carded in
+      complexity_gotchas.md, and queued into the end-of-week complexity cleanup, which re-asks it
+      cold on the existing code — only the rating consequence is gone. SUPERSEDES the clean-code-only
+      scope of `complexity-cleanup-formalized` (Sep 3, 2026): that waiver applied only when
+      recognition AND code were clean off a blank page, and its scope sentence ("if the code needed a
+      real fix, the normal freebie→🟡 cap stands") is now wrong. A real CODE fix still affects the
+      rating through the code criterion; the complexity miss itself never does, whether or not the
+      code also needed a fix. Retires rule 2's freebie/repeat-🟡 cap in complexity_gotchas.md as a
+      rating mechanism (the ledger stays, now tracking category transfer only). Learner: "Rating
+      should ignore Big-O going forward — we will be doing the complexity gate at end of the week to
+      clear them up as we go." No `cse.config.yml` value changed. Strands: "correct complexity" as a
+      🟢 criterion; a complexity miss capping a rating; "clean code + Big-O miss" as the waiver's
+      scope (now every rep). See CLAUDE.md gate 1, `SKILL.md` §2/§3, `review-workflow.md` step 1,
+      `spaced-repetition.md`, `weekly-build.md`, `complexity_gotchas.md`,
+      `.claude/memory/feedback_ask_complexity.md`.
+    supersedes: [complexity-cleanup-formalized]
+    affects: [complexity_gate, ratings, complexity_gotchas, feedback_ask_complexity, weekly_closeout]

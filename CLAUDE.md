@@ -1,6 +1,6 @@
 # cse-progress
 
-<!-- reconciled: 2026-09-14 -->
+<!-- reconciled: 2026-09-23 -->
 
 This is a personal spaced-repetition practice log + coaching workflow (DSA, with a System
 Design pillar). **The coaching engine is a skill; this file carries only the always-on
@@ -33,8 +33,10 @@ Each fires unprompted; the SessionStart hook re-states them and the Stop hooks e
 them. The *how* is in the named skill reference.
 
 1. **About to propose a comfort rating?** The **complexity gate** is already overdue — time
-   AND space, each with an itemized why-clause, before the rating. (`review-workflow.md` §1;
-   enforced by `rating_gate.py`.)
+   AND space, each with an itemized why-clause, before the rating. **The rating itself ignores
+   Big-O (2026-09-23)** — a wrong, prompted, or taught complexity never lowers or caps it; every
+   miss is still carded and queued for the end-of-week complexity cleanup. (`review-workflow.md`
+   §1; enforced by `rating_gate.py`.)
 2. **Before any solution code?** The **recognition gate** — learner states shape → technique →
    the feature that picks it; you name only shape cues, never candidate techniques.
    (`review-workflow.md` §0.)

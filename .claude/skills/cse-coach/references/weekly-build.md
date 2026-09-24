@@ -1,4 +1,4 @@
-<!-- reconciled: 2026-09-20 -->
+<!-- reconciled: 2026-09-23 -->
 # End-of-week close-out & schedule build
 
 **Open this** when today is the last session of the week. **Not for** a mid-week rep (that's
@@ -20,12 +20,13 @@ week's assumptions.
 
 ## The close-out checklist
 
-- ⭐ **End-of-week complexity cleanup (Sep 3, 2026).** Read the cleanup-queue table in
+- ⭐ **End-of-week complexity cleanup (Sep 3, 2026; queue widened to every rep's misses,
+  2026-09-23).** Read the cleanup-queue table in
   [`complexity_gotchas.md`](docs/foundations/dsa/mastery/complexity_gotchas.md): for each queued
-  problem (clean code, missed Big-O — the step-1 waiver), have the learner **re-open that code and
-  re-state time + space cold, with the why**. No re-solving; only the bound. Clean → clear the row;
-  missed again → keep it queued and escalate to a proper complexity teach on that category. An
-  empty queue is a clean pass, not a skip.
+  problem — any missed Big-O, since the rating no longer considers complexity — have the learner
+  **re-open that code and re-state time + space cold, with the why**. No re-solving; only the
+  bound. Clean → clear the row; missed again → keep it queued and escalate to a proper complexity
+  teach on that category. An empty queue is a clean pass, not a skip.
 - ⭐ **Cold complexity probes — fire them at the Sunday close-out, NOT scattered across weekday warmups
   (consolidated Sep 20, 2026 — STANDING, learner's call).** ~2 probes fire **cold on any mature 🟢/🎓
   solved problem** to keep the miss-cluster categories fresh; the learner states time + space cold on
@@ -146,7 +147,8 @@ never price a day already underway that way (use `--schedule-day`). Full budget 
 `effort-budget.md`. Coverage / which technique to pull: `technique-coverage.md`.
 
 full rule: [`complexity_gotchas.md`](docs/foundations/dsa/mastery/complexity_gotchas.md);
-`decisions.yml` `complexity-cleanup-formalized`, `complexity-probe-drill`, `technique-comfort-audit`;
+`decisions.yml` `complexity-cleanup-formalized`, `rating-ignores-complexity`,
+`complexity-probe-drill`, `technique-comfort-audit`;
 [`feedback_end_of_week_schedule.md`](.claude/memory/feedback_end_of_week_schedule.md),
 [`feedback_concept_primer.md`](.claude/memory/feedback_concept_primer.md),
 [`feedback_unseen_on_non_sd_days.md`](.claude/memory/feedback_unseen_on_non_sd_days.md).

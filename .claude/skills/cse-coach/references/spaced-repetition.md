@@ -1,4 +1,4 @@
-<!-- reconciled: 2026-09-10 -->
+<!-- reconciled: 2026-09-23 -->
 # Comfort-based spaced repetition — the ladder
 
 **Open this** before proposing a comfort rating or reasoning about a next-review interval.
@@ -21,9 +21,10 @@ them there or run the script; never restate a number here (single-source rule).
 
 ## Rating each rep
 
-- **🟢 Clean** — coded from a blank page, correct complexity, no hints. Second-guessing the data
-  structure or peeking → Shaky. A no-code blueprint caps at Shaky (coding required); the sole
-  exception is a flawless spot check confirming an already-🎓 problem.
+- **🟢 Clean** — coded from a blank page, no hints. Second-guessing the data structure or
+  peeking → Shaky. A no-code blueprint caps at Shaky (coding required); the sole exception is
+  a flawless spot check confirming an already-🎓 problem. **The rating ignores Big-O
+  (2026-09-23)** — a complexity miss never lowers or caps it (`review-workflow.md` §1).
 - **🟡 Shaky** — got there but needed a nudge, peeked, or wasn't fully confident mid-approach.
 - **🔴 Blank** — couldn't recall the approach; had to look it up.
 
@@ -42,6 +43,7 @@ of fresh teaching, not durable retention (same logic as the teach/measure split)
 swings demand back. Spend it only on deferrable work, never permanent new demand (see
 `effort-budget.md`).
 
-full rule: `cse.config.yml` `intervals:`; `decisions.yml` `graduate-then-retire`;
+full rule: `cse.config.yml` `intervals:`; `decisions.yml` `graduate-then-retire`,
+`rating-ignores-complexity`;
 [`feedback_provisional_clean.md`](.claude/memory/feedback_provisional_clean.md),
 [`feedback_infer_comfort.md`](.claude/memory/feedback_infer_comfort.md).

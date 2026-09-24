@@ -1,4 +1,4 @@
-<!-- reconciled: 2026-09-11 -->
+<!-- reconciled: 2026-09-23 -->
 # LeetCode review workflow — gate detail
 
 **Open this** for any problem discussion (solving, reviewing, or the learner mentioning a
@@ -46,24 +46,26 @@ full rule: [`recognition_gotchas.md`](docs/foundations/dsa/mastery/recognition_g
 Ask for **time AND space, each with an itemized why-clause** ("O(1), one fixed 26-array" — not
 a bare "O(1)"); don't move on until they answer or explicitly pass.
 
-- **It exists because its absence is a silent failure.** "Correct complexity" is a 🟢 criterion
-  (step 4), so a rating proposed without it rests on an unchecked premise and the learner
-  confirms on incomplete information — nothing looks wrong afterwards. (Missed Aug 2, 2026 on
-  211; the learner had to ask *"you never asked the time/space complexity here"*.)
+- **It exists to surface the miss, not to gate the rating.** The rating no longer considers
+  complexity at all (2026-09-23) — asking is still mandatory because it's the only way a miss
+  gets caught, carded, and queued for the end-of-week cleanup, and because volunteering it
+  unprompted is the interview habit being trained. Skipping the ask still leaves the learner
+  confirming on incomplete information — the miss just goes uncaught, not uncapped. (Missed
+  Aug 2, 2026 on 211; the learner had to ask *"you never asked the time/space complexity
+  here"*.)
 - **It fires on the rep, not the ritual.** A session arriving as "what's wrong with my code"
   with no scaffold or kickoff is still a rep. If you're about to propose a rating, it's overdue.
-- ⭐ **Clean code + a Big-O miss does NOT cap the rating (Sep 3, 2026).** When **recognition AND
-  code were clean off a blank page** and the *only* miss was a complexity bound, rate on the
-  code (a clean rep is 🟢) and **do not apply the freebie/repeat-🟡 cap** — re-repping clean code
-  to re-ask its Big-O is churn. Instead **queue the missed bound in the end-of-week complexity
-  cleanup**, re-asked cold at the close-out (`weekly-build.md`). Scope is exactly *clean code +
-  Big-O miss*; if the code needed a real fix, the normal freebie→🟡 cap stands. Always still
-  correct the miss and ledger it — the waiver moves the *rating consequence* and *re-test
-  timing*, never whether the concept is tested.
+- ⭐ **A Big-O miss never caps the rating (generalized 2026-09-23; supersedes the Sep 3, 2026
+  clean-code-only waiver).** Rate on recognition + code only. A wrong, prompted, or
+  taught complexity bound — on any rep, not just a clean one — never lowers or caps the
+  rating. Always still correct the miss and ledger it, then **queue the missed bound in the
+  end-of-week complexity cleanup**, re-asked cold at the close-out (`weekly-build.md`). A real
+  fix to the *code* can still affect the rating through the code criterion — that's the code
+  being shaky, not the complexity miss capping it.
 
 full rule: [`complexity_gotchas.md`](docs/foundations/dsa/mastery/complexity_gotchas.md),
 [`feedback_ask_complexity.md`](.claude/memory/feedback_ask_complexity.md); `decisions.yml`
-`complexity-cleanup-formalized`.
+`complexity-cleanup-formalized`, `rating-ignores-complexity`.
 
 ## Step 2 — Stuck? Read their solution file before hinting
 

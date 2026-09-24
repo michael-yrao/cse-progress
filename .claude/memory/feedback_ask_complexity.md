@@ -3,7 +3,7 @@ name: feedback_ask_complexity
 description: after a problem is coded, ASK the learner for time & space complexity before rating — don't state it for them
 metadata:
   type: feedback
-reconciled: 2026-09-20
+reconciled: 2026-09-23
 ---
 
 After a problem is done, **ask the learner to state the time and space complexity themselves**
@@ -25,14 +25,18 @@ enforced through the interval engine (the only real lever) via two rules:
    surfaces the miss; a bare symbol hides it. Don't log any rep until they've answered (or explicitly
    passed). This supersedes the softer "ask for complexity" wording above.
 
-2. **Per-problem freebie, then it counts:** the **first** complexity miss on a given problem →
-   correct it + add it to [`complexity_gotchas.md`](../../docs/foundations/dsa/mastery/complexity_gotchas.md),
-   **no rating hit**. A **repeat** complexity miss on the **same problem** (a later rep) → **caps that
-   rep at 🟡**. The gotchas card doubles as the ledger: **if the problem is already on the card, its
-   freebie is spent** → the next miss drops it. The gate and the correction+card entry always happen;
-   the freebie only governs the *rating consequence*.
+2. **Per-problem freebie, then it counts** *(superseded 2026-09-23 — see the dated section at the
+   bottom of this file; the freebie/cap mechanism below no longer governs the rating)*: the **first**
+   complexity miss on a given problem → correct it + add it to
+   [`complexity_gotchas.md`](../../docs/foundations/dsa/mastery/complexity_gotchas.md), **no rating
+   hit**. A **repeat** complexity miss on the **same problem** (a later rep) → **caps that rep at 🟡**.
+   The gotchas card doubles as the ledger: **if the problem is already on the card, its freebie is
+   spent** → the next miss drops it. The gate and the correction+card entry always happen; the freebie
+   only governs the *rating consequence*.
 
-⚠️ **READ THE LEDGER BEFORE PROPOSING THE RATING — not after (promoted 2026-08-23, 2 occurrences).**
+⚠️ **READ THE LEDGER BEFORE PROPOSING THE RATING — not after (promoted 2026-08-23, 2 occurrences;
+superseded 2026-09-23 — the ledger no longer decides a rating consequence, kept for the history it
+documents).**
 The freebie rule above only works if its input is read *first*. Twice the rating was proposed and *then*
 the ledger checked, once in each direction: **2026-08-22** on 15 — proposed 🟡 (miss caps) when the
 freebie was **unspent** → should have been 🟢; **2026-08-23** on 567 — proposed 🟢 s2 when the freebie was
@@ -119,16 +123,21 @@ Candidate 1 (a fixed historical tag) was not needed and is not implemented.
 
 ---
 
-## ⭐ Clean code + Big-O miss → don't cap; drill it end-of-week (formalized Sep 3, 2026)
+## ⭐ Clean code + Big-O miss → don't cap; drill it end-of-week (formalized Sep 3, 2026; generalized
+to every rep 2026-09-23 — see the dated section at the bottom of this file)
 
 **Normative sentence lives in CLAUDE.md** (LeetCode Review Workflow step 1) and the rule table in
 `complexity_gotchas.md` (rule 4 + the cleanup queue). This is the why + the history.
 
-**The rule:** when **recognition AND code were clean off a blank page** and the *only* miss was a
-complexity bound, the miss **does not cap** the comfort rating (rate on the code — a clean rep is 🟢),
-and the missed bound is **queued for an end-of-week complexity cleanup** where it is re-asked cold on
-the *existing* code. Supersedes the freebie→repeat-🟡 cap (rule 2) for this case only. If the code
-itself needed a real fix, the normal cap stands.
+**The rule as it stood Sep 3–22, 2026:** when **recognition AND code were clean off a blank page** and
+the *only* miss was a complexity bound, the miss **does not cap** the comfort rating (rate on the code
+— a clean rep is 🟢), and the missed bound is **queued for an end-of-week complexity cleanup** where it
+is re-asked cold on the *existing* code. Supersedes the freebie→repeat-🟡 cap (rule 2) for this case
+only. If the code itself needed a real fix, that fix still affects the rating — but through the code
+criterion, never because a complexity miss rode alongside it.
+**2026-09-23: the scope condition above is retired** — see the dated section at the bottom of this
+file. A real code fix still affects the rating through the code criterion; a complexity miss never
+does, on any rep, clean or not.
 
 **Why (learner, Sep 3, 2026):** *"we do an end of week cleanup for clean code and big O misses only …
 the agent can ask the user to look at the code and explain the bounds again at end of the week for
@@ -160,3 +169,31 @@ is clean authoring, so the clean-code waiver (rule 4) still holds and it does **
 feature is **who surfaced it + whether logic changed**: self-caught & logic-unchanged → clean; coach-/test-
 surfaced or an algorithm-altering fix → a real fix (→ 🟡, waiver broken). Operational home: rule 4 scope in
 `complexity_gotchas.md`; `decisions.yml` `typo-self-fix-not-a-real-fix`.
+
+---
+
+## ⭐ 2026-09-23 — the rating ignores Big-O entirely; the clean-code waiver above generalizes to every rep
+
+**Learner's call:** *"Rating should ignore Big-O going forward — we will be doing the complexity gate at
+end of the week to clear them up as we go."*
+
+**What changed.** The complexity gate itself is unchanged — the coach still asks for time AND space,
+each with an itemized why-clause, before every rating (rule 1 above; `rating_gate.py` unchanged). What
+changed is the *consequence*: a wrong, prompted, or taught complexity bound **never** lowers or caps the
+comfort rating, on any rep — not just a clean one. This retires rule 2's freebie/repeat-🟡 cap and lifts
+the Sep 3, 2026 clean-code scope condition on the waiver above (*"if the code needed a real fix, the
+normal cap stands"*) — that clause is now wrong and superseded. A real fix to the **code** still affects
+the rating, but through the ordinary code criterion (a rep that needed a real fix isn't clean), never
+because a complexity miss happened to ride alongside it.
+
+**What stays.** Every miss — wrong, prompted, or taught — is still corrected in the moment, still added
+to [`complexity_gotchas.md`](../../docs/foundations/dsa/mastery/complexity_gotchas.md), and still queued
+into the end-of-week complexity cleanup (`weekly-build.md`), which re-asks it cold on the existing code.
+The gate, the correction, and the card all still happen every time; only the rating consequence is gone.
+
+**Why:** the Sep 3 policy already established that the code rep and the complexity concept are different
+units of learning, and decoupled them for the clean-code case. This removes the remaining special case —
+whether the code also needed a fix was never really about whether the *complexity* concept had been
+tested, so gating the complexity waiver on the code's cleanliness was mixing two separate judgments.
+Testing complexity happens uniformly, off-rep, at the weekly cleanup; testing code happens on the rep, via
+the code criterion. See `decisions.yml` `rating-ignores-complexity` (supersedes `complexity-cleanup-formalized`'s clean-code-only scope).

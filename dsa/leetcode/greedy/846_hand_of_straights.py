@@ -27,6 +27,43 @@ from typing import List, Optional
 
 
 class Solution:
+
+    # ── Attempt · 2026-09-23 ──────────────
+    def isNStraightHand_20260923(self, hand: List[int], groupSize: int) -> bool:
+        # we can use freqMap here
+        # and go from lowest number up
+        # but map doesn't keep order, so how do we do this properly
+        # let's sort to get the smallest number possible
+
+        hand.sort()
+
+        freqMap = Counter(hand)
+
+        def markSequence(start):
+            for i in range(start, start+groupSize):
+                # if next number does not exist, return False
+                if i not in freqMap or freqMap[i] == 0:
+                    return False
+                freqMap[i]-=1
+            return True
+
+        i = 0
+        while i < len(hand):
+            # if hand[i] is not 0 in freqMap, it is a start of a sequence
+            # so we check if the sequence is of groupSize
+            if freqMap[hand[i]] != 0:
+                # if we cannot make a sequence out of hand[i], return False
+                if not markSequence(hand[i]):
+                    return False
+            # now that we are out of markSequence, we can continue to the next index
+            i+=1
+        
+        for key,value in freqMap.items():
+            if value != 0:
+                return False
+        
+        return True
+
     # ── Attempt 1 · 2026-09-11 ────────────────────────────────────────────
     def isNStraightHand(self, hand: List[int], groupSize: int) -> bool:
         # first thought of longest consecutive sequence

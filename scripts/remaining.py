@@ -80,9 +80,11 @@ def unstruck_numbers(schedule: Path, label: str) -> list[str] | None:
     found_block = False
     numbers: list[str] = []
     for line in lines:
-        if DAY_HEADER.search(line):
-            # A new day-block starts. We're in ours only if this header names our date.
-            in_block = label in line
+        header = DAY_HEADER.search(line)
+        if header:
+            # A new day-block starts. We're in ours only if its bold date names our date —
+            # not free text later in the header (a note citing "Sep 23" once matched Fri).
+            in_block = re.search(rf"\b{re.escape(label)}\b", header.group(0)) is not None
             if in_block:
                 found_block = True
             continue

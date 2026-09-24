@@ -66,14 +66,17 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/dsa/mastery/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **123+6** problems &nbsp;·&nbsp; **134+6** solutions &nbsp;·&nbsp; **597+6** reps
+> **124+6** problems &nbsp;·&nbsp; **135+6** solutions &nbsp;·&nbsp; **600+6** reps
 
 | | 🏆 Retired | 🎓 Graduated | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|:---:|
-| **Solutions** | 0 | 20 | 99 | 15 | 0 |
+| **Solutions** | 0 | 20 | 99 | 15 | 1 |
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Rep Date | Rep Dates |
 |---|---|---|---|---|---|---|
+| Medium | [39. Combination Sum](https://leetcode.com/problems/combination-sum/) | 🔴 | 0 | 2026-09-25 | 2026-09-23 | 2026-09-23 |
+| Medium | [846. Hand of Straights](https://leetcode.com/problems/hand-of-straights/) | 🟡 | 0 | 2026-10-03 | 2026-09-23 | 2026-09-11, 2026-09-23 |
+| Hard | [1489. Find Critical and Pseudo-Critical Edges in MST (Kruskal)](https://leetcode.com/problems/find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree/) | 🟡 | 0 | 2026-10-03 | 2026-09-23 | 2026-09-13, 2026-09-23 |
 | Medium | [1552. Magnetic Force Between Two Balls](https://leetcode.com/problems/magnetic-force-between-two-balls/) | 🟡 | 0 | 2026-10-02 | 2026-09-22 | 2026-09-20, 2026-09-22 |
 | Medium | [424. Longest Repeating Character Replacement](https://leetcode.com/problems/longest-repeating-character-replacement/) | 🟢 | 1 | 2026-10-22 | 2026-09-22 | 2026-04-19, 2026-07-02, 2026-07-10, 2026-07-17, 2026-07-27, 2026-08-28, 2026-08-31, 2026-09-10, 2026-09-12, 2026-09-22 |
 | Medium | [743. Network Delay Time (Dijkstra — min-heap)](https://leetcode.com/problems/network-delay-time/) | 🟢 | 1 | 2026-10-22 | 2026-09-22 | 2026-07-15, 2026-07-25, 2026-08-04, 2026-08-14, 2026-08-24, 2026-09-03, 2026-09-12, 2026-09-22 |
@@ -114,11 +117,9 @@ Notes for future agents:
 | Easy | [226. Invert Binary Tree](https://leetcode.com/problems/invert-binary-tree/) | 🎓 | 3 | 2027-03-13 | 2026-09-14 | 2026-04-30, 2026-05-26, 2026-06-25, 2026-07-20, 2026-09-14 |
 | Medium | [162. Find Peak Element](https://leetcode.com/problems/find-peak-element/) | 🎓 | 3 | 2027-03-13 | 2026-09-14 | 2026-05-02, 2026-06-12, 2026-06-13, 2026-07-16, 2026-09-14 |
 | Medium | [207. Course Schedule I](https://leetcode.com/problems/course-schedule/) | 🎓 | 3 | 2027-03-13 | 2026-09-14 | 2026-06-08, 2026-06-12, 2026-06-13, 2026-07-16, 2026-09-14 |
-| Hard | [1489. Find Critical and Pseudo-Critical Edges in MST (Kruskal)](https://leetcode.com/problems/find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree/) | 🟡 | 0 | 2026-09-23 | 2026-09-13 | 2026-09-13 |
 | Medium | [56. Merge Intervals](https://leetcode.com/problems/merge-intervals/) | 🟢 | 1 | 2026-10-13 | 2026-09-13 | 2026-08-24, 2026-09-03, 2026-09-13 |
 | Medium | [167. Two Sum II](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/) | 🎓 | 3 | 2027-03-11 | 2026-09-12 | 2026-01-19, 2026-07-14, 2026-09-12 |
 | Hard | [239. Sliding Window Maximum](https://leetcode.com/problems/sliding-window-maximum/) | 🟢 | 1 | 2026-10-11 | 2026-09-11 | 2026-08-20, 2026-08-22, 2026-09-01, 2026-09-11 |
-| Medium | [846. Hand of Straights](https://leetcode.com/problems/hand-of-straights/) | 🟡 | 0 | 2026-09-21 | 2026-09-11 | 2026-09-11 |
 | Hard | [332. Reconstruct Itinerary (min-heap ordering)](https://leetcode.com/problems/reconstruct-itinerary/) | 🟢 | 1 | 2026-10-10 | 2026-09-10 | 2026-07-22, 2026-07-28, 2026-08-04, 2026-08-29, 2026-08-31, 2026-09-10 |
 | Medium | [133. Clone Graph](https://leetcode.com/problems/clone-graph/) | 🟢 | 1 | 2026-10-08 | 2026-09-08 | 2026-06-04, 2026-06-05, 2026-06-07, 2026-08-09, 2026-08-19, 2026-08-29, 2026-09-08 |
 | Medium | [57. Insert Interval](https://leetcode.com/problems/insert-interval/) | 🟢 | 1 | 2026-10-07 | 2026-09-07 | 2026-08-26, 2026-08-28, 2026-09-07 |

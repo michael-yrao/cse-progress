@@ -112,7 +112,7 @@ For problems marked **Easy**, the no-code rule is lifted:
 
 * **During warmup**: Code the solution directly. Target **2 easy problems per 15-minute slot** (~7 min each). If you finish the first and still have time, pull the next Easy from the backlog immediately — do not stop at one.
 * **During the active block**: Target **2 easy problems per session** instead of 1. Use the time saved to run the Speed Demon Protocol (edge cases + alternative solutions) on at least one of them.
-* **Comfort bar is the same**: Easy does not lower the standard. Both problems must be completable from a blank page with correct complexity to log 🟢 Clean.
+* **Comfort bar is the same**: Easy does not lower the standard. Both problems must be completable from a blank page, no hints, to log 🟢 Clean (the rating ignores Big-O — see `spaced-repetition.md`).
 
 ---
 
@@ -223,7 +223,7 @@ The 15-minute daily maintenance flashcard keeps mastered patterns warm. But not 
 
 | Category status at end of Phase 1 | Phase 2 DSA approach |
 |------------------------------------|----------------------|
-| Majority Clean (solved cold, correct complexity) | 15-min flashcard only — no new problems needed |
+| Majority Clean (solved cold) | 15-min flashcard only — no new problems needed |
 | Majority Shaky/Blank | Continue 1 new problem per week in that category during the weekday active block, alongside design work |
 | Backlog spikes above 5 overdue | Pause design block entirely. Run emergency double warmup until cleared. Same rule as Phase 1 |
 

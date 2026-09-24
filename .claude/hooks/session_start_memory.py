@@ -61,7 +61,8 @@ ALWAYS-ON GATES — each is bound to a MOMENT, not a topic. Check the trigger, n
 1. About to propose a comfort rating (green/yellow/red)? -> The COMPLEXITY GATE is already overdue.
    Time AND space, each with an itemized why-clause, from the learner, BEFORE the rating. It fires on
    the rep, not the ritual: "what's wrong with my code" with no scaffold and no kickoff is still a rep.
-   Step 1 of CLAUDE.md's LeetCode Review Workflow. (Skipped entirely 2026-08-02.)
+   Step 1 of CLAUDE.md's LeetCode Review Workflow. (Skipped entirely 2026-08-02.) The RATING ignores
+   Big-O (2026-09-23): a miss never lowers or caps it, only feeds the end-of-week cleanup.
 2. Something you did just got corrected — by the learner OR by you, unprompted? -> Append a dated entry
    to .claude/memory/self_eval_log.md IN THE SAME TURN. A sentence in chat is not a fix; it dies with
    the context window. (Caught-then-not-logged 2026-08-02.)
