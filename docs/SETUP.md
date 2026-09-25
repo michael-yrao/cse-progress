@@ -146,3 +146,16 @@ whole point.
 
 If the token cost bites, drop `compact` from the fire list first — startup/resume/clear are the
 load-bearing ones.
+
+## 5. The global-layer canary
+
+`.claude/hooks/global_layer_canary.py`, called from `session_start_memory.py` on every fire,
+checks that the machine actually has the global enforcement layer: `~/.claude`'s
+rules/agents/hooks files exist, `settings.json` wires the pyramid hooks in, `~/.claude` is a
+real dotfiles checkout, and this repo's `core.hooksPath` is `.githooks`. A
+`!! GLOBAL LAYER CHECK FAILED` banner at session start means one or more of those is missing —
+the tech-lead/team-lead/engineer pyramid in `execution-workflow.md` is silently unenforced
+until it's fixed, which is exactly what happened on a Mac that ran for days with no global
+layer and no warning. The fix it names is a clone of the dotfiles repo followed by
+`python <clone>/bootstrap.py --repos-dir <this repo's parent>` on a fresh machine, plus `git config core.hooksPath .githooks` in this repo if that part
+is what's missing.

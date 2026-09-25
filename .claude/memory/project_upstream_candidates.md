@@ -16,6 +16,38 @@ evidence.
 
 ---
 
+## ✅ SHIPPED Sep 23, 2026 (`cse-coach` v0.6.0)
+
+**Went up:**
+
+- The `/learn` cheat-sheet contract — all 18 re-headed technique docs, `scripts/build_cheatsheets.py` +
+  `scripts/check_cheatsheets.py` + `scripts/test_build_cheatsheets.py` + `scripts/fixtures/{cheat-sheets.schema.json,cheat-sheets.seed.json}`, the `techniques.yml` `doc:`/`tier:` schema (plus the
+  DP-framework-lenses and Tier 1/2/3 zero-problem vocabulary blocks), and `check_cheatsheets.py --check`
+  wired blocking (not report-only) in canonical's pre-commit, matching this repo's Sep 23 promotion.
+  `coach_sync.ENGINE_PATHS` gained `scripts/fixtures/*.json` — it was invisible to sync until named,
+  the same failure shape as `decisions.yml` before it.
+- The gamify end-status fields: `endComfort`/`endNote`/`nextReview` on the schedule-item contract
+  (`dashboard/progress.schema.json`, `scripts/gamify.py`'s `_end_glyph()` + `_schedule_item_outcome()`).
+- `links.resolve_title_url()` (header-over-tracker precedence, extracted out of `link_line()`).
+- `decisions.yml` entries `learn-cheatsheet-contract-sep22` and `schedule-item-end-status-sep23`
+  (genericized: the cheat-sheet entry's plan-doc citations reworded to point at
+  `build_cheatsheets.py`'s own docstring instead of this repo's `docs/cse-coach/learn_cheatsheet_plan.md`).
+
+**Declined:** the grounded-solutions showcase tooling (`scripts/export_showcase.py`,
+`scripts/showcase_candidates.py`, `scripts/test_showcase.py`, the matching pre-commit block, and
+`decisions.yml`'s `showcase-contract` entry) — a display concern of progressiveoverflow.com's
+visualizers, not the engine. Recorded with its reason in canonical's `.coach-sync/declined.md`.
+
+**Two latent sync holes found and closed this round** (same shape as the `decisions.yml`/Aug 17 gap
+above — an artifact invisible to sync until someone names it): `techniques.yml`'s SCHEMA
+(`doc:`/`tier:` vocabulary) had been drifting silently since Sep 21 because the file sits outside
+`ENGINE_PATHS` by design (it's learner-owned) and nothing flagged its schema half as needing a manual
+sync pass; and `scripts/fixtures/` itself was unnamed in `ENGINE_PATHS`, so its `.json` files were
+invisible in both directions. Both are now called out explicitly in canonical's `.coach-sync/declined.md`
+and `coach_sync.py`.
+
+**Bookkeeping:** `v0.5.0` was never tagged on `cse-coach` and is being tagged retroactively alongside
+this round's `v0.6.0`.
 
 ## 📤 Triage — Aug 17, 2026 (20 candidates)
 
