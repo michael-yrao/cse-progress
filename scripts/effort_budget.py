@@ -68,7 +68,7 @@ SCHEDULES = REPO / "docs/foundations/schedules"
 # A day header in a weekly schedule: "| ▸ **Tue Aug 18** · 8.0 units |  |  |  |  |"
 DAY_HEADER = re.compile(
     r"\|\s*▸\s*\*\*(?P<wd>\w{3})\s+(?P<mon>\w{3})\s+(?P<day>\d{1,2})\*\*"
-    r"(?:[^|]*?·\s*(?P<units>[\d.]+)\s*units)?"
+    r"(?:[^|]*?·\s*~?\s*(?P<units>[\d.]+)\s*units)?"  # `~` = an approximate price, still a price
 )
 # Any 5-column row of the daily table.
 SCHED_ROW = re.compile(r"^\|(?P<c1>[^|]*)\|(?P<c2>[^|]*)\|(?P<c3>[^|]*)\|(?P<c4>[^|]*)\|(?P<c5>.*)\|\s*$")

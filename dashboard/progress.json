@@ -4,18 +4,18 @@
   "totals": {
     "problems": 124,
     "solutions": 135,
-    "reps": 601
+    "reps": 606
   },
   "pipeline": {
-    "blank": 2,
+    "blank": 1,
     "shaky": 14,
     "clean": {
-      "s0": 2,
-      "s1": 29,
+      "s0": 3,
+      "s1": 28,
       "s2plus": 68,
       "total": 99
     },
-    "graduated": 20,
+    "graduated": 21,
     "retired": 0
   },
   "difficulty": {
@@ -24,10 +24,10 @@
     "Hard": 11
   },
   "streak": {
-    "current": 120,
-    "longest": 120,
-    "lastStudyDay": "2026-09-24",
-    "studyDays": 178,
+    "current": 121,
+    "longest": 121,
+    "lastStudyDay": "2026-09-25",
+    "studyDays": 179,
     "restDayAllowance": 1
   },
   "coverage": {
@@ -39,8 +39,8 @@
   },
   "onSchedule": {
     "totalActive": 135,
-    "dueToday": 3,
-    "overdue": 10
+    "dueToday": 0,
+    "overdue": 8
   },
   "trophyCase": {
     "graduated": [
@@ -883,6 +883,52 @@
           },
           {
             "date": "2026-07-29",
+            "comfort": "🎓",
+            "level": 3
+          }
+        ]
+      },
+      {
+        "lcNumber": 104,
+        "title": "Maximum Depth of Binary Tree",
+        "url": "https://leetcode.com/problems/maximum-depth-of-binary-tree/",
+        "file": "dsa/leetcode/trees/104_max_depth_of_binary_tree.py",
+        "difficulty": "Easy",
+        "category": "trees",
+        "comfort": "🎓",
+        "level": 3,
+        "streak": 3,
+        "nextReview": "2027-03-24",
+        "repDates": [
+          "2026-04-30",
+          "2026-05-27",
+          "2026-06-27",
+          "2026-07-27",
+          "2026-09-25"
+        ],
+        "timeline": [
+          {
+            "date": "2026-04-30",
+            "comfort": null,
+            "level": null
+          },
+          {
+            "date": "2026-05-27",
+            "comfort": null,
+            "level": null
+          },
+          {
+            "date": "2026-06-27",
+            "comfort": null,
+            "level": null
+          },
+          {
+            "date": "2026-07-27",
+            "comfort": null,
+            "level": null
+          },
+          {
+            "date": "2026-09-25",
             "comfort": "🎓",
             "level": 3
           }
@@ -2584,7 +2630,8 @@
     "2026-09-21",
     "2026-09-22",
     "2026-09-23",
-    "2026-09-24"
+    "2026-09-24",
+    "2026-09-25"
   ],
   "schedule": {
     "weekOf": "2026-09-21",
@@ -2900,10 +2947,10 @@
               "variant"
             ],
             "kind": "rep",
-            "done": false,
-            "endComfort": null,
+            "done": true,
+            "endComfort": "🟡",
             "endNote": null,
-            "nextReview": null
+            "nextReview": "2026-10-05"
           },
           {
             "lcNumber": 1334,
@@ -2917,10 +2964,10 @@
               "moved"
             ],
             "kind": "rep",
-            "done": false,
-            "endComfort": null,
+            "done": true,
+            "endComfort": "🟢",
             "endNote": null,
-            "nextReview": null
+            "nextReview": "2026-11-24"
           },
           {
             "lcNumber": 55,
@@ -2932,10 +2979,10 @@
             "file": "dsa/leetcode/greedy/55_jump_game.py",
             "tags": [],
             "kind": "rep",
-            "done": false,
-            "endComfort": null,
+            "done": true,
+            "endComfort": "🟡",
             "endNote": null,
-            "nextReview": null
+            "nextReview": "2026-10-05"
           },
           {
             "lcNumber": 104,
@@ -2947,10 +2994,10 @@
             "file": "dsa/leetcode/trees/104_max_depth_of_binary_tree.py",
             "tags": [],
             "kind": "rep",
-            "done": false,
-            "endComfort": null,
+            "done": true,
+            "endComfort": "🎓",
             "endNote": null,
-            "nextReview": null
+            "nextReview": "2027-03-24"
           },
           {
             "lcNumber": 46,
@@ -2982,10 +3029,10 @@
               "backfill"
             ],
             "kind": "rep",
-            "done": false,
-            "endComfort": null,
+            "done": true,
+            "endComfort": "🟢",
             "endNote": null,
-            "nextReview": null
+            "nextReview": "2026-10-05"
           },
           {
             "lcNumber": 875,
@@ -3027,7 +3074,7 @@
         "date": "2026-09-26",
         "weekday": "Saturday",
         "label": "⚠️ over ceiling since 648 🔴 re-rep landed here Sep 24; re-price at close-out · Binary Search 🟡 + greens + 🆕 1631 Dijkstra consolidation (min-over-max)",
-        "units": null,
+        "units": 11.1,
         "items": [
           {
             "lcNumber": 34,
@@ -3502,18 +3549,24 @@
       "file": "dsa/leetcode/backtracking/39_combination_sum.py",
       "difficulty": "Medium",
       "category": "backtracking",
-      "comfort": "🔴",
-      "level": 0,
+      "comfort": "🟢",
+      "level": 2,
       "streak": 0,
-      "nextReview": "2026-09-25",
+      "nextReview": "2026-10-05",
       "repDates": [
-        "2026-09-23"
+        "2026-09-23",
+        "2026-09-25"
       ],
       "timeline": [
         {
           "date": "2026-09-23",
           "comfort": "🔴",
           "level": 0
+        },
+        {
+          "date": "2026-09-25",
+          "comfort": "🟢",
+          "level": 2
         }
       ]
     },
@@ -5009,10 +5062,11 @@
       "comfort": "🟡",
       "level": 1,
       "streak": 0,
-      "nextReview": "2026-09-25",
+      "nextReview": "2026-10-05",
       "repDates": [
         "2026-09-05",
-        "2026-09-15"
+        "2026-09-15",
+        "2026-09-25"
       ],
       "timeline": [
         {
@@ -5022,6 +5076,11 @@
         },
         {
           "date": "2026-09-15",
+          "comfort": "🟡",
+          "level": 1
+        },
+        {
+          "date": "2026-09-25",
           "comfort": "🟡",
           "level": 1
         }
@@ -5129,10 +5188,11 @@
       "comfort": "🟡",
       "level": 1,
       "streak": 0,
-      "nextReview": "2026-09-24",
+      "nextReview": "2026-10-05",
       "repDates": [
         "2026-09-12",
-        "2026-09-14"
+        "2026-09-14",
+        "2026-09-25"
       ],
       "timeline": [
         {
@@ -5142,6 +5202,11 @@
         },
         {
           "date": "2026-09-14",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-09-25",
           "comfort": "🟡",
           "level": 1
         }
@@ -6558,13 +6623,14 @@
       "category": "graphs",
       "comfort": "🟢",
       "level": 2,
-      "streak": 1,
-      "nextReview": "2026-09-24",
+      "streak": 2,
+      "nextReview": "2026-11-24",
       "repDates": [
         "2026-07-31",
         "2026-08-05",
         "2026-08-15",
-        "2026-08-25"
+        "2026-08-25",
+        "2026-09-25"
       ],
       "timeline": [
         {
@@ -6584,6 +6650,11 @@
         },
         {
           "date": "2026-08-25",
+          "comfort": "🟢",
+          "level": 2
+        },
+        {
+          "date": "2026-09-25",
           "comfort": "🟢",
           "level": 2
         }
@@ -9000,15 +9071,16 @@
       "file": "dsa/leetcode/trees/104_max_depth_of_binary_tree.py",
       "difficulty": "Easy",
       "category": "trees",
-      "comfort": "🟢",
-      "level": 2,
-      "streak": 2,
-      "nextReview": "2026-09-25",
+      "comfort": "🎓",
+      "level": 3,
+      "streak": 3,
+      "nextReview": "2027-03-24",
       "repDates": [
         "2026-04-30",
         "2026-05-27",
         "2026-06-27",
-        "2026-07-27"
+        "2026-07-27",
+        "2026-09-25"
       ],
       "timeline": [
         {
@@ -9028,8 +9100,13 @@
         },
         {
           "date": "2026-07-27",
-          "comfort": "🟢",
-          "level": 2
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-09-25",
+          "comfort": "🎓",
+          "level": 3
         }
       ]
     },
