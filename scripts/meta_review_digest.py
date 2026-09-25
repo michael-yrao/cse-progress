@@ -66,6 +66,9 @@ def is_closed(body: str) -> bool:
 
 # A recurrence-family tag, either the prose form or the shorthand this script promotes.
 FAM = re.compile(r"(?:Recurrence family|fam)\s*[:=]\s*([^.\n]+)", re.IGNORECASE)
+# A fix that was written down but never made: the 2026-09-24 meta-review found 5/13 open entries in
+# this shape. Flagged so the review cannot mistake a proposal for a landed rung.
+PROPOSED_ONLY = re.compile(r"proposed,?\s+(?:but\s+)?not\s+(?:yet\s+)?(?:edited|landed|written|done|applied)", re.I)
 PRIORITY = re.compile(r"\[(P\d)\]")
 
 
@@ -137,6 +140,7 @@ def main() -> int:
     scope = "ALL open" if args.all else f"open since last meta-review ({last or 'none recorded'})"
     print(f"{len(opens)} {scope}:\n")
     fam_tally: dict[str, int] = {}
+    proposed_only = 0
     for d, b in opens:
         pr = PRIORITY.search(b)
         fam = FAM.search(b)
@@ -148,12 +152,18 @@ def main() -> int:
         line = f"  {prefix}  {summarize(b)}"
         if fam_txt:
             line += f"   ⟨fam: {fam_txt}⟩"
+        if PROPOSED_ONLY.search(b):
+            line += "   ⚠️ PROPOSED-ONLY"
+            proposed_only += 1
         print(line)
 
     dupes = {k: n for k, n in fam_tally.items() if n >= 2}
     print("\nCluster hint: group the lines above by root cause; any 2+ recurrence is a promotion.")
     if dupes:
         print("  tagged families with 2+ open: " + "; ".join(f"{k} ×{n}" for k, n in dupes.items()))
+    if proposed_only:
+        print(f"  {proposed_only} open entries PROPOSED a fix that was never landed (2026-09-24 review: "
+              "5 of 13 open entries were this shape) — land it or re-status it; a proposal is not a fix.")
     untagged = sum(1 for _, b in opens if not FAM.search(b))
     if untagged:
         print(f"  {untagged}/{len(opens)} open entries carry no fam: tag — cluster these by hand, "

@@ -5,22 +5,6 @@
 
 Append-only log of corrections. Governed by [[feedback_self_evaluation]]. Newest at top. Meta-review promotes recurring root causes into rules; entries are never deleted, only re-statused.
 
-- **2026-09-23 [P3]** fam:read-before-asserting — The site plan asserted "no spec hard-codes the 95/120
-  counts" after grepping specs for those literals, then 28 new registry entries broke 2 `today-board` tests:
-  its fixture used LC 22 as the row with NO visualizer route, and 22 gained a page. The grep answered "no
-  literal totals", not "no spec depends on registry MEMBERSHIP". Caught by my own full-suite run before
-  commit; fixed at the fixture (lcNumber 9999, commented as deliberately unregistered). Rule of thumb when
-  adding registry members: grep specs for the member keys (`lcNumber: <n>`) too, not just the totals.
-- **2026-09-20 [P2]** fam:read-before-asserting — Told the learner "cse-progress looks **private**" and built a
-  plan branch around a private-source data pipeline, inferring privacy from a *failed* `gh repo view
-  michael-yrao/cse-progress` (which failed for auth/other reasons, not visibility). The repo is PUBLIC; the
-  learner corrected it. This is [[feedback_read_before_asserting]] — a command's *failure* answers "the call
-  errored", not "the repo is private", exactly as grep answers "exists" not "what is the state". Cost: a wrong
-  premise (curate-a-public-subset-from-a-private-repo) that would have added needless cross-repo token
-  plumbing. Fix applied same turn: re-planned on the public-repo model (runtime raw fetch, no token). Cheap
-  guard for next time: confirm visibility with `gh repo view --json visibility` (and treat a non-zero exit as
-  UNKNOWN, never as a value) before asserting a repo's state to the learner.
-
 ## 🔬 META-REVIEW 2026-09-19 — the review pipeline itself got instrumented (digest + archive), plus 2 promotions
 
 Triggered by the OVERDUE banner (~14 open since the 2026-09-10 review). Run LITM-safe: clustered from
@@ -1159,25 +1143,10 @@ hook that cross-checks schedule variant tags against the tracker's due row).
 - **Also observed:** the global `execution_workflow_reminder.py` fired on "before i move forward, is this expected" — the `move` cue matched and no suppressor word was present. Second data point for the leaky-regex finding.
 - **Fix:** verified with `git status --short -uall` (8 files) + `git check-ignore` on secrets. Regex narrowing is already queued as part of the enforcement-layer work. fam: predicted-tool-output.
 
-## 2026-09-21 [P2] — Explained a resume bullet's claim as fact; learner said the claim itself was false
-**What:** Learner asked what "approval workflow" meant in the EquityZen bullet of `career/resume_draft_2026_onepage.md`. The coach explained it as a maker-checker control as if the bullet were true, adding only a trailing "only you can confirm". Learner: "not really true, that is true for RETINA, not EquityZen." The claim had sat in both drafts (one-page since Sep 4, full draft since Jun 29) and had just been carried into the new Sep 21 docx/PDF unchallenged.
-**Why it's wrong:** A resume bullet is a claim the learner must defend in an interview; the coach treated inherited text as ground truth and dressed it in a confident explanation. The right move when asked "what does X mean on my resume" is to ask whether X is actually what the tool did BEFORE explaining what a reader will infer. Same family as fabricated-evidence discipline: inherited prose is not evidence of the fact it states.
-**Fix/ladder:** First occurrence → memory-file entry. Immediate fix: stripped "approval workflow" from EquityZen in both drafts + docx + PDF, moved it to the RETINA bullet where the learner says it is true. Standing rule for resume work: every bullet edited or defended in-session gets an explicit "is this accurate?" check with the learner; do not explain a claim's meaning without first confirming the claim. fam: resume claim verification.
-
 ## 2026-09-21 [P3] — heredoc backslash collapsed twice while patching a temp trace line
 - **What:** Two consecutive Bash heredoc patches to `role_gate.py` produced a SyntaxError: the tool pipeline collapsed a doubled backslash before Python saw it, so a two-character newline escape became a real newline in the written source. Second attempt repeated the same construct. Third attempt built the token with `chr(92)` and worked.
 - **Why it matters:** the retry repeated the failing construct instead of changing it; the tests caught both, so nothing landed, but it cost two turns.
 - **Fix/ladder (memory-file tier):** when writing source through a heredoc, never rely on backslash escapes surviving — build escape sequences with `chr()` or use the Write/Edit tool. Also the moment to hand a small edit to an engineer rather than fight the pipeline inline. fam: heredoc-escape-collapse.
-
-## 2026-09-21 [P1] fam: read-before-asserting — Briefed a lead that cse-coach was "git main, clean at start"; it carried an uncommitted prior port round
-**What:** The L3 brief asserted cse-coach was clean at VERSION 0.4.1. I had run `git log` there earlier in the session but never `git status`; the working tree held six modified files and an untracked `scripts/remaining.py` from an earlier, uncommitted promotion (0.4.0 -> 0.4.1). Two of those files were on the port list. The lead caught it by running `git status` itself and re-briefed its engineers to diff against the working tree.
-**Why it's wrong:** A brief is a MECHANICAL artifact — a second agent with the same inputs should produce the same brief — and "clean" is a one-command fact I stated from memory of a different command. Same family as the 09-20 private-repo inference: a state claim inferred from adjacent evidence instead of read. Cost: nothing landed wrong (the lead verified), but a lead that trusted the brief would have reverted landed hunks.
-**Fix/ladder:** 2nd occurrence in this family within two days -> promote past memory-file. Candidate rung-3 step for the plan/brief template: every repo a brief names gets its `git status --short` pasted INTO the brief, never described. Reopen and climb to that checklist line at the next meta-review if a third lands.
-
-## 2026-09-21 [P1] fam: lead-forced-handback — All three `team-lead` agents handed back mid-flight before their engineers reported, three times in one session
-**What:** L1, L2 and L3 each spawned their two engineers in the background and then ended their turn; the harness returned a "final report" containing no diff and no verification, and each had to be resumed by message (L2 and L1 twice). Nothing was lost — resumes worked and the leads reported honestly that nothing was done — but every hand-back cost a round trip and one lead explicitly said the handback was forced, not chosen.
-**Why it matters:** The lead definition's contract is "report a consolidated diff + review notes"; a turn that ends with children still running cannot satisfy it. This is structural (the agent ends its turn when its own tool calls are exhausted), so prose in the brief ("do not hand back until both report") did not prevent it on the third try either.
-**Fix/ladder (rung 1, agent definition — lives in `~/.claude/agents/team-lead.md`, the private claude-dotfiles repo, needs its own commit):** instruct the lead to spawn engineers with `run_in_background: false` when it has nothing else to do but wait (or to spawn both in the background and then block on the first with a foreground call), so its turn cannot end before the reports exist. Until that lands, the tech lead resumes leads on each premature handback. Logged here because the evidence is in this session; the normative change goes in the agent file.
 
 ## 🔬 META-REVIEW 2026-09-21 — schedule build-drift got a source fix; the unverified-enforcement family closed same-day
 
@@ -1211,55 +1180,59 @@ each already tagged, each a first occurrence.
 **Deferred (unchanged from 09-19):** the ~80 pre-09-10 open one-offs stay deferred, optional
 batch-archiving cleanup, not mechanical. Cadence reset.
 
-## 2026-09-23 [P1] fam: lead-forced-handback — The single `team-lead` handed back three times before its engineers reported (2nd session in this family)
-**What:** One lead, two background engineers; the lead's turn ended the moment its spawns were issued, and again on each resume while the engineers were still running. Its actual review only happened on the fourth resume, after both engineers had reported to the tech lead directly. Nothing was lost; every resume cost a round trip.
-**Why it recurred:** The 09-21 entry's rung-1 fix (spawn engineers with `run_in_background: false`, or block on the first with a foreground call) was proposed but never written into `~/.claude/agents/team-lead.md` — a grep for `run_in_background`/`hand back`/`foreground` in that file finds nothing today. Prose in the brief did not prevent it, as 09-21 already predicted.
-**Fix/ladder:** 2nd session, 6 occurrences total -> the proposed rung-1 edit is now overdue, not optional: add to the team-lead agent definition "spawn engineers with `run_in_background: false` (or block on the first with a foreground call) so the turn cannot end before their reports exist". Lives in the private claude-dotfiles repo, needs its own commit; proposed to the learner in the 09-23 end-status board report. Close this entry when that edit is verified by a live spawn, per the "verified by live probe" standard.
-
-## 2026-09-23 [P2] fam: release-step-unverified — `git push --follow-tags` silently skipped a lightweight tag; caught by a post-push `ls-remote`, not by the push output
-**What:** The v0.6.0 cse-coach release ran `git tag v0.6.0` (lightweight) then `git push --follow-tags`. `--follow-tags` pushes only ANNOTATED tags, so main + the explicitly pushed v0.5.0 landed and v0.6.0 did not. The `ls-remote --tags` check I had queued anyway showed the gap; fixed with an explicit `git push origin v0.6.0`. Cost: one extra push. Risk if unchecked: exactly the failure cse-coach's CLAUDE.md warns about — an untagged release is invisible to every adopter's `update_coach.py --check`.
-**Why:** cse-coach's release recipe says `git tag v0.3.0 && git push --follow-tags`, which only works with `-a` tags; the recipe never says annotated. I followed the recipe's shape without knowing the flag's precondition.
-**Fix/ladder:** Rung 1 (source): cse-coach's CLAUDE.md "Releasing" recipe should read `git tag -a v0.x.0 -m "..."` (or `git push origin main --tags`) so the recipe cannot be followed into this gap — proposed, not yet edited (it is a canonical-repo change, next release). Standing habit that already saved it: verify a push's remote state with `ls-remote` rather than trusting the push summary. First occurrence.
-
 ## 2026-09-23 [P3] fam: hook-false-positive — `problem_link_reminder.py` SPOILER COLUMN fired on a line-number → comment-fix table, not a lineup
 **What:** On 39, the learner asked for help rewording their v2 comments. I answered with a `Line | Now | Suggested` table whose first cell was a file-line link (`[44](…39_combination_sum.py#L44)`). The Stop hook read the `.py` link in the first column as a lineup row and flagged the other columns as spoilers. There was no board and no spoiler: the table was about the learner's own comments on a problem they had already recognized. Re-emitted as a list to clear the hook.
 **Why:** The detector treats any table with a `.py` link in its first cell as a lineup. A `#L<n>` line anchor, or a numeric link text that isn't `<n> <title>`, marks a code reference, not a problem.
 **Fix/ladder:** Rung 1 (source): in `problem_link_reminder.py`, skip rows whose link carries a `#L` anchor, or whose link text doesn't match `<n> <Title>`. Proposed, not yet edited (it's hook implementation, so it goes through the engineer workflow). Until then, use lists, not tables, for line-by-line code notes. First occurrence.
 
-## 2026-09-23 [P3] fam: advance-prompt-tail — ended a resolved point with "Go ahead and code it" (846); same tail went unflagged on 39 earlier ("Go ahead and write the code")
-**What:** Twice this session a turn that settled a design question closed with a nudge to start coding. The Stop hook caught the 846 one. The 39 one ("Go ahead and write the code.") slipped past it, likely because of the wording.
-**Why:** Treated "the call is done, so coding is next" as my transition to announce. Principle 3 says the learner drives every transition.
-**Fix/ladder:** The hook already exists (rung 2). Its pattern missed "write the code", so consider widening it to "go ahead and (write|code)". Proposed, not edited. Habit: end a turn at the answer.
-
-## 2026-09-23 [P3] fam: tool-substring-match — my Fri header note "learner-accepted Sep 23" made `remaining.py` list Friday's rows as today's
-**What:** The Wed open board came back with 1489 plus Friday's rows. `unstruck_numbers` matched the date with `label in line`, so a header whose free text mentioned "Sep 23" opened a second block. I caught it myself before handing over the board.
-**Fix/ladder:** Rung 1 (source), done: the match now reads only the header's bold date, with word boundaries (`\bSep 23\b` inside `**Wed Sep 23**`). `test_remaining.py` 10/10 pass. Header reworded to "learner-accepted Wed". First occurrence.
-
 ## 2026-09-23 [P2] fam: retry-stash-leak — a 1489 retry scaffold left the prior attempt's top-level `UF` class in the file
 **What:** `new_problem.py`'s retry extract moves only what's below the new stub inside `class Solution`. 1489's prior attempt had a module-level `class UF` (union-find with `numComponents`) above `Solution`, and it stayed in view. The learner opened the file to a filled-in helper, not a blank page ("why is this file not even scaffolded"). That's a spoiler for a rep whose helper is part of the recall.
 **Fix/ladder:** Rung 1 (source), proposed: the retry extract should also stash module-level classes and functions defined between the imports and `class Solution` (and restore should put them back at module level). Needs the engineer workflow plus tests. Until then, at retry scaffold time, check for top-level helpers above `Solution`. First occurrence.
-
-## 2026-09-23 [P2] fam: advance-prompt-tail — on 1489, asked for a code check and I added a step-5 lead-in question
-**What:** The learner asked "what about now, still need to do 5". I reviewed the fix, then asked a leading question about step 5 (force the edge in, compare the weight), which walked them into the next piece. Learner: "don't push forward please, let's focus on the current task at hand." That's the second pace push today, after the "go ahead and code it" on 846.
-**Why:** Read "still need to do 5" as a request for help on 5. It was a status note. The request was the check.
-**Fix/ladder:** Second occurrence today, so the prose habit isn't holding. Rung 2 candidate: widen the Stop hook's advance-tail detector to catch a trailing question that opens the next unit of work after a requested review. Proposed, not edited. Habit now: answer exactly the check asked for, and stop.
+**2nd occurrence 2026-09-24 (648 — `class TrieNode` above `Solution` stayed in view at kickoff; noticed and named to the learner, not silent).** Promotion due → source fix; plan + interim step recorded in the 2026-09-24 meta-review; interim check line added to `retry-and-restore.md`. (status: open — lands via the engineer workflow once the learner approves the plan.)
 
 ## 2026-09-23 [P3] fam: constraint-unapplied-complexity — on 1489, I gave O(E·(E+V)) and "you missed the V", but the problem guarantees a connected graph (E ≥ V−1)
 **What:** I corrected the learner's O(E²) to O(E·(E+V)) and space O(E) to O(E+V). They asked why V. Explaining it, I saw that connectivity absorbs V, so their bounds were right. My extra V term was a loose correction presented as their miss.
 **Why:** Priced the per-build `UF(n)` init without applying the problem's constraints. That's the same "analyze against the GIVEN constraint" lesson the 424 ledger row teaches the learner.
 **Fix/ladder:** Habit (rung 4): before correcting a bound, apply the problem's constraints to both the learner's bound and mine. First occurrence. The complexity card for 1489 records only the real miss (the 2E+1 build count).
 
-## 2026-09-23 [P2] fam: resume claim verification — the Sep 21 one-pager shipped a "99% accuracy bar" that was never the gate
-**What:** Learner: "the 99% accuracy bar is wrong, it is 70% standard F1 score but heavily skewed towards precision with a 100% groundedness." The figure went into `career/resume_draft_2026_onepage.md` and the Sep 21 docx/PDF (commit `48f21fc`) without an explicit "is this number right?" check, two days after the approval-workflow entry set exactly that rule.
-**Why:** The Sep 21 rule lived only as a sentence inside a log entry, which is the coldest tier there is. A number in a resume is a claim the learner defends live; a wrong one is worse than none.
-**Fix/ladder:** Second occurrence in three days → promoted to its own memory file, [`feedback_resume_claims.md`](feedback_resume_claims.md), with a pre-build checklist (every number/claim touched in-session gets a yes from the learner before the docx/PDF is rendered). Immediate fix: bullet rewritten to the F1 + groundedness gate, "GA" wording per the learner, new Sep 23 docx/PDF. This session ran the check for the Podman claim before writing it.
+## 🔬 META-REVIEW 2026-09-24 — five proposed fixes had never been made; four landed tonight, the fifth (retry-stash-leak) needs a plan approval
 
-## 2026-09-23 [P3] fam: resume claim verification — the pre-build check caught a third inherited overclaim ("zero accounting discrepancies at cutover")
-**What:** Learner asked what the EquityZen bullet meant. Per `feedback_resume_claims.md`, I ran the claim check before explaining or rewriting: the ETL and the leadership are real, but the recon found breaks that were then reconciled to zero — "zero discrepancies at cutover" overstated it. Same false claim sat in the full draft's EquityZen bullet since Jun 29. Both rewritten before the docx/PDF render.
-**Why it matters:** third inherited overclaim in the same file family, but the first caught by the rule rather than by the learner. No ladder climb; evidence the Sep 23 promotion holds. The full draft's EquityZen line 34 still carries `~$100M` and no ETL — flagged to the learner, not edited.
+Triggered by the OVERDUE banner (13 open since the 2026-09-21 review, incl. one logged tonight). Clustered from
+`python scripts/meta_review_digest.py`. **The finding of this review is about the review:** 5 of the 13 open entries
+had written "proposed, not edited" and stopped — a proposal was being counted as a rung. The digest now flags that
+shape (`PROPOSED_ONLY` → `⚠️ PROPOSED-ONLY` per line + a count), so it cannot pass unnoticed again.
 
-## 2026-09-24 [P2] fam: workflow-tier-skip — implemented the stage-1 `src`-link work inline instead of tech lead → Opus team lead → Sonnet engineers
-**What:** Learner: "how come we didn't use the tech lead -> team lead -> engineer structure here." The whole stage-1 change (cse-progress `links.py`/`gamify.py`/schema/tests/records + the site's model/service/two components/specs/styles) was written by the session directly. Only the exploration used subagents. Non-trivial, two repos, ~15 files: squarely inside the rule's scope.
-**Why (three layers, all real):** (1) The rule's NORMATIVE layer is `~/.claude/rules/execution-workflow.md` + the `UserPromptSubmit` reminder hook + `~/.claude/agents/{team-lead,engineer}.md` + the `role_gate.py` deny hook. **None of those exist on this Mac** (`~/.claude/rules`, `~/.claude/hooks`, `~/.claude/agents` are all absent; `~/.claude/settings.json` wires no hooks). They were built on the other machine and live outside any repo, so git never carried them here — the enforcement layer the memory calls "hardened" is machine-local. (2) The repo-synced layer is only the memory file `feedback_execution_workflow.md`, an opt-in read; the SessionStart hook surfaced just its one index line, and I did not open it. (3) The harness's own guidance for this session says not to spawn agents unless asked, and with no repo-level rule visible, that default won. Net: a rule whose only synced copy is a memory file behaved exactly as `docs/ARCHITECTURE.md` predicts — too cold a tier, and it lapsed.
-**Fix/ladder:** Rung 1 (source), proposed: move the workflow's enforcement into the repo so it syncs — `.claude/agents/team-lead.md` + `engineer.md`, the reminder + role-gate hooks under `.claude/hooks/`, wired in the committed `.claude/settings.json`, and the normative sentence in CLAUDE.md's always-on gates (the memory says it "must never be the only place the rule is stated", yet on this machine it is). Learner's call, since it changes their global setup. Immediate recovery for this job: the implementation is done, so the missed tier is the review one — run an Opus `team-lead`-style review of both diffs before any commit, and route stage 2 through the pyramid from the start. First occurrence in this repo on this machine.
-**Resolved same day:** root cause was narrower than "outside any repo" — the layer IS versioned (`michael-yrao/claude-dotfiles`, per `project_global_claude_unversioned.md`); the Mac had simply never run the restore. Restored 2026-09-24 with a merged `settings.json`; hooks verified firing. The stage-1 diffs got their Opus review after the fact (two approve-with-nits, all should-fixes applied before commit).
+**Promotions (2+ recurrence → up the ladder):**
+1. **lead-forced-handback** (09-21 ×3 + 09-23 ×3 hand-backs, 2 entries) → **agent definition** (rung 1 for an agent):
+   `~/.claude/agents/team-lead.md` already carries the spawn-second-engineer-in-the-foreground rule (L18-24). Both
+   entries consolidated; the family closes for good on the first live lead spawn that reports without a resume.
+2. **read-before-asserting** (09-20 private-source, 09-21 "clean" brief, 09-23 site-plan grep = 3×) → **rung 3, the
+   workflow rule**: `~/.claude/rules/execution-workflow.md` gained "Briefs carry pasted state, never described state"
+   (per-repo `git status --short` pasted into every brief; counts/"nothing depends on X" from a run, not a grep).
+   Dotfiles repo — needs its own commit.
+3. **advance-prompt-tail** (09-23 ×2) → **hook** (rung 2): `problem_link_reminder.py::ADVANCE_PHRASE` now catches
+   `go ahead and …` and `write the/your code|solution`; +2 positive, +1 negative self-test case, all passing. The
+   leading-question variant is not regex-shaped and stays a habit under the same `fam:`.
+4. **resume claim verification** (09-21 + 09-23 ×2) → already promoted 09-23 to [[feedback_resume_claims]]; the
+   09-23 P3 entry is the rule catching a claim on its own. All three consolidated.
+5. **retry-stash-leak** (09-23 1489 `UF`, 09-24 648 `TrieNode` = 2×) → **source fix DUE, not landed** — it is a
+   two-script change with tests, so it goes through the engineer workflow after the learner approves the plan:
+   - `new_problem.py` retry extract: also move module-level `class`/`def` blocks that sit between the last import
+     and `class Solution` into the stash, tagged so restore knows their level (e.g. a `# ── module-level ──`
+     separator line inside the `.txt`, or a second stash section).
+   - `restore_history.py`: paste that section back at module level (above `class Solution`), the rest below
+     today's attempt as now; keep the verbatim-slice invariant (no parsing inside the moved text).
+   - Tests: a file with a top-level helper round-trips byte-identical through extract → restore; a file without
+     one is unchanged; the un-attempted guard still declines.
+   Interim (rung 3, landed tonight): `retry-and-restore.md` tells the coach to read the lines above `class
+   Solution` after every retry scaffold and name any helper in the hand-over.
+6. **release-step-unverified** (1×, but the fix is a one-line recipe edit) → landed in cse-coach `CLAUDE.md`
+   (annotated tag + `ls-remote` verify). Uncommitted in the canonical repo.
+
+**Bookkeeping:** 12 `##` entries + the bullet-format 09-23 read-before-asserting entry consolidated and moved to
+`self_eval_archive.md` (byte-complete). Left open: retry-stash-leak (now 2×, plan above), hook-false-positive
+(SPOILER COLUMN on a `#L` table, 1×, rung-1 candidate in `problem_link_reminder.py`), constraint-unapplied-complexity
+(1×, habit). The 09-21 singletons (predicted-tool-output, heredoc-escape-collapse) predate this window and stay as
+they were. Also logged tonight and consolidated same-turn: out-of-phase pull endorsed (→ `scaffolding.md`).
+Cadence reset.
+

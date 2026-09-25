@@ -586,6 +586,8 @@ ADVANCE_PHRASE = re.compile(
     r"|let'?s\s+(?:do|tackle|start|try)\s+(?:the\s+)?next"
     r"|move\s+on\s+to\s+(?:the\s+)?next"
     r"|on\s+to\s+(?:the\s+)?(?:next|\d{1,4})"
+    r"|go\s+ahead\s+and\s+\w+"                                  # "go ahead and write the code" (missed 09-23 on 39)
+    r"|(?:now\s+)?write\s+(?:the\s+|your\s+)?(?:code|solution)"   # "write the code", "now write your solution"
     r")",
     re.IGNORECASE,
 )
@@ -936,12 +938,16 @@ ADVANCE_CASES = [
     ("shall we move on", "The recognition call is right. Shall we move on?", True),
     ("bare go", "Looks right.\nGo.", True),
     ("let's do the next", "Complexity checks out. Let's do the next problem.", True),
+    ("go ahead and write the code", "That settles the pruning bound. Go ahead and write the code.", True),
+    ("bare write the code", "The call is right.\nWrite the code.", True),
     # Negatives — must stay silent.
     ("ends on the answer", "The amortized cost is O(n) because each index is pushed and popped once.", False),
     ("complexity gate prompt", "What's the time and space complexity — each with a why?", False),
     ("recognition gate prompt", "What shape do you see, and what technique does it pick?", False),
     ("code-it inside a long close",
      "Once you code it up the two-pointer walk makes the O(n) bound obvious.", False),
+    ("write-the-code inside a long close",
+     "When you write the code, the base case is the empty remainder, not the full string.", False),
     ("whenever you're ready (blessed close)", "That settles the invariant. Whenever you're ready.", False),
     ("genuine rep question", "Does the deque hold indices or values in your version?", False),
     ("make sense check", "So the window never shrinks past the max. Make sense?", False),

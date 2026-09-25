@@ -1,4 +1,4 @@
-<!-- reconciled: 2026-09-19 -->
+<!-- reconciled: 2026-09-24 -->
 # Scaffolding a problem
 
 **Open this** before you create or set up any problem file for the learner.
@@ -28,6 +28,11 @@ Set the file up **before** they start — never make them create it or paste the
   kickoff, scaffold **every** problem on the day's schedule — active block *and* both
   warmup slots, 🔴/🟡/🟢 alike — in one batch. (This repo overrides the cse-coach default
   of files-only-for-coding-reps.)
+- **A pull the learner recalls but the record does not show is a NEW pull, not a restore.** Before
+  scaffolding it, check the technique's phase in `study_guide.md`. Out of phase → decline by description
+  and offer the in-phase seat; do not endorse it on the learner's stated motive. (Sep 24, 2026: 139 Word
+  Break — a DP-phase problem — pulled ahead of a Trie re-rep on a recollection the record didn't carry;
+  ended in a pseudocode handover and an abandoned scaffold.)
 - **A named problem is a request, not a kickoff.** Do not infer a kickoff from "first
   message I've seen today," and don't batch because it's cheap. If genuinely ambiguous,
   scaffold what they named and *ask* before batching the rest.

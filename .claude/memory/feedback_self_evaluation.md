@@ -41,6 +41,9 @@ banner fires (or at the start of a week):
   forces the skill re-read via `reconcile.py`). **Cross-cutting/unprompted** → a hook or a CLAUDE.md gate.
   **Pure judgement, no trigger** → a memory file (the weakest rung — see below).
 - Mark promoted entries `consolidated→<the actual fix>`. Leave true one-offs `open` (they may still cluster later).
+- **A proposal is not a fix.** An entry whose ladder line says "proposed, not edited" is still fully open; the
+  2026-09-24 review found 5 of 13 open entries in that shape, so the digest now flags them `⚠️ PROPOSED-ONLY`.
+  At review time each one is either landed or explicitly deferred with a named owner/trigger — never re-proposed.
 - Keep the log append-only; don't delete entries, just update their status. **Archive** `consolidated→`
   entries (and old meta-review cluster bodies) to `self_eval_archive.md` so the live log stays small.
 

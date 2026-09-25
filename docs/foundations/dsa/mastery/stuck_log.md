@@ -22,6 +22,31 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🔴 648. Replace Words — 2026-09-24
+**Topic**: Trie — prefix search (shortest-root replacement). Was 🟡 (Sep 14 probe); re-rep from a blank page. Learner's own call: 🔴, to re-practice prefix search.
+
+### Where did I get stuck?
+- **Recognised the structure, not the operation.** Trie was named unaided and built cleanly (the insert loop is now automatic). Then: *"we want the shortest path so this feels like trie with BFS"* — and the helper stalled at `def bfs(word, traversal):` with nothing under it. The word "shortest" pulled in a graph-search reflex; there was no picture of what a lookup on a trie *does*.
+- **Two questions dissolved it:** (1) walking `"another"` down the trie, how many children may you choose at each step? — one, the word dictates it, so there is a single path and nothing for a BFS to explore; (2) what is the depth when `isWord` first turns true? — the root's length, so the first word-end on the walk *is* the shortest root, no comparison needed. Learner: *"ah so I guess not BFS, so what is this called?"*
+- **Asked for the template** — the three-exit walk (fall off the trie → miss; hit a word-end → return the prefix so far; run out of word → miss) was given as pseudocode with a two-word trace, then coded correctly in one pass.
+- **Complexity:** space O(D + S) right and itemized; time called O(D·S), corrected to O(D + S) on one nudge (each walk is ≤ the word's own length, never D). Second time this problem's query cost got multiplied by the structure size — carded, queued for the Sunday cleanup.
+
+### Core Realization
+A trie lookup is not a search. The key you're looking up chooses every child; the only decisions are *when to stop* and *what to return on each exit*. `search`, `startsWith` and shortest-prefix replacement are the same walk with different exits. "Shortest" comes free from depth = length — the first word-end you meet wins. BFS/DFS on a trie only appear when the key has a branch point (a wildcard, as in 211).
+
+### Code Snippet (learner-written after the template)
+```python
+def prefixSearch(word):
+    node = root
+    for index, char in enumerate(word):
+        if char not in node.children:
+            return word
+        node = node.children[char]
+        if node.isWord:
+            return word[:index+1]
+    return word
+```
+
 ## 🔴 22. Generate Parentheses — 2026-09-19
 **Topic**: Backtracking (phase-opening rep, no primer — full approach coach-supplied, hence 🔴)
 ### Where did I get stuck?
