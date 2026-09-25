@@ -56,7 +56,9 @@ them. The *how* is in the named skill reference.
    close-out-and-publish instruction** (*"close out the day/session/week"*, *"wrap up and
    commit/push"*): that phrase IS standing authorization to commit AND push with no further
    confirmation — do the pre-commit sweep (`git status` · `restore_history.py` ·
-   `update_review_dates`), then **report what landed**. The trigger is the learner's explicit
+   `update_review_dates`), then **report what landed**. **Commit and push are TWO commands — read the hook's
+   output between them; any `ERROR:` line from a report-only check holds the push** (2026-09-24: a chained
+   commit+push shipped a stale `showcase.json`). The trigger is the learner's explicit
    phrase, never your own read of a "good breakpoint" (that judgement is what caused the
    31-commit run). Still **hold and ask** if anything is pending: an unrated/uncertain rep, an
    unsettled schedule/structural decision, a weekly close-out whose build isn't done (gate 7
