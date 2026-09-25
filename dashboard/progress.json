@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-24",
+  "generatedAt": "2026-09-25",
   "totals": {
     "problems": 124,
     "solutions": 135,
@@ -39,8 +39,8 @@
   },
   "onSchedule": {
     "totalActive": 135,
-    "dueToday": 6,
-    "overdue": 4
+    "dueToday": 3,
+    "overdue": 10
   },
   "trophyCase": {
     "graduated": [
@@ -2959,7 +2959,7 @@
             "startComfort": null,
             "difficulty": null,
             "url": "https://leetcode.com/problems/permutations/",
-            "file": null,
+            "file": "dsa/leetcode/backtracking/46_permutations.py",
             "tags": [
               "new"
             ],

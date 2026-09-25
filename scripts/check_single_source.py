@@ -110,6 +110,15 @@ SCRIPT_DEFAULTS = (
             "difficulty": "effort_budget.difficulty",
         },
     ),
+    (
+        "scripts/judge_output.py",
+        "DEFAULT_CONFIG",
+        {
+            "judge_model": "output_quality.judge_model",
+            "pass_threshold": "output_quality.pass_threshold",
+            "max_sentence_words": "output_quality.readability.max_sentence_words",
+        },
+    ),
 )
 
 #: Words that mean "this line is talking about <config key>". Auto-derived from the key path

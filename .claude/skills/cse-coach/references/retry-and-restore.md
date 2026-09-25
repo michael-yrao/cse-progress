@@ -1,4 +1,4 @@
-<!-- reconciled: 2026-09-24 -->
+<!-- reconciled: 2026-09-25 -->
 # Retries: hide prior attempts, restore at session end
 
 **Open this** when scaffolding a retry (a problem whose file already exists) or when
@@ -8,26 +8,27 @@ anything: the slice is opaque by design (see the invariant below).
 
 ## Retries must not show prior attempts
 
-**On a retry the new stub goes at the TOP of the `Solution` class, and everything below it
+**On a retry the new stub goes at the TOP** of the `Solution` class. Everything below it
 (the prior attempts) is MOVED OUT of the file into a per-problem stash at
-`<root>/.history/<number>_<snake>.txt`.** Reading your own previous solution before a retry
+`<root>/.history/<number>_<snake>.txt`. Reading your own previous solution before a retry
 destroys the rep — the point is recall from a blank page. So the spoiler isn't hidden, it's
-*physically absent* while you work: the file holds only the statement, today's blank stub,
+*physically absent* while you work. The file holds only the statement, today's blank stub,
 and a one-line pointer to the stash.
 
 This needs **no editor and no extension** — it reads as a blank page in any editor, on
-GitHub, in a plain `git diff`. That portability is the whole reason for the stash (the old
+GitHub, in a plain `git diff`. That portability is the whole reason for the stash. The old
 approach folded attempts with the `zokugun.explicit-folding` extension, whose config had to
-be reproduced by hand on every machine — all gone). It's a speed bump, not a lock: the stash
+be reproduced by hand on every machine — all gone. It's a speed bump, not a lock: the stash
 is one click away, and that's accepted. What it buys is that seeing your old solution becomes
 a deliberate act, not an accident.
 
-⚠️ **Known gap (2× — 1489 on Sep 23, 648 on Sep 24, 2026): the extract cuts only INSIDE `class Solution`.**
-A module-level helper the learner wrote above it (`class UF`, `class TrieNode`) stays in view — a filled-in
-helper on what should be a blank page. Until the source fix lands (stash module-level defs between the
-imports and `class Solution`, restore them at module level — plan in the 2026-09-24 meta-review), **after
-every retry scaffold read the lines between the imports and `class Solution`**; if a helper sits there, say
-so in the hand-over ("a helper from a prior attempt is above the stub — write your own"), never silently.
+⚠️ **Known gap.** It happened 2× — 1489 on Sep 23, 648 on Sep 24, 2026. The extract cuts only
+INSIDE `class Solution`. A module-level helper the learner wrote above it (`class UF`, `class TrieNode`) stays in view — a filled-in
+helper on what should be a blank page. Until the source fix lands, **after
+every retry scaffold read the lines between the imports and `class Solution`**. If a helper sits
+there, say so in the hand-over ("a helper from a prior attempt is above the stub — write your
+own"), never silently. The planned fix stashes module-level defs between the imports and
+`class Solution` and restores them at module level. The plan is in the 2026-09-24 meta-review.
 
 ## Restore the stash once the day's reps are done
 
@@ -40,12 +41,12 @@ python scripts/restore_history.py --dry-run  # report only
 ```
 
 Restore pastes the stash back *after* today's completed attempt (recent on top), deletes the
-stash file, and strips the pointer — reconstructing the single file with full dated history,
+stash file, and strips the pointer. This reconstructs the single file with full dated history,
 exactly as before the extract. It also migrates **legacy folded files**: a solution still
 carrying an old `# region ⚠ PRIOR ATTEMPTS` fold has the markers stripped here.
 
-- **It only restores a problem whose dated attempt has a real body.** A retry scaffolded but
-  never attempted still has `pass` under today's stub — pasting the prior attempts back would
+- **It only restores** a problem whose dated attempt has a real body. A retry scaffolded but
+  never attempted still has `pass` under today's stub. Pasting the prior attempts back would
   expose the old solution before the rep happened, the exact failure the extract prevents.
   Those keep their stash *out* of the file and are reported as kept. `--all` overrides the
   guard (for reconciling old files, never at session end).
@@ -55,9 +56,9 @@ carrying an old `# region ⚠ PRIOR ATTEMPTS` fold has the markers stripped here
   to the next machine (where restore finishes the job). A cut-short-then-resumed retry
   re-extracts safely: an un-attempted stub is dropped and the existing stash is left untouched
   (never clobbered with an empty stub).
-- ⚠️ **Restore warns on duplicate top-level names in the merged file — act on the warning.**
+- ⚠️ **Restore warns** on duplicate top-level names in the merged file — act on the warning.
   An undated helper in today's attempt is **silently shadowed** by the same-named one from a
-  prior attempt (Python binds the *last* definition), so today's code runs the older class.
+  prior attempt (Python binds the *last* definition). So today's code runs the older class.
   Give helpers a dated name (`TrieNode_20260802`). (Found on 211: two identical `TrieNode`s,
   so nothing crashed — the bad case.)
 
@@ -89,19 +90,19 @@ Restored 211 (addWord_20260910 has a body); stash removed.
 
 ## The load-bearing invariant (unchanged from the fold era)
 
-Today's stub goes at the **top**, and *everything below it* is the prior-attempts slice — a
+Today's stub goes at the **top**, and *everything below it* is the prior-attempts slice. It is a
 **verbatim line slice**, moved to the stash and later pasted back **without the script ever
-parsing its shape** (dated methods, dated sibling classes, trailing unittest blocks all vary
-and are not ours to interpret). Extract cuts at EOF; restore appends at EOF; today's attempt
-sits above. **Keep it that way — anything that reaches *into* a prior solution to decide the
-cut is how this breaks.**
+parsing its shape**. Dated methods, dated sibling classes, and trailing unittest blocks all vary
+and are not ours to interpret. Extract cuts at EOF; restore appends at EOF; today's attempt
+sits above. **Keep it that way** — anything that reaches *into* a prior solution to decide the
+cut is how this breaks.
 
 ## Notes for whoever maintains this
 
-- **The un-attempted guard ignores scaffold method signatures inside a dated *class* attempt
-  (fixed Aug 10, 2026).** `attempt_has_body` counted any non-`pass` line as work, so a design
+- **The un-attempted guard ignores scaffold method signatures** inside a dated *class* attempt
+  (fixed Aug 10, 2026). `attempt_has_body` counted any non-`pass` line as work, so a design
   problem's own `def __init__(...)`/`def add(...)` made every multi-method scaffold look
-  attempted — restore would paste the prior solution back before the rep ran. Found on 703
+  attempted. Restore would paste the prior solution back before the rep ran. Found on 703
   (`class KthLargest_20260810`). Single-method (`def <name>_<stamp>`) scaffolds were never
   affected — their body really is just `pass`.
 - The stash is a **`.txt`**, deliberately: it never matches the `*.py` source glob, so
@@ -111,13 +112,13 @@ cut is how this breaks.**
   top of `class Solution`; the slice is the remaining indented methods. **Multi-method**
   (`--method encode,decode`) or a legacy file with no `class Solution` → a dated
   `class Solution_<stamp>` at module level (matching
-  [271](dsa/leetcode/arrays_and_hash/271_encode_and_decode_string.py)); the slice is the prior
+  [271](dsa/leetcode/arrays_and_hash/271_encode_and_decode_string.py)). The slice is the prior
   module-level classes. Either way the slice pastes straight back.
 - The stub carries the problem's **real signature**, pulled from the existing method. A *new*
   problem has no prior method to read — that's what `--signature` is for.
 - `new_problem.py` strips any leftover pointer and legacy `# region` markers before
   re-extracting, so it's idempotent and migrates old folded files on their next retry.
 - `restore_history.py` keys the stash back by **problem number** (globs `<root>/*/<number>_*.py`)
-  because the stash filename drops the pattern folder. The number is the identity — same reason
-  `new_problem.py` matches on it, and **refuses** a write whose `--title`/`--pattern` would fork
+  because the stash filename drops the pattern folder. The number is the identity. That's the same
+  reason `new_problem.py` matches on it, and **refuses** a write whose `--title`/`--pattern` would fork
   history into a second file (naming the file it found; `--force-new` overrides).

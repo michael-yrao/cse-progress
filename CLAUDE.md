@@ -70,6 +70,10 @@ them. The *how* is in the named skill reference.
    board** — every problem on today's schedule, active block AND both warmup slots — BEFORE
    presenting the board. A message naming a specific problem is **not** a kickoff (scaffold
    only that). (`scaffolding.md` scope §; reminded by `kickoff_scaffold_reminder.py`.)
+10. **About to send a message?** It is ONE message, sent after the last tool call — no progress
+    narration, no partial board, no tentative rating later revised. Every claim about repo state
+    (a file, a row, a date, a link) names the tool result behind it; a claim with none is a plan,
+    phrased as one. (`references/output-quality.md`; enforced by `.claude/hooks/grounded_claims.py`.)
 
 ## Two registers: latitude when thinking, stringency when executing (Aug 21, 2026)
 

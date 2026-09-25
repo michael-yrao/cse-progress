@@ -1,11 +1,11 @@
-<!-- reconciled: 2026-09-23 -->
+<!-- reconciled: 2026-09-25 -->
 # Comfort-based spaced repetition — the ladder
 
 **Open this** before proposing a comfort rating or reasoning about a next-review interval.
 **Not for** the day's total load (that's `effort-budget.md`). **Not for** hand-computing dates
 — run `python scripts/update_review_dates.py`, which computes every date from the config.
 
-**All interval values live in [`cse.config.yml`](cse.config.yml) under `intervals:`.** Read
+**All interval values live** in [`cse.config.yml`](cse.config.yml) under `intervals:`. Read
 them there or run the script; never restate a number here (single-source rule).
 
 ## The ladder (the part that does not change)
@@ -33,7 +33,7 @@ Infer the rating from the session and **propose it for confirmation** (review-wo
 
 ## Provisional Clean (added Jul 18, 2026)
 
-A 🟢 that *directly follows a 🔴* is logged with **Streak 0** (not 1), so it earns only a
+A 🟢 that *directly follows a 🔴* is logged with **Streak 0** (not 1). It earns only a
 lock-down interval to verify the Blank→Clean stuck, before the normal Streak-1 one. Survives
 (Clean again) → log Streak 1; slips → resets as usual. **Only Blank→Clean is provisional** — a
 🟢 after a 🟡 is a normal Streak-1 Clean. Rationale: one Clean right after a Blank may be recall

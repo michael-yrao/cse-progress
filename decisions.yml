@@ -971,3 +971,24 @@ decisions:
       `.claude/memory/project_gamification.md`, `.claude/memory/project_grounded_solutions.md`,
       `~/.claude/plans/can-we-find-a-vast-flask.md`.
     affects: [gamification]
+
+  - id: output-quality-standard-sep25
+    date: 2026-09-25
+    summary: >-
+      ADDS an output-quality standard for every coaching turn: four dimensions (F1, groundedness,
+      narrative quality, readability), a turn shape (one message, sent after the last tool call,
+      with no text between tool calls except one short line before a long mechanical run), a
+      per-moment content contract (required/forbidden items for an answer, a concept teach, a
+      stuck hint, a rating proposal, a work report, a board/hand-over, a close-out report, an SD
+      mock debrief), a groundedness Stop hook, and an LLM judge + eval suite. New files:
+      `references/output-quality.md`, `.claude/hooks/grounded_claims.py`,
+      `.claude/memory/feedback_output_quality.md`, `scripts/judge_output.py`, and
+      `.claude/skills/cse-coach/evals/`. `cse.config.yml` gains an `output_quality:` block
+      (`judge_model`, `pass_threshold`, `readability.max_sentence_words`); no existing key's
+      value changed. Strands any wording that has the coach narrate progress mid-turn before the
+      answer is complete, present a partial board or a tentative rating that gets revised later,
+      or split one answer across several messages. Does NOT strand "lead with the spine, then
+      stop and check in" (SKILL.md §1) — that stop follows a COMPLETE spine answer and invites
+      the learner's next move; it is not mid-turn narration. See `references/output-quality.md`,
+      `feedback_output_quality.md`.
+    affects: [turn_economy, token_discipline, self_evaluation, hooks, reporting]

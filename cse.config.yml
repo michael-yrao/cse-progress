@@ -251,3 +251,13 @@ gamification:
   streak_milestones: [7, 30, 100]        # 🔥 badge thresholds (study-days)
   trophy_milestones: [1, 10, 25, 50]     # 💎 badge thresholds (🎓 graduated + 🏆 retired)
   on_schedule_target: 0.9                # fraction of active rows expected not-overdue
+
+# The output-quality standard (F1 · groundedness · narrative · readability) that a coaching
+# turn is graded against — see references/output-quality.md and evals/rubric.md. Read by
+# scripts/judge_output.py; its DEFAULT_CONFIG mirrors this block (checked by
+# scripts/check_single_source.py).
+output_quality:
+  judge_model: claude-sonnet-5      # the LLM judge; scripts/judge_output.py --model overrides it
+  pass_threshold: 0.75              # aggregate 0–1 below which judge_output.py --check exits 1
+  readability:
+    max_sentence_words: 20          # the sentence-length guide the rubric applies
