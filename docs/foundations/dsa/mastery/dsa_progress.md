@@ -66,14 +66,15 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/dsa/mastery/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **124+6** problems &nbsp;·&nbsp; **135+6** solutions &nbsp;·&nbsp; **600+6** reps
+> **124+6** problems &nbsp;·&nbsp; **135+6** solutions &nbsp;·&nbsp; **601+6** reps
 
 | | 🏆 Retired | 🎓 Graduated | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|:---:|
-| **Solutions** | 0 | 20 | 99 | 15 | 1 |
+| **Solutions** | 0 | 20 | 99 | 14 | 2 |
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Rep Date | Rep Dates |
 |---|---|---|---|---|---|---|
+| Medium | [648. Replace Words](https://leetcode.com/problems/replace-words/) | 🔴 | 0 | 2026-09-26 | 2026-09-24 | 2026-09-14, 2026-09-24 |
 | Medium | [39. Combination Sum](https://leetcode.com/problems/combination-sum/) | 🔴 | 0 | 2026-09-25 | 2026-09-23 | 2026-09-23 |
 | Medium | [846. Hand of Straights](https://leetcode.com/problems/hand-of-straights/) | 🟡 | 0 | 2026-10-03 | 2026-09-23 | 2026-09-11, 2026-09-23 |
 | Hard | [1489. Find Critical and Pseudo-Critical Edges in MST (Kruskal)](https://leetcode.com/problems/find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree/) | 🟡 | 0 | 2026-10-03 | 2026-09-23 | 2026-09-13, 2026-09-23 |
@@ -112,7 +113,6 @@ Notes for future agents:
 | Hard | [332. Reconstruct Itinerary (pre-sorted adjacency)](https://leetcode.com/problems/reconstruct-itinerary/) | 🟢 | 1 | 2026-10-15 | 2026-09-15 | 2026-08-18, 2026-09-05, 2026-09-15 |
 | Medium | [261. Graph Valid Tree (Union-Find)](https://neetcode.io/problems/valid-tree/question) | 🎓 | 3 | 2027-03-14 | 2026-09-15 | 2026-06-19, 2026-06-29, 2026-07-09, 2026-07-18, 2026-08-01, 2026-08-31, 2026-09-15 |
 | Medium | [743. Network Delay Time (Dijkstra — array-scan)](https://leetcode.com/problems/network-delay-time/) | 🟡 | 0 | 2026-09-24 | 2026-09-14 | 2026-09-12, 2026-09-14 |
-| Medium | [648. Replace Words](https://leetcode.com/problems/replace-words/) | 🟡 | 0 | 2026-09-24 | 2026-09-14 | 2026-09-14 |
 | Medium | [200. Number of Islands (DFS)](https://leetcode.com/problems/number-of-islands/) | 🎓 | 3 | 2027-03-13 | 2026-09-14 | 2026-05-31, 2026-06-02, 2026-06-16, 2026-06-26, 2026-07-20, 2026-09-14 |
 | Easy | [226. Invert Binary Tree](https://leetcode.com/problems/invert-binary-tree/) | 🎓 | 3 | 2027-03-13 | 2026-09-14 | 2026-04-30, 2026-05-26, 2026-06-25, 2026-07-20, 2026-09-14 |
 | Medium | [162. Find Peak Element](https://leetcode.com/problems/find-peak-element/) | 🎓 | 3 | 2027-03-13 | 2026-09-14 | 2026-05-02, 2026-06-12, 2026-06-13, 2026-07-16, 2026-09-14 |

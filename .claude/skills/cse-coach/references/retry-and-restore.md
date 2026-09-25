@@ -1,4 +1,4 @@
-<!-- reconciled: 2026-09-10 -->
+<!-- reconciled: 2026-09-24 -->
 # Retries: hide prior attempts, restore at session end
 
 **Open this** when scaffolding a retry (a problem whose file already exists) or when
@@ -21,6 +21,13 @@ approach folded attempts with the `zokugun.explicit-folding` extension, whose co
 be reproduced by hand on every machine — all gone). It's a speed bump, not a lock: the stash
 is one click away, and that's accepted. What it buys is that seeing your old solution becomes
 a deliberate act, not an accident.
+
+⚠️ **Known gap (2× — 1489 on Sep 23, 648 on Sep 24, 2026): the extract cuts only INSIDE `class Solution`.**
+A module-level helper the learner wrote above it (`class UF`, `class TrieNode`) stays in view — a filled-in
+helper on what should be a blank page. Until the source fix lands (stash module-level defs between the
+imports and `class Solution`, restore them at module level — plan in the 2026-09-24 meta-review), **after
+every retry scaffold read the lines between the imports and `class Solution`**; if a helper sits there, say
+so in the hand-over ("a helper from a prior attempt is above the stub — write your own"), never silently.
 
 ## Restore the stash once the day's reps are done
 

@@ -7,6 +7,11 @@
 - **2026-09-23 · 846 Hand of Straights** (🟡 retry, half-spoiled) — ⚠️ **partial.** Count map + "lowest first"
   called unaided; the picking feature (the smallest card left can only START a group, so the greedy choice is
   forced) needed a coach position table. → 🟡.
+- **2026-09-24 · 648 Replace Words** (🟡 re-rep; retry, blank page) — ⚠️ **partial.** Trie named unaided ("place all the
+  dictionaries into a trie"), but the *operation* was mis-called: "shortest → trie with BFS". The picking feature (a fixed
+  word dictates one child per step, so there is a single path and no frontier; the first word-end on it IS the shortest
+  root) came out of two coach questions, and the prefix-search template was given on request. Same half-miss as Sep 14
+  (then: a "needed Word Break" over-association) — the structure is recognised, the lookup on it is not. → 🔴 (learner's call).
 - **2026-09-23 · 39 Combination Sum** (🆕 new, measured) — ⚠️ **partial.** Backtracking shape named via the
   5-slot template, but the picking feature vs 78 Subsets (unique by *count*, reuse allowed → a start bound
   that stays put on take) left as `state = n/a?`; came from a coach hint. → 🔴.

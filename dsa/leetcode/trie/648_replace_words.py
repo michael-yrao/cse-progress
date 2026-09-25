@@ -45,6 +45,44 @@ class TrieNode:
         self.isWord = False
 
 class Solution:
+
+    # ── Attempt · 2026-09-24 ──────────────
+    def replaceWords_20260924(self, dictionary: List[str], sentence: str) -> str:
+        # we can place all the dictionaries into a trie but what does that accomplish
+        # we want the shortest path so we do prefix search
+        root = TrieNode()
+
+        for word in dictionary:
+            traversal = root
+            for char in word:
+                if char not in traversal.children:
+                    traversal.children[char] = TrieNode()
+                traversal = traversal.children[char]
+            traversal.isWord = True
+
+        resultWords = []
+        # now let's try to BFS on each word in the sentence
+        # if not found, just use the word itself
+
+        def prefixSearch(word):
+          node = root
+          for index, char in enumerate(word):
+            # we use the word itself if we cannot find a this word in the Trie
+            if char not in node.children:
+              return word
+            # if we can, increment node
+            node = node.children[char]
+            if node.isWord:
+              return word[:index+1]
+          return word
+          
+        words = sentence.split()
+
+        for word in words:
+            resultWords.append(prefixSearch(word))
+        
+        return " ".join(resultWords)
+
     def replaceWords(self, dictionary: List[str], sentence: str) -> str:
         # create a Trie for the dictionary
         # now for each word in sentence, we stop at the first isWord we encounter

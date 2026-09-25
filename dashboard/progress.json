@@ -4,11 +4,11 @@
   "totals": {
     "problems": 124,
     "solutions": 135,
-    "reps": 600
+    "reps": 601
   },
   "pipeline": {
-    "blank": 1,
-    "shaky": 15,
+    "blank": 2,
+    "shaky": 14,
     "clean": {
       "s0": 2,
       "s1": 29,
@@ -24,10 +24,10 @@
     "Hard": 11
   },
   "streak": {
-    "current": 119,
-    "longest": 119,
-    "lastStudyDay": "2026-09-23",
-    "studyDays": 177,
+    "current": 120,
+    "longest": 120,
+    "lastStudyDay": "2026-09-24",
+    "studyDays": 178,
     "restDayAllowance": 1
   },
   "coverage": {
@@ -39,7 +39,7 @@
   },
   "onSchedule": {
     "totalActive": 135,
-    "dueToday": 7,
+    "dueToday": 6,
     "overdue": 4
   },
   "trophyCase": {
@@ -2583,7 +2583,8 @@
     "2026-09-20",
     "2026-09-21",
     "2026-09-22",
-    "2026-09-23"
+    "2026-09-23",
+    "2026-09-24"
   ],
   "schedule": {
     "weekOf": "2026-09-21",
@@ -2792,8 +2793,8 @@
       {
         "date": "2026-09-24",
         "weekday": "Thursday",
-        "label": "Trie/Dijkstra 🟡 + green batch",
-        "units": 7.0,
+        "label": "short session (learner's call): 648 done; 743 + 1334 → Fri Sep 25; 1046 · 189 · 53 · 572 → Tue Sep 29 (seat at the Sep 28 build)",
+        "units": 5.5,
         "items": [
           {
             "lcNumber": 648,
@@ -2805,27 +2806,10 @@
             "file": "dsa/leetcode/trie/648_replace_words.py",
             "tags": [],
             "kind": "rep",
-            "done": false,
-            "endComfort": null,
+            "done": true,
+            "endComfort": "🔴",
             "endNote": null,
-            "nextReview": null
-          },
-          {
-            "lcNumber": 743,
-            "title": "Network Delay Time (Dijkstra — array-scan)",
-            "technique": "Dijkstra",
-            "startComfort": "🟡",
-            "difficulty": "Medium",
-            "url": "https://leetcode.com/problems/network-delay-time/",
-            "file": "dsa/leetcode/graphs/743_network_delay_time.py",
-            "tags": [
-              "variant"
-            ],
-            "kind": "rep",
-            "done": false,
-            "endComfort": null,
-            "endNote": null,
-            "nextReview": null
+            "nextReview": "2026-09-26"
           },
           {
             "lcNumber": 1046,
@@ -2835,7 +2819,86 @@
             "difficulty": "Easy",
             "url": "https://leetcode.com/problems/last-stone-weight/",
             "file": "dsa/leetcode/heap/1046_last_stone_weight.py",
-            "tags": [],
+            "tags": [
+              "moved"
+            ],
+            "kind": "rep",
+            "done": false,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": "2026-09-29"
+          },
+          {
+            "lcNumber": 189,
+            "title": "Rotate Array",
+            "technique": "Array-rotation",
+            "startComfort": "🟢",
+            "difficulty": "Medium",
+            "url": "https://leetcode.com/problems/rotate-array/",
+            "file": "dsa/leetcode/arrays_and_hash/189_rotate_array.py",
+            "tags": [
+              "moved"
+            ],
+            "kind": "rep",
+            "done": false,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": "2026-09-29"
+          },
+          {
+            "lcNumber": 53,
+            "title": "Maximum Subarray",
+            "technique": "Kadane",
+            "startComfort": "🟢",
+            "difficulty": "Medium",
+            "url": "https://leetcode.com/problems/maximum-subarray/",
+            "file": "dsa/leetcode/greedy/53_maximum_subarray.py",
+            "tags": [
+              "moved"
+            ],
+            "kind": "rep",
+            "done": false,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": "2026-09-29"
+          },
+          {
+            "lcNumber": 572,
+            "title": "Subtree Of Another Tree",
+            "technique": "Tree-DFS",
+            "startComfort": "🟢",
+            "difficulty": "Medium",
+            "url": "https://leetcode.com/problems/subtree-of-another-tree/",
+            "file": "dsa/leetcode/trees/572_subtree_of_another_tree.py",
+            "tags": [
+              "moved"
+            ],
+            "kind": "rep",
+            "done": false,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": "2026-09-29"
+          }
+        ]
+      },
+      {
+        "date": "2026-09-25",
+        "weekday": "Friday",
+        "label": "⚠️ over ceiling (10.5 accepted Wed, +2.6 from Thu's 743 + 1334, learner's call Sep 24; re-price at kickoff) · Greedy 🟡 + 39 🔴 re-rep + Backtracking intake 2 + overdue 🟢s seated",
+        "units": 13.1,
+        "items": [
+          {
+            "lcNumber": 743,
+            "title": "Network Delay Time (Dijkstra — array-scan)",
+            "technique": "Dijkstra",
+            "startComfort": "🟡",
+            "difficulty": "Medium",
+            "url": "https://leetcode.com/problems/network-delay-time/",
+            "file": "dsa/leetcode/graphs/743_network_delay_time.py",
+            "tags": [
+              "moved",
+              "variant"
+            ],
             "kind": "rep",
             "done": false,
             "endComfort": null,
@@ -2850,66 +2913,15 @@
             "difficulty": "Medium",
             "url": "https://leetcode.com/problems/find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance/",
             "file": "dsa/leetcode/graphs/1334_find_the_city_with_the_smallest_number_of_neighbors_at_a_threshold_distance.py",
-            "tags": [],
+            "tags": [
+              "moved"
+            ],
             "kind": "rep",
             "done": false,
             "endComfort": null,
             "endNote": null,
             "nextReview": null
           },
-          {
-            "lcNumber": 189,
-            "title": "Rotate Array",
-            "technique": "Array-rotation",
-            "startComfort": "🟢",
-            "difficulty": "Medium",
-            "url": "https://leetcode.com/problems/rotate-array/",
-            "file": "dsa/leetcode/arrays_and_hash/189_rotate_array.py",
-            "tags": [],
-            "kind": "rep",
-            "done": false,
-            "endComfort": null,
-            "endNote": null,
-            "nextReview": null
-          },
-          {
-            "lcNumber": 53,
-            "title": "Maximum Subarray",
-            "technique": "Kadane",
-            "startComfort": "🟢",
-            "difficulty": "Medium",
-            "url": "https://leetcode.com/problems/maximum-subarray/",
-            "file": "dsa/leetcode/greedy/53_maximum_subarray.py",
-            "tags": [],
-            "kind": "rep",
-            "done": false,
-            "endComfort": null,
-            "endNote": null,
-            "nextReview": null
-          },
-          {
-            "lcNumber": 572,
-            "title": "Subtree Of Another Tree",
-            "technique": "Tree-DFS",
-            "startComfort": "🟢",
-            "difficulty": "Medium",
-            "url": "https://leetcode.com/problems/subtree-of-another-tree/",
-            "file": "dsa/leetcode/trees/572_subtree_of_another_tree.py",
-            "tags": [],
-            "kind": "rep",
-            "done": false,
-            "endComfort": null,
-            "endNote": null,
-            "nextReview": null
-          }
-        ]
-      },
-      {
-        "date": "2026-09-25",
-        "weekday": "Friday",
-        "label": "over ceiling, learner-accepted Wed · Greedy 🟡 + 39 🔴 re-rep + Backtracking intake 2 + overdue 🟢s seated",
-        "units": 10.5,
-        "items": [
           {
             "lcNumber": 55,
             "title": "Jump Game",
@@ -3014,8 +3026,8 @@
       {
         "date": "2026-09-26",
         "weekday": "Saturday",
-        "label": "Binary Search 🟡 + greens + 🆕 1631 Dijkstra consolidation (min-over-max)",
-        "units": 7.9,
+        "label": "⚠️ over ceiling since 648 🔴 re-rep landed here Sep 24; re-price at close-out · Binary Search 🟡 + greens + 🆕 1631 Dijkstra consolidation (min-over-max)",
+        "units": null,
         "items": [
           {
             "lcNumber": 34,
@@ -3089,6 +3101,24 @@
               "new"
             ],
             "kind": "new",
+            "done": false,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
+          },
+          {
+            "lcNumber": 648,
+            "title": "Replace Words",
+            "technique": "Trie",
+            "startComfort": "🔴",
+            "difficulty": "Medium",
+            "url": "https://leetcode.com/problems/replace-words/",
+            "file": "dsa/leetcode/trie/648_replace_words.py",
+            "tags": [
+              "protected",
+              "backfill"
+            ],
+            "kind": "rep",
             "done": false,
             "endComfort": null,
             "endNote": null,
@@ -3241,6 +3271,23 @@
             "difficulty": "Medium",
             "url": "https://leetcode.com/problems/network-delay-time/",
             "file": "dsa/leetcode/graphs/743_network_delay_time.py",
+            "tags": [
+              "probe"
+            ],
+            "kind": "complexity",
+            "done": false,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
+          },
+          {
+            "lcNumber": 648,
+            "title": "Replace Words",
+            "technique": "Complexity",
+            "startComfort": null,
+            "difficulty": "Medium",
+            "url": "https://leetcode.com/problems/replace-words/",
+            "file": "dsa/leetcode/trie/648_replace_words.py",
             "tags": [
               "probe"
             ],
@@ -3420,6 +3467,34 @@
     }
   ],
   "problems": [
+    {
+      "lcNumber": 648,
+      "title": "Replace Words",
+      "url": "https://leetcode.com/problems/replace-words/",
+      "file": "dsa/leetcode/trie/648_replace_words.py",
+      "difficulty": "Medium",
+      "category": "trie",
+      "comfort": "🔴",
+      "level": 0,
+      "streak": 0,
+      "nextReview": "2026-09-26",
+      "repDates": [
+        "2026-09-14",
+        "2026-09-24"
+      ],
+      "timeline": [
+        {
+          "date": "2026-09-14",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-09-24",
+          "comfort": "🔴",
+          "level": 0
+        }
+      ]
+    },
     {
       "lcNumber": 39,
       "title": "Combination Sum",
@@ -5065,28 +5140,6 @@
           "comfort": null,
           "level": null
         },
-        {
-          "date": "2026-09-14",
-          "comfort": "🟡",
-          "level": 1
-        }
-      ]
-    },
-    {
-      "lcNumber": 648,
-      "title": "Replace Words",
-      "url": "https://leetcode.com/problems/replace-words/",
-      "file": "dsa/leetcode/trie/648_replace_words.py",
-      "difficulty": "Medium",
-      "category": "trie",
-      "comfort": "🟡",
-      "level": 1,
-      "streak": 0,
-      "nextReview": "2026-09-24",
-      "repDates": [
-        "2026-09-14"
-      ],
-      "timeline": [
         {
           "date": "2026-09-14",
           "comfort": "🟡",

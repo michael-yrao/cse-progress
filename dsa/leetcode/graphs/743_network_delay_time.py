@@ -42,6 +42,24 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-09-24 ──────────────
+    def networkDelayTime_20260924(self, times: List[List[int]], n: int, k: int) -> int:
+        # array variant of Dijkstra's
+        # we need a distance array that tells us how far each node is from starting
+        # we look out further each level and update to min(distance[i], currentNode + weight)
+        # so we need adjMap, queue and visited
+
+        distance = [math.inf] * n
+
+        distance[k] = 0
+
+        visited = set()
+
+        adjMap = collections.defaultdict(list)
+
+        for src,dst,weight in times:
+            adjMap[src].append(dst)
+
     # ── Attempt · 2026-09-22 ──────────────
     def networkDelayTime_20260922(self, times: List[List[int]], n: int, k: int) -> int:
         # minHeap dijkstra variant today
