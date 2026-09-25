@@ -365,7 +365,7 @@ class ParseCurrentWeekScheduleTests(unittest.TestCase):
         "| [200 Number of Islands](../../../dsa/leetcode/graphs/200_number_of_islands.py)"
         " · [NC](https://neetcode.io/problems/number-of-islands) | 🟡 | | | BFS |\n"
         "| |  |  |  |  |\n"
-        "| ▸ **Sat Sep 26** · 4.0 units — Test day five |  |  |  |  |\n"
+        "| ▸ **Sat Sep 26** · ~4.0 units — Test day five |  |  |  |  |\n"
         # 269 is NOT in the tracker: nothing outranks the row's own [NC] link, so it's
         # used as the last resort rather than leaving url null.
         "| [269 Alien Dictionary](../../../dsa/leetcode/graphs/269_alien_dictionary.py)"
@@ -443,6 +443,9 @@ class ParseCurrentWeekScheduleTests(unittest.TestCase):
         self.assertEqual(mon["weekday"], "Monday")
         self.assertEqual(mon["units"], 6.8)
         self.assertEqual(mon["label"], "Test day one")
+        # An approximate price ("~4.0 units") is still a price — the `~` must not null the units
+        # (Sat Sep 26's "~11.1 units" header hid the dashboard's workload bar, found 2026-09-25).
+        self.assertEqual(result["days"][5]["units"], 4.0)
         self.assertEqual(len(mon["items"]), 3)
 
         plain, done, untracked = mon["items"]
