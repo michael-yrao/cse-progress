@@ -1,9 +1,9 @@
 ---
 name: project-global-claude-unversioned
-description: The execution-workflow enforcement layer in ~/.claude/ is versioned in the private repo michael-yrao/claude-dotfiles (whitelist .gitignore, in-place); restored on the Mac 2026-09-24 with a merged settings.json — restore recipe + the merge step
+description: The execution-workflow enforcement layer in ~/.claude/ is versioned in the private repo michael-yrao/claude-dotfiles (whitelist .gitignore, in-place); since 2026-09-25 a SessionStart hook (hooks/dotfiles_sync.py) converges it automatically — restore recipe for a fresh machine + what the hook does and does not do
 metadata:
   type: project
-reconciled: 2026-09-24
+reconciled: 2026-09-25
 ---
 The enforcement layer for the execution workflow lives in `~/.claude/`: the normative SSOT
 `rules/execution-workflow.md`, the reminder hook `hooks/execution_workflow_reminder.py`, the agent
@@ -20,8 +20,15 @@ copy of the rule — the single-source failure the repo's own architecture warns
 needs a commit + push in `~/.claude/` too — it is a separate repo, and the pre-commit sweep in
 cse-progress does not see it. Check with `git -C ~/.claude status -sb`.
 
-**Restore on a fresh machine:** `git init -b main` in `~/.claude`, add the remote, `git fetch origin`,
-`git checkout -b main origin/main`. See [[feedback-execution-workflow]].
+**Restore on a fresh machine (since 2026-09-25): one command.** Clone the repo anywhere, then
+`python <clone>/bootstrap.py --repos-dir <dir holding cse-progress etc.>`. It checks out the repo IN PLACE at
+`~/.claude` (init + remote + fetch + checkout), backs up any pre-existing `settings.json` to `backups/` and
+merges it onto the tracked copy (lists union, local scalars win, tracked `hooks` and `defaultMode` always
+win), moves any colliding hand-copied file aside, sets `core.hooksPath .githooks` in every child repo that
+ships `.githooks/`, runs the hook tests, verifies the three hooks are wired, and pushes. `--dry-run` prints
+the plan; `--no-push` skips the push. Rerunning on a restored machine only fetches. The manual steps it
+replaced: `git init -b main` in `~/.claude`, add the remote, `git fetch origin`, `git checkout -b main
+origin/main`, then merge `settings.json` by hand. See [[feedback-execution-workflow]].
 
 **2026-09-24 — the Mac had never been restored.** `~/.claude` there was a plain directory: no
 `rules/`, `agents/`, `hooks/`, no hook wiring in `settings.json` — so the whole enforcement layer was
@@ -37,3 +44,22 @@ then merge (union) rather than pick a side. **Portability caveat:** `additionalD
 inherently machine-specific; the harness resolves the foreign paths relative to the cwd (harmless
 noise). Verified after restore: both hooks fire (`execution_workflow_reminder` on a non-trivial prompt;
 `role_gate` warns the tech lead's first write and denies a `team-lead` Edit); 20/20 hook tests pass.
+
+**2026-09-25 — sync is now automatic.** `~/.claude/hooks/dotfiles_sync.py`, wired as a `SessionStart`
+hook in the tracked `settings.json`, fetches `origin/main` on every session start (skipped on
+`compact`), auto-commits `settings.json` churn as `chore(settings): <host> settings churn`, merges
+`origin/main` (a conflict confined to `settings.json` is resolved by a three-way JSON merge:
+`allow`/`deny`/`ask`/`additionalDirectories` are order-preserving set unions, everything else is a
+scalar three-way merge with local winning on a double change), pushes when ahead, and reports one
+`dotfiles:` line per action into the session context. **It never touches a dirty file under `rules/`,
+`agents/` or `hooks/`** — those are reported and stay a manual `git -C ~/.claude status` + commit
+(the hook pushes that commit on the next start). So the standing obligation above shrinks to: commit
+rule/agent/hook edits; settings churn takes care of itself. **The hook cannot help a machine that was
+never restored** (no `settings.json` wiring, nothing fires) — the restore recipe above still applies
+there, and the two recurrences (Mac 09-24, Windows 09-25) are logged in `self_eval_log.md`.
+
+**Detection (2026-09-25):** cse-progress's own SessionStart hook now runs
+`.claude/hooks/global_layer_canary.py`, which prints a `!! GLOBAL LAYER CHECK FAILED` banner when any piece
+of the layer is missing on the machine (rule/agent/hook files, the three hook wirings in `settings.json`,
+the `~/.claude/.git` checkout, this repo's `core.hooksPath`). A lapse like the Mac's is now loud at the
+first session, not discovered days later through a lapsed rule.

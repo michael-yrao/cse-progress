@@ -32,6 +32,8 @@ import re
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+
 MEMORY_INDEX = Path("memory") / "MEMORY.md"
 SELF_EVAL_LOG = Path("memory") / "self_eval_log.md"
 
@@ -262,7 +264,16 @@ def main() -> None:
         )
         return
 
-    emit(f"{meta_review_banner(claude_dir)}{progress_banner(claude_dir)}{ALWAYS_ON}\n{index}")
+    try:
+        # Imported here, not at module top level: a missing or broken global_layer_canary.py
+        # must degrade to the crash line below, not kill the whole memory hook.
+        from global_layer_canary import canary_banner
+
+        canary = canary_banner(Path.home(), claude_dir.parent)
+    except Exception as exc:  # noqa: BLE001 - the memory index must still load either way
+        canary = f"!! global-layer canary crashed ({exc.__class__.__name__}: {exc})\n\n"
+
+    emit(f"{canary}{meta_review_banner(claude_dir)}{progress_banner(claude_dir)}{ALWAYS_ON}\n{index}")
 
 
 if __name__ == "__main__":
