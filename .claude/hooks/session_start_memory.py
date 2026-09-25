@@ -82,6 +82,9 @@ ALWAYS-ON GATES — each is bound to a MOMENT, not a topic. Check the trigger, n
    problem on today's schedule, active block AND both warmups) BEFORE presenting it. A message naming
    a specific problem is NOT a kickoff -- scaffold only that. (Presented-not-scaffolded Sep 12 AND 13,
    2026; the reference-tier fix lapsed in a day. Gate 9 of CLAUDE.md; kickoff_scaffold_reminder.py.)
+8. About to send a message? -> ONE message after the last tool call -- no progress narration,
+   no partial results. Every repo-state claim names its tool result; a claim with none is a
+   plan, not a report. See grounded_claims.py. (Aug 3, Aug 21 x2, 2026.)
 
 Load the individual memory file before acting on any rule you are unsure about. Index follows.
 """

@@ -1,4 +1,4 @@
-<!-- reconciled: 2026-09-20 -->
+<!-- reconciled: 2026-09-25 -->
 # Motivation & progress — surfacing the journey honestly
 
 **Open this** at a *celebration moment*: session start, when a real milestone lands (a graduation,
@@ -10,10 +10,10 @@ mid-rep — progress is surfaced *around* the work, never during the rating.
 Every progress signal here is computed from records that already exist and keys off a
 **genuine, unfakeable event**. A graduation is three cold cleans across spaced intervals; a
 retirement is a graduated problem clearing its spot checks; a streak is showing up. **Never** let
-a badge or streak leak into a rating: you still infer comfort from the session and flag a dishonest
+a badge or streak leak into a rating. You still infer comfort from the session and flag a dishonest
 🟢 exactly as before (`review-workflow.md`, [[feedback_infer_comfort]]). The gamification exists to
 make honest progress *visible*, not to buy a rep. If celebrating a milestone would tempt the
-learner toward a soft 🟢 to keep a streak alive, say the honest thing — the streak survives a 🟡, a
+learner toward a soft 🟢 to keep a streak alive, say the honest thing. The streak survives a 🟡, a
 rep happened.
 
 ## What is real progress here (and what is not)
@@ -37,16 +37,16 @@ is healthy. Report the pipeline and the trophy case, never "N problems in the tr
 | Moment | Do |
 |---|---|
 | **Session start** | the SessionStart hook already injects a one-line PROGRESS banner (streak + trophies + dashboard link). Acknowledge it warmly in a sentence if it is notable; don't recompute or expand it. |
-| **A milestone lands this rep** (a graduation, a retirement, a streak threshold crossed, a comeback) | one genuine, specific line — *what* was earned and *why it counts* — in the coach's warm voice. Not gushing, not a checklist. |
+| **A milestone lands this rep** (a graduation, a retirement, a streak threshold crossed, a comeback) | one genuine, specific line: *what* was earned and *why it counts*. Deliver it in the coach's warm voice, not gushing, not a checklist. |
 | **Weekly close-out** (`weekly-build.md`) | note the week's pipeline movement (what converted, what graduated) as part of the close-out. |
 
 ## Mechanics
 
-- The numbers are computed, never hand-tallied: `python scripts/gamify.py` writes `progress.json`
-  (the pre-commit hook does this automatically when a rep lands). `--banner` prints the one-line
+- The numbers are computed, never hand-tallied: `python scripts/gamify.py` writes `progress.json`.
+  The pre-commit hook does this automatically when a rep lands. `--banner` prints the one-line
   summary; `--validate` checks it without writing.
 - Tuned thresholds (streak rest-day allowance, milestone lengths) live **only** in
   `cse.config.yml` `gamification:` — name the key, never restate the number here.
-- The dashboard lives at `progressiveoverflow.com/progress` (own repo by default;
-  `?repo=owner/name` for any public cse-coach repo). full rule / why:
+- The dashboard lives at `progressiveoverflow.com/progress`. By default it uses its own repo; pass
+  `?repo=owner/name` for any public cse-coach repo. full rule / why:
   [[project_gamification]]; decision: `gamification-progress-platform` (`decisions.yml`).

@@ -18,6 +18,7 @@ operational copy is in a skill reference or CLAUDE.md. Grouped for scanning.
 - [Interactive learning](feedback_interactive_learning.md) — derive/Socratic for heavy concepts, but spine-then-pull; at TRUE ZERO it degrades → teach the spine, let them pull.
 - [Concept primer](feedback_concept_primer.md) — before the FIRST exposure to a named algorithm, a short UNRATED session on the object it finds + its name; the procedure comes later, another day.
 - [Expand acronyms](feedback_expand_acronyms.md) — expand every acronym on first use, chat + note.
+- [Output quality](feedback_output_quality.md) — one message per turn after the last tool call; F1 · groundedness · narrative · readability; every repo-state claim names its tool result.
 
 ## Rating & gates
 - [Recognition gate](feedback_recognition_gate.md) — front-gate: shape→technique+why (their pre-code comment); shape cues only, never candidate techniques.

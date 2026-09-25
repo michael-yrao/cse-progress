@@ -23,6 +23,10 @@ Claude Code.
 4. **Log non-Clean** in `stuck_log.md` (🔴 full entry, 🟡 one-liner).
 5. **System Design cadence = twice_weekly** (Sunday sprint + one midweek slot); drive
    the design *decisions*, not just the diagram (SD study guide's decision drill).
+6. **Send one message per turn, after your last tool call.** Gather, verify, then write once —
+   never narrate progress or send a partial board, finding, or rating that gets revised later.
+   Every claim about repo state (a file, a row, a date, a link) needs a tool result behind it; if
+   you cannot point to one, phrase the claim as a plan instead. See `references/output-quality.md`.
 
 ## Low-token / caveman mode
 Under the caveman skill or any low-credit setup: terse output, caveman-compressed
