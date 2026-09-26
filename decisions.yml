@@ -992,3 +992,21 @@ decisions:
       the learner's next move; it is not mid-turn narration. See `references/output-quality.md`,
       `feedback_output_quality.md`.
     affects: [turn_economy, token_discipline, self_evaluation, hooks, reporting]
+
+  - id: workload-series
+    date: 2026-09-25
+    summary: >-
+      ADDS a `workload` array to `progress.json`/`progress-summary.json`: one entry per scheduled
+      day (live + archive) — `{date, planned, done, built, partial}`, planned from the day header's
+      stated unit total, done/built priced from its rows. `effort_budget.py`'s `price_schedule_day()`
+      (prices a day but only prints) is split so the pricing core is reusable: the new
+      `price_day_items(day, items, rows, cfg)` is a behaviour-preserving extraction of its loop, and
+      `gamify.py`'s new `build_workload(rows, cfg)` calls it once per scheduled day. `done`/`built`
+      are re-priced under the CURRENT `cse.config.yml` weights, not whatever a day was billed at
+      when it was built — so the series lets the dashboard compare planned vs completed units over
+      time, but history is comparable to TODAY's weights, never to what a schedule's own Start
+      column implied at build time. In `progress-summary.json` the array is capped to the same
+      rolling window as `studyDays` (`SUMMARY_STUDY_DAYS_WINDOW`); `progress.json` keeps every
+      scheduled day, uncapped. No `cse.config.yml` value changed. See `dashboard/progress.schema.json`
+      (`workloadDay`), `scripts/effort_budget.py`, `scripts/gamify.py`.
+    affects: [gamification]

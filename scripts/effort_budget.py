@@ -416,26 +416,14 @@ def parse_schedule_day(path: Path, day: dt.date) -> tuple[list[dict], float | No
     return items, stated
 
 
-def price_schedule_day(day: dt.date, rows: list[dict], cfg: dict) -> None:
-    """Price a scheduled day as BUILT, splitting done from remaining.
+def price_day_items(day: dt.date, items: list[dict], rows: list[dict], cfg: dict) -> dict:
+    """Price one day's parsed schedule items, splitting done from remaining.
 
-    This exists because --day cannot do it. --day takes a list of numbers from a
-    human, so it prices exactly what it is handed -- and mid-session the natural
-    thing to hand it is the REMAINING items, whose total then reads as the day's
-    total. That error (Aug 18, 2026) invented 5.0 units of spare capacity on a day
-    already sitting at the ceiling, and a discretionary rep got seated on it. Here
-    the tool defines the day, so there is nothing to mis-hand it.
+    Pure pricing core shared by price_schedule_day() (which prints) and
+    build_workload() in gamify.py (which serializes). Moved out of
+    price_schedule_day() verbatim on 2026-09-25 so the dashboard could reuse the
+    exact same pricing without reprinting it.
     """
-    path = find_schedule(day)
-    if path is None:
-        print(f"no weekly schedule covers {day} (looked in {SCHEDULES} and archive/)")
-        return
-    items, stated = parse_schedule_day(path, day)
-    if not items:
-        print(f"{day} has no block in {path.name} -- nothing scheduled, or the day "
-              f"header is not in the form this parser expects.")
-        return
-
     by_num: dict[str, list[dict]] = {}
     for r in rows:
         by_num.setdefault(r["num"], []).append(r)
@@ -477,7 +465,42 @@ def price_schedule_day(day: dt.date, rows: list[dict], cfg: dict) -> None:
             rest_total += cost
             rest_lines.append(line)
 
-    built = done_total + rest_total
+    return {
+        "done": done_total,
+        "remaining": rest_total,
+        "built": done_total + rest_total,
+        "guessed": guessed,
+        "unpriced": unpriced,
+        "done_lines": done_lines,
+        "rest_lines": rest_lines,
+    }
+
+
+def price_schedule_day(day: dt.date, rows: list[dict], cfg: dict) -> None:
+    """Price a scheduled day as BUILT, splitting done from remaining.
+
+    This exists because --day cannot do it. --day takes a list of numbers from a
+    human, so it prices exactly what it is handed -- and mid-session the natural
+    thing to hand it is the REMAINING items, whose total then reads as the day's
+    total. That error (Aug 18, 2026) invented 5.0 units of spare capacity on a day
+    already sitting at the ceiling, and a discretionary rep got seated on it. Here
+    the tool defines the day, so there is nothing to mis-hand it.
+    """
+    path = find_schedule(day)
+    if path is None:
+        print(f"no weekly schedule covers {day} (looked in {SCHEDULES} and archive/)")
+        return
+    items, stated = parse_schedule_day(path, day)
+    if not items:
+        print(f"{day} has no block in {path.name} -- nothing scheduled, or the day "
+              f"header is not in the form this parser expects.")
+        return
+
+    p = price_day_items(day, items, rows, cfg)
+    done_total, rest_total, built = p["done"], p["remaining"], p["built"]
+    guessed, unpriced = p["guessed"], p["unpriced"]
+    done_lines, rest_lines = p["done_lines"], p["rest_lines"]
+
     print(f"{day:%a %b %d} - {path.name}\n")
     if done_lines:
         print("  DONE")
