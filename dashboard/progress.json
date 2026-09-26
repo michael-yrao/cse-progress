@@ -3073,8 +3073,8 @@
       {
         "date": "2026-09-26",
         "weekday": "Saturday",
-        "label": "⚠️ over ceiling since 648 🔴 re-rep landed here Sep 24; re-price at close-out · Binary Search 🟡 + greens + 🆕 1631 Dijkstra consolidation (min-over-max)",
-        "units": 11.1,
+        "label": "⚠️ still over ceiling (648 🔴 re-rep landed here Sep 24; 540 → Sun Sep 27, learner's call) · Binary Search 🟡 + greens + 🆕 1631 Dijkstra consolidation (min-over-max)",
+        "units": 9.5,
         "items": [
           {
             "lcNumber": 34,
@@ -3084,21 +3084,6 @@
             "difficulty": "Medium",
             "url": "https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/",
             "file": "dsa/leetcode/binary_search/34_find_first_and_last_position_of_element_in_sorted_array.py",
-            "tags": [],
-            "kind": "rep",
-            "done": false,
-            "endComfort": null,
-            "endNote": null,
-            "nextReview": null
-          },
-          {
-            "lcNumber": 540,
-            "title": "Single Element in a Sorted Array",
-            "technique": "Binary-search",
-            "startComfort": "🟡",
-            "difficulty": "Medium",
-            "url": "https://leetcode.com/problems/single-element-in-a-sorted-array/",
-            "file": "dsa/leetcode/binary_search/540_single_element_in_sorted_array.py",
             "tags": [],
             "kind": "rep",
             "done": false,
@@ -3176,8 +3161,8 @@
       {
         "date": "2026-09-27",
         "weekday": "Sunday",
-        "label": "🟡 conversions + 🆕 1102 Dijkstra consolidation (max-min) + complexity cleanup (close-out)",
-        "units": 7.3,
+        "label": "⚠️ over ceiling (+1.6 from Sat's 540, learner's call Sep 26) · 🟡 conversions + 🆕 1102 Dijkstra consolidation (max-min) + complexity cleanup (close-out)",
+        "units": 8.9,
         "items": [
           {
             "lcNumber": 560,
@@ -3203,6 +3188,23 @@
             "url": "https://leetcode.com/problems/accounts-merge/",
             "file": "dsa/leetcode/graphs/721_accounts_merge.py",
             "tags": [],
+            "kind": "rep",
+            "done": false,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
+          },
+          {
+            "lcNumber": 540,
+            "title": "Single Element in a Sorted Array",
+            "technique": "Binary-search",
+            "startComfort": "🟡",
+            "difficulty": "Medium",
+            "url": "https://leetcode.com/problems/single-element-in-a-sorted-array/",
+            "file": "dsa/leetcode/binary_search/540_single_element_in_sorted_array.py",
+            "tags": [
+              "moved"
+            ],
             "kind": "rep",
             "done": false,
             "endComfort": null,
@@ -3680,16 +3682,16 @@
     },
     {
       "date": "2026-09-26",
-      "planned": 11.1,
+      "planned": 9.5,
       "done": 0.0,
-      "built": 8.1,
+      "built": 6.5,
       "partial": true
     },
     {
       "date": "2026-09-27",
-      "planned": 7.3,
+      "planned": 8.9,
       "done": 0.0,
-      "built": 11.1,
+      "built": 12.8,
       "partial": true
     }
   ],
