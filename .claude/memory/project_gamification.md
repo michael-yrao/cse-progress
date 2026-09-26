@@ -3,7 +3,7 @@ name: project-gamification
 description: Honest-progress gamification (streak, maturation pipeline, trophy case, coverage, badges) emitted as progress.json and rendered on progressiveoverflow.com; reward only unfakeable events, never a rating
 metadata:
   type: project
-reconciled: 2026-09-24
+reconciled: 2026-09-26
 ---
 
 **Started Sep 20, 2026**, from the learner's ask: "gamify cse-coach — achievements/milestones,
@@ -158,3 +158,24 @@ summary contract (today's / this-week's items — small), same summary-first dis
 this-week progress); everything else (pipeline breakdown, technique list, per-problem graphs) stays as
 drill-downs. Keep the summary-first / lightweight rules. Plan it under the standing workflow
 ([[feedback-execution-workflow]]) when the learner returns to it.
+
+## Full Spectrum tightened to the WHOLE roadmap; badges gain `progress` (Sep 26, 2026)
+
+Full Spectrum (`all-green`) used to earn on `technique_coverage.md`'s header count — every
+STARTED technique had a green, `noGreen == 0` with at least one started. That let a badge called
+"Full Spectrum" earn while most of the roadmap sat untouched (59/59 started-and-green while 39 of
+98 `techniques.yml` entries had no rep at all). It now reads the per-technique table
+(`stats["techniques"]`, `hasGreen`) directly and requires a green in EVERY entry, started or not —
+so the badge means what its name says. Every counter badge (the streak milestones, the mastered/
+graduated-or-retired milestones, and Full Spectrum) also gained an additive `progress: {current,
+target}` field, present whether or not it's earned; a one-shot event badge (first-clean, first-
+hard-clean, first-graduate, first-retire, comeback) never carries it — an event either happened or
+it didn't, there's no "how far toward" a comeback. Non-breaking, no `SCHEMA_VERSION` bump.
+Decision: `decisions.yml` `badge-catalog-full-spectrum-sep26`.
+
+**"Trophy case" in the prose above (and elsewhere in this file) means the 🎓+🏆 maturation
+TIERS** — the pipeline stage, not a UI element — and that meaning is unchanged. Separately, the
+progressiveoverflow.com site is removing its dedicated Trophy-case CARD from the dashboard (a
+site-repo change); this repo's `trophyCase` key in the JSON contract is retained and still
+emitted unchanged — the card and the contract key were never the same thing, and only the card
+is going.

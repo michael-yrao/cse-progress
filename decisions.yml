@@ -1010,3 +1010,26 @@ decisions:
       scheduled day, uncapped. No `cse.config.yml` value changed. See `dashboard/progress.schema.json`
       (`workloadDay`), `scripts/effort_budget.py`, `scripts/gamify.py`.
     affects: [gamification]
+
+  - id: badge-catalog-full-spectrum-sep26
+    date: 2026-09-26
+    summary: >-
+      CHANGES the Full Spectrum (`all-green`) badge's earned criterion: it used to fire once
+      every STARTED technique had a green (`technique_coverage.md`'s `noGreen == 0` with at
+      least one started); it now requires a green in EVERY technique in `techniques.yml`
+      (`stats["techniques"]`, one entry per row, `hasGreen`), so an untouched technique keeps
+      it locked even when everything started is clean. ADDS an additive `progress: {current,
+      target}` field to every counter badge (the streak milestones, the mastered/graduated-
+      or-retired milestones, and Full Spectrum) — how far toward the target, present whether
+      or not the badge is earned; a one-shot event badge (first-clean, first-hard-clean,
+      first-graduate, first-retire, comeback) never carries it, since there is no current/
+      target for an event that either happened or hasn't. Also fixes the mastered-milestone
+      description's plural ("1 problem" vs "N problems"). No `SCHEMA_VERSION` bump (both
+      changes are additive/non-breaking) and no `cse.config.yml` value changed. Separately,
+      the progressiveoverflow.com site is removing its Trophy case card from the dashboard
+      UI (a site-repo change, not this repo's) — the JSON contract's `trophyCase` key is
+      retained and still emitted unchanged (additive discipline); nothing here touches it.
+      See `scripts/gamify.py`
+      (`compute_badges`), `dashboard/progress.schema.json` (`badges.items.properties.progress`),
+      `.claude/memory/project_gamification.md`.
+    affects: [gamification]
