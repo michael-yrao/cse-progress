@@ -1,3 +1,10 @@
+- **2026-09-25 · 46 Permutations** (🆕 new, measured; folder half-spoils) — ⚠️ **partial.** Backtracking named unaided, but the
+  picking feature vs 78/39 (order matters ⟹ every unused element is a candidate for the next slot ⟹ a `for` over candidates,
+  not a take/skip on an index) was coach-supplied after the take/skip version failed; pseudocode given on request. → 🟡.
+- **2026-09-25 · 55 Jump Game** (🟡 re-rep; retry, half-spoiled: greedy folder) — ⚠️ **partial.** Shape called unaided
+  (reachability via `i + nums[i]`, no path needed), but the technique was never named and the picking feature (one
+  running value — furthest-reachable forward, or the moving goal backward — replaces enumerating jumps) came from two
+  coach questions; the backward loop's shape was coach-supplied after the forward version missed the `i > furthest` check. → 🟡.
 
 
 - **2026-09-23 · 1489 Critical/Pseudo-Critical MST Edges** (🟡 retry, half-spoiled: schedule tag named Kruskal) —

@@ -21,6 +21,22 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-09-25 ──────────────
+    def jumpGame_20260925(self, nums: List[int]) -> bool:
+        # we only need to know if we can reach the end node
+        # we judge whether or not we can reach via i + nums[i]
+        # mental blockade here is it is very hard to not think about how we do the jump
+        # so go backwards and change the goal as we go backwards
+
+        goal = len(nums) - 1
+
+        for i in range(len(nums) - 2, -1, -1):
+            # if we can reach goal from i, set i to our new goal
+            if i + nums[i] >= goal:
+                goal = i
+            
+        return True if goal == 0 else False
+
     # ── Attempt · 2026-09-15 ──────────────
     def jumpGame_20260915(self, nums: List[int]) -> bool:
         # one important thing to note here is that we are looking for whether or not

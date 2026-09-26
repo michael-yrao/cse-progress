@@ -1259,3 +1259,14 @@ Cadence reset.
 **What:** The learner saw no units bar for Sat Sep 26 in the collapsed schedule board. `effort_budget.DAY_HEADER` required the digits to follow the `·` directly, so the `~` in "· ~11.1 units" left the `units` group empty; `gamify.py` (line ~479) then exported `units: null`, and the board hides the bar on null. `effort_budget.py` reads the same group, so Saturday's stated price was also invisible to the budget check.
 **Why:** the header grammar admitted an annotation (`~` = approximate, written at the Sep 24 re-price) that the parser's regex never modelled; no test covered a header with it.
 **Fix/ladder:** Source fix (rung 1): the regex now accepts an optional `~` before the number; `test_gamify.py`'s Saturday fixture carries `~4.0 units` and asserts it parses to 4.0. Dashboard JSON regenerated (Sat = 11.1). Rule stands: a schedule-header annotation is legal only once a test parses it.
+
+## 2026-09-25 [P3] advance-prompt tail on 46: closed a resolved point with "Go ahead"
+**What:** After the learner chose the explicit `used`-set version for 46 Permutations, the turn ended on "Go ahead." The Stop hook (`problem_link_reminder.py` advance-prompt check) blocked it; re-emitted without the tail.
+**Why:** the point was resolved and the correct close was silence; the tail slipped in as a conversational sign-off, the same reflex `feedback_let_learner_pace.md` names.
+**Fix/ladder:** Hook (rung 2) already enforces it and caught it; no new wiring. Habit note: when the learner states a plan, affirm it and stop — the plan is theirs to execute on their own clock.
+
+
+## 2026-09-26 [P3] site: workload chart's ceiling label painted UNDER the bars it exists to flag
+**What:** The learner saw the "ceiling 8" label hidden behind the daily bars on the new Workload chart (and the weekly view had the same defect). The template drew the ceiling line + label before the `@for` of bar groups; SVG paints in document order, so any bar at or above the ceiling covered them — exactly the bars the line is there to flag.
+**Why:** Review (lead + tech lead) checked geometry, colours, legend and specs but never a z-order case: no spec put a bar above the ceiling and asked whether the reference layer was still visible. The dataviz pass covered form and colour, not paint order.
+**Fix/ladder:** Source fix: the ceiling group now renders after the bars and the label carries a card-coloured `paint-order: stroke` halo; a spec asserts the line/label follow the last bar group in DOM order. Habit note for chart reviews: a reference line's spec must include a datum that crosses it.

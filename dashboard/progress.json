@@ -2,17 +2,17 @@
   "schemaVersion": 1,
   "generatedAt": "2026-09-25",
   "totals": {
-    "problems": 124,
-    "solutions": 135,
-    "reps": 606
+    "problems": 125,
+    "solutions": 136,
+    "reps": 609
   },
   "pipeline": {
     "blank": 1,
-    "shaky": 14,
+    "shaky": 15,
     "clean": {
       "s0": 3,
-      "s1": 28,
-      "s2plus": 68,
+      "s1": 26,
+      "s2plus": 70,
       "total": 99
     },
     "graduated": 21,
@@ -20,7 +20,7 @@
   },
   "difficulty": {
     "Easy": 34,
-    "Medium": 90,
+    "Medium": 91,
     "Hard": 11
   },
   "streak": {
@@ -38,12 +38,58 @@
     "variantGaps": 3
   },
   "onSchedule": {
-    "totalActive": 135,
+    "totalActive": 136,
     "dueToday": 0,
-    "overdue": 8
+    "overdue": 6
   },
   "trophyCase": {
     "graduated": [
+      {
+        "lcNumber": 104,
+        "title": "Maximum Depth of Binary Tree",
+        "url": "https://leetcode.com/problems/maximum-depth-of-binary-tree/",
+        "file": "dsa/leetcode/trees/104_max_depth_of_binary_tree.py",
+        "difficulty": "Easy",
+        "category": "trees",
+        "comfort": "🎓",
+        "level": 3,
+        "streak": 3,
+        "nextReview": "2027-03-24",
+        "repDates": [
+          "2026-04-30",
+          "2026-05-27",
+          "2026-06-27",
+          "2026-07-27",
+          "2026-09-25"
+        ],
+        "timeline": [
+          {
+            "date": "2026-04-30",
+            "comfort": null,
+            "level": null
+          },
+          {
+            "date": "2026-05-27",
+            "comfort": null,
+            "level": null
+          },
+          {
+            "date": "2026-06-27",
+            "comfort": null,
+            "level": null
+          },
+          {
+            "date": "2026-07-27",
+            "comfort": null,
+            "level": null
+          },
+          {
+            "date": "2026-09-25",
+            "comfort": "🎓",
+            "level": 3
+          }
+        ]
+      },
       {
         "lcNumber": 199,
         "title": "Binary Tree Right Side View",
@@ -883,52 +929,6 @@
           },
           {
             "date": "2026-07-29",
-            "comfort": "🎓",
-            "level": 3
-          }
-        ]
-      },
-      {
-        "lcNumber": 104,
-        "title": "Maximum Depth of Binary Tree",
-        "url": "https://leetcode.com/problems/maximum-depth-of-binary-tree/",
-        "file": "dsa/leetcode/trees/104_max_depth_of_binary_tree.py",
-        "difficulty": "Easy",
-        "category": "trees",
-        "comfort": "🎓",
-        "level": 3,
-        "streak": 3,
-        "nextReview": "2027-03-24",
-        "repDates": [
-          "2026-04-30",
-          "2026-05-27",
-          "2026-06-27",
-          "2026-07-27",
-          "2026-09-25"
-        ],
-        "timeline": [
-          {
-            "date": "2026-04-30",
-            "comfort": null,
-            "level": null
-          },
-          {
-            "date": "2026-05-27",
-            "comfort": null,
-            "level": null
-          },
-          {
-            "date": "2026-06-27",
-            "comfort": null,
-            "level": null
-          },
-          {
-            "date": "2026-07-27",
-            "comfort": null,
-            "level": null
-          },
-          {
-            "date": "2026-09-25",
             "comfort": "🎓",
             "level": 3
           }
@@ -2931,7 +2931,7 @@
       {
         "date": "2026-09-25",
         "weekday": "Friday",
-        "label": "⚠️ over ceiling (10.5 accepted Wed, +2.6 from Thu's 743 + 1334, learner's call Sep 24; re-price at kickoff) · Greedy 🟡 + 39 🔴 re-rep + Backtracking intake 2 + overdue 🟢s seated",
+        "label": "✅ all 8 done (743 🟡 · 1334 🟢 · 55 🟡 · 104 🎓 · 39 🟢 · 46 🟡 · 875 🟢 · 1584 🟢) — ⚠️ over ceiling (10.5 accepted Wed, +2.6 from Thu's 743 + 1334, learner's call Sep 24) · Greedy 🟡 + 39 🔴 re-rep + Backtracking intake 2 + overdue 🟢s seated",
         "units": 13.1,
         "items": [
           {
@@ -3004,17 +3004,17 @@
             "title": "Permutations",
             "technique": "Backtracking",
             "startComfort": null,
-            "difficulty": null,
+            "difficulty": "Medium",
             "url": "https://leetcode.com/problems/permutations/",
             "file": "dsa/leetcode/backtracking/46_permutations.py",
             "tags": [
               "new"
             ],
             "kind": "new",
-            "done": false,
-            "endComfort": null,
+            "done": true,
+            "endComfort": "🟡",
             "endNote": null,
-            "nextReview": null
+            "nextReview": "2026-10-05"
           },
           {
             "lcNumber": 39,
@@ -3046,10 +3046,10 @@
               "backfill"
             ],
             "kind": "rep",
-            "done": false,
-            "endComfort": null,
+            "done": true,
+            "endComfort": "🟢",
             "endNote": null,
-            "nextReview": null
+            "nextReview": "2026-11-24"
           },
           {
             "lcNumber": 1584,
@@ -3063,10 +3063,10 @@
               "backfill"
             ],
             "kind": "rep",
-            "done": false,
-            "endComfort": null,
+            "done": true,
+            "endComfort": "🟢",
             "endNote": null,
-            "nextReview": null
+            "nextReview": "2026-11-24"
           }
         ]
       },
@@ -3415,8 +3415,8 @@
     {
       "date": "2026-08-19",
       "planned": 8.5,
-      "done": 8.6,
-      "built": 8.6,
+      "done": 8.1,
+      "built": 8.1,
       "partial": true
     },
     {
@@ -3464,8 +3464,8 @@
     {
       "date": "2026-08-26",
       "planned": 8.0,
-      "done": 3.2,
-      "built": 3.2,
+      "done": 2.7,
+      "built": 2.7,
       "partial": false
     },
     {
@@ -3520,8 +3520,8 @@
     {
       "date": "2026-09-03",
       "planned": 7.7,
-      "done": 7.3,
-      "built": 7.3,
+      "done": 7.4,
+      "built": 7.4,
       "partial": false
     },
     {
@@ -3597,8 +3597,8 @@
     {
       "date": "2026-09-14",
       "planned": 7.0,
-      "done": 4.5,
-      "built": 4.5,
+      "done": 5.0,
+      "built": 5.0,
       "partial": true
     },
     {
@@ -3653,8 +3653,8 @@
     {
       "date": "2026-09-22",
       "planned": 7.3,
-      "done": 7.0,
-      "built": 7.0,
+      "done": 7.3,
+      "built": 7.3,
       "partial": false
     },
     {
@@ -3674,9 +3674,9 @@
     {
       "date": "2026-09-25",
       "planned": 13.1,
-      "done": 8.1,
-      "built": 10.1,
-      "partial": true
+      "done": 12.5,
+      "built": 12.5,
+      "partial": false
     },
     {
       "date": "2026-09-26",
@@ -3860,34 +3860,6 @@
   ],
   "problems": [
     {
-      "lcNumber": 648,
-      "title": "Replace Words",
-      "url": "https://leetcode.com/problems/replace-words/",
-      "file": "dsa/leetcode/trie/648_replace_words.py",
-      "difficulty": "Medium",
-      "category": "trie",
-      "comfort": "🔴",
-      "level": 0,
-      "streak": 0,
-      "nextReview": "2026-09-26",
-      "repDates": [
-        "2026-09-14",
-        "2026-09-24"
-      ],
-      "timeline": [
-        {
-          "date": "2026-09-14",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-09-24",
-          "comfort": "🔴",
-          "level": 0
-        }
-      ]
-    },
-    {
       "lcNumber": 39,
       "title": "Combination Sum",
       "url": "https://leetcode.com/problems/combination-sum/",
@@ -3912,6 +3884,326 @@
           "date": "2026-09-25",
           "comfort": "🟢",
           "level": 2
+        }
+      ]
+    },
+    {
+      "lcNumber": 46,
+      "title": "Permutations",
+      "url": "https://leetcode.com/problems/permutations/",
+      "file": "dsa/leetcode/backtracking/46_permutations.py",
+      "difficulty": "Medium",
+      "category": "backtracking",
+      "comfort": "🟡",
+      "level": 1,
+      "streak": 0,
+      "nextReview": "2026-10-05",
+      "repDates": [
+        "2026-09-25"
+      ],
+      "timeline": [
+        {
+          "date": "2026-09-25",
+          "comfort": "🟡",
+          "level": 1
+        }
+      ]
+    },
+    {
+      "lcNumber": 55,
+      "title": "Jump Game",
+      "url": "https://leetcode.com/problems/jump-game/",
+      "file": "dsa/leetcode/greedy/55_jump_game.py",
+      "difficulty": "Medium",
+      "category": "greedy",
+      "comfort": "🟡",
+      "level": 1,
+      "streak": 0,
+      "nextReview": "2026-10-05",
+      "repDates": [
+        "2026-09-05",
+        "2026-09-15",
+        "2026-09-25"
+      ],
+      "timeline": [
+        {
+          "date": "2026-09-05",
+          "comfort": "🟡",
+          "level": 1
+        },
+        {
+          "date": "2026-09-15",
+          "comfort": "🟡",
+          "level": 1
+        },
+        {
+          "date": "2026-09-25",
+          "comfort": "🟡",
+          "level": 1
+        }
+      ]
+    },
+    {
+      "lcNumber": 743,
+      "title": "Network Delay Time (Dijkstra — array-scan)",
+      "url": "https://leetcode.com/problems/network-delay-time/",
+      "file": "dsa/leetcode/graphs/743_network_delay_time.py",
+      "difficulty": "Medium",
+      "category": "graphs",
+      "comfort": "🟡",
+      "level": 1,
+      "streak": 0,
+      "nextReview": "2026-10-05",
+      "repDates": [
+        "2026-09-12",
+        "2026-09-14",
+        "2026-09-25"
+      ],
+      "timeline": [
+        {
+          "date": "2026-09-12",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-09-14",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-09-25",
+          "comfort": "🟡",
+          "level": 1
+        }
+      ]
+    },
+    {
+      "lcNumber": 1334,
+      "title": "Find the City With the Smallest Number of Neighbors at a Threshold Distance (Floyd-Warshall)",
+      "url": "https://leetcode.com/problems/find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance/",
+      "file": "dsa/leetcode/graphs/1334_find_the_city_with_the_smallest_number_of_neighbors_at_a_threshold_distance.py",
+      "difficulty": "Medium",
+      "category": "graphs",
+      "comfort": "🟢",
+      "level": 2,
+      "streak": 2,
+      "nextReview": "2026-11-24",
+      "repDates": [
+        "2026-07-31",
+        "2026-08-05",
+        "2026-08-15",
+        "2026-08-25",
+        "2026-09-25"
+      ],
+      "timeline": [
+        {
+          "date": "2026-07-31",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-08-05",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-08-15",
+          "comfort": "🟡",
+          "level": 1
+        },
+        {
+          "date": "2026-08-25",
+          "comfort": "🟢",
+          "level": 2
+        },
+        {
+          "date": "2026-09-25",
+          "comfort": "🟢",
+          "level": 2
+        }
+      ]
+    },
+    {
+      "lcNumber": 875,
+      "title": "Koko Eating Bananas",
+      "url": "https://leetcode.com/problems/koko-eating-bananas/",
+      "file": "dsa/leetcode/binary_search/875_koko_eating_bananas.py",
+      "difficulty": "Medium",
+      "category": "binary_search",
+      "comfort": "🟢",
+      "level": 2,
+      "streak": 2,
+      "nextReview": "2026-11-24",
+      "repDates": [
+        "2026-04-22",
+        "2026-07-03",
+        "2026-07-13",
+        "2026-07-23",
+        "2026-08-02",
+        "2026-08-11",
+        "2026-09-25"
+      ],
+      "timeline": [
+        {
+          "date": "2026-04-22",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-07-03",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-07-13",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-07-23",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-08-02",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-08-11",
+          "comfort": "🟢",
+          "level": 2
+        },
+        {
+          "date": "2026-09-25",
+          "comfort": "🟢",
+          "level": 2
+        }
+      ]
+    },
+    {
+      "lcNumber": 1584,
+      "title": "Min Cost to Connect All Points (Prim's MST)",
+      "url": "https://leetcode.com/problems/min-cost-to-connect-all-points/",
+      "file": "dsa/leetcode/graphs/1584_min_cost_to_connect_all_points.py",
+      "difficulty": "Medium",
+      "category": "graphs",
+      "comfort": "🟢",
+      "level": 2,
+      "streak": 2,
+      "nextReview": "2026-11-24",
+      "repDates": [
+        "2026-07-16",
+        "2026-07-18",
+        "2026-07-20",
+        "2026-08-01",
+        "2026-08-11",
+        "2026-09-25"
+      ],
+      "timeline": [
+        {
+          "date": "2026-07-16",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-07-18",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-07-20",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-08-01",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-08-11",
+          "comfort": "🟢",
+          "level": 2
+        },
+        {
+          "date": "2026-09-25",
+          "comfort": "🟢",
+          "level": 2
+        }
+      ]
+    },
+    {
+      "lcNumber": 104,
+      "title": "Maximum Depth of Binary Tree",
+      "url": "https://leetcode.com/problems/maximum-depth-of-binary-tree/",
+      "file": "dsa/leetcode/trees/104_max_depth_of_binary_tree.py",
+      "difficulty": "Easy",
+      "category": "trees",
+      "comfort": "🎓",
+      "level": 3,
+      "streak": 3,
+      "nextReview": "2027-03-24",
+      "repDates": [
+        "2026-04-30",
+        "2026-05-27",
+        "2026-06-27",
+        "2026-07-27",
+        "2026-09-25"
+      ],
+      "timeline": [
+        {
+          "date": "2026-04-30",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-05-27",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-06-27",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-07-27",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-09-25",
+          "comfort": "🎓",
+          "level": 3
+        }
+      ]
+    },
+    {
+      "lcNumber": 648,
+      "title": "Replace Words",
+      "url": "https://leetcode.com/problems/replace-words/",
+      "file": "dsa/leetcode/trie/648_replace_words.py",
+      "difficulty": "Medium",
+      "category": "trie",
+      "comfort": "🔴",
+      "level": 0,
+      "streak": 0,
+      "nextReview": "2026-09-26",
+      "repDates": [
+        "2026-09-14",
+        "2026-09-24"
+      ],
+      "timeline": [
+        {
+          "date": "2026-09-14",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-09-24",
+          "comfort": "🔴",
+          "level": 0
         }
       ]
     },
@@ -5398,40 +5690,6 @@
       ]
     },
     {
-      "lcNumber": 55,
-      "title": "Jump Game",
-      "url": "https://leetcode.com/problems/jump-game/",
-      "file": "dsa/leetcode/greedy/55_jump_game.py",
-      "difficulty": "Medium",
-      "category": "greedy",
-      "comfort": "🟡",
-      "level": 1,
-      "streak": 0,
-      "nextReview": "2026-10-05",
-      "repDates": [
-        "2026-09-05",
-        "2026-09-15",
-        "2026-09-25"
-      ],
-      "timeline": [
-        {
-          "date": "2026-09-05",
-          "comfort": "🟡",
-          "level": 1
-        },
-        {
-          "date": "2026-09-15",
-          "comfort": "🟡",
-          "level": 1
-        },
-        {
-          "date": "2026-09-25",
-          "comfort": "🟡",
-          "level": 1
-        }
-      ]
-    },
-    {
       "lcNumber": 332,
       "title": "Reconstruct Itinerary (pre-sorted adjacency)",
       "url": "https://leetcode.com/problems/reconstruct-itinerary/",
@@ -5520,40 +5778,6 @@
           "date": "2026-09-15",
           "comfort": "🎓",
           "level": 3
-        }
-      ]
-    },
-    {
-      "lcNumber": 743,
-      "title": "Network Delay Time (Dijkstra — array-scan)",
-      "url": "https://leetcode.com/problems/network-delay-time/",
-      "file": "dsa/leetcode/graphs/743_network_delay_time.py",
-      "difficulty": "Medium",
-      "category": "graphs",
-      "comfort": "🟡",
-      "level": 1,
-      "streak": 0,
-      "nextReview": "2026-10-05",
-      "repDates": [
-        "2026-09-12",
-        "2026-09-14",
-        "2026-09-25"
-      ],
-      "timeline": [
-        {
-          "date": "2026-09-12",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-09-14",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-09-25",
-          "comfort": "🟡",
-          "level": 1
         }
       ]
     },
@@ -6960,52 +7184,6 @@
       ]
     },
     {
-      "lcNumber": 1334,
-      "title": "Find the City With the Smallest Number of Neighbors at a Threshold Distance (Floyd-Warshall)",
-      "url": "https://leetcode.com/problems/find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance/",
-      "file": "dsa/leetcode/graphs/1334_find_the_city_with_the_smallest_number_of_neighbors_at_a_threshold_distance.py",
-      "difficulty": "Medium",
-      "category": "graphs",
-      "comfort": "🟢",
-      "level": 2,
-      "streak": 2,
-      "nextReview": "2026-11-24",
-      "repDates": [
-        "2026-07-31",
-        "2026-08-05",
-        "2026-08-15",
-        "2026-08-25",
-        "2026-09-25"
-      ],
-      "timeline": [
-        {
-          "date": "2026-07-31",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-08-05",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-08-15",
-          "comfort": "🟡",
-          "level": 1
-        },
-        {
-          "date": "2026-08-25",
-          "comfort": "🟢",
-          "level": 2
-        },
-        {
-          "date": "2026-09-25",
-          "comfort": "🟢",
-          "level": 2
-        }
-      ]
-    },
-    {
       "lcNumber": 347,
       "title": "Top K Frequent Elements",
       "url": "https://leetcode.com/problems/top-k-frequent-elements/",
@@ -8108,104 +8286,6 @@
         },
         {
           "date": "2026-08-13",
-          "comfort": "🟢",
-          "level": 2
-        }
-      ]
-    },
-    {
-      "lcNumber": 875,
-      "title": "Koko Eating Bananas",
-      "url": "https://leetcode.com/problems/koko-eating-bananas/",
-      "file": "dsa/leetcode/binary_search/875_koko_eating_bananas.py",
-      "difficulty": "Medium",
-      "category": "binary_search",
-      "comfort": "🟢",
-      "level": 2,
-      "streak": 1,
-      "nextReview": "2026-09-10",
-      "repDates": [
-        "2026-04-22",
-        "2026-07-03",
-        "2026-07-13",
-        "2026-07-23",
-        "2026-08-02",
-        "2026-08-11"
-      ],
-      "timeline": [
-        {
-          "date": "2026-04-22",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-07-03",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-07-13",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-07-23",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-08-02",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-08-11",
-          "comfort": "🟢",
-          "level": 2
-        }
-      ]
-    },
-    {
-      "lcNumber": 1584,
-      "title": "Min Cost to Connect All Points (Prim's MST)",
-      "url": "https://leetcode.com/problems/min-cost-to-connect-all-points/",
-      "file": "dsa/leetcode/graphs/1584_min_cost_to_connect_all_points.py",
-      "difficulty": "Medium",
-      "category": "graphs",
-      "comfort": "🟢",
-      "level": 2,
-      "streak": 1,
-      "nextReview": "2026-09-10",
-      "repDates": [
-        "2026-07-16",
-        "2026-07-18",
-        "2026-07-20",
-        "2026-08-01",
-        "2026-08-11"
-      ],
-      "timeline": [
-        {
-          "date": "2026-07-16",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-07-18",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-07-20",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-08-01",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-08-11",
           "comfort": "🟢",
           "level": 2
         }
@@ -9406,52 +9486,6 @@
           "date": "2026-07-28",
           "comfort": "🟢",
           "level": 2
-        }
-      ]
-    },
-    {
-      "lcNumber": 104,
-      "title": "Maximum Depth of Binary Tree",
-      "url": "https://leetcode.com/problems/maximum-depth-of-binary-tree/",
-      "file": "dsa/leetcode/trees/104_max_depth_of_binary_tree.py",
-      "difficulty": "Easy",
-      "category": "trees",
-      "comfort": "🎓",
-      "level": 3,
-      "streak": 3,
-      "nextReview": "2027-03-24",
-      "repDates": [
-        "2026-04-30",
-        "2026-05-27",
-        "2026-06-27",
-        "2026-07-27",
-        "2026-09-25"
-      ],
-      "timeline": [
-        {
-          "date": "2026-04-30",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-05-27",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-06-27",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-07-27",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-09-25",
-          "comfort": "🎓",
-          "level": 3
         }
       ]
     },

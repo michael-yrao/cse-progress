@@ -42,6 +42,58 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-09-25 ──────────────
+    def networkDelayTime_20260925(self, times: List[List[int]], n: int, k: int) -> int:
+        # array based dijkstra ; similar to Prim's MST build
+        # distance array, visited array and adjacency map
+        # we go through the distance and find the minimum unvisited node
+        # this means each iteration, we mark one node as visited
+        # from there, we relax everyone unvisited relative to it
+
+        # n + 1 because the nodes start at 1 and not 0
+        distance = [math.inf] * (n + 1)
+        visited = [False] * (n + 1)
+
+        # need to make sure we mark the 0th node as good
+        distance[0] = 0
+        visited[0] = True
+
+        # mark starting node with weight of 0
+        distance[k] = 0
+
+        # create our adjacency map
+        adj_map = collections.defaultdict(list)
+
+        for src,dst,weight in times:
+            adj_map[src].append((dst,weight))
+
+        def find_closest_unvisited_node():
+            min_value = math.inf
+            min_index = 0
+            for i in range(1,n+1):
+                if distance[i] < min_value and not visited[i]:
+                    min_value = distance[i]
+                    min_index = i
+            return min_index
+
+        def relax_relative_to_node(node):
+            # look through adjMap of node
+            for neighbor, weight in adj_map[node]:
+                # we don't mark anyone as visited when we relax them
+                # we only mark them as visited when we choose them in the loop
+                if not visited[neighbor] and distance[node] + weight < distance[neighbor]:
+                    distance[neighbor] = distance[node] + weight
+
+        # settle one node each iteration
+        for _ in range(n):
+            closest_unvisited_node = find_closest_unvisited_node()
+            relax_relative_to_node(closest_unvisited_node)
+            visited[closest_unvisited_node] = True
+        
+        if all(visited):
+            return max(distance) # type: ignore
+        return -1
+
     # ── Attempt · 2026-09-24 ──────────────
     def networkDelayTime_20260924(self, times: List[List[int]], n: int, k: int) -> int:
         # array variant of Dijkstra's
