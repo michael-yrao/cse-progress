@@ -1,4 +1,4 @@
-<!-- reconciled: 2026-09-25 -->
+<!-- reconciled: 2026-09-26 -->
 # End-of-week close-out & schedule build
 
 **Open this** when today is the last session of the week. **Not for** a mid-week rep (that's
@@ -45,6 +45,11 @@ week's assumptions.
     probes.** A zero-green technique outranks *discretionary* work and *fresh* cleans — but **not** a
     clean aged far past its interval (a retention risk that manufactures new demand). A 🔴 bills ~12×
     a 🟢 forever, so converting one removes the most demand.
+- **Regenerate the company-demand report — `python scripts/company_demand.py --tier all`** (network;
+  not a hook). Read its per-tier "demand vs supply" tables beside `technique_coverage.md`: a
+  `NO FAMILY` verdict is a vocabulary gap (add the family to `techniques.yml`), a `not started`/`thin`
+  family with high demand is a pull-order input, and the "asked by ≥3 targets and untracked" list is
+  the pull population.
 - **⚠️ Does the week contain a FIRST exposure to a named algorithm?** Then it carries a CONCEPT
   PRIMER, scheduled before that problem. ~15 min, unrated, no tracker row, ~1.0 unit. It covers
   the object being found and its name, and the nearest neighbouring object and the one feature
@@ -87,6 +92,10 @@ week's assumptions.
   `effort_budget.py` shows ≥2 days/week well under the ceiling for 2 weeks. Met → raise starting it
   with the learner; not met → say nothing. This is the firing mechanism that keeps "deferred" from
   becoming "forgotten" — don't skip it just because AI isn't on the board.
+- **If the Practical Coding Rep is still PARKED, test its trigger** (see
+  [`project_interview_formats`](.claude/memory/project_interview_formats.md)): career_strategy Gate
+  1's DSA half holds AND the learner has said applications are opening. Met → raise building the
+  drill with the learner; not met → say nothing.
 
 ## ⚙️ How the Sunday close-out is RUN (STANDING, set Sep 20, 2026 — learner's call)
 

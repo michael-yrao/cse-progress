@@ -6,7 +6,7 @@
 
 > The tracker is keyed by **problem**; this is keyed by **technique**. Use it at the weekly build to decide what to pull, and at phase exit to check the per-algorithm bar (recognition + execution, ≥1 🟢 each).
 
-> **59/98** techniques started &nbsp;·&nbsp; **0** with no 🟢 &nbsp;·&nbsp; **19** thin &nbsp;·&nbsp; **3** unqueued variant gaps
+> **59/104** techniques started &nbsp;·&nbsp; **0** with no 🟢 &nbsp;·&nbsp; **19** thin &nbsp;·&nbsp; **3** unqueued variant gaps
 
 ## ⚠️ Action list
 
@@ -62,6 +62,8 @@ Every declared technique gets a row, started or not — a not-started row's Gaps
 | Binary Search (max boundary) | binary_search | core | 3 | 3 (34, 74, 1552) | 🟢 | ✅ | — | — |
 | Binary Search (min boundary) | binary_search | core | 3 | 7 (34, 153, 162, 540, 875, 1011, 2300) | 🎓 | ✅ | — | — |
 | Binary Search on Answer | binary_search | core | 3 | 3 (875, 1011, 1552) | 🟢 | ✅ | — | — |
+| Bit Manipulation | bit_manipulation | core | 2 | 0 (—) | — | ❌ | — | *not started* |
+| Design (composed data structures) | design | core | 3 | 0 (—) | — | ❌ | — | *not started* |
 | 1D Dynamic Programming | dynamic_programming | dp | 3 | 0 (—) | — | ❌ | — | *not started* |
 | 2D Dynamic Programming | dynamic_programming | dp | 3 | 0 (—) | — | ❌ | — | *not started* |
 | Interval DP | dynamic_programming | dp | 3 | 0 (—) | — | ❌ | — | *not started* |
@@ -121,6 +123,8 @@ Every declared technique gets a row, started or not — a not-started row's Gaps
 | Linked List Merge | linked_list | core | 1 | 1 *+1v* (21) | 🎓 | ✅ | Iterative ×1 · Recursion ×1 | — |
 | Linked List Reversal | linked_list | core | 1 | 1 *+1v* (206) | 🎓 | ✅ | Iterative ×1 · Recursion ×1 | — |
 | Remove Nth From End | linked_list | core | 1 | 1 *+1v* (19) | 🟢 | ✅ | Iterative ×1 · Postorder Recursion ×1 · ~~Preorder Recursion~~ *(queued: `expansion — parked Jul 9`)* | — |
+| Math / Number Manipulation | math_sim | core | 3 | 0 (—) | — | ❌ | — | *not started* |
+| Simulation / Matrix Walk | math_sim | core | 2 | 0 (—) | — | ❌ | — | *not started* |
 | Kadane | prefix_sum | core | 1 | 1 (53) | 🟢 | ✅ | — | — |
 | Prefix Sum | prefix_sum | core | 3 | 2 (53, 560) | 🟢 | ✅ | — | thin (2/3) |
 | Recursion | recursion | core | 3 | 3 (19, 21, 206) | 🎓 | ✅ | — | — |
@@ -132,6 +136,8 @@ Every declared technique gets a row, started or not — a not-started row's Gaps
 | Stack (augmented entries) | stack | core | 2 | 1 (155) | 🟢 | ✅ | — | thin (1/2) |
 | Stack (expression evaluation) | stack | core | 2 | 1 (150) | 🟢 | ✅ | — | thin (1/2) |
 | Stack (matching) | stack | core | 1 | 1 (20) | 🟢 | ✅ | — | — |
+| String Building & Encoding | strings | core | 2 | 0 (—) | — | ❌ | — | *not started* |
+| String Parsing / Manipulation | strings | core | 3 | 0 (—) | — | ❌ | — | *not started* |
 | BST Descent | trees | core | 2 | 2 (98, 235) | 🟢 | ✅ | — | — |
 | Tree BFS (level order) | trees | core | 3 | 2 (102, 199) | 🎓 | ✅ | — | thin (2/3) |
 | Tree Construction (Divide & Conquer) | trees | core | 1 | 1 (105) | 🟢 | ✅ | — | — |

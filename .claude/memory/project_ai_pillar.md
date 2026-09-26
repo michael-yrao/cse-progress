@@ -52,6 +52,8 @@ cadence-driven, learner-does-the-work / coach-assesses, own tracker.
 - **Home:** in-repo under `docs/foundations/ai_engineering/` — the resource
   (github.com/calmrocks/ai-engineer-notebooks) is public, so no sd-progress-style privacy split.
 
+**GenAI system design** (RAG path, routing/caching for cost, evals, guardrails — now in general big-tech loops per [[project_interview_formats]]) rides this pillar's `10-ml-system-design` step, not a new track.
+
 **NOT built until activation** (avoid premature scaffold): the `references/ai-engineering.md` skill
 reference, an `ai_progress.md` tracker, and any `cse.config.yml` cadence key (single-source: add the
 key only when it holds a live value). Ties to [[project_interview_goal]].

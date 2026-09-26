@@ -66,6 +66,8 @@ CATEGORY_TO_TOPICS = {
     "Intervals": {"Line Sweep"},
     "Math & Geometry": {"Math", "Geometry"},
     "Bit Manipulation": {"Bit Manipulation"},
+    "Strings": {"String"},
+    "Design": {"Design", "Data Stream", "Iterator"},
 }
 
 # ── TODO (expansion phases): EXTEND THIS MAP when the learner starts RETIRING
@@ -99,6 +101,7 @@ FOLDER_TO_CATEGORY = {
     "intervals": "Intervals", "1d_dynamic_programming": "1-D Dynamic Programming",
     "2d_dynamic_programming": "2-D Dynamic Programming",
     "math_geometry": "Math & Geometry", "bit_manipulation": "Bit Manipulation",
+    "strings": "Strings", "design": "Design",
 }
 
 
@@ -158,14 +161,17 @@ def read_tracker() -> tuple[set[str], set[int]]:
     learned_numbers: set[int] = set()
     if not TRACKER.exists():
         return solved_slugs, learned_numbers
-    row_re = re.compile(r"\|[^|]+\|\s*\[(\d+)\.[^\]]+\]\(([^)]+)\)\s*\|\s*(🟢|🟡|🔴|🏆)")
+    # 🎓 (Graduated) sits between 🟢 and 🏆 (Retired) on the comfort scale — omitting it
+    # here silently dropped every graduated row from both solved_slugs and
+    # learned_numbers (found Sep 26, 2026 via company_demand.py's tracker join).
+    row_re = re.compile(r"\|[^|]+\|\s*\[(\d+)\.[^\]]+\]\(([^)]+)\)\s*\|\s*(🟢|🟡|🔴|🎓|🏆)")
     for line in TRACKER.read_text(encoding="utf-8").splitlines():
         m = row_re.match(line)
         if not m:
             continue
         number, url, comfort = int(m.group(1)), m.group(2), m.group(3)
         solved_slugs.add(slug_from_link(url))
-        if comfort in ("🟢", "🏆"):
+        if comfort in ("🟢", "🎓", "🏆"):
             learned_numbers.add(number)
     return solved_slugs, learned_numbers
 

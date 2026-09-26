@@ -31,7 +31,7 @@
     "restDayAllowance": 1
   },
   "coverage": {
-    "total": 98,
+    "total": 104,
     "started": 59,
     "noGreen": 0,
     "thin": 19,
@@ -1346,6 +1346,41 @@
       "graduatedCount": 0
     },
     {
+      "name": "Bit Manipulation",
+      "family": "bit_manipulation",
+      "tier": "core",
+      "started": false,
+      "minProblems": 2,
+      "problemCount": 0,
+      "problems": [],
+      "bestComfort": null,
+      "hasGreen": false,
+      "thin": false,
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Array/String Fundamentals"
+      ],
+      "graduatedCount": 0
+    },
+    {
+      "name": "Design (composed data structures)",
+      "family": "design",
+      "tier": "core",
+      "started": false,
+      "minProblems": 3,
+      "problemCount": 0,
+      "problems": [],
+      "bestComfort": null,
+      "hasGreen": false,
+      "thin": false,
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Hash Map Lookup",
+        "HashMap + Doubly Linked List (LRU)"
+      ],
+      "graduatedCount": 0
+    },
+    {
       "name": "1D Dynamic Programming",
       "family": "dynamic_programming",
       "tier": "dp",
@@ -2423,6 +2458,40 @@
       "graduatedCount": 0
     },
     {
+      "name": "Math / Number Manipulation",
+      "family": "math_sim",
+      "tier": "core",
+      "started": false,
+      "minProblems": 3,
+      "problemCount": 0,
+      "problems": [],
+      "bestComfort": null,
+      "hasGreen": false,
+      "thin": false,
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Array/String Fundamentals"
+      ],
+      "graduatedCount": 0
+    },
+    {
+      "name": "Simulation / Matrix Walk",
+      "family": "math_sim",
+      "tier": "core",
+      "started": false,
+      "minProblems": 2,
+      "problemCount": 0,
+      "problems": [],
+      "bestComfort": null,
+      "hasGreen": false,
+      "thin": false,
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Array/String Fundamentals"
+      ],
+      "graduatedCount": 0
+    },
+    {
       "name": "Kadane",
       "family": "prefix_sum",
       "tier": "core",
@@ -2640,6 +2709,40 @@
       ],
       "bestComfort": "🟢",
       "hasGreen": true,
+      "thin": false,
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Array/String Fundamentals"
+      ],
+      "graduatedCount": 0
+    },
+    {
+      "name": "String Building & Encoding",
+      "family": "strings",
+      "tier": "core",
+      "started": false,
+      "minProblems": 2,
+      "problemCount": 0,
+      "problems": [],
+      "bestComfort": null,
+      "hasGreen": false,
+      "thin": false,
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Length-Prefix Encoding"
+      ],
+      "graduatedCount": 0
+    },
+    {
+      "name": "String Parsing / Manipulation",
+      "family": "strings",
+      "tier": "core",
+      "started": false,
+      "minProblems": 3,
+      "problemCount": 0,
+      "problems": [],
+      "bestComfort": null,
+      "hasGreen": false,
       "thin": false,
       "hasVariantGap": false,
       "buildsOn": [
@@ -4219,7 +4322,7 @@
       "earned": false,
       "progress": {
         "current": 59,
-        "target": 98
+        "target": 104
       }
     },
     {

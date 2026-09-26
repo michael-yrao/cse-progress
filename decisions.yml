@@ -1060,3 +1060,55 @@ decisions:
       `_break_cycles`), `dashboard/progress.schema.json` (`definitions.technique`),
       `.claude/memory/project_gamification.md`.
     affects: [gamification]
+
+  - id: company-demand-families-sep26
+    date: 2026-09-26
+    summary: >-
+      ADDS `scripts/company_demand.py` → `docs/foundations/dsa/mastery/company_demand.md`:
+      per-tier demand from the liquidslr company-wise lists, joined to `techniques.yml`
+      families. Run by hand at the weekly build (`python scripts/company_demand.py --tier
+      all`) — needs the network, so it is NOT wired into the pre-commit hook, unlike
+      `technique_coverage.py`. ADDS four not-started `tier: core` families to
+      `techniques.yml` — `strings`, `math_sim`, `design`, `bit_manipulation` — placed by
+      the big-tech top-100 shares from the pull: String 22/100, Math 13/100 + Simulation
+      3/100, Design 7/100 (12/40 data-platform, 13/100 supplementary), Bit Manipulation
+      2/100 (4/100 fintech, 7/100 supplementary) `single-source-ok`. Those are TAG shares
+      (a problem carries several tags); the report's per-family demand is lower for
+      `strings`/`math_sim` because a multi-tag problem is assigned ONE family by
+      `FAMILY_PRIORITY`, and a tracked problem takes the family of its vocabulary credit
+      — so "strings 2%" in the report and "String 22/100" here measure different things
+      and do not contradict each other. Math/Sim and Bit
+      Manipulation are already the existing NC150 Dec 7–28 phase (study_guide.md), not a
+      new curriculum addition — the vocabulary was simply missing an entry for a phase
+      already on the schedule. Sorting is deliberately NOT added — the family already
+      exists. Rule: a demand family with no vocabulary entry is a `NO FAMILY` verdict in
+      `company_demand.md`, fixed by adding the `techniques.yml` entry, never by scheduling
+      a problem reactively off the report. FIXES `pull_interview.read_tracker()`'s
+      `(🟢|🟡|🔴|🏆)` alternation, which omitted 🎓 and silently dropped every graduated
+      row from both `solved_slugs` and `learned_numbers`; also adds `"Strings":
+      {"String"}` / `"Design": {"Design", "Data Stream", "Iterator"}` to
+      `CATEGORY_TO_TOPICS` and `"strings": "Strings"` / `"design": "Design"` to
+      `FOLDER_TO_CATEGORY` (no solution folders exist yet for either, so this is inert
+      until one does). See `scripts/company_demand.py`, `scripts/pull_interview.py`
+      (`read_tracker`, `CATEGORY_TO_TOPICS`, `FOLDER_TO_CATEGORY`),
+      `docs/foundations/dsa/mastery/techniques.yml` (the four new sections, just above
+      the DP framework-lenses block).
+    affects: [technique_coverage, gamification, pull_interview]
+
+  - id: interview-formats-parked-drill-sep26
+    date: 2026-09-26
+    summary: >-
+      ADDS `docs/foundations/interview_formats.md`: 2026 round shapes per
+      `career_strategy.md` tier, six shifts in loop design since 2025, and a prep matrix.
+      PARKS a new rep type, the "Practical Coding Rep" — an unaided bug-squash/
+      integration variant first, an AI-assisted variant second; 45–60 min on a
+      coach-supplied repo with failing tests; the first two of each unrated; scheduled in
+      the evening slot, off the DSA effort ceiling — behind a measured trigger rather than
+      scaffolding it now: it fires at a weekly build when BOTH `career_strategy.md` Gate
+      1's DSA half holds AND the learner says applications are opening. Nothing about it
+      is scaffolded before that trigger fires — no tracker row, no schedule slot, no
+      curriculum entry. Memory: `.claude/memory/project_interview_formats.md`. See
+      `docs/foundations/interview_formats.md`,
+      `.claude/skills/cse-coach/references/weekly-build.md` (the trigger-check bullet),
+      `docs/foundations/career_strategy.md` §5.
+    affects: [scheduling, weekly_build]

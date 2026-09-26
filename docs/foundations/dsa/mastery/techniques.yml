@@ -834,10 +834,66 @@ techniques:
   # excluded from every gap check (no-green / thin / variant) and from the Action List — it
   # only adds to the total in the header line and gets one row in the Coverage table with
   # Gaps = `*not started*`. Enumerated FAITHFULLY from docs/foundations/dsa/study_guide.md
-  # (the Framework-lenses bullet + the Tier 1/2/3 Knowledge Expansion Queue lists) — nothing
-  # here is invented. Promote an entry to "started" the normal way: add its first
+  # (the Framework-lenses bullet + the Tier 1/2/3 Knowledge Expansion Queue lists — nothing
+  # here is invented) — plus, since Sep 26, 2026, the four demand-sourced core families
+  # (strings, math_sim, design, bit_manipulation; decision `company-demand-families-sep26`).
+  # Promote an entry to "started" the normal way: add its first
   # `problems:` row once a rep is actually seated (see study_guide.md's promotion note).
   # ══════════════════════════════════════════════════════════════════════════════
+
+  # ── Strings (tier: core) ──
+  # Company-demand pull, Sep 26, 2026 (decision `company-demand-families-sep26`): String
+  # tags land in 22/100 big-tech top-100 problems — the single largest untracked demand
+  # slice. Two not-started core techniques for pure string manipulation, distinct from
+  # the existing arrays_and_hash string reps.
+  - name: String Parsing / Manipulation
+    family: strings
+    tier: core
+    min_problems: 3
+    builds_on: ["Array/String Fundamentals"]
+
+  - name: String Building & Encoding
+    family: strings
+    tier: core
+    min_problems: 2
+    builds_on: ["Length-Prefix Encoding"]
+
+  # ── Math & Simulation (tier: core) ──
+  # Company-demand pull, Sep 26, 2026 (decision `company-demand-families-sep26`): Math
+  # 13/100 + Simulation 3/100 in the big-tech top-100. Also the existing NC150 Dec 7–28
+  # phase (Math & Simulation), not yet started.
+  - name: Math / Number Manipulation
+    family: math_sim
+    tier: core
+    min_problems: 3
+    builds_on: ["Array/String Fundamentals"]
+
+  - name: Simulation / Matrix Walk
+    family: math_sim
+    tier: core
+    min_problems: 2
+    builds_on: ["Array/String Fundamentals"]
+
+  # ── Design — composed data structures (tier: core) ──
+  # Company-demand pull, Sep 26, 2026 (decision `company-demand-families-sep26`): Design
+  # 7/100 big-tech (12/40 data-platform, 13/100 supplementary). 146 LRU Cache stays
+  # credited under linked_list (HashMap + Doubly Linked List) — this family is for
+  # hit counter / time-based KV / LFU-style composition, not the LRU rep itself.
+  - name: Design (composed data structures)
+    family: design
+    tier: core
+    min_problems: 3
+    builds_on: ["Hash Map Lookup", "HashMap + Doubly Linked List (LRU)"]
+
+  # ── Bit Manipulation (tier: core) ──
+  # Company-demand pull, Sep 26, 2026 (decision `company-demand-families-sep26`): Bit
+  # Manipulation 2/100 big-tech (4/100 fintech, 7/100 supplementary). Also the existing
+  # NC150 Dec 7–28 phase (Bit Manipulation), not yet started.
+  - name: Bit Manipulation
+    family: bit_manipulation
+    tier: core
+    min_problems: 2
+    builds_on: ["Array/String Fundamentals"]
 
   # ── DP framework lenses + the two core roadmap phases (tier: dp) ────────────────
   # study_guide.md line 17 ("Framework lenses — knapsack / interval / LIS / space-
