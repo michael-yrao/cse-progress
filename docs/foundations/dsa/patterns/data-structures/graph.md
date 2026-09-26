@@ -16,7 +16,9 @@ Nodes + edges, represented as an adjacency map/list (or an implicit grid). This 
 | **Union-Find** | Connectivity, grouping, cycle detection (undirected) | [techniques/union_find](../techniques/union_find.md) |
 | **Topological sort** | Ordering with dependencies on a DAG | [techniques/topological_sort](../techniques/topological_sort.md) |
 
-*(Dijkstra / heap shortest-path arrives with the Advanced Graphs block — will get its own doc then.)*
+| **Dijkstra** | Single-source shortest path, **weighted non-negative** edges (uniform weights → BFS; negative / k-hop → Bellman-Ford) | min-heap (lazy) or array-scan on dense small n |
+| **Floyd-Warshall** | **All-pairs** shortest path on a small n (~≤ 100–400) | [techniques/floyd_warshall](../techniques/floyd_warshall.md) |
+| **MST (Prim's / Kruskal's)** | Cheapest set of edges connecting everything — **undirected only** | [techniques/prims_mst](../techniques/prims_mst.md) |
 
 ## Deciding fast
 
@@ -27,6 +29,9 @@ Nodes + edges, represented as an adjacency map/list (or an implicit grid). This 
 | Valid tree? | Union-Find + `edges == n-1` connectivity check |
 | Order tasks with prerequisites? | Topological sort (Kahn's / DFS) |
 | Shortest # of steps in a grid/graph? | BFS (multi-source BFS if many starts, e.g. rotting oranges) |
+| Shortest **weighted** path from one source? | Dijkstra (non-negative). ⚠️ **Undirected is NOT a cue against it** — an undirected edge is two directed edges of the same weight; add both directions and run it unchanged (2026-09-25, from 1334) |
+| Shortest paths between **every** pair? | Floyd-Warshall on small n; n × Dijkstra on a large sparse graph (early-stop past a threshold) |
+| Connect everything at minimum total cost? | MST — Prim's / Kruskal's. **Here undirected IS the cue**: a spanning tree is only defined on undirected graphs |
 
 ## Representative problems
 

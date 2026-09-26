@@ -34,6 +34,33 @@ from typing import List
 
 class Solution:
 
+    # ── Attempt · 2026-09-25 ──────────────
+    def minEatingSpeed_20260925(self, piles: List[int], h: int) -> int:
+        # h >= n is a given so no need to worry about that case
+        # we can always finish the piles in h if Koko eats max(piles) each hour
+        # our goal is to minimize this, so binary search on 1 to max(piles)
+        # min boundary binary search
+
+        l = 1
+        r = max(piles)
+
+        def canFinish(speed):
+            currentHour = 0
+            for pile in piles:
+                hoursTaken = math.ceil(pile / speed)
+                currentHour+=hoursTaken
+            return currentHour <= h
+
+        while l < r:
+            m = (l + r) // 2
+            # if we can finish in m, keep as result but keep trying for smaller
+            if canFinish(m):
+                r = m
+            else:
+                l = m + 1
+        
+        return l
+
     # ── Attempt · 2026-08-11 ──────────────
     def minEatingSpeed_20260811(self, piles: List[int], h: int) -> int:
         # we are given h >= len(piles) so we can always finish

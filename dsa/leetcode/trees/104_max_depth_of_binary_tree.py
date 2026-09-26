@@ -30,6 +30,15 @@ class TreeNode:
         self.right = right
 class Solution:
 
+    # ── Attempt · 2026-09-25 ──────────────
+    def maxDepth_20260925(self, root: Optional[TreeNode]) -> int:
+        if not root:
+            return 0
+        
+        leftSide = self.maxDepth_20260925(root.left)
+        rightSide = self.maxDepth_20260925(root.right)
+        return max(leftSide, rightSide) + 1
+
     # ── Attempt · 2026-07-27 ──────────────
     def maxDepth_20260727(self, root: Optional[TreeNode]) -> int:
         if not root:

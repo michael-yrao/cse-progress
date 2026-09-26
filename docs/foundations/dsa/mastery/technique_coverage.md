@@ -145,10 +145,11 @@ Every declared technique gets a row, started or not — a not-started row's Gaps
 
 ## Vocabulary maintenance
 
-**Unmapped tracker rows (5)** — solved but assigned to no technique. Add them to `techniques.yml`, or coverage silently drifts behind the tracker.
+**Unmapped tracker rows (6)** — solved but assigned to no technique. Add them to `techniques.yml`, or coverage silently drifts behind the tracker.
 
 - 1489 Find Critical and Pseudo-Critical Edges in MST (Kruskal)
 - 39 Combination Sum
+- 46 Permutations
 - 648 Replace Words
 - 743 Network Delay Time (Dijkstra — array-scan)
 - 743 Network Delay Time (Dijkstra — min-heap)

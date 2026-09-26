@@ -39,6 +39,37 @@ from typing import List, Optional
 
 
 class Solution:
+
+    # ── Attempt · 2026-09-25 ──────────────
+    def combinationSum_20260925(self, candidates: List[int], target: int) -> List[List[int]]:
+        # all combination sum, backtracking
+        # path = current array so far
+        # state = current candidate index
+        # choice = choose or not choose to use index
+        # validity = state < len(candidates) and sum(path) + choice <= target
+        # base case = sum(path) == target (valid) ; indexState >= len(candidates) (invalid)
+
+        result = []
+
+        def backtrack(path, indexState):
+            if indexState >= len(candidates):
+                return
+            if sum(path) == target:
+                result.append(path)
+                return
+            
+            # validity and choose to use
+            if indexState < len(candidates) and sum(path) + candidates[indexState] <= target:
+                # path + [] creates new array so no need for copy
+                backtrack(path + [candidates[indexState]], indexState)
+            
+            # choose not to use
+            backtrack(path, indexState+1)
+        
+        backtrack([],0)
+
+        return result
+
     # ── Attempt 1 · 2026-09-23 ────────────────────────────────────────────
     def combinationSum_v1(self, candidates: List[int], target: int) -> List[List[int]]:
         # all combinations where chosen numbers sum to target

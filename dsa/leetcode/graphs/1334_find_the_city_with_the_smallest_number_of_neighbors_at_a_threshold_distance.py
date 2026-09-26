@@ -51,6 +51,52 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-09-25 ──────────────
+    def findTheCity_20260925(self, n: int, edges: List[List[int]], distanceThreshold: int) -> int:
+        # no starting node and end node, so we are looking to try to squeeze as many neighbors as we can per node under a distance threshold and no directed edges
+        # step 1 is finding distance for node to each all other nodes, given n is also only 100, I am actually leaning towards floyd warshall here for this
+        # step 2 is fetching the count for each node where threshold < distanceThreshold, so row based if floyd warshall and return the biggest index with the smallest counter
+        # with the go ahead of the coach, we will now implement floyd warshall
+        # so we need a 2D array, initially started at math.inf and then we relax this as we go via a middleman
+
+        distance = []
+
+        for i in range(n):
+            row = [math.inf] * n
+            distance.append(row)
+            distance[i][i] = 0
+        
+        # now we go through the immediate neighbors and update distance
+        # don't think we need the second but should be
+        for src,dst,weight in edges:
+            distance[src][dst] = weight
+            distance[dst][src] = weight
+        
+        # now let's do the floyd warshall algorithm
+
+        for middleman in range(n):
+            for src in range(n):
+                for dst in range(n):
+                    if distance[src][middleman] + distance[middleman][dst] < distance[src][dst]:
+                        distance[src][dst] = distance[src][middleman] + distance[middleman][dst]
+                        distance[dst][src] = distance[src][middleman] + distance[middleman][dst]
+        
+        # now let's gather numbers for all nodes
+
+        returnNode = -1
+        lowestCount = math.inf
+
+        for node in range(n):
+            currentCounter = 0
+            for neighbor in range(n):
+                if node != neighbor and distance[node][neighbor] <= distanceThreshold:
+                    currentCounter+=1
+            if currentCounter <= lowestCount:
+                returnNode = node
+                lowestCount = currentCounter
+        
+        return returnNode
+
     # ── Attempt · 2026-08-25 ──────────────
     def findTheCity_20260825(self, n: int, edges: List[List[int]], distanceThreshold: int) -> int:
         # no distinct source and destination

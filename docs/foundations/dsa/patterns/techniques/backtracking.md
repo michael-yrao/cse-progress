@@ -24,6 +24,27 @@ The output is EVERY valid arrangement (all subsets / permutations / combinations
 
 ---
 
+## Complexity — nodes × work per node (added 2026-09-25, via 39)
+
+Every backtracking bound is the same product: **nodes in the call tree × work per node**, with
+nodes ≤ **branching^depth**. Per problem, find the two factors:
+
+1. **Depth** = what each step *consumes*, and how many steps until it's gone.
+2. **Branching** = choices per step.
+3. **Work per node** = the `sum(path)`, copy, or check done in each call.
+
+| Problem | Branching | Depth = what runs out | Nodes |
+|---|---|---|---|
+| 78 Subsets, take/skip | 2 | the index, n steps | 2^n |
+| 39 Combination Sum, take/skip | 2 | takes cap at d = target ÷ min(candidates), skips at n | 2^(d+n) |
+| 39 Combination Sum, pick-next loop | up to n | takes only, d | n^d |
+| 46 Permutations | n, then n−1, … | slots to fill, n | n! leaves |
+
+⚠️ **The trap (39, twice: Sep 23 taught, Sep 25 missed cold):** reading depth as n because that is what
+Subsets taught. A *take* with index reuse consumes **no** index, so the index no longer bounds the
+branch; the sum does, after d takes. Draw the tiniest case (`[1]`, target 2 → depth 3 = d + n) and count.
+Stack space is the depth (O(d + n) frames), not the node count.
+
 ## Template: Permutations Pattern
 
 *When:* Finding every possible layout variation of an items list where ordering determines unique results.

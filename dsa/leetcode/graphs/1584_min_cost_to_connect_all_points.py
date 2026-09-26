@@ -33,6 +33,50 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-09-25 ──────────────
+    def minCostConnectPoints_20260925(self, points: List[List[int]]) -> int:
+        # creating MST, since we are given only nodes, natural choice is Prim's
+        # so we need a visited set that helps us determine which one to go to next
+        # and a distance array to determine next closest
+
+        visited = set()
+
+        distance = [math.inf] * len(points)
+
+        # set distance[0] to 0 since we will start with 0th index of points
+        distance[0] = 0
+
+        def find_min_unvisited_node():
+            minValue = math.inf
+            minNode = 0
+            for i in range(len(distance)):
+                if distance[i] < minValue and i not in visited:
+                    minValue = distance[i]
+                    minNode = i
+            return minNode
+        
+        def relax_relative_to_node(node):
+            x1, y1 = points[node]
+            for i in range(len(distance)):
+                if i not in visited:
+                    x2, y2 = points[i]
+                    manhattan_distance = abs(x1-x2) + abs(y1-y2)
+                    distance[i] = min(distance[i],manhattan_distance)
+
+        total_distance = 0
+        # each iteration will help us connect one more dot, so we loop through number of nodes we have
+        for _ in range(len(points)):
+            # find next node to connect
+            min_unvisited_node = find_min_unvisited_node()
+            # mark as visited
+            visited.add(min_unvisited_node)
+            # add to result distance
+            total_distance+=distance[min_unvisited_node]
+            # relax rest of nodes to this node
+            relax_relative_to_node(min_unvisited_node)
+
+        return total_distance # type: ignore
+
     # ── Attempt · 2026-08-26 ──────────────
     def minCostConnectPointsKruskal_20260826(self, points: List[List[int]]) -> int:
         # we will use Kruskal's to build the MST here
