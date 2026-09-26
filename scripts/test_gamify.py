@@ -146,12 +146,20 @@ class TimelineTests(unittest.TestCase):
 class BadgeTests(unittest.TestCase):
     CFG = {"streak_milestones": [7, 30], "trophy_milestones": [1, 10]}
 
-    def _stats(self, graduated=0, retired=0, clean_total=0, longest=0, no_green=1):
+    @staticmethod
+    def _default_techniques():
+        """One green, one not — the ordinary "some breadth, not full" shape."""
+        return [{"name": "A", "hasGreen": True}, {"name": "B", "hasGreen": False}]
+
+    def _stats(self, graduated=0, retired=0, clean_total=0, longest=0, no_green=1,
+               techniques=None):
+        techs = techniques if techniques is not None else self._default_techniques()
         return {
             "pipeline": {"graduated": graduated, "retired": retired,
                          "clean": {"total": clean_total}},
             "streak": {"longest": longest},
-            "coverage": {"noGreen": no_green, "started": 56, "total": 56},
+            "coverage": {"noGreen": no_green, "started": 56, "total": len(techs)},
+            "techniques": techs,
         }
 
     def test_locked_when_nothing_earned(self):
@@ -160,21 +168,59 @@ class BadgeTests(unittest.TestCase):
         self.assertEqual(earned, set())
 
     def test_graduation_and_trophy_milestones(self):
-        stats = self._stats(graduated=12, retired=0, clean_total=5, no_green=0)
+        stats = self._stats(graduated=12, retired=0, clean_total=5)
         problems = [{"difficulty": "Hard", "comfort": "🎓", "timeline": []}]
         badges = {b["id"]: b["earned"] for b in gamify.compute_badges(stats, problems, self.CFG)}
         self.assertTrue(badges["first-graduate"])
         self.assertTrue(badges["trophies-1"])
         self.assertTrue(badges["trophies-10"])       # 12 >= 10
         self.assertTrue(badges["first-hard-clean"])  # a Hard at 🎓
-        self.assertTrue(badges["all-green"])         # noGreen == 0
         self.assertFalse(badges["first-retire"])     # 0 retired
+        # New criterion (Sep 26, 2026): all-green needs a green in EVERY
+        # technique on the roadmap, not just the started ones — one
+        # ungreened technique keeps it locked even with a loaded pipeline.
+        self.assertFalse(badges["all-green"])
+
+    def test_all_green_locked_despite_no_green_zero(self):
+        """noGreen==0 (the OLD "every started technique" signal) no longer drives
+        all-green on its own — only a green in every techniques.yml entry does."""
+        stats = self._stats(no_green=0)
+        badges = {b["id"]: b["earned"] for b in gamify.compute_badges(stats, [], self.CFG)}
+        self.assertFalse(badges["all-green"])
+
+    def test_all_green_earned_when_every_technique_has_green(self):
+        techs = [{"name": "A", "hasGreen": True}, {"name": "B", "hasGreen": True}]
+        stats = self._stats(techniques=techs)
+        badges = {b["id"]: b for b in gamify.compute_badges(stats, [], self.CFG)}
+        self.assertTrue(badges["all-green"]["earned"])
+        self.assertEqual(badges["all-green"]["progress"], {"current": 2, "target": 2})
+
+    def test_all_green_locked_when_no_techniques_at_all(self):
+        stats = self._stats(techniques=[])
+        badges = {b["id"]: b for b in gamify.compute_badges(stats, [], self.CFG)}
+        self.assertFalse(badges["all-green"]["earned"])
+        self.assertEqual(badges["all-green"]["progress"], {"current": 0, "target": 0})
 
     def test_streak_badges_use_longest(self):
         stats = self._stats(longest=30)
         badges = {b["id"]: b["earned"] for b in gamify.compute_badges(stats, [], self.CFG)}
         self.assertTrue(badges["streak-7"])
         self.assertTrue(badges["streak-30"])
+
+    def test_progress_on_counter_badges_absent_on_event_badges(self):
+        stats = self._stats(graduated=1, longest=30)
+        badges = {b["id"]: b for b in gamify.compute_badges(stats, [], self.CFG)}
+        self.assertEqual(badges["streak-7"]["progress"], {"current": 30, "target": 7})
+        self.assertEqual(badges["trophies-1"]["progress"], {"current": 1, "target": 1})
+        self.assertIn("progress", badges["all-green"])
+        self.assertNotIn("progress", badges["comeback"])
+        self.assertNotIn("progress", badges["first-retire"])
+
+    def test_trophies_description_pluralization(self):
+        badges = {b["id"]: b["description"]
+                  for b in gamify.compute_badges(self._stats(), [], self.CFG)}
+        self.assertIn("1 problem graduated", badges["trophies-1"])
+        self.assertIn("10 problems graduated", badges["trophies-10"])
 
 
 class ParseTechniquesTests(unittest.TestCase):

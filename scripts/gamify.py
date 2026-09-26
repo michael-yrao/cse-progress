@@ -942,18 +942,32 @@ def _had_turnaround(problems: list[dict]) -> bool:
 def compute_badges(stats: dict, problems: list[dict], cfg: dict) -> list[dict]:
     """The badge CATALOG. Every trigger keys off a genuine, unfakeable event —
     a graduation (3 cold cleans across spaced intervals), a retirement, a comeback,
-    a study-day streak — never a raw count of easy greens and never a rating."""
+    a study-day streak — never a raw count of easy greens and never a rating.
+
+    A counter badge (streak-N, trophies-N, all-green) MAY carry an additive
+    `progress: {current, target}` alongside `earned` — how far toward the target,
+    even when not yet earned. A one-shot event badge (first-clean, first-hard-clean,
+    first-graduate, first-retire, comeback) never carries it: there is no "current/
+    target" for an event that either happened or hasn't."""
     pl = stats["pipeline"]
     trophies = pl["graduated"] + pl["retired"]
     hard_clean = any(p["difficulty"] == "Hard" and p["comfort"] in ("🟢", "🎓")
                      for p in problems)
+    techs = stats.get("techniques") or []
+    green = sum(1 for t in techs if t.get("hasGreen"))
     cov = stats.get("coverage") or {}
+    all_green_target = cov.get("total") or len(techs)
 
     badges: list[dict] = []
 
-    def add(bid: str, title: str, icon: str, desc: str, earned: bool) -> None:
-        badges.append({"id": bid, "title": title, "icon": icon,
-                       "description": desc, "earned": bool(earned)})
+    def add(bid: str, title: str, icon: str, desc: str, earned: bool,
+            progress: tuple[int, int] | None = None) -> None:
+        badge = {"id": bid, "title": title, "icon": icon,
+                 "description": desc, "earned": bool(earned)}
+        if progress is not None:
+            current, target = progress
+            badge = {**badge, "progress": {"current": int(current), "target": int(target)}}
+        badges.append(badge)
 
     add("first-clean", "First Cold Solve", "🟢",
         "Solve one problem clean from a blank page.",
@@ -969,16 +983,19 @@ def compute_badges(stats: dict, problems: list[dict], cfg: dict) -> list[dict]:
     add("comeback", "Comeback", "🔁",
         "Turn a Blank into a Clean on the same problem.", _had_turnaround(problems))
     add("all-green", "Full Spectrum", "🌈",
-        "Have at least one clean solve in every technique you have started.",
-        bool(cov) and cov.get("noGreen") == 0 and cov.get("started", 0) > 0)
+        "Have at least one clean solve in every technique on the roadmap.",
+        all_green_target > 0 and green >= all_green_target,
+        progress=(green, all_green_target))
 
     for m in sorted(cfg.get("streak_milestones") or []):
         add(f"streak-{m}", f"{m}-Day Streak", "🔥",
             f"Practice on {m} study-days without letting the streak lapse.",
-            stats["streak"]["longest"] >= m)
+            stats["streak"]["longest"] >= m,
+            progress=(stats["streak"]["longest"], m))
     for m in sorted(cfg.get("trophy_milestones") or []):
         add(f"trophies-{m}", f"{m} Mastered", "💎",
-            f"Reach {m} problems graduated or retired.", trophies >= m)
+            f"Reach {m} problem{'s' if m != 1 else ''} graduated or retired.",
+            trophies >= m, progress=(trophies, m))
 
     return badges
 

@@ -107,7 +107,10 @@
           "title": { "type": "string" },
           "icon": { "type": "string" },
           "description": { "type": "string" },
-          "earned": { "type": "boolean" }
+          "earned": { "type": "boolean" },
+          "progress": { "type": "object", "required": ["current", "target"],
+            "properties": { "current": {"type": "integer"}, "target": {"type": "integer"} },
+            "description": "Only on counter badges (streak/mastered milestones, Full Spectrum): how far toward the target. Absent on one-shot event badges." }
         }
       }
     },

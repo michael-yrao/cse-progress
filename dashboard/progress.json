@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-25",
+  "generatedAt": "2026-09-26",
   "totals": {
     "problems": 125,
     "solutions": 136,
@@ -39,7 +39,7 @@
   },
   "onSchedule": {
     "totalActive": 136,
-    "dueToday": 0,
+    "dueToday": 5,
     "overdue": 6
   },
   "trophyCase": {
@@ -3807,57 +3807,89 @@
       "id": "all-green",
       "title": "Full Spectrum",
       "icon": "🌈",
-      "description": "Have at least one clean solve in every technique you have started.",
-      "earned": true
+      "description": "Have at least one clean solve in every technique on the roadmap.",
+      "earned": false,
+      "progress": {
+        "current": 59,
+        "target": 98
+      }
     },
     {
       "id": "streak-7",
       "title": "7-Day Streak",
       "icon": "🔥",
       "description": "Practice on 7 study-days without letting the streak lapse.",
-      "earned": true
+      "earned": true,
+      "progress": {
+        "current": 121,
+        "target": 7
+      }
     },
     {
       "id": "streak-30",
       "title": "30-Day Streak",
       "icon": "🔥",
       "description": "Practice on 30 study-days without letting the streak lapse.",
-      "earned": true
+      "earned": true,
+      "progress": {
+        "current": 121,
+        "target": 30
+      }
     },
     {
       "id": "streak-100",
       "title": "100-Day Streak",
       "icon": "🔥",
       "description": "Practice on 100 study-days without letting the streak lapse.",
-      "earned": true
+      "earned": true,
+      "progress": {
+        "current": 121,
+        "target": 100
+      }
     },
     {
       "id": "trophies-1",
       "title": "1 Mastered",
       "icon": "💎",
-      "description": "Reach 1 problems graduated or retired.",
-      "earned": true
+      "description": "Reach 1 problem graduated or retired.",
+      "earned": true,
+      "progress": {
+        "current": 21,
+        "target": 1
+      }
     },
     {
       "id": "trophies-10",
       "title": "10 Mastered",
       "icon": "💎",
       "description": "Reach 10 problems graduated or retired.",
-      "earned": true
+      "earned": true,
+      "progress": {
+        "current": 21,
+        "target": 10
+      }
     },
     {
       "id": "trophies-25",
       "title": "25 Mastered",
       "icon": "💎",
       "description": "Reach 25 problems graduated or retired.",
-      "earned": false
+      "earned": false,
+      "progress": {
+        "current": 21,
+        "target": 25
+      }
     },
     {
       "id": "trophies-50",
       "title": "50 Mastered",
       "icon": "💎",
       "description": "Reach 50 problems graduated or retired.",
-      "earned": false
+      "earned": false,
+      "progress": {
+        "current": 21,
+        "target": 50
+      }
     }
   ],
   "problems": [
