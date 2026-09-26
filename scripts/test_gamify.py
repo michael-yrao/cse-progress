@@ -787,9 +787,13 @@ class BuildWorkloadTests(unittest.TestCase):
     }
 
     # Mon Aug 10 2026: a plain 🔴 Medium row (remaining, priced 3.0) and a struck 🟡 Easy
-    # row (done, priced 1.4) — the two-row done/remaining split. Thu Aug 13 2026: a
-    # number-less 🔤 primer row only — no problem number to price, so `partial` must be
-    # true even though built/done both land at 0.0.
+    # row (done, priced 1.4) — the two-row done/remaining split. Tue Aug 11 2026: a struck
+    # 🆕 row for a number ROWS tracks at 🟢 s1 (its POST-rep state) — must price as Blank
+    # (🔴), never the tracker's green, and must NOT count as guessed. Wed Aug 12 2026: a
+    # struck 🆕 row for a number absent from ROWS entirely — untracked, so it still guesses
+    # Blank Medium and marks the day partial. Thu Aug 13 2026: a number-less 🔤 primer row
+    # only — no problem number to price, so `partial` must be true even though built/done
+    # both land at 0.0.
     LIVE_FIXTURE = (
         "## Daily Schedule\n\n"
         "| Problem | S | E | Next | Technique |\n"
@@ -799,6 +803,14 @@ class BuildWorkloadTests(unittest.TestCase):
         " · [LC](https://leetcode.com/problems/widget-one/) | 🔴 | | | Arrays |\n"
         "| ~~[502 Widget Two](../../../dsa/leetcode/arrays/502_widget_two.py)~~"
         " · [LC](https://leetcode.com/problems/widget-two/) | 🟡 | | | Arrays |\n"
+        "| |  |  |  |  |\n"
+        "| ▸ **Tue Aug 11** · 3.0 units — New-row tracked day |  |  |  |  |\n"
+        "| 🆕 ~~[505 Widget Five](../../../dsa/leetcode/arrays/505_widget_five.py)"
+        " · [LC](https://leetcode.com/problems/widget-five/)~~ | 🆕 | | | Arrays |\n"
+        "| |  |  |  |  |\n"
+        "| ▸ **Wed Aug 12** · 3.0 units — New-row untracked day |  |  |  |  |\n"
+        "| 🆕 ~~[506 Widget Six](../../../dsa/leetcode/arrays/506_widget_six.py)"
+        " · [LC](https://leetcode.com/problems/widget-six/)~~ | 🆕 | | | Arrays |\n"
         "| |  |  |  |  |\n"
         "| ▸ **Thu Aug 13** · 3.0 units — Primer day |  |  |  |  |\n"
         "| 🔤 **Some Primer Topic** — no LC number | 🔤 | | | concept overview |\n"
@@ -837,6 +849,7 @@ class BuildWorkloadTests(unittest.TestCase):
         _row(502, "🟡", 0, diff="Easy"),
         _row(503, "🟢", 1, diff="Hard"),
         _row(504, "🟡", 0, diff="Medium"),
+        _row(505, "🟢", 1, diff="Medium"),   # POST-rep state of the Tue Aug 11 🆕 row
     ]
 
     def setUp(self):
@@ -858,7 +871,8 @@ class BuildWorkloadTests(unittest.TestCase):
         workload = gamify.build_workload(self.ROWS, self.CFG)
         dates = [w["date"] for w in workload]
         self.assertEqual(dates, sorted(dates))
-        self.assertEqual(dates, ["2026-08-10", "2026-08-13", "2026-09-14", "2026-09-16"])
+        self.assertEqual(dates, ["2026-08-10", "2026-08-11", "2026-08-12", "2026-08-13",
+                                 "2026-09-14", "2026-09-16"])
 
     def test_planned_reads_the_approximate_header(self):
         workload = gamify.build_workload(self.ROWS, self.CFG)
@@ -880,13 +894,34 @@ class BuildWorkloadTests(unittest.TestCase):
     def test_pre_era_headerless_file_contributes_no_entries(self):
         workload = gamify.build_workload(self.ROWS, self.CFG)
         self.assertFalse(any(w["date"].startswith("2026-06") for w in workload))
-        self.assertEqual(len(workload), 4)
+        self.assertEqual(len(workload), 6)
 
     def test_partial_true_for_a_numberless_primer_row(self):
         workload = gamify.build_workload(self.ROWS, self.CFG)
         by_date = {w["date"]: w for w in workload}
         self.assertTrue(by_date["2026-08-13"]["partial"])
         self.assertFalse(by_date["2026-08-10"]["partial"])
+
+    def test_new_row_prices_as_blank_not_the_tracker_post_rep_comfort(self):
+        # 505 is 🆕 in the schedule but ROWS carries its POST-rep 🟢 s1 Medium. Billing
+        # from the tracker (units() = 1.0 * 1.0 = 1.0) would understate the day -- it must
+        # price Blank instead: 🔴 Medium = 3.0 * 1.0 = 3.0.
+        workload = gamify.build_workload(self.ROWS, self.CFG)
+        by_date = {w["date"]: w for w in workload}
+        aug11 = by_date["2026-08-11"]
+        self.assertAlmostEqual(aug11["done"], 3.0)
+        self.assertAlmostEqual(aug11["built"], 3.0)
+        self.assertFalse(aug11["partial"])
+
+    def test_new_row_untracked_guesses_blank_medium_and_marks_partial(self):
+        # 506 is 🆕 and absent from ROWS entirely -- still guesses Blank Medium (3.0) like
+        # any other untracked number, but a guessed difficulty must mark the day partial.
+        workload = gamify.build_workload(self.ROWS, self.CFG)
+        by_date = {w["date"]: w for w in workload}
+        aug12 = by_date["2026-08-12"]
+        self.assertAlmostEqual(aug12["done"], 3.0)
+        self.assertAlmostEqual(aug12["built"], 3.0)
+        self.assertTrue(aug12["partial"])
 
     def test_price_day_items_splits_done_from_remaining_on_a_two_row_day(self):
         path = eb.SCHEDULES / "20260810_schedule.md"

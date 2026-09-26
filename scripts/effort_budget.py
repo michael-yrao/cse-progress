@@ -75,6 +75,11 @@ SCHED_ROW = re.compile(r"^\|(?P<c1>[^|]*)\|(?P<c2>[^|]*)\|(?P<c3>[^|]*)\|(?P<c4>
 # The problem number is the first digits following a "[" or a "**" in the first cell.
 SCHED_NUM = re.compile(r"(?:\[|\*\*)(\d+)")
 GLYPH = re.compile(r"[🔴🟡🟢🎓]")
+# A 🆕 Start cell means the row was UNSEEN going into its rep -- GLYPH does not match it,
+# so parse_schedule_day() would otherwise return start=None and price_day_items() would
+# fall through to the tracker's comfort, which by pricing time is what the row EARNED
+# from today's rep, not what it cost to start. A 🆕 row must always bill as Blank.
+NEW_GLYPH = "🆕"
 
 
 def load_config() -> dict:
@@ -352,7 +357,8 @@ def parse_schedule_day(path: Path, day: dt.date) -> tuple[list[dict], float | No
     """Pull one day's block out of a weekly schedule's daily table.
 
     Returns (items, stated_units). Each item carries the problem number, the START
-    comfort glyph as written at build time, and whether the row is struck through.
+    comfort glyph as written at build time, whether that Start cell was 🆕 (is_new --
+    see NEW_GLYPH), and whether the row is struck through.
 
     The START column is the whole point of this function. It is written once, at the
     weekly build, and never mutated -- so it survives a rep being logged, which the
@@ -410,6 +416,7 @@ def parse_schedule_day(path: Path, day: dt.date) -> tuple[list[dict], float | No
             "num": num.group(1) if num else None,
             "start": glyph.group(0) if glyph else None,
             "start_streak": int(streak_m.group(1)) if streak_m else 0,
+            "is_new": NEW_GLYPH in (m["c2"] or ""),
             "done": "~~" in cell,
             "text": re.sub(r"\s+", " ", text).strip(" ·*"),
         })
@@ -449,6 +456,17 @@ def price_day_items(day: dt.date, items: list[dict], rows: list[dict], cfg: dict
             cost = price(it["start"], it["start_streak"], diff, attempts, cfg)
             streak_tag = f" s{it['start_streak']}" if it["start"] == "🟢" else ""
             note = f"{it['start']}{streak_tag} {diff[0]}"
+        elif it.get("is_new"):
+            # 🆕 means unseen going in: bill Blank (🔴), zero prior attempts, regardless
+            # of what the tracker shows now -- see NEW_GLYPH. Only the difficulty is worth
+            # reading from the tracker when a row exists; there is no start comfort to read.
+            diff = tracked[0]["diff"] if tracked else "Medium"
+            cost = price("🔴", 0, diff, 0, cfg)
+            if tracked:
+                note = f"NEW {diff[0]}"
+            else:
+                note = "NEW !! untracked -- guessed as a new Blank Medium"
+                guessed += 1
         elif tracked:
             worst = max(tracked, key=lambda r: units(r, cfg))
             cost = units(worst, cfg)

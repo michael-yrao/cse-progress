@@ -1112,3 +1112,14 @@ decisions:
       `.claude/skills/cse-coach/references/weekly-build.md` (the trigger-check bullet),
       `docs/foundations/career_strategy.md` §5.
     affects: [scheduling, weekly_build]
+
+  - id: workload-new-row-pricing
+    date: 2026-09-26
+    summary: >-
+      FIXES day-as-built pricing of 🆕 rows — a 🆕 Start cell now bills Blank (🔴) x the
+      problem's difficulty with zero prior attempts, instead of falling through to the
+      tracker's post-rep comfort; untracked 🆕 rows still guess Medium and mark the day
+      partial; the historical `workload` series shifts UP on every day that carried a 🆕
+      row; no `cse.config.yml` value changed. See `scripts/effort_budget.py` (`NEW_GLYPH`,
+      `parse_schedule_day()`'s `is_new` item field, `price_day_items()`).
+    affects: [gamification]
