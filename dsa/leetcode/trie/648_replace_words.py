@@ -46,6 +46,43 @@ class TrieNode:
 
 class Solution:
 
+    # ── Attempt · 2026-09-26 ──────────────
+    def replaceWords_20260926(self, dictionary: List[str], sentence: str) -> str:
+        # trie problem, put each word in dictionary in our trie
+        # convert words in the sentence into a list then go through each word
+        # return on the first match we find, if no match found, return itself
+
+        root = TrieNode()
+
+        for word in dictionary:
+            traversal = root
+            for char in word:
+                if char not in traversal.children:
+                    traversal.children[char] = TrieNode()
+                traversal = traversal.children[char]
+            traversal.isWord = True
+        
+        result = []
+
+        wordList = sentence.split()
+
+        def find_shortest_word(word, node):
+            # finding the first isWord here
+            for i in range(len(word)):
+                if word[i] not in node.children:
+                    return word
+                node = node.children[word[i]]
+                if node.isWord:
+                    # return the word including ith index
+                    return word[:i+1]
+            return word
+
+        for word in wordList:
+            traversal = root
+            result.append(find_shortest_word(word,traversal))
+        
+        return " ".join(result)
+
     # ── Attempt · 2026-09-24 ──────────────
     def replaceWords_20260924(self, dictionary: List[str], sentence: str) -> str:
         # we can place all the dictionaries into a trie but what does that accomplish

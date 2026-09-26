@@ -2,32 +2,32 @@
   "schemaVersion": 1,
   "generatedAt": "2026-09-26",
   "totals": {
-    "problems": 125,
-    "solutions": 136,
-    "reps": 609
+    "problems": 126,
+    "solutions": 137,
+    "reps": 614
   },
   "pipeline": {
-    "blank": 1,
-    "shaky": 15,
+    "blank": 0,
+    "shaky": 14,
     "clean": {
       "s0": 3,
-      "s1": 26,
-      "s2plus": 70,
-      "total": 99
+      "s1": 29,
+      "s2plus": 69,
+      "total": 101
     },
-    "graduated": 21,
+    "graduated": 22,
     "retired": 0
   },
   "difficulty": {
     "Easy": 34,
-    "Medium": 91,
+    "Medium": 92,
     "Hard": 11
   },
   "streak": {
-    "current": 121,
-    "longest": 121,
-    "lastStudyDay": "2026-09-25",
-    "studyDays": 179,
+    "current": 122,
+    "longest": 122,
+    "lastStudyDay": "2026-09-26",
+    "studyDays": 180,
     "restDayAllowance": 1
   },
   "coverage": {
@@ -35,15 +35,67 @@
     "started": 59,
     "noGreen": 0,
     "thin": 19,
-    "variantGaps": 3
+    "variantGaps": 2
   },
   "onSchedule": {
-    "totalActive": 136,
-    "dueToday": 5,
+    "totalActive": 137,
+    "dueToday": 1,
     "overdue": 6
   },
   "trophyCase": {
     "graduated": [
+      {
+        "lcNumber": 169,
+        "title": "Majority Element",
+        "url": "https://leetcode.com/problems/majority-element/",
+        "file": "dsa/leetcode/arrays_and_hash/169_majority_element.py",
+        "difficulty": "Easy",
+        "category": "arrays_and_hash",
+        "comfort": "🎓",
+        "level": 3,
+        "streak": 3,
+        "nextReview": "2027-03-25",
+        "repDates": [
+          "2026-01-05",
+          "2026-04-01",
+          "2026-05-28",
+          "2026-06-27",
+          "2026-07-28",
+          "2026-09-26"
+        ],
+        "timeline": [
+          {
+            "date": "2026-01-05",
+            "comfort": null,
+            "level": null
+          },
+          {
+            "date": "2026-04-01",
+            "comfort": null,
+            "level": null
+          },
+          {
+            "date": "2026-05-28",
+            "comfort": null,
+            "level": null
+          },
+          {
+            "date": "2026-06-27",
+            "comfort": null,
+            "level": null
+          },
+          {
+            "date": "2026-07-28",
+            "comfort": null,
+            "level": null
+          },
+          {
+            "date": "2026-09-26",
+            "comfort": "🎓",
+            "level": 3
+          }
+        ]
+      },
       {
         "lcNumber": 104,
         "title": "Maximum Depth of Binary Tree",
@@ -1009,9 +1061,10 @@
       "tier": "core",
       "started": true,
       "minProblems": 3,
-      "problemCount": 1,
+      "problemCount": 2,
       "problems": [
-        778
+        778,
+        1631
       ],
       "bestComfort": "🟢",
       "hasGreen": true,
@@ -1113,14 +1166,14 @@
         169,
         229
       ],
-      "bestComfort": "🟢",
+      "bestComfort": "🎓",
       "hasGreen": true,
       "thin": false,
       "hasVariantGap": false,
       "buildsOn": [
         "Frequency Counting"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 1
     },
     {
       "name": "Frequency Counting",
@@ -3142,7 +3195,8 @@
     "2026-09-22",
     "2026-09-23",
     "2026-09-24",
-    "2026-09-25"
+    "2026-09-25",
+    "2026-09-26"
   ],
   "schedule": {
     "weekOf": "2026-09-21",
@@ -3584,7 +3638,7 @@
       {
         "date": "2026-09-26",
         "weekday": "Saturday",
-        "label": "⚠️ still over ceiling (648 🔴 re-rep landed here Sep 24; 540 → Sun Sep 27, learner's call) · Binary Search 🟡 + greens + 🆕 1631 Dijkstra consolidation (min-over-max)",
+        "label": "✅ all 5 done (648 🟢 prov · 1631 🟢 s1 · 34 🟢 s1 · 787 🟢 s1 · 169 🎓) — ⚠️ was over ceiling (648 🔴 re-rep landed here Sep 24; 540 → Sun Sep 27, learner's call) · Binary Search 🟡 + greens + 🆕 1631 Dijkstra consolidation (min-over-max)",
         "units": 9.5,
         "items": [
           {
@@ -3597,10 +3651,10 @@
             "file": "dsa/leetcode/binary_search/34_find_first_and_last_position_of_element_in_sorted_array.py",
             "tags": [],
             "kind": "rep",
-            "done": false,
-            "endComfort": null,
-            "endNote": null,
-            "nextReview": null
+            "done": true,
+            "endComfort": "🟢",
+            "endNote": "s1",
+            "nextReview": "2026-10-26"
           },
           {
             "lcNumber": 169,
@@ -3612,10 +3666,10 @@
             "file": "dsa/leetcode/arrays_and_hash/169_majority_element.py",
             "tags": [],
             "kind": "rep",
-            "done": false,
-            "endComfort": null,
+            "done": true,
+            "endComfort": "🎓",
             "endNote": null,
-            "nextReview": null
+            "nextReview": "2027-03-25"
           },
           {
             "lcNumber": 787,
@@ -3627,27 +3681,27 @@
             "file": "dsa/leetcode/graphs/787_cheapest_flights_within_k_stops.py",
             "tags": [],
             "kind": "rep",
-            "done": false,
-            "endComfort": null,
-            "endNote": null,
-            "nextReview": null
+            "done": true,
+            "endComfort": "🟢",
+            "endNote": "s1",
+            "nextReview": "2026-10-26"
           },
           {
             "lcNumber": 1631,
             "title": "Path With Minimum Effort",
             "technique": "Dijkstra",
             "startComfort": null,
-            "difficulty": null,
+            "difficulty": "Medium",
             "url": "https://leetcode.com/problems/path-with-minimum-effort/",
-            "file": null,
+            "file": "dsa/leetcode/graphs/1631_path_with_minimum_effort.py",
             "tags": [
               "new"
             ],
             "kind": "new",
-            "done": false,
-            "endComfort": null,
-            "endNote": null,
-            "nextReview": null
+            "done": true,
+            "endComfort": "🟢",
+            "endNote": "s1",
+            "nextReview": "2026-10-26"
           },
           {
             "lcNumber": 648,
@@ -3662,10 +3716,10 @@
               "backfill"
             ],
             "kind": "rep",
-            "done": false,
-            "endComfort": null,
-            "endNote": null,
-            "nextReview": null
+            "done": true,
+            "endComfort": "🟢",
+            "endNote": "prov",
+            "nextReview": "2026-10-06"
           }
         ]
       },
@@ -4054,8 +4108,8 @@
     {
       "date": "2026-09-06",
       "planned": 9.4,
-      "done": 11.1,
-      "built": 11.1,
+      "done": 9.9,
+      "built": 9.9,
       "partial": true
     },
     {
@@ -4194,15 +4248,15 @@
     {
       "date": "2026-09-26",
       "planned": 9.5,
-      "done": 0.0,
-      "built": 6.5,
-      "partial": true
+      "done": 7.1,
+      "built": 7.1,
+      "partial": false
     },
     {
       "date": "2026-09-27",
       "planned": 8.9,
       "done": 0.0,
-      "built": 12.8,
+      "built": 10.8,
       "partial": true
     }
   ],
@@ -4332,7 +4386,7 @@
       "description": "Practice on 7 study-days without letting the streak lapse.",
       "earned": true,
       "progress": {
-        "current": 121,
+        "current": 122,
         "target": 7
       }
     },
@@ -4343,7 +4397,7 @@
       "description": "Practice on 30 study-days without letting the streak lapse.",
       "earned": true,
       "progress": {
-        "current": 121,
+        "current": 122,
         "target": 30
       }
     },
@@ -4354,7 +4408,7 @@
       "description": "Practice on 100 study-days without letting the streak lapse.",
       "earned": true,
       "progress": {
-        "current": 121,
+        "current": 122,
         "target": 100
       }
     },
@@ -4365,7 +4419,7 @@
       "description": "Reach 1 problem graduated or retired.",
       "earned": true,
       "progress": {
-        "current": 21,
+        "current": 22,
         "target": 1
       }
     },
@@ -4376,7 +4430,7 @@
       "description": "Reach 10 problems graduated or retired.",
       "earned": true,
       "progress": {
-        "current": 21,
+        "current": 22,
         "target": 10
       }
     },
@@ -4387,7 +4441,7 @@
       "description": "Reach 25 problems graduated or retired.",
       "earned": false,
       "progress": {
-        "current": 21,
+        "current": 22,
         "target": 25
       }
     },
@@ -4398,12 +4452,218 @@
       "description": "Reach 50 problems graduated or retired.",
       "earned": false,
       "progress": {
-        "current": 21,
+        "current": 22,
         "target": 50
       }
     }
   ],
   "problems": [
+    {
+      "lcNumber": 648,
+      "title": "Replace Words",
+      "url": "https://leetcode.com/problems/replace-words/",
+      "file": "dsa/leetcode/trie/648_replace_words.py",
+      "difficulty": "Medium",
+      "category": "trie",
+      "comfort": "🟢",
+      "level": 2,
+      "streak": 0,
+      "nextReview": "2026-10-06",
+      "repDates": [
+        "2026-09-14",
+        "2026-09-24",
+        "2026-09-26"
+      ],
+      "timeline": [
+        {
+          "date": "2026-09-14",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-09-24",
+          "comfort": "🔴",
+          "level": 0
+        },
+        {
+          "date": "2026-09-26",
+          "comfort": "🟢",
+          "level": 2
+        }
+      ]
+    },
+    {
+      "lcNumber": 1631,
+      "title": "Path With Minimum Effort (Dijkstra)",
+      "url": "https://leetcode.com/problems/path-with-minimum-effort/",
+      "file": "dsa/leetcode/graphs/1631_path_with_minimum_effort.py",
+      "difficulty": "Medium",
+      "category": "graphs",
+      "comfort": "🟢",
+      "level": 2,
+      "streak": 1,
+      "nextReview": "2026-10-26",
+      "repDates": [
+        "2026-09-26"
+      ],
+      "timeline": [
+        {
+          "date": "2026-09-26",
+          "comfort": "🟢",
+          "level": 2
+        }
+      ]
+    },
+    {
+      "lcNumber": 34,
+      "title": "Find First And Last Position Of Element In Sorted Array",
+      "url": "https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/",
+      "file": "dsa/leetcode/binary_search/34_find_first_and_last_position_of_element_in_sorted_array.py",
+      "difficulty": "Medium",
+      "category": "binary_search",
+      "comfort": "🟢",
+      "level": 2,
+      "streak": 1,
+      "nextReview": "2026-10-26",
+      "repDates": [
+        "2026-09-06",
+        "2026-09-16",
+        "2026-09-26"
+      ],
+      "timeline": [
+        {
+          "date": "2026-09-06",
+          "comfort": "🟡",
+          "level": 1
+        },
+        {
+          "date": "2026-09-16",
+          "comfort": "🟡",
+          "level": 1
+        },
+        {
+          "date": "2026-09-26",
+          "comfort": "🟢",
+          "level": 2
+        }
+      ]
+    },
+    {
+      "lcNumber": 787,
+      "title": "Cheapest Flights Within K Stops (Bellman-Ford)",
+      "url": "https://leetcode.com/problems/cheapest-flights-within-k-stops/",
+      "file": "dsa/leetcode/graphs/787_cheapest_flights_within_k_stops.py",
+      "difficulty": "Medium",
+      "category": "graphs",
+      "comfort": "🟢",
+      "level": 2,
+      "streak": 1,
+      "nextReview": "2026-10-26",
+      "repDates": [
+        "2026-07-14",
+        "2026-07-16",
+        "2026-07-26",
+        "2026-08-05",
+        "2026-08-15",
+        "2026-09-14",
+        "2026-09-16",
+        "2026-09-26"
+      ],
+      "timeline": [
+        {
+          "date": "2026-07-14",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-07-16",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-07-26",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-08-05",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-08-15",
+          "comfort": "🟢",
+          "level": 2
+        },
+        {
+          "date": "2026-09-14",
+          "comfort": "🔴",
+          "level": 0
+        },
+        {
+          "date": "2026-09-16",
+          "comfort": "🟢",
+          "level": 2
+        },
+        {
+          "date": "2026-09-26",
+          "comfort": "🟢",
+          "level": 2
+        }
+      ]
+    },
+    {
+      "lcNumber": 169,
+      "title": "Majority Element",
+      "url": "https://leetcode.com/problems/majority-element/",
+      "file": "dsa/leetcode/arrays_and_hash/169_majority_element.py",
+      "difficulty": "Easy",
+      "category": "arrays_and_hash",
+      "comfort": "🎓",
+      "level": 3,
+      "streak": 3,
+      "nextReview": "2027-03-25",
+      "repDates": [
+        "2026-01-05",
+        "2026-04-01",
+        "2026-05-28",
+        "2026-06-27",
+        "2026-07-28",
+        "2026-09-26"
+      ],
+      "timeline": [
+        {
+          "date": "2026-01-05",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-04-01",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-05-28",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-06-27",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-07-28",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-09-26",
+          "comfort": "🎓",
+          "level": 3
+        }
+      ]
+    },
     {
       "lcNumber": 39,
       "title": "Combination Sum",
@@ -4721,34 +4981,6 @@
           "date": "2026-09-25",
           "comfort": "🎓",
           "level": 3
-        }
-      ]
-    },
-    {
-      "lcNumber": 648,
-      "title": "Replace Words",
-      "url": "https://leetcode.com/problems/replace-words/",
-      "file": "dsa/leetcode/trie/648_replace_words.py",
-      "difficulty": "Medium",
-      "category": "trie",
-      "comfort": "🔴",
-      "level": 0,
-      "streak": 0,
-      "nextReview": "2026-09-26",
-      "repDates": [
-        "2026-09-14",
-        "2026-09-24"
-      ],
-      "timeline": [
-        {
-          "date": "2026-09-14",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-09-24",
-          "comfort": "🔴",
-          "level": 0
         }
       ]
     },
@@ -5963,64 +6195,6 @@
       ]
     },
     {
-      "lcNumber": 787,
-      "title": "Cheapest Flights Within K Stops (Bellman-Ford)",
-      "url": "https://leetcode.com/problems/cheapest-flights-within-k-stops/",
-      "file": "dsa/leetcode/graphs/787_cheapest_flights_within_k_stops.py",
-      "difficulty": "Medium",
-      "category": "graphs",
-      "comfort": "🟢",
-      "level": 2,
-      "streak": 0,
-      "nextReview": "2026-09-26",
-      "repDates": [
-        "2026-07-14",
-        "2026-07-16",
-        "2026-07-26",
-        "2026-08-05",
-        "2026-08-15",
-        "2026-09-14",
-        "2026-09-16"
-      ],
-      "timeline": [
-        {
-          "date": "2026-07-14",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-07-16",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-07-26",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-08-05",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-08-15",
-          "comfort": "🟢",
-          "level": 2
-        },
-        {
-          "date": "2026-09-14",
-          "comfort": "🔴",
-          "level": 0
-        },
-        {
-          "date": "2026-09-16",
-          "comfort": "🟢",
-          "level": 2
-        }
-      ]
-    },
-    {
       "lcNumber": 540,
       "title": "Single Element in a Sorted Array",
       "url": "https://leetcode.com/problems/single-element-in-a-sorted-array/",
@@ -6072,34 +6246,6 @@
           "comfort": null,
           "level": null
         },
-        {
-          "date": "2026-09-06",
-          "comfort": "🟡",
-          "level": 1
-        },
-        {
-          "date": "2026-09-16",
-          "comfort": "🟡",
-          "level": 1
-        }
-      ]
-    },
-    {
-      "lcNumber": 34,
-      "title": "Find First And Last Position Of Element In Sorted Array",
-      "url": "https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/",
-      "file": "dsa/leetcode/binary_search/34_find_first_and_last_position_of_element_in_sorted_array.py",
-      "difficulty": "Medium",
-      "category": "binary_search",
-      "comfort": "🟡",
-      "level": 1,
-      "streak": 0,
-      "nextReview": "2026-09-26",
-      "repDates": [
-        "2026-09-06",
-        "2026-09-16"
-      ],
-      "timeline": [
         {
           "date": "2026-09-06",
           "comfort": "🟡",
@@ -9985,52 +10131,6 @@
           "date": "2026-07-29",
           "comfort": "🎓",
           "level": 3
-        }
-      ]
-    },
-    {
-      "lcNumber": 169,
-      "title": "Majority Element",
-      "url": "https://leetcode.com/problems/majority-element/",
-      "file": "dsa/leetcode/arrays_and_hash/169_majority_element.py",
-      "difficulty": "Easy",
-      "category": "arrays_and_hash",
-      "comfort": "🟢",
-      "level": 2,
-      "streak": 2,
-      "nextReview": "2026-09-26",
-      "repDates": [
-        "2026-01-05",
-        "2026-04-01",
-        "2026-05-28",
-        "2026-06-27",
-        "2026-07-28"
-      ],
-      "timeline": [
-        {
-          "date": "2026-01-05",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-04-01",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-05-28",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-06-27",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-07-28",
-          "comfort": "🟢",
-          "level": 2
         }
       ]
     },

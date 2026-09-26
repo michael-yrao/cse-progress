@@ -37,6 +37,41 @@ import unittest
 
 class Solution:
 
+    # ── Attempt · 2026-09-26 ──────────────
+    def majorityElement_20260926(self, nums: List[int]) -> int:
+        # boyer moore's majority voting algorithm
+        # freqMap of size 1, if bigger than 1, decrement all
+
+        freqMap = {}
+
+        for num in nums:
+            freqMap[num] = freqMap.get(num,0) + 1
+            if len(freqMap) > 1:
+                for key in set(freqMap):
+                    freqMap[key]-=1
+                    if freqMap[key] == 0:
+                        del freqMap[key]
+        
+        return list(freqMap)[0]
+
+    def majorityElement_v2(self, nums: list[int]) -> int:
+        # boyer moore's majority voting algorithm
+        # say first element is majority, if freq goes below 0, change to current?
+
+        majority = nums[0]
+        majorityFreq = 1
+
+        for i in range(1, len(nums)):
+            if nums[i] == majority:
+                majorityFreq+=1
+            else:
+                majorityFreq-=1
+                if majorityFreq <= 0:
+                    majority = nums[i]
+                    majorityFreq = 1
+        
+        return majority
+
     # ── Attempt · 2026-07-28 ──────────────
     def majorityElement_20260728(self, nums: List[int]) -> int:
         # majority voting algorithm

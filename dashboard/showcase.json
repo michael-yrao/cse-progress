@@ -1046,8 +1046,8 @@
         {
           "kind": "attempt",
           "symbol": "majorityElement",
-          "startLine": 58,
-          "endLine": 68,
+          "startLine": 93,
+          "endLine": 103,
           "lines": [
             "    def majorityElement(self, nums: List[int]) -> int:",
             "        freqMap = {}",
@@ -1086,8 +1086,8 @@
         {
           "kind": "attempt",
           "symbol": "majorityElementBoyerMoore",
-          "startLine": 70,
-          "endLine": 88,
+          "startLine": 105,
+          "endLine": 123,
           "lines": [
             "    def majorityElementBoyerMoore(self, nums: List[int]) -> int:",
             "        # boyer-moore algorithm assumes a single max exists",
@@ -2471,8 +2471,8 @@
         {
           "kind": "attempt",
           "symbol": "findCheapestPrice_20260815",
-          "startLine": 92,
-          "endLine": 123,
+          "startLine": 118,
+          "endLine": 149,
           "lines": [
             "    # ── Attempt · 2026-08-15 ──────────────",
             "    def findCheapestPrice_20260815(self, n: int, flights: List[List[int]], src: int, dst: int, k: int) -> int:",
@@ -6968,8 +6968,8 @@
         {
           "kind": "attempt",
           "symbol": "searchRange_20260916",
-          "startLine": 37,
-          "endLine": 80,
+          "startLine": 77,
+          "endLine": 120,
           "lines": [
             "    # ── Attempt · 2026-09-16 ──────────────",
             "    def searchRange_20260916(self, nums: List[int], target: int) -> List[int]:",
@@ -8014,8 +8014,8 @@
         {
           "kind": "attempt",
           "symbol": "replaceWords",
-          "startLine": 86,
-          "endLine": 123,
+          "startLine": 123,
+          "endLine": 160,
           "lines": [
             "    def replaceWords(self, dictionary: List[str], sentence: str) -> str:",
             "        # create a Trie for the dictionary",

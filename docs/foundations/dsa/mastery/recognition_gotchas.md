@@ -1,3 +1,23 @@
+- **2026-09-26 · 169 Majority Element** (🟢 s2 review; retry, half-spoiled: tracker names Boyer-Moore) — ✅ **hit.**
+  Boyer-Moore named in the top comment; first written as the 1-slot generalised form (a one-key map with
+  decrement-all), then the two-variable form on request, both unaided and correct (v2 fuzzed 20k valid inputs).
+  Learner's own aside: "same reset instinct as Kadane's" — a cross-technique link made unprompted. → 🟢 s3 → 🎓.
+- **2026-09-26 · 787 Cheapest Flights Within K Stops** (🟢 prov lock-down; retry, half-spoiled: graphs folder) — ✅ **hit.**
+  "Cheapest → shortest path, k stops → Bellman-Ford" plus the picking feature stated outright: one edge per round, so
+  relax off a snapshot copy. Blank page, correct first run. → 🟢 s1 (lock-down held).
+- **2026-09-26 · 34 Find First and Last Position** (🟡 re-rep; retry, half-spoiled: binary_search folder) — ✅ **hit.**
+  Two-boundary binary search called in the top comment; the deciding detail (round the upper-bound midpoint up so a
+  two-element window terminates) was in the code unprompted. Blank page, correct first run. → 🟢 s1.
+- **2026-09-26 · 1631 Path With Minimum Effort** (🆕 consolidation rep; half-spoiled: the schedule header named
+  "Dijkstra consolidation") — ✅ **hit.** Dijkstra named unaided ("obviously"); the heap-vs-array pick was reasoned
+  from the grid's ≤4 neighbours after a general question on when each wins (answered as a teach, not a hint). The
+  min-over-max feature came out in the code (running max at pop), not in the comment. Blank page, correct in one
+  pass. → 🟢 s1. ⚙️ The pruned distance-array variant was then attempted on request and needed three corrections
+  (compare target, dropped max, stale overwrite) — carded as a variant rep, not a rating input.
+- **2026-09-26 · 648 Replace Words** (🔴 re-rep; retry, half-spoiled: trie folder) — ✅ **hit.** Trie named unaided
+  AND the operation called correctly this time: "return on the first match we find" — the first word-end on the
+  single walk IS the shortest root, the exact picking feature that was coach-supplied Sep 14 and Sep 24. Coded in
+  one pass, no hints. → 🟢 prov.
 - **2026-09-25 · 46 Permutations** (🆕 new, measured; folder half-spoils) — ⚠️ **partial.** Backtracking named unaided, but the
   picking feature vs 78/39 (order matters ⟹ every unused element is a candidate for the next slot ⟹ a `for` over candidates,
   not a take/skip on an index) was coach-supplied after the take/skip version failed; pseudocode given on request. → 🟡.

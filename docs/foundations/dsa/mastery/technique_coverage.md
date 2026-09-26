@@ -6,7 +6,7 @@
 
 > The tracker is keyed by **problem**; this is keyed by **technique**. Use it at the weekly build to decide what to pull, and at phase exit to check the per-algorithm bar (recognition + execution, ≥1 🟢 each).
 
-> **59/104** techniques started &nbsp;·&nbsp; **0** with no 🟢 &nbsp;·&nbsp; **19** thin &nbsp;·&nbsp; **3** unqueued variant gaps
+> **59/104** techniques started &nbsp;·&nbsp; **0** with no 🟢 &nbsp;·&nbsp; **19** thin &nbsp;·&nbsp; **2** unqueued variant gaps
 
 ## ⚠️ Action list
 
@@ -15,7 +15,6 @@
 - **Bellman-Ford** (advanced_graphs) — 1/3: 787
 - **Connected Components** (graphs) — 1/3 (3 rows): 323
 - **Cycle Detection in an Iterated Sequence** (graphs) — 1/2: 202
-- **Dijkstra** (advanced_graphs) — 1/3: 778
 - **Divide & Conquer / Sorting** (sorting) — 1/3: 912
 - **HashMap + Doubly Linked List (LRU)** (linked_list) — 1/3: 146
 - **Multi-source BFS** (graphs) — 1/3: 994
@@ -23,6 +22,7 @@
 - **Stack (augmented entries)** (stack) — 1/2: 155
 - **Stack (expression evaluation)** (stack) — 1/2: 150
 - **Backtracking** (backtracking) — 2/3: 22, 78
+- **Dijkstra** (advanced_graphs) — 2/3: 778, 1631
 - **Floyd's Cycle / Midpoint** (linked_list) — 2/3: 141, 143
 - **Floyd-Warshall (all-pairs shortest path)** (advanced_graphs) — 2/3: 1334, 1462
 - **Grid DFS** (graphs) — 2/3: 200, 695
@@ -34,8 +34,7 @@
 
 **Unqueued variant gaps — a method never once exercised, and not in any queue.**
 
-- **Dijkstra** — missing **Min-over-max (minimize the maximum edge)**. Exercised: none
-- **Dijkstra** — missing **Max-min bottleneck (maximize the minimum edge)**. Exercised: none
+- **Dijkstra** — missing **Max-min bottleneck (maximize the minimum edge)**. Exercised: Min-over-max (minimize the maximum edge) ×1
 - **Prim's MST** — missing **Kruskal's MST**. Exercised: Prim's MST ×1
 
 ## Coverage
@@ -45,12 +44,12 @@ Every declared technique gets a row, started or not — a not-started row's Gaps
 | Technique | Family | Tier | Min | Problems | Best | 🟢 | Variants | Gaps |
 |---|---|---|---:|---:|:---:|:---:|---|---|
 | Bellman-Ford | advanced_graphs | core | 3 | 1 (787) | 🟢 | ✅ | Standard ×1 · ~~Contrast rep on 743~~ *(queued: `graduates:743`)* | thin (1/3) |
-| Dijkstra | advanced_graphs | core | 3 | 1 (778) | 🟢 | ✅ | **Min-over-max (minimize the maximum edge) ×0** · **Max-min bottleneck (maximize the minimum edge) ×0** · ~~0/1 edge weights (0-1 BFS vs Dijkstra)~~ *(queued: `surplus>=1`)* · ~~Multiplicative relaxation (maximize the product)~~ *(queued: `surplus>=1`)* | thin (1/3) · variant: **Min-over-max (minimize the maximum edge)** · variant: **Max-min bottleneck (maximize the minimum edge)** |
+| Dijkstra | advanced_graphs | core | 3 | 2 (778, 1631) | 🟢 | ✅ | Min-over-max (minimize the maximum edge) ×1 · **Max-min bottleneck (maximize the minimum edge) ×0** · ~~0/1 edge weights (0-1 BFS vs Dijkstra)~~ *(queued: `surplus>=1`)* · ~~Multiplicative relaxation (maximize the product)~~ *(queued: `surplus>=1`)* | thin (2/3) · variant: **Max-min bottleneck (maximize the minimum edge)** |
 | Floyd-Warshall (all-pairs shortest path) | advanced_graphs | core | 3 | 2 (1334, 1462) | 🟢 | ✅ | — | thin (2/3) |
 | Hierholzer (Eulerian path) | advanced_graphs | core | 3 | 2 *+1v* (332, 2097) | 🟢 | ✅ | pre-sorted adjacency ×1 · min-heap ordering ×1 | thin (2/3) |
 | Prim's MST | advanced_graphs | core | 3 | 1 (1584) | 🟢 | ✅ | Prim's MST ×1 · **Kruskal's MST ×0** | thin (1/3) · variant: **Kruskal's MST** |
 | Array/String Fundamentals | arrays_and_hash | core | 1 | 3 (14, 66, 1929) | 🟢 | ✅ | — | — |
-| Boyer-Moore Voting | arrays_and_hash | core | 2 | 2 (169, 229) | 🟢 | ✅ | — | — |
+| Boyer-Moore Voting | arrays_and_hash | core | 2 | 2 (169, 229) | 🎓 | ✅ | — | — |
 | Frequency Counting | arrays_and_hash | core | 2 | 2 (49, 242) | 🎓 | ✅ | — | — |
 | Hash Map Lookup | arrays_and_hash | core | 2 | 2 (1, 219) | 🎓 | ✅ | — | — |
 | Hash Set Membership | arrays_and_hash | core | 3 | 3 (36, 128, 217) | 🟢 | ✅ | — | — |
@@ -164,5 +163,5 @@ Every declared technique gets a row, started or not — a not-started row's Gaps
 
 - 743 (Dijkstra)
 
-**Not reached yet (6)** — declared in the vocabulary, no tracker row. This is the normal state for curriculum ahead of the learner; it is a roadmap, not a finding.
+**Not reached yet (5)** — declared in the vocabulary, no tracker row. This is the normal state for curriculum ahead of the learner; it is a roadmap, not a finding.
 

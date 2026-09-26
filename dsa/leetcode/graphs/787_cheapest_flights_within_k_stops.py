@@ -33,6 +33,32 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-09-26 ──────────────
+    def findCheapestPrice_20260926(self, n: int, flights: List[List[int]], src: int, dst: int, k: int) -> int:
+        # cheapest price, so shortest path, k stops, so bellman-ford
+        # for bellman ford, we need to make sure we only take one step each iteration
+        # so this means we need a working copy of our solution, so distance array and a working copy
+
+        distance = [math.inf] * n
+        distance[src] = 0
+
+        # k stops, which is actually k + 1 edges, so k + 1
+        for _ in range(k+1):
+            workingDistance = distance.copy()
+            for source,destination,price in flights:
+                # no need to bother if we can't even start here
+                if distance[source] == math.inf:
+                    continue
+                # if working distance[destination] is bigger than distance[src] + price, then we can update workingDistance. working distance because we can have other nodes that go here faster in the same iteration
+                if distance[source] + price < workingDistance[destination]:
+                    workingDistance[destination] = distance[source] + price
+            distance = workingDistance
+        
+        if distance[dst] == math.inf:
+            return -1
+        
+        return distance[dst] # type: ignore
+
     # ── Attempt · 2026-09-16 ──────────────
     def findCheapestPrice_20260916(self, n: int, flights: List[List[int]], src: int, dst: int, k: int) -> int:
         # we are given a directed graph with positive weight, a source and a destination and we are to find cheapest flights

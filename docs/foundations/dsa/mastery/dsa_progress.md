@@ -66,14 +66,19 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/dsa/mastery/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **125+6** problems &nbsp;·&nbsp; **136+6** solutions &nbsp;·&nbsp; **609+6** reps
+> **126+6** problems &nbsp;·&nbsp; **137+6** solutions &nbsp;·&nbsp; **614+6** reps
 
 | | 🏆 Retired | 🎓 Graduated | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|:---:|
-| **Solutions** | 0 | 21 | 99 | 15 | 1 |
+| **Solutions** | 0 | 22 | 101 | 14 | 0 |
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Rep Date | Rep Dates |
 |---|---|---|---|---|---|---|
+| Medium | [648. Replace Words](https://leetcode.com/problems/replace-words/) | 🟢 | 0 | 2026-10-06 | 2026-09-26 | 2026-09-14, 2026-09-24, 2026-09-26 |
+| Medium | [1631. Path With Minimum Effort (Dijkstra)](https://leetcode.com/problems/path-with-minimum-effort/) | 🟢 | 1 | 2026-10-26 | 2026-09-26 | 2026-09-26 |
+| Medium | [34. Find First And Last Position Of Element In Sorted Array](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/) | 🟢 | 1 | 2026-10-26 | 2026-09-26 | 2026-09-06, 2026-09-16, 2026-09-26 |
+| Medium | [787. Cheapest Flights Within K Stops (Bellman-Ford)](https://leetcode.com/problems/cheapest-flights-within-k-stops/) | 🟢 | 1 | 2026-10-26 | 2026-09-26 | 2026-07-14, 2026-07-16, 2026-07-26, 2026-08-05, 2026-08-15, 2026-09-14, 2026-09-16, 2026-09-26 |
+| Easy | [169. Majority Element](https://leetcode.com/problems/majority-element/) | 🎓 | 3 | 2027-03-25 | 2026-09-26 | 2026-01-05, 2026-04-01, 2026-05-28, 2026-06-27, 2026-07-28, 2026-09-26 |
 | Medium | [39. Combination Sum](https://leetcode.com/problems/combination-sum/) | 🟢 | 0 | 2026-10-05 | 2026-09-25 | 2026-09-23, 2026-09-25 |
 | Medium | [46. Permutations](https://leetcode.com/problems/permutations/) | 🟡 | 0 | 2026-10-05 | 2026-09-25 | 2026-09-25 |
 | Medium | [55. Jump Game](https://leetcode.com/problems/jump-game/) | 🟡 | 0 | 2026-10-05 | 2026-09-25 | 2026-09-05, 2026-09-15, 2026-09-25 |
@@ -82,7 +87,6 @@ Notes for future agents:
 | Medium | [875. Koko Eating Bananas](https://leetcode.com/problems/koko-eating-bananas/) | 🟢 | 2 | 2026-11-24 | 2026-09-25 | 2026-04-22, 2026-07-03, 2026-07-13, 2026-07-23, 2026-08-02, 2026-08-11, 2026-09-25 |
 | Medium | [1584. Min Cost to Connect All Points (Prim's MST)](https://leetcode.com/problems/min-cost-to-connect-all-points/) | 🟢 | 2 | 2026-11-24 | 2026-09-25 | 2026-07-16, 2026-07-18, 2026-07-20, 2026-08-01, 2026-08-11, 2026-09-25 |
 | Easy | [104. Maximum Depth of Binary Tree](https://leetcode.com/problems/maximum-depth-of-binary-tree/) | 🎓 | 3 | 2027-03-24 | 2026-09-25 | 2026-04-30, 2026-05-27, 2026-06-27, 2026-07-27, 2026-09-25 |
-| Medium | [648. Replace Words](https://leetcode.com/problems/replace-words/) | 🔴 | 0 | 2026-09-26 | 2026-09-24 | 2026-09-14, 2026-09-24 |
 | Medium | [846. Hand of Straights](https://leetcode.com/problems/hand-of-straights/) | 🟡 | 0 | 2026-10-03 | 2026-09-23 | 2026-09-11, 2026-09-23 |
 | Hard | [1489. Find Critical and Pseudo-Critical Edges in MST (Kruskal)](https://leetcode.com/problems/find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree/) | 🟡 | 0 | 2026-10-03 | 2026-09-23 | 2026-09-13, 2026-09-23 |
 | Medium | [1552. Magnetic Force Between Two Balls](https://leetcode.com/problems/magnetic-force-between-two-balls/) | 🟡 | 0 | 2026-10-02 | 2026-09-22 | 2026-09-20, 2026-09-22 |
@@ -111,9 +115,7 @@ Notes for future agents:
 | Medium | [235. Lowest Common Ancestor of a Binary Search Tree](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/) | 🟢 | 2 | 2026-11-16 | 2026-09-17 | 2026-05-03, 2026-06-12, 2026-07-19, 2026-07-29, 2026-08-08, 2026-08-18, 2026-09-17 |
 | Medium | [560. Subarray Sum Equals K](https://leetcode.com/problems/subarray-sum-equals-k/) | 🟡 | 0 | 2026-09-27 | 2026-09-17 | 2026-04-05, 2026-06-26, 2026-06-28, 2026-07-29, 2026-08-08, 2026-08-18, 2026-09-17 |
 | Medium | [102. Binary Tree Level Order Traversal](https://leetcode.com/problems/binary-tree-level-order-traversal/) | 🎓 | 3 | 2027-03-16 | 2026-09-17 | 2026-05-03, 2026-06-12, 2026-07-19, 2026-09-17 |
-| Medium | [787. Cheapest Flights Within K Stops (Bellman-Ford)](https://leetcode.com/problems/cheapest-flights-within-k-stops/) | 🟢 | 0 | 2026-09-26 | 2026-09-16 | 2026-07-14, 2026-07-16, 2026-07-26, 2026-08-05, 2026-08-15, 2026-09-14, 2026-09-16 |
 | Medium | [540. Single Element in a Sorted Array](https://leetcode.com/problems/single-element-in-a-sorted-array/) | 🟡 | 0 | 2026-09-26 | 2026-09-16 | 2026-05-02, 2026-06-12, 2026-06-13, 2026-07-17, 2026-07-27, 2026-08-06, 2026-09-06, 2026-09-16 |
-| Medium | [34. Find First And Last Position Of Element In Sorted Array](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/) | 🟡 | 0 | 2026-09-26 | 2026-09-16 | 2026-09-06, 2026-09-16 |
 | Medium | [19. Remove Nth Node From End of List (Postorder Recursion)](https://leetcode.com/problems/remove-nth-node-from-end-of-list/) | 🟢 | 2 | 2026-11-15 | 2026-09-16 | 2026-05-18, 2026-05-21, 2026-06-18, 2026-06-28, 2026-07-08, 2026-07-18, 2026-07-28, 2026-08-07, 2026-08-17, 2026-09-16 |
 | Easy | [242. Valid Anagram](https://leetcode.com/problems/valid-anagram/) | 🎓 | 3 | 2027-03-15 | 2026-09-16 | 2026-01-01, 2026-03-25, 2026-06-22, 2026-07-22, 2026-09-16 |
 | Hard | [332. Reconstruct Itinerary (pre-sorted adjacency)](https://leetcode.com/problems/reconstruct-itinerary/) | 🟢 | 1 | 2026-10-15 | 2026-09-15 | 2026-08-18, 2026-09-05, 2026-09-15 |
@@ -204,7 +206,6 @@ Notes for future agents:
 | Easy | [219. Contains Duplicate II](https://leetcode.com/problems/contains-duplicate-ii/) | 🟢 | 2 | 2026-10-02 | 2026-08-03 | 2026-03-22, 2026-04-14, 2026-06-25, 2026-07-04, 2026-08-03 |
 | Medium | [128. Longest Consecutive Sequence](https://leetcode.com/problems/longest-consecutive-sequence/) | 🟢 | 2 | 2026-09-27 | 2026-07-29 | 2026-01-26, 2026-04-14, 2026-06-27, 2026-06-29, 2026-07-29 |
 | Easy | [733. Flood Fill (BFS)](https://leetcode.com/problems/flood-fill/) | 🎓 | 3 | 2027-01-25 | 2026-07-29 | 2026-06-12, 2026-06-19, 2026-06-28, 2026-07-29 |
-| Easy | [169. Majority Element](https://leetcode.com/problems/majority-element/) | 🟢 | 2 | 2026-09-26 | 2026-07-28 | 2026-01-05, 2026-04-01, 2026-05-28, 2026-06-27, 2026-07-28 |
 | Medium | [53. Maximum Subarray (Kadane)](https://leetcode.com/problems/maximum-subarray/) | 🟢 | 2 | 2026-09-24 | 2026-07-26 | 2026-01-08, 2026-04-02, 2026-06-23, 2026-06-24, 2026-07-26 |
 | Medium | [189. Rotate Array](https://leetcode.com/problems/rotate-array/) | 🟢 | 2 | 2026-09-24 | 2026-07-26 | 2026-01-11, 2026-04-04, 2026-06-24, 2026-07-26 |
 | Easy | [1046. Last Stone Weight](https://leetcode.com/problems/last-stone-weight/) | 🟢 | 2 | 2026-09-24 | 2026-07-26 | 2026-06-23, 2026-07-26 |

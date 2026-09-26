@@ -34,6 +34,46 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-09-26 ──────────────
+    def searchRange_20260926(self, nums: List[int], target: int) -> List[int]:
+        # binary search, first and last means we do both min boundary and max boundary
+        # [5,7,7,8,8,9,9,10] ; 8
+        #  l       m     r
+
+        result = [-1,-1]
+
+        l, r = 0, len(nums) - 1
+
+        while l < r:
+            m = (l + r) // 2
+            # if value is less, we need to move up, which is obvious for both cases
+            # but if it is equal, we keep as candidate and move r down
+            # if value is bigger, we need to move r down as down
+            if nums[m] >= target:
+                r = m
+            else:
+                l = m + 1
+        
+        if l < len(nums) and nums[l] == target:
+            result[0] = l
+
+        l, r = 0, len(nums) - 1
+
+        while l < r:
+            m = (l + r + 1) // 2
+            # if value is less, we need to move up, which is obvious for both cases
+            # but if it is equal, we keep as candidate and move l up
+            # if value is bigger, we need to move r down as down
+            if nums[m] <= target:
+                l = m
+            else:
+                r = m - 1
+        
+        if l < len(nums) and nums[l] == target:
+            result[1] = l
+        
+        return result
+
     # ── Attempt · 2026-09-16 ──────────────
     def searchRange_20260916(self, nums: List[int], target: int) -> List[int]:
         # min boundary and max boundary binary search
