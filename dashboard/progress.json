@@ -997,7 +997,11 @@
       "bestComfort": "🟢",
       "hasGreen": true,
       "thin": true,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Dijkstra"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "Dijkstra",
@@ -1012,7 +1016,12 @@
       "bestComfort": "🟢",
       "hasGreen": true,
       "thin": true,
-      "hasVariantGap": true
+      "hasVariantGap": true,
+      "buildsOn": [
+        "Heap / Priority Queue",
+        "Grid BFS"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "Floyd-Warshall (all-pairs shortest path)",
@@ -1028,7 +1037,11 @@
       "bestComfort": "🟢",
       "hasGreen": true,
       "thin": true,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Dijkstra"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "Hierholzer (Eulerian path)",
@@ -1044,7 +1057,11 @@
       "bestComfort": "🟢",
       "hasGreen": true,
       "thin": true,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Graph Cycle Detection (DFS)"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "Prim's MST",
@@ -1059,7 +1076,12 @@
       "bestComfort": "🟢",
       "hasGreen": true,
       "thin": true,
-      "hasVariantGap": true
+      "hasVariantGap": true,
+      "buildsOn": [
+        "Heap / Priority Queue",
+        "Dijkstra"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "Array/String Fundamentals",
@@ -1076,7 +1098,9 @@
       "bestComfort": "🟢",
       "hasGreen": true,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [],
+      "graduatedCount": 0
     },
     {
       "name": "Boyer-Moore Voting",
@@ -1092,7 +1116,11 @@
       "bestComfort": "🟢",
       "hasGreen": true,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Frequency Counting"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "Frequency Counting",
@@ -1108,7 +1136,11 @@
       "bestComfort": "🎓",
       "hasGreen": true,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Hash Map Lookup"
+      ],
+      "graduatedCount": 1
     },
     {
       "name": "Hash Map Lookup",
@@ -1124,7 +1156,9 @@
       "bestComfort": "🎓",
       "hasGreen": true,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [],
+      "graduatedCount": 1
     },
     {
       "name": "Hash Set Membership",
@@ -1141,7 +1175,11 @@
       "bestComfort": "🟢",
       "hasGreen": true,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Hash Map Lookup"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "In-Place Array Rotation",
@@ -1156,7 +1194,11 @@
       "bestComfort": "🟢",
       "hasGreen": true,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Array/String Fundamentals"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "Length-Prefix Encoding",
@@ -1171,7 +1213,11 @@
       "bestComfort": "🟢",
       "hasGreen": true,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Array/String Fundamentals"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "Prefix/Suffix Products",
@@ -1186,7 +1232,11 @@
       "bestComfort": "🟢",
       "hasGreen": true,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Array/String Fundamentals"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "Backtracking",
@@ -1202,7 +1252,11 @@
       "bestComfort": "🟢",
       "hasGreen": true,
       "thin": true,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Recursion"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "Binary Search (exact match)",
@@ -1218,7 +1272,11 @@
       "bestComfort": "🎓",
       "hasGreen": true,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Array/String Fundamentals"
+      ],
+      "graduatedCount": 1
     },
     {
       "name": "Binary Search (max boundary)",
@@ -1235,7 +1293,11 @@
       "bestComfort": "🟢",
       "hasGreen": true,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Binary Search (exact match)"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "Binary Search (min boundary)",
@@ -1256,7 +1318,11 @@
       "bestComfort": "🎓",
       "hasGreen": true,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Binary Search (exact match)"
+      ],
+      "graduatedCount": 1
     },
     {
       "name": "Binary Search on Answer",
@@ -1273,7 +1339,11 @@
       "bestComfort": "🟢",
       "hasGreen": true,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Binary Search (min boundary)"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "1D Dynamic Programming",
@@ -1286,7 +1356,11 @@
       "bestComfort": null,
       "hasGreen": false,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Memoization"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "2D Dynamic Programming",
@@ -1299,7 +1373,11 @@
       "bestComfort": null,
       "hasGreen": false,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "1D Dynamic Programming"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "Interval DP",
@@ -1312,7 +1390,11 @@
       "bestComfort": null,
       "hasGreen": false,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "2D Dynamic Programming"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "Knapsack",
@@ -1325,7 +1407,11 @@
       "bestComfort": null,
       "hasGreen": false,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "1D Dynamic Programming"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "Longest Common Subsequence",
@@ -1338,7 +1424,11 @@
       "bestComfort": null,
       "hasGreen": false,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "2D Dynamic Programming"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "Longest Increasing Subsequence",
@@ -1351,7 +1441,12 @@
       "bestComfort": null,
       "hasGreen": false,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "1D Dynamic Programming",
+        "Binary Search (min boundary)"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "Memoization",
@@ -1364,7 +1459,12 @@
       "bestComfort": null,
       "hasGreen": false,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Recursion",
+        "Backtracking"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "Space Compression",
@@ -1377,7 +1477,11 @@
       "bestComfort": null,
       "hasGreen": false,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "2D Dynamic Programming"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "2-SAT",
@@ -1390,7 +1494,11 @@
       "bestComfort": null,
       "hasGreen": false,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Tarjan's SCC"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "Advanced Geometry",
@@ -1403,7 +1511,11 @@
       "bestComfort": null,
       "hasGreen": false,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Sweep Line"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "Aho-Corasick",
@@ -1416,7 +1528,12 @@
       "bestComfort": null,
       "hasGreen": false,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Trie",
+        "KMP"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "Bidirectional Search / Johnson's",
@@ -1429,7 +1546,12 @@
       "bestComfort": null,
       "hasGreen": false,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Dijkstra",
+        "Bellman-Ford"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "Centroid Decomposition",
@@ -1442,7 +1564,11 @@
       "bestComfort": null,
       "hasGreen": false,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Tree DFS with Postorder Return"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "D&C DP (Aliens Trick)",
@@ -1455,7 +1581,12 @@
       "bestComfort": null,
       "hasGreen": false,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "2D Dynamic Programming",
+        "Divide & Conquer / Sorting"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "Difference Array",
@@ -1468,7 +1599,11 @@
       "bestComfort": null,
       "hasGreen": false,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Prefix Sum"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "Eertree",
@@ -1481,7 +1616,12 @@
       "bestComfort": null,
       "hasGreen": false,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Manacher's Algorithm",
+        "Trie"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "FFT/NTT",
@@ -1494,7 +1634,12 @@
       "bestComfort": null,
       "hasGreen": false,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Number Theory",
+        "Divide & Conquer / Sorting"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "Fenwick Tree (BIT)",
@@ -1507,7 +1652,11 @@
       "bestComfort": null,
       "hasGreen": false,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Prefix Sum"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "Heavy-Light Decomposition",
@@ -1520,7 +1669,12 @@
       "bestComfort": null,
       "hasGreen": false,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Segment Tree",
+        "LCA"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "KMP",
@@ -1533,7 +1687,11 @@
       "bestComfort": null,
       "hasGreen": false,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Array/String Fundamentals"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "LCA",
@@ -1546,7 +1704,11 @@
       "bestComfort": null,
       "hasGreen": false,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Tree DFS (recursive)"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "Link-Cut Trees",
@@ -1559,7 +1721,11 @@
       "bestComfort": null,
       "hasGreen": false,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Heavy-Light Decomposition"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "MCMF / Min-Cut Modeling",
@@ -1572,7 +1738,12 @@
       "bestComfort": null,
       "hasGreen": false,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Max-Flow",
+        "Bellman-Ford"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "Manacher's Algorithm",
@@ -1585,7 +1756,11 @@
       "bestComfort": null,
       "hasGreen": false,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Two Pointers (converging)"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "Matrix Exponentiation",
@@ -1598,7 +1773,11 @@
       "bestComfort": null,
       "hasGreen": false,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "2D Dynamic Programming"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "Max-Flow",
@@ -1611,7 +1790,11 @@
       "bestComfort": null,
       "hasGreen": false,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Grid BFS"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "Meet-in-the-Middle",
@@ -1624,7 +1807,12 @@
       "bestComfort": null,
       "hasGreen": false,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Backtracking",
+        "Binary Search (exact match)"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "Mo's Algorithm",
@@ -1637,7 +1825,12 @@
       "bestComfort": null,
       "hasGreen": false,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Prefix Sum",
+        "Divide & Conquer / Sorting"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "Number Theory",
@@ -1650,7 +1843,9 @@
       "bestComfort": null,
       "hasGreen": false,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [],
+      "graduatedCount": 0
     },
     {
       "name": "Persistent Structures",
@@ -1663,7 +1858,11 @@
       "bestComfort": null,
       "hasGreen": false,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Segment Tree"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "Reservoir Sampling",
@@ -1676,7 +1875,11 @@
       "bestComfort": null,
       "hasGreen": false,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Array/String Fundamentals"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "SOS DP",
@@ -1689,7 +1892,11 @@
       "bestComfort": null,
       "hasGreen": false,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Knapsack"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "Segment Tree",
@@ -1702,7 +1909,12 @@
       "bestComfort": null,
       "hasGreen": false,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Tree DFS (recursive)",
+        "Prefix Sum"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "Segment Tree Beats",
@@ -1715,7 +1927,11 @@
       "bestComfort": null,
       "hasGreen": false,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Segment Tree"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "Sprague-Grundy",
@@ -1728,7 +1944,11 @@
       "bestComfort": null,
       "hasGreen": false,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Memoization"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "Suffix Automaton",
@@ -1741,7 +1961,11 @@
       "bestComfort": null,
       "hasGreen": false,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Trie"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "Sweep Line",
@@ -1754,7 +1978,12 @@
       "bestComfort": null,
       "hasGreen": false,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Intervals (sort + sweep)",
+        "Heap / Priority Queue"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "Tarjan's SCC",
@@ -1767,7 +1996,11 @@
       "bestComfort": null,
       "hasGreen": false,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Graph Cycle Detection (DFS)"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "XOR Trie",
@@ -1780,7 +2013,11 @@
       "bestComfort": null,
       "hasGreen": false,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Trie"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "BFS on Implicit Graph",
@@ -1795,7 +2032,11 @@
       "bestComfort": "🟢",
       "hasGreen": true,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Grid BFS"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "Connected Components",
@@ -1810,7 +2051,11 @@
       "bestComfort": "🟢",
       "hasGreen": true,
       "thin": true,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Grid DFS"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "Cycle Detection in an Iterated Sequence",
@@ -1825,7 +2070,12 @@
       "bestComfort": "🟢",
       "hasGreen": true,
       "thin": true,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Floyd's Cycle / Midpoint",
+        "Hash Set Membership"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "Graph Clone (DFS + Hash Map)",
@@ -1840,7 +2090,12 @@
       "bestComfort": "🟢",
       "hasGreen": true,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Grid DFS",
+        "Hash Map Lookup"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "Graph Cycle Detection (DFS)",
@@ -1855,7 +2110,11 @@
       "bestComfort": "🟢",
       "hasGreen": true,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Grid DFS"
+      ],
+      "graduatedCount": 1
     },
     {
       "name": "Grid BFS",
@@ -1873,7 +2132,11 @@
       "bestComfort": "🎓",
       "hasGreen": true,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Tree BFS (level order)"
+      ],
+      "graduatedCount": 3
     },
     {
       "name": "Grid DFS",
@@ -1889,7 +2152,11 @@
       "bestComfort": "🎓",
       "hasGreen": true,
       "thin": true,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Tree DFS (recursive)"
+      ],
+      "graduatedCount": 1
     },
     {
       "name": "Multi-source BFS",
@@ -1904,7 +2171,11 @@
       "bestComfort": "🟢",
       "hasGreen": true,
       "thin": true,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Grid BFS"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "Topological Sort",
@@ -1921,7 +2192,12 @@
       "bestComfort": "🎓",
       "hasGreen": true,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Graph Cycle Detection (DFS)",
+        "Grid BFS"
+      ],
+      "graduatedCount": 1
     },
     {
       "name": "Union-Find",
@@ -1939,7 +2215,11 @@
       "bestComfort": "🎓",
       "hasGreen": true,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Connected Components"
+      ],
+      "graduatedCount": 2
     },
     {
       "name": "Heap / Priority Queue",
@@ -1959,7 +2239,11 @@
       "bestComfort": "🟢",
       "hasGreen": true,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Divide & Conquer / Sorting"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "Intervals (sort + sweep)",
@@ -1976,7 +2260,11 @@
       "bestComfort": "🟢",
       "hasGreen": true,
       "thin": true,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Divide & Conquer / Sorting"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "Deep Copy via Hash Map",
@@ -1991,7 +2279,12 @@
       "bestComfort": "🟢",
       "hasGreen": true,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Hash Map Lookup",
+        "Dummy Node"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "Dummy Node",
@@ -2008,7 +2301,9 @@
       "bestComfort": "🎓",
       "hasGreen": true,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [],
+      "graduatedCount": 1
     },
     {
       "name": "Floyd's Cycle / Midpoint",
@@ -2024,7 +2319,11 @@
       "bestComfort": "🟢",
       "hasGreen": true,
       "thin": true,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Dummy Node"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "HashMap + Doubly Linked List (LRU)",
@@ -2039,7 +2338,12 @@
       "bestComfort": "🟢",
       "hasGreen": true,
       "thin": true,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Hash Map Lookup",
+        "Dummy Node"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "Linked List Arithmetic",
@@ -2054,7 +2358,11 @@
       "bestComfort": "🟢",
       "hasGreen": true,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Dummy Node"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "Linked List Merge",
@@ -2069,7 +2377,11 @@
       "bestComfort": "🎓",
       "hasGreen": true,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Dummy Node"
+      ],
+      "graduatedCount": 1
     },
     {
       "name": "Linked List Reversal",
@@ -2084,7 +2396,11 @@
       "bestComfort": "🎓",
       "hasGreen": true,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Dummy Node"
+      ],
+      "graduatedCount": 1
     },
     {
       "name": "Remove Nth From End",
@@ -2099,7 +2415,12 @@
       "bestComfort": "🟢",
       "hasGreen": true,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Dummy Node",
+        "Two Pointers (converging)"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "Kadane",
@@ -2114,7 +2435,11 @@
       "bestComfort": "🟢",
       "hasGreen": true,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Prefix Sum"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "Prefix Sum",
@@ -2130,7 +2455,11 @@
       "bestComfort": "🟢",
       "hasGreen": true,
       "thin": true,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Array/String Fundamentals"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "Recursion",
@@ -2147,7 +2476,9 @@
       "bestComfort": "🎓",
       "hasGreen": true,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [],
+      "graduatedCount": 2
     },
     {
       "name": "Greedy (single pass)",
@@ -2167,7 +2498,11 @@
       "bestComfort": "🟢",
       "hasGreen": true,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Array/String Fundamentals"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "Sliding Window",
@@ -2185,7 +2520,12 @@
       "bestComfort": "🟢",
       "hasGreen": true,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Two Pointers (converging)",
+        "Frequency Counting"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "Divide & Conquer / Sorting",
@@ -2200,7 +2540,11 @@
       "bestComfort": "🟢",
       "hasGreen": true,
       "thin": true,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Recursion"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "Monotonic Deque",
@@ -2215,7 +2559,12 @@
       "bestComfort": "🟢",
       "hasGreen": true,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Monotonic Stack",
+        "Sliding Window"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "Monotonic Stack",
@@ -2235,7 +2584,11 @@
       "bestComfort": "🟢",
       "hasGreen": true,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Stack (matching)"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "Stack (augmented entries)",
@@ -2250,7 +2603,11 @@
       "bestComfort": "🟢",
       "hasGreen": true,
       "thin": true,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Stack (matching)"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "Stack (expression evaluation)",
@@ -2265,7 +2622,11 @@
       "bestComfort": "🟢",
       "hasGreen": true,
       "thin": true,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Stack (matching)"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "Stack (matching)",
@@ -2280,7 +2641,11 @@
       "bestComfort": "🟢",
       "hasGreen": true,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Array/String Fundamentals"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "BST Descent",
@@ -2296,7 +2661,12 @@
       "bestComfort": "🟢",
       "hasGreen": true,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Tree DFS (recursive)",
+        "Binary Search (exact match)"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "Tree BFS (level order)",
@@ -2312,7 +2682,11 @@
       "bestComfort": "🎓",
       "hasGreen": true,
       "thin": true,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Tree DFS (recursive)"
+      ],
+      "graduatedCount": 2
     },
     {
       "name": "Tree Construction (Divide & Conquer)",
@@ -2327,7 +2701,12 @@
       "bestComfort": "🟢",
       "hasGreen": true,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Tree DFS with Postorder Return",
+        "Divide & Conquer / Sorting"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "Tree DFS (recursive)",
@@ -2347,7 +2726,11 @@
       "bestComfort": "🎓",
       "hasGreen": true,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Recursion"
+      ],
+      "graduatedCount": 4
     },
     {
       "name": "Tree DFS with Postorder Return",
@@ -2363,7 +2746,11 @@
       "bestComfort": "🟢",
       "hasGreen": true,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Tree DFS (recursive)"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "Trie",
@@ -2379,7 +2766,12 @@
       "bestComfort": "🟢",
       "hasGreen": true,
       "thin": true,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Tree DFS (recursive)",
+        "Hash Map Lookup"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "Dutch National Flag",
@@ -2394,7 +2786,11 @@
       "bestComfort": "🟢",
       "hasGreen": true,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Fast/Slow In-Place Write"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "Fast/Slow In-Place Write",
@@ -2412,7 +2808,11 @@
       "bestComfort": "🎓",
       "hasGreen": true,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Two Pointers (converging)"
+      ],
+      "graduatedCount": 1
     },
     {
       "name": "Prefix/Suffix Max",
@@ -2427,7 +2827,11 @@
       "bestComfort": "🟢",
       "hasGreen": true,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Prefix/Suffix Products"
+      ],
+      "graduatedCount": 0
     },
     {
       "name": "Two Pointers (converging)",
@@ -2449,7 +2853,11 @@
       "bestComfort": "🎓",
       "hasGreen": true,
       "thin": false,
-      "hasVariantGap": false
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Array/String Fundamentals"
+      ],
+      "graduatedCount": 2
     }
   ],
   "studyDays": [
