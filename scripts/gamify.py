@@ -73,6 +73,7 @@ _console.force_utf8()
 REPO = Path(__file__).resolve().parent.parent
 TRACKER = REPO / "docs/foundations/dsa/mastery/dsa_progress.md"
 COVERAGE = REPO / "docs/foundations/dsa/mastery/technique_coverage.md"
+TECHNIQUES_YML = REPO / "docs/foundations/dsa/mastery/techniques.yml"
 PROBES_README = REPO / "dsa/probes/README.md"
 LEETCODE = REPO / "dsa/leetcode"
 # The generated contract lives under dashboard/ (moved out of the repo root Sep 21, 2026 to
@@ -98,6 +99,12 @@ SUMMARY_STUDY_DAYS_WINDOW = 183
 # Keyed by glyph, never by the words blank/shaky/clean/graduated (the config scrape
 # hazard — see cse.config.yml). 🏆 Retired is terminal, above 🎓.
 LEVEL = {"🔴": 0, "🟡": 1, "🟢": 2, "🎓": 3, "🏆": 4}
+
+# graduatedCount's bar (Sep 26, 2026): a technique's problem counts once it reaches 🎓 or
+# better. UNTRACKED_LEVEL is below LEVEL's own floor (🔴 = 0) so an LC number with no
+# tracker row (comfort_by_number has nothing for it) never accidentally counts as graduated.
+GRADUATED_LEVEL = LEVEL["🎓"]
+UNTRACKED_LEVEL = -1
 
 # Announced fallback — used only when cse.config.yml has no `gamification:` block or
 # PyYAML is unavailable. Neutral key names on purpose: none contains the substrings
@@ -752,6 +759,130 @@ def parse_techniques(warnings: list[str]) -> list[dict]:
     return out
 
 
+# ── technique graph + graduation counts (builds_on / graduatedCount, Sep 26, 2026) ──
+
+def load_technique_entries(warnings: list[str]) -> list[dict]:
+    """techniques.yml's `techniques:` list, verbatim (each entry's `name` + `builds_on`
+    among other keys `parse_techniques()` doesn't carry). Fail-soft to [] with a warning —
+    same style as load_config(): a missing file or missing PyYAML degrades gracefully
+    rather than raising out of the hook."""
+    try:
+        import yaml  # noqa: PLC0415
+        config = yaml.safe_load(TECHNIQUES_YML.read_text(encoding="utf-8")) or {}
+    except Exception:  # noqa: BLE001 — a missing/unparsable file is a normal fail-soft state
+        warnings.append(
+            "techniques.yml not readable — buildsOn omitted for every technique.")
+        return []
+    return config.get("techniques") or []
+
+
+def _resolve_builds_on(name: str, raw_by_name: dict[str, list[str]],
+                       known_names: set[str], warnings: list[str]) -> list[str]:
+    """One technique's raw `builds_on` list -> the edges that survive validation: an
+    unknown name or a self-edge is dropped, each with one warning naming the offender.
+    Cycle-breaking is a separate pass (`_break_cycles`) — it needs the whole graph, not
+    one row at a time."""
+    resolved = []
+    for dep in raw_by_name.get(name) or []:
+        if dep == name:
+            warnings.append(f"techniques.yml: {name!r} lists itself in builds_on — dropped.")
+            continue
+        if dep not in known_names:
+            warnings.append(
+                f"techniques.yml: {name!r} builds_on unknown technique {dep!r} — dropped.")
+            continue
+        resolved.append(dep)
+    return resolved
+
+
+def _break_cycles(graph: dict[str, list[str]], order: list[str],
+                  warnings: list[str]) -> dict[str, list[str]]:
+    """DFS over `graph` in `order` (techniques.yml's own file order, so this is
+    deterministic run to run). A back edge to a node still GRAY (on the current DFS
+    stack) closes a cycle; only that one edge is dropped, with a warning naming it — the
+    rest of both nodes' builds_on survives. Returns a NEW graph (pure, no mutation of the
+    input dict's lists)."""
+    cleaned = {name: list(deps) for name, deps in graph.items()}
+    white, gray, black = 0, 1, 2
+    color = {name: white for name in graph}
+
+    def visit(name: str) -> None:
+        color[name] = gray
+        for dep in list(cleaned.get(name, [])):
+            if color.get(dep) == gray:
+                cleaned[name].remove(dep)
+                warnings.append(
+                    f"techniques.yml: builds_on cycle through {name!r} -> {dep!r} — "
+                    "that edge dropped.")
+            elif color.get(dep) == white:
+                visit(dep)
+        color[name] = black
+
+    for name in order:
+        if color.get(name) == white:
+            visit(name)
+    return cleaned
+
+
+def _comfort_by_number(problems: list[dict], retired: list[dict]) -> dict[int, str]:
+    """LC number -> its best (highest LEVEL) comfort glyph, from data build_payload already
+    parsed once — never a second read of the tracker. A number can carry several tracker
+    rows (21 Recursion vs Iterative), so the highest LEVEL among them wins. Retired
+    problems left the 7-column table (parse_retired()'s own docstring — parse_rows() never
+    sees them), so they never appear in `problems`; each is 🏆, terminal above 🎓.
+
+    Fail-soft like build_problems() itself (LEVEL.get(r["comfort"]), never LEVEL[...]): a
+    tracker comfort cell outside LEVEL's five glyphs is never stored — its UNTRACKED_LEVEL
+    can't outrank a real glyph already recorded, and if it's the only row for that number,
+    UNTRACKED_LEVEL == UNTRACKED_LEVEL so nothing is written at all. `build_payload` must
+    never raise on a malformed cell."""
+    best: dict[int, str] = {}
+    for p in problems:
+        num, glyph = p["lcNumber"], p["comfort"]
+        if LEVEL.get(glyph, UNTRACKED_LEVEL) > LEVEL.get(best.get(num), UNTRACKED_LEVEL):
+            best[num] = glyph
+    for r in retired:
+        num = r["lcNumber"]
+        if LEVEL["🏆"] > LEVEL.get(best.get(num), UNTRACKED_LEVEL):
+            best[num] = "🏆"
+    return best
+
+
+def enrich_techniques(rows: list[dict], yaml_entries: list[dict],
+                      comfort_by_number: dict[int, str],
+                      warnings: list[str]) -> list[dict]:
+    """`parse_techniques()`'s rows -> new dicts (no mutation) adding `buildsOn` and
+    `graduatedCount`.
+
+    `buildsOn` is techniques.yml's own `builds_on` for that row's name, validated (an
+    unknown name or a self-edge dropped, each warned) and cycle-broken (one back edge
+    dropped per cycle, warned) against the same file's declared names — never against
+    `rows`, since a coverage-table name with no matching YAML entry gets `[]` rather than
+    silently reusing a stale graph.
+
+    `graduatedCount` counts the row's `problems` (LC numbers) whose tracker comfort has
+    reached GRADUATED_LEVEL (🎓) or better, read from `comfort_by_number` — data
+    build_payload already holds, never a second read of the tracker.
+    """
+    known_names = {e["name"] for e in yaml_entries if e.get("name")}
+    order = [e["name"] for e in yaml_entries if e.get("name")]
+    raw_by_name = {e["name"]: e.get("builds_on") or []
+                   for e in yaml_entries if e.get("name")}
+    graph = {name: _resolve_builds_on(name, raw_by_name, known_names, warnings)
+             for name in order}
+    graph = _break_cycles(graph, order, warnings)
+
+    enriched = []
+    for row in rows:
+        graduated = sum(
+            1 for num in row["problems"]
+            if LEVEL.get(comfort_by_number.get(num), UNTRACKED_LEVEL) >= GRADUATED_LEVEL)
+        enriched.append({**row,
+                         "buildsOn": graph.get(row["name"], []),
+                         "graduatedCount": graduated})
+    return enriched
+
+
 # ── recognition probes (the "is the pool still teaching?" diagnostic) ───────────────
 
 PROBE_SECTION = re.compile(r"##\s*📒\s*Probe log(.*?)(?:\n##\s|\Z)", re.S)
@@ -1040,6 +1171,13 @@ def build_payload(today: dt.date | None = None) -> tuple[dict, list[str]]:
 
     problems = build_problems(rows, sched, cats, urls, files, warnings)
     days = study_days(rows)
+
+    # buildsOn/graduatedCount (Sep 26, 2026): computed after build_problems() rather than
+    # right after parse_techniques() because graduatedCount needs comfort_by_number, which
+    # is built from build_problems()'s own output — never a second read of the tracker.
+    yaml_entries = load_technique_entries(warnings)
+    comfort_by_number = _comfort_by_number(problems, retired)
+    techniques = enrich_techniques(techniques, yaml_entries, comfort_by_number, warnings)
 
     stats = {
         "schemaVersion": SCHEMA_VERSION,
