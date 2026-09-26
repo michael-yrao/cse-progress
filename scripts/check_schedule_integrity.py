@@ -296,6 +296,84 @@ def tracker_attempts(path: Path) -> list[tuple[str, int, dt.date]]:
     return out
 
 
+# ── Check 3's seating decision. A flat "is this number LISTED anywhere" test (struck or
+# not) masks two real shapes: (1) a tracker number with MORE than one row (two solve
+# methods for the same LC problem, e.g. 1584 Prim's MST vs 1584 Kruskal) where a struck rep
+# for ONE method keeps the number "listed" while the OTHER method's overdue row goes
+# unseated; (2) a single tracker row's own struck rep this week keeps its number "listed"
+# even though nothing UNSTRUCK seats its NEXT (already-due) rep. is_seated() below is the
+# fix: "seated" means an unstruck, method-compatible board row, not a merely-listed number.
+
+ROW_METHOD = re.compile(r"\(([^()]+)\)")
+BOARD_ROW_NOISE = re.compile(r"[*~`]")
+
+
+def row_method(title: str) -> str | None:
+    """A tracker row's method: the text of the LAST parenthetical in its title (e.g.
+    "Kruskal" out of "... (Kruskal)"), or None when the title carries no parenthetical at
+    all — true of most single-technique rows.
+    """
+    matches = ROW_METHOD.findall(title)
+    return matches[-1] if matches else None
+
+
+def _normalized_board_text(text: str) -> str:
+    """A board row's text with markdown emphasis stripped and lowercased, for a
+    case-insensitive method-containment check."""
+    return BOARD_ROW_NOISE.sub("", text).lower()
+
+
+def _due_within(row: dict, sunday: dt.date) -> bool:
+    return dt.date.fromisoformat(row["due"]) <= sunday
+
+
+def is_seated(tracker_row: dict, tracker_rows_for_number: list[dict],
+              pending_board_rows: list[str], sunday: dt.date) -> bool:
+    """Is `tracker_row` (a tracker row due on/before `sunday`) seated by some UNSTRUCK
+    board row?
+
+    `tracker_rows_for_number` is every tracker row sharing tracker_row's problem number, at
+    ANY due date — its length picks the rule. Exactly one row for the number: any unstruck
+    mention seats it. More than one: an unstruck mention seats THIS row only when its text
+    names this row's method (row_method); a mention that names NO tracker method for the
+    number at all still seats it, but only when the number is otherwise unambiguous — exactly
+    one of its tracker rows due within the week.
+    """
+    if not pending_board_rows:
+        return False
+    if len(tracker_rows_for_number) <= 1:
+        return True
+
+    method = row_method(tracker_row["title"])
+    known_methods = {m for r in tracker_rows_for_number if (m := row_method(r["title"]))}
+    due_count = sum(1 for r in tracker_rows_for_number if _due_within(r, sunday))
+
+    for board_text in pending_board_rows:
+        normalized = _normalized_board_text(board_text)
+        if method and method.lower() in normalized:
+            return True
+        names_a_tracker_method = any(m.lower() in normalized for m in known_methods)
+        if not names_a_tracker_method and due_count == 1:
+            return True
+    return False
+
+
+def pending_board_mentions(rows: list[tuple[str, bool, list[str]]]) -> dict[int, list[str]]:
+    """Every problem number seated by an UNSTRUCK board row, mapped to the raw cell text
+    of each unstruck row that mentions it — is_seated's own `pending_board_rows` input, per
+    number. A struck row never contributes: it is a masking case's whole point that a
+    struck rep for one method (or an already-done rep) must not seat a still-due row.
+    Pure over `schedule_rows()`'s own return shape, so a test can build `rows` directly.
+    """
+    pending: dict[int, list[str]] = {}
+    for problem, struck, _ in rows:
+        if struck:
+            continue
+        for n in MENTION.findall(problem):
+            pending.setdefault(int(n), []).append(problem)
+    return pending
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--check", action="store_true", help="exit 1 on any finding")
@@ -354,15 +432,26 @@ def main() -> None:
     # sunday, so it is not flagged; a deliberate deferral gets a new future date, so it is not
     # flagged either — only a genuinely-dropped due row surfaces. Reuses effort_budget's row
     # parser (the same rows behind `--due`, which this diffs against the board, per the entry).
+    #
+    # "Seated" is decided by is_seated(), not by the flatter listed_numbers above: a merely-
+    # LISTED number (struck or not) can mask an overdue row — see is_seated's own docstring.
+    pending_by_number = pending_board_mentions(rows)
+
     try:
         import effort_budget  # sibling script; import has no side effects
-        for r in effort_budget.parse_rows():
+        tracker_rows = effort_budget.parse_rows()
+        rows_by_number: dict[int, list[dict]] = {}
+        for r in tracker_rows:
+            rows_by_number.setdefault(int(r["num"]), []).append(r)
+        for r in tracker_rows:
             if dt.date.fromisoformat(r["due"]) > sunday:
                 continue
-            if int(r["num"]) not in listed_numbers:
-                findings.append(
-                    f"due {r['due']} but seated on no day of {path.name} — "
-                    f"{r['num']} {r['title'][:40]} ({r['comfort']})")
+            num = int(r["num"])
+            if is_seated(r, rows_by_number[num], pending_by_number.get(num, []), sunday):
+                continue
+            findings.append(
+                f"due {r['due']} but seated on no day of {path.name} — "
+                f"{r['num']} {r['title'][:40]} ({r['comfort']})")
     except Exception as exc:  # a reuse failure must never break the integrity check
         print(f"   (overdue-seated check skipped: {exc.__class__.__name__}: {exc})", file=sys.stderr)
 

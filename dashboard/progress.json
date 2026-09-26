@@ -3,24 +3,24 @@
   "generatedAt": "2026-09-26",
   "totals": {
     "problems": 126,
-    "solutions": 137,
-    "reps": 614
+    "solutions": 138,
+    "reps": 615
   },
   "pipeline": {
     "blank": 0,
     "shaky": 14,
     "clean": {
       "s0": 3,
-      "s1": 29,
+      "s1": 30,
       "s2plus": 69,
-      "total": 101
+      "total": 102
     },
     "graduated": 22,
     "retired": 0
   },
   "difficulty": {
     "Easy": 34,
-    "Medium": 92,
+    "Medium": 93,
     "Hard": 11
   },
   "streak": {
@@ -31,16 +31,16 @@
     "restDayAllowance": 1
   },
   "coverage": {
-    "total": 104,
-    "started": 59,
+    "total": 105,
+    "started": 60,
     "noGreen": 0,
-    "thin": 19,
-    "variantGaps": 2
+    "thin": 17,
+    "variantGaps": 1
   },
   "onSchedule": {
-    "totalActive": 137,
+    "totalActive": 138,
     "dueToday": 1,
-    "overdue": 6
+    "overdue": 7
   },
   "trophyCase": {
     "graduated": [
@@ -1061,14 +1061,15 @@
       "tier": "core",
       "started": true,
       "minProblems": 3,
-      "problemCount": 2,
+      "problemCount": 3,
       "problems": [
+        743,
         778,
         1631
       ],
       "bestComfort": "🟢",
       "hasGreen": true,
-      "thin": true,
+      "thin": false,
       "hasVariantGap": true,
       "buildsOn": [
         "Heap / Priority Queue",
@@ -1117,6 +1118,26 @@
       "graduatedCount": 0
     },
     {
+      "name": "Kruskal's MST",
+      "family": "advanced_graphs",
+      "tier": "core",
+      "started": true,
+      "minProblems": 3,
+      "problemCount": 2,
+      "problems": [
+        1489,
+        1584
+      ],
+      "bestComfort": "🟢",
+      "hasGreen": true,
+      "thin": true,
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Union-Find"
+      ],
+      "graduatedCount": 0
+    },
+    {
       "name": "Prim's MST",
       "family": "advanced_graphs",
       "tier": "core",
@@ -1129,7 +1150,7 @@
       "bestComfort": "🟢",
       "hasGreen": true,
       "thin": true,
-      "hasVariantGap": true,
+      "hasVariantGap": false,
       "buildsOn": [
         "Heap / Priority Queue",
         "Dijkstra"
@@ -1297,14 +1318,16 @@
       "tier": "core",
       "started": true,
       "minProblems": 3,
-      "problemCount": 2,
+      "problemCount": 4,
       "problems": [
         22,
+        39,
+        46,
         78
       ],
       "bestComfort": "🟢",
       "hasGreen": true,
-      "thin": true,
+      "thin": false,
       "hasVariantGap": false,
       "buildsOn": [
         "Recursion"
@@ -2914,14 +2937,15 @@
       "tier": "core",
       "started": true,
       "minProblems": 3,
-      "problemCount": 2,
+      "problemCount": 3,
       "problems": [
         208,
-        211
+        211,
+        648
       ],
       "bestComfort": "🟢",
       "hasGreen": true,
-      "thin": true,
+      "thin": false,
       "hasVariantGap": false,
       "buildsOn": [
         "Tree DFS (recursive)",
@@ -3926,15 +3950,15 @@
     {
       "date": "2026-08-11",
       "planned": 9.0,
-      "done": 5.9,
-      "built": 5.9,
+      "done": 9.2,
+      "built": 9.2,
       "partial": false
     },
     {
       "date": "2026-08-12",
       "planned": 8.5,
-      "done": 7.2,
-      "built": 7.2,
+      "done": 9.4,
+      "built": 9.4,
       "partial": false
     },
     {
@@ -3947,15 +3971,15 @@
     {
       "date": "2026-08-14",
       "planned": 10.0,
-      "done": 9.2,
-      "built": 9.2,
+      "done": 11.4,
+      "built": 11.4,
       "partial": false
     },
     {
       "date": "2026-08-15",
       "planned": 9.0,
-      "done": 6.4,
-      "built": 7.4,
+      "done": 8.6,
+      "built": 11.6,
       "partial": false
     },
     {
@@ -3982,15 +4006,15 @@
     {
       "date": "2026-08-19",
       "planned": 8.5,
-      "done": 8.1,
-      "built": 8.1,
+      "done": 8.6,
+      "built": 8.6,
       "partial": true
     },
     {
       "date": "2026-08-20",
       "planned": 7.5,
-      "done": 1.8,
-      "built": 1.8,
+      "done": 4.7,
+      "built": 4.7,
       "partial": true
     },
     {
@@ -4017,22 +4041,22 @@
     {
       "date": "2026-08-24",
       "planned": 8.0,
-      "done": 3.6,
-      "built": 5.4,
+      "done": 5.8,
+      "built": 7.6,
       "partial": false
     },
     {
       "date": "2026-08-25",
       "planned": 8.0,
-      "done": 5.6,
-      "built": 5.6,
+      "done": 7.8,
+      "built": 7.8,
       "partial": false
     },
     {
       "date": "2026-08-26",
       "planned": 8.0,
-      "done": 2.7,
-      "built": 2.7,
+      "done": 9.8,
+      "built": 9.8,
       "partial": false
     },
     {
@@ -4060,7 +4084,7 @@
       "date": "2026-08-30",
       "planned": 8.0,
       "done": 0.7,
-      "built": 7.1,
+      "built": 8.4,
       "partial": true
     },
     {
@@ -4094,22 +4118,22 @@
     {
       "date": "2026-09-04",
       "planned": 6.5,
-      "done": 4.6,
-      "built": 4.6,
+      "done": 5.9,
+      "built": 5.9,
       "partial": true
     },
     {
       "date": "2026-09-05",
       "planned": 7.8,
-      "done": 7.5,
-      "built": 7.5,
+      "done": 11.4,
+      "built": 11.4,
       "partial": false
     },
     {
       "date": "2026-09-06",
       "planned": 9.4,
-      "done": 9.9,
-      "built": 9.9,
+      "done": 12.1,
+      "built": 12.1,
       "partial": true
     },
     {
@@ -4122,15 +4146,15 @@
     {
       "date": "2026-09-08",
       "planned": 8.6,
-      "done": 4.6,
-      "built": 7.6,
+      "done": 5.6,
+      "built": 8.6,
       "partial": true
     },
     {
       "date": "2026-09-09",
       "planned": 9.0,
-      "done": 5.8,
-      "built": 5.8,
+      "done": 9.0,
+      "built": 9.0,
       "partial": true
     },
     {
@@ -4143,22 +4167,22 @@
     {
       "date": "2026-09-11",
       "planned": 11.0,
-      "done": 7.6,
-      "built": 7.6,
+      "done": 8.6,
+      "built": 8.6,
       "partial": true
     },
     {
       "date": "2026-09-12",
       "planned": 8.7,
       "done": 5.0,
-      "built": 8.7,
+      "built": 10.0,
       "partial": false
     },
     {
       "date": "2026-09-13",
       "planned": 9.0,
-      "done": 4.6,
-      "built": 9.6,
+      "done": 5.9,
+      "built": 11.9,
       "partial": true
     },
     {
@@ -4199,15 +4223,15 @@
     {
       "date": "2026-09-19",
       "planned": 6.8,
-      "done": 5.9,
-      "built": 5.9,
+      "done": 7.9,
+      "built": 7.9,
       "partial": false
     },
     {
       "date": "2026-09-20",
       "planned": 7.4,
-      "done": 9.3,
-      "built": 9.3,
+      "done": 11.3,
+      "built": 11.3,
       "partial": false
     },
     {
@@ -4227,8 +4251,8 @@
     {
       "date": "2026-09-23",
       "planned": 7.6,
-      "done": 5.6,
-      "built": 5.6,
+      "done": 7.6,
+      "built": 7.6,
       "partial": false
     },
     {
@@ -4241,15 +4265,15 @@
     {
       "date": "2026-09-25",
       "planned": 13.1,
-      "done": 12.5,
-      "built": 12.5,
+      "done": 13.5,
+      "built": 13.5,
       "partial": false
     },
     {
       "date": "2026-09-26",
       "planned": 9.5,
-      "done": 7.1,
-      "built": 7.1,
+      "done": 9.3,
+      "built": 9.3,
       "partial": false
     },
     {
@@ -4375,8 +4399,8 @@
       "description": "Have at least one clean solve in every technique on the roadmap.",
       "earned": false,
       "progress": {
-        "current": 59,
-        "target": 104
+        "current": 60,
+        "target": 105
       }
     },
     {
@@ -4928,8 +4952,8 @@
         },
         {
           "date": "2026-08-11",
-          "comfort": "🟢",
-          "level": 2
+          "comfort": null,
+          "level": null
         },
         {
           "date": "2026-09-25",
@@ -7825,6 +7849,28 @@
           "date": "2026-08-27",
           "comfort": "🎓",
           "level": 3
+        }
+      ]
+    },
+    {
+      "lcNumber": 1584,
+      "title": "Min Cost to Connect All Points (Kruskal)",
+      "url": "https://leetcode.com/problems/min-cost-to-connect-all-points/",
+      "file": "dsa/leetcode/graphs/1584_min_cost_to_connect_all_points.py",
+      "difficulty": "Medium",
+      "category": "graphs",
+      "comfort": "🟢",
+      "level": 2,
+      "streak": 1,
+      "nextReview": "2026-09-25",
+      "repDates": [
+        "2026-08-26"
+      ],
+      "timeline": [
+        {
+          "date": "2026-08-26",
+          "comfort": "🟢",
+          "level": 2
         }
       ]
     },

@@ -30,8 +30,11 @@ choosing pulls.
 
 **Three gap checks:** `no-green` (execution unproven — blocks phase exit), `thin` (fewer than
 `min_problems`), `variant` (a declared method with zero problems). A variant already in the
-Waiting Room or Expansion Queue is marked `queued:` in the YAML and reported separately. A known
-gap must never re-surface as a new finding, or the report becomes noise and stops being read.
+Waiting Room or Expansion Queue is marked `queued:` in the YAML and reported separately. A thin
+technique's line also names its queued *fill*, not only its count: `queued:` on a `problems:`
+entry puts ``queued: <n> `<trigger>` `` in both the Gaps cell and the Action list, so a thin
+`1/3` names its picked fill whenever one is queued. `decisions.yml` `coverage-queued-problems-sep26`. A
+known gap must never re-surface as a new finding, or the report becomes noise and stops being read.
 
 ## ⚠️ Where a coverage sibling comes from: the PULL first, authoring last (Aug 29, 2026)
 
@@ -44,6 +47,12 @@ python scripts/pull_interview.py --company <C> --technique <t>   # read by frequ
 **Reach for a hand-picked problem** only if the pull doesn't yield enough coverage, and say so in
 the build. Learner: *"make sure the population comes from company pulls first and then we can
 reach for others if there is not enough coverage."*
+
+- **A judge-sourced sibling** (Kattis, CSES, …) is allowed when the LeetCode pull yields no fitting
+  problem at all — say so in the build. It gets a synthetic id in `9001`–`9999`, lives under the
+  normal root in its pattern folder like any other problem, and its file header carries the real
+  judge URL (`9001. Single Source Shortest Path, Negative Weights   ·   https://open.kattis.com/problems/shortestpath3`).
+  `decisions.yml` `external-judge-problems-sep26`.
 
 - ⭐ **The sharper half:** if a rung exists only to justify the problem below it, re-examine the
   RUNG — do not schedule the sequel. The 227 failure: authored Aug 11 to defend 150 after the

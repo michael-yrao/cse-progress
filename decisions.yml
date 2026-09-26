@@ -1113,6 +1113,90 @@ decisions:
       `docs/foundations/career_strategy.md` §5.
     affects: [scheduling, weekly_build]
 
+  - id: external-judge-problems-sep26
+    date: 2026-09-26
+    summary: >-
+      ADDS a synthetic-id convention for a problem sourced from a judge other than
+      LeetCode/NeetCode: a 4-digit id in 9001–9999 (the toolchain's own regexes are
+      `\d{1,4}`; 5 digits would be silently dropped), living under the existing tracked
+      root in its normal pattern folder, with the file header carrying the REAL judge URL
+      — the id is the tracker join key exactly as an LC number is. Origin: the learner
+      wants a Bellman-Ford-only rep (negative edges / negative-cycle detection) that must
+      be submittable on a real judge; LeetCode/NeetCode have no such problem. Sourcing
+      rule honored (`coverage-sibling-pulled-not-authored`): pull first, hand-pick only
+      when the pull yields too little — the Sep 26, 2026 shortest-path company pull is
+      LeetCode-only and yielded zero negative-edge problems, so the hand-pick condition is
+      met. Hand-picked from Kattis: `shortestpath3` (SSSP, negative weights, -Infinity
+      propagation on nodes reachable from a negative cycle) and `arbitrage` (currency
+      arbitrage → log-transform → negative-cycle detection), as 9001/9002. `techniques.yml`
+      gains two new Bellman-Ford variants and two `problems:` entries (`queued:
+      "surplus>=1"`, the Slice-C mechanism — see `coverage-queued-problems-sep26`);
+      `dsa_progress.md` gains two Waiting Room rows and the convention itself in the
+      "Notes for future agents" legend. Companion source fixes (label problems by judge
+      host, read the header URL for the auto-row) land in `scripts/update_review_dates.py`,
+      `scripts/links.py`, `scripts/new_problem.py`, `.claude/hooks/problem_link_reminder.py`
+      wording. Not scaffolded now — an unattempted problem plants a phantom row
+      (`scaffolding.md`); scaffolded only at kickoff, via `new_problem.py --number 900x
+      --url <judge url> ...`. No `cse.config.yml` value changed. See
+      `docs/foundations/dsa/mastery/techniques.yml` (Bellman-Ford entry),
+      `docs/foundations/dsa/mastery/dsa_progress.md` (Waiting Room + legend),
+      `scripts/links.py`, `scripts/new_problem.py`, `scripts/update_review_dates.py`,
+      `.claude/hooks/problem_link_reminder.py`.
+    affects: [technique_coverage, dsa_progress, waiting_room, scaffolding, links]
+
+  - id: mst-split-sep26
+    date: 2026-09-26
+    summary: >-
+      SPLITS the single `Prim's MST` `techniques.yml` entry (`variants: [Prim's MST,
+      Kruskal's MST]`, one that could never close — 1584 has only ever had one tracker
+      row) into two techniques, credited by WHICH IMPLEMENTATION was written: `Prim's MST`
+      (1584 method Prim's MST, plus 1135 `queued: "surplus>=1"`) and a new `Kruskal's MST`
+      (family advanced_graphs, `builds_on: ["Union-Find"]`, problems 1489 + 1584 method
+      Kruskal). REVERSES the Aug 26, 2026 "no new review row" call recorded in
+      `docs/foundations/schedules/archive/20260824_schedule.md` L67 (1584 was solved
+      Kruskal too, on Aug 26, but credited only via `variants:`, with no second tracker
+      row, on the reasoning that the Kruskal *problem-credit* would come from 1489
+      instead) — the learner's call now is to credit by implementation, so `dsa_progress.md`
+      gains a SECOND tracker row for 1584, titled "(Kruskal)", following the 200/332/743
+      two-rows-one-problem convention; the rating is already on record (Aug 26, 🟢). ⚠️
+      **Consequence, stated plainly:** the new row's next review, computed from Aug 26, is
+      already overdue — `check_schedule_integrity.py` will flag it at the Sep 28 build,
+      which must seat it (a 🟢 s1 Kruskal re-rep, ~1 unit) or re-defer it with a written
+      reason. No `cse.config.yml` value changed. Strands any wording that still describes
+      Prim's and Kruskal's as one technique, or that cites the Aug 26 archive note as the
+      standing call. See `docs/foundations/dsa/mastery/techniques.yml` (Prim's MST /
+      Kruskal's MST entries), `docs/foundations/dsa/mastery/dsa_progress.md` (the new 1584
+      Kruskal row).
+    affects: [technique_coverage, dsa_progress, waiting_room]
+
+  - id: coverage-queued-problems-sep26
+    date: 2026-09-26
+    summary: >-
+      ADDS a `queued:` key on a `techniques.yml` `problems:` spec — same vocabulary a
+      `variants:` entry already used — so a declared problem with no tracker row yet, but
+      already sitting in the Waiting Room / Expansion Queue behind a stated trigger, is
+      reported as a KNOWN gap (named in the Gaps cell and a new "Queued" Action-list
+      block) instead of silently folding into "not reached yet". "Not reached yet" itself
+      splits into "Queued (N) — listed in the Action list" and "Declared, not queued (N):
+      <numbers>" (now actually LISTED, not just counted) — before this, a thin technique's
+      "needs 3 more" gave no hint whether a fill was already picked. New
+      `Resolved.queued_problems: dict[int, str]` in `scripts/technique_coverage.py`; a
+      `queued:` key on a spec that DOES match a tracker row is a no-op, never an error.
+      Rendered strictly INSIDE the existing Gaps cell — never a new column, never inside
+      the Problems cell's parenthetical, and never containing the word "variant" (which
+      `gamify.parse_techniques()` reads as a substring to flag `hasVariantGap`) — so the
+      `## Coverage` table's 9-column contract and gamify's header-count regex are both
+      unchanged. Applied immediately to Dijkstra's 3650/1368/1514 (`surplus>=1`, already
+      in the Waiting Room) and Bellman-Ford's new 9001/9002 (see
+      `external-judge-problems-sep26`); 1102 and 547 are deliberately left unqueued, so
+      they surface under "Declared, not queued". New `scripts/test_technique_coverage.py`
+      (string fixtures — a tiny techniques.yml + tracker, monkeypatched path constants —
+      never the live repo files). No `cse.config.yml` value changed. See
+      `scripts/technique_coverage.py`, `scripts/test_technique_coverage.py`,
+      `docs/foundations/dsa/mastery/techniques.yml` (schema comment),
+      `.claude/skills/cse-coach/references/technique-coverage.md`.
+    affects: [technique_coverage]
+
   - id: workload-new-row-pricing
     date: 2026-09-26
     summary: >-

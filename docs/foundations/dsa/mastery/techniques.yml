@@ -61,6 +61,10 @@
 #                   review   true = the method here is an ASSUMPTION, because the tracker
 #                            row carries no parenthetical. Confirm, add the parenthetical
 #                            to the tracker, then drop this flag.
+#                   queued   <trigger> — declared, no tracker row yet, waiting on this
+#                            trigger; same vocabulary as `variants:`'s own `queued:` above.
+#                            Reported in the Gaps cell and the Action list rather than
+#                            silently falling into "not reached yet".
 #
 # Adding a solved problem here is not optional bookkeeping: the report lists every
 # unmapped tracker row, so anything left out shows up as a gap in the vocabulary itself.
@@ -538,6 +542,7 @@ techniques:
     problems:
       - {number: 208, method: Prefix Tree}
       - {number: 211}
+      - {number: 648}
 
   # ── Heap ────────────────────────────────────────────────────────────────────
   - name: Heap / Priority Queue
@@ -685,22 +690,34 @@ techniques:
       - {name: 0/1 edge weights (0-1 BFS vs Dijkstra), queued: "surplus>=1"}
       - {name: Multiplicative relaxation (maximize the product), queued: "surplus>=1"}
     problems:
-      - {number: 743, method: Dijkstra}
+      - {number: 743, method: "Dijkstra — array-scan"}
+      - {number: 743, method: "Dijkstra — min-heap"}
       - {number: 778, method: Dijkstra / Min-Heap}
       - {number: 1631, method: Dijkstra, variant: Min-over-max (minimize the maximum edge)}
       - {number: 1102, method: Dijkstra, variant: Max-min bottleneck (maximize the minimum edge)}
-      - {number: 3650, method: Dijkstra}
-      - {number: 1368, method: Dijkstra, variant: 0/1 edge weights (0-1 BFS vs Dijkstra)}
-      - {number: 1514, method: Dijkstra, variant: Multiplicative relaxation (maximize the product)}
+      - {number: 3650, method: Dijkstra, queued: "surplus>=1"}
+      - {number: 1368, method: Dijkstra, variant: 0/1 edge weights (0-1 BFS vs Dijkstra), queued: "surplus>=1"}
+      - {number: 1514, method: Dijkstra, variant: Multiplicative relaxation (maximize the product), queued: "surplus>=1"}
 
+  # 9001/9002 are hand-picked, non-LeetCode siblings (decision `external-judge-problems-sep26`):
+  # the Sep 26, 2026 shortest-path company pull yielded zero negative-edge problems (LeetCode-only),
+  # so the sourcing rule (`coverage-sibling-pulled-not-authored`) permits a hand-pick, sourced from
+  # Kattis rather than authored — `shortestpath3` (SSSP with negative weights, -Infinity
+  # propagation) and `arbitrage` (currency arbitrage -> log-transform -> negative-cycle detection).
+  # Synthetic ids per the external-judge convention (see dsa_progress.md's "Notes for future
+  # agents" legend); scaffolded only at kickoff, per `scaffolding.md` (no phantom rows now).
   - name: Bellman-Ford
     family: advanced_graphs
     builds_on: ["Dijkstra"]
     variants:
       - {name: Standard}
       - {name: Contrast rep on 743, queued: "graduates:743"}
+      - {name: "Negative edges (SSSP, -Infinity propagation)", queued: "surplus>=1"}
+      - {name: "Negative-cycle detection (arbitrage / log-transform)", queued: "surplus>=1"}
     problems:
       - {number: 787, method: Bellman-Ford, variant: Standard}
+      - {number: 9001, method: Bellman-Ford, variant: "Negative edges (SSSP, -Infinity propagation)", queued: "surplus>=1"}
+      - {number: 9002, method: Bellman-Ford, variant: "Negative-cycle detection (arbitrage / log-transform)", queued: "surplus>=1"}
 
   # min_problems dropped Aug 15, 2026 so this inherits the default of 3.
   # Learner: "I want more practice with floyd warshall… this applies for all the harder
@@ -758,20 +775,27 @@ techniques:
       - {number: 2097}   # Sep 5, 2026 — purest Hierholzer: no lexical order (so off the ordering-variant axis), start derived from out-in degree
 
   # min_problems dropped Aug 15, 2026 — same rule as Floyd-Warshall above.
+  #
+  # Split from Kruskal's MST, Sep 26, 2026 (decision `mst-split-sep26`) — learner's call:
+  # credit Prim's and Kruskal's as two separate techniques, by which implementation was
+  # actually written, rather than one entry with a variants: gap that could never close
+  # (1584 has only ever had one tracker row, titled Prim's MST). Reverses the Aug 26 "no
+  # new review row" call now that 1584 has a second, Kruskal-titled row (see
+  # dsa_progress.md).
   - name: Prim's MST
     family: advanced_graphs
     builds_on: ["Heap / Priority Queue", "Dijkstra"]
     doc: prims_mst
-    variants:
-      - {name: Prim's MST}
-      - {name: Kruskal's MST}
     problems:
-      # 1584 is one tracker row (titled Prim's MST); it was also solved Kruskal
-      # Aug 26 (recognition ledger + solution file record it). Both methods stay
-      # declared in `variants`; the Kruskal *problem-credit* comes from 1489 (its
-      # own row, Aug 31 week) rather than a 2nd 1584 entry — one number can't carry
-      # two method parentheticals on a single row, and a duplicate just drifts.
       - {number: 1584, method: Prim's MST}
+      - {number: 1135, method: Prim's MST, queued: "surplus>=1"}
+
+  - name: Kruskal's MST
+    family: advanced_graphs
+    builds_on: ["Union-Find"]
+    problems:
+      - {number: 1489, method: Kruskal}
+      - {number: 1584, method: Kruskal}
 
   # ── Backtracking ────────────────────────────────────────────────────────────
   # Added for the /learn cheat-sheet contract (Sep 23, 2026) — backtracking.md carried no
@@ -789,6 +813,8 @@ techniques:
     problems:
       - {number: 78}
       - {number: 22}
+      - {number: 39}
+      - {number: 46}
 
   # ── Recursion ───────────────────────────────────────────────────────────────
   # Added for the /learn cheat-sheet contract (Sep 23, 2026) — recursion.md carried no

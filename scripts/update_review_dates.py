@@ -422,6 +422,34 @@ def extract_difficulty_from_source(path: Path) -> str | None:
     return None
 
 
+# Header line: `9001. Single Source Shortest Path, Negative Weights   ·   https://open.kattis.com/…`
+# — same shape as links.py's HEADER (the `·` and the URL are both optional there too), parsed
+# independently here so update_review_dates.py carries no import dependency on links.py.
+HEADER_URL_RE = re.compile(r"^\s*\d{1,4}\.\s+.+?(?:\s+·\s+(https?://\S+))?\s*$")
+
+
+def extract_url_from_source(path: Path) -> str | None:
+    """The problem-page URL recorded in the file's own header line, or None if absent.
+
+    Scans only the FIRST docstring block (the module header) — same scope as
+    extract_difficulty_from_source. A problem hand-picked from a non-LeetCode judge
+    (Kattis, CSES, …) carries its real URL only here; discover_source_problems() uses it
+    for the auto-row so that URL is never silently overwritten by the LeetCode-slug guess.
+    """
+    try:
+        content = path.read_text(encoding="utf-8")
+    except OSError:
+        return None
+
+    parts = content.split('"""')
+    block = parts[1] if len(parts) >= 2 else content
+    for line in block.splitlines():
+        match = HEADER_URL_RE.match(line)
+        if match and match.group(1):
+            return match.group(1).rstrip(".,;)")
+    return None
+
+
 def get_staged_paths() -> tuple[list[Path], bool]:
     try:
         output = subprocess.check_output(
@@ -611,10 +639,14 @@ def discover_source_problems(existing_titles: set[str], staged_files: list[Path]
             continue
         difficulty = extract_difficulty_from_source(path) or "Unknown"
         slug = raw_name.lower().replace("_", "-")
+        # The header's own URL wins — it's the only correct source for a problem hand-picked
+        # from a non-LeetCode judge (Kattis, CSES, …); the LC slug guess is the fallback,
+        # exactly as before, for a file with no header URL.
+        url = extract_url_from_source(path) or f"https://leetcode.com/problems/{slug}/"
         missing_rows.append({
             "difficulty": difficulty,
             "problem": problem_title,
-            "url": f"https://leetcode.com/problems/{slug}/",
+            "url": url,
             "comfort": COMFORT_BLANK,
             "streak": 0,
             "latest": now,

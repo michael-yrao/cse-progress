@@ -6,7 +6,7 @@
 
 > The tracker is keyed by **problem**; this is keyed by **technique**. Use it at the weekly build to decide what to pull, and at phase exit to check the per-algorithm bar (recognition + execution, ≥1 🟢 each).
 
-> **59/104** techniques started &nbsp;·&nbsp; **0** with no 🟢 &nbsp;·&nbsp; **19** thin &nbsp;·&nbsp; **2** unqueued variant gaps
+> **60/105** techniques started &nbsp;·&nbsp; **0** with no 🟢 &nbsp;·&nbsp; **17** thin &nbsp;·&nbsp; **1** unqueued variant gaps
 
 ## ⚠️ Action list
 
@@ -21,21 +21,24 @@
 - **Prim's MST** (advanced_graphs) — 1/3: 1584
 - **Stack (augmented entries)** (stack) — 1/2: 155
 - **Stack (expression evaluation)** (stack) — 1/2: 150
-- **Backtracking** (backtracking) — 2/3: 22, 78
-- **Dijkstra** (advanced_graphs) — 2/3: 778, 1631
 - **Floyd's Cycle / Midpoint** (linked_list) — 2/3: 141, 143
 - **Floyd-Warshall (all-pairs shortest path)** (advanced_graphs) — 2/3: 1334, 1462
 - **Grid DFS** (graphs) — 2/3: 200, 695
 - **Hierholzer (Eulerian path)** (advanced_graphs) — 2/3 (3 rows): 332, 2097
+- **Kruskal's MST** (advanced_graphs) — 2/3: 1489, 1584
 - **Prefix Sum** (prefix_sum) — 2/3: 53, 560
 - **Tree BFS (level order)** (trees) — 2/3: 102, 199
-- **Trie** (tries) — 2/3: 208, 211
 - **Intervals (sort + sweep)** (intervals) — 3/5: 56, 57, 435
+
+**Queued — declared, and already sitting in the Waiting Room / Expansion Queue.** A known gap with a fill already picked, not a new finding.
+
+- **Bellman-Ford** (advanced_graphs) — queued: 9001 (`surplus>=1`), 9002 (`surplus>=1`)
+- **Dijkstra** (advanced_graphs) — queued: 1368 (`surplus>=1`), 1514 (`surplus>=1`), 3650 (`surplus>=1`)
+- **Prim's MST** (advanced_graphs) — queued: 1135 (`surplus>=1`)
 
 **Unqueued variant gaps — a method never once exercised, and not in any queue.**
 
 - **Dijkstra** — missing **Max-min bottleneck (maximize the minimum edge)**. Exercised: Min-over-max (minimize the maximum edge) ×1
-- **Prim's MST** — missing **Kruskal's MST**. Exercised: Prim's MST ×1
 
 ## Coverage
 
@@ -43,11 +46,12 @@ Every declared technique gets a row, started or not — a not-started row's Gaps
 
 | Technique | Family | Tier | Min | Problems | Best | 🟢 | Variants | Gaps |
 |---|---|---|---:|---:|:---:|:---:|---|---|
-| Bellman-Ford | advanced_graphs | core | 3 | 1 (787) | 🟢 | ✅ | Standard ×1 · ~~Contrast rep on 743~~ *(queued: `graduates:743`)* | thin (1/3) |
-| Dijkstra | advanced_graphs | core | 3 | 2 (778, 1631) | 🟢 | ✅ | Min-over-max (minimize the maximum edge) ×1 · **Max-min bottleneck (maximize the minimum edge) ×0** · ~~0/1 edge weights (0-1 BFS vs Dijkstra)~~ *(queued: `surplus>=1`)* · ~~Multiplicative relaxation (maximize the product)~~ *(queued: `surplus>=1`)* | thin (2/3) · variant: **Max-min bottleneck (maximize the minimum edge)** |
+| Bellman-Ford | advanced_graphs | core | 3 | 1 (787) | 🟢 | ✅ | Standard ×1 · ~~Contrast rep on 743~~ *(queued: `graduates:743`)* · ~~Negative edges (SSSP, -Infinity propagation)~~ *(queued: `surplus>=1`)* · ~~Negative-cycle detection (arbitrage / log-transform)~~ *(queued: `surplus>=1`)* | thin (1/3) · queued: 9001 `surplus>=1`, 9002 `surplus>=1` |
+| Dijkstra | advanced_graphs | core | 3 | 3 *+1v* (743, 778, 1631) | 🟢 | ✅ | Min-over-max (minimize the maximum edge) ×1 · **Max-min bottleneck (maximize the minimum edge) ×0** · ~~0/1 edge weights (0-1 BFS vs Dijkstra)~~ *(queued: `surplus>=1`)* · ~~Multiplicative relaxation (maximize the product)~~ *(queued: `surplus>=1`)* | queued: 1368 `surplus>=1`, 1514 `surplus>=1`, 3650 `surplus>=1` · variant: **Max-min bottleneck (maximize the minimum edge)** |
 | Floyd-Warshall (all-pairs shortest path) | advanced_graphs | core | 3 | 2 (1334, 1462) | 🟢 | ✅ | — | thin (2/3) |
 | Hierholzer (Eulerian path) | advanced_graphs | core | 3 | 2 *+1v* (332, 2097) | 🟢 | ✅ | pre-sorted adjacency ×1 · min-heap ordering ×1 | thin (2/3) |
-| Prim's MST | advanced_graphs | core | 3 | 1 (1584) | 🟢 | ✅ | Prim's MST ×1 · **Kruskal's MST ×0** | thin (1/3) · variant: **Kruskal's MST** |
+| Kruskal's MST | advanced_graphs | core | 3 | 2 (1489, 1584) | 🟢 | ✅ | — | thin (2/3) |
+| Prim's MST | advanced_graphs | core | 3 | 1 (1584) | 🟢 | ✅ | — | thin (1/3) · queued: 1135 `surplus>=1` |
 | Array/String Fundamentals | arrays_and_hash | core | 1 | 3 (14, 66, 1929) | 🟢 | ✅ | — | — |
 | Boyer-Moore Voting | arrays_and_hash | core | 2 | 2 (169, 229) | 🎓 | ✅ | — | — |
 | Frequency Counting | arrays_and_hash | core | 2 | 2 (49, 242) | 🎓 | ✅ | — | — |
@@ -56,7 +60,7 @@ Every declared technique gets a row, started or not — a not-started row's Gaps
 | In-Place Array Rotation | arrays_and_hash | core | 1 | 1 (189) | 🟢 | ✅ | — | — |
 | Length-Prefix Encoding | arrays_and_hash | core | 1 | 1 (271) | 🟢 | ✅ | — | — |
 | Prefix/Suffix Products | arrays_and_hash | core | 1 | 1 (238) | 🟢 | ✅ | — | — |
-| Backtracking | backtracking | core | 3 | 2 (22, 78) | 🟢 | ✅ | — | thin (2/3) |
+| Backtracking | backtracking | core | 3 | 4 (22, 39, 46, 78) | 🟢 | ✅ | — | — |
 | Binary Search (exact match) | binary_search | core | 2 | 2 (33, 704) | 🎓 | ✅ | — | — |
 | Binary Search (max boundary) | binary_search | core | 3 | 3 (34, 74, 1552) | 🟢 | ✅ | — | — |
 | Binary Search (min boundary) | binary_search | core | 3 | 7 (34, 153, 162, 540, 875, 1011, 2300) | 🎓 | ✅ | — | — |
@@ -142,7 +146,7 @@ Every declared technique gets a row, started or not — a not-started row's Gaps
 | Tree Construction (Divide & Conquer) | trees | core | 1 | 1 (105) | 🟢 | ✅ | — | — |
 | Tree DFS (recursive) | trees | core | 3 | 6 (100, 104, 110, 226, 572, 1448) | 🎓 | ✅ | — | — |
 | Tree DFS with Postorder Return | trees | core | 2 | 2 (124, 543) | 🟢 | ✅ | — | — |
-| Trie | tries | core | 3 | 2 (208, 211) | 🟢 | ✅ | — | thin (2/3) |
+| Trie | tries | core | 3 | 3 (208, 211, 648) | 🟢 | ✅ | — | — |
 | Dutch National Flag | two_pointers | core | 1 | 1 (75) | 🟢 | ✅ | — | — |
 | Fast/Slow In-Place Write | two_pointers | core | 3 | 4 (26, 27, 80, 283) | 🎓 | ✅ | — | — |
 | Prefix/Suffix Max | two_pointers | core | 1 | 1 (42) | 🟢 | ✅ | Array ×1 · ~~Two Pointer~~ *(queued: `graduates:42`)* | — |
@@ -150,18 +154,7 @@ Every declared technique gets a row, started or not — a not-started row's Gaps
 
 ## Vocabulary maintenance
 
-**Unmapped tracker rows (6)** — solved but assigned to no technique. Add them to `techniques.yml`, or coverage silently drifts behind the tracker.
+**Queued (6)** — listed in the Action list above; a known gap with a fill already picked, not counted below.
 
-- 1489 Find Critical and Pseudo-Critical Edges in MST (Kruskal)
-- 39 Combination Sum
-- 46 Permutations
-- 648 Replace Words
-- 743 Network Delay Time (Dijkstra — array-scan)
-- 743 Network Delay Time (Dijkstra — min-heap)
-
-**Method drift (1)** — the tracker HAS a row for this problem, but not with the method the vocabulary declares. Either the parenthetical changed or the YAML names the wrong variant; the technique is not being credited.
-
-- 743 (Dijkstra)
-
-**Not reached yet (5)** — declared in the vocabulary, no tracker row. This is the normal state for curriculum ahead of the learner; it is a roadmap, not a finding.
+**Declared, not queued (2)** — declared in the vocabulary, no tracker row, and not yet in any queue. This is the normal state for curriculum ahead of the learner; it is a roadmap, not a finding: 1102 (Dijkstra), 547
 

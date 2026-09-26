@@ -417,7 +417,10 @@ of an already-🟢 algorithm is acceptable. What is **not** acceptable is an alg
 or a recognition trigger that's still missing. Anything carried out of a phase must be **written into
 the next phase's review load explicitly** — a carried gap that isn't scheduled is just a forgotten one.
 
-**Report at phase close per algorithm, not per problem:**
+**Report at phase close per algorithm, not per problem.** The block below is an *example of the
+form*, a snapshot of how Advanced Graphs stood when it was written in August — it is not live status.
+Live per-technique status is [`technique_coverage.md`](mastery/technique_coverage.md) (e.g. Bellman-Ford
+reached 🟢 on 787 Sep 26, 2026, with two Kattis negative-edge siblings queued).
 
 > *Advanced Graphs — 8 algorithms: Dijkstra ✅(🟢 778) · Bellman-Ford ⚠️(🟡 787 only) · Prim/MST ⚠️ ·
 > Hierholzer ❌(🔴 332) · Topo sort ✅ · BFS-transform ✅ · Floyd-Warshall — · Union-Find modeling —.

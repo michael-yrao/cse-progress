@@ -269,6 +269,79 @@ class TrapExtractionTests(unittest.TestCase):
         self.assertNotIn(18, named)
 
 
+class IsSeatedTests(unittest.TestCase):
+    """Direct pins on is_seated(), check 3's seating decision — pure, so no fixture files
+    are needed. The two masking shapes it exists to fix (see check_schedule_integrity's
+    module docstring, check 3): a second tracker row for the same LC number whose only
+    board mention is a struck rep for the OTHER method, and a single row's own struck rep
+    keeping its number "listed" while its next (already-due) rep seats nowhere.
+    """
+
+    SUNDAY = dt.date(2026, 9, 27)
+
+    KRUSKAL_ROW = {"num": "1584", "title": "Min Cost to Connect All Points (Kruskal)",
+                   "due": "2026-08-26"}  # overdue
+    PRIMS_ROW = {"num": "1584", "title": "Min Cost to Connect All Points (Prim's MST)",
+                 "due": "2026-11-24"}  # not due this week
+
+    def test_pending_board_mentions_excludes_struck_rows(self):
+        struck = "~~[1584 Min Cost to Connect All Points](x)~~ · [LC](y)"
+        unstruck = "**1584** Min Cost to Connect All Points (Kruskal) re-rep"
+        board_rows = [
+            (struck, True, ["🟢", "🟢", "2026-11-24"]),
+            (unstruck, False, ["", "", ""]),
+        ]
+        pending = csi.pending_board_mentions(board_rows)
+        self.assertEqual(pending.get(1584), [unstruck])
+
+    def test_two_rows_one_number_only_struck_board_row_is_flagged(self):
+        # board has only a STRUCK row for 1584 -> pending_board_mentions drops it, so no
+        # unstruck mention ever reaches is_seated.
+        board_rows = [
+            ("~~[1584 Min Cost to Connect All Points](x)~~ · [LC](y)", True,
+             ["🟢", "🟢", "2026-11-24"]),
+        ]
+        pending = csi.pending_board_mentions(board_rows)
+        seated = csi.is_seated(self.KRUSKAL_ROW, [self.KRUSKAL_ROW, self.PRIMS_ROW],
+                                pending.get(1584, []), self.SUNDAY)
+        self.assertFalse(seated)
+
+    def test_two_rows_one_number_unstruck_row_naming_its_own_method_is_not_flagged(self):
+        pending = ["**1584** Min Cost to Connect All Points (Kruskal) re-rep"]
+        seated = csi.is_seated(self.KRUSKAL_ROW, [self.KRUSKAL_ROW, self.PRIMS_ROW],
+                                pending, self.SUNDAY)
+        self.assertTrue(seated)
+
+    def test_two_rows_one_number_unstruck_row_naming_the_other_method_is_flagged(self):
+        pending = ["**1584** Min Cost to Connect All Points (Prim's MST) re-rep"]
+        seated = csi.is_seated(self.KRUSKAL_ROW, [self.KRUSKAL_ROW, self.PRIMS_ROW],
+                                pending, self.SUNDAY)
+        self.assertFalse(seated)
+
+    def test_single_row_due_this_week_only_struck_board_row_is_flagged(self):
+        row = {"num": "22", "title": "Generate Parentheses", "due": "2026-09-24"}
+        board_rows = [
+            ("~~[22 Generate Parentheses](x)~~ · [LC](y)", True, ["🔴", "🟢", "2026-10-24"]),
+        ]
+        pending = csi.pending_board_mentions(board_rows)
+        seated = csi.is_seated(row, [row], pending.get(22, []), self.SUNDAY)
+        self.assertFalse(seated)
+
+    def test_single_row_due_this_week_unstruck_board_row_is_not_flagged(self):
+        row = {"num": "22", "title": "Generate Parentheses", "due": "2026-09-24"}
+        pending = ["**22** Generate Parentheses re-rep"]
+        seated = csi.is_seated(row, [row], pending, self.SUNDAY)
+        self.assertTrue(seated)
+
+    def test_unstruck_row_with_no_method_text_seats_the_sole_due_variant(self):
+        due_row = {"num": "39", "title": "Combination Sum (BFS)", "due": "2026-09-24"}
+        other_row = {"num": "39", "title": "Combination Sum (Union-Find)",
+                     "due": "2026-11-01"}  # not due this week -> due_count is 1, unambiguous
+        pending = ["**39** Combination Sum"]  # no method text at all
+        seated = csi.is_seated(due_row, [due_row, other_row], pending, self.SUNDAY)
+        self.assertTrue(seated)
+
+
 class LiveCurrentWeekTests(unittest.TestCase):
     """A soft check against the repo's real current-week schedule, not a fixture. Skips
     rather than fails when the schedule tree isn't present (e.g. a checkout of just this

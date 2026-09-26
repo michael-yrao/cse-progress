@@ -261,7 +261,7 @@ MESSAGE = (
     "LINK RULE — this turn names problem number(s) {nums} without a markdown link.\n"
     "DO NOT RE-SEND THE TURN. Reply with ONLY the missing link pairs, one line each — "
     "no restated explanation, no summary of what you just said, nothing else:\n"
-    "    [<repo-relative .py path>] · [LC](leetcode url)   (use [NC](neetcode url) if LC-premium)\n"
+    "    [<repo-relative .py path>] · [LC](leetcode url)   (use [NC]/judge label if LC-premium/another judge)\n"
     "A lone re-emitted link reads as a directive (\"do this one first\"). When these links "
     "are ONLY a debt being paid — not a pick you are recommending — append the fixed tag "
     "`(links owed, order unchanged)` to the last line so it cannot be misread. Omit the tag "

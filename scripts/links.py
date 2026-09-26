@@ -9,10 +9,11 @@ that file, three folders deep) but DEAD when the chat renderer resolves it from 
 root. That is the Aug 27, 2026 lapse (self_eval_log.md).
 
 This tool removes the transcription. Give it problem numbers; it prints one
-`[<number> <title>](<repo-root-relative path>) · [LC|NC](<url>)` line per number, reading
-the path from disk and the title/URL from the file's own docstring header (falling back to
-the tracker). The agent runs it and pastes the output — it is structurally impossible to
-emit a wrong path.
+`[<number> <title>](<repo-root-relative path>) · [<judge label>](<url>)` line per number
+(`LC`, `NC`, `Kattis`, `CSES`, or another judge's bare hostname — see `judge_label`),
+reading the path from disk and the title/URL from the file's own docstring header (falling
+back to the tracker). The agent runs it and pastes the output — it is structurally
+impossible to emit a wrong path.
 
 Per the intervention ladder in `.claude/memory/feedback_self_evaluation.md`:
 source fix > hook > CLAUDE.md step > memory file. This is the top rung, matching
@@ -28,6 +29,7 @@ import argparse
 import re
 import sys
 from pathlib import Path
+from urllib.parse import urlparse
 
 # The `·` separator and any glyph in a problem title is unmappable on a stock Windows
 # console (cp1252) and would render as `?` or, from the git hook, crash the run. Force
@@ -47,6 +49,33 @@ TRACKER = REPO_ROOT / "docs" / "foundations" / "dsa" / "mastery" / "dsa_progress
 HEADER = re.compile(r"^\s*(\d{1,4})\.\s+(.+?)(?:\s+·\s+(https?://\S+))?\s*$")
 # Tracker row cell: `[49. Group Anagrams](https://leetcode.com/problems/group-anagrams/)`.
 TRACKER_CELL = re.compile(r"\[(\d{1,4})\.\s*([^\]]+?)\]\((https?://[^)]+)\)")
+
+# Host -> the short label printed next to a problem-page link. Judges beyond LC/NC are
+# the external-judge convention (`decisions.yml` `external-judge-problems-sep26`): a
+# problem the LC/NeetCode pull doesn't cover (e.g. a negative-edge shortest-path form) is
+# hand-picked from another judge, keeping a synthetic 9001-9999 id under the normal root.
+# Any host not listed here falls back to its bare hostname (judge_label below) rather than
+# silently mislabeling it "LC".
+JUDGE_LABELS = {
+    "leetcode.com": "LC",
+    "neetcode.io": "NC",
+    "open.kattis.com": "Kattis",
+    "cses.fi": "CSES",
+}
+
+
+def judge_label(url: str) -> str:
+    """The short label for a problem-page URL's host: `LC`, `NC`, `Kattis`, `CSES`, or —
+    for any other judge — the bare hostname (leading `www.` stripped).
+
+    `new_problem.py`'s `report_links()` imports this rather than re-deriving the label —
+    links.py has no import of new_problem.py (verified), so the direction is acyclic, and
+    importing it there triggers no module-level side effect (this module only defines
+    names + calls `_console.force_utf8()`, already a no-op the second time).
+    """
+    host = urlparse(url).hostname or ""
+    host = host.removeprefix("www.")
+    return JUDGE_LABELS.get(host, host)
 
 
 def source_roots() -> list[Path]:
@@ -151,7 +180,8 @@ def resolve_title_url(number: str, path: Path | None) -> tuple[str | None, str |
 
 
 def link_line(number: str) -> str | None:
-    """The `[file] · [LC|NC]` line for `number`, or None if nothing on disk knows it.
+    """The `[file] · [judge label]` line for `number` (e.g. `LC`, `NC`, `Kattis`), or None
+    if nothing on disk knows it.
 
     Path is ALWAYS repo-root-relative (the fix). Title/URL prefer the file header, then the
     tracker (resolve_title_url). A problem with no file yields no file link — that is
@@ -163,7 +193,7 @@ def link_line(number: str) -> str | None:
 
     if path is None:
         if url:
-            label = "NC" if "neetcode" in url else "LC"
+            label = judge_label(url)
             print(f"NOTE: {number} has no solution file yet — scaffold it with new_problem.py "
                   f"for the file link. Problem-page link only:", file=sys.stderr)
             return f"[{number}{(' ' + title) if title else ''}]() · [{label}]({url})"
@@ -177,13 +207,14 @@ def link_line(number: str) -> str | None:
         print(f"WARNING: {number} has no problem-page URL in its header or the tracker; "
               f"emitting the file link alone.", file=sys.stderr)
         return f"[{name}]({rel})"
-    label = "NC" if "neetcode" in url else "LC"
+    label = judge_label(url)
     return f"[{name}]({rel}) · [{label}]({url})"
 
 
 def main() -> None:
     ap = argparse.ArgumentParser(
-        description="Print the [file] · [LC/NC] link pair for one or more problem numbers.")
+        description="Print the [file] · [judge label] link pair for one or more problem "
+                    "numbers (judge label: LC/NC/Kattis/CSES/hostname).")
     ap.add_argument("numbers", nargs="+", help="problem number(s), e.g. 269 853 424")
     args = ap.parse_args()
 

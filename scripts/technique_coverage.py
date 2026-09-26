@@ -24,10 +24,14 @@ cannot silently fall behind the tracker the way method parentheticals do.
 
 `techniques.yml` ships as a curriculum-wide vocabulary, so on a young tracker most of the
 problems it names are simply **not solved yet**. That is the expected state, not a
-finding — so an unmatched spec is split two ways: no tracker row for that number at all
-is "not reached yet" (a one-line count), while a row that exists but whose *method*
-string doesn't match is real **drift** and is listed. Without that split a fresh repo
-opens with a hundred-line "problem" list and the report stops being read.
+finding — so an unmatched spec is split three ways: no tracker row for that number, but
+the `problems:` entry itself carries a `queued: <trigger>` (same vocabulary as a
+`variants:` queue) is **queued** — a known gap, named in the Action list and the Gaps
+cell rather than re-reported as new; no tracker row and no `queued:` key is **declared,
+not queued** (counted AND listed, so a thin technique's open slots are visible, not just
+their number); a row that exists but whose *method* string doesn't match is real
+**drift** and is listed. Without that split a fresh repo opens with a hundred-line
+"problem" list and the report stops being read.
 
 Usage:
     python scripts/technique_coverage.py            # write the report
@@ -142,6 +146,11 @@ class Resolved:
     rows: list[Row] = field(default_factory=list)
     variant_rows: dict[str, list[Row]] = field(default_factory=dict)
     queued_variants: dict[str, str] = field(default_factory=dict)
+    #: A `problems:` entry with no matching tracker row AND a `queued: <trigger>` key —
+    #: declared and already waiting on a fired trigger, so it is reported (Gaps cell +
+    #: Action list) rather than silently counted as "not reached yet". Keyed by number,
+    #: same trigger vocabulary as a `variants:` queue.
+    queued_problems: dict[int, str] = field(default_factory=dict)
     needs_review: list[str] = field(default_factory=list)
     #: Declared, and a tracker row for that NUMBER exists, but the method didn't match.
     #: That is vocabulary drift and is worth naming.
@@ -207,6 +216,8 @@ class Resolved:
             out.append("**no-green**")
         if self.n_problems < self.min_problems:
             out.append(f"thin ({self.n_problems}/{self.min_problems})")
+        if self.queued_problems:
+            out.append(f"queued: {_queued_label(self.queued_problems, parenthesize=False)}")
         for variant, rows in self.variant_rows.items():
             if not rows and variant not in self.queued_variants:
                 out.append(f"variant: **{variant}**")
@@ -253,6 +264,23 @@ def _matches(row: Row, spec: dict) -> bool:
     return True if method is None else row.method == method
 
 
+def _queued_label(queued: dict[int, str], *, parenthesize: bool) -> str:
+    """Render a `queued_problems` map (number -> trigger), sorted by number.
+
+    Two call sites want two punctuation styles for the same data: the Gaps cell reads
+    ``945 `trigger` `` (bare, so it stays a short inline fragment), the Action list reads
+    ``945 (`trigger`)`` (parenthesized, matching how the Variants column already wraps a
+    queued trigger). Neither ever contains the word "variant" — `gamify.parse_techniques()`
+    reads that substring out of the Gaps cell to flag a variant gap, and a queued PROBLEM
+    is not a variant gap.
+    """
+    parts = []
+    for number, trigger in sorted(queued.items()):
+        trigger_str = f"`{trigger}`"
+        parts.append(f"{number} ({trigger_str})" if parenthesize else f"{number} {trigger_str}")
+    return ", ".join(parts)
+
+
 def resolve(config: dict, rows: list[Row]) -> tuple[list[Resolved], set[str]]:
     """Join the technique vocabulary against the tracker rows."""
     default_min = config.get("defaults", {}).get("min_problems", DEFAULT_MIN_PROBLEMS)
@@ -275,6 +303,15 @@ def resolve(config: dict, rows: list[Row]) -> tuple[list[Resolved], set[str]]:
         for spec in entry.get("problems", []) or []:
             matched = [r for r in rows if _matches(r, spec)]
             if not matched:
+                # No row for this number, and it is already declared queued (waiting on
+                # a fired trigger, same vocabulary as a `variants:` queue) -> report it as
+                # queued rather than falling into drift/unreached. A `queued:` key on a
+                # spec that DOES have a row (the `matched` branch below) is simply never
+                # consulted, so it is a no-op there, not an error.
+                trigger = spec.get("queued")
+                if trigger:
+                    tech.queued_problems[spec["number"]] = trigger
+                    continue
                 label = str(spec["number"]) + (f" ({spec['method']})" if spec.get("method") else "")
                 # A row exists for the number but the method didn't match -> drift.
                 # No row at all -> the learner simply hasn't reached this problem.
@@ -322,6 +359,7 @@ def render(resolved: list[Resolved], rows: list[Row], claimed: set[str]) -> str:
         for v, vr in t.variant_rows.items()
         if not vr and v not in t.queued_variants
     ]
+    queued_techs = [t for t in started if t.queued_problems]
 
     add(
         f"> **{len(started)}/{len(resolved)}** techniques started &nbsp;·&nbsp; "
@@ -331,7 +369,7 @@ def render(resolved: list[Resolved], rows: list[Row], claimed: set[str]) -> str:
     )
     add("")
 
-    if blockers or thin or variant_gaps:
+    if blockers or thin or variant_gaps or queued_techs:
         add("## ⚠️ Action list")
         add("")
         if blockers:
@@ -351,6 +389,16 @@ def render(resolved: list[Resolved], rows: list[Row], claimed: set[str]) -> str:
                 probs = ", ".join(str(n) for n in t.numbers) or "none"
                 extra = f" ({len(t.rows)} rows)" if t.has_multi_variant_problem else ""
                 add(f"- **{t.name}** ({t.family}) — {t.n_problems}/{t.min_problems}{extra}: {probs}")
+            add("")
+        if queued_techs:
+            add(
+                "**Queued — declared, and already sitting in the Waiting Room / Expansion "
+                "Queue.** A known gap with a fill already picked, not a new finding."
+            )
+            add("")
+            for t in sorted(queued_techs, key=lambda t: t.name):
+                label = _queued_label(t.queued_problems, parenthesize=True)
+                add(f"- **{t.name}** ({t.family}) — queued: {label}")
             add("")
         if variant_gaps:
             add("**Unqueued variant gaps — a method never once exercised, and not in any queue.**")
@@ -396,8 +444,9 @@ def render(resolved: list[Resolved], rows: list[Row], claimed: set[str]) -> str:
     review = sorted({label for t in resolved for label in t.needs_review})
     drifted = sorted({label for t in resolved for label in t.drifted})
     unreached = sorted({label for t in resolved for label in t.unreached})
+    queued_numbers = sorted({n for t in resolved for n in t.queued_problems})
 
-    if unmapped or review or drifted or unreached:
+    if unmapped or review or drifted or unreached or queued_numbers:
         add("## Vocabulary maintenance")
         add("")
         if unmapped:
@@ -430,11 +479,17 @@ def render(resolved: list[Resolved], rows: list[Row], claimed: set[str]) -> str:
             for label in drifted:
                 add(f"- {label}")
             add("")
+        if queued_numbers:
+            add(
+                f"**Queued ({len(queued_numbers)})** — listed in the Action list above; a "
+                "known gap with a fill already picked, not counted below."
+            )
+            add("")
         if unreached:
             add(
-                f"**Not reached yet ({len(unreached)})** — declared in the vocabulary, no tracker "
-                "row. This is the normal state for curriculum ahead of the learner; it is a "
-                "roadmap, not a finding."
+                f"**Declared, not queued ({len(unreached)})** — declared in the vocabulary, no "
+                "tracker row, and not yet in any queue. This is the normal state for curriculum "
+                f"ahead of the learner; it is a roadmap, not a finding: {', '.join(unreached)}"
             )
             add("")
 

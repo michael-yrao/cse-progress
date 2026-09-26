@@ -36,6 +36,7 @@ import urllib.request
 from pathlib import Path
 
 import session_date
+from links import judge_label
 
 # Git runs hooks with a cp1252 console on Windows; the first emoji printed would
 # otherwise kill the script mid-report while the commit still succeeds. See _console.
@@ -347,17 +348,19 @@ def report_links(path: Path, number: str, title: str, url: str, probe: bool = Fa
     `.claude/memory/feedback_self_evaluation.md` — source fix > hook > CLAUDE.md step >
     memory file.
 
-    The label tracks the host, so a premium problem reads `NC` and points at the free
-    NeetCode mirror rather than the paywalled LeetCode page.
+    The label tracks the host (`links.judge_label`), so a premium problem reads `NC` and
+    points at the free NeetCode mirror rather than the paywalled LeetCode page, and a
+    problem hand-picked from another judge (Kattis, CSES, …) reads that judge's label
+    rather than being silently mislabeled `LC`.
 
-    A recognition probe (`probe=True`) prints the LOCAL FILE LINK ONLY — no LC/NC. The
-    file path names the problem (the learner opens it to do the rep), but the problem
+    A recognition probe (`probe=True`) prints the LOCAL FILE LINK ONLY — no judge label.
+    The file path names the problem (the learner opens it to do the rep), but the problem
     PAGE's tags/editorial would name the technique, which is the one thing being measured.
     """
     if probe:
-        print(f"LINKS: [{number} {title}]({path.as_posix()})  (probe — local link only, no LC/NC)")
+        print(f"LINKS: [{number} {title}]({path.as_posix()})  (probe — local link only, no judge label)")
         return
-    label = "NC" if "neetcode" in url else "LC"
+    label = judge_label(url)
     print(f"LINKS: [{number} {title}]({path.as_posix()}) · [{label}]({url})")
 
 
@@ -687,7 +690,7 @@ def main() -> None:
     ap.add_argument("--probe", action="store_true",
                     help="scaffold a blind RECOGNITION PROBE to dsa/probes/ (neutral path, "
                          "'you name it' header, no technique). Prints the LOCAL file link "
-                         "ONLY — no LC/NC (the problem page spoils the technique call). "
+                         "ONLY — no judge link (the problem page spoils the technique call). "
                          "For a NEW probe; see dsa/probes/README.md")
     ap.add_argument("--url", default="")
     ap.add_argument("--method", action="append", default=[],
