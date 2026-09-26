@@ -622,6 +622,138 @@ class ParseCurrentWeekScheduleTests(unittest.TestCase):
         self.assertIsNone(primer["file"])                     # no number → no lookup
 
 
+class BuildWorkloadTests(unittest.TestCase):
+    """gamify.build_workload() — planned-vs-completed effort units per scheduled day,
+    scanned across BOTH the live schedules folder and its archive/ subfolder, priced via
+    effort_budget.price_day_items() (the extracted pricing core of price_schedule_day()).
+
+    Fixture rows are plain dicts (effort_budget's own row shape, via the module-level
+    _row() helper) rather than a tracker markdown file + eb.parse_rows() — build_workload()
+    takes `rows` straight from its caller, so nothing here needs the tracker file at all.
+
+    CFG is a minimal, self-contained effort_budget config: no attempt_decay or
+    difficulty_demotion block, so price() reduces to base(comfort/streak) x
+    difficulty(tier) with no decay/demotion — expected prices below are computed by hand
+    against exactly these weights, not against cse.config.yml's (which is free to change).
+    """
+
+    CFG = {
+        "comfort_units": {"🔴": 3.0, "🟡": 2.0, "🟢": 1.0},
+        "difficulty": {"Easy": 0.7, "Medium": 1.0, "Hard": 1.5},
+    }
+
+    # Mon Aug 10 2026: a plain 🔴 Medium row (remaining, priced 3.0) and a struck 🟡 Easy
+    # row (done, priced 1.4) — the two-row done/remaining split. Thu Aug 13 2026: a
+    # number-less 🔤 primer row only — no problem number to price, so `partial` must be
+    # true even though built/done both land at 0.0.
+    LIVE_FIXTURE = (
+        "## Daily Schedule\n\n"
+        "| Problem | S | E | Next | Technique |\n"
+        "|---|:-:|:-:|:-:|---|\n"
+        "| ▸ **Mon Aug 10** · 5.0 units — Test build day |  |  |  |  |\n"
+        "| [501 Widget One](../../../dsa/leetcode/arrays/501_widget_one.py)"
+        " · [LC](https://leetcode.com/problems/widget-one/) | 🔴 | | | Arrays |\n"
+        "| ~~[502 Widget Two](../../../dsa/leetcode/arrays/502_widget_two.py)~~"
+        " · [LC](https://leetcode.com/problems/widget-two/) | 🟡 | | | Arrays |\n"
+        "| |  |  |  |  |\n"
+        "| ▸ **Thu Aug 13** · 3.0 units — Primer day |  |  |  |  |\n"
+        "| 🔤 **Some Primer Topic** — no LC number | 🔤 | | | concept overview |\n"
+        "| |  |  |  |  |\n"
+    )
+
+    # Mon Sep 14 2026: an approximate (`~4.0`) header with no priced rows — pins that
+    # `planned` reads the approximate price, not None. Wed Sep 16 2026: a struck 🟢 s1
+    # Hard row (done) plus a plain 🟡 Medium row (remaining) — built > done.
+    ARCHIVE_FIXTURE = (
+        "## Daily Schedule\n\n"
+        "| Problem | S | E | Next | Technique |\n"
+        "|---|:-:|:-:|:-:|---|\n"
+        "| ▸ **Mon Sep 14** · ~4.0 units — Approx day |  |  |  |  |\n"
+        "| |  |  |  |  |\n"
+        "| ▸ **Wed Sep 16** · 6.0 units — Struck day |  |  |  |  |\n"
+        "| ~~[503 Widget Three](../../../dsa/leetcode/arrays/503_widget_three.py)~~"
+        " · [LC](https://leetcode.com/problems/widget-three/) | 🟢 s1 | | | Arrays |\n"
+        "| [504 Widget Four](../../../dsa/leetcode/arrays/504_widget_four.py)"
+        " · [LC](https://leetcode.com/problems/widget-four/) | 🟡 | | | Arrays |\n"
+        "| |  |  |  |  |\n"
+    )
+
+    # Pre-2026-08-10 one-row-per-day shape: no `▸ **Day**` header this parser recognizes,
+    # so every day of this week is stated=None/items=[] and build_workload() must emit
+    # nothing for it.
+    OLD_FORMAT_FIXTURE = (
+        "## Daily Schedule\n\n"
+        "| Date | Problem | Comfort |\n"
+        "|---|---|---|\n"
+        "| 2026-06-01 | 1 Two Sum | 🟢 |\n"
+    )
+
+    ROWS = [
+        _row(501, "🔴", 0, diff="Medium"),
+        _row(502, "🟡", 0, diff="Easy"),
+        _row(503, "🟢", 1, diff="Hard"),
+        _row(504, "🟡", 0, diff="Medium"),
+    ]
+
+    def setUp(self):
+        self._tmpdir = tempfile.TemporaryDirectory()
+        self._orig_schedules = eb.SCHEDULES
+        sched_dir = Path(self._tmpdir.name)
+        (sched_dir / "archive").mkdir()
+        (sched_dir / "20260810_schedule.md").write_text(self.LIVE_FIXTURE, encoding="utf-8")
+        (sched_dir / "20260601_schedule.md").write_text(self.OLD_FORMAT_FIXTURE, encoding="utf-8")
+        (sched_dir / "archive" / "20260914_schedule.md").write_text(
+            self.ARCHIVE_FIXTURE, encoding="utf-8")
+        eb.SCHEDULES = sched_dir
+
+    def tearDown(self):
+        eb.SCHEDULES = self._orig_schedules
+        self._tmpdir.cleanup()
+
+    def test_entries_sorted_by_date_across_live_and_archive(self):
+        workload = gamify.build_workload(self.ROWS, self.CFG)
+        dates = [w["date"] for w in workload]
+        self.assertEqual(dates, sorted(dates))
+        self.assertEqual(dates, ["2026-08-10", "2026-08-13", "2026-09-14", "2026-09-16"])
+
+    def test_planned_reads_the_approximate_header(self):
+        workload = gamify.build_workload(self.ROWS, self.CFG)
+        by_date = {w["date"]: w for w in workload}
+        self.assertEqual(by_date["2026-09-14"]["planned"], 4.0)
+
+    def test_done_is_the_struck_rows_priced_sum_and_built_covers_all_rows(self):
+        workload = gamify.build_workload(self.ROWS, self.CFG)
+        by_date = {w["date"]: w for w in workload}
+        aug10 = by_date["2026-08-10"]
+        self.assertAlmostEqual(aug10["done"], 1.4)     # 502: 🟡 Easy = 2.0 * 0.7
+        self.assertAlmostEqual(aug10["built"], 4.4)    # + 501: 🔴 Medium = 3.0 * 1.0
+        self.assertGreaterEqual(aug10["built"], aug10["done"])
+        sep16 = by_date["2026-09-16"]
+        self.assertAlmostEqual(sep16["done"], 1.5)     # 503: 🟢 s1 Hard = 1.0 * 1.5
+        self.assertAlmostEqual(sep16["built"], 3.5)    # + 504: 🟡 Medium = 2.0 * 1.0
+        self.assertGreaterEqual(sep16["built"], sep16["done"])
+
+    def test_pre_era_headerless_file_contributes_no_entries(self):
+        workload = gamify.build_workload(self.ROWS, self.CFG)
+        self.assertFalse(any(w["date"].startswith("2026-06") for w in workload))
+        self.assertEqual(len(workload), 4)
+
+    def test_partial_true_for_a_numberless_primer_row(self):
+        workload = gamify.build_workload(self.ROWS, self.CFG)
+        by_date = {w["date"]: w for w in workload}
+        self.assertTrue(by_date["2026-08-13"]["partial"])
+        self.assertFalse(by_date["2026-08-10"]["partial"])
+
+    def test_price_day_items_splits_done_from_remaining_on_a_two_row_day(self):
+        path = eb.SCHEDULES / "20260810_schedule.md"
+        items, stated = eb.parse_schedule_day(path, dt.date(2026, 8, 10))
+        priced = eb.price_day_items(dt.date(2026, 8, 10), items, self.ROWS, self.CFG)
+        self.assertEqual(stated, 5.0)
+        self.assertAlmostEqual(priced["done"], 1.4)
+        self.assertAlmostEqual(priced["remaining"], 3.0)
+        self.assertAlmostEqual(priced["built"], 4.4)
+
+
 class SolutionFilesTests(unittest.TestCase):
     """links.solution_files() — the map gamify reads: keyed by the file's leading number,
     non-numbered files skipped, roots walked in config order and sorted within each root
@@ -942,6 +1074,13 @@ class SummaryOfTests(unittest.TestCase):
                            "technique": "Backtracking", "startComfort": "🔴",
                            "difficulty": "Medium", "done": False}]},
             ]},
+            # Mirrors studyDays just above: one date far outside the summary's rolling
+            # window plus two recent ones, so the cap can be pinned the same way.
+            "workload": [
+                {"date": "2025-01-01", "planned": 4.0, "done": 4.0, "built": 4.0, "partial": False},
+                {"date": "2026-09-19", "planned": 5.0, "done": 5.0, "built": 5.0, "partial": False},
+                {"date": "2026-09-20", "planned": 6.0, "done": 3.0, "built": 6.0, "partial": True},
+            ],
             "effortCeiling": 8.0,
             "effortFloor": 3.0,
             "probes": {"total": 3, "cleanRate": 1 / 3, "items": [
@@ -959,8 +1098,8 @@ class SummaryOfTests(unittest.TestCase):
         summary = gamify.summary_of(self._payload())
         for key in ("streak", "pipeline", "badges", "coverage", "totals",
                     "onSchedule", "difficulty", "schemaVersion", "generatedAt",
-                    "techniques", "studyDays", "schedule", "effortCeiling", "effortFloor",
-                    "probes"):
+                    "techniques", "studyDays", "schedule", "workload", "effortCeiling",
+                    "effortFloor", "probes"):
             self.assertIn(key, summary)
         self.assertEqual(summary["streak"]["current"], 3)
         self.assertEqual(summary["badges"][0]["id"], "first-graduate")
@@ -1007,6 +1146,13 @@ class SummaryOfTests(unittest.TestCase):
         # (2026-09-20) and must be dropped; the two recent dates stay.
         summary = gamify.summary_of(self._payload())
         self.assertEqual(summary["studyDays"], ["2026-09-19", "2026-09-20"])
+
+    def test_workload_capped_to_the_same_rolling_window_as_study_days(self):
+        # Same cutoff, same shape of fixture as studyDays above: 2025-01-01 drops,
+        # the two recent entries stay.
+        summary = gamify.summary_of(self._payload())
+        self.assertEqual([w["date"] for w in summary["workload"]],
+                         ["2026-09-19", "2026-09-20"])
 
     def test_study_days_cap_does_not_touch_the_lifetime_count(self):
         # The lifetime total lives in streak.studyDays/streak.longest, untouched by the cap

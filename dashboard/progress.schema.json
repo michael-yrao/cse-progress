@@ -134,6 +134,11 @@
         "days": { "type": "array", "minItems": 7, "maxItems": 7, "items": { "$ref": "#/definitions/scheduleDay" } }
       }
     },
+    "workload": {
+      "type": "array",
+      "description": "One entry per scheduled day (live + archive) that has a header or priced rows, sorted by date — planned vs completed effort units, backing the workload chart. `done`/`built` are priced under the CURRENT cse.config.yml weights (gamify.py's build_workload(), reusing effort_budget.py's price_day_items()), so the series is comparable to today's numbers, never to what a day was billed at when it was built (decisions.yml `workload-series`). In progress.json (this schema) this is the COMPLETE list back to whenever schedules began. In progress-summary.json it is capped to the same rolling window as `studyDays` (SUMMARY_STUDY_DAYS_WINDOW days).",
+      "items": { "$ref": "#/definitions/workloadDay" }
+    },
     "effortCeiling": {
       "type": "number",
       "description": "The learner's daily effort-budget ceiling (units), from cse.config.yml's effort_budget.ceiling (default 8.0 if absent). Backs the Today's-board workload bar's Heavy band (>= 0.9x this)."
@@ -176,6 +181,7 @@
         "techniques": { "$ref": "#/properties/techniques" },
         "studyDays": { "$ref": "#/properties/studyDays" },
         "schedule": { "$ref": "#/properties/schedule" },
+        "workload": { "$ref": "#/properties/workload" },
         "effortCeiling": { "$ref": "#/properties/effortCeiling" },
         "effortFloor": { "$ref": "#/properties/effortFloor" },
         "probes": { "$ref": "#/properties/probes" },
@@ -237,6 +243,18 @@
         "technique": { "type": "string" },
         "result": { "type": ["string", "null"], "enum": ["🔴", "🟡", "🟢", "🎓", "🏆", null], "description": "The FIRST comfort glyph in the Result cell — scored on the COLD call, not a later conversion (e.g. '🔴 → 🟡 (re-rep Sep 16)' reads 🔴)." },
         "url": { "type": ["string", "null"], "description": "Canonical LeetCode URL, joined by lcNumber from the tracker's markdown links (problem_urls()). null when the number has no tracker entry yet." }
+      }
+    },
+    "workloadDay": {
+      "type": "object",
+      "description": "One scheduled day's planned-vs-completed effort units, priced under the current cse.config.yml weights.",
+      "required": ["date", "planned", "done", "built", "partial"],
+      "properties": {
+        "date": { "type": "string", "format": "date" },
+        "planned": { "type": ["number", "null"], "description": "The day header's stated unit total; null when the header carried none." },
+        "done": { "type": "number", "description": "Sum of the struck-through rows' price, 1 decimal place." },
+        "built": { "type": "number", "description": "Sum of ALL the day's rows' price (done + remaining), 1 decimal place." },
+        "partial": { "type": "boolean", "description": "True when at least one row could not be priced exactly (no problem number, or untracked and guessed) — done/built are then a lower bound." }
       }
     },
     "scheduleDay": {

@@ -3348,6 +3348,351 @@
       }
     ]
   },
+  "workload": [
+    {
+      "date": "2026-08-10",
+      "planned": 7.0,
+      "done": 7.4,
+      "built": 7.4,
+      "partial": true
+    },
+    {
+      "date": "2026-08-11",
+      "planned": 9.0,
+      "done": 5.9,
+      "built": 5.9,
+      "partial": false
+    },
+    {
+      "date": "2026-08-12",
+      "planned": 8.5,
+      "done": 7.2,
+      "built": 7.2,
+      "partial": false
+    },
+    {
+      "date": "2026-08-13",
+      "planned": 9.0,
+      "done": 8.2,
+      "built": 8.2,
+      "partial": true
+    },
+    {
+      "date": "2026-08-14",
+      "planned": 10.0,
+      "done": 9.2,
+      "built": 9.2,
+      "partial": false
+    },
+    {
+      "date": "2026-08-15",
+      "planned": 9.0,
+      "done": 6.4,
+      "built": 7.4,
+      "partial": false
+    },
+    {
+      "date": "2026-08-16",
+      "planned": 8.0,
+      "done": 4.5,
+      "built": 6.1,
+      "partial": true
+    },
+    {
+      "date": "2026-08-17",
+      "planned": 8.0,
+      "done": 7.2,
+      "built": 7.2,
+      "partial": false
+    },
+    {
+      "date": "2026-08-18",
+      "planned": 8.0,
+      "done": 7.2,
+      "built": 7.2,
+      "partial": true
+    },
+    {
+      "date": "2026-08-19",
+      "planned": 8.5,
+      "done": 8.6,
+      "built": 8.6,
+      "partial": true
+    },
+    {
+      "date": "2026-08-20",
+      "planned": 7.5,
+      "done": 1.8,
+      "built": 1.8,
+      "partial": true
+    },
+    {
+      "date": "2026-08-21",
+      "planned": 8.0,
+      "done": 9.0,
+      "built": 9.0,
+      "partial": true
+    },
+    {
+      "date": "2026-08-22",
+      "planned": 15.5,
+      "done": 13.9,
+      "built": 13.9,
+      "partial": false
+    },
+    {
+      "date": "2026-08-23",
+      "planned": 8.0,
+      "done": 7.0,
+      "built": 7.0,
+      "partial": false
+    },
+    {
+      "date": "2026-08-24",
+      "planned": 8.0,
+      "done": 3.6,
+      "built": 5.4,
+      "partial": false
+    },
+    {
+      "date": "2026-08-25",
+      "planned": 8.0,
+      "done": 5.6,
+      "built": 5.6,
+      "partial": false
+    },
+    {
+      "date": "2026-08-26",
+      "planned": 8.0,
+      "done": 3.2,
+      "built": 3.2,
+      "partial": false
+    },
+    {
+      "date": "2026-08-27",
+      "planned": 8.0,
+      "done": 5.7,
+      "built": 6.7,
+      "partial": false
+    },
+    {
+      "date": "2026-08-28",
+      "planned": 7.0,
+      "done": 9.0,
+      "built": 14.2,
+      "partial": true
+    },
+    {
+      "date": "2026-08-29",
+      "planned": 8.0,
+      "done": 6.5,
+      "built": 9.9,
+      "partial": true
+    },
+    {
+      "date": "2026-08-30",
+      "planned": 8.0,
+      "done": 0.7,
+      "built": 7.1,
+      "partial": true
+    },
+    {
+      "date": "2026-08-31",
+      "planned": 9.5,
+      "done": 8.2,
+      "built": 8.2,
+      "partial": false
+    },
+    {
+      "date": "2026-09-01",
+      "planned": 8.0,
+      "done": 6.3,
+      "built": 6.3,
+      "partial": true
+    },
+    {
+      "date": "2026-09-02",
+      "planned": 6.0,
+      "done": 5.3,
+      "built": 5.3,
+      "partial": true
+    },
+    {
+      "date": "2026-09-03",
+      "planned": 7.7,
+      "done": 7.3,
+      "built": 7.3,
+      "partial": false
+    },
+    {
+      "date": "2026-09-04",
+      "planned": 6.5,
+      "done": 4.6,
+      "built": 4.6,
+      "partial": true
+    },
+    {
+      "date": "2026-09-05",
+      "planned": 7.8,
+      "done": 7.5,
+      "built": 7.5,
+      "partial": false
+    },
+    {
+      "date": "2026-09-06",
+      "planned": 9.4,
+      "done": 11.1,
+      "built": 11.1,
+      "partial": true
+    },
+    {
+      "date": "2026-09-07",
+      "planned": 9.5,
+      "done": 8.7,
+      "built": 8.7,
+      "partial": false
+    },
+    {
+      "date": "2026-09-08",
+      "planned": 8.6,
+      "done": 4.6,
+      "built": 7.6,
+      "partial": true
+    },
+    {
+      "date": "2026-09-09",
+      "planned": 9.0,
+      "done": 5.8,
+      "built": 5.8,
+      "partial": true
+    },
+    {
+      "date": "2026-09-10",
+      "planned": 7.8,
+      "done": 3.0,
+      "built": 7.6,
+      "partial": true
+    },
+    {
+      "date": "2026-09-11",
+      "planned": 11.0,
+      "done": 7.6,
+      "built": 7.6,
+      "partial": true
+    },
+    {
+      "date": "2026-09-12",
+      "planned": 8.7,
+      "done": 5.0,
+      "built": 8.7,
+      "partial": false
+    },
+    {
+      "date": "2026-09-13",
+      "planned": 9.0,
+      "done": 4.6,
+      "built": 9.6,
+      "partial": true
+    },
+    {
+      "date": "2026-09-14",
+      "planned": 7.0,
+      "done": 4.5,
+      "built": 4.5,
+      "partial": true
+    },
+    {
+      "date": "2026-09-15",
+      "planned": 6.2,
+      "done": 4.9,
+      "built": 5.3,
+      "partial": false
+    },
+    {
+      "date": "2026-09-16",
+      "planned": 10.5,
+      "done": 10.2,
+      "built": 10.2,
+      "partial": true
+    },
+    {
+      "date": "2026-09-17",
+      "planned": 7.7,
+      "done": 7.7,
+      "built": 7.7,
+      "partial": false
+    },
+    {
+      "date": "2026-09-18",
+      "planned": 7.4,
+      "done": 5.9,
+      "built": 6.8,
+      "partial": false
+    },
+    {
+      "date": "2026-09-19",
+      "planned": 6.8,
+      "done": 5.9,
+      "built": 5.9,
+      "partial": false
+    },
+    {
+      "date": "2026-09-20",
+      "planned": 7.4,
+      "done": 9.3,
+      "built": 9.3,
+      "partial": false
+    },
+    {
+      "date": "2026-09-21",
+      "planned": 6.8,
+      "done": 6.8,
+      "built": 6.8,
+      "partial": false
+    },
+    {
+      "date": "2026-09-22",
+      "planned": 7.3,
+      "done": 7.0,
+      "built": 7.0,
+      "partial": false
+    },
+    {
+      "date": "2026-09-23",
+      "planned": 7.6,
+      "done": 5.6,
+      "built": 5.6,
+      "partial": false
+    },
+    {
+      "date": "2026-09-24",
+      "planned": 5.5,
+      "done": 2.0,
+      "built": 5.5,
+      "partial": false
+    },
+    {
+      "date": "2026-09-25",
+      "planned": 13.1,
+      "done": 8.1,
+      "built": 10.1,
+      "partial": true
+    },
+    {
+      "date": "2026-09-26",
+      "planned": 11.1,
+      "done": 0.0,
+      "built": 8.1,
+      "partial": true
+    },
+    {
+      "date": "2026-09-27",
+      "planned": 7.3,
+      "done": 0.0,
+      "built": 11.1,
+      "partial": true
+    }
+  ],
   "effortCeiling": 8.0,
   "effortFloor": 3.0,
   "probes": {

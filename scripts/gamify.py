@@ -209,6 +209,45 @@ def build_schedule_index() -> dict[str, dict[int, str]]:
     return index
 
 
+def build_workload(rows: list[dict], cfg: dict) -> list[dict]:
+    """One entry per scheduled day (live + archive) with a header or priced rows.
+
+    `done`/`built` are priced under the CURRENT cse.config.yml weights, not whatever
+    a day was billed at when it was built — so the series is comparable to today's
+    numbers, never to what a schedule's own Start column implied at build time (see
+    decisions.yml `workload-series`). A day with no header AND no rows (the
+    pre-2026-08-10 one-row-per-day era, or a week not yet built) contributes no
+    entry rather than a fabricated zero.
+    """
+    workload: list[dict] = []
+    for folder in (eb.SCHEDULES, eb.SCHEDULES / "archive"):
+        if not folder.is_dir():
+            continue
+        for path in sorted(folder.glob("*_schedule.md")):
+            stamp = path.name.split("_")[0]
+            if len(stamp) != 8 or not stamp.isdigit():
+                continue
+            try:
+                week_start = dt.date(int(stamp[:4]), int(stamp[4:6]), int(stamp[6:]))
+            except ValueError:
+                continue
+            for offset in range(7):
+                day = week_start + dt.timedelta(days=offset)
+                items, stated = eb.parse_schedule_day(path, day)
+                if stated is None and not items:
+                    continue
+                p = eb.price_day_items(day, items, rows, cfg)
+                workload.append({
+                    "date": day.isoformat(),
+                    "planned": stated,
+                    "done": round(p["done"], 1),
+                    "built": round(p["built"], 1),
+                    "partial": bool(p["unpriced"] or p["guessed"]),
+                })
+    workload.sort(key=lambda w: w["date"])
+    return workload
+
+
 def _weekday_lookup(week_start: dt.date) -> dict[tuple[str, str, int], str]:
     return {(d.strftime("%a"), d.strftime("%b"), d.day): d.isoformat()
             for d in (week_start + dt.timedelta(days=o) for o in range(7))}
@@ -1003,6 +1042,7 @@ def build_payload(today: dt.date | None = None) -> tuple[dict, list[str]]:
         "techniques": techniques,
         "studyDays": [d.isoformat() for d in days],
         "schedule": schedule,
+        "workload": build_workload(rows, effort_cfg),
         "effortCeiling": float(effort_cfg["ceiling"]),
         "effortFloor": float(effort_cfg["floor_min"]),
         "probes": probes,
@@ -1038,6 +1078,11 @@ def summary_of(payload: dict) -> dict:
     `probes` (round 3) rides through whole too — the Probe log is ~1 row/week, small
     either way, and it's the ONLY place a disposable, cold recognition probe is counted
     (see parse_probes()'s docstring), so the Recognition tab needs it with no extra fetch.
+
+    `workload` (planned vs completed effort units per scheduled day) rides through
+    CAPPED to the same rolling window as `studyDays` — the workload chart is a recent
+    view, not a lifetime one, and an uncapped list grows by one entry per scheduled day
+    forever. The full `progress.json` keeps every scheduled day, uncapped.
     """
     trophy_case = payload.get("trophyCase") or {}
     compact_graduated = [
@@ -1062,6 +1107,7 @@ def summary_of(payload: dict) -> dict:
         "techniques": payload.get("techniques") or [],
         "studyDays": recent_study_days,
         "schedule": payload.get("schedule"),
+        "workload": [w for w in payload.get("workload") or [] if w["date"] >= cutoff],
         "effortCeiling": payload.get("effortCeiling"),
         "effortFloor": payload.get("effortFloor"),
         "probes": payload.get("probes"),
