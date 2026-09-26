@@ -625,11 +625,16 @@ techniques:
     variants:
       - {name: Min-over-max (minimize the maximum edge)}
       - {name: Max-min bottleneck (maximize the minimum edge)}
+      - {name: 0/1 edge weights (0-1 BFS vs Dijkstra), queued: "surplus>=1"}
+      - {name: Multiplicative relaxation (maximize the product), queued: "surplus>=1"}
     problems:
       - {number: 743, method: Dijkstra}
       - {number: 778, method: Dijkstra / Min-Heap}
       - {number: 1631, method: Dijkstra, variant: Min-over-max (minimize the maximum edge)}
       - {number: 1102, method: Dijkstra, variant: Max-min bottleneck (maximize the minimum edge)}
+      - {number: 3650, method: Dijkstra}
+      - {number: 1368, method: Dijkstra, variant: 0/1 edge weights (0-1 BFS vs Dijkstra)}
+      - {number: 1514, method: Dijkstra, variant: Multiplicative relaxation (maximize the product)}
 
   - name: Bellman-Ford
     family: advanced_graphs

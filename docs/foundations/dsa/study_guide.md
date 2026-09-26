@@ -372,6 +372,20 @@ gated on 778/743 sitting at 🟡+ — which they do.
 > Sep 21** — the Sep 21 weekly build seats them onto the grid. ⚠️ **1102 is LC-premium**, so its scaffold
 > link resolves to the NeetCode mirror. (No `decisions.yml` entry — adding roadmap problems strands no rule.)
 
+> **Update Sep 26, 2026 — three more Dijkstra siblings, pulled not authored.** The learner asked for more Dijkstra
+> coverage, so the population came from the company pull as the rule requires (`pull_interview.py --company
+> Google,Amazon,Meta,Microsoft,Apple --technique "Shortest Path"`, 23 eligible). Learner's picks: **3650 Minimum
+> Cost Path with Edge Reversals** (Medium; Meta 23.4 · Google 20.9 · Amazon 15.7 · Microsoft 7.3 — the only Medium
+> on all four big lists; a plain sum-Dijkstra whose test is the **modeling** step, augmenting the graph with reversed
+> edges at 2× cost) and **1368 Minimum Cost to Make at Least One Valid Path in a Grid** (Hard; Google 31.1 · Meta 8.0
+> · Amazon 7.2 — the highest single-list frequency of any pure-Dijkstra candidate; **0/1 edge weights**, so the
+> recognition call is 0-1 BFS vs Dijkstra — a flavour 743/778/1631/1102 do not cover). **1514 Path with Maximum
+> Probability** (Medium; Google 25.4 · Microsoft 12.0 · Amazon 5.0 · Meta 5.0) was added later the same day, reversing the
+> Sep 20 swap — its relaxation **multiplies and maximizes**, the product flavour named here in July. All three are
+> **consolidation reps** (gate met — 778 is 🟢), declared under Dijkstra in
+> `techniques.yml`, parked in the Waiting Room, and targeted at the **week of Sep 28** — the Sep 28 build seats at most two
+> of the three if surplus allows (the ≤2 consolidation budget), holds the third, and scaffolds at kickoff. (No `decisions.yml` entry — adding roadmap problems strands no rule.)
+
 ### Phase exit standard — per algorithm, not per problem (set Jul 26, 2026)
 
 **The goal at the end of a phase: every algorithm in it is locked down — recognized *and* executable.**

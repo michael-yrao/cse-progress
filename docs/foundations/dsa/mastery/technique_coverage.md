@@ -45,7 +45,7 @@ Every declared technique gets a row, started or not — a not-started row's Gaps
 | Technique | Family | Tier | Min | Problems | Best | 🟢 | Variants | Gaps |
 |---|---|---|---:|---:|:---:|:---:|---|---|
 | Bellman-Ford | advanced_graphs | core | 3 | 1 (787) | 🟢 | ✅ | Standard ×1 · ~~Contrast rep on 743~~ *(queued: `graduates:743`)* | thin (1/3) |
-| Dijkstra | advanced_graphs | core | 3 | 1 (778) | 🟢 | ✅ | **Min-over-max (minimize the maximum edge) ×0** · **Max-min bottleneck (maximize the minimum edge) ×0** | thin (1/3) · variant: **Min-over-max (minimize the maximum edge)** · variant: **Max-min bottleneck (maximize the minimum edge)** |
+| Dijkstra | advanced_graphs | core | 3 | 1 (778) | 🟢 | ✅ | **Min-over-max (minimize the maximum edge) ×0** · **Max-min bottleneck (maximize the minimum edge) ×0** · ~~0/1 edge weights (0-1 BFS vs Dijkstra)~~ *(queued: `surplus>=1`)* · ~~Multiplicative relaxation (maximize the product)~~ *(queued: `surplus>=1`)* | thin (1/3) · variant: **Min-over-max (minimize the maximum edge)** · variant: **Max-min bottleneck (maximize the minimum edge)** |
 | Floyd-Warshall (all-pairs shortest path) | advanced_graphs | core | 3 | 2 (1334, 1462) | 🟢 | ✅ | — | thin (2/3) |
 | Hierholzer (Eulerian path) | advanced_graphs | core | 3 | 2 *+1v* (332, 2097) | 🟢 | ✅ | pre-sorted adjacency ×1 · min-heap ordering ×1 | thin (2/3) |
 | Prim's MST | advanced_graphs | core | 3 | 1 (1584) | 🟢 | ✅ | Prim's MST ×1 · **Kruskal's MST ×0** | thin (1/3) · variant: **Kruskal's MST** |
@@ -158,5 +158,5 @@ Every declared technique gets a row, started or not — a not-started row's Gaps
 
 - 743 (Dijkstra)
 
-**Not reached yet (3)** — declared in the vocabulary, no tracker row. This is the normal state for curriculum ahead of the learner; it is a roadmap, not a finding.
+**Not reached yet (6)** — declared in the vocabulary, no tracker row. This is the normal state for curriculum ahead of the learner; it is a roadmap, not a finding.
 
