@@ -232,7 +232,9 @@
         "bestComfort": { "type": ["string", "null"], "enum": ["🔴", "🟡", "🟢", "🎓", "🏆", null] },
         "hasGreen": { "type": "boolean" },
         "thin": { "type": "boolean", "description": "Fewer than the 3-4 surface forms the technique needs." },
-        "hasVariantGap": { "type": "boolean", "description": "A declared method variant has never once been exercised." }
+        "hasVariantGap": { "type": "boolean", "description": "A declared method variant has never once been exercised." },
+        "buildsOn": { "type": "array", "items": { "type": "string" }, "description": "Technique names this one presupposes (techniques.yml's `builds_on`, Sep 26, 2026), validated against that file's own declared names (an unknown name, a self-edge, or the edge that closes a cycle is dropped). Empty for a root of the technique graph. Feeds the site's skill tree." },
+        "graduatedCount": { "type": "integer", "minimum": 0, "description": "How many of this row's `problems` (LC numbers) have reached 🎓 or better in the tracker (Sep 26, 2026) — the highest comfort per number when a number carries several tracker rows." }
       }
     },
     "probe": {

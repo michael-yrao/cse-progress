@@ -179,3 +179,9 @@ progressiveoverflow.com site is removing its dedicated Trophy-case CARD from the
 site-repo change); this repo's `trophyCase` key in the JSON contract is retained and still
 emitted unchanged — the card and the contract key were never the same thing, and only the card
 is going.
+
+## `builds_on` + `graduatedCount` for the site's skill tree (Sep 26, 2026)
+
+Every technique row now carries `buildsOn` (validated, cycle-broken prerequisite names from
+`techniques.yml`'s new `builds_on`) and `graduatedCount` (how many of its problems are 🎓/🏆) —
+purely additive, no `SCHEMA_VERSION` bump. Decision: `decisions.yml` `technique-builds-on-sep26`.

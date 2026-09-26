@@ -355,6 +355,104 @@ class ParseTechniquesWrongColumnCountTests(unittest.TestCase):
         self.assertIn("expected 9", warnings[0])
 
 
+def _tech_row(name, problems=None):
+    return {"name": name, "family": "f", "tier": "core", "started": True,
+            "minProblems": 3, "problemCount": len(problems or []),
+            "problems": problems or [], "bestComfort": None, "hasGreen": False,
+            "thin": True, "hasVariantGap": False}
+
+
+def _yaml_entry(name, builds_on=None):
+    return {"name": name, "builds_on": builds_on}
+
+
+def _problem(num, comfort):
+    return {"lcNumber": num, "comfort": comfort}
+
+
+class EnrichTechniquesTests(unittest.TestCase):
+    """enrich_techniques() against plain-dict fixtures (parse_techniques()'s row shape and
+    techniques.yml's own entry shape) — never the live repo file. Pins: builds_on copies
+    through; defaults to []; an unknown name is dropped with a warning; a self-edge is
+    dropped with a warning; a 2-cycle is detected and one edge dropped; graduatedCount
+    counts 🎓 and 🏆 but not 🟢; enrich_techniques never mutates its inputs."""
+
+    def test_builds_on_copies_through(self):
+        rows = [_tech_row("B")]
+        entries = [_yaml_entry("A"), _yaml_entry("B", ["A"])]
+        out = gamify.enrich_techniques(rows, entries, {}, [])
+        self.assertEqual(out[0]["buildsOn"], ["A"])
+
+    def test_builds_on_defaults_to_empty_list(self):
+        rows = [_tech_row("Root")]
+        entries = [_yaml_entry("Root")]
+        out = gamify.enrich_techniques(rows, entries, {}, [])
+        self.assertEqual(out[0]["buildsOn"], [])
+
+    def test_unknown_name_dropped_with_warning(self):
+        rows = [_tech_row("B")]
+        entries = [_yaml_entry("B", ["Nonexistent"])]
+        warnings: list[str] = []
+        out = gamify.enrich_techniques(rows, entries, {}, warnings)
+        self.assertEqual(out[0]["buildsOn"], [])
+        self.assertEqual(len(warnings), 1)
+        self.assertIn("Nonexistent", warnings[0])
+
+    def test_self_edge_dropped_with_warning(self):
+        rows = [_tech_row("A")]
+        entries = [_yaml_entry("A", ["A"])]
+        warnings: list[str] = []
+        out = gamify.enrich_techniques(rows, entries, {}, warnings)
+        self.assertEqual(out[0]["buildsOn"], [])
+        self.assertEqual(len(warnings), 1)
+        self.assertIn("itself", warnings[0])
+
+    def test_two_cycle_detected_and_one_edge_dropped(self):
+        rows = [_tech_row("A"), _tech_row("B")]
+        entries = [_yaml_entry("A", ["B"]), _yaml_entry("B", ["A"])]
+        warnings: list[str] = []
+        out = gamify.enrich_techniques(rows, entries, {}, warnings)
+        by_name = {r["name"]: r["buildsOn"] for r in out}
+        # exactly one of the two edges survives — the DFS back-edge is dropped
+        total_edges = len(by_name["A"]) + len(by_name["B"])
+        self.assertEqual(total_edges, 1)
+        self.assertTrue(any("cycle" in w for w in warnings))
+
+    def test_graduated_and_retired_count_graduated_streak_and_clean_do_not(self):
+        rows = [_tech_row("T", problems=[1, 2, 3, 4])]
+        entries = [_yaml_entry("T")]
+        comfort_by_number = {1: "🎓", 2: "🏆", 3: "🟢", 4: "🟡"}
+        out = gamify.enrich_techniques(rows, entries, comfort_by_number, [])
+        self.assertEqual(out[0]["graduatedCount"], 2)
+
+    def test_untracked_problem_number_does_not_count(self):
+        rows = [_tech_row("T", problems=[99])]
+        entries = [_yaml_entry("T")]
+        out = gamify.enrich_techniques(rows, entries, {}, [])
+        self.assertEqual(out[0]["graduatedCount"], 0)
+
+    def test_does_not_mutate_inputs(self):
+        row = _tech_row("B")
+        entry = _yaml_entry("B", ["A"])
+        rows, entries = [row], [_yaml_entry("A"), entry]
+        gamify.enrich_techniques(rows, entries, {}, [])
+        self.assertNotIn("buildsOn", row)
+        self.assertNotIn("graduatedCount", row)
+
+    def test_comfort_by_number_malformed_glyph_does_not_raise_or_count(self):
+        # build_problems() itself is fail-soft (LEVEL.get(r["comfort"]), never LEVEL[...]),
+        # so _comfort_by_number must be too: a tracker cell outside LEVEL's five glyphs
+        # must never raise build_payload out of its "never raises" contract.
+        problems = [_problem(1, "?")]
+        comfort_by_number = gamify._comfort_by_number(problems, retired=[])
+        self.assertNotIn(1, comfort_by_number)
+
+        rows = [_tech_row("T", problems=[1])]
+        entries = [_yaml_entry("T")]
+        out = gamify.enrich_techniques(rows, entries, comfort_by_number, [])
+        self.assertEqual(out[0]["graduatedCount"], 0)
+
+
 class ParseCurrentWeekScheduleTests(unittest.TestCase):
     """parse_current_week_schedule() against a small fixture week (not the live repo file)
     — pins the Today's-board slice: a plain row, a struck/done row (glyph swap-out and
@@ -1239,6 +1337,39 @@ class PayloadTests(unittest.TestCase):
         # rather than being overridden again inside build_payload.
         payload, _warnings = gamify.build_payload(dt.date(2026, 9, 20))
         self.assertEqual(payload["generatedAt"], "2026-09-20")
+
+    def test_every_technique_row_carries_builds_on_and_graduated_count(self):
+        # Runs against the live techniques.yml + tracker — this is what actually proves
+        # the authored builds_on list in techniques.yml got through gamify, not just that
+        # the two keys exist somewhere.
+        payload, warnings = gamify.build_payload(dt.date(2026, 9, 20))
+        self.assertEqual(warnings, [])
+        techs = payload["techniques"]
+        self.assertTrue(techs)
+        for row in techs:
+            self.assertIn("buildsOn", row)
+            self.assertIn("graduatedCount", row)
+            self.assertIsInstance(row["buildsOn"], list)
+            self.assertGreaterEqual(row["graduatedCount"], 0)
+
+    def test_every_builds_on_name_resolves_to_a_live_technique_row(self):
+        payload, _warnings = gamify.build_payload(dt.date(2026, 9, 20))
+        techs = payload["techniques"]
+        names = {t["name"] for t in techs}
+        for row in techs:
+            for dep in row["buildsOn"]:
+                self.assertIn(dep, names)
+
+    def test_live_builds_on_row_count_matches_the_authored_yaml(self):
+        # Proves the authored builds_on list in techniques.yml actually reached every
+        # row it named — a join that silently dropped rows would still pass the two
+        # checks above (both only test the keys/edges that DID come through).
+        payload, _warnings = gamify.build_payload(dt.date(2026, 9, 20))
+        techs = payload["techniques"]
+        yaml_entries = gamify.load_technique_entries([])
+        expected = sum(1 for e in yaml_entries if e.get("builds_on"))
+        actual = sum(1 for t in techs if t["buildsOn"])
+        self.assertEqual(actual, expected)
 
 
 class MainStdoutCleanTests(unittest.TestCase):

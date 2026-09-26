@@ -1033,3 +1033,30 @@ decisions:
       (`compute_badges`), `dashboard/progress.schema.json` (`badges.items.properties.progress`),
       `.claude/memory/project_gamification.md`.
     affects: [gamification]
+
+  - id: technique-builds-on-sep26
+    date: 2026-09-26
+    summary: >-
+      ADDS `builds_on` to the `techniques.yml` vocabulary (an optional list of technique
+      `name`s a technique presupposes — a name must exist in this file, no self-reference,
+      the graph must stay acyclic) and `buildsOn`/`graduatedCount` to
+      `progress.json`/`progress-summary.json`'s per-technique contract. `scripts/gamify.py`
+      gains a pure `enrich_techniques(rows, yaml_entries, comfort_by_number, warnings)`,
+      called from `build_payload` right after `build_problems` (not literally right after
+      `parse_techniques`, since `graduatedCount` needs `build_problems`'s own output):
+      `buildsOn` is the YAML entry's `builds_on`, validated (an unknown name or a self-edge
+      dropped + warned) and cycle-broken (one back edge per cycle dropped + warned,
+      deterministic DFS in the file's own order); `graduatedCount` is how many of the row's
+      `problems` (LC numbers) have reached `LEVEL["🎓"]` or better in
+      `comfort_by_number` — built from `build_problems`'s output plus `parse_retired()`'s
+      list (mapped to 🏆), never a second read of the tracker. 93 of 98 techniques carry
+      `builds_on`; 5 roots (Hash Map Lookup, Array/String Fundamentals, Dummy Node,
+      Recursion, Number Theory) carry none. Purely additive: no `SCHEMA_VERSION` bump, no
+      `cse.config.yml` value changed. `technique_coverage.py` ignores the new `builds_on`
+      key (it reads known keys via `.get(...)`), so `technique_coverage.md` is unaffected.
+      Consumer: the progressiveoverflow.com site's skill tree (a technique's prerequisite
+      edges + how much of it is graduated). See `docs/foundations/dsa/mastery/techniques.yml`
+      (schema header), `scripts/gamify.py` (`enrich_techniques`, `_comfort_by_number`,
+      `_break_cycles`), `dashboard/progress.schema.json` (`definitions.technique`),
+      `.claude/memory/project_gamification.md`.
+    affects: [gamification]
