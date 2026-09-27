@@ -28,6 +28,17 @@
 # A number whose slug did not resolve, or whose id/difficulty disagreed, is left OUT
 # rather than guessed.
 #
+# LINK ORDER (Sep 27, 2026, learner's words: "leetcode (free) -> neetcode (free) ->
+# hellointerview (premium) in that order"; decision `problem-link-order-sep27`):
+#   1. LeetCode, when the problem is free there.
+#   2. NeetCode, when LeetCode paywalls it AND NeetCode's own public list has it.
+#   3. HelloInterview (the learner subscribes), when neither of the above and its catalog
+#      has it.
+#   4. None of the three: LeetCode's page, which is paywalled — stated, not hidden.
+# Every step is CHECKED against that site's list, never guessed. NeetCode's site answers
+# 200 for any slug, so a NeetCode link for a problem it does not list looks alive and is
+# dead; that is why 1102 links LeetCode below and not a NeetCode mirror.
+#
 # `phase` is one of: Backtracking, 1D-DP, 2D-DP, Bit-Math (an active/upcoming roadmap
 # phase — the same spelling as techniques.yml's `queued: phase:<Name>` trigger), or
 # `backlog` for an already-active core technique's next unrated rep, whatever its
@@ -90,7 +101,7 @@ problems:
   - {number: 678, title: "Valid Parenthesis String", url: "https://leetcode.com/problems/valid-parenthesis-string/", difficulty: Medium, phase: backlog}
   - {number: 746, title: "Min Cost Climbing Stairs", url: "https://leetcode.com/problems/min-cost-climbing-stairs/", difficulty: Easy, phase: 1D-DP}
   - {number: 815, title: "Bus Routes", url: "https://leetcode.com/problems/bus-routes/", difficulty: Hard, phase: backlog}
-  - {number: 1102, title: "Path With Maximum Minimum Value", url: "https://neetcode.io/problems/path-with-maximum-minimum-value", difficulty: Medium, phase: backlog}
+  - {number: 1102, title: "Path With Maximum Minimum Value", url: "https://leetcode.com/problems/path-with-maximum-minimum-value/", difficulty: Medium, phase: backlog}
   - {number: 1143, title: "Longest Common Subsequence", url: "https://leetcode.com/problems/longest-common-subsequence/", difficulty: Medium, phase: 2D-DP}
   - {number: 1197, title: "Minimum Knight Moves", url: "https://www.hellointerview.com/learn/code/breadth-first-search/minimum-knight-moves", difficulty: Medium, phase: backlog}
   - {number: 1851, title: "Minimum Interval to Include Each Query", url: "https://leetcode.com/problems/minimum-interval-to-include-each-query/", difficulty: Hard, phase: backlog}

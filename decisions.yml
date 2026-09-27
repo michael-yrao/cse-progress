@@ -1379,3 +1379,86 @@ decisions:
       `docs/foundations/dsa/study_guide.md`,
       `.claude/skills/cse-coach/references/technique-coverage.md`.
     affects: [gamification, technique_coverage, dsa_progress, waiting_room, roadmap]
+
+  - id: problem-link-order-sep27
+    date: 2026-09-27
+    summary: >-
+      ADDS a four-step link-order rule for a LeetCode problem (owner's decision, Sep 27,
+      2026, owner's words: "leetcode (free) -> neetcode (free) -> hellointerview (premium)
+      in that order" — see `.claude/memory/reference_hellointerview_premium.md`): 1.
+      LeetCode, when the problem is free there. 2. NeetCode, when LeetCode paywalls it AND
+      NeetCode's own public list has it. 3. HelloInterview (the owner's premium
+      subscription), when neither of the above and its catalog has it. 4. None of the
+      three: LeetCode's own page, stated as paywalled rather than hidden. Every step is
+      CHECKED against that site's own list, never guessed. Scope: PLANNED problems and
+      future scaffolds only — a tracked problem or an existing solution file is never
+      relinked (252/1197 were relinked in `roadmap.yml` by hand, ahead of and independent
+      of this entry).
+
+      ⚠️ CORRECTION, same day: this entry is RENAMED from
+      `hellointerview-premium-link-order-sep27`, not merely edited in place — that first
+      version, built an hour earlier from a menu that never offered "NeetCode first", put
+      HelloInterview AHEAD of the NeetCode mirror and had `resolve_premium_link()` guess an
+      unlisted NeetCode URL rather than checking NeetCode's own list; the learner then
+      stated the four-step order outright, and every reference to the old id (`scripts/
+      new_problem.py`, `scripts/links.py`, `hellointerview.yml`'s header; `roadmap.yml`
+      already used the new id) is updated to this one in the same edit that fixes the code.
+
+      JOIN METHOD (HelloInterview). HelloInterview's own slugs frequently differ from
+      LeetCode's (Meeting Rooms is `intervals/can-attend-meetings`), so the map is joined ON
+      THE LEETCODE SLUG EACH HELLOINTERVIEW PAGE LINKS, never on the title and never on
+      HelloInterview's own slug. A one-off crawl of `https://www.hellointerview.com/learn/
+      code` (the catalog page) collects every `/learn/code/<pattern>/<slug>` path, fetches
+      each individually (sequential, polite, a real `User-Agent`), and extracts the
+      `leetcode.com/problems/*` link(s) the page carries: exactly one -> a problem page
+      (mapped); zero -> a lesson page (skipped); more than one -> AMBIGUOUS (skipped,
+      reported, never mapped).
+
+      CRAWL RESULT (2026-09-27): 120 distinct catalog paths -> 84 problem pages mapped, 27
+      lesson pages skipped, 9 ambiguous pages skipped (multiple LeetCode links — mostly a
+      pattern's own `overview`/fundamentals page worked through several examples); 84 + 27
+      + 9 = 120, the full catalog. Of the 27 lesson pages, 22 link no LeetCode problem at
+      all, and FIVE link exactly one — a lesson that works a single problem through as its
+      example. "Exactly one slug" is therefore necessary, not sufficient. The engineer
+      caught one of the five by an accounting mismatch (`/learn/code/prefix-sum/overview`
+      duplicated the dedicated page for `subarray-sum-equals-k`); the tech lead's review
+      caught the other four by comparing each mapped path's last segment against its slug
+      (`greedy/overview` -> assign-cookies, `dynamic-programming/fundamentals` ->
+      climbing-stairs, `dynamic-programming/solving-a-question-with-dp` -> house-robber,
+      `depth-first-search/global-variables` -> count-good-nodes-in-binary-tree). None of
+      the five is LeetCode-premium, so no link would have been wrong in practice; they are
+      excluded because the map must be true, not merely harmless.
+
+      NEETCODE LIST (2026-09-27). Fetched live from `https://raw.githubusercontent.com/
+      neetcode-gh/leetcode/main/.problemSiteData.json` (188343 bytes) -> 450 source entries
+      -> 450 rows emitted (8 premium, 442 free) into `docs/foundations/dsa/mastery/
+      neetcode.yml`, 0 malformed-link / 0 no-leading-number / 0 duplicate-slug anomalies.
+
+      OUTCOME FOR THE PLANNED LEETCODE-PREMIUM PROBLEMS ON RECORD, checked against BOTH
+      lists: 252 Meeting Rooms and 253 Meeting Rooms II resolve to NeetCode (its own list
+      carries both, `premium: true`) — 253 changes from the first version's HelloInterview
+      pick; 1197 Minimum Knight Moves resolves to HelloInterview (NeetCode's list does not
+      carry it; HelloInterview's catalog does — already reflected in `roadmap.yml`, ahead
+      of this crawl); 1102 Path With Maximum Minimum Value and 1135 Connecting Cities With
+      Minimum Cost resolve to LeetCode's own paywalled page (neither list has either).
+
+      IMPLEMENTATION. New `docs/foundations/dsa/mastery/neetcode.yml` (see NEETCODE LIST
+      above), alongside the existing `docs/foundations/dsa/mastery/hellointerview.yml`.
+      `scripts/new_problem.py` gains `load_neetcode_slugs()` (fail-soft like
+      `load_hellointerview_map()`, but returns `None` — UNKNOWN — for an unreadable file
+      rather than an empty set, so an unreadable list is never mistaken for "NeetCode lists
+      nothing") and a single `resolve_premium_link(slug, neetcode_slugs, hi_map) ->
+      PremiumLink` (a NamedTuple of `url`, `judge`, `reason`) replacing the old
+      `resolve_premium_link()`/`_premium_reason()` pair, so the printed NOTE and the URL it
+      names can never disagree. Used at both premium call sites — the auto-detected
+      `isPaidOnly` branch in `verify_links()` and the explicit `--premium` branch in
+      `main()`. `verify_links()`'s early-return link-check warning (a hand-passed or
+      already-NeetCode URL) is corrected to check NeetCode's own list too, and to check
+      `NEETCODE_RENAMES.values()` (the NeetCode-side slug the URL actually carries) rather
+      than its keys — the old check's bug, which warned on every correctly-renamed slug.
+      No `cse.config.yml` value changed. See `docs/foundations/dsa/mastery/neetcode.yml`
+      (new), `scripts/new_problem.py` (`NEETCODE_MAP_PATH`, `load_neetcode_slugs`,
+      `PremiumLink`, `resolve_premium_link`, `verify_links`), `scripts/links.py` (comment
+      only), `docs/foundations/dsa/mastery/hellointerview.yml` (header only),
+      `scripts/test_new_problem.py` (extended).
+    affects: [links, scaffolding]

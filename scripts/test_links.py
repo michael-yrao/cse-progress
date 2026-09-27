@@ -42,6 +42,20 @@ class JudgeLabelTests(unittest.TestCase):
         self.assertEqual(
             links.judge_label("https://www.spoj.com/problems/TEST/"), "spoj.com")
 
+    def test_hellointerview_with_www(self):
+        # The real HelloInterview URLs carry "www." (hellointerview.yml stores paths
+        # only, joined onto HELLOINTERVIEW_HOST, which includes it).
+        self.assertEqual(
+            links.judge_label(
+                "https://www.hellointerview.com/learn/code/intervals/can-attend-meetings"),
+            "HelloInterview")
+
+    def test_hellointerview_without_www(self):
+        self.assertEqual(
+            links.judge_label(
+                "https://hellointerview.com/learn/code/intervals/can-attend-meetings"),
+            "HelloInterview")
+
 
 class LinkLineJudgeLabelTests(unittest.TestCase):
     """link_line() on a Kattis-sourced problem prints the `Kattis` label, not `LC`.

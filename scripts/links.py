@@ -10,9 +10,10 @@ root. That is the Aug 27, 2026 lapse (self_eval_log.md).
 
 This tool removes the transcription. Give it problem numbers; it prints one
 `[<number> <title>](<repo-root-relative path>) · [<judge label>](<url>)` line per number
-(`LC`, `NC`, `Kattis`, `CSES`, or another judge's bare hostname — see `judge_label`),
-reading the path from disk and the title/URL from the file's own docstring header (falling
-back to the tracker). The agent runs it and pastes the output — it is structurally
+(`LC`, `NC`, `Kattis`, `CSES`, `HelloInterview`, or another judge's bare hostname — see
+`judge_label`), reading the path from disk and the title/URL from the file's own
+docstring header (falling back to the tracker). The agent runs it and pastes the
+output — it is structurally
 impossible to emit a wrong path.
 
 Per the intervention ladder in `.claude/memory/feedback_self_evaluation.md`:
@@ -50,23 +51,29 @@ HEADER = re.compile(r"^\s*(\d{1,4})\.\s+(.+?)(?:\s+·\s+(https?://\S+))?\s*$")
 # Tracker row cell: `[49. Group Anagrams](https://leetcode.com/problems/group-anagrams/)`.
 TRACKER_CELL = re.compile(r"\[(\d{1,4})\.\s*([^\]]+?)\]\((https?://[^)]+)\)")
 
-# Host -> the short label printed next to a problem-page link. Judges beyond LC/NC are
-# the external-judge convention (`decisions.yml` `external-judge-problems-sep26`): a
-# problem the LC/NeetCode pull doesn't cover (e.g. a negative-edge shortest-path form) is
+# Host -> the short label printed next to a problem-page link. Kattis/CSES are the
+# external-judge convention (`decisions.yml` `external-judge-problems-sep26`): a problem
+# the LC/NeetCode pull doesn't cover (e.g. a negative-edge shortest-path form) is
 # hand-picked from another judge, keeping a synthetic 9001-9999 id under the normal root.
-# Any host not listed here falls back to its bare hostname (judge_label below) rather than
-# silently mislabeling it "LC".
+# HelloInterview is a different convention (`problem-link-order-sep27`):
+# the SAME LeetCode-numbered problem, just linked to the owner's premium judge there
+# instead of the free NeetCode mirror — no synthetic id involved; its label is spelled
+# out in full ("HelloInterview"), the owner's plain-language rule, not abbreviated the
+# way LC/NC are. Any host not listed here falls back to its bare hostname (judge_label
+# below) rather than silently mislabeling it "LC".
 JUDGE_LABELS = {
     "leetcode.com": "LC",
     "neetcode.io": "NC",
     "open.kattis.com": "Kattis",
     "cses.fi": "CSES",
+    "hellointerview.com": "HelloInterview",
 }
 
 
 def judge_label(url: str) -> str:
-    """The short label for a problem-page URL's host: `LC`, `NC`, `Kattis`, `CSES`, or —
-    for any other judge — the bare hostname (leading `www.` stripped).
+    """The short label for a problem-page URL's host: `LC`, `NC`, `Kattis`, `CSES`,
+    `HelloInterview`, or — for any other judge — the bare hostname (leading `www.`
+    stripped).
 
     `new_problem.py`'s `report_links()` imports this rather than re-deriving the label —
     links.py has no import of new_problem.py (verified), so the direction is acyclic, and
@@ -180,8 +187,8 @@ def resolve_title_url(number: str, path: Path | None) -> tuple[str | None, str |
 
 
 def link_line(number: str) -> str | None:
-    """The `[file] · [judge label]` line for `number` (e.g. `LC`, `NC`, `Kattis`), or None
-    if nothing on disk knows it.
+    """The `[file] · [judge label]` line for `number` (e.g. `LC`, `NC`, `Kattis`,
+    `HelloInterview`), or None if nothing on disk knows it.
 
     Path is ALWAYS repo-root-relative (the fix). Title/URL prefer the file header, then the
     tracker (resolve_title_url). A problem with no file yields no file link — that is
@@ -214,7 +221,7 @@ def link_line(number: str) -> str | None:
 def main() -> None:
     ap = argparse.ArgumentParser(
         description="Print the [file] · [judge label] link pair for one or more problem "
-                    "numbers (judge label: LC/NC/Kattis/CSES/hostname).")
+                    "numbers (judge label: LC/NC/Kattis/CSES/HelloInterview/hostname).")
     ap.add_argument("numbers", nargs="+", help="problem number(s), e.g. 269 853 424")
     args = ap.parse_args()
 
