@@ -74,6 +74,7 @@ REPO = Path(__file__).resolve().parent.parent
 TRACKER = REPO / "docs/foundations/dsa/mastery/dsa_progress.md"
 COVERAGE = REPO / "docs/foundations/dsa/mastery/technique_coverage.md"
 TECHNIQUES_YML = REPO / "docs/foundations/dsa/mastery/techniques.yml"
+ROADMAP_YML = REPO / "docs/foundations/dsa/mastery/roadmap.yml"
 PROBES_README = REPO / "dsa/probes/README.md"
 LEETCODE = REPO / "dsa/leetcode"
 # The generated contract lives under dashboard/ (moved out of the repo root Sep 21, 2026 to
@@ -721,6 +722,24 @@ COMFORT_GLYPH = re.compile(r"[🔴🟡🟢🎓🏆]")
 # shape, not a tuned threshold.
 COVERAGE_TABLE_COLUMNS = 9
 
+# The Variants cell's UNQUEUED-GAP rendering (technique_coverage.py's render(), the
+# `variants` join): a variant with zero rows and no `queued:` entry prints
+# `**<name> ×0**`; a queued gap prints `~~<name>~~ *(queued: ...)*` (single stars, so it
+# never collides with this pattern); an exercised variant prints `<name> ×N` (N >= 1, no
+# stars at all). Non-greedy up to " ×0**" so a name containing its own parentheses or a
+# slash (e.g. "Max-min bottleneck (maximize the minimum edge)", "0/1 edge weights (0-1
+# BFS vs Dijkstra)") is still captured whole.
+UNTRIED_VARIANT = re.compile(r"\*\*(.+?) ×0\*\*")
+
+
+def _parse_untried_variants(variants_cell: str) -> list[str]:
+    """The Variants cell's `**<name> ×0**` names — a declared method variant never once
+    exercised AND not sitting in any queue (untriedVariations, Sep 26, 2026, decision
+    `mastery-ratio-done-over-planned-sep26`). A queued gap (`~~name~~ *(queued: ...)*`)
+    is deliberately excluded — it's a known gap with a fill already picked, not something
+    to name as missing. `—` (no variants declared) yields []."""
+    return UNTRIED_VARIANT.findall(variants_cell or "")
+
 
 def parse_techniques(warnings: list[str]) -> list[dict]:
     """The `## Coverage` per-technique table -> one dict per row.
@@ -775,7 +794,7 @@ def parse_techniques(warnings: list[str]) -> list[dict]:
         if len(cells) != COVERAGE_TABLE_COLUMNS:
             continue
         (name, family, tier, min_cell, problems_cell, best_cell, green_cell,
-         _variants_cell, gaps_cell) = cells
+         variants_cell, gaps_cell) = cells
         if name in ("Technique", "") or set(name) <= {"-", ":"}:
             continue  # header / markdown separator row, not data
 
@@ -798,11 +817,35 @@ def parse_techniques(warnings: list[str]) -> list[dict]:
             "hasGreen": "✅" in green_cell,
             "thin": "thin" in gaps_cell,
             "hasVariantGap": "variant" in gaps_cell,
+            # Internal only — enrich_techniques() reads this to derive
+            # `untriedVariations` (Sep 26, 2026) and strips it before the row is
+            # emitted; never part of the public progress.json technique schema.
+            "_variantsCell": variants_cell,
         })
     return out
 
 
 # ── technique graph + graduation counts (builds_on / graduatedCount, Sep 26, 2026) ──
+
+def load_roadmap(warnings: list[str]) -> dict[int, dict]:
+    """roadmap.yml's `problems:` list -> {number: {"title", "url", "difficulty"}}
+    (Sep 26, 2026, decision `mastery-ratio-done-over-planned-sep26`) — the fallback
+    title/url/difficulty source for a declared-but-untracked problem with no Waiting
+    Room row (see planned_for()). Fail-soft, same style as load_config()/
+    load_technique_entries(): a missing file or missing PyYAML degrades to {} with one
+    warning rather than raising out of the hook."""
+    try:
+        import yaml  # noqa: PLC0415
+        config = yaml.safe_load(ROADMAP_YML.read_text(encoding="utf-8")) or {}
+    except Exception:  # noqa: BLE001 — a missing/unparsable file is a normal fail-soft state
+        warnings.append(
+            "roadmap.yml not readable — catalog title/url/difficulty omitted for every "
+            "declared-untracked problem.")
+        return {}
+    return {p["number"]: {"title": p.get("title"), "url": p.get("url"),
+                          "difficulty": p.get("difficulty")}
+            for p in config.get("problems") or [] if p.get("number") is not None}
+
 
 def load_technique_entries(warnings: list[str]) -> list[dict]:
     """techniques.yml's `techniques:` list, verbatim (each entry's `name` + `builds_on`
@@ -891,47 +934,107 @@ def _comfort_by_number(problems: list[dict], retired: list[dict]) -> dict[int, s
     return best
 
 
+def _planned_entry(number: int, trigger: str | None, waiting_room: dict[int, dict],
+                   catalog: dict[int, dict], warnings: list[str]) -> dict:
+    """One `planned[]` row: title/url/difficulty resolve from `waiting_room` first, then
+    `catalog` (roadmap.yml), and honestly null (plus one warning naming the number) when
+    neither has it — never guessed."""
+    source = waiting_room.get(number) or catalog.get(number)
+    if source is None:
+        warnings.append(
+            f"techniques.yml: declared problem {number} has no Waiting Room row in "
+            "dsa_progress.md and no roadmap.yml entry — planned entry emitted with nulls.")
+        return {"lcNumber": number, "title": None, "url": None, "difficulty": None,
+                "trigger": trigger}
+    return {"lcNumber": number, "title": source["title"], "url": source["url"],
+            "difficulty": source["difficulty"], "trigger": trigger}
+
+
+SPEC_PLANNED_FIELD = "planned"  # techniques.yml `problems:` spec key; false opts a
+                                # declared-untracked number out of the dashboard's
+                                # `planned` list (Sep 27, 2026, decision
+                                # `mastery-ratio-done-over-planned-sep26` — a recognition
+                                # probe like 547, credited if it ever earns a tracker row
+                                # but never part of the plan).
+
+
+def _first_trigger(specs: list[dict]) -> str | None:
+    """First non-null `queued` across one number's specs, in file order — a trigger
+    declared on a later row for the same number is never lost behind an earlier,
+    unqueued row."""
+    for spec in specs:
+        trigger = spec.get("queued")
+        if trigger is not None:
+            return trigger
+    return None
+
+
+def _all_opted_out(specs: list[dict]) -> bool:
+    """True when EVERY spec for this number explicitly opts out via
+    `planned: false` (Sep 27, 2026) — a single ordinary (or missing-key) spec among
+    several keeps the number in `planned`."""
+    return all(spec.get(SPEC_PLANNED_FIELD) is False for spec in specs)
+
+
 def planned_for(entry: dict | None, tracked_numbers: set[int],
-                waiting_room: dict[int, dict], warnings: list[str]) -> list[dict]:
-    """One techniques.yml entry's `problems:` specs -> its `planned` list (Sep 26, 2026):
-    every spec that carries a `queued` trigger and whose number has NOT yet earned a
-    tracker row, in file order. A number graduates out of `planned` on its own the moment
-    it is rated — `tracked_numbers` is comfort_by_number's own keys, so no second edit is
-    needed here when that happens.
+                waiting_room: dict[int, dict], catalog: dict[int, dict],
+                warnings: list[str]) -> list[dict]:
+    """One techniques.yml entry's `problems:` specs -> its `planned` list (Sep 26, 2026,
+    decision `mastery-ratio-done-over-planned-sep26`): every DISTINCT number declared
+    under this entry that has NOT yet earned a tracker row and is not opted out via
+    `planned: false` (see `_all_opted_out`), in file order — not only specs carrying a
+    `queued` trigger any more (that key is now optional on an untracked spec; see
+    techniques.yml's own schema comment). A number graduates out of `planned` on its own
+    the moment it is rated (into `problems` above) — `tracked_numbers` is
+    comfort_by_number's own keys, so no second edit is needed here when that happens.
 
     `entry` is None for a coverage-table row with no matching techniques.yml entry (the
     same silent-[] case enrich_techniques already gives buildsOn) — returns [].
 
-    A queued number absent from `waiting_room` emits nulls for title/url/difficulty plus
-    ONE warning naming it — fail-soft, never raises, but visible rather than silently
-    blank.
+    Deduped BY NUMBER within the entry: a linked-list-style entry carries two `problems:`
+    rows per number (one per `method:`), and an untracked number must appear in `planned`
+    once per problem, not once per row — `_first_trigger` picks the first non-null
+    `queued` across that number's rows, and `_all_opted_out` requires EVERY row for the
+    number to carry `planned: false` before the number is excluded.
+
+    Title/url/difficulty resolve via `_planned_entry` — the Waiting Room table first, then
+    `catalog` (roadmap.yml's declared-problem catalog), and honestly null (plus one warning
+    naming the number) when neither source has it.
     """
     if not entry:
         return []
-    planned = []
+    specs_by_number: dict[int, list[dict]] = {}
     for spec in entry.get("problems") or []:
-        number, trigger = spec.get("number"), spec.get("queued")
-        if number is None or trigger is None or number in tracked_numbers:
+        number = spec.get("number")
+        if number is None or number in tracked_numbers:
             continue
-        room = waiting_room.get(number)
-        if room is None:
-            warnings.append(
-                f"techniques.yml: queued problem {number} has no Waiting Room row in "
-                "dsa_progress.md — planned entry emitted with nulls.")
-            planned.append({"lcNumber": number, "title": None, "url": None,
-                            "difficulty": None, "trigger": trigger})
-            continue
-        planned.append({"lcNumber": number, "title": room["title"], "url": room["url"],
-                        "difficulty": room["difficulty"], "trigger": trigger})
-    return planned
+        specs_by_number.setdefault(number, []).append(spec)
+    return [_planned_entry(number, _first_trigger(specs), waiting_room, catalog, warnings)
+            for number, specs in specs_by_number.items()
+            if not _all_opted_out(specs)]
+
+
+def _enrich_row(row: dict, builds_on: list[str], graduated: int, planned: list[dict]) -> dict:
+    """One enriched technique row: `row` (parse_techniques()'s output) plus `buildsOn`/
+    `graduatedCount`/`planned`/`plannedTotal`/`untriedVariations` — never `row`'s own
+    internal `_variantsCell` (dropped here; see parse_techniques()'s docstring for why it
+    exists at all)."""
+    public_row = {k: v for k, v in row.items() if k != "_variantsCell"}
+    return {**public_row,
+            "buildsOn": builds_on,
+            "graduatedCount": graduated,
+            "planned": planned,
+            "plannedTotal": row["problemCount"] + len(planned),
+            "untriedVariations": _parse_untried_variants(row.get("_variantsCell", ""))}
 
 
 def enrich_techniques(rows: list[dict], yaml_entries: list[dict],
                       comfort_by_number: dict[int, str],
                       waiting_room: dict[int, dict],
-                      warnings: list[str]) -> list[dict]:
+                      warnings: list[str],
+                      catalog: dict[int, dict] | None = None) -> list[dict]:
     """`parse_techniques()`'s rows -> new dicts (no mutation) adding `buildsOn`,
-    `graduatedCount` and `planned`.
+    `graduatedCount`, `planned`, `plannedTotal` and `untriedVariations`.
 
     `buildsOn` is techniques.yml's own `builds_on` for that row's name, validated (an
     unknown name or a self-edge dropped, each warned) and cycle-broken (one back edge
@@ -943,11 +1046,21 @@ def enrich_techniques(rows: list[dict], yaml_entries: list[dict],
     reached GRADUATED_LEVEL (🎓) or better, read from `comfort_by_number` — data
     build_payload already holds, never a second read of the tracker.
 
-    `planned` (Sep 26, 2026) is planned_for()'s own list for this row's techniques.yml
-    entry (matched by name; a coverage row with no YAML entry gets []): every `queued`
-    problem not yet in comfort_by_number, resolved against `waiting_room`. Present on
+    `planned` (Sep 26, 2026, decision `mastery-ratio-done-over-planned-sep26`) is
+    planned_for()'s own list for this row's techniques.yml entry (matched by name; a
+    coverage row with no YAML entry gets []): every declared problem not yet in
+    comfort_by_number, resolved against `waiting_room` first and `catalog` (roadmap.yml,
+    via load_roadmap() — defaults to {} when the caller has none) second. Present on
     every row, started or not — an empty list, never an absent key.
+
+    `plannedTotal` (y = done + planned) is `problemCount + len(planned)` — exported so
+    the site never re-derives it from an older-contract payload's absent field (see the
+    site's own documented fallback, `problemCount + (planned?.length ?? 0)`).
+
+    `untriedVariations` is `_parse_untried_variants()` read off the row's own (internal,
+    stripped-before-return) `_variantsCell`.
     """
+    catalog = catalog or {}
     known_names = {e["name"] for e in yaml_entries if e.get("name")}
     order = [e["name"] for e in yaml_entries if e.get("name")]
     raw_by_name = {e["name"]: e.get("builds_on") or []
@@ -964,11 +1077,8 @@ def enrich_techniques(rows: list[dict], yaml_entries: list[dict],
             1 for num in row["problems"]
             if LEVEL.get(comfort_by_number.get(num), UNTRACKED_LEVEL) >= GRADUATED_LEVEL)
         planned = planned_for(entry_by_name.get(row["name"]), tracked_numbers,
-                              waiting_room, warnings)
-        enriched.append({**row,
-                         "buildsOn": graph.get(row["name"], []),
-                         "graduatedCount": graduated,
-                         "planned": planned})
+                              waiting_room, catalog, warnings)
+        enriched.append(_enrich_row(row, graph.get(row["name"], []), graduated, planned))
     return enriched
 
 
@@ -1273,8 +1383,12 @@ def build_payload(today: dt.date | None = None) -> tuple[dict, list[str]]:
         waiting_room = parse_waiting_room(TRACKER.read_text(encoding="utf-8"))
     except OSError:
         waiting_room = {}
+    # roadmap.yml (Sep 26, 2026, decision `mastery-ratio-done-over-planned-sep26`): the
+    # fallback title/url/difficulty catalog for a declared-untracked problem with no
+    # Waiting Room row of its own — see planned_for()/load_roadmap().
+    roadmap = load_roadmap(warnings)
     techniques = enrich_techniques(techniques, yaml_entries, comfort_by_number,
-                                   waiting_room, warnings)
+                                   waiting_room, warnings, catalog=roadmap)
 
     stats = {
         "schemaVersion": SCHEMA_VERSION,

@@ -376,7 +376,16 @@ class EnrichTechniquesTests(unittest.TestCase):
     through; defaults to []; an unknown name is dropped with a warning; a self-edge is
     dropped with a warning; a 2-cycle is detected and one edge dropped; graduatedCount
     counts 🎓 and 🏆 but not 🟢; planned carries queued-but-untracked problems (Sep 26,
-    2026); enrich_techniques never mutates its inputs."""
+    2026); enrich_techniques never mutates its inputs.
+
+    Widened Sep 26, 2026 (decision `mastery-ratio-done-over-planned-sep26`, y = done +
+    planned): planned now carries EVERY declared-untracked problem, `queued` key or not
+    (trigger null without one); title/url/difficulty resolve from `waiting_room` first,
+    then the `catalog` param (roadmap.yml, via load_roadmap() — see gamify.build_payload());
+    `plannedTotal` = problemCount + len(planned); `untriedVariations` names an unqueued
+    `×0` variant from the row's (internal, stripped-before-return) `_variantsCell`; a
+    number declared under two entries counts in each; two `method:` rows for the same
+    untracked number collapse to ONE planned entry."""
 
     def test_builds_on_copies_through(self):
         rows = [_tech_row("B")]
@@ -489,6 +498,154 @@ class EnrichTechniquesTests(unittest.TestCase):
         out = gamify.enrich_techniques(rows, entries, {}, waiting_room, [])
         self.assertEqual(len(out[0]["planned"]), 1)
         self.assertEqual(out[0]["planned"][0]["lcNumber"], 6)
+
+    def test_declared_unqueued_untracked_problem_has_null_trigger(self):
+        # Sep 26, 2026 widening: `queued` is now optional on an untracked spec — it is
+        # still `planned`, just with `trigger: None` instead of a trigger string.
+        rows = [_tech_row("T")]
+        entries = [_yaml_entry("T", problems=[{"number": 547}])]
+        catalog = {547: {"title": "Number of Provinces", "url": "https://x",
+                         "difficulty": "Medium"}}
+        out = gamify.enrich_techniques(rows, entries, {}, {}, [], catalog=catalog)
+        self.assertEqual(out[0]["planned"], [
+            {"lcNumber": 547, "title": "Number of Provinces", "url": "https://x",
+             "difficulty": "Medium", "trigger": None}])
+
+    def test_title_resolves_from_catalog_when_no_waiting_room_row(self):
+        rows = [_tech_row("T")]
+        entries = [_yaml_entry("T", problems=[{"number": 501, "queued": "surplus>=1"}])]
+        catalog = {501: {"title": "Catalog Title", "url": "https://catalog",
+                         "difficulty": "Hard"}}
+        out = gamify.enrich_techniques(rows, entries, {}, {}, [], catalog=catalog)
+        self.assertEqual(out[0]["planned"], [
+            {"lcNumber": 501, "title": "Catalog Title", "url": "https://catalog",
+             "difficulty": "Hard", "trigger": "surplus>=1"}])
+
+    def test_waiting_room_wins_over_catalog_when_both_have_the_number(self):
+        rows = [_tech_row("T")]
+        entries = [_yaml_entry("T", problems=[{"number": 502, "queued": "surplus>=1"}])]
+        waiting_room = {502: {"title": "WR Title", "url": "https://wr",
+                              "difficulty": "Easy"}}
+        catalog = {502: {"title": "Catalog Title", "url": "https://catalog",
+                         "difficulty": "Hard"}}
+        out = gamify.enrich_techniques(rows, entries, {}, waiting_room, [], catalog=catalog)
+        self.assertEqual(out[0]["planned"], [
+            {"lcNumber": 502, "title": "WR Title", "url": "https://wr",
+             "difficulty": "Easy", "trigger": "surplus>=1"}])
+
+    def test_planned_total_equals_problem_count_plus_planned_length(self):
+        rows = [_tech_row("T", problems=[1, 2])]
+        entries = [_yaml_entry("T", problems=[
+            {"number": 1}, {"number": 2}, {"number": 503, "queued": "surplus>=1"}])]
+        catalog = {503: {"title": "Extra Problem", "url": "https://x", "difficulty": "Easy"}}
+        out = gamify.enrich_techniques(rows, entries, {1: "🎓", 2: "🎓"}, {}, [],
+                                       catalog=catalog)
+        self.assertEqual(len(out[0]["planned"]), 1)
+        self.assertEqual(out[0]["plannedTotal"],
+                         out[0]["problemCount"] + len(out[0]["planned"]))
+        self.assertEqual(out[0]["plannedTotal"], 3)
+
+    def test_untried_variations_names_unqueued_gaps_and_omits_queued_one(self):
+        # Real vocabulary from techniques.yml's Dijkstra entry — both unqueued names carry
+        # parentheses, and one of them also carries a slash; a queued gap in the same cell
+        # must still be excluded.
+        rows = [_tech_row("T")]
+        rows[0]["_variantsCell"] = (
+            "**0/1 edge weights (0-1 BFS vs Dijkstra) ×0** · "
+            "**Max-min bottleneck (maximize the minimum edge) ×0** · "
+            "~~Multiplicative relaxation (maximize the product)~~ *(queued: `surplus>=1`)*")
+        entries = [_yaml_entry("T")]
+        out = gamify.enrich_techniques(rows, entries, {}, {}, [])
+        self.assertEqual(out[0]["untriedVariations"], [
+            "0/1 edge weights (0-1 BFS vs Dijkstra)",
+            "Max-min bottleneck (maximize the minimum edge)"])
+        self.assertNotIn("_variantsCell", out[0])
+
+    def test_declared_under_two_entries_counts_the_problem_in_each(self):
+        rows = [_tech_row("A"), _tech_row("B")]
+        entries = [_yaml_entry("A", problems=[{"number": 23, "queued": "surplus>=1"}]),
+                  _yaml_entry("B", problems=[{"number": 23, "queued": "surplus>=1"}])]
+        catalog = {23: {"title": "Merge k Sorted Lists", "url": "https://x",
+                       "difficulty": "Hard"}}
+        out = gamify.enrich_techniques(rows, entries, {}, {}, [], catalog=catalog)
+        by_name = {r["name"]: r for r in out}
+        self.assertEqual(by_name["A"]["planned"][0]["lcNumber"], 23)
+        self.assertEqual(by_name["B"]["planned"][0]["lcNumber"], 23)
+
+    def test_two_method_rows_for_same_untracked_number_produce_one_planned_entry(self):
+        rows = [_tech_row("T")]
+        entries = [_yaml_entry("T", problems=[
+            {"number": 206, "method": "Iterative", "queued": "surplus>=1"},
+            {"number": 206, "method": "Recursion"},
+        ])]
+        catalog = {206: {"title": "Reverse Linked List", "url": "https://x",
+                        "difficulty": "Easy"}}
+        out = gamify.enrich_techniques(rows, entries, {}, {}, [], catalog=catalog)
+        self.assertEqual(len(out[0]["planned"]), 1)
+        # The first NON-NULL `queued` across the number's rows wins.
+        self.assertEqual(out[0]["planned"][0]["trigger"], "surplus>=1")
+
+    def test_two_method_rows_queued_on_the_second_row_still_resolves(self):
+        # The mirror case: the FIRST row for the number carries no `queued` at all, and
+        # the trigger only shows up on the SECOND row — it must still come through
+        # rather than being lost behind the first row's null.
+        rows = [_tech_row("T")]
+        entries = [_yaml_entry("T", problems=[
+            {"number": 19, "method": "Iterative"},
+            {"number": 19, "method": "Postorder Recursion", "queued": "surplus>=1"},
+        ])]
+        catalog = {19: {"title": "Remove Nth Node From End of List", "url": "https://x",
+                       "difficulty": "Medium"}}
+        out = gamify.enrich_techniques(rows, entries, {}, {}, [], catalog=catalog)
+        self.assertEqual(len(out[0]["planned"]), 1)
+        self.assertEqual(out[0]["planned"][0]["trigger"], "surplus>=1")
+
+    def test_missing_title_warning_fires_once_for_untracked_unqueued_problem(self):
+        rows = [_tech_row("T")]
+        entries = [_yaml_entry("T", problems=[{"number": 999}])]
+        warnings: list[str] = []
+        out = gamify.enrich_techniques(rows, entries, {}, {}, warnings)
+        self.assertEqual(out[0]["planned"], [
+            {"lcNumber": 999, "title": None, "url": None, "difficulty": None,
+             "trigger": None}])
+        self.assertEqual(len(warnings), 1)
+        self.assertIn("999", warnings[0])
+
+    def test_planned_false_and_untracked_is_absent_from_planned_and_total(self):
+        # Sep 27, 2026, decision `mastery-ratio-done-over-planned-sep26` (547, a
+        # recognition probe whose row was dropped): `planned: false` opts an
+        # untracked number out of both `planned` and `plannedTotal`.
+        rows = [_tech_row("T")]
+        entries = [_yaml_entry("T", problems=[{"number": 547, "planned": False}])]
+        out = gamify.enrich_techniques(rows, entries, {}, {}, [])
+        self.assertEqual(out[0]["planned"], [])
+        self.assertEqual(out[0]["plannedTotal"], out[0]["problemCount"])
+
+    def test_one_planned_false_spec_among_several_keeps_the_number_in(self):
+        # A number is excluded only when EVERY untracked spec for it carries
+        # `planned: false` — a single ordinary spec keeps it in.
+        rows = [_tech_row("T")]
+        entries = [_yaml_entry("T", problems=[
+            {"number": 547, "planned": False},
+            {"number": 547, "queued": "surplus>=1"},
+        ])]
+        catalog = {547: {"title": "Number of Provinces", "url": "https://x",
+                         "difficulty": "Medium"}}
+        out = gamify.enrich_techniques(rows, entries, {}, {}, [], catalog=catalog)
+        self.assertEqual(len(out[0]["planned"]), 1)
+        self.assertEqual(out[0]["planned"][0]["lcNumber"], 547)
+        self.assertEqual(out[0]["planned"][0]["trigger"], "surplus>=1")
+
+    def test_planned_false_on_a_tracked_number_does_not_affect_problem_count(self):
+        # `planned: false` only ever governs the untracked-number `planned` list — a
+        # number that already has a tracker row stays counted in `problemCount`
+        # (which comes from the coverage table, not from this key) regardless.
+        rows = [_tech_row("T", problems=[547])]
+        entries = [_yaml_entry("T", problems=[{"number": 547, "planned": False}])]
+        out = gamify.enrich_techniques(rows, entries, {547: "🎓"}, {}, [])
+        self.assertEqual(out[0]["problemCount"], 1)
+        self.assertEqual(out[0]["graduatedCount"], 1)
+        self.assertEqual(out[0]["planned"], [])
 
 
 class ParseWaitingRoomTests(unittest.TestCase):

@@ -1288,3 +1288,94 @@ decisions:
       `docs/foundations/dsa/mastery/techniques.yml` (the six new `queued:` specs),
       `docs/foundations/dsa/mastery/dsa_progress.md` (the two new Waiting Room rows).
     affects: [gamification, technique_coverage, dsa_progress, waiting_room]
+
+  - id: mastery-ratio-done-over-planned-sep26
+    date: 2026-09-26
+    summary: >-
+      CHANGES the Mastery tab's ratio from `problemCount/minProblems` (tracked vs. an
+      internal coverage bar) to `z/y` — **done over planned**, so the number on the page
+      answers "how many of what's coming have I done" instead of comparing against a bar
+      the learner has never seen. Learner read `0/2` (Bit Manipulation) as "two problems
+      are planned" when seven actually are (`study_guide.md`'s phase table) — the ratio
+      showed neither what was attempted nor what was coming.
+
+      DEFINITIONS. **z (done)** — any problem with a rating counts as attempted at all,
+      once per problem; this already existed as `problemCount`
+      (`technique_coverage.py`'s `n_problems = len({r.number for r in self.rows})`), so no
+      new counting rule was needed. **y (planned)** — every problem planned for the
+      technique, done ones included: `y = problemCount + len(planned)`, where `planned`
+      now holds EVERY declared-untracked problem in `techniques.yml`, not only ones
+      carrying a `queued:` trigger (widening `technique-planned-problems-sep26`) — a
+      problem declared under two techniques counts once in each (this file's normal
+      dual-credit model, same as 200 crediting both Grid DFS and Grid BFS). **x
+      (threshold)** — unchanged (`min_problems`), now shown as a tick on a progress bar
+      under the row rather than folded into the ratio; `x > y` (threshold above what is
+      currently planned) is a real, honestly-shown finding, not hidden.
+
+      THE CATALOG. Most declared-untracked problems already resolve their title via the
+      tracker's Waiting Room table (`parse_waiting_room`). 59 distinct roadmap numbers
+      across 24 existing/new `techniques.yml` entries have NEITHER a tracker row NOR a
+      Waiting Room row (only 1514 of the pre-existing gap was already declared, with a
+      Waiting Room row of its own) — new `docs/foundations/dsa/mastery/roadmap.yml` is
+      their catalog: `{number, title, url, difficulty, phase}`, titles/difficulties taken
+      from `cse-coach`'s `curriculum/dsa/milestone.yml` by number, slugs derived the same
+      way `scripts/new_problem.py` derives one and confirmed against the LeetCode GraphQL
+      endpoint (`questionFrontendId`, `isPaidOnly`) the same way that script's
+      `verify_links()` does; a premium problem's `url` is the NeetCode mirror
+      (`NEETCODE_RENAMES`-aware). `scripts/gamify.py` gains `load_roadmap(warnings)`
+      (fail-soft, same style as `load_technique_entries`) as `planned_for`'s SECOND
+      fallback source (Waiting Room first, catalog second, honest null + one warning when
+      neither has it — never guessed). (Corrects the 56/21 first counted here, verified
+      Sep 27, 2026: `roadmap.yml` has 59 `{number: ...}` entries; `python
+      scripts/gamify.py --stdout`'s `planned[]` carries 79 distinct declared-untracked
+      numbers in total, of which these same 59 — across 24 distinct technique names —
+      resolve via `roadmap.yml`, the other 20 via the Waiting Room, with zero warnings.)
+      815 and 1197 are cataloged here rather than resolved via the Waiting Room because
+      their only tracker row sits in `dsa_progress.md`'s "Not from Grind 75" table,
+      outside the `## ⏳ Waiting Room` section `parse_waiting_room` scans.
+
+      AN OPT-OUT FOR A DECLARED PROBLEM THAT IS NOT PART OF THE PLAN. `techniques.yml`'s
+      `problems:` spec gains an optional `planned: false` (Sep 27, 2026) — declared for
+      credit if it ever earns a tracker row, but excluded from `planned`/`plannedTotal`,
+      for a recognition probe: 547 (Number of Provinces) is the first case, `{number: 547,
+      planned: false}`, since its row was **dropped Sep 16** once the probe converted
+      (`dsa/probes/README.md`). `planned_for` (`scripts/gamify.py`) excludes a number only
+      when EVERY untracked spec for it carries `planned: false` — a single ordinary spec
+      for the same number still keeps it in.
+
+      `techniques.yml`'s `queued` key is now OPTIONAL on an untracked spec — a spec with
+      no tracker row and no `queued` key is still `planned` (`trigger: null` in the
+      contract); `queued`'s only remaining job is which bucket `technique_coverage.py`
+      sorts an unmatched spec into ("queued" vs. "declared, not queued" in the Gaps cell
+      and Vocabulary-maintenance section) — `technique_coverage.py` itself is UNCHANGED.
+      Verified in memory (imported `resolve`/`render`, diffed against the on-disk
+      `technique_coverage.md`): the header (`60/105 started · 1 no-green · 17 thin · 1
+      unqueued variant gap`) is byte-identical before/after, and every changed table row
+      is one whose Gaps cell gained a `queued: ...` clause — no technique's `is_started`,
+      `problemCount`, `thin`, or `hasVariantGap` moved.
+
+      NEW CONTRACT FIELDS (additive, no `SCHEMA_VERSION` bump): `plannedTotal` (= y,
+      exported so the site never re-derives it — an older payload without it falls back
+      to `problemCount + (planned?.length ?? 0)`) and `untriedVariations` (string[] —
+      names of a declared method variant never exercised and not queued, parsed from
+      `technique_coverage.md`'s own Variants cell's bold `**<name> ×0**` entries via a new
+      `gamify._parse_untried_variants`, so the page can name the missing variation instead
+      of printing a bare "variant gap"). `parse_techniques()` now carries the raw Variants
+      cell through as an internal `_variantsCell` key, stripped by `enrich_techniques`
+      before a row is returned — never part of the public schema.
+
+      OUT OF SCOPE, stated: the Grind 75 fill (13 rows) and the Knowledge Expansion Queue
+      tiers — a backlog, not a plan with dates, per `technique-planned-problems-sep26`'s
+      own precedent.
+
+      Consumer: the progressiveoverflow.com Mastery tab's ratio, bar, and tick (list row,
+      bar-with-tick, Map node text, summary line — see the site-side plan). See
+      `scripts/gamify.py` (`load_roadmap`, widened `planned_for`/`_planned_entry`,
+      `_parse_untried_variants`, widened `enrich_techniques`/`_enrich_row`),
+      `scripts/test_gamify.py` (the widened `EnrichTechniquesTests`),
+      `dashboard/progress.schema.json` (`definitions.technique.planned`/`plannedTotal`/
+      `untriedVariations`), `docs/foundations/dsa/mastery/roadmap.yml` (new),
+      `docs/foundations/dsa/mastery/techniques.yml` (the mapping-table declarations),
+      `docs/foundations/dsa/study_guide.md`,
+      `.claude/skills/cse-coach/references/technique-coverage.md`.
+    affects: [gamification, technique_coverage, dsa_progress, waiting_room, roadmap]

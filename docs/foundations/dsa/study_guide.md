@@ -275,6 +275,8 @@ Every design session must be narrated out loud — not written silently. Intervi
 | **Bit Manipulation + Math & Geometry** | Dec 7–28 | 15 | Single Number, # of 1 Bits, Counting Bits, Reverse Bits, Missing Number, Sum of Two Integers, Reverse Integer; Rotate Image, Spiral Matrix, Set Matrix Zeroes, Happy Number, Pow(x,n), Multiply Strings, Detect Squares |
 | **Buffer + Final EOY Review** | Dec 29–31 | — | Sweep `dsa_progress.md` for all 🔴 Blank and 🟡 Shaky solutions. Target: ≤ 10 non-Clean by EOY |
 
+> [`roadmap.yml`](mastery/roadmap.yml) is the numbered, machine-readable form of this same phase table (decision `mastery-ratio-done-over-planned-sep26`) — one `{number, title, url, difficulty, phase}` entry per problem above that has no tracker row and no Waiting Room row yet.
+
 > **📌 22 Generate Parentheses moved Stack → Backtracking, Aug 15, 2026.** Raised by the learner mid-session,
 > *before* attempting it: *"isn't 22 a backtracking problem… should this not be reserved for the backtracking
 > section. Is there a stack method that I should be focused on right now?"* Both halves were right. There is

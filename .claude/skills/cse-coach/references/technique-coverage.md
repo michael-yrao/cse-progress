@@ -36,6 +36,11 @@ entry puts ``queued: <n> `<trigger>` `` in both the Gaps cell and the Action lis
 `1/3` names its picked fill whenever one is queued. `decisions.yml` `coverage-queued-problems-sep26`. A
 known gap must never re-surface as a new finding, or the report becomes noise and stops being read.
 
+The progressiveoverflow.com Mastery tab shows each technique's **done/planned** ratio and a
+progress bar (`decisions.yml` `mastery-ratio-done-over-planned-sep26`) — that is a render of the
+same `problems:`/`queued:` data for a learner-facing audience, never a second signal: `thin`
+(fewer than `min_problems`) stays the coach's own pull signal here, at the weekly build.
+
 ## ⚠️ Where a coverage sibling comes from: the PULL first, authoring last (Aug 29, 2026)
 
 Once a technique is named thin/no-green, its candidate **population** is a company frequency pull:

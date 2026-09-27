@@ -64,7 +64,27 @@
 #                   queued   <trigger> — declared, no tracker row yet, waiting on this
 #                            trigger; same vocabulary as `variants:`'s own `queued:` above.
 #                            Reported in the Gaps cell and the Action list rather than
-#                            silently falling into "not reached yet".
+#                            silently falling into "not reached yet". OPTIONAL on an
+#                            untracked spec (Sep 26, 2026, decision
+#                            `mastery-ratio-done-over-planned-sep26`): a spec with no
+#                            tracker row and no `queued` key is still counted in the
+#                            site's `planned` (y = problemCount + planned.length) via
+#                            gamify.py's `planned_for()` — it just carries `trigger: null`
+#                            there instead of a trigger string. `queued`'s only remaining
+#                            job for THIS script (technique_coverage.py) is which bucket an
+#                            unmatched spec falls into: "queued" (has the key) vs.
+#                            "declared, not queued" (doesn't) in the Gaps cell / Vocabulary
+#                            maintenance section below — both are already-known roadmap,
+#                            never a new finding either way.
+#                   planned  false = declared for credit if it ever earns a tracker row,
+#                            but NOT part of the plan: excluded from the dashboard's
+#                            planned list and from plannedTotal (y). Use for a
+#                            recognition probe (Sep 27, 2026, decision
+#                            `mastery-ratio-done-over-planned-sep26`). Omitted (the
+#                            default) on an ordinary declared-untracked spec, which stays
+#                            in `planned`. When a number has several specs in one entry,
+#                            it is excluded only when EVERY untracked spec for that number
+#                            carries `planned: false` — a single ordinary spec keeps it in.
 #
 # Adding a solved problem here is not optional bookkeeping: the report lists every
 # unmapped tracker row, so anything left out shows up as a gap in the vocabulary itself.
@@ -187,6 +207,10 @@ techniques:
       - {number: 424}
       - {number: 567}
       - {number: 121}
+      # Declared Sep 26, 2026 (decision `mastery-ratio-done-over-planned-sep26`) —
+      # roadmap.yml. The file itself is parked in `discovery_skip` (see cse.config.yml) —
+      # that governs weekly-build discovery, not this vocabulary declaration.
+      - {number: 76, queued: "surplus>=1"}
 
   - name: Greedy (single pass)
     family: sliding_window
@@ -199,6 +223,9 @@ techniques:
       - {number: 763}  # partition frontier: extend to max last-index of chars seen, cut at i==end (Sep 9, 2026)
       - {number: 134}  # gas station: running-tank reset (Kadane-shaped), start=i+1 on negative + total>=0 gate (Sep 9, 2026)
       - {number: 846}  # hand of straights: min-anchor + count-map consume (smallest must start a run); O(1) lookup kills the O(n^2) (Sep 11, 2026)
+      # Declared Sep 26, 2026 (decision `mastery-ratio-done-over-planned-sep26`) — roadmap.yml.
+      - {number: 1899, queued: "surplus>=1"}
+      - {number: 678, queued: "surplus>=1"}
 
   # ── Intervals ───────────────────────────────────────────────────────────────
   # Phase "Intervals + Greedy" opened Aug 24, 2026.
@@ -223,6 +250,10 @@ techniques:
       - {number: 56, variant: "Merge overlapping (sort by start)"}
       - {number: 57, variant: "Insert into sorted (3-phase sweep)"}
       - {number: 435, variant: "Interval scheduling (sort by end)"}
+      # Declared Sep 26, 2026 (decision `mastery-ratio-done-over-planned-sep26`) — roadmap.yml.
+      - {number: 1851, queued: "surplus>=1"}
+      - {number: 252, queued: "surplus>=1"}
+      - {number: 253, queued: "surplus>=1"}
 
   # ── Prefix sum ──────────────────────────────────────────────────────────────
   # Bar raised to the file default of 3 on Aug 16, 2026 (tier A/B of the
@@ -295,6 +326,8 @@ techniques:
       - {number: 34}     # the first-position half — clean cold; last-position half taught (done Sep 6)
       - {number: 875}    # => also axis 2 — smallest k that works
       - {number: 1011}   # => also axis 2 — smallest capacity that works
+      # Declared Sep 26, 2026 (decision `mastery-ratio-done-over-planned-sep26`) — roadmap.yml.
+      - {number: 4, queued: "surplus>=1"}
 
   # AXIS 2 — the search space IS the answer, not an array you were handed. Kept as its own
   # entry rather than folded into the bias entries (learner's call, Aug 30): recognizing that
@@ -389,6 +422,10 @@ techniques:
       # finalizes the popped bar's rectangle (height × nearest-smaller-both-sides width).
       # Fully taught → 🔴 (never-encoded); re-rep Sep 6 measures it. Closes the Stack phase.
       - {number: 84}
+      # Waiting Room rows (dsa_progress.md), each keeping its existing trigger verbatim
+      # (`solved:84`): 85 and 1504 (the row-histogram-reduction siblings of 84).
+      - {number: 85, queued: "solved:84"}
+      - {number: 1504, queued: "solved:84"}
 
   # ── Monotonic deque ─────────────────────────────────────────────────────────
   # Distinct from Monotonic Stack: a deque pops from BOTH ends — the back to keep it
@@ -432,6 +469,9 @@ techniques:
     problems:
       - {number: 206, method: Iterative}
       - {number: 206, method: Recursion}
+      # Declared Sep 26, 2026 (decision `mastery-ratio-done-over-planned-sep26`) —
+      # roadmap.yml. No `method:` (unlike this entry's existing rows).
+      - {number: 25, queued: "surplus>=1"}
 
   - name: Linked List Merge
     family: linked_list
@@ -443,6 +483,9 @@ techniques:
     problems:
       - {number: 21, method: Iterative}
       - {number: 21, method: Recursion}
+      # Declared Sep 26, 2026 (decision `mastery-ratio-done-over-planned-sep26`) —
+      # roadmap.yml. Also declared under Heap / Priority Queue above (dual credit).
+      - {number: 23, queued: "surplus>=1"}
 
   - name: Remove Nth From End
     family: linked_list
@@ -501,6 +544,8 @@ techniques:
       - {number: 100}
       - {number: 572}
       - {number: 1448}
+      # Declared Sep 26, 2026 (decision `mastery-ratio-done-over-planned-sep26`) — roadmap.yml.
+      - {number: 297, queued: "surplus>=1"}
 
   - name: Tree DFS with Postorder Return
     family: trees
@@ -527,6 +572,8 @@ techniques:
     problems:
       - {number: 235}
       - {number: 98}
+      # Declared Sep 26, 2026 (decision `mastery-ratio-done-over-planned-sep26`) — roadmap.yml.
+      - {number: 230, queued: "surplus>=1"}
 
   - name: Tree Construction (Divide & Conquer)
     family: trees
@@ -545,6 +592,11 @@ techniques:
       - {number: 208, method: Prefix Tree}
       - {number: 211}
       - {number: 648}
+      # Declared Sep 26, 2026 (decision `mastery-ratio-done-over-planned-sep26`) —
+      # roadmap.yml. Also declared under Backtracking below (dual credit).
+      - {number: 212, queued: "surplus>=1"}
+      # Waiting Room row (dsa_progress.md), trigger quoted verbatim: `rated:139`.
+      - {number: 472, queued: "rated:139"}
 
   # ── Heap ────────────────────────────────────────────────────────────────────
   - name: Heap / Priority Queue
@@ -557,6 +609,11 @@ techniques:
       - {number: 621}
       - {number: 355}
       - {number: 347}
+      # Declared Sep 26, 2026 (decision `mastery-ratio-done-over-planned-sep26`) — the
+      # roadmap catalog (roadmap.yml). 23 is ALSO declared under Linked List Merge below
+      # (this file's normal dual-credit model, same as 200 crediting both Grid DFS/BFS).
+      - {number: 295, queued: "surplus>=1"}
+      - {number: 23, queued: "surplus>=1"}
 
   # ── Graphs ──────────────────────────────────────────────────────────────────
   - name: Grid DFS
@@ -639,6 +696,8 @@ techniques:
       - {name: Floyd Fast/Slow, queued: "🟡:202 — ready; rides 202's next rep"}
     problems:
       - {number: 202, method: Seen-Set}
+      # Declared Sep 26, 2026 (decision `mastery-ratio-done-over-planned-sep26`) — roadmap.yml.
+      - {number: 287, queued: "surplus>=1"}
 
   - name: Connected Components
     family: graphs
@@ -651,7 +710,7 @@ techniques:
       - {number: 323, method: DFS}
       - {number: 323, method: BFS}
       - {number: 323, method: Union-Find}
-      - {number: 547}  # Number of Provinces (Union-Find) — 🎯 Probe #7, adjacency matrix (Sep 11, 2026)
+      - {number: 547, planned: false}  # Number of Provinces (Union-Find) — 🎯 Probe #7, adjacency matrix (Sep 11, 2026); row dropped Sep 16 (dsa/probes/README.md)
 
   - name: Union-Find
     family: graphs
@@ -674,6 +733,10 @@ techniques:
       - {number: 207, variant: Kahn's (BFS)}
       - {number: 210, variant: Kahn's (BFS)}
       - {number: 269, variant: Kahn's (BFS)}
+      # Waiting Room rows (dsa_progress.md), each keeping its existing trigger verbatim
+      # (`surplus>=1`): 802 (topo consolidation rep #4) and 2115 (rep #5).
+      - {number: 802, queued: "surplus>=1"}
+      - {number: 2115, queued: "surplus>=1"}
 
   - name: BFS on Implicit Graph
     family: graphs
@@ -681,6 +744,11 @@ techniques:
     min_problems: 1
     problems:
       - {number: 127, method: BFS}
+      # Waiting Room rows (dsa_progress.md), each keeping its existing trigger verbatim
+      # (`solved:127`): 815 (Bus Routes) and 1197 (Minimum Knight Moves, HelloInterview
+      # premium link).
+      - {number: 815, queued: "solved:127"}
+      - {number: 1197, queued: "solved:127"}
 
   # ── Advanced graphs ─────────────────────────────────────────────────────────
   - name: Dijkstra
@@ -822,6 +890,15 @@ techniques:
       - {number: 22}
       - {number: 39}
       - {number: 46}
+      # Declared Sep 26, 2026 (decision `mastery-ratio-done-over-planned-sep26`) —
+      # roadmap.yml. 212 is ALSO declared under Trie above (dual credit).
+      - {number: 90, queued: "phase:Backtracking"}
+      - {number: 40, queued: "phase:Backtracking"}
+      - {number: 79, queued: "phase:Backtracking"}
+      - {number: 131, queued: "phase:Backtracking"}
+      - {number: 17, queued: "phase:Backtracking"}
+      - {number: 51, queued: "phase:Backtracking"}
+      - {number: 212, queued: "phase:Backtracking"}
 
   # ── Recursion ───────────────────────────────────────────────────────────────
   # Added for the /learn cheat-sheet contract (Sep 23, 2026) — recursion.md carried no
@@ -902,12 +979,22 @@ techniques:
     tier: core
     min_problems: 3
     builds_on: ["Array/String Fundamentals"]
+    # Declared Sep 26, 2026 (decision `mastery-ratio-done-over-planned-sep26`) — roadmap.yml.
+    problems:
+      - {number: 7, queued: "phase:Bit-Math"}
+      - {number: 50, queued: "phase:Bit-Math"}
+      - {number: 43, queued: "phase:Bit-Math"}
 
   - name: Simulation / Matrix Walk
     family: math_sim
     tier: core
     min_problems: 2
     builds_on: ["Array/String Fundamentals"]
+    # Declared Sep 26, 2026 (decision `mastery-ratio-done-over-planned-sep26`) — roadmap.yml.
+    problems:
+      - {number: 48, queued: "phase:Bit-Math"}
+      - {number: 54, queued: "phase:Bit-Math"}
+      - {number: 73, queued: "phase:Bit-Math"}
 
   # ── Design — composed data structures (tier: core) ──
   # Company-demand pull, Sep 26, 2026 (decision `company-demand-families-sep26`): Design
@@ -921,16 +1008,28 @@ techniques:
     builds_on: ["Hash Map Lookup", "HashMap + Doubly Linked List (LRU)"]
     problems:
       - {number: 981, queued: "surplus>=1"}
+      # Declared Sep 26, 2026 (decision `mastery-ratio-done-over-planned-sep26`) — roadmap.yml.
+      - {number: 2013, queued: "phase:Bit-Math"}
 
   # ── Bit Manipulation (tier: core) ──
   # Company-demand pull, Sep 26, 2026 (decision `company-demand-families-sep26`): Bit
   # Manipulation 2/100 big-tech (4/100 fintech, 7/100 supplementary). Also the existing
   # NC150 Dec 7–28 phase (Bit Manipulation), not yet started.
+  # min_problems raised 2 -> 3 on Sep 27, 2026 (learner's call): six problems are planned
+  # here, so the usual bar applies — 2 was set from big-tech demand alone.
   - name: Bit Manipulation
     family: bit_manipulation
     tier: core
-    min_problems: 2
+    min_problems: 3
     builds_on: ["Array/String Fundamentals"]
+    # Declared Sep 26, 2026 (decision `mastery-ratio-done-over-planned-sep26`) — roadmap.yml.
+    problems:
+      - {number: 136, queued: "phase:Bit-Math"}
+      - {number: 191, queued: "phase:Bit-Math"}
+      - {number: 338, queued: "phase:Bit-Math"}
+      - {number: 190, queued: "phase:Bit-Math"}
+      - {number: 268, queued: "phase:Bit-Math"}
+      - {number: 371, queued: "phase:Bit-Math"}
 
   # ── DP framework lenses + the two core roadmap phases (tier: dp) ────────────────
   # study_guide.md line 17 ("Framework lenses — knapsack / interval / LIS / space-
@@ -954,24 +1053,45 @@ techniques:
     builds_on: ["1D Dynamic Programming"]
     tier: dp
     min_problems: 3
+    # Declared Sep 26, 2026 (decision `mastery-ratio-done-over-planned-sep26`) —
+    # roadmap.yml. Split across the two DP phases per the roadmap row each problem
+    # actually falls in: 416/322 are 1D-DP-phase Knapsack forms, 518/494 are 2D-DP-phase.
+    problems:
+      - {number: 416, queued: "phase:1D-DP"}
+      - {number: 322, queued: "phase:1D-DP"}
+      - {number: 518, queued: "phase:2D-DP"}
+      - {number: 494, queued: "phase:2D-DP"}
 
   - name: Interval DP
     family: dynamic_programming
     builds_on: ["2D Dynamic Programming"]
     tier: dp
     min_problems: 3
+    # Declared Sep 26, 2026 (decision `mastery-ratio-done-over-planned-sep26`) — roadmap.yml.
+    problems:
+      - {number: 312, queued: "phase:2D-DP"}
 
   - name: Longest Increasing Subsequence
     family: dynamic_programming
     builds_on: ["1D Dynamic Programming", "Binary Search (min boundary)"]
     tier: dp
     min_problems: 1
+    # Declared Sep 26, 2026 (decision `mastery-ratio-done-over-planned-sep26`) —
+    # roadmap.yml (300) plus two Waiting Room new-problem rows (354, 646), each keeping
+    # its existing Waiting Room trigger verbatim.
+    problems:
+      - {number: 300, queued: "phase:1D-DP"}
+      - {number: 354, queued: "phase:1D-DP"}
+      - {number: 646, queued: "phase:1D-DP"}
 
   - name: Longest Common Subsequence
     family: dynamic_programming
     builds_on: ["2D Dynamic Programming"]
     tier: dp
     min_problems: 1
+    # Declared Sep 26, 2026 (decision `mastery-ratio-done-over-planned-sep26`) — roadmap.yml.
+    problems:
+      - {number: 1143, queued: "phase:2D-DP"}
 
   - name: Space Compression
     family: dynamic_programming
@@ -984,12 +1104,32 @@ techniques:
     builds_on: ["Memoization"]
     tier: dp
     min_problems: 3
+    # Declared Sep 26, 2026 (decision `mastery-ratio-done-over-planned-sep26`) — roadmap.yml.
+    problems:
+      - {number: 70, queued: "phase:1D-DP"}
+      - {number: 746, queued: "phase:1D-DP"}
+      - {number: 198, queued: "phase:1D-DP"}
+      - {number: 213, queued: "phase:1D-DP"}
+      - {number: 5, queued: "phase:1D-DP"}
+      - {number: 647, queued: "phase:1D-DP"}
+      - {number: 91, queued: "phase:1D-DP"}
+      - {number: 152, queued: "phase:1D-DP"}
+      - {number: 139, queued: "phase:1D-DP"}
 
   - name: 2D Dynamic Programming
     family: dynamic_programming
     builds_on: ["1D Dynamic Programming"]
     tier: dp
     min_problems: 3
+    # Declared Sep 26, 2026 (decision `mastery-ratio-done-over-planned-sep26`) — roadmap.yml.
+    problems:
+      - {number: 62, queued: "phase:2D-DP"}
+      - {number: 309, queued: "phase:2D-DP"}
+      - {number: 97, queued: "phase:2D-DP"}
+      - {number: 329, queued: "phase:2D-DP"}
+      - {number: 115, queued: "phase:2D-DP"}
+      - {number: 72, queued: "phase:2D-DP"}
+      - {number: 10, queued: "phase:2D-DP"}
 
   # ── Tier 1 — Knowledge Expansion Queue, ABOVE the interview-ROI line (tier: tier1) ──
   # study_guide.md line 17: "Tier 1 advanced ... segment tree, Fenwick, KMP, XOR trie,

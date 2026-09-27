@@ -237,19 +237,21 @@
         "graduatedCount": { "type": "integer", "minimum": 0, "description": "How many of this row's `problems` (LC numbers) have reached 🎓 or better in the tracker (Sep 26, 2026) — the highest comfort per number when a number carries several tracker rows." },
         "planned": {
           "type": "array",
-          "description": "Problems queued for this technique with no tracker row yet (Sep 26, 2026, decision `technique-planned-problems-sep26`) — techniques.yml `problems:` specs carrying `queued`, joined against the tracker's Waiting Room table for title/url/difficulty. A number moves out of this list on its own the moment it is rated (into `problems` above) — no second edit needed. Present on every technique, started or not (empty array when nothing is queued). Curation rule: the Waiting Room's Notes column (coaching prose, judge links) is NEVER exported — only lcNumber/title/url/difficulty/trigger.",
+          "description": "Problems declared for this technique with no tracker row yet (Sep 26, 2026, decision `mastery-ratio-done-over-planned-sep26`, widening `technique-planned-problems-sep26`) — EVERY techniques.yml `problems:` spec whose number has no tracker row, not only ones carrying a `queued` trigger any more. title/url/difficulty resolve from the tracker's Waiting Room table first, then `roadmap.yml`'s declared-problem catalog, and are null (with a warning in gamify.py) when neither has the number. A number moves out of this list on its own the moment it is rated (into `problems` above) — no second edit needed. Present on every technique, started or not (empty array when nothing is declared-and-untracked). Curation rule: the Waiting Room's Notes column (coaching prose, judge links) is NEVER exported — only lcNumber/title/url/difficulty/trigger. A spec marked `planned: false` in techniques.yml (Sep 27, 2026 — a recognition probe, credited if it ever earns a tracker row but not part of the plan) is excluded from this list and from `plannedTotal`.",
           "items": {
             "type": "object",
             "required": ["lcNumber", "trigger"],
             "properties": {
               "lcNumber": { "type": "integer", "description": "The queued problem's LC number, or a synthetic 9xxx external-judge id (external-judge-problems-sep26) — the `url` host says which judge." },
-              "title": { "type": ["string", "null"], "description": "From the Waiting Room row's link text, verbatim. Null when the queued number has no Waiting Room row yet (a warned condition in gamify.py)." },
+              "title": { "type": ["string", "null"], "description": "From the Waiting Room row's link text (or roadmap.yml's catalog title), verbatim. Null when the number has neither a Waiting Room row nor a roadmap.yml entry (a warned condition in gamify.py)." },
               "url": { "type": ["string", "null"], "format": "uri" },
               "difficulty": { "type": ["string", "null"], "enum": ["Easy", "Medium", "Hard", null] },
-              "trigger": { "type": "string", "description": "The `queued:` trigger string from techniques.yml — same vocabulary as the Waiting Room's own Trigger column." }
+              "trigger": { "type": ["string", "null"], "description": "The spec's `queued:` trigger string from techniques.yml — same vocabulary as the Waiting Room's own Trigger column. Null (Sep 26, 2026) for a declared-untracked spec that carries no `queued` key at all — `queued` is optional on such a spec (see techniques.yml's own schema comment) and the problem is still `planned`." }
             }
           }
-        }
+        },
+        "plannedTotal": { "type": "integer", "minimum": 0, "description": "y = problemCount + planned.length (Sep 26, 2026, decision `mastery-ratio-done-over-planned-sep26`) — every distinct problem declared under this technique in techniques.yml, tracked or not. Exported so the site never re-derives it; an older payload with no `plannedTotal` falls back to `problemCount + (planned?.length ?? 0)`." },
+        "untriedVariations": { "type": "array", "items": { "type": "string" }, "description": "Names of declared method variants never once exercised AND not sitting in any queue (Sep 26, 2026, decision `mastery-ratio-done-over-planned-sep26`) — parsed from technique_coverage.md's own Variants cell (the bold `**<name> ×0**` entries only; a struck-through `queued:` variant is excluded, since that is a known gap with a fill already picked, not something to name as missing). Lets the page name the specific missing variation instead of a bare `variant gap` label." }
       }
     },
     "probe": {
