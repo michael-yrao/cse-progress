@@ -355,15 +355,15 @@ class ParseTechniquesWrongColumnCountTests(unittest.TestCase):
         self.assertIn("expected 9", warnings[0])
 
 
-def _tech_row(name, problems=None):
-    return {"name": name, "family": "f", "tier": "core", "started": True,
+def _tech_row(name, problems=None, started=True):
+    return {"name": name, "family": "f", "tier": "core", "started": started,
             "minProblems": 3, "problemCount": len(problems or []),
             "problems": problems or [], "bestComfort": None, "hasGreen": False,
             "thin": True, "hasVariantGap": False}
 
 
-def _yaml_entry(name, builds_on=None):
-    return {"name": name, "builds_on": builds_on}
+def _yaml_entry(name, builds_on=None, problems=None):
+    return {"name": name, "builds_on": builds_on, "problems": problems}
 
 
 def _problem(num, comfort):
@@ -375,25 +375,26 @@ class EnrichTechniquesTests(unittest.TestCase):
     techniques.yml's own entry shape) — never the live repo file. Pins: builds_on copies
     through; defaults to []; an unknown name is dropped with a warning; a self-edge is
     dropped with a warning; a 2-cycle is detected and one edge dropped; graduatedCount
-    counts 🎓 and 🏆 but not 🟢; enrich_techniques never mutates its inputs."""
+    counts 🎓 and 🏆 but not 🟢; planned carries queued-but-untracked problems (Sep 26,
+    2026); enrich_techniques never mutates its inputs."""
 
     def test_builds_on_copies_through(self):
         rows = [_tech_row("B")]
         entries = [_yaml_entry("A"), _yaml_entry("B", ["A"])]
-        out = gamify.enrich_techniques(rows, entries, {}, [])
+        out = gamify.enrich_techniques(rows, entries, {}, {}, [])
         self.assertEqual(out[0]["buildsOn"], ["A"])
 
     def test_builds_on_defaults_to_empty_list(self):
         rows = [_tech_row("Root")]
         entries = [_yaml_entry("Root")]
-        out = gamify.enrich_techniques(rows, entries, {}, [])
+        out = gamify.enrich_techniques(rows, entries, {}, {}, [])
         self.assertEqual(out[0]["buildsOn"], [])
 
     def test_unknown_name_dropped_with_warning(self):
         rows = [_tech_row("B")]
         entries = [_yaml_entry("B", ["Nonexistent"])]
         warnings: list[str] = []
-        out = gamify.enrich_techniques(rows, entries, {}, warnings)
+        out = gamify.enrich_techniques(rows, entries, {}, {}, warnings)
         self.assertEqual(out[0]["buildsOn"], [])
         self.assertEqual(len(warnings), 1)
         self.assertIn("Nonexistent", warnings[0])
@@ -402,7 +403,7 @@ class EnrichTechniquesTests(unittest.TestCase):
         rows = [_tech_row("A")]
         entries = [_yaml_entry("A", ["A"])]
         warnings: list[str] = []
-        out = gamify.enrich_techniques(rows, entries, {}, warnings)
+        out = gamify.enrich_techniques(rows, entries, {}, {}, warnings)
         self.assertEqual(out[0]["buildsOn"], [])
         self.assertEqual(len(warnings), 1)
         self.assertIn("itself", warnings[0])
@@ -411,7 +412,7 @@ class EnrichTechniquesTests(unittest.TestCase):
         rows = [_tech_row("A"), _tech_row("B")]
         entries = [_yaml_entry("A", ["B"]), _yaml_entry("B", ["A"])]
         warnings: list[str] = []
-        out = gamify.enrich_techniques(rows, entries, {}, warnings)
+        out = gamify.enrich_techniques(rows, entries, {}, {}, warnings)
         by_name = {r["name"]: r["buildsOn"] for r in out}
         # exactly one of the two edges survives — the DFS back-edge is dropped
         total_edges = len(by_name["A"]) + len(by_name["B"])
@@ -422,22 +423,23 @@ class EnrichTechniquesTests(unittest.TestCase):
         rows = [_tech_row("T", problems=[1, 2, 3, 4])]
         entries = [_yaml_entry("T")]
         comfort_by_number = {1: "🎓", 2: "🏆", 3: "🟢", 4: "🟡"}
-        out = gamify.enrich_techniques(rows, entries, comfort_by_number, [])
+        out = gamify.enrich_techniques(rows, entries, comfort_by_number, {}, [])
         self.assertEqual(out[0]["graduatedCount"], 2)
 
     def test_untracked_problem_number_does_not_count(self):
         rows = [_tech_row("T", problems=[99])]
         entries = [_yaml_entry("T")]
-        out = gamify.enrich_techniques(rows, entries, {}, [])
+        out = gamify.enrich_techniques(rows, entries, {}, {}, [])
         self.assertEqual(out[0]["graduatedCount"], 0)
 
     def test_does_not_mutate_inputs(self):
         row = _tech_row("B")
         entry = _yaml_entry("B", ["A"])
         rows, entries = [row], [_yaml_entry("A"), entry]
-        gamify.enrich_techniques(rows, entries, {}, [])
+        gamify.enrich_techniques(rows, entries, {}, {}, [])
         self.assertNotIn("buildsOn", row)
         self.assertNotIn("graduatedCount", row)
+        self.assertNotIn("planned", row)
 
     def test_comfort_by_number_malformed_glyph_does_not_raise_or_count(self):
         # build_problems() itself is fail-soft (LEVEL.get(r["comfort"]), never LEVEL[...]),
@@ -449,8 +451,106 @@ class EnrichTechniquesTests(unittest.TestCase):
 
         rows = [_tech_row("T", problems=[1])]
         entries = [_yaml_entry("T")]
-        out = gamify.enrich_techniques(rows, entries, comfort_by_number, [])
+        out = gamify.enrich_techniques(rows, entries, comfort_by_number, {}, [])
         self.assertEqual(out[0]["graduatedCount"], 0)
+
+    def test_queued_and_untracked_problem_appears_in_planned(self):
+        rows = [_tech_row("T")]
+        entries = [_yaml_entry("T", problems=[{"number": 9001, "queued": "surplus>=1"}])]
+        waiting_room = {9001: {"title": "Cracking the Safe", "url": "https://x",
+                               "difficulty": "Hard"}}
+        out = gamify.enrich_techniques(rows, entries, {}, waiting_room, [])
+        self.assertEqual(out[0]["planned"], [
+            {"lcNumber": 9001, "title": "Cracking the Safe", "url": "https://x",
+             "difficulty": "Hard", "trigger": "surplus>=1"}])
+
+    def test_queued_but_already_tracked_problem_is_absent_from_planned(self):
+        rows = [_tech_row("T")]
+        entries = [_yaml_entry("T", problems=[{"number": 146, "queued": "rated:146"}])]
+        out = gamify.enrich_techniques(rows, entries, {146: "🟢"}, {}, [])
+        self.assertEqual(out[0]["planned"], [])
+
+    def test_queued_problem_with_no_waiting_room_row_emits_nulls_and_one_warning(self):
+        rows = [_tech_row("T")]
+        entries = [_yaml_entry("T", problems=[{"number": 394, "queued": "surplus>=1"}])]
+        warnings: list[str] = []
+        out = gamify.enrich_techniques(rows, entries, {}, {}, warnings)
+        self.assertEqual(out[0]["planned"], [
+            {"lcNumber": 394, "title": None, "url": None, "difficulty": None,
+             "trigger": "surplus>=1"}])
+        self.assertEqual(len(warnings), 1)
+        self.assertIn("394", warnings[0])
+
+    def test_not_started_technique_still_carries_planned(self):
+        rows = [_tech_row("T", started=False)]
+        entries = [_yaml_entry("T", problems=[{"number": 6, "queued": "surplus>=1"}])]
+        waiting_room = {6: {"title": "Zigzag Conversion", "url": "https://x",
+                            "difficulty": "Medium"}}
+        out = gamify.enrich_techniques(rows, entries, {}, waiting_room, [])
+        self.assertEqual(len(out[0]["planned"]), 1)
+        self.assertEqual(out[0]["planned"][0]["lcNumber"], 6)
+
+
+class ParseWaitingRoomTests(unittest.TestCase):
+    """parse_waiting_room() against a small string fixture (never the live repo file).
+    Pins: scoped to the `## ⏳ Waiting Room` section alone (a look-alike header before AND
+    after the section is ignored); a Kattis row (external-judge URL) parses like an LC row;
+    a Notes cell carrying its own markdown links (`[Kattis \\`shortestpath3\\`](...)`,
+    `[CSES 1673](...)`) never leaks into the title; a duplicated number keeps its FIRST
+    occurrence; a text with no Waiting Room heading at all returns {}."""
+
+    FIXTURE = (
+        "## Some Other Section\n\n"
+        "| Difficulty | Problem | Trigger | Notes |\n"
+        "|---|---|---|---|\n"
+        "| Medium | [999. Decoy Outside Section](https://leetcode.com/problems/decoy/) "
+        "| `surplus>=1` | Never parsed — outside the Waiting Room. |\n\n"
+        "## ⏳ Waiting Room — will enter rotation\n\n"
+        "Some prose about the trigger vocabulary.\n\n"
+        "| Difficulty | Problem | Trigger | Notes |\n"
+        "|---|---|---|---|\n"
+        "| Easy | [9001. Single Source Shortest Path, Negative Weights]"
+        "(https://open.kattis.com/problems/shortestpath3) | `surplus>=1` | Hand-picked "
+        "from [Kattis `shortestpath3`](https://open.kattis.com/problems/shortestpath3). "
+        "See [CSES 1673](https://cses.fi/problemset/task/1673) too. |\n"
+        "| Hard | [1216. Valid Palindrome III (backtracking)]"
+        "(https://leetcode.com/problems/valid-palindrome-iii/) | `phase:Backtracking` "
+        "| First occurrence — wins. |\n"
+        "| Hard | [1216. Valid Palindrome III (1DP)]"
+        "(https://leetcode.com/problems/valid-palindrome-iii/) | `phase:1D-DP` "
+        "| Duplicate number — ignored. |\n\n"
+        "## Grind 75 Fill\n\n"
+        "| Difficulty | Problem | Trigger | Notes |\n"
+        "|---|---|---|---|\n"
+        "| Medium | [815. Another Decoy Row](https://leetcode.com/problems/another/) "
+        "| `surplus>=1` | Same header shape, past the boundary — never parsed. |\n"
+    )
+
+    def test_scoped_to_waiting_room_section_only(self):
+        result = gamify.parse_waiting_room(self.FIXTURE)
+        self.assertNotIn(999, result)
+        self.assertNotIn(815, result)
+        self.assertIn(9001, result)
+        self.assertIn(1216, result)
+
+    def test_kattis_row_parses_like_an_lc_row(self):
+        result = gamify.parse_waiting_room(self.FIXTURE)
+        self.assertEqual(result[9001], {
+            "title": "Single Source Shortest Path, Negative Weights",
+            "url": "https://open.kattis.com/problems/shortestpath3",
+            "difficulty": "Easy"})
+
+    def test_notes_links_never_leak_into_title(self):
+        result = gamify.parse_waiting_room(self.FIXTURE)
+        self.assertNotIn("Kattis", result[9001]["title"])
+        self.assertNotIn("CSES", result[9001]["title"])
+
+    def test_first_occurrence_of_a_duplicate_number_wins(self):
+        result = gamify.parse_waiting_room(self.FIXTURE)
+        self.assertEqual(result[1216]["title"], "Valid Palindrome III (backtracking)")
+
+    def test_no_waiting_room_heading_returns_empty(self):
+        self.assertEqual(gamify.parse_waiting_room("# Nothing here\n\nplain text\n"), {})
 
 
 class ParseCurrentWeekScheduleTests(unittest.TestCase):
@@ -1237,10 +1337,14 @@ class SummaryOfTests(unittest.TestCase):
             "techniques": [
                 {"name": "Bellman-Ford", "family": "advanced_graphs", "tier": "core",
                  "started": True, "minProblems": 3, "problemCount": 1, "problems": [787],
-                 "bestComfort": "🟢", "hasGreen": True, "thin": True, "hasVariantGap": False},
+                 "bestComfort": "🟢", "hasGreen": True, "thin": True, "hasVariantGap": False,
+                 "planned": [{"lcNumber": 9001, "title": "Single Source Shortest Path,"
+                              " Negative Weights", "url": "https://x", "difficulty": "Easy",
+                              "trigger": "surplus>=1"}]},
                 {"name": "Knapsack", "family": "dynamic_programming", "tier": "dp",
                  "started": False, "minProblems": 3, "problemCount": 0, "problems": [],
-                 "bestComfort": None, "hasGreen": False, "thin": False, "hasVariantGap": False},
+                 "bestComfort": None, "hasGreen": False, "thin": False, "hasVariantGap": False,
+                 "planned": []},
             ],
             # One date far outside the summary's rolling window (well over
             # SUMMARY_STUDY_DAYS_WINDOW days before generatedAt) plus two recent ones —
@@ -1292,6 +1396,12 @@ class SummaryOfTests(unittest.TestCase):
         self.assertEqual(by_name["Knapsack"]["tier"], "dp")
         self.assertFalse(by_name["Knapsack"]["started"])
         self.assertEqual(by_name["Knapsack"]["minProblems"], 3)
+
+    def test_planned_survives_into_the_summary(self):
+        summary = gamify.summary_of(self._payload())
+        by_name = {t["name"]: t for t in summary["techniques"]}
+        self.assertEqual(by_name["Bellman-Ford"]["planned"][0]["lcNumber"], 9001)
+        self.assertEqual(by_name["Knapsack"]["planned"], [])
 
     def test_probes_pass_through_unchanged(self):
         summary = gamify.summary_of(self._payload())

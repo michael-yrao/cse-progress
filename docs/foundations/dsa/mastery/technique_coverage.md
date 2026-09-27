@@ -6,9 +6,13 @@
 
 > The tracker is keyed by **problem**; this is keyed by **technique**. Use it at the weekly build to decide what to pull, and at phase exit to check the per-algorithm bar (recognition + execution, ≥1 🟢 each).
 
-> **60/105** techniques started &nbsp;·&nbsp; **0** with no 🟢 &nbsp;·&nbsp; **17** thin &nbsp;·&nbsp; **1** unqueued variant gaps
+> **60/105** techniques started &nbsp;·&nbsp; **1** with no 🟢 &nbsp;·&nbsp; **17** thin &nbsp;·&nbsp; **1** unqueued variant gaps
 
 ## ⚠️ Action list
+
+**No 🟢 — blocks per-algorithm phase exit.** Execution is unproven.
+
+- **Kruskal's MST** (advanced_graphs) — best 🟡 across 1489
 
 **Thin — fewer than the 3–4 surface forms a technique needs.** One instance trains recall of that problem, not the skill.
 
@@ -17,6 +21,7 @@
 - **Cycle Detection in an Iterated Sequence** (graphs) — 1/2: 202
 - **Divide & Conquer / Sorting** (sorting) — 1/3: 912
 - **HashMap + Doubly Linked List (LRU)** (linked_list) — 1/3: 146
+- **Kruskal's MST** (advanced_graphs) — 1/3: 1489
 - **Multi-source BFS** (graphs) — 1/3: 994
 - **Prim's MST** (advanced_graphs) — 1/3: 1584
 - **Stack (augmented entries)** (stack) — 1/2: 155
@@ -25,7 +30,6 @@
 - **Floyd-Warshall (all-pairs shortest path)** (advanced_graphs) — 2/3: 1334, 1462
 - **Grid DFS** (graphs) — 2/3: 200, 695
 - **Hierholzer (Eulerian path)** (advanced_graphs) — 2/3 (3 rows): 332, 2097
-- **Kruskal's MST** (advanced_graphs) — 2/3: 1489, 1584
 - **Prefix Sum** (prefix_sum) — 2/3: 53, 560
 - **Tree BFS (level order)** (trees) — 2/3: 102, 199
 - **Intervals (sort + sweep)** (intervals) — 3/5: 56, 57, 435
@@ -34,7 +38,12 @@
 
 - **Bellman-Ford** (advanced_graphs) — queued: 9001 (`surplus>=1`), 9002 (`surplus>=1`)
 - **Dijkstra** (advanced_graphs) — queued: 1368 (`surplus>=1`), 1514 (`surplus>=1`), 3650 (`surplus>=1`)
-- **Prim's MST** (advanced_graphs) — queued: 1135 (`surplus>=1`)
+- **Floyd-Warshall (all-pairs shortest path)** (advanced_graphs) — queued: 399 (`rated:1334`)
+- **HashMap + Doubly Linked List (LRU)** (linked_list) — queued: 1472 (`rated:146`)
+- **Hierholzer (Eulerian path)** (advanced_graphs) — queued: 753 (`surplus>=1`)
+- **Kruskal's MST** (advanced_graphs) — queued: 1135 (`surplus>=1`)
+- **Prim's MST** (advanced_graphs) — queued: 9003 (`surplus>=1`)
+- **Stack (expression evaluation)** (stack) — queued: 394 (`surplus>=1`)
 
 **Unqueued variant gaps — a method never once exercised, and not in any queue.**
 
@@ -48,10 +57,10 @@ Every declared technique gets a row, started or not — a not-started row's Gaps
 |---|---|---|---:|---:|:---:|:---:|---|---|
 | Bellman-Ford | advanced_graphs | core | 3 | 1 (787) | 🟢 | ✅ | Standard ×1 · ~~Contrast rep on 743~~ *(queued: `graduates:743`)* · ~~Negative edges (SSSP, -Infinity propagation)~~ *(queued: `surplus>=1`)* · ~~Negative-cycle detection (arbitrage / log-transform)~~ *(queued: `surplus>=1`)* | thin (1/3) · queued: 9001 `surplus>=1`, 9002 `surplus>=1` |
 | Dijkstra | advanced_graphs | core | 3 | 3 *+1v* (743, 778, 1631) | 🟢 | ✅ | Min-over-max (minimize the maximum edge) ×1 · **Max-min bottleneck (maximize the minimum edge) ×0** · ~~0/1 edge weights (0-1 BFS vs Dijkstra)~~ *(queued: `surplus>=1`)* · ~~Multiplicative relaxation (maximize the product)~~ *(queued: `surplus>=1`)* | queued: 1368 `surplus>=1`, 1514 `surplus>=1`, 3650 `surplus>=1` · variant: **Max-min bottleneck (maximize the minimum edge)** |
-| Floyd-Warshall (all-pairs shortest path) | advanced_graphs | core | 3 | 2 (1334, 1462) | 🟢 | ✅ | — | thin (2/3) |
-| Hierholzer (Eulerian path) | advanced_graphs | core | 3 | 2 *+1v* (332, 2097) | 🟢 | ✅ | pre-sorted adjacency ×1 · min-heap ordering ×1 | thin (2/3) |
-| Kruskal's MST | advanced_graphs | core | 3 | 2 (1489, 1584) | 🟢 | ✅ | — | thin (2/3) |
-| Prim's MST | advanced_graphs | core | 3 | 1 (1584) | 🟢 | ✅ | — | thin (1/3) · queued: 1135 `surplus>=1` |
+| Floyd-Warshall (all-pairs shortest path) | advanced_graphs | core | 3 | 2 (1334, 1462) | 🟢 | ✅ | — | thin (2/3) · queued: 399 `rated:1334` |
+| Hierholzer (Eulerian path) | advanced_graphs | core | 3 | 2 *+1v* (332, 2097) | 🟢 | ✅ | pre-sorted adjacency ×1 · min-heap ordering ×1 | thin (2/3) · queued: 753 `surplus>=1` |
+| Kruskal's MST | advanced_graphs | core | 3 | 1 (1489) | 🟡 | ❌ | — | **no-green** · thin (1/3) · queued: 1135 `surplus>=1` |
+| Prim's MST | advanced_graphs | core | 3 | 1 (1584) | 🟢 | ✅ | — | thin (1/3) · queued: 9003 `surplus>=1` |
 | Array/String Fundamentals | arrays_and_hash | core | 1 | 3 (14, 66, 1929) | 🟢 | ✅ | — | — |
 | Boyer-Moore Voting | arrays_and_hash | core | 2 | 2 (169, 229) | 🎓 | ✅ | — | — |
 | Frequency Counting | arrays_and_hash | core | 2 | 2 (49, 242) | 🎓 | ✅ | — | — |
@@ -121,7 +130,7 @@ Every declared technique gets a row, started or not — a not-started row's Gaps
 | Deep Copy via Hash Map | linked_list | core | 1 | 1 (138) | 🟢 | ✅ | — | — |
 | Dummy Node | linked_list | core | 3 | 3 *+2v* (2, 19, 21) | 🎓 | ✅ | — | — |
 | Floyd's Cycle / Midpoint | linked_list | core | 3 | 2 (141, 143) | 🟢 | ✅ | — | thin (2/3) |
-| HashMap + Doubly Linked List (LRU) | linked_list | core | 3 | 1 (146) | 🟢 | ✅ | — | thin (1/3) |
+| HashMap + Doubly Linked List (LRU) | linked_list | core | 3 | 1 (146) | 🟢 | ✅ | — | thin (1/3) · queued: 1472 `rated:146` |
 | Linked List Arithmetic | linked_list | core | 1 | 1 (2) | 🟢 | ✅ | — | — |
 | Linked List Merge | linked_list | core | 1 | 1 *+1v* (21) | 🎓 | ✅ | Iterative ×1 · Recursion ×1 | — |
 | Linked List Reversal | linked_list | core | 1 | 1 *+1v* (206) | 🎓 | ✅ | Iterative ×1 · Recursion ×1 | — |
@@ -137,7 +146,7 @@ Every declared technique gets a row, started or not — a not-started row's Gaps
 | Monotonic Deque | stack | core | 1 | 1 (239) | 🟢 | ✅ | — | — |
 | Monotonic Stack | stack | core | 3 | 6 (84, 496, 503, 739, 853, 901) | 🟢 | ✅ | — | — |
 | Stack (augmented entries) | stack | core | 2 | 1 (155) | 🟢 | ✅ | — | thin (1/2) |
-| Stack (expression evaluation) | stack | core | 2 | 1 (150) | 🟢 | ✅ | — | thin (1/2) |
+| Stack (expression evaluation) | stack | core | 2 | 1 (150) | 🟢 | ✅ | — | thin (1/2) · queued: 394 `surplus>=1` |
 | Stack (matching) | stack | core | 1 | 1 (20) | 🟢 | ✅ | — | — |
 | String Building & Encoding | strings | core | 2 | 0 (—) | — | ❌ | — | *not started* |
 | String Parsing / Manipulation | strings | core | 3 | 0 (—) | — | ❌ | — | *not started* |
@@ -154,7 +163,7 @@ Every declared technique gets a row, started or not — a not-started row's Gaps
 
 ## Vocabulary maintenance
 
-**Queued (6)** — listed in the Action list above; a known gap with a fill already picked, not counted below.
+**Queued (13)** — listed in the Action list above; a known gap with a fill already picked, not counted below.
 
 **Declared, not queued (2)** — declared in the vocabulary, no tracker row, and not yet in any queue. This is the normal state for curriculum ahead of the learner; it is a roadmap, not a finding: 1102 (Dijkstra), 547
 

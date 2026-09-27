@@ -172,6 +172,49 @@ def problem_urls() -> dict[int, str]:
     return {int(n): url for n, url in PROBLEM_URL.findall(text)}
 
 
+# The Waiting Room's own 4-column table, scoped from its own heading to the next `## `
+# heading (Sep 26, 2026 — planned problems). The identical `| Difficulty | Problem |
+# Trigger | Notes |` header recurs verbatim on the Grind 75 "Not from Grind 75" table
+# further down the same file, and the Knowledge Expansion Queue's header is close enough
+# to confuse a header-only match — neither is scanned, since the section is bounded before
+# any row regex runs.
+WAITING_ROOM_SECTION = re.compile(r"##\s*⏳\s*Waiting Room.*?(?=\n##\s|\Z)", re.S)
+
+# Anchored on the ROW SHAPE, not the header: `| <Easy|Medium|Hard> | [<n>. <title>](<url>) |
+# ...`. The cell must START with the link right after the difficulty cell, so a row whose
+# link is only PART of the cell (e.g. "Digit DP (technique) — e.g. [233. ...]") is
+# correctly excluded — such a row credits no technique's `queued:` spec anyway.
+WAITING_ROOM_ROW = re.compile(
+    r"^\|\s*(Easy|Medium|Hard)\s*\|\s*\[(\d+)\.\s*(.+?)\]\((https?://[^)]+)\)\s*\|",
+    re.MULTILINE)
+
+
+def parse_waiting_room(tracker_text: str) -> dict[int, dict]:
+    """The `## ⏳ Waiting Room` table -> {number: {"title", "url", "difficulty"}}.
+
+    A pure function over the tracker's own text (never a second file read — build_payload
+    reads TRACKER once and passes the string in here). Scoped to the Waiting Room section
+    alone via WAITING_ROOM_SECTION, so a look-alike header elsewhere in the same file is
+    never mistaken for a Waiting Room row.
+
+    A number can appear more than once in the section (1216's two phase-gated variants;
+    743 carries its own dedicated method-variant row) — the FIRST occurrence in file order
+    wins, so a later duplicate is silently ignored rather than overwriting the earlier
+    title/url. Only title/url/difficulty are returned; the Notes cell (coaching prose,
+    judge links like `[Kattis \\`lostmap\\`](...)`) never reaches the caller —
+    planned_for()'s curation rule (Notes never exported) depends on that.
+    """
+    section = WAITING_ROOM_SECTION.search(tracker_text)
+    if not section:
+        return {}
+    by_number: dict[int, dict] = {}
+    for difficulty, number, title, url in WAITING_ROOM_ROW.findall(section.group(0)):
+        num = int(number)
+        if num not in by_number:
+            by_number[num] = {"title": title, "url": url, "difficulty": difficulty}
+    return by_number
+
+
 def category_map() -> dict[int, str]:
     """LeetCode number -> technique folder, scanned from the solution tree.
 
@@ -848,11 +891,47 @@ def _comfort_by_number(problems: list[dict], retired: list[dict]) -> dict[int, s
     return best
 
 
+def planned_for(entry: dict | None, tracked_numbers: set[int],
+                waiting_room: dict[int, dict], warnings: list[str]) -> list[dict]:
+    """One techniques.yml entry's `problems:` specs -> its `planned` list (Sep 26, 2026):
+    every spec that carries a `queued` trigger and whose number has NOT yet earned a
+    tracker row, in file order. A number graduates out of `planned` on its own the moment
+    it is rated — `tracked_numbers` is comfort_by_number's own keys, so no second edit is
+    needed here when that happens.
+
+    `entry` is None for a coverage-table row with no matching techniques.yml entry (the
+    same silent-[] case enrich_techniques already gives buildsOn) — returns [].
+
+    A queued number absent from `waiting_room` emits nulls for title/url/difficulty plus
+    ONE warning naming it — fail-soft, never raises, but visible rather than silently
+    blank.
+    """
+    if not entry:
+        return []
+    planned = []
+    for spec in entry.get("problems") or []:
+        number, trigger = spec.get("number"), spec.get("queued")
+        if number is None or trigger is None or number in tracked_numbers:
+            continue
+        room = waiting_room.get(number)
+        if room is None:
+            warnings.append(
+                f"techniques.yml: queued problem {number} has no Waiting Room row in "
+                "dsa_progress.md — planned entry emitted with nulls.")
+            planned.append({"lcNumber": number, "title": None, "url": None,
+                            "difficulty": None, "trigger": trigger})
+            continue
+        planned.append({"lcNumber": number, "title": room["title"], "url": room["url"],
+                        "difficulty": room["difficulty"], "trigger": trigger})
+    return planned
+
+
 def enrich_techniques(rows: list[dict], yaml_entries: list[dict],
                       comfort_by_number: dict[int, str],
+                      waiting_room: dict[int, dict],
                       warnings: list[str]) -> list[dict]:
-    """`parse_techniques()`'s rows -> new dicts (no mutation) adding `buildsOn` and
-    `graduatedCount`.
+    """`parse_techniques()`'s rows -> new dicts (no mutation) adding `buildsOn`,
+    `graduatedCount` and `planned`.
 
     `buildsOn` is techniques.yml's own `builds_on` for that row's name, validated (an
     unknown name or a self-edge dropped, each warned) and cycle-broken (one back edge
@@ -863,23 +942,33 @@ def enrich_techniques(rows: list[dict], yaml_entries: list[dict],
     `graduatedCount` counts the row's `problems` (LC numbers) whose tracker comfort has
     reached GRADUATED_LEVEL (🎓) or better, read from `comfort_by_number` — data
     build_payload already holds, never a second read of the tracker.
+
+    `planned` (Sep 26, 2026) is planned_for()'s own list for this row's techniques.yml
+    entry (matched by name; a coverage row with no YAML entry gets []): every `queued`
+    problem not yet in comfort_by_number, resolved against `waiting_room`. Present on
+    every row, started or not — an empty list, never an absent key.
     """
     known_names = {e["name"] for e in yaml_entries if e.get("name")}
     order = [e["name"] for e in yaml_entries if e.get("name")]
     raw_by_name = {e["name"]: e.get("builds_on") or []
                    for e in yaml_entries if e.get("name")}
+    entry_by_name = {e["name"]: e for e in yaml_entries if e.get("name")}
     graph = {name: _resolve_builds_on(name, raw_by_name, known_names, warnings)
              for name in order}
     graph = _break_cycles(graph, order, warnings)
+    tracked_numbers = set(comfort_by_number)
 
     enriched = []
     for row in rows:
         graduated = sum(
             1 for num in row["problems"]
             if LEVEL.get(comfort_by_number.get(num), UNTRACKED_LEVEL) >= GRADUATED_LEVEL)
+        planned = planned_for(entry_by_name.get(row["name"]), tracked_numbers,
+                              waiting_room, warnings)
         enriched.append({**row,
                          "buildsOn": graph.get(row["name"], []),
-                         "graduatedCount": graduated})
+                         "graduatedCount": graduated,
+                         "planned": planned})
     return enriched
 
 
@@ -1172,12 +1261,20 @@ def build_payload(today: dt.date | None = None) -> tuple[dict, list[str]]:
     problems = build_problems(rows, sched, cats, urls, files, warnings)
     days = study_days(rows)
 
-    # buildsOn/graduatedCount (Sep 26, 2026): computed after build_problems() rather than
-    # right after parse_techniques() because graduatedCount needs comfort_by_number, which
-    # is built from build_problems()'s own output — never a second read of the tracker.
+    # buildsOn/graduatedCount/planned (Sep 26, 2026): computed after build_problems()
+    # rather than right after parse_techniques() because graduatedCount (and planned's
+    # tracked-number check) needs comfort_by_number, which is built from build_problems()'s
+    # own output, never a second read of the tracker. planned's own waiting_room map DOES
+    # read TRACKER again here — the same per-function read convention as problem_urls()
+    # and parse_retired() above, not a second read of anything comfort_by_number covers.
     yaml_entries = load_technique_entries(warnings)
     comfort_by_number = _comfort_by_number(problems, retired)
-    techniques = enrich_techniques(techniques, yaml_entries, comfort_by_number, warnings)
+    try:
+        waiting_room = parse_waiting_room(TRACKER.read_text(encoding="utf-8"))
+    except OSError:
+        waiting_room = {}
+    techniques = enrich_techniques(techniques, yaml_entries, comfort_by_number,
+                                   waiting_room, warnings)
 
     stats = {
         "schemaVersion": SCHEMA_VERSION,

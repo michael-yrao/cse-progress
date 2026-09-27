@@ -3,24 +3,24 @@
   "generatedAt": "2026-09-26",
   "totals": {
     "problems": 126,
-    "solutions": 138,
-    "reps": 615
+    "solutions": 137,
+    "reps": 614
   },
   "pipeline": {
     "blank": 0,
     "shaky": 14,
     "clean": {
       "s0": 3,
-      "s1": 30,
+      "s1": 29,
       "s2plus": 69,
-      "total": 102
+      "total": 101
     },
     "graduated": 22,
     "retired": 0
   },
   "difficulty": {
     "Easy": 34,
-    "Medium": 93,
+    "Medium": 92,
     "Hard": 11
   },
   "streak": {
@@ -33,14 +33,14 @@
   "coverage": {
     "total": 105,
     "started": 60,
-    "noGreen": 0,
+    "noGreen": 1,
     "thin": 17,
     "variantGaps": 1
   },
   "onSchedule": {
-    "totalActive": 138,
+    "totalActive": 137,
     "dueToday": 1,
-    "overdue": 7
+    "overdue": 6
   },
   "trophyCase": {
     "graduated": [
@@ -1053,7 +1053,23 @@
       "buildsOn": [
         "Dijkstra"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": [
+        {
+          "lcNumber": 9001,
+          "title": "Single Source Shortest Path, Negative Weights",
+          "url": "https://open.kattis.com/problems/shortestpath3",
+          "difficulty": "Easy",
+          "trigger": "surplus>=1"
+        },
+        {
+          "lcNumber": 9002,
+          "title": "Arbitrage",
+          "url": "https://open.kattis.com/problems/arbitrage",
+          "difficulty": "Medium",
+          "trigger": "surplus>=1"
+        }
+      ]
     },
     {
       "name": "Dijkstra",
@@ -1075,7 +1091,30 @@
         "Heap / Priority Queue",
         "Grid BFS"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": [
+        {
+          "lcNumber": 3650,
+          "title": "Minimum Cost Path with Edge Reversals",
+          "url": "https://leetcode.com/problems/minimum-cost-path-with-edge-reversals/",
+          "difficulty": "Medium",
+          "trigger": "surplus>=1"
+        },
+        {
+          "lcNumber": 1368,
+          "title": "Minimum Cost to Make at Least One Valid Path in a Grid",
+          "url": "https://leetcode.com/problems/minimum-cost-to-make-at-least-one-valid-path-in-a-grid/",
+          "difficulty": "Hard",
+          "trigger": "surplus>=1"
+        },
+        {
+          "lcNumber": 1514,
+          "title": "Path with Maximum Probability",
+          "url": "https://leetcode.com/problems/path-with-maximum-probability/",
+          "difficulty": "Medium",
+          "trigger": "surplus>=1"
+        }
+      ]
     },
     {
       "name": "Floyd-Warshall (all-pairs shortest path)",
@@ -1095,7 +1134,16 @@
       "buildsOn": [
         "Dijkstra"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": [
+        {
+          "lcNumber": 399,
+          "title": "Evaluate Division",
+          "url": "https://leetcode.com/problems/evaluate-division/",
+          "difficulty": "Medium",
+          "trigger": "rated:1334"
+        }
+      ]
     },
     {
       "name": "Hierholzer (Eulerian path)",
@@ -1115,7 +1163,16 @@
       "buildsOn": [
         "Graph Cycle Detection (DFS)"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": [
+        {
+          "lcNumber": 753,
+          "title": "Cracking the Safe",
+          "url": "https://leetcode.com/problems/cracking-the-safe/",
+          "difficulty": "Hard",
+          "trigger": "surplus>=1"
+        }
+      ]
     },
     {
       "name": "Kruskal's MST",
@@ -1123,19 +1180,27 @@
       "tier": "core",
       "started": true,
       "minProblems": 3,
-      "problemCount": 2,
+      "problemCount": 1,
       "problems": [
-        1489,
-        1584
+        1489
       ],
-      "bestComfort": "🟢",
-      "hasGreen": true,
+      "bestComfort": "🟡",
+      "hasGreen": false,
       "thin": true,
       "hasVariantGap": false,
       "buildsOn": [
         "Union-Find"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": [
+        {
+          "lcNumber": 1135,
+          "title": "Connecting Cities With Minimum Cost",
+          "url": "https://leetcode.com/problems/connecting-cities-with-minimum-cost/",
+          "difficulty": "Medium",
+          "trigger": "surplus>=1"
+        }
+      ]
     },
     {
       "name": "Prim's MST",
@@ -1155,7 +1220,16 @@
         "Heap / Priority Queue",
         "Dijkstra"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": [
+        {
+          "lcNumber": 9003,
+          "title": "Lost Map",
+          "url": "https://open.kattis.com/problems/lostmap",
+          "difficulty": "Easy",
+          "trigger": "surplus>=1"
+        }
+      ]
     },
     {
       "name": "Array/String Fundamentals",
@@ -1174,7 +1248,8 @@
       "thin": false,
       "hasVariantGap": false,
       "buildsOn": [],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "Boyer-Moore Voting",
@@ -1194,7 +1269,8 @@
       "buildsOn": [
         "Frequency Counting"
       ],
-      "graduatedCount": 1
+      "graduatedCount": 1,
+      "planned": []
     },
     {
       "name": "Frequency Counting",
@@ -1214,7 +1290,8 @@
       "buildsOn": [
         "Hash Map Lookup"
       ],
-      "graduatedCount": 1
+      "graduatedCount": 1,
+      "planned": []
     },
     {
       "name": "Hash Map Lookup",
@@ -1232,7 +1309,8 @@
       "thin": false,
       "hasVariantGap": false,
       "buildsOn": [],
-      "graduatedCount": 1
+      "graduatedCount": 1,
+      "planned": []
     },
     {
       "name": "Hash Set Membership",
@@ -1253,7 +1331,8 @@
       "buildsOn": [
         "Hash Map Lookup"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "In-Place Array Rotation",
@@ -1272,7 +1351,8 @@
       "buildsOn": [
         "Array/String Fundamentals"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "Length-Prefix Encoding",
@@ -1291,7 +1371,8 @@
       "buildsOn": [
         "Array/String Fundamentals"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "Prefix/Suffix Products",
@@ -1310,7 +1391,8 @@
       "buildsOn": [
         "Array/String Fundamentals"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "Backtracking",
@@ -1332,7 +1414,8 @@
       "buildsOn": [
         "Recursion"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "Binary Search (exact match)",
@@ -1352,7 +1435,8 @@
       "buildsOn": [
         "Array/String Fundamentals"
       ],
-      "graduatedCount": 1
+      "graduatedCount": 1,
+      "planned": []
     },
     {
       "name": "Binary Search (max boundary)",
@@ -1373,7 +1457,8 @@
       "buildsOn": [
         "Binary Search (exact match)"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "Binary Search (min boundary)",
@@ -1398,7 +1483,8 @@
       "buildsOn": [
         "Binary Search (exact match)"
       ],
-      "graduatedCount": 1
+      "graduatedCount": 1,
+      "planned": []
     },
     {
       "name": "Binary Search on Answer",
@@ -1419,7 +1505,8 @@
       "buildsOn": [
         "Binary Search (min boundary)"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "Bit Manipulation",
@@ -1436,7 +1523,8 @@
       "buildsOn": [
         "Array/String Fundamentals"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "Design (composed data structures)",
@@ -1454,7 +1542,16 @@
         "Hash Map Lookup",
         "HashMap + Doubly Linked List (LRU)"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": [
+        {
+          "lcNumber": 981,
+          "title": "Time Based Key-Value Store",
+          "url": "https://leetcode.com/problems/time-based-key-value-store/",
+          "difficulty": "Medium",
+          "trigger": "surplus>=1"
+        }
+      ]
     },
     {
       "name": "1D Dynamic Programming",
@@ -1471,7 +1568,8 @@
       "buildsOn": [
         "Memoization"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "2D Dynamic Programming",
@@ -1488,7 +1586,8 @@
       "buildsOn": [
         "1D Dynamic Programming"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "Interval DP",
@@ -1505,7 +1604,8 @@
       "buildsOn": [
         "2D Dynamic Programming"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "Knapsack",
@@ -1522,7 +1622,8 @@
       "buildsOn": [
         "1D Dynamic Programming"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "Longest Common Subsequence",
@@ -1539,7 +1640,8 @@
       "buildsOn": [
         "2D Dynamic Programming"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "Longest Increasing Subsequence",
@@ -1557,7 +1659,8 @@
         "1D Dynamic Programming",
         "Binary Search (min boundary)"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "Memoization",
@@ -1575,7 +1678,8 @@
         "Recursion",
         "Backtracking"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "Space Compression",
@@ -1592,7 +1696,8 @@
       "buildsOn": [
         "2D Dynamic Programming"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "2-SAT",
@@ -1609,7 +1714,8 @@
       "buildsOn": [
         "Tarjan's SCC"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "Advanced Geometry",
@@ -1626,7 +1732,8 @@
       "buildsOn": [
         "Sweep Line"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "Aho-Corasick",
@@ -1644,7 +1751,8 @@
         "Trie",
         "KMP"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "Bidirectional Search / Johnson's",
@@ -1662,7 +1770,8 @@
         "Dijkstra",
         "Bellman-Ford"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "Centroid Decomposition",
@@ -1679,7 +1788,8 @@
       "buildsOn": [
         "Tree DFS with Postorder Return"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "D&C DP (Aliens Trick)",
@@ -1697,7 +1807,8 @@
         "2D Dynamic Programming",
         "Divide & Conquer / Sorting"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "Difference Array",
@@ -1714,7 +1825,8 @@
       "buildsOn": [
         "Prefix Sum"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "Eertree",
@@ -1732,7 +1844,8 @@
         "Manacher's Algorithm",
         "Trie"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "FFT/NTT",
@@ -1750,7 +1863,8 @@
         "Number Theory",
         "Divide & Conquer / Sorting"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "Fenwick Tree (BIT)",
@@ -1767,7 +1881,8 @@
       "buildsOn": [
         "Prefix Sum"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "Heavy-Light Decomposition",
@@ -1785,7 +1900,8 @@
         "Segment Tree",
         "LCA"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "KMP",
@@ -1802,7 +1918,8 @@
       "buildsOn": [
         "Array/String Fundamentals"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "LCA",
@@ -1819,7 +1936,8 @@
       "buildsOn": [
         "Tree DFS (recursive)"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "Link-Cut Trees",
@@ -1836,7 +1954,8 @@
       "buildsOn": [
         "Heavy-Light Decomposition"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "MCMF / Min-Cut Modeling",
@@ -1854,7 +1973,8 @@
         "Max-Flow",
         "Bellman-Ford"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "Manacher's Algorithm",
@@ -1871,7 +1991,8 @@
       "buildsOn": [
         "Two Pointers (converging)"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "Matrix Exponentiation",
@@ -1888,7 +2009,8 @@
       "buildsOn": [
         "2D Dynamic Programming"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "Max-Flow",
@@ -1905,7 +2027,8 @@
       "buildsOn": [
         "Grid BFS"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "Meet-in-the-Middle",
@@ -1923,7 +2046,8 @@
         "Backtracking",
         "Binary Search (exact match)"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "Mo's Algorithm",
@@ -1941,7 +2065,8 @@
         "Prefix Sum",
         "Divide & Conquer / Sorting"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "Number Theory",
@@ -1956,7 +2081,8 @@
       "thin": false,
       "hasVariantGap": false,
       "buildsOn": [],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "Persistent Structures",
@@ -1973,7 +2099,8 @@
       "buildsOn": [
         "Segment Tree"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "Reservoir Sampling",
@@ -1990,7 +2117,8 @@
       "buildsOn": [
         "Array/String Fundamentals"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "SOS DP",
@@ -2007,7 +2135,8 @@
       "buildsOn": [
         "Knapsack"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "Segment Tree",
@@ -2025,7 +2154,8 @@
         "Tree DFS (recursive)",
         "Prefix Sum"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "Segment Tree Beats",
@@ -2042,7 +2172,8 @@
       "buildsOn": [
         "Segment Tree"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "Sprague-Grundy",
@@ -2059,7 +2190,8 @@
       "buildsOn": [
         "Memoization"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "Suffix Automaton",
@@ -2076,7 +2208,8 @@
       "buildsOn": [
         "Trie"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "Sweep Line",
@@ -2094,7 +2227,8 @@
         "Intervals (sort + sweep)",
         "Heap / Priority Queue"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "Tarjan's SCC",
@@ -2111,7 +2245,8 @@
       "buildsOn": [
         "Graph Cycle Detection (DFS)"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "XOR Trie",
@@ -2128,7 +2263,8 @@
       "buildsOn": [
         "Trie"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "BFS on Implicit Graph",
@@ -2147,7 +2283,8 @@
       "buildsOn": [
         "Grid BFS"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "Connected Components",
@@ -2166,7 +2303,8 @@
       "buildsOn": [
         "Grid DFS"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "Cycle Detection in an Iterated Sequence",
@@ -2186,7 +2324,8 @@
         "Floyd's Cycle / Midpoint",
         "Hash Set Membership"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "Graph Clone (DFS + Hash Map)",
@@ -2206,7 +2345,8 @@
         "Grid DFS",
         "Hash Map Lookup"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "Graph Cycle Detection (DFS)",
@@ -2225,7 +2365,8 @@
       "buildsOn": [
         "Grid DFS"
       ],
-      "graduatedCount": 1
+      "graduatedCount": 1,
+      "planned": []
     },
     {
       "name": "Grid BFS",
@@ -2247,7 +2388,8 @@
       "buildsOn": [
         "Tree BFS (level order)"
       ],
-      "graduatedCount": 3
+      "graduatedCount": 3,
+      "planned": []
     },
     {
       "name": "Grid DFS",
@@ -2267,7 +2409,8 @@
       "buildsOn": [
         "Tree DFS (recursive)"
       ],
-      "graduatedCount": 1
+      "graduatedCount": 1,
+      "planned": []
     },
     {
       "name": "Multi-source BFS",
@@ -2286,7 +2429,8 @@
       "buildsOn": [
         "Grid BFS"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "Topological Sort",
@@ -2308,7 +2452,8 @@
         "Graph Cycle Detection (DFS)",
         "Grid BFS"
       ],
-      "graduatedCount": 1
+      "graduatedCount": 1,
+      "planned": []
     },
     {
       "name": "Union-Find",
@@ -2330,7 +2475,8 @@
       "buildsOn": [
         "Connected Components"
       ],
-      "graduatedCount": 2
+      "graduatedCount": 2,
+      "planned": []
     },
     {
       "name": "Heap / Priority Queue",
@@ -2354,7 +2500,8 @@
       "buildsOn": [
         "Divide & Conquer / Sorting"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "Intervals (sort + sweep)",
@@ -2375,7 +2522,8 @@
       "buildsOn": [
         "Divide & Conquer / Sorting"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "Deep Copy via Hash Map",
@@ -2395,7 +2543,8 @@
         "Hash Map Lookup",
         "Dummy Node"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "Dummy Node",
@@ -2414,7 +2563,8 @@
       "thin": false,
       "hasVariantGap": false,
       "buildsOn": [],
-      "graduatedCount": 1
+      "graduatedCount": 1,
+      "planned": []
     },
     {
       "name": "Floyd's Cycle / Midpoint",
@@ -2434,7 +2584,8 @@
       "buildsOn": [
         "Dummy Node"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "HashMap + Doubly Linked List (LRU)",
@@ -2454,7 +2605,16 @@
         "Hash Map Lookup",
         "Dummy Node"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": [
+        {
+          "lcNumber": 1472,
+          "title": "Design Browser History",
+          "url": "https://leetcode.com/problems/design-browser-history/",
+          "difficulty": "Medium",
+          "trigger": "rated:146"
+        }
+      ]
     },
     {
       "name": "Linked List Arithmetic",
@@ -2473,7 +2633,8 @@
       "buildsOn": [
         "Dummy Node"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "Linked List Merge",
@@ -2492,7 +2653,8 @@
       "buildsOn": [
         "Dummy Node"
       ],
-      "graduatedCount": 1
+      "graduatedCount": 1,
+      "planned": []
     },
     {
       "name": "Linked List Reversal",
@@ -2511,7 +2673,8 @@
       "buildsOn": [
         "Dummy Node"
       ],
-      "graduatedCount": 1
+      "graduatedCount": 1,
+      "planned": []
     },
     {
       "name": "Remove Nth From End",
@@ -2531,7 +2694,8 @@
         "Dummy Node",
         "Two Pointers (converging)"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "Math / Number Manipulation",
@@ -2548,7 +2712,8 @@
       "buildsOn": [
         "Array/String Fundamentals"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "Simulation / Matrix Walk",
@@ -2565,7 +2730,8 @@
       "buildsOn": [
         "Array/String Fundamentals"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "Kadane",
@@ -2584,7 +2750,8 @@
       "buildsOn": [
         "Prefix Sum"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "Prefix Sum",
@@ -2604,7 +2771,8 @@
       "buildsOn": [
         "Array/String Fundamentals"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "Recursion",
@@ -2623,7 +2791,8 @@
       "thin": false,
       "hasVariantGap": false,
       "buildsOn": [],
-      "graduatedCount": 2
+      "graduatedCount": 2,
+      "planned": []
     },
     {
       "name": "Greedy (single pass)",
@@ -2647,7 +2816,8 @@
       "buildsOn": [
         "Array/String Fundamentals"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "Sliding Window",
@@ -2670,7 +2840,8 @@
         "Two Pointers (converging)",
         "Frequency Counting"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "Divide & Conquer / Sorting",
@@ -2689,7 +2860,8 @@
       "buildsOn": [
         "Recursion"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "Monotonic Deque",
@@ -2709,7 +2881,8 @@
         "Monotonic Stack",
         "Sliding Window"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "Monotonic Stack",
@@ -2733,7 +2906,8 @@
       "buildsOn": [
         "Stack (matching)"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "Stack (augmented entries)",
@@ -2752,7 +2926,8 @@
       "buildsOn": [
         "Stack (matching)"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "Stack (expression evaluation)",
@@ -2771,7 +2946,16 @@
       "buildsOn": [
         "Stack (matching)"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": [
+        {
+          "lcNumber": 394,
+          "title": "Decode String",
+          "url": "https://leetcode.com/problems/decode-string/",
+          "difficulty": "Medium",
+          "trigger": "surplus>=1"
+        }
+      ]
     },
     {
       "name": "Stack (matching)",
@@ -2790,7 +2974,8 @@
       "buildsOn": [
         "Array/String Fundamentals"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "String Building & Encoding",
@@ -2807,7 +2992,8 @@
       "buildsOn": [
         "Length-Prefix Encoding"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "String Parsing / Manipulation",
@@ -2824,7 +3010,16 @@
       "buildsOn": [
         "Array/String Fundamentals"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": [
+        {
+          "lcNumber": 6,
+          "title": "Zigzag Conversion",
+          "url": "https://leetcode.com/problems/zigzag-conversion/",
+          "difficulty": "Medium",
+          "trigger": "surplus>=1"
+        }
+      ]
     },
     {
       "name": "BST Descent",
@@ -2845,7 +3040,8 @@
         "Tree DFS (recursive)",
         "Binary Search (exact match)"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "Tree BFS (level order)",
@@ -2865,7 +3061,8 @@
       "buildsOn": [
         "Tree DFS (recursive)"
       ],
-      "graduatedCount": 2
+      "graduatedCount": 2,
+      "planned": []
     },
     {
       "name": "Tree Construction (Divide & Conquer)",
@@ -2885,7 +3082,8 @@
         "Tree DFS with Postorder Return",
         "Divide & Conquer / Sorting"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "Tree DFS (recursive)",
@@ -2909,7 +3107,8 @@
       "buildsOn": [
         "Recursion"
       ],
-      "graduatedCount": 4
+      "graduatedCount": 4,
+      "planned": []
     },
     {
       "name": "Tree DFS with Postorder Return",
@@ -2929,7 +3128,8 @@
       "buildsOn": [
         "Tree DFS (recursive)"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "Trie",
@@ -2951,7 +3151,8 @@
         "Tree DFS (recursive)",
         "Hash Map Lookup"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "Dutch National Flag",
@@ -2970,7 +3171,8 @@
       "buildsOn": [
         "Fast/Slow In-Place Write"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "Fast/Slow In-Place Write",
@@ -2992,7 +3194,8 @@
       "buildsOn": [
         "Two Pointers (converging)"
       ],
-      "graduatedCount": 1
+      "graduatedCount": 1,
+      "planned": []
     },
     {
       "name": "Prefix/Suffix Max",
@@ -3011,7 +3214,8 @@
       "buildsOn": [
         "Prefix/Suffix Products"
       ],
-      "graduatedCount": 0
+      "graduatedCount": 0,
+      "planned": []
     },
     {
       "name": "Two Pointers (converging)",
@@ -3037,7 +3241,8 @@
       "buildsOn": [
         "Array/String Fundamentals"
       ],
-      "graduatedCount": 2
+      "graduatedCount": 2,
+      "planned": []
     }
   ],
   "studyDays": [
@@ -4006,8 +4211,8 @@
     {
       "date": "2026-08-19",
       "planned": 8.5,
-      "done": 8.6,
-      "built": 8.6,
+      "done": 8.1,
+      "built": 8.1,
       "partial": true
     },
     {
@@ -4399,7 +4604,7 @@
       "description": "Have at least one clean solve in every technique on the roadmap.",
       "earned": false,
       "progress": {
-        "current": 60,
+        "current": 59,
         "target": 105
       }
     },
@@ -4952,8 +5157,8 @@
         },
         {
           "date": "2026-08-11",
-          "comfort": null,
-          "level": null
+          "comfort": "🟢",
+          "level": 2
         },
         {
           "date": "2026-09-25",
@@ -7849,28 +8054,6 @@
           "date": "2026-08-27",
           "comfort": "🎓",
           "level": 3
-        }
-      ]
-    },
-    {
-      "lcNumber": 1584,
-      "title": "Min Cost to Connect All Points (Kruskal)",
-      "url": "https://leetcode.com/problems/min-cost-to-connect-all-points/",
-      "file": "dsa/leetcode/graphs/1584_min_cost_to_connect_all_points.py",
-      "difficulty": "Medium",
-      "category": "graphs",
-      "comfort": "🟢",
-      "level": 2,
-      "streak": 1,
-      "nextReview": "2026-09-25",
-      "repDates": [
-        "2026-08-26"
-      ],
-      "timeline": [
-        {
-          "date": "2026-08-26",
-          "comfort": "🟢",
-          "level": 2
         }
       ]
     },

@@ -1197,6 +1197,31 @@ decisions:
       `.claude/skills/cse-coach/references/technique-coverage.md`.
     affects: [technique_coverage]
 
+  - id: mst-split-correction-sep26
+    date: 2026-09-26
+    summary: >-
+      CORRECTS `mst-split-sep26` the same day it landed. That entry credited Prim's and
+      Kruskal's "by WHICH IMPLEMENTATION was written" and so added a second tracker row,
+      1584 (Kruskal), from the Aug 26 rated rep. The learner rejected the row: 1584 is a
+      complete graph, so Kruskal's must build and sort every pair of points before
+      union-find does anything, while array-scan Prim's finishes in n squared — nobody
+      would choose Kruskal's there, and a review row would schedule a rep of a method
+      choice that is wrong for the problem. The Aug 19/26 Kruskal code on 1584 was a teach
+      and a check that the teach stuck, which is what the Aug 26 "no new review row" call
+      had recorded; that call is REINSTATED. The split itself STANDS (two techniques), but
+      the crediting rule is now: a problem credits the method you would CHOOSE for its
+      input shape — dense input (complete graph, coordinates, a distance matrix) -> Prim's;
+      an edge list on a sparse graph -> Kruskal's. Changes: the 1584 (Kruskal) tracker row
+      and its Tue Sep 29 slot are removed; 1135 Connecting Cities moves from Prim's to
+      Kruskal's (its input is an edge list); Prim's gains 9003 Lost Map (Kattis `lostmap`,
+      a full distance matrix, output the tree's edges), hand-picked under
+      `external-judge-problems-sep26` because the Sep 26 MST company pull returned three
+      Hards, none Prim's-natural. Coverage reads Prim's 1/3 and Kruskal's 1/3, each with
+      one queued fill. No `cse.config.yml` value changed. See
+      `docs/foundations/dsa/mastery/techniques.yml` (Prim's MST / Kruskal's MST entries),
+      `docs/foundations/dsa/mastery/dsa_progress.md` (Waiting Room rows 1135, 9003).
+    affects: [technique_coverage, dsa_progress, waiting_room]
+
   - id: workload-new-row-pricing
     date: 2026-09-26
     summary: >-
@@ -1207,3 +1232,59 @@ decisions:
       row; no `cse.config.yml` value changed. See `scripts/effort_budget.py` (`NEW_GLYPH`,
       `parse_schedule_day()`'s `is_new` item field, `price_day_items()`).
     affects: [gamification]
+
+  - id: technique-planned-problems-sep26
+    date: 2026-09-26
+    summary: >-
+      ADDS `planned` to `progress.json`/`progress-summary.json`'s per-technique contract:
+      the technique's `queued` `problems:` specs that have NOT yet earned a tracker row
+      (a number moves out on its own, into `problems`, the moment it is rated — no second
+      edit needed). Curation rule: only `lcNumber`/`title`/`url`/`difficulty`/`trigger` are
+      exported, sourced from the tracker's Waiting Room row — the Notes column (coaching
+      prose, judge links) is NEVER exported, same discipline as `problems[]` itself.
+      Present on every technique, started or not started — an empty array, never an absent
+      key, so an older/newer contract renders unchanged. `scripts/gamify.py` gains
+      `parse_waiting_room(tracker_text)` (a pure function scoped to the `## ⏳ Waiting
+      Room` section alone, so the look-alike `| Difficulty | Problem | Trigger | Notes |`
+      header on the Grind 75 "Not from Grind 75" table is never mistaken for a Waiting Room
+      row) and `planned_for(entry, tracked_numbers, waiting_room, warnings)`, called from
+      `enrich_techniques` (now takes `waiting_room` as a new argument). A queued number
+      absent from the Waiting Room table emits nulls + one warning, fail-soft. No
+      `SCHEMA_VERSION` bump, no `cse.config.yml` value changed — same additive precedent as
+      `technique-builds-on-sep26`.
+
+      RECORD SYNC (declares fills already on record; queues nothing new): adds a
+      `queued:` spec to six `techniques.yml` `problems:` entries that were fills already
+      decided elsewhere but never marked queued — `{number: 399, queued: "rated:1334"}`
+      (Floyd-Warshall), `{number: 753, queued: "surplus>=1"}` (Hierholzer — already named
+      in that same entry's own comment, "queued: 753 Cracking the Safe (Hard) — de Bruijn
+      via Eulerian circuit", and held in the weekly schedule's Waiting Room since its
+      `green:2097` trigger fired Sep 7, 2026), `{number: 1472, queued: "rated:146"}`
+      (HashMap + Doubly Linked List), `{number: 394, queued: "surplus>=1"}` (Stack
+      expression evaluation), `{number: 981, queued: "surplus>=1"}` (Design,
+      `company-demand-families-sep26`), `{number: 6, queued: "surplus>=1"}` (String
+      Parsing / Manipulation, same decision). ADDS two new `dsa_progress.md` Waiting Room
+      rows the record sync depends on — 753 Cracking the Safe (Hard; held since its
+      `green:2097` trigger fired Sep 7, 2026, now the machine-checkable `surplus>=1`) and
+      394 Decode String (Medium; named in `.claude/skills/cse-coach/references/
+      technique-coverage.md` as Stack-expression's 2nd problem in place of the parked
+      224/227 rungs, but never given its own row) — without these two rows, `planned_for`
+      would emit nulls + a warning for both numbers, which is exactly the guard that
+      caught the gap. A Sep 26, 2026 coverage scan surfaced six further NEW candidate
+      fills — those are DELIBERATELY left unqueued: this decision covers declaring fills
+      already decided, never picking new ones off a scan. Named here so the scan is not
+      lost (company pull, 7 companies, ungated): 986 Interval List Intersections and 253
+      Meeting Rooms II (Intervals — the two variants queued with no problem named), 528
+      Random Pick with Weight (Prefix Sum), 215 Kth Largest Element in an Array (Divide &
+      Conquer / Sorting, first quickselect), 103 Binary Tree Zigzag Level Order Traversal
+      (Tree BFS), 934 Shortest Bridge (Multi-source BFS). A weekly build may queue any of
+      them; none is queued by this entry.
+
+      Consumer: the progressiveoverflow.com Mastery tab shows a thin technique's in-flight
+      problems (number + title) instead of only "1/3". See `scripts/gamify.py`
+      (`parse_waiting_room`, `planned_for`, `enrich_techniques`),
+      `scripts/test_gamify.py` (`ParseWaitingRoomTests`, the new `EnrichTechniquesTests`
+      cases), `dashboard/progress.schema.json` (`definitions.technique.planned`),
+      `docs/foundations/dsa/mastery/techniques.yml` (the six new `queued:` specs),
+      `docs/foundations/dsa/mastery/dsa_progress.md` (the two new Waiting Room rows).
+    affects: [gamification, technique_coverage, dsa_progress, waiting_room]

@@ -358,6 +358,7 @@ techniques:
     min_problems: 2
     problems:
       - {number: 150}
+      - {number: 394, queued: "surplus>=1"}
 
   # Not a monotonic stack and not expression evaluation: the stack stores AUGMENTED
   # entries so a query that would otherwise be a scan becomes a read of the top. The
@@ -486,6 +487,7 @@ techniques:
     builds_on: ["Hash Map Lookup", "Dummy Node"]
     problems:
       - {number: 146}
+      - {number: 1472, queued: "rated:146"}
 
   # ── Trees ───────────────────────────────────────────────────────────────────
   - name: Tree DFS (recursive)
@@ -732,6 +734,7 @@ techniques:
     problems:
       - {number: 1334, method: Floyd-Warshall}
       - {number: 1462, method: Floyd-Warshall / Transitive Closure}
+      - {number: 399, method: Floyd-Warshall, queued: "rated:1334"}
 
   # Learner self-reported 50:50 on execution (Aug 15) while recognition is the
   # strongest call in the ledger. LeetCode has only three Eulerian problems total;
@@ -773,29 +776,33 @@ techniques:
       - {number: 332, method: min-heap ordering}
       - {number: 332, method: pre-sorted adjacency}
       - {number: 2097}   # Sep 5, 2026 — purest Hierholzer: no lexical order (so off the ordering-variant axis), start derived from out-in degree
+      - {number: 753, queued: "surplus>=1"}
 
   # min_problems dropped Aug 15, 2026 — same rule as Floyd-Warshall above.
   #
   # Split from Kruskal's MST, Sep 26, 2026 (decision `mst-split-sep26`) — learner's call:
-  # credit Prim's and Kruskal's as two separate techniques, by which implementation was
-  # actually written, rather than one entry with a variants: gap that could never close
-  # (1584 has only ever had one tracker row, titled Prim's MST). Reverses the Aug 26 "no
-  # new review row" call now that 1584 has a second, Kruskal-titled row (see
-  # dsa_progress.md).
+  # Prim's and Kruskal's are two separate techniques, each credited by the problems where
+  # that method is the one you would actually CHOOSE (corrected the same day, decision
+  # `mst-split-correction-sep26`): DENSE input (complete graph, coordinates, a distance
+  # matrix) -> Prim's; an EDGE LIST on a sparse graph -> Kruskal's. 1584 is a complete graph,
+  # so it credits Prim's only — its Aug 19/26 Kruskal implementations were a teach and a
+  # check on the teach, not a method choice, and carry no tracker row.
+  #   9003 = Kattis `lostmap` (full n x n distance matrix, output the tree's edges) —
+  #   hand-picked: the Sep 26 MST pull returned 3 Hards, none Prim's-natural.
   - name: Prim's MST
     family: advanced_graphs
     builds_on: ["Heap / Priority Queue", "Dijkstra"]
     doc: prims_mst
     problems:
       - {number: 1584, method: Prim's MST}
-      - {number: 1135, method: Prim's MST, queued: "surplus>=1"}
+      - {number: 9003, method: Prim's MST, queued: "surplus>=1"}
 
   - name: Kruskal's MST
     family: advanced_graphs
     builds_on: ["Union-Find"]
     problems:
       - {number: 1489, method: Kruskal}
-      - {number: 1584, method: Kruskal}
+      - {number: 1135, method: Kruskal, queued: "surplus>=1"}
 
   # ── Backtracking ────────────────────────────────────────────────────────────
   # Added for the /learn cheat-sheet contract (Sep 23, 2026) — backtracking.md carried no
@@ -877,6 +884,8 @@ techniques:
     tier: core
     min_problems: 3
     builds_on: ["Array/String Fundamentals"]
+    problems:
+      - {number: 6, queued: "surplus>=1"}
 
   - name: String Building & Encoding
     family: strings
@@ -910,6 +919,8 @@ techniques:
     tier: core
     min_problems: 3
     builds_on: ["Hash Map Lookup", "HashMap + Doubly Linked List (LRU)"]
+    problems:
+      - {number: 981, queued: "surplus>=1"}
 
   # ── Bit Manipulation (tier: core) ──
   # Company-demand pull, Sep 26, 2026 (decision `company-demand-families-sep26`): Bit

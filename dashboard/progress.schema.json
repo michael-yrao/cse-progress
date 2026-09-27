@@ -234,7 +234,22 @@
         "thin": { "type": "boolean", "description": "Fewer than the 3-4 surface forms the technique needs." },
         "hasVariantGap": { "type": "boolean", "description": "A declared method variant has never once been exercised." },
         "buildsOn": { "type": "array", "items": { "type": "string" }, "description": "Technique names this one presupposes (techniques.yml's `builds_on`, Sep 26, 2026), validated against that file's own declared names (an unknown name, a self-edge, or the edge that closes a cycle is dropped). Empty for a root of the technique graph. Feeds the site's skill tree." },
-        "graduatedCount": { "type": "integer", "minimum": 0, "description": "How many of this row's `problems` (LC numbers) have reached 🎓 or better in the tracker (Sep 26, 2026) — the highest comfort per number when a number carries several tracker rows." }
+        "graduatedCount": { "type": "integer", "minimum": 0, "description": "How many of this row's `problems` (LC numbers) have reached 🎓 or better in the tracker (Sep 26, 2026) — the highest comfort per number when a number carries several tracker rows." },
+        "planned": {
+          "type": "array",
+          "description": "Problems queued for this technique with no tracker row yet (Sep 26, 2026, decision `technique-planned-problems-sep26`) — techniques.yml `problems:` specs carrying `queued`, joined against the tracker's Waiting Room table for title/url/difficulty. A number moves out of this list on its own the moment it is rated (into `problems` above) — no second edit needed. Present on every technique, started or not (empty array when nothing is queued). Curation rule: the Waiting Room's Notes column (coaching prose, judge links) is NEVER exported — only lcNumber/title/url/difficulty/trigger.",
+          "items": {
+            "type": "object",
+            "required": ["lcNumber", "trigger"],
+            "properties": {
+              "lcNumber": { "type": "integer", "description": "The queued problem's LC number, or a synthetic 9xxx external-judge id (external-judge-problems-sep26) — the `url` host says which judge." },
+              "title": { "type": ["string", "null"], "description": "From the Waiting Room row's link text, verbatim. Null when the queued number has no Waiting Room row yet (a warned condition in gamify.py)." },
+              "url": { "type": ["string", "null"], "format": "uri" },
+              "difficulty": { "type": ["string", "null"], "enum": ["Easy", "Medium", "Hard", null] },
+              "trigger": { "type": "string", "description": "The `queued:` trigger string from techniques.yml — same vocabulary as the Waiting Room's own Trigger column." }
+            }
+          }
+        }
       }
     },
     "probe": {
