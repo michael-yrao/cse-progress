@@ -396,7 +396,8 @@ class ReportContext:
 
 def build_report_context() -> ReportContext:
     resolved, _ = tc.resolve(tc._load_yaml().safe_load(tc.TECHNIQUES_YML.read_text(encoding="utf-8")),
-                              tc.parse_tracker(tc.TRACKER_MD))
+                              tc.parse_tracker(tc.TRACKER_MD),
+                              tc.load_coverage_threshold_config())
     return ReportContext(
         resolved=resolved,
         comfort_by_slug=tracker_comfort_by_slug(),

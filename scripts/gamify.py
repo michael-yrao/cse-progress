@@ -716,6 +716,10 @@ TABLE_ROW = re.compile(r"^\|(.+)\|\s*$", re.MULTILINE)
 CELL_NUMBER = re.compile(r"\d+")
 PARENTHETICAL = re.compile(r"\((.*?)\)")
 COMFORT_GLYPH = re.compile(r"[🔴🟡🟢🎓🏆]")
+# The Min cell's floor+unclean breakdown, e.g. `8 (4+4)` — technique_coverage.py's
+# `_min_cell()`. Absent on an older report written before that breakdown existed; see
+# parse_techniques()'s fallback below.
+MIN_CELL_BREAKDOWN = re.compile(r"\((\d+)\+(\d+)\)")
 
 # The `## Coverage` table's fixed schema: Technique, Family, Tier, Min, Problems, Best,
 # 🟢, Variants, Gaps. Not a cse.config.yml value — it's technique_coverage.py's own output
@@ -739,6 +743,26 @@ def _parse_untried_variants(variants_cell: str) -> list[str]:
     is deliberately excluded — it's a known gap with a fill already picked, not something
     to name as missing. `—` (no variants declared) yields []."""
     return UNTRIED_VARIANT.findall(variants_cell or "")
+
+
+def _fallback_min_problems(warnings: list[str]) -> int:
+    """Only reached when a Min cell has no integer at all — should not happen with a
+    freshly generated report. Reads `cse.config.yml`'s `coverage_threshold.floor_min`
+    rather than a hard-coded literal, so this rare fallback tracks the same knob as
+    everywhere else it's used (single source of truth). Fail-soft to 1, announced via
+    `warnings`, when the file or key is missing."""
+    try:
+        import yaml  # noqa: PLC0415
+        cfg = yaml.safe_load(CONFIG.read_text(encoding="utf-8")) or {}
+    except Exception:  # noqa: BLE001 — a missing/unparsable config is a normal fail-soft state
+        cfg = {}
+    floor_min = (cfg.get("coverage_threshold") or {}).get("floor_min")
+    if floor_min is None:
+        warnings.append(
+            "cse.config.yml has no coverage_threshold.floor_min — an unparseable Min "
+            "cell fell back to a built-in default of 1.")
+        return 1
+    return floor_min
 
 
 def parse_techniques(warnings: list[str]) -> list[dict]:
@@ -765,9 +789,13 @@ def parse_techniques(warnings: list[str]) -> list[dict]:
     `is_started` (the exact gate that keeps these techniques out of the Action list) even
     if that check's definition ever changes.
 
-    `minProblems` (round 3) is the Min column — the per-technique coverage bar
-    (`techniques.yml`'s `min_problems`, 1 for most, up to 5 for one) that makes "thin"
-    self-explanatory as `problemCount / minProblems` instead of a bare, unexplained label.
+    `minProblems` (round 3) is the Min column — the per-technique coverage bar, computed
+    by `technique_coverage.py` per `cse.config.yml`'s `coverage_threshold` formula (or an
+    explicit override in `techniques.yml`) — that makes "thin" self-explanatory as
+    `problemCount / minProblems` instead of a bare, unexplained label. The Min cell also
+    carries that threshold's `(floor+unclean)` breakdown, read out here as
+    `coverageFloor`/`uncleanCount` — additive fields alongside `minProblems`, both falling
+    back to `minProblems`/0 on an older report written before the breakdown existed.
     """
     try:
         text = COVERAGE.read_text(encoding="utf-8")
@@ -799,6 +827,15 @@ def parse_techniques(warnings: list[str]) -> list[dict]:
             continue  # header / markdown separator row, not data
 
         min_problems_match = CELL_NUMBER.search(min_cell)
+        min_problems = (int(min_problems_match.group(0)) if min_problems_match
+                        else _fallback_min_problems(warnings))
+        # The `(floor+unclean)` breakdown is additive (Sep 27, 2026) — an older report
+        # written before it existed has a bare integer Min cell, so it falls back to
+        # crediting the whole threshold to the floor with zero unclean, rather than
+        # leaving these two fields unset.
+        breakdown = MIN_CELL_BREAKDOWN.search(min_cell)
+        coverage_floor = int(breakdown.group(1)) if breakdown else min_problems
+        unclean_count = int(breakdown.group(2)) if breakdown else 0
         counts = CELL_NUMBER.findall(problems_cell)
         problem_count = int(counts[0]) if counts else 0
         paren = PARENTHETICAL.search(problems_cell)
@@ -810,7 +847,9 @@ def parse_techniques(warnings: list[str]) -> list[dict]:
             "family": family,
             "tier": tier or "core",
             "started": "not started" not in gaps_cell,
-            "minProblems": int(min_problems_match.group(0)) if min_problems_match else 3,
+            "minProblems": min_problems,
+            "coverageFloor": coverage_floor,
+            "uncleanCount": unclean_count,
             "problemCount": problem_count,
             "problems": problems,
             "bestComfort": best.group(0) if best else None,

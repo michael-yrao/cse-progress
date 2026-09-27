@@ -261,3 +261,17 @@ output_quality:
   pass_threshold: 0.75              # aggregate 0–1 below which judge_output.py --check exits 1
   readability:
     max_sentence_words: 20          # the sentence-length guide the rubric applies
+
+# The per-technique coverage bar — read by scripts/technique_coverage.py (formula:
+# floor = clamp(ceil(plan_share * declared), floor_min, floor_max); threshold =
+# floor + unclean, where `declared` is the technique's distinct declared problem
+# count and `unclean` is how many of its credited problems are still 🔴/🟡 best
+# comfort). Replaces the old flat `techniques.yml` `defaults.min_problems` (decision
+# `coverage-threshold-formula-sep27`, decisions.yml) — a fixed default didn't fit a
+# vocabulary spanning techniques with 1 declared problem and techniques with 15.
+# A technique's own `min_problems:` in techniques.yml, when present, overrides
+# `floor` only; `unclean` is still added on top.
+coverage_threshold:
+  plan_share: 0.5   # share of a technique's declared problems the floor asks for
+  floor_min: 1      # a technique with very few declared problems still wants at least this many
+  floor_max: 5      # a technique with a huge declared set doesn't need the whole set drilled

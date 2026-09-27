@@ -25,8 +25,6 @@ import technique_coverage as tc
 
 TECHNIQUES_FIXTURE = """
 version: 1
-defaults:
-  min_problems: 3
 techniques:
   - name: Test Tech
     family: test_family
@@ -76,7 +74,10 @@ class QueuedProblemTests(unittest.TestCase):
     def _render(self) -> str:
         config = tc.yaml.safe_load(tc.TECHNIQUES_YML.read_text(encoding="utf-8"))
         rows = tc.parse_tracker(tc.TRACKER_MD)
-        resolved, claimed = tc.resolve(config, rows)
+        # DEFAULT_COVERAGE_THRESHOLD directly, never a disk read of the live
+        # cse.config.yml — this fixture stays isolated from repo state, same as the
+        # techniques.yml/tracker fixtures above.
+        resolved, claimed = tc.resolve(config, rows, tc.DEFAULT_COVERAGE_THRESHOLD)
         return tc.render(resolved, rows, claimed)
 
     def test_queued_problem_in_gaps_cell_and_action_list_not_in_problems_parens(self):
@@ -117,6 +118,45 @@ class QueuedProblemTests(unittest.TestCase):
         self.assertEqual(row["problemCount"], 1)
         self.assertTrue(row["thin"])
         self.assertFalse(row["hasVariantGap"])
+
+
+class ComputeCoverageThresholdTests(unittest.TestCase):
+    """Table-driven test of `compute_coverage_threshold()` — the pure formula behind the
+    per-technique coverage bar (decision `coverage-threshold-formula-sep27`):
+
+        floor     = an explicit override, else clamp(ceil(plan_share * declared),
+                    floor_min, floor_max)
+        threshold = floor + unclean
+
+    Fixed config throughout (`plan_share=0.5, floor_min=1, floor_max=5`, matching
+    cse.config.yml's own defaults) — only `declared`/`unclean`/`override` vary per case.
+    """
+
+    CFG = {"plan_share": 0.5, "floor_min": 1, "floor_max": 5}
+
+    CASES = {
+        "zero declared clamps up to floor_min": (
+            {"declared": 0, "unclean": 0, "override": None}, (1, 1)),
+        "a mid declared count rounds its floor up": (
+            # ceil(0.5 * 5) = ceil(2.5) = 3
+            {"declared": 5, "unclean": 0, "override": None}, (3, 3)),
+        "a large declared count clamps down to floor_max": (
+            # ceil(0.5 * 20) = 10, clamped to floor_max=5
+            {"declared": 20, "unclean": 0, "override": None}, (5, 5)),
+        "an explicit override replaces the computed floor": (
+            # the computed floor from declared=1 would be 1; the override wins instead
+            {"declared": 1, "unclean": 0, "override": 4}, (4, 4)),
+        "unclean adds on top of a computed floor": (
+            {"declared": 5, "unclean": 2, "override": None}, (3, 5)),
+        "unclean adds on top of an overridden floor": (
+            {"declared": 1, "unclean": 2, "override": 4}, (4, 6)),
+    }
+
+    def test_floor_and_threshold(self):
+        for label, (kwargs, expected) in self.CASES.items():
+            with self.subTest(label):
+                self.assertEqual(
+                    tc.compute_coverage_threshold(**kwargs, **self.CFG), expected)
 
 
 if __name__ == "__main__":

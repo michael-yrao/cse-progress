@@ -1,19 +1,19 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-26",
+  "generatedAt": "2026-09-27",
   "totals": {
     "problems": 126,
     "solutions": 137,
-    "reps": 614
+    "reps": 615
   },
   "pipeline": {
     "blank": 0,
-    "shaky": 14,
+    "shaky": 13,
     "clean": {
       "s0": 3,
-      "s1": 29,
+      "s1": 30,
       "s2plus": 69,
-      "total": 101
+      "total": 102
     },
     "graduated": 22,
     "retired": 0
@@ -24,22 +24,22 @@
     "Hard": 11
   },
   "streak": {
-    "current": 122,
-    "longest": 122,
-    "lastStudyDay": "2026-09-26",
-    "studyDays": 180,
+    "current": 123,
+    "longest": 123,
+    "lastStudyDay": "2026-09-27",
+    "studyDays": 181,
     "restDayAllowance": 1
   },
   "coverage": {
     "total": 105,
     "started": 60,
     "noGreen": 1,
-    "thin": 17,
+    "thin": 6,
     "variantGaps": 1
   },
   "onSchedule": {
     "totalActive": 137,
-    "dueToday": 1,
+    "dueToday": 3,
     "overdue": 6
   },
   "trophyCase": {
@@ -1041,7 +1041,9 @@
       "family": "advanced_graphs",
       "tier": "core",
       "started": true,
-      "minProblems": 3,
+      "minProblems": 2,
+      "coverageFloor": 2,
+      "uncleanCount": 0,
       "problemCount": 1,
       "problems": [
         787
@@ -1078,7 +1080,9 @@
       "family": "advanced_graphs",
       "tier": "core",
       "started": true,
-      "minProblems": 3,
+      "minProblems": 4,
+      "coverageFloor": 4,
+      "uncleanCount": 0,
       "problemCount": 3,
       "problems": [
         743,
@@ -1087,7 +1091,7 @@
       ],
       "bestComfort": "🟢",
       "hasGreen": true,
-      "thin": false,
+      "thin": true,
       "hasVariantGap": true,
       "buildsOn": [
         "Heap / Priority Queue",
@@ -1134,7 +1138,9 @@
       "family": "advanced_graphs",
       "tier": "core",
       "started": true,
-      "minProblems": 3,
+      "minProblems": 2,
+      "coverageFloor": 2,
+      "uncleanCount": 0,
       "problemCount": 2,
       "problems": [
         1334,
@@ -1142,7 +1148,7 @@
       ],
       "bestComfort": "🟢",
       "hasGreen": true,
-      "thin": true,
+      "thin": false,
       "hasVariantGap": false,
       "buildsOn": [
         "Dijkstra"
@@ -1165,7 +1171,9 @@
       "family": "advanced_graphs",
       "tier": "core",
       "started": true,
-      "minProblems": 3,
+      "minProblems": 2,
+      "coverageFloor": 2,
+      "uncleanCount": 0,
       "problemCount": 2,
       "problems": [
         332,
@@ -1173,7 +1181,7 @@
       ],
       "bestComfort": "🟢",
       "hasGreen": true,
-      "thin": true,
+      "thin": false,
       "hasVariantGap": false,
       "buildsOn": [
         "Graph Cycle Detection (DFS)"
@@ -1196,7 +1204,9 @@
       "family": "advanced_graphs",
       "tier": "core",
       "started": true,
-      "minProblems": 3,
+      "minProblems": 2,
+      "coverageFloor": 1,
+      "uncleanCount": 1,
       "problemCount": 1,
       "problems": [
         1489
@@ -1226,14 +1236,16 @@
       "family": "advanced_graphs",
       "tier": "core",
       "started": true,
-      "minProblems": 3,
+      "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 1,
       "problems": [
         1584
       ],
       "bestComfort": "🟢",
       "hasGreen": true,
-      "thin": true,
+      "thin": false,
       "hasVariantGap": false,
       "buildsOn": [
         "Heap / Priority Queue",
@@ -1257,7 +1269,9 @@
       "family": "arrays_and_hash",
       "tier": "core",
       "started": true,
-      "minProblems": 1,
+      "minProblems": 2,
+      "coverageFloor": 2,
+      "uncleanCount": 0,
       "problemCount": 3,
       "problems": [
         14,
@@ -1279,7 +1293,9 @@
       "family": "arrays_and_hash",
       "tier": "core",
       "started": true,
-      "minProblems": 2,
+      "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 2,
       "problems": [
         169,
@@ -1302,7 +1318,9 @@
       "family": "arrays_and_hash",
       "tier": "core",
       "started": true,
-      "minProblems": 2,
+      "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 2,
       "problems": [
         49,
@@ -1325,7 +1343,9 @@
       "family": "arrays_and_hash",
       "tier": "core",
       "started": true,
-      "minProblems": 2,
+      "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 2,
       "problems": [
         1,
@@ -1346,7 +1366,9 @@
       "family": "arrays_and_hash",
       "tier": "core",
       "started": true,
-      "minProblems": 3,
+      "minProblems": 2,
+      "coverageFloor": 2,
+      "uncleanCount": 0,
       "problemCount": 3,
       "problems": [
         36,
@@ -1371,6 +1393,8 @@
       "tier": "core",
       "started": true,
       "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 1,
       "problems": [
         189
@@ -1393,6 +1417,8 @@
       "tier": "core",
       "started": true,
       "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 1,
       "problems": [
         271
@@ -1415,6 +1441,8 @@
       "tier": "core",
       "started": true,
       "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 1,
       "problems": [
         238
@@ -1436,7 +1464,9 @@
       "family": "backtracking",
       "tier": "core",
       "started": true,
-      "minProblems": 3,
+      "minProblems": 7,
+      "coverageFloor": 5,
+      "uncleanCount": 2,
       "problemCount": 4,
       "problems": [
         22,
@@ -1446,7 +1476,7 @@
       ],
       "bestComfort": "🟢",
       "hasGreen": true,
-      "thin": false,
+      "thin": true,
       "hasVariantGap": false,
       "buildsOn": [
         "Recursion"
@@ -1511,7 +1541,9 @@
       "family": "binary_search",
       "tier": "core",
       "started": true,
-      "minProblems": 2,
+      "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 2,
       "problems": [
         33,
@@ -1535,6 +1567,8 @@
       "tier": "core",
       "started": true,
       "minProblems": 3,
+      "coverageFloor": 2,
+      "uncleanCount": 1,
       "problemCount": 3,
       "problems": [
         34,
@@ -1558,7 +1592,9 @@
       "family": "binary_search",
       "tier": "core",
       "started": true,
-      "minProblems": 3,
+      "minProblems": 4,
+      "coverageFloor": 4,
+      "uncleanCount": 0,
       "problemCount": 7,
       "problems": [
         34,
@@ -1595,6 +1631,8 @@
       "tier": "core",
       "started": true,
       "minProblems": 3,
+      "coverageFloor": 2,
+      "uncleanCount": 1,
       "problemCount": 3,
       "problems": [
         875,
@@ -1619,6 +1657,8 @@
       "tier": "core",
       "started": false,
       "minProblems": 3,
+      "coverageFloor": 3,
+      "uncleanCount": 0,
       "problemCount": 0,
       "problems": [],
       "bestComfort": null,
@@ -1681,7 +1721,9 @@
       "family": "design",
       "tier": "core",
       "started": false,
-      "minProblems": 3,
+      "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 0,
       "problems": [],
       "bestComfort": null,
@@ -1717,7 +1759,9 @@
       "family": "dynamic_programming",
       "tier": "dp",
       "started": false,
-      "minProblems": 3,
+      "minProblems": 5,
+      "coverageFloor": 5,
+      "uncleanCount": 0,
       "problemCount": 0,
       "problems": [],
       "bestComfort": null,
@@ -1801,7 +1845,9 @@
       "family": "dynamic_programming",
       "tier": "dp",
       "started": false,
-      "minProblems": 3,
+      "minProblems": 4,
+      "coverageFloor": 4,
+      "uncleanCount": 0,
       "problemCount": 0,
       "problems": [],
       "bestComfort": null,
@@ -1871,7 +1917,9 @@
       "family": "dynamic_programming",
       "tier": "dp",
       "started": false,
-      "minProblems": 3,
+      "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 0,
       "problems": [],
       "bestComfort": null,
@@ -1899,7 +1947,9 @@
       "family": "dynamic_programming",
       "tier": "dp",
       "started": false,
-      "minProblems": 3,
+      "minProblems": 2,
+      "coverageFloor": 2,
+      "uncleanCount": 0,
       "problemCount": 0,
       "problems": [],
       "bestComfort": null,
@@ -1949,6 +1999,8 @@
       "tier": "dp",
       "started": false,
       "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 0,
       "problems": [],
       "bestComfort": null,
@@ -1976,7 +2028,9 @@
       "family": "dynamic_programming",
       "tier": "dp",
       "started": false,
-      "minProblems": 1,
+      "minProblems": 2,
+      "coverageFloor": 2,
+      "uncleanCount": 0,
       "problemCount": 0,
       "problems": [],
       "bestComfort": null,
@@ -2019,7 +2073,9 @@
       "family": "dynamic_programming",
       "tier": "dp",
       "started": false,
-      "minProblems": 3,
+      "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 0,
       "problems": [],
       "bestComfort": null,
@@ -2041,6 +2097,8 @@
       "tier": "dp",
       "started": false,
       "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 0,
       "problems": [],
       "bestComfort": null,
@@ -2061,6 +2119,8 @@
       "tier": "tier3",
       "started": false,
       "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 0,
       "problems": [],
       "bestComfort": null,
@@ -2081,6 +2141,8 @@
       "tier": "tier3",
       "started": false,
       "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 0,
       "problems": [],
       "bestComfort": null,
@@ -2101,6 +2163,8 @@
       "tier": "tier2",
       "started": false,
       "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 0,
       "problems": [],
       "bestComfort": null,
@@ -2122,6 +2186,8 @@
       "tier": "tier2",
       "started": false,
       "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 0,
       "problems": [],
       "bestComfort": null,
@@ -2143,6 +2209,8 @@
       "tier": "tier3",
       "started": false,
       "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 0,
       "problems": [],
       "bestComfort": null,
@@ -2163,6 +2231,8 @@
       "tier": "tier3",
       "started": false,
       "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 0,
       "problems": [],
       "bestComfort": null,
@@ -2184,6 +2254,8 @@
       "tier": "tier1",
       "started": false,
       "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 0,
       "problems": [],
       "bestComfort": null,
@@ -2204,6 +2276,8 @@
       "tier": "tier3",
       "started": false,
       "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 0,
       "problems": [],
       "bestComfort": null,
@@ -2225,6 +2299,8 @@
       "tier": "tier3",
       "started": false,
       "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 0,
       "problems": [],
       "bestComfort": null,
@@ -2246,6 +2322,8 @@
       "tier": "tier1",
       "started": false,
       "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 0,
       "problems": [],
       "bestComfort": null,
@@ -2266,6 +2344,8 @@
       "tier": "tier3",
       "started": false,
       "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 0,
       "problems": [],
       "bestComfort": null,
@@ -2287,6 +2367,8 @@
       "tier": "tier1",
       "started": false,
       "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 0,
       "problems": [],
       "bestComfort": null,
@@ -2307,6 +2389,8 @@
       "tier": "tier2",
       "started": false,
       "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 0,
       "problems": [],
       "bestComfort": null,
@@ -2327,6 +2411,8 @@
       "tier": "tier3",
       "started": false,
       "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 0,
       "problems": [],
       "bestComfort": null,
@@ -2347,6 +2433,8 @@
       "tier": "tier3",
       "started": false,
       "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 0,
       "problems": [],
       "bestComfort": null,
@@ -2368,6 +2456,8 @@
       "tier": "tier1",
       "started": false,
       "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 0,
       "problems": [],
       "bestComfort": null,
@@ -2388,6 +2478,8 @@
       "tier": "tier1",
       "started": false,
       "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 0,
       "problems": [],
       "bestComfort": null,
@@ -2408,6 +2500,8 @@
       "tier": "tier2",
       "started": false,
       "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 0,
       "problems": [],
       "bestComfort": null,
@@ -2428,6 +2522,8 @@
       "tier": "tier1",
       "started": false,
       "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 0,
       "problems": [],
       "bestComfort": null,
@@ -2449,6 +2545,8 @@
       "tier": "tier2",
       "started": false,
       "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 0,
       "problems": [],
       "bestComfort": null,
@@ -2470,6 +2568,8 @@
       "tier": "tier1",
       "started": false,
       "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 0,
       "problems": [],
       "bestComfort": null,
@@ -2488,6 +2588,8 @@
       "tier": "tier2",
       "started": false,
       "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 0,
       "problems": [],
       "bestComfort": null,
@@ -2508,6 +2610,8 @@
       "tier": "tier1",
       "started": false,
       "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 0,
       "problems": [],
       "bestComfort": null,
@@ -2528,6 +2632,8 @@
       "tier": "tier2",
       "started": false,
       "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 0,
       "problems": [],
       "bestComfort": null,
@@ -2548,6 +2654,8 @@
       "tier": "tier1",
       "started": false,
       "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 0,
       "problems": [],
       "bestComfort": null,
@@ -2569,6 +2677,8 @@
       "tier": "tier3",
       "started": false,
       "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 0,
       "problems": [],
       "bestComfort": null,
@@ -2589,6 +2699,8 @@
       "tier": "tier3",
       "started": false,
       "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 0,
       "problems": [],
       "bestComfort": null,
@@ -2609,6 +2721,8 @@
       "tier": "tier2",
       "started": false,
       "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 0,
       "problems": [],
       "bestComfort": null,
@@ -2629,6 +2743,8 @@
       "tier": "tier2",
       "started": false,
       "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 0,
       "problems": [],
       "bestComfort": null,
@@ -2650,6 +2766,8 @@
       "tier": "tier1",
       "started": false,
       "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 0,
       "problems": [],
       "bestComfort": null,
@@ -2670,6 +2788,8 @@
       "tier": "tier1",
       "started": false,
       "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 0,
       "problems": [],
       "bestComfort": null,
@@ -2689,14 +2809,16 @@
       "family": "graphs",
       "tier": "core",
       "started": true,
-      "minProblems": 1,
+      "minProblems": 2,
+      "coverageFloor": 2,
+      "uncleanCount": 0,
       "problemCount": 1,
       "problems": [
         127
       ],
       "bestComfort": "🟢",
       "hasGreen": true,
-      "thin": false,
+      "thin": true,
       "hasVariantGap": false,
       "buildsOn": [
         "Grid BFS"
@@ -2726,14 +2848,16 @@
       "family": "graphs",
       "tier": "core",
       "started": true,
-      "minProblems": 3,
+      "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 1,
       "problems": [
         323
       ],
       "bestComfort": "🟢",
       "hasGreen": true,
-      "thin": true,
+      "thin": false,
       "hasVariantGap": false,
       "buildsOn": [
         "Grid DFS"
@@ -2748,14 +2872,16 @@
       "family": "graphs",
       "tier": "core",
       "started": true,
-      "minProblems": 2,
+      "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 1,
       "problems": [
         202
       ],
       "bestComfort": "🟢",
       "hasGreen": true,
-      "thin": true,
+      "thin": false,
       "hasVariantGap": false,
       "buildsOn": [
         "Floyd's Cycle / Midpoint",
@@ -2780,6 +2906,8 @@
       "tier": "core",
       "started": true,
       "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 1,
       "problems": [
         133
@@ -2803,6 +2931,8 @@
       "tier": "core",
       "started": true,
       "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 1,
       "problems": [
         261
@@ -2824,7 +2954,9 @@
       "family": "graphs",
       "tier": "core",
       "started": true,
-      "minProblems": 3,
+      "minProblems": 2,
+      "coverageFloor": 2,
+      "uncleanCount": 0,
       "problemCount": 4,
       "problems": [
         130,
@@ -2849,7 +2981,9 @@
       "family": "graphs",
       "tier": "core",
       "started": true,
-      "minProblems": 3,
+      "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 2,
       "problems": [
         200,
@@ -2857,7 +2991,7 @@
       ],
       "bestComfort": "🎓",
       "hasGreen": true,
-      "thin": true,
+      "thin": false,
       "hasVariantGap": false,
       "buildsOn": [
         "Tree DFS (recursive)"
@@ -2872,14 +3006,16 @@
       "family": "graphs",
       "tier": "core",
       "started": true,
-      "minProblems": 3,
+      "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 1,
       "problems": [
         994
       ],
       "bestComfort": "🟢",
       "hasGreen": true,
-      "thin": true,
+      "thin": false,
       "hasVariantGap": false,
       "buildsOn": [
         "Grid BFS"
@@ -2895,6 +3031,8 @@
       "tier": "core",
       "started": true,
       "minProblems": 3,
+      "coverageFloor": 3,
+      "uncleanCount": 0,
       "problemCount": 3,
       "problems": [
         207,
@@ -2935,6 +3073,8 @@
       "tier": "core",
       "started": true,
       "minProblems": 3,
+      "coverageFloor": 2,
+      "uncleanCount": 1,
       "problemCount": 4,
       "problems": [
         130,
@@ -2959,7 +3099,9 @@
       "family": "heap",
       "tier": "core",
       "started": true,
-      "minProblems": 3,
+      "minProblems": 4,
+      "coverageFloor": 4,
+      "uncleanCount": 0,
       "problemCount": 6,
       "problems": [
         347,
@@ -3001,7 +3143,9 @@
       "family": "intervals",
       "tier": "core",
       "started": true,
-      "minProblems": 5,
+      "minProblems": 3,
+      "coverageFloor": 3,
+      "uncleanCount": 0,
       "problemCount": 3,
       "problems": [
         56,
@@ -3010,7 +3154,7 @@
       ],
       "bestComfort": "🟢",
       "hasGreen": true,
-      "thin": true,
+      "thin": false,
       "hasVariantGap": false,
       "buildsOn": [
         "Divide & Conquer / Sorting"
@@ -3048,6 +3192,8 @@
       "tier": "core",
       "started": true,
       "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 1,
       "problems": [
         138
@@ -3070,7 +3216,9 @@
       "family": "linked_list",
       "tier": "core",
       "started": true,
-      "minProblems": 3,
+      "minProblems": 2,
+      "coverageFloor": 2,
+      "uncleanCount": 0,
       "problemCount": 3,
       "problems": [
         2,
@@ -3092,7 +3240,9 @@
       "family": "linked_list",
       "tier": "core",
       "started": true,
-      "minProblems": 3,
+      "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 2,
       "problems": [
         141,
@@ -3100,7 +3250,7 @@
       ],
       "bestComfort": "🟢",
       "hasGreen": true,
-      "thin": true,
+      "thin": false,
       "hasVariantGap": false,
       "buildsOn": [
         "Dummy Node"
@@ -3115,14 +3265,16 @@
       "family": "linked_list",
       "tier": "core",
       "started": true,
-      "minProblems": 3,
+      "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 1,
       "problems": [
         146
       ],
       "bestComfort": "🟢",
       "hasGreen": true,
-      "thin": true,
+      "thin": false,
       "hasVariantGap": false,
       "buildsOn": [
         "Hash Map Lookup",
@@ -3147,6 +3299,8 @@
       "tier": "core",
       "started": true,
       "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 1,
       "problems": [
         2
@@ -3169,6 +3323,8 @@
       "tier": "core",
       "started": true,
       "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 1,
       "problems": [
         21
@@ -3199,6 +3355,8 @@
       "tier": "core",
       "started": true,
       "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 1,
       "problems": [
         206
@@ -3229,6 +3387,8 @@
       "tier": "core",
       "started": true,
       "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 1,
       "problems": [
         19
@@ -3251,7 +3411,9 @@
       "family": "math_sim",
       "tier": "core",
       "started": false,
-      "minProblems": 3,
+      "minProblems": 2,
+      "coverageFloor": 2,
+      "uncleanCount": 0,
       "problemCount": 0,
       "problems": [],
       "bestComfort": null,
@@ -3294,6 +3456,8 @@
       "tier": "core",
       "started": false,
       "minProblems": 2,
+      "coverageFloor": 2,
+      "uncleanCount": 0,
       "problemCount": 0,
       "problems": [],
       "bestComfort": null,
@@ -3336,6 +3500,8 @@
       "tier": "core",
       "started": true,
       "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 1,
       "problems": [
         53
@@ -3357,7 +3523,9 @@
       "family": "prefix_sum",
       "tier": "core",
       "started": true,
-      "minProblems": 3,
+      "minProblems": 2,
+      "coverageFloor": 1,
+      "uncleanCount": 1,
       "problemCount": 2,
       "problems": [
         53,
@@ -3365,7 +3533,7 @@
       ],
       "bestComfort": "🟢",
       "hasGreen": true,
-      "thin": true,
+      "thin": false,
       "hasVariantGap": false,
       "buildsOn": [
         "Array/String Fundamentals"
@@ -3380,7 +3548,9 @@
       "family": "recursion",
       "tier": "core",
       "started": true,
-      "minProblems": 3,
+      "minProblems": 2,
+      "coverageFloor": 2,
+      "uncleanCount": 0,
       "problemCount": 3,
       "problems": [
         19,
@@ -3402,7 +3572,9 @@
       "family": "sliding_window",
       "tier": "core",
       "started": true,
-      "minProblems": 1,
+      "minProblems": 8,
+      "coverageFloor": 4,
+      "uncleanCount": 4,
       "problemCount": 6,
       "problems": [
         45,
@@ -3414,7 +3586,7 @@
       ],
       "bestComfort": "🟢",
       "hasGreen": true,
-      "thin": false,
+      "thin": true,
       "hasVariantGap": false,
       "buildsOn": [
         "Array/String Fundamentals"
@@ -3445,6 +3617,8 @@
       "tier": "core",
       "started": true,
       "minProblems": 3,
+      "coverageFloor": 3,
+      "uncleanCount": 0,
       "problemCount": 4,
       "problems": [
         3,
@@ -3478,14 +3652,16 @@
       "family": "sorting",
       "tier": "core",
       "started": true,
-      "minProblems": 3,
+      "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 1,
       "problems": [
         912
       ],
       "bestComfort": "🟢",
       "hasGreen": true,
-      "thin": true,
+      "thin": false,
       "hasVariantGap": false,
       "buildsOn": [
         "Recursion"
@@ -3501,6 +3677,8 @@
       "tier": "core",
       "started": true,
       "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 1,
       "problems": [
         239
@@ -3523,7 +3701,9 @@
       "family": "stack",
       "tier": "core",
       "started": true,
-      "minProblems": 3,
+      "minProblems": 6,
+      "coverageFloor": 4,
+      "uncleanCount": 2,
       "problemCount": 6,
       "problems": [
         84,
@@ -3565,14 +3745,16 @@
       "family": "stack",
       "tier": "core",
       "started": true,
-      "minProblems": 2,
+      "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 1,
       "problems": [
         155
       ],
       "bestComfort": "🟢",
       "hasGreen": true,
-      "thin": true,
+      "thin": false,
       "hasVariantGap": false,
       "buildsOn": [
         "Stack (matching)"
@@ -3587,14 +3769,16 @@
       "family": "stack",
       "tier": "core",
       "started": true,
-      "minProblems": 2,
+      "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 1,
       "problems": [
         150
       ],
       "bestComfort": "🟢",
       "hasGreen": true,
-      "thin": true,
+      "thin": false,
       "hasVariantGap": false,
       "buildsOn": [
         "Stack (matching)"
@@ -3618,6 +3802,8 @@
       "tier": "core",
       "started": true,
       "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 1,
       "problems": [
         20
@@ -3639,7 +3825,9 @@
       "family": "strings",
       "tier": "core",
       "started": false,
-      "minProblems": 2,
+      "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 0,
       "problems": [],
       "bestComfort": null,
@@ -3659,7 +3847,9 @@
       "family": "strings",
       "tier": "core",
       "started": false,
-      "minProblems": 3,
+      "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 0,
       "problems": [],
       "bestComfort": null,
@@ -3688,6 +3878,8 @@
       "tier": "core",
       "started": true,
       "minProblems": 2,
+      "coverageFloor": 2,
+      "uncleanCount": 0,
       "problemCount": 2,
       "problems": [
         98,
@@ -3719,7 +3911,9 @@
       "family": "trees",
       "tier": "core",
       "started": true,
-      "minProblems": 3,
+      "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 2,
       "problems": [
         102,
@@ -3727,7 +3921,7 @@
       ],
       "bestComfort": "🎓",
       "hasGreen": true,
-      "thin": true,
+      "thin": false,
       "hasVariantGap": false,
       "buildsOn": [
         "Tree DFS (recursive)"
@@ -3743,6 +3937,8 @@
       "tier": "core",
       "started": true,
       "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 1,
       "problems": [
         105
@@ -3765,7 +3961,9 @@
       "family": "trees",
       "tier": "core",
       "started": true,
-      "minProblems": 3,
+      "minProblems": 4,
+      "coverageFloor": 4,
+      "uncleanCount": 0,
       "problemCount": 6,
       "problems": [
         100,
@@ -3800,7 +3998,9 @@
       "family": "trees",
       "tier": "core",
       "started": true,
-      "minProblems": 2,
+      "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 2,
       "problems": [
         124,
@@ -3824,6 +4024,8 @@
       "tier": "core",
       "started": true,
       "minProblems": 3,
+      "coverageFloor": 3,
+      "uncleanCount": 0,
       "problemCount": 3,
       "problems": [
         208,
@@ -3864,6 +4066,8 @@
       "tier": "core",
       "started": true,
       "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 1,
       "problems": [
         75
@@ -3885,7 +4089,9 @@
       "family": "two_pointers",
       "tier": "core",
       "started": true,
-      "minProblems": 3,
+      "minProblems": 2,
+      "coverageFloor": 2,
+      "uncleanCount": 0,
       "problemCount": 4,
       "problems": [
         26,
@@ -3911,6 +4117,8 @@
       "tier": "core",
       "started": true,
       "minProblems": 1,
+      "coverageFloor": 1,
+      "uncleanCount": 0,
       "problemCount": 1,
       "problems": [
         42
@@ -3932,7 +4140,9 @@
       "family": "two_pointers",
       "tier": "core",
       "started": true,
-      "minProblems": 3,
+      "minProblems": 4,
+      "coverageFloor": 4,
+      "uncleanCount": 0,
       "problemCount": 8,
       "problems": [
         11,
@@ -4137,7 +4347,8 @@
     "2026-09-23",
     "2026-09-24",
     "2026-09-25",
-    "2026-09-26"
+    "2026-09-26",
+    "2026-09-27"
   ],
   "schedule": {
     "weekOf": "2026-09-21",
@@ -4712,10 +4923,10 @@
               "moved"
             ],
             "kind": "rep",
-            "done": false,
-            "endComfort": null,
-            "endNote": null,
-            "nextReview": null
+            "done": true,
+            "endComfort": "🟢",
+            "endNote": "s1",
+            "nextReview": "2026-10-27"
           },
           {
             "lcNumber": 128,
@@ -4758,6 +4969,23 @@
             "difficulty": null,
             "url": "https://leetcode.com/problems/path-with-maximum-minimum-value/",
             "file": null,
+            "tags": [
+              "new"
+            ],
+            "kind": "new",
+            "done": true,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
+          },
+          {
+            "lcNumber": 2812,
+            "title": "Find the Safest Path in a Grid",
+            "technique": "Dijkstra",
+            "startComfort": null,
+            "difficulty": null,
+            "url": "https://leetcode.com/problems/find-the-safest-path-in-a-grid/",
+            "file": "dsa/leetcode/graphs/2812_find_the_safest_path_in_a_grid.py",
             "tags": [
               "new"
             ],
@@ -5196,8 +5424,8 @@
     {
       "date": "2026-09-27",
       "planned": 8.9,
-      "done": 0.0,
-      "built": 10.8,
+      "done": 1.6,
+      "built": 13.8,
       "partial": true
     }
   ],
@@ -5327,7 +5555,7 @@
       "description": "Practice on 7 study-days without letting the streak lapse.",
       "earned": true,
       "progress": {
-        "current": 122,
+        "current": 123,
         "target": 7
       }
     },
@@ -5338,7 +5566,7 @@
       "description": "Practice on 30 study-days without letting the streak lapse.",
       "earned": true,
       "progress": {
-        "current": 122,
+        "current": 123,
         "target": 30
       }
     },
@@ -5349,7 +5577,7 @@
       "description": "Practice on 100 study-days without letting the streak lapse.",
       "earned": true,
       "progress": {
-        "current": 122,
+        "current": 123,
         "target": 100
       }
     },
@@ -7142,10 +7370,10 @@
       "file": "dsa/leetcode/binary_search/540_single_element_in_sorted_array.py",
       "difficulty": "Medium",
       "category": "binary_search",
-      "comfort": "🟡",
-      "level": 1,
-      "streak": 0,
-      "nextReview": "2026-09-26",
+      "comfort": "🟢",
+      "level": 2,
+      "streak": 1,
+      "nextReview": "2026-10-27",
       "repDates": [
         "2026-05-02",
         "2026-06-12",
@@ -7154,7 +7382,8 @@
         "2026-07-27",
         "2026-08-06",
         "2026-09-06",
-        "2026-09-16"
+        "2026-09-16",
+        "2026-09-27"
       ],
       "timeline": [
         {
@@ -7196,6 +7425,11 @@
           "date": "2026-09-16",
           "comfort": "🟡",
           "level": 1
+        },
+        {
+          "date": "2026-09-27",
+          "comfort": "🟢",
+          "level": 2
         }
       ]
     },

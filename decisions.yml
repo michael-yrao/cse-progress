@@ -1462,3 +1462,64 @@ decisions:
       only), `docs/foundations/dsa/mastery/hellointerview.yml` (header only),
       `scripts/test_new_problem.py` (extended).
     affects: [links, scaffolding]
+
+  - id: coverage-threshold-formula-sep27
+    date: 2026-09-27
+    summary: >-
+      REPLACES the per-technique coverage bar's hand-set `min_problems` (a flat default of
+      3, individually overridden on ~74 of 105 techniques.yml entries) with a COMPUTED
+      threshold. A single fixed default did not fit a vocabulary spanning techniques with
+      one declared problem and techniques with a dozen — the flat number was either too
+      loose on a thin technique or too tight on a broad one, and each mismatch was patched
+      by hand, one at a time, forever.
+
+      FORMULA (`cse.config.yml`'s new `coverage_threshold` block: `plan_share: 0.5,
+      floor_min: 1, floor_max: 5`):
+
+          floor     = clamp(ceil(plan_share * declared), floor_min, floor_max)
+          threshold = floor + unclean
+
+      `declared` is the technique's own distinct declared problem count (`techniques.yml`'s
+      `problems:`, excluding a number whose every spec opts out via `planned: false` — the
+      same rule `gamify.py`'s `_all_opted_out` already applies to the dashboard's `planned`
+      list). `unclean` is how many of the technique's CREDITED problems (tracker-matched,
+      distinct numbers) are still 🔴/🟡 best comfort — added on top of the floor because a
+      shaky rep hasn't earned its coverage credit yet, whether the floor came from the
+      formula or a manual override. A technique's own `min_problems:` in techniques.yml,
+      when still present, REPLACES the formula's floor only; `unclean` is still added on
+      top either way — so the formula never lets a genuinely shaky technique read as
+      "covered" just because someone hand-picked a low floor once.
+
+      BASIS. Two ideas combined, deliberately: (1) the N-consecutive-correct rule tutoring
+      systems use for mastery (a skill isn't "known" from one clean rep — it needs a run of
+      them, which is also this repo's own `graduate_at_streak` logic for a single problem,
+      applied here at the TECHNIQUE level via `unclean`), and (2) sizing the bar as a SHARE
+      of what's actually planned for that technique, rather than a constant — a technique
+      declaring 1 problem and one declaring 12 cannot honestly want the same number.
+      Declared variations, difficulty and company demand are DELIBERATELY left out of the
+      formula: variations are a separate, per-technique gap check (`variant:` in the Gaps
+      cell) and folding them into the same number double-counts one problem drilled twice
+      as if it were two; difficulty and demand size WHICH problems to pull, not how many
+      count toward being "covered".
+
+      IMPLEMENTATION. `scripts/technique_coverage.py`: `compute_coverage_threshold()` (pure,
+      table-tested) computes `(floor, threshold)`; `Resolved` gains `coverage_floor` and
+      `unclean_count` alongside `min_problems` (now the computed threshold); the Min column
+      renders `threshold (floor+unclean)` (e.g. `8 (4+4)`), still schema-compatible with
+      `gamify.parse_techniques()`'s existing "first integer in the cell" read, extended to
+      also read the two parenthesised integers into `coverageFloor`/`uncleanCount`
+      (additive fields; an older report's bare-integer Min cell falls back to
+      floor=minProblems, unclean=0). `techniques.yml` loses its `defaults.min_problems`
+      block and EVERY explicit `min_problems:` key, whether or not it matched the formula.
+      The two entries whose comment had reasoned about the old value (Hierholzer, Design
+      (composed data structures)) carry an inline note for the learner's review, since the
+      computed floor is LOWER than the old hand-picked one there. `company_demand.py` and `technique_comfort_audit.py` (the
+      other two `technique_coverage.resolve()` callers) pass the loaded
+      `coverage_threshold` config through unchanged.
+
+      VERIFIED against a dry run's five spot-checked techniques (Greedy (single pass) 4+4=8
+      done 6; Backtracking 5+2=7 done 4; Two Pointers (converging) 4; Grid DFS 1; Prim's MST
+      1) — all five matched exactly once `declared` was computed as DISTINCT problem
+      numbers (Hierholzer's two methods on 332 count once, not twice), confirming the
+      formula was never the thing under-specified in the dry run — only the numerator was.
+    affects: [technique_coverage, gamify, mastery]

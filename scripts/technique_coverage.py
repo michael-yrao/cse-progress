@@ -11,8 +11,10 @@ tracker and emits `technique_coverage.md`, one row per technique, with three gap
 
   no-green   no problem for this technique has ever come back 🟢 — a phase-exit blocker
              under the per-algorithm exit rule (recognition + execution, >=1 🟢 each)
-  thin       fewer problems than `min_problems` — a technique needs 3-4 surface forms
-             before it is a skill rather than recall of one problem's solution
+  thin       fewer problems than the computed coverage threshold (`cse.config.yml`'s
+             `coverage_threshold`: a floor sized off the technique's own declared problem
+             count, plus its still-🔴/🟡 problems) — a technique needs more than one
+             surface form before it is a skill rather than recall of one problem's solution
   variant    a declared method variant with zero problems behind it (the Kahn's-vs-DFS
              case that prompted this tool). Variants already sitting in the Waiting Room
              or Expansion Queue are marked `queued:` in the YAML and reported separately,
@@ -41,6 +43,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import math
 import re
 import subprocess
 import sys
@@ -94,8 +97,13 @@ MASTERY = REPO_ROOT / "docs" / "foundations" / "dsa" / "mastery"
 TECHNIQUES_YML = MASTERY / "techniques.yml"
 TRACKER_MD = MASTERY / "dsa_progress.md"
 REPORT_MD = MASTERY / "technique_coverage.md"
+CSE_CONFIG_YML = REPO_ROOT / "cse.config.yml"
 
-DEFAULT_MIN_PROBLEMS = 3
+#: Announced fallback for `cse.config.yml`'s `coverage_threshold` block — mirrors that
+#: block's own values (see cse.config.yml). This script already assumes techniques.yml
+#: exists, so this fallback exists only for a config predating the coverage_threshold
+#: feature (decision `coverage-threshold-formula-sep27`), never a pre-config repo.
+DEFAULT_COVERAGE_THRESHOLD = {"plan_share": 0.5, "floor_min": 1, "floor_max": 5}
 
 # Comfort tiers, weakest to strongest. Ordering drives "best comfort" and the
 # no-green check; 🎓 and 🏆 both imply the technique has been executed cleanly.
@@ -135,7 +143,21 @@ class Resolved:
 
     name: str
     family: str
+    #: The technique's computed coverage bar: `coverage_floor + unclean_count` (see
+    #: `compute_coverage_threshold`). Set once, after `coverage_floor` and every matched
+    #: row are known — never read before `resolve()` finishes building this technique.
     min_problems: int
+    #: The floor half of `min_problems` — either the config formula's clamp(ceil(
+    #: plan_share * declared), floor_min, floor_max), or an explicit `min_problems:`
+    #: override from techniques.yml, which REPLACES the formula's floor (unclean_count
+    #: is still added on top either way). Kept alongside `min_problems` so the Min cell
+    #: can render both halves (`gamify.parse_techniques()` reads them back out).
+    coverage_floor: int
+    #: How many of this technique's credited problems (distinct numbers) are still
+    #: 🔴/🟡 best comfort — added on top of `coverage_floor` because a shaky rep hasn't
+    #: earned the technique credit toward the bar yet, whether the floor came from the
+    #: formula or a manual override.
+    unclean_count: int = 0
     #: Curriculum tier: "core" (already-started NC150/pattern-doc techniques — the
     #: implicit default for any YAML entry with no `tier:` key), "dp" (DP framework
     #: lenses), "tier1" (Knowledge Expansion Queue, above the interview-ROI line),
@@ -264,6 +286,81 @@ def _matches(row: Row, spec: dict) -> bool:
     return True if method is None else row.method == method
 
 
+def load_coverage_threshold_config() -> dict:
+    """Return `cse.config.yml`'s `coverage_threshold` block, merged over
+    `DEFAULT_COVERAGE_THRESHOLD`. Fail-soft, announced (see module docstring on
+    `DEFAULT_COVERAGE_THRESHOLD`): a missing file, unparsable YAML, or a config that
+    predates this block all fall back to the built-in defaults with one printed line,
+    rather than raising out of the pre-commit hook this script runs in.
+    """
+    try:
+        cfg = yaml.safe_load(CSE_CONFIG_YML.read_text(encoding="utf-8")) or {}
+    except OSError:
+        cfg = {}
+    block = cfg.get("coverage_threshold")
+    if not block:
+        print(
+            "technique_coverage: cse.config.yml has no coverage_threshold block — using "
+            f"built-in defaults {DEFAULT_COVERAGE_THRESHOLD}.",
+            file=sys.stderr,
+        )
+        return dict(DEFAULT_COVERAGE_THRESHOLD)
+    return {**DEFAULT_COVERAGE_THRESHOLD, **block}
+
+
+def _all_opted_out(specs: list[dict]) -> bool:
+    """True when every spec for one declared problem number carries `planned: false`
+    (mirrors `gamify._all_opted_out` — a recognition probe declared for credit but not
+    part of the plan should not inflate the technique's declared-problem count either).
+    """
+    return all(spec.get("planned") is False for spec in specs)
+
+
+def _declared_count(specs: list[dict]) -> int:
+    """The `declared` input to the coverage-threshold formula: the count of DISTINCT
+    problem numbers under one technique's `problems:`, excluding a number whose every
+    spec opts out via `planned: false` (see `_all_opted_out`). Declared variations,
+    difficulty and company demand are deliberately not inputs — only breadth of
+    surface-form problems is.
+    """
+    by_number: dict[int, list[dict]] = {}
+    for spec in specs:
+        by_number.setdefault(spec["number"], []).append(spec)
+    return sum(1 for number_specs in by_number.values() if not _all_opted_out(number_specs))
+
+
+def _unclean_count(rows: list[Row]) -> int:
+    """The `unclean` input to the coverage-threshold formula: how many distinct problem
+    numbers credited to a technique have a BEST comfort (across that number's matched
+    rows) of 🔴 or 🟡 — still shaky, so it doesn't yet earn the technique credit toward
+    the bar the way a 🟢-or-better problem does.
+    """
+    by_number: dict[int, list[Row]] = {}
+    for row in rows:
+        by_number.setdefault(row.number, []).append(row)
+    dirty = {"🔴", "🟡"}
+    return sum(
+        1 for number_rows in by_number.values()
+        if max((r.comfort for r in number_rows), key=lambda c: COMFORT_RANK[c]) in dirty
+    )
+
+
+def compute_coverage_threshold(
+    *, declared: int, unclean: int, override: int | None,
+    plan_share: float, floor_min: int, floor_max: int,
+) -> tuple[int, int]:
+    """Return (floor, threshold) for one technique's coverage bar.
+
+    floor = an explicit `min_problems:` override when the technique declares one, else
+    clamp(ceil(plan_share * declared), floor_min, floor_max). `unclean` is always added
+    on top of the floor to get `threshold` — whether the floor came from the formula or
+    a manual override, a still-shaky problem hasn't earned its coverage credit yet.
+    """
+    computed_floor = min(max(math.ceil(plan_share * declared), floor_min), floor_max)
+    floor = computed_floor if override is None else override
+    return floor, floor + unclean
+
+
 def _queued_label(queued: dict[int, str], *, parenthesize: bool) -> str:
     """Render a `queued_problems` map (number -> trigger), sorted by number.
 
@@ -281,18 +378,27 @@ def _queued_label(queued: dict[int, str], *, parenthesize: bool) -> str:
     return ", ".join(parts)
 
 
-def resolve(config: dict, rows: list[Row]) -> tuple[list[Resolved], set[str]]:
+def resolve(
+    config: dict, rows: list[Row], threshold_config: dict,
+) -> tuple[list[Resolved], set[str]]:
     """Join the technique vocabulary against the tracker rows."""
-    default_min = config.get("defaults", {}).get("min_problems", DEFAULT_MIN_PROBLEMS)
     resolved: list[Resolved] = []
     claimed: set[str] = set()
     solved_numbers = {r.number for r in rows}
 
     for entry in config.get("techniques", []):
+        specs = entry.get("problems") or []
+        floor, _ = compute_coverage_threshold(
+            declared=_declared_count(specs),
+            unclean=0,  # unclean isn't known until rows are matched below; added after
+            override=entry.get("min_problems"),
+            **threshold_config,
+        )
         tech = Resolved(
             name=entry["name"],
             family=entry.get("family", "—"),
-            min_problems=entry.get("min_problems", default_min),
+            min_problems=floor,  # finalized to floor + unclean_count once rows are matched
+            coverage_floor=floor,
             tier=entry.get("tier") or "core",
         )
         for variant in entry.get("variants", []) or []:
@@ -300,7 +406,7 @@ def resolve(config: dict, rows: list[Row]) -> tuple[list[Resolved], set[str]]:
             if variant.get("queued"):
                 tech.queued_variants[variant["name"]] = variant["queued"]
 
-        for spec in entry.get("problems", []) or []:
+        for spec in specs:
             matched = [r for r in rows if _matches(r, spec)]
             if not matched:
                 # No row for this number, and it is already declared queued (waiting on
@@ -327,9 +433,19 @@ def resolve(config: dict, rows: list[Row]) -> tuple[list[Resolved], set[str]]:
                 if spec.get("review"):
                     tech.needs_review.append(row.label)
 
+        tech.unclean_count = _unclean_count(tech.rows)
+        tech.min_problems = tech.coverage_floor + tech.unclean_count
         resolved.append(tech)
 
     return resolved, claimed
+
+
+def _min_cell(t: Resolved) -> str:
+    """Render the Min column: the threshold, then its floor+unclean breakdown in
+    parens (e.g. `8 (4+4)`) — `gamify.parse_techniques()` reads both the leading
+    integer (threshold) and the two parenthesised ones (floor, unclean) back out.
+    """
+    return f"{t.min_problems} ({t.coverage_floor}+{t.unclean_count})"
 
 
 def render(resolved: list[Resolved], rows: list[Row], claimed: set[str]) -> str:
@@ -381,8 +497,9 @@ def render(resolved: list[Resolved], rows: list[Row], claimed: set[str]) -> str:
             add("")
         if thin:
             add(
-                "**Thin — fewer than the 3–4 surface forms a technique needs.** One instance "
-                "trains recall of that problem, not the skill."
+                "**Thin — below its computed coverage bar** (`cse.config.yml`'s "
+                "`coverage_threshold`). One instance trains recall of that problem, not "
+                "the skill."
             )
             add("")
             for t in sorted(thin, key=lambda t: (t.n_problems, t.name)):
@@ -433,7 +550,7 @@ def render(resolved: list[Resolved], rows: list[Row], claimed: set[str]) -> str:
         else:
             variants = "—"
         add(
-            f"| {t.name} | {t.family} | {t.tier} | {t.min_problems} | {t.n_problems}"
+            f"| {t.name} | {t.family} | {t.tier} | {_min_cell(t)} | {t.n_problems}"
             + (f" *+{len(t.rows) - t.n_problems}v*" if t.has_multi_variant_problem else "")
             + f" ({probs}) | {t.best_comfort} | "
             f"{'✅' if t.has_green else '❌'} | {variants} | {' · '.join(t.gaps) or '—'} |"
@@ -507,7 +624,8 @@ def main() -> int:
 
     config = yaml.safe_load(TECHNIQUES_YML.read_text(encoding="utf-8"))
     rows = parse_tracker(TRACKER_MD)
-    resolved, claimed = resolve(config, rows)
+    threshold_config = load_coverage_threshold_config()
+    resolved, claimed = resolve(config, rows, threshold_config)
     report = render(resolved, rows, claimed)
 
     if args.check:

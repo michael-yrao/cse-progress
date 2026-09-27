@@ -228,17 +228,19 @@ class ParseTechniquesTests(unittest.TestCase):
     Problems-cell parsing (count vs. the parenthetical LC list) against the tricky tokens
     the real table actually contains (*+Nv*, em-dash, tilde-strikeout elsewhere), the Tier
     column + the started/*not started* Gaps marker (Sep 21, 2026), and (round 3) the Min
-    column -> minProblems."""
+    column -> minProblems. The Min cell carries technique_coverage.py's `(floor+unclean)`
+    breakdown (Sep 27, 2026, decision `coverage-threshold-formula-sep27`) — pinned here
+    too, alongside the leading threshold integer."""
 
     FIXTURE = """## Coverage
 
 | Technique | Family | Tier | Min | Problems | Best | 🟢 | Variants | Gaps |
 |---|---|---|---:|---:|:---:|:---:|---|---|
-| Hierholzer (Eulerian path) | advanced_graphs | core | 3 | 2 *+1v* (332, 2097) | 🟢 | ✅ | pre-sorted adjacency ×1 | thin (2/3) |
-| Bellman-Ford | advanced_graphs | core | 3 | 1 (787) | 🟢 | ✅ | — | thin (1/3) |
-| Dijkstra | advanced_graphs | core | 3 | 1 (778) | 🟢 | ✅ | **Min-over-max ×0** | variant: **Min-over-max** |
-| Frequency Counting | arrays_and_hash | core | 2 | 2 (49, 242) | 🎓 | ✅ | — | — |
-| Knapsack | dynamic_programming | dp | 3 | 0 (—) | — | ❌ | — | *not started* |
+| Hierholzer (Eulerian path) | advanced_graphs | core | 3 (2+1) | 2 *+1v* (332, 2097) | 🟢 | ✅ | pre-sorted adjacency ×1 | thin (2/3) |
+| Bellman-Ford | advanced_graphs | core | 3 (3+0) | 1 (787) | 🟢 | ✅ | — | thin (1/3) |
+| Dijkstra | advanced_graphs | core | 3 (3+0) | 1 (778) | 🟢 | ✅ | **Min-over-max ×0** | variant: **Min-over-max** |
+| Frequency Counting | arrays_and_hash | core | 2 (2+0) | 2 (49, 242) | 🎓 | ✅ | — | — |
+| Knapsack | dynamic_programming | dp | 3 (3+0) | 0 (—) | — | ❌ | — | *not started* |
 
 ## Vocabulary maintenance
 
@@ -290,6 +292,40 @@ class ParseTechniquesTests(unittest.TestCase):
         row = rows["Knapsack"]
         self.assertEqual(row["minProblems"], 3)
         self.assertEqual(row["problemCount"], 0)
+
+    def test_min_cell_breakdown_and_its_old_bare_integer_fallback(self):
+        """One case reads `minProblems`/`coverageFloor`/`uncleanCount` from the current
+        `N (floor+unclean)` Min cell (this class's own FIXTURE); the other reads a bare
+        integer Min cell — an older report, written before the breakdown existed — and
+        must still produce all three fields, falling back to floor=minProblems and
+        unclean=0 rather than leaving the two additive fields unset."""
+        current_rows = {r["name"]: r for r in gamify.parse_techniques([])}
+        with self.subTest("current (floor+unclean) breakdown"):
+            row = current_rows["Hierholzer (Eulerian path)"]
+            self.assertEqual((row["minProblems"], row["coverageFloor"], row["uncleanCount"]),
+                              (3, 2, 1))
+
+        old_fixture = """## Coverage
+
+| Technique | Family | Tier | Min | Problems | Best | 🟢 | Variants | Gaps |
+|---|---|---|---:|---:|:---:|:---:|---|---|
+| Bellman-Ford | advanced_graphs | core | 3 | 1 (787) | 🟢 | ✅ | — | thin (1/3) |
+"""
+        tmp = tempfile.NamedTemporaryFile(
+            mode="w", suffix=".md", delete=False, encoding="utf-8")
+        tmp.write(old_fixture)
+        tmp.close()
+        orig_coverage = gamify.COVERAGE
+        gamify.COVERAGE = Path(tmp.name)
+        try:
+            old_rows = {r["name"]: r for r in gamify.parse_techniques([])}
+        finally:
+            gamify.COVERAGE.unlink(missing_ok=True)
+            gamify.COVERAGE = orig_coverage
+        with self.subTest("older report, bare-integer Min cell"):
+            row = old_rows["Bellman-Ford"]
+            self.assertEqual((row["minProblems"], row["coverageFloor"], row["uncleanCount"]),
+                              (3, 3, 0))
 
     def test_simple_single_problem_row(self):
         rows = {r["name"]: r for r in gamify.parse_techniques([])}

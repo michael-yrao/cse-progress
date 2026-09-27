@@ -18,10 +18,15 @@
 #                 not every entry needs one (sub-variant entries like "Binary Search (min
 #                 boundary)" don't — the doc is joined once, from its single best-matching
 #                 entry).
-#   min_problems  coverage bar. Defaults to 3 (a technique needs 3-4 surface forms before
-#                 it is a skill rather than recall of one problem). Drop to 1-2 for
-#                 patterns that are genuinely problem-specific — Dutch National Flag has
-#                 exactly one canonical problem and flagging it "thin" forever is noise.
+#   min_problems  OPTIONAL manual override of the coverage bar's computed floor (decision
+#                 `coverage-threshold-formula-sep27`). Without it, `technique_coverage.py`
+#                 sizes the floor off this entry's own declared problem count, per
+#                 `cse.config.yml`'s `coverage_threshold` (plan_share/floor_min/floor_max);
+#                 a technique's still-🔴/🟡 problems are always added on top of the floor,
+#                 override or not. Set this only when the formula's floor doesn't fit a
+#                 technique's actual shape (e.g. it is genuinely problem-specific, like
+#                 Dutch National Flag, or the learner wants more/less drilling than the
+#                 formula gives it).
 #   tier          curriculum tier, for the HONEST denominator (Sep 21, 2026): "core"
 #                 (already-started NC150/pattern-doc techniques — the implicit default
 #                 when a technique carries no `tier:` key, so the 56 pre-existing entries
@@ -91,14 +96,11 @@
 
 version: 1
 
-defaults:
-  min_problems: 3
 
 techniques:
   # ── Arrays & hashing ────────────────────────────────────────────────────────
   - name: Hash Map Lookup
     family: arrays_and_hash
-    min_problems: 2
     problems:
       - {number: 1}
       - {number: 219}
@@ -114,7 +116,6 @@ techniques:
   - name: Frequency Counting
     family: arrays_and_hash
     builds_on: ["Hash Map Lookup"]
-    min_problems: 2
     problems:
       - {number: 242}
       - {number: 49}
@@ -122,14 +123,12 @@ techniques:
   - name: Prefix/Suffix Products
     family: arrays_and_hash
     builds_on: ["Array/String Fundamentals"]
-    min_problems: 1
     problems:
       - {number: 238}
 
   - name: Boyer-Moore Voting
     family: arrays_and_hash
     builds_on: ["Frequency Counting"]
-    min_problems: 2
     problems:
       - {number: 169}
       - {number: 229}
@@ -137,20 +136,17 @@ techniques:
   - name: Length-Prefix Encoding
     family: arrays_and_hash
     builds_on: ["Array/String Fundamentals"]
-    min_problems: 1
     problems:
       - {number: 271}
 
   - name: In-Place Array Rotation
     family: arrays_and_hash
     builds_on: ["Array/String Fundamentals"]
-    min_problems: 1
     problems:
       - {number: 189}
 
   - name: Array/String Fundamentals
     family: arrays_and_hash
-    min_problems: 1
     problems:
       - {number: 1929}
       - {number: 66}
@@ -183,14 +179,12 @@ techniques:
   - name: Dutch National Flag
     family: two_pointers
     builds_on: ["Fast/Slow In-Place Write"]
-    min_problems: 1
     problems:
       - {number: 75, method: Dutch Flag}
 
   - name: Prefix/Suffix Max
     family: two_pointers
     builds_on: ["Prefix/Suffix Products"]
-    min_problems: 1
     variants:
       - {name: Array}
       - {name: Two Pointer, queued: "graduates:42"}
@@ -215,7 +209,6 @@ techniques:
   - name: Greedy (single pass)
     family: sliding_window
     builds_on: ["Array/String Fundamentals"]
-    min_problems: 1
     problems:
       - {number: 122}
       - {number: 55}   # reachability frontier: track furthest reach in one pass (Sep 5, 2026)
@@ -239,7 +232,6 @@ techniques:
     family: intervals
     builds_on: ["Divide & Conquer / Sorting"]
     doc: intervals
-    min_problems: 5
     variants:
       - {name: "Merge overlapping (sort by start)"}
       - {name: "Insert into sorted (3-phase sweep)"}
@@ -269,7 +261,6 @@ techniques:
   - name: Kadane
     family: prefix_sum
     builds_on: ["Prefix Sum"]
-    min_problems: 1
     problems:
       - {number: 53, method: Kadane}
 
@@ -301,7 +292,6 @@ techniques:
     family: binary_search
     builds_on: ["Array/String Fundamentals"]
     doc: binary_search
-    min_problems: 2
     problems:
       - {number: 704}    # the base rung — target present or not
       - {number: 33}     # rotated, still an exact-match target search
@@ -317,7 +307,6 @@ techniques:
   - name: Binary Search (min boundary)
     family: binary_search
     builds_on: ["Binary Search (exact match)"]
-    min_problems: 3
     problems:
       - {number: 153}    # first index of the rotation — Graduated Aug 30
       - {number: 2300}   # first potion index that clears the threshold
@@ -367,7 +356,6 @@ techniques:
   - name: Binary Search (max boundary)
     family: binary_search
     builds_on: ["Binary Search (exact match)"]
-    min_problems: 3
     problems:
       - {number: 74}     # largest row whose first element <= target
       - {number: 34}     # both boundaries in one problem — the two biases side by side (done Sep 6, 🟡)
@@ -377,7 +365,6 @@ techniques:
   - name: Stack (matching)
     family: stack
     builds_on: ["Array/String Fundamentals"]
-    min_problems: 1
     problems:
       - {number: 20}
 
@@ -388,7 +375,6 @@ techniques:
   - name: Stack (expression evaluation)
     family: stack
     builds_on: ["Stack (matching)"]
-    min_problems: 2
     problems:
       - {number: 150}
       - {number: 394, queued: "surplus>=1"}
@@ -400,7 +386,6 @@ techniques:
   - name: Stack (augmented entries)
     family: stack
     builds_on: ["Stack (matching)"]
-    min_problems: 2
     problems:
       - {number: 155, method: Pair with Min-So-Far}
 
@@ -430,11 +415,11 @@ techniques:
   # ── Monotonic deque ─────────────────────────────────────────────────────────
   # Distinct from Monotonic Stack: a deque pops from BOTH ends — the back to keep it
   # decreasing, the FRONT to evict the max once it slides out of the window. 239 is
-  # the canonical sliding-window-maximum use; niche, so min_problems: 1.
+  # the canonical sliding-window-maximum use; niche — only one problem is declared, so
+  # the computed coverage floor is already 1 with no override needed.
   - name: Monotonic Deque
     family: stack
     builds_on: ["Monotonic Stack", "Sliding Window"]
-    min_problems: 1
     problems:
       - {number: 239}
 
@@ -462,7 +447,6 @@ techniques:
     family: linked_list
     builds_on: ["Dummy Node"]
     doc: in_place_reversal
-    min_problems: 1
     variants:
       - {name: Iterative}
       - {name: Recursion}
@@ -476,7 +460,6 @@ techniques:
   - name: Linked List Merge
     family: linked_list
     builds_on: ["Dummy Node"]
-    min_problems: 1
     variants:
       - {name: Iterative}
       - {name: Recursion}
@@ -490,7 +473,6 @@ techniques:
   - name: Remove Nth From End
     family: linked_list
     builds_on: ["Dummy Node", "Two Pointers (converging)"]
-    min_problems: 1
     variants:
       - {name: Iterative}
       - {name: Postorder Recursion}
@@ -512,14 +494,12 @@ techniques:
   - name: Linked List Arithmetic
     family: linked_list
     builds_on: ["Dummy Node"]
-    min_problems: 1
     problems:
       - {number: 2}
 
   - name: Deep Copy via Hash Map
     family: linked_list
     builds_on: ["Hash Map Lookup", "Dummy Node"]
-    min_problems: 1
     problems:
       - {number: 138}
 
@@ -550,7 +530,6 @@ techniques:
   - name: Tree DFS with Postorder Return
     family: trees
     builds_on: ["Tree DFS (recursive)"]
-    min_problems: 2
     problems:
       - {number: 543}
       - {number: 124}
@@ -568,7 +547,6 @@ techniques:
   - name: BST Descent
     family: trees
     builds_on: ["Tree DFS (recursive)", "Binary Search (exact match)"]
-    min_problems: 2
     problems:
       - {number: 235}
       - {number: 98}
@@ -578,7 +556,6 @@ techniques:
   - name: Tree Construction (Divide & Conquer)
     family: trees
     builds_on: ["Tree DFS with Postorder Return", "Divide & Conquer / Sorting"]
-    min_problems: 1
     problems:
       - {number: 105}
 
@@ -666,14 +643,12 @@ techniques:
   - name: Graph Clone (DFS + Hash Map)
     family: graphs
     builds_on: ["Grid DFS", "Hash Map Lookup"]
-    min_problems: 1
     problems:
       - {number: 133}
 
   - name: Graph Cycle Detection (DFS)
     family: graphs
     builds_on: ["Grid DFS"]
-    min_problems: 1
     problems:
       - {number: 261, method: DFS}
 
@@ -684,7 +659,6 @@ techniques:
   - name: Cycle Detection in an Iterated Sequence
     family: graphs
     builds_on: ["Floyd's Cycle / Midpoint", "Hash Set Membership"]
-    min_problems: 2
     variants:
       - {name: Seen-Set}
       # GATE RELAXED Aug 23, 2026 (decisions.yml sibling-gate-yellow-not-green): the `green:202`
@@ -741,7 +715,6 @@ techniques:
   - name: BFS on Implicit Graph
     family: graphs
     builds_on: ["Grid BFS"]
-    min_problems: 1
     problems:
       - {number: 127, method: BFS}
       # Waiting Room rows (dsa_progress.md), each keeping its existing trigger verbatim
@@ -789,7 +762,9 @@ techniques:
       - {number: 9001, method: Bellman-Ford, variant: "Negative edges (SSSP, -Infinity propagation)", queued: "surplus>=1"}
       - {number: 9002, method: Bellman-Ford, variant: "Negative-cycle detection (arbitrage / log-transform)", queued: "surplus>=1"}
 
-  # min_problems dropped Aug 15, 2026 so this inherits the default of 3.
+  # min_problems dropped Aug 15, 2026 — no override; the coverage floor is the formula's
+  # computed value (see cse.config.yml's coverage_threshold, decision
+  # `coverage-threshold-formula-sep27`).
   # Learner: "I want more practice with floyd warshall… this applies for all the harder
   # algorithms, we should have more than just one problem tackling it."
   #   queued: 2642 Design Graph With Shortest Path Calculator (Hard) — F-W under edge insertion.
@@ -806,7 +781,11 @@ techniques:
 
   # Learner self-reported 50:50 on execution (Aug 15) while recognition is the
   # strongest call in the ledger. LeetCode has only three Eulerian problems total;
-  # all three are wanted, so min_problems is the full set.
+  # all three are wanted. ⚠️ Sep 27, 2026: the explicit `min_problems: 3` this note
+  # explained was removed with the coverage-threshold formula's rollout (decision
+  # `coverage-threshold-formula-sep27`) — the computed floor for this technique's 3
+  # declared problems is lower (2). Flagged for the learner's review; re-add
+  # `min_problems: 3` here if the full set is still wanted as the floor.
   #   queued: 2097 Valid Arrangement of Pairs (Hard) — purest Hierholzer, start node
   #           must be derived from out-in degree; 332 hands the start over for free.
   #   queued: 753 Cracking the Safe (Hard) — de Bruijn via Eulerian circuit.
@@ -836,7 +815,6 @@ techniques:
   - name: Hierholzer (Eulerian path)
     family: advanced_graphs
     builds_on: ["Graph Cycle Detection (DFS)"]
-    min_problems: 3
     variants:
       - {name: pre-sorted adjacency}
       - {name: min-heap ordering}
@@ -846,7 +824,9 @@ techniques:
       - {number: 2097}   # Sep 5, 2026 — purest Hierholzer: no lexical order (so off the ordering-variant axis), start derived from out-in degree
       - {number: 753, queued: "surplus>=1"}
 
-  # min_problems dropped Aug 15, 2026 — same rule as Floyd-Warshall above.
+  # min_problems dropped Aug 15, 2026 — no override; the coverage floor is the formula's
+  # computed value (see cse.config.yml's coverage_threshold, decision
+  # `coverage-threshold-formula-sep27`).
   #
   # Split from Kruskal's MST, Sep 26, 2026 (decision `mst-split-sep26`) — learner's call:
   # Prim's and Kruskal's are two separate techniques, each credited by the problems where
@@ -877,9 +857,9 @@ techniques:
   # techniques.yml entry at all. Credits 78 (Subsets, active 🟡 row) and 22 (Generate
   # Parentheses, active 🟢 row) — the two dsa_progress.md rows that exist among the classic
   # backtracking set (46, 39, 40, 17, 22, 51, 90, 131, 79, 78; 1216 backtracking is
-  # phase-gated Blank, not solved, so it earns no credit). Below the file's `defaults:
-  # min_problems` bar until more of that set is solved; the coverage report correctly
-  # flags it thin rather than not-started.
+  # phase-gated Blank, not solved, so it earns no credit). Below its computed coverage
+  # floor (cse.config.yml's coverage_threshold) until more of that set is solved; the
+  # coverage report correctly flags it thin rather than not-started.
   - name: Backtracking
     family: backtracking
     builds_on: ["Recursion"]
@@ -959,7 +939,6 @@ techniques:
   - name: String Parsing / Manipulation
     family: strings
     tier: core
-    min_problems: 3
     builds_on: ["Array/String Fundamentals"]
     problems:
       - {number: 6, queued: "surplus>=1"}
@@ -967,7 +946,6 @@ techniques:
   - name: String Building & Encoding
     family: strings
     tier: core
-    min_problems: 2
     builds_on: ["Length-Prefix Encoding"]
 
   # ── Math & Simulation (tier: core) ──
@@ -977,7 +955,6 @@ techniques:
   - name: Math / Number Manipulation
     family: math_sim
     tier: core
-    min_problems: 3
     builds_on: ["Array/String Fundamentals"]
     # Declared Sep 26, 2026 (decision `mastery-ratio-done-over-planned-sep26`) — roadmap.yml.
     problems:
@@ -988,7 +965,6 @@ techniques:
   - name: Simulation / Matrix Walk
     family: math_sim
     tier: core
-    min_problems: 2
     builds_on: ["Array/String Fundamentals"]
     # Declared Sep 26, 2026 (decision `mastery-ratio-done-over-planned-sep26`) — roadmap.yml.
     problems:
@@ -1001,10 +977,13 @@ techniques:
   # 7/100 big-tech (12/40 data-platform, 13/100 supplementary). 146 LRU Cache stays
   # credited under linked_list (HashMap + Doubly Linked List) — this family is for
   # hit counter / time-based KV / LFU-style composition, not the LRU rep itself.
+  # ⚠️ Sep 27, 2026: this entry carried an explicit `min_problems: 3`, removed with the
+  # coverage-threshold formula's rollout (decision `coverage-threshold-formula-sep27`) —
+  # the computed floor for its 2 declared problems is lower (1). Flagged for the
+  # learner's review; re-add `min_problems: 3` here if 3 is still wanted as the floor.
   - name: Design (composed data structures)
     family: design
     tier: core
-    min_problems: 3
     builds_on: ["Hash Map Lookup", "HashMap + Doubly Linked List (LRU)"]
     problems:
       - {number: 981, queued: "surplus>=1"}
@@ -1016,11 +995,13 @@ techniques:
   # Manipulation 2/100 big-tech (4/100 fintech, 7/100 supplementary). Also the existing
   # NC150 Dec 7–28 phase (Bit Manipulation), not yet started.
   # min_problems raised 2 -> 3 on Sep 27, 2026 (learner's call): six problems are planned
-  # here, so the usual bar applies — 2 was set from big-tech demand alone.
+  # here, so the full bar applies — 2 was set from big-tech demand alone. Later the same
+  # day the explicit override was removed for the coverage-threshold formula's rollout
+  # (decision `coverage-threshold-formula-sep27`) — its computed floor for 6 declared
+  # problems is also 3, so this technique's bar is unchanged.
   - name: Bit Manipulation
     family: bit_manipulation
     tier: core
-    min_problems: 3
     builds_on: ["Array/String Fundamentals"]
     # Declared Sep 26, 2026 (decision `mastery-ratio-done-over-planned-sep26`) — roadmap.yml.
     problems:
@@ -1052,7 +1033,6 @@ techniques:
     family: dynamic_programming
     builds_on: ["1D Dynamic Programming"]
     tier: dp
-    min_problems: 3
     # Declared Sep 26, 2026 (decision `mastery-ratio-done-over-planned-sep26`) —
     # roadmap.yml. Split across the two DP phases per the roadmap row each problem
     # actually falls in: 416/322 are 1D-DP-phase Knapsack forms, 518/494 are 2D-DP-phase.
@@ -1066,7 +1046,6 @@ techniques:
     family: dynamic_programming
     builds_on: ["2D Dynamic Programming"]
     tier: dp
-    min_problems: 3
     # Declared Sep 26, 2026 (decision `mastery-ratio-done-over-planned-sep26`) — roadmap.yml.
     problems:
       - {number: 312, queued: "phase:2D-DP"}
@@ -1075,7 +1054,6 @@ techniques:
     family: dynamic_programming
     builds_on: ["1D Dynamic Programming", "Binary Search (min boundary)"]
     tier: dp
-    min_problems: 1
     # Declared Sep 26, 2026 (decision `mastery-ratio-done-over-planned-sep26`) —
     # roadmap.yml (300) plus two Waiting Room new-problem rows (354, 646), each keeping
     # its existing Waiting Room trigger verbatim.
@@ -1088,7 +1066,6 @@ techniques:
     family: dynamic_programming
     builds_on: ["2D Dynamic Programming"]
     tier: dp
-    min_problems: 1
     # Declared Sep 26, 2026 (decision `mastery-ratio-done-over-planned-sep26`) — roadmap.yml.
     problems:
       - {number: 1143, queued: "phase:2D-DP"}
@@ -1097,13 +1074,11 @@ techniques:
     family: dynamic_programming
     builds_on: ["2D Dynamic Programming"]
     tier: dp
-    min_problems: 1
 
   - name: 1D Dynamic Programming
     family: dynamic_programming
     builds_on: ["Memoization"]
     tier: dp
-    min_problems: 3
     # Declared Sep 26, 2026 (decision `mastery-ratio-done-over-planned-sep26`) — roadmap.yml.
     problems:
       - {number: 70, queued: "phase:1D-DP"}
@@ -1120,7 +1095,6 @@ techniques:
     family: dynamic_programming
     builds_on: ["1D Dynamic Programming"]
     tier: dp
-    min_problems: 3
     # Declared Sep 26, 2026 (decision `mastery-ratio-done-over-planned-sep26`) — roadmap.yml.
     problems:
       - {number: 62, queued: "phase:2D-DP"}
@@ -1139,66 +1113,55 @@ techniques:
     family: expansion
     builds_on: ["Tree DFS (recursive)", "Prefix Sum"]
     tier: tier1
-    min_problems: 1
 
   - name: Fenwick Tree (BIT)
     family: expansion
     builds_on: ["Prefix Sum"]
     tier: tier1
-    min_problems: 1
 
   - name: KMP
     family: expansion
     builds_on: ["Array/String Fundamentals"]
     tier: tier1
-    min_problems: 1
 
   - name: XOR Trie
     family: expansion
     builds_on: ["Trie"]
     tier: tier1
-    min_problems: 1
 
   - name: Manacher's Algorithm
     family: expansion
     builds_on: ["Two Pointers (converging)"]
     tier: tier1
-    min_problems: 1
 
   - name: Matrix Exponentiation
     family: expansion
     builds_on: ["2D Dynamic Programming"]
     tier: tier1
-    min_problems: 1
 
   - name: Tarjan's SCC
     family: expansion
     builds_on: ["Graph Cycle Detection (DFS)"]
     tier: tier1
-    min_problems: 1
 
   - name: Meet-in-the-Middle
     family: expansion
     builds_on: ["Backtracking", "Binary Search (exact match)"]
     tier: tier1
-    min_problems: 1
 
   - name: Reservoir Sampling
     family: expansion
     builds_on: ["Array/String Fundamentals"]
     tier: tier1
-    min_problems: 1
 
   - name: Difference Array
     family: expansion
     builds_on: ["Prefix Sum"]
     tier: tier1
-    min_problems: 1
 
   - name: Number Theory
     family: expansion
     tier: tier1
-    min_problems: 1
 
   # ══════════ INTERVIEW-ROI LINE — everything above still pays interview dividends; ══════════
   # ══════════ everything below is competitive-programming depth only.            ══════════
@@ -1211,55 +1174,46 @@ techniques:
     family: expansion
     builds_on: ["Intervals (sort + sweep)", "Heap / Priority Queue"]
     tier: tier2
-    min_problems: 1
 
   - name: Max-Flow
     family: expansion
     builds_on: ["Grid BFS"]
     tier: tier2
-    min_problems: 1
 
   - name: LCA
     family: expansion
     builds_on: ["Tree DFS (recursive)"]
     tier: tier2
-    min_problems: 1
 
   - name: Bidirectional Search / Johnson's
     family: expansion
     builds_on: ["Dijkstra", "Bellman-Ford"]
     tier: tier2
-    min_problems: 1
 
   - name: Mo's Algorithm
     family: expansion
     builds_on: ["Prefix Sum", "Divide & Conquer / Sorting"]
     tier: tier2
-    min_problems: 1
 
   - name: SOS DP
     family: expansion
     builds_on: ["Knapsack"]
     tier: tier2
-    min_problems: 1
 
   - name: Suffix Automaton
     family: expansion
     builds_on: ["Trie"]
     tier: tier2
-    min_problems: 1
 
   - name: Aho-Corasick
     family: expansion
     builds_on: ["Trie", "KMP"]
     tier: tier2
-    min_problems: 1
 
   - name: Persistent Structures
     family: expansion
     builds_on: ["Segment Tree"]
     tier: tier2
-    min_problems: 1
 
   # ── Tier 3 — "competitive / research horizon", BELOW the line (tier: tier3) ─────
   # study_guide.md line 20: "HLD, centroid decomposition, link-cut trees, suffix
@@ -1270,64 +1224,53 @@ techniques:
     family: expansion
     builds_on: ["Segment Tree", "LCA"]
     tier: tier3
-    min_problems: 1
 
   - name: Centroid Decomposition
     family: expansion
     builds_on: ["Tree DFS with Postorder Return"]
     tier: tier3
-    min_problems: 1
 
   - name: Link-Cut Trees
     family: expansion
     builds_on: ["Heavy-Light Decomposition"]
     tier: tier3
-    min_problems: 1
 
   - name: Eertree
     family: expansion
     builds_on: ["Manacher's Algorithm", "Trie"]
     tier: tier3
-    min_problems: 1
 
   - name: FFT/NTT
     family: expansion
     builds_on: ["Number Theory", "Divide & Conquer / Sorting"]
     tier: tier3
-    min_problems: 1
 
   - name: MCMF / Min-Cut Modeling
     family: expansion
     builds_on: ["Max-Flow", "Bellman-Ford"]
     tier: tier3
-    min_problems: 1
 
   - name: D&C DP (Aliens Trick)
     family: expansion
     builds_on: ["2D Dynamic Programming", "Divide & Conquer / Sorting"]
     tier: tier3
-    min_problems: 1
 
   - name: Segment Tree Beats
     family: expansion
     builds_on: ["Segment Tree"]
     tier: tier3
-    min_problems: 1
 
   - name: 2-SAT
     family: expansion
     builds_on: ["Tarjan's SCC"]
     tier: tier3
-    min_problems: 1
 
   - name: Advanced Geometry
     family: expansion
     builds_on: ["Sweep Line"]
     tier: tier3
-    min_problems: 1
 
   - name: Sprague-Grundy
     family: expansion
     builds_on: ["Memoization"]
     tier: tier3
-    min_problems: 1

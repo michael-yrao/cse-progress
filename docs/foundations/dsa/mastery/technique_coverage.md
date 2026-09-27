@@ -6,7 +6,7 @@
 
 > The tracker is keyed by **problem**; this is keyed by **technique**. Use it at the weekly build to decide what to pull, and at phase exit to check the per-algorithm bar (recognition + execution, ≥1 🟢 each).
 
-> **60/105** techniques started &nbsp;·&nbsp; **1** with no 🟢 &nbsp;·&nbsp; **17** thin &nbsp;·&nbsp; **1** unqueued variant gaps
+> **60/105** techniques started &nbsp;·&nbsp; **1** with no 🟢 &nbsp;·&nbsp; **6** thin &nbsp;·&nbsp; **1** unqueued variant gaps
 
 ## ⚠️ Action list
 
@@ -14,25 +14,14 @@
 
 - **Kruskal's MST** (advanced_graphs) — best 🟡 across 1489
 
-**Thin — fewer than the 3–4 surface forms a technique needs.** One instance trains recall of that problem, not the skill.
+**Thin — below its computed coverage bar** (`cse.config.yml`'s `coverage_threshold`). One instance trains recall of that problem, not the skill.
 
-- **Bellman-Ford** (advanced_graphs) — 1/3: 787
-- **Connected Components** (graphs) — 1/3 (3 rows): 323
-- **Cycle Detection in an Iterated Sequence** (graphs) — 1/2: 202
-- **Divide & Conquer / Sorting** (sorting) — 1/3: 912
-- **HashMap + Doubly Linked List (LRU)** (linked_list) — 1/3: 146
-- **Kruskal's MST** (advanced_graphs) — 1/3: 1489
-- **Multi-source BFS** (graphs) — 1/3: 994
-- **Prim's MST** (advanced_graphs) — 1/3: 1584
-- **Stack (augmented entries)** (stack) — 1/2: 155
-- **Stack (expression evaluation)** (stack) — 1/2: 150
-- **Floyd's Cycle / Midpoint** (linked_list) — 2/3: 141, 143
-- **Floyd-Warshall (all-pairs shortest path)** (advanced_graphs) — 2/3: 1334, 1462
-- **Grid DFS** (graphs) — 2/3: 200, 695
-- **Hierholzer (Eulerian path)** (advanced_graphs) — 2/3 (3 rows): 332, 2097
-- **Prefix Sum** (prefix_sum) — 2/3: 53, 560
-- **Tree BFS (level order)** (trees) — 2/3: 102, 199
-- **Intervals (sort + sweep)** (intervals) — 3/5: 56, 57, 435
+- **BFS on Implicit Graph** (graphs) — 1/2: 127
+- **Bellman-Ford** (advanced_graphs) — 1/2: 787
+- **Kruskal's MST** (advanced_graphs) — 1/2: 1489
+- **Dijkstra** (advanced_graphs) — 3/4 (4 rows): 743, 778, 1631
+- **Backtracking** (backtracking) — 4/7: 22, 39, 46, 78
+- **Greedy (single pass)** (sliding_window) — 6/8: 45, 55, 122, 134, 763, 846
 
 **Queued — declared, and already sitting in the Waiting Room / Expansion Queue.** A known gap with a fill already picked, not a new finding.
 
@@ -70,111 +59,111 @@ Every declared technique gets a row, started or not — a not-started row's Gaps
 
 | Technique | Family | Tier | Min | Problems | Best | 🟢 | Variants | Gaps |
 |---|---|---|---:|---:|:---:|:---:|---|---|
-| Bellman-Ford | advanced_graphs | core | 3 | 1 (787) | 🟢 | ✅ | Standard ×1 · ~~Contrast rep on 743~~ *(queued: `graduates:743`)* · ~~Negative edges (SSSP, -Infinity propagation)~~ *(queued: `surplus>=1`)* · ~~Negative-cycle detection (arbitrage / log-transform)~~ *(queued: `surplus>=1`)* | thin (1/3) · queued: 9001 `surplus>=1`, 9002 `surplus>=1` |
-| Dijkstra | advanced_graphs | core | 3 | 3 *+1v* (743, 778, 1631) | 🟢 | ✅ | Min-over-max (minimize the maximum edge) ×1 · **Max-min bottleneck (maximize the minimum edge) ×0** · ~~0/1 edge weights (0-1 BFS vs Dijkstra)~~ *(queued: `surplus>=1`)* · ~~Multiplicative relaxation (maximize the product)~~ *(queued: `surplus>=1`)* | queued: 1368 `surplus>=1`, 1514 `surplus>=1`, 3650 `surplus>=1` · variant: **Max-min bottleneck (maximize the minimum edge)** |
-| Floyd-Warshall (all-pairs shortest path) | advanced_graphs | core | 3 | 2 (1334, 1462) | 🟢 | ✅ | — | thin (2/3) · queued: 399 `rated:1334` |
-| Hierholzer (Eulerian path) | advanced_graphs | core | 3 | 2 *+1v* (332, 2097) | 🟢 | ✅ | pre-sorted adjacency ×1 · min-heap ordering ×1 | thin (2/3) · queued: 753 `surplus>=1` |
-| Kruskal's MST | advanced_graphs | core | 3 | 1 (1489) | 🟡 | ❌ | — | **no-green** · thin (1/3) · queued: 1135 `surplus>=1` |
-| Prim's MST | advanced_graphs | core | 3 | 1 (1584) | 🟢 | ✅ | — | thin (1/3) · queued: 9003 `surplus>=1` |
-| Array/String Fundamentals | arrays_and_hash | core | 1 | 3 (14, 66, 1929) | 🟢 | ✅ | — | — |
-| Boyer-Moore Voting | arrays_and_hash | core | 2 | 2 (169, 229) | 🎓 | ✅ | — | — |
-| Frequency Counting | arrays_and_hash | core | 2 | 2 (49, 242) | 🎓 | ✅ | — | — |
-| Hash Map Lookup | arrays_and_hash | core | 2 | 2 (1, 219) | 🎓 | ✅ | — | — |
-| Hash Set Membership | arrays_and_hash | core | 3 | 3 (36, 128, 217) | 🟢 | ✅ | — | — |
-| In-Place Array Rotation | arrays_and_hash | core | 1 | 1 (189) | 🟢 | ✅ | — | — |
-| Length-Prefix Encoding | arrays_and_hash | core | 1 | 1 (271) | 🟢 | ✅ | — | — |
-| Prefix/Suffix Products | arrays_and_hash | core | 1 | 1 (238) | 🟢 | ✅ | — | — |
-| Backtracking | backtracking | core | 3 | 4 (22, 39, 46, 78) | 🟢 | ✅ | — | queued: 17 `phase:Backtracking`, 40 `phase:Backtracking`, 51 `phase:Backtracking`, 79 `phase:Backtracking`, 90 `phase:Backtracking`, 131 `phase:Backtracking`, 212 `phase:Backtracking` |
-| Binary Search (exact match) | binary_search | core | 2 | 2 (33, 704) | 🎓 | ✅ | — | — |
-| Binary Search (max boundary) | binary_search | core | 3 | 3 (34, 74, 1552) | 🟢 | ✅ | — | — |
-| Binary Search (min boundary) | binary_search | core | 3 | 7 (34, 153, 162, 540, 875, 1011, 2300) | 🎓 | ✅ | — | queued: 4 `surplus>=1` |
-| Binary Search on Answer | binary_search | core | 3 | 3 (875, 1011, 1552) | 🟢 | ✅ | — | — |
-| Bit Manipulation | bit_manipulation | core | 3 | 0 (—) | — | ❌ | — | *not started* |
-| Design (composed data structures) | design | core | 3 | 0 (—) | — | ❌ | — | *not started* |
-| 1D Dynamic Programming | dynamic_programming | dp | 3 | 0 (—) | — | ❌ | — | *not started* |
-| 2D Dynamic Programming | dynamic_programming | dp | 3 | 0 (—) | — | ❌ | — | *not started* |
-| Interval DP | dynamic_programming | dp | 3 | 0 (—) | — | ❌ | — | *not started* |
-| Knapsack | dynamic_programming | dp | 3 | 0 (—) | — | ❌ | — | *not started* |
-| Longest Common Subsequence | dynamic_programming | dp | 1 | 0 (—) | — | ❌ | — | *not started* |
-| Longest Increasing Subsequence | dynamic_programming | dp | 1 | 0 (—) | — | ❌ | — | *not started* |
-| Memoization | dynamic_programming | dp | 3 | 0 (—) | — | ❌ | — | *not started* |
-| Space Compression | dynamic_programming | dp | 1 | 0 (—) | — | ❌ | — | *not started* |
-| 2-SAT | expansion | tier3 | 1 | 0 (—) | — | ❌ | — | *not started* |
-| Advanced Geometry | expansion | tier3 | 1 | 0 (—) | — | ❌ | — | *not started* |
-| Aho-Corasick | expansion | tier2 | 1 | 0 (—) | — | ❌ | — | *not started* |
-| Bidirectional Search / Johnson's | expansion | tier2 | 1 | 0 (—) | — | ❌ | — | *not started* |
-| Centroid Decomposition | expansion | tier3 | 1 | 0 (—) | — | ❌ | — | *not started* |
-| D&C DP (Aliens Trick) | expansion | tier3 | 1 | 0 (—) | — | ❌ | — | *not started* |
-| Difference Array | expansion | tier1 | 1 | 0 (—) | — | ❌ | — | *not started* |
-| Eertree | expansion | tier3 | 1 | 0 (—) | — | ❌ | — | *not started* |
-| FFT/NTT | expansion | tier3 | 1 | 0 (—) | — | ❌ | — | *not started* |
-| Fenwick Tree (BIT) | expansion | tier1 | 1 | 0 (—) | — | ❌ | — | *not started* |
-| Heavy-Light Decomposition | expansion | tier3 | 1 | 0 (—) | — | ❌ | — | *not started* |
-| KMP | expansion | tier1 | 1 | 0 (—) | — | ❌ | — | *not started* |
-| LCA | expansion | tier2 | 1 | 0 (—) | — | ❌ | — | *not started* |
-| Link-Cut Trees | expansion | tier3 | 1 | 0 (—) | — | ❌ | — | *not started* |
-| MCMF / Min-Cut Modeling | expansion | tier3 | 1 | 0 (—) | — | ❌ | — | *not started* |
-| Manacher's Algorithm | expansion | tier1 | 1 | 0 (—) | — | ❌ | — | *not started* |
-| Matrix Exponentiation | expansion | tier1 | 1 | 0 (—) | — | ❌ | — | *not started* |
-| Max-Flow | expansion | tier2 | 1 | 0 (—) | — | ❌ | — | *not started* |
-| Meet-in-the-Middle | expansion | tier1 | 1 | 0 (—) | — | ❌ | — | *not started* |
-| Mo's Algorithm | expansion | tier2 | 1 | 0 (—) | — | ❌ | — | *not started* |
-| Number Theory | expansion | tier1 | 1 | 0 (—) | — | ❌ | — | *not started* |
-| Persistent Structures | expansion | tier2 | 1 | 0 (—) | — | ❌ | — | *not started* |
-| Reservoir Sampling | expansion | tier1 | 1 | 0 (—) | — | ❌ | — | *not started* |
-| SOS DP | expansion | tier2 | 1 | 0 (—) | — | ❌ | — | *not started* |
-| Segment Tree | expansion | tier1 | 1 | 0 (—) | — | ❌ | — | *not started* |
-| Segment Tree Beats | expansion | tier3 | 1 | 0 (—) | — | ❌ | — | *not started* |
-| Sprague-Grundy | expansion | tier3 | 1 | 0 (—) | — | ❌ | — | *not started* |
-| Suffix Automaton | expansion | tier2 | 1 | 0 (—) | — | ❌ | — | *not started* |
-| Sweep Line | expansion | tier2 | 1 | 0 (—) | — | ❌ | — | *not started* |
-| Tarjan's SCC | expansion | tier1 | 1 | 0 (—) | — | ❌ | — | *not started* |
-| XOR Trie | expansion | tier1 | 1 | 0 (—) | — | ❌ | — | *not started* |
-| BFS on Implicit Graph | graphs | core | 1 | 1 (127) | 🟢 | ✅ | — | queued: 815 `solved:127`, 1197 `solved:127` |
-| Connected Components | graphs | core | 3 | 1 *+2v* (323) | 🟢 | ✅ | DFS ×1 · BFS ×1 · Union-Find ×1 | thin (1/3) |
-| Cycle Detection in an Iterated Sequence | graphs | core | 2 | 1 (202) | 🟢 | ✅ | Seen-Set ×1 · ~~Floyd Fast/Slow~~ *(queued: `🟡:202 — ready; rides 202's next rep`)* | thin (1/2) · queued: 287 `surplus>=1` |
-| Graph Clone (DFS + Hash Map) | graphs | core | 1 | 1 (133) | 🟢 | ✅ | — | — |
-| Graph Cycle Detection (DFS) | graphs | core | 1 | 1 (261) | 🟢 | ✅ | — | — |
-| Grid BFS | graphs | core | 3 | 4 (130, 200, 417, 733) | 🎓 | ✅ | — | — |
-| Grid DFS | graphs | core | 3 | 2 (200, 695) | 🎓 | ✅ | — | thin (2/3) |
-| Multi-source BFS | graphs | core | 3 | 1 (994) | 🟢 | ✅ | — | thin (1/3) |
-| Topological Sort | graphs | core | 3 | 3 (207, 210, 269) | 🎓 | ✅ | Kahn's (BFS) ×3 · ~~DFS postorder~~ *(queued: `graduates:210`)* | queued: 802 `surplus>=1`, 2115 `surplus>=1` |
-| Union-Find | graphs | core | 3 | 4 (130, 261, 684, 721) | 🎓 | ✅ | — | — |
-| Heap / Priority Queue | heap | core | 3 | 6 (347, 355, 621, 703, 973, 1046) | 🟢 | ✅ | — | queued: 23 `surplus>=1`, 295 `surplus>=1` |
-| Intervals (sort + sweep) | intervals | core | 5 | 3 (56, 57, 435) | 🟢 | ✅ | Merge overlapping (sort by start) ×1 · Insert into sorted (3-phase sweep) ×1 · Interval scheduling (sort by end) ×1 · ~~Max concurrent (sweep line / min-heap of ends)~~ *(queued: `green:435`)* · ~~Two-list intersection (two pointers)~~ *(queued: `green:56`)* | thin (3/5) · queued: 252 `surplus>=1`, 253 `surplus>=1`, 1851 `surplus>=1` |
-| Deep Copy via Hash Map | linked_list | core | 1 | 1 (138) | 🟢 | ✅ | — | — |
-| Dummy Node | linked_list | core | 3 | 3 *+2v* (2, 19, 21) | 🎓 | ✅ | — | — |
-| Floyd's Cycle / Midpoint | linked_list | core | 3 | 2 (141, 143) | 🟢 | ✅ | — | thin (2/3) |
-| HashMap + Doubly Linked List (LRU) | linked_list | core | 3 | 1 (146) | 🟢 | ✅ | — | thin (1/3) · queued: 1472 `rated:146` |
-| Linked List Arithmetic | linked_list | core | 1 | 1 (2) | 🟢 | ✅ | — | — |
-| Linked List Merge | linked_list | core | 1 | 1 *+1v* (21) | 🎓 | ✅ | Iterative ×1 · Recursion ×1 | queued: 23 `surplus>=1` |
-| Linked List Reversal | linked_list | core | 1 | 1 *+1v* (206) | 🎓 | ✅ | Iterative ×1 · Recursion ×1 | queued: 25 `surplus>=1` |
-| Remove Nth From End | linked_list | core | 1 | 1 *+1v* (19) | 🟢 | ✅ | Iterative ×1 · Postorder Recursion ×1 · ~~Preorder Recursion~~ *(queued: `expansion — parked Jul 9`)* | — |
-| Math / Number Manipulation | math_sim | core | 3 | 0 (—) | — | ❌ | — | *not started* |
-| Simulation / Matrix Walk | math_sim | core | 2 | 0 (—) | — | ❌ | — | *not started* |
-| Kadane | prefix_sum | core | 1 | 1 (53) | 🟢 | ✅ | — | — |
-| Prefix Sum | prefix_sum | core | 3 | 2 (53, 560) | 🟢 | ✅ | — | thin (2/3) |
-| Recursion | recursion | core | 3 | 3 (19, 21, 206) | 🎓 | ✅ | — | — |
-| Greedy (single pass) | sliding_window | core | 1 | 6 (45, 55, 122, 134, 763, 846) | 🟢 | ✅ | — | queued: 678 `surplus>=1`, 1899 `surplus>=1` |
-| Sliding Window | sliding_window | core | 3 | 4 (3, 121, 424, 567) | 🟢 | ✅ | — | queued: 76 `surplus>=1` |
-| Divide & Conquer / Sorting | sorting | core | 3 | 1 (912) | 🟢 | ✅ | Merge Sort ×1 · ~~Quick Sort~~ *(queued: `expansion — sorting deep-dive`)* · ~~Radix Sort~~ *(queued: `expansion — sorting deep-dive`)* · ~~Counting Sort~~ *(queued: `expansion — sorting deep-dive`)* · ~~Timsort~~ *(queued: `expansion — sorting deep-dive`)* · ~~D&C on 53~~ *(queued: `rated:912 + surplus>=1`)* | thin (1/3) |
-| Monotonic Deque | stack | core | 1 | 1 (239) | 🟢 | ✅ | — | — |
-| Monotonic Stack | stack | core | 3 | 6 (84, 496, 503, 739, 853, 901) | 🟢 | ✅ | — | queued: 85 `solved:84`, 1504 `solved:84` |
-| Stack (augmented entries) | stack | core | 2 | 1 (155) | 🟢 | ✅ | — | thin (1/2) |
-| Stack (expression evaluation) | stack | core | 2 | 1 (150) | 🟢 | ✅ | — | thin (1/2) · queued: 394 `surplus>=1` |
-| Stack (matching) | stack | core | 1 | 1 (20) | 🟢 | ✅ | — | — |
-| String Building & Encoding | strings | core | 2 | 0 (—) | — | ❌ | — | *not started* |
-| String Parsing / Manipulation | strings | core | 3 | 0 (—) | — | ❌ | — | *not started* |
-| BST Descent | trees | core | 2 | 2 (98, 235) | 🟢 | ✅ | — | queued: 230 `surplus>=1` |
-| Tree BFS (level order) | trees | core | 3 | 2 (102, 199) | 🎓 | ✅ | — | thin (2/3) |
-| Tree Construction (Divide & Conquer) | trees | core | 1 | 1 (105) | 🟢 | ✅ | — | — |
-| Tree DFS (recursive) | trees | core | 3 | 6 (100, 104, 110, 226, 572, 1448) | 🎓 | ✅ | — | queued: 297 `surplus>=1` |
-| Tree DFS with Postorder Return | trees | core | 2 | 2 (124, 543) | 🟢 | ✅ | — | — |
-| Trie | tries | core | 3 | 3 (208, 211, 648) | 🟢 | ✅ | — | queued: 212 `surplus>=1`, 472 `rated:139` |
-| Dutch National Flag | two_pointers | core | 1 | 1 (75) | 🟢 | ✅ | — | — |
-| Fast/Slow In-Place Write | two_pointers | core | 3 | 4 (26, 27, 80, 283) | 🎓 | ✅ | — | — |
-| Prefix/Suffix Max | two_pointers | core | 1 | 1 (42) | 🟢 | ✅ | Array ×1 · ~~Two Pointer~~ *(queued: `graduates:42`)* | — |
-| Two Pointers (converging) | two_pointers | core | 3 | 8 (11, 15, 88, 125, 167, 344, 680, 1768) | 🎓 | ✅ | — | — |
+| Bellman-Ford | advanced_graphs | core | 2 (2+0) | 1 (787) | 🟢 | ✅ | Standard ×1 · ~~Contrast rep on 743~~ *(queued: `graduates:743`)* · ~~Negative edges (SSSP, -Infinity propagation)~~ *(queued: `surplus>=1`)* · ~~Negative-cycle detection (arbitrage / log-transform)~~ *(queued: `surplus>=1`)* | thin (1/2) · queued: 9001 `surplus>=1`, 9002 `surplus>=1` |
+| Dijkstra | advanced_graphs | core | 4 (4+0) | 3 *+1v* (743, 778, 1631) | 🟢 | ✅ | Min-over-max (minimize the maximum edge) ×1 · **Max-min bottleneck (maximize the minimum edge) ×0** · ~~0/1 edge weights (0-1 BFS vs Dijkstra)~~ *(queued: `surplus>=1`)* · ~~Multiplicative relaxation (maximize the product)~~ *(queued: `surplus>=1`)* | thin (3/4) · queued: 1368 `surplus>=1`, 1514 `surplus>=1`, 3650 `surplus>=1` · variant: **Max-min bottleneck (maximize the minimum edge)** |
+| Floyd-Warshall (all-pairs shortest path) | advanced_graphs | core | 2 (2+0) | 2 (1334, 1462) | 🟢 | ✅ | — | queued: 399 `rated:1334` |
+| Hierholzer (Eulerian path) | advanced_graphs | core | 2 (2+0) | 2 *+1v* (332, 2097) | 🟢 | ✅ | pre-sorted adjacency ×1 · min-heap ordering ×1 | queued: 753 `surplus>=1` |
+| Kruskal's MST | advanced_graphs | core | 2 (1+1) | 1 (1489) | 🟡 | ❌ | — | **no-green** · thin (1/2) · queued: 1135 `surplus>=1` |
+| Prim's MST | advanced_graphs | core | 1 (1+0) | 1 (1584) | 🟢 | ✅ | — | queued: 9003 `surplus>=1` |
+| Array/String Fundamentals | arrays_and_hash | core | 2 (2+0) | 3 (14, 66, 1929) | 🟢 | ✅ | — | — |
+| Boyer-Moore Voting | arrays_and_hash | core | 1 (1+0) | 2 (169, 229) | 🎓 | ✅ | — | — |
+| Frequency Counting | arrays_and_hash | core | 1 (1+0) | 2 (49, 242) | 🎓 | ✅ | — | — |
+| Hash Map Lookup | arrays_and_hash | core | 1 (1+0) | 2 (1, 219) | 🎓 | ✅ | — | — |
+| Hash Set Membership | arrays_and_hash | core | 2 (2+0) | 3 (36, 128, 217) | 🟢 | ✅ | — | — |
+| In-Place Array Rotation | arrays_and_hash | core | 1 (1+0) | 1 (189) | 🟢 | ✅ | — | — |
+| Length-Prefix Encoding | arrays_and_hash | core | 1 (1+0) | 1 (271) | 🟢 | ✅ | — | — |
+| Prefix/Suffix Products | arrays_and_hash | core | 1 (1+0) | 1 (238) | 🟢 | ✅ | — | — |
+| Backtracking | backtracking | core | 7 (5+2) | 4 (22, 39, 46, 78) | 🟢 | ✅ | — | thin (4/7) · queued: 17 `phase:Backtracking`, 40 `phase:Backtracking`, 51 `phase:Backtracking`, 79 `phase:Backtracking`, 90 `phase:Backtracking`, 131 `phase:Backtracking`, 212 `phase:Backtracking` |
+| Binary Search (exact match) | binary_search | core | 1 (1+0) | 2 (33, 704) | 🎓 | ✅ | — | — |
+| Binary Search (max boundary) | binary_search | core | 3 (2+1) | 3 (34, 74, 1552) | 🟢 | ✅ | — | — |
+| Binary Search (min boundary) | binary_search | core | 4 (4+0) | 7 (34, 153, 162, 540, 875, 1011, 2300) | 🎓 | ✅ | — | queued: 4 `surplus>=1` |
+| Binary Search on Answer | binary_search | core | 3 (2+1) | 3 (875, 1011, 1552) | 🟢 | ✅ | — | — |
+| Bit Manipulation | bit_manipulation | core | 3 (3+0) | 0 (—) | — | ❌ | — | *not started* |
+| Design (composed data structures) | design | core | 1 (1+0) | 0 (—) | — | ❌ | — | *not started* |
+| 1D Dynamic Programming | dynamic_programming | dp | 5 (5+0) | 0 (—) | — | ❌ | — | *not started* |
+| 2D Dynamic Programming | dynamic_programming | dp | 4 (4+0) | 0 (—) | — | ❌ | — | *not started* |
+| Interval DP | dynamic_programming | dp | 1 (1+0) | 0 (—) | — | ❌ | — | *not started* |
+| Knapsack | dynamic_programming | dp | 2 (2+0) | 0 (—) | — | ❌ | — | *not started* |
+| Longest Common Subsequence | dynamic_programming | dp | 1 (1+0) | 0 (—) | — | ❌ | — | *not started* |
+| Longest Increasing Subsequence | dynamic_programming | dp | 2 (2+0) | 0 (—) | — | ❌ | — | *not started* |
+| Memoization | dynamic_programming | dp | 1 (1+0) | 0 (—) | — | ❌ | — | *not started* |
+| Space Compression | dynamic_programming | dp | 1 (1+0) | 0 (—) | — | ❌ | — | *not started* |
+| 2-SAT | expansion | tier3 | 1 (1+0) | 0 (—) | — | ❌ | — | *not started* |
+| Advanced Geometry | expansion | tier3 | 1 (1+0) | 0 (—) | — | ❌ | — | *not started* |
+| Aho-Corasick | expansion | tier2 | 1 (1+0) | 0 (—) | — | ❌ | — | *not started* |
+| Bidirectional Search / Johnson's | expansion | tier2 | 1 (1+0) | 0 (—) | — | ❌ | — | *not started* |
+| Centroid Decomposition | expansion | tier3 | 1 (1+0) | 0 (—) | — | ❌ | — | *not started* |
+| D&C DP (Aliens Trick) | expansion | tier3 | 1 (1+0) | 0 (—) | — | ❌ | — | *not started* |
+| Difference Array | expansion | tier1 | 1 (1+0) | 0 (—) | — | ❌ | — | *not started* |
+| Eertree | expansion | tier3 | 1 (1+0) | 0 (—) | — | ❌ | — | *not started* |
+| FFT/NTT | expansion | tier3 | 1 (1+0) | 0 (—) | — | ❌ | — | *not started* |
+| Fenwick Tree (BIT) | expansion | tier1 | 1 (1+0) | 0 (—) | — | ❌ | — | *not started* |
+| Heavy-Light Decomposition | expansion | tier3 | 1 (1+0) | 0 (—) | — | ❌ | — | *not started* |
+| KMP | expansion | tier1 | 1 (1+0) | 0 (—) | — | ❌ | — | *not started* |
+| LCA | expansion | tier2 | 1 (1+0) | 0 (—) | — | ❌ | — | *not started* |
+| Link-Cut Trees | expansion | tier3 | 1 (1+0) | 0 (—) | — | ❌ | — | *not started* |
+| MCMF / Min-Cut Modeling | expansion | tier3 | 1 (1+0) | 0 (—) | — | ❌ | — | *not started* |
+| Manacher's Algorithm | expansion | tier1 | 1 (1+0) | 0 (—) | — | ❌ | — | *not started* |
+| Matrix Exponentiation | expansion | tier1 | 1 (1+0) | 0 (—) | — | ❌ | — | *not started* |
+| Max-Flow | expansion | tier2 | 1 (1+0) | 0 (—) | — | ❌ | — | *not started* |
+| Meet-in-the-Middle | expansion | tier1 | 1 (1+0) | 0 (—) | — | ❌ | — | *not started* |
+| Mo's Algorithm | expansion | tier2 | 1 (1+0) | 0 (—) | — | ❌ | — | *not started* |
+| Number Theory | expansion | tier1 | 1 (1+0) | 0 (—) | — | ❌ | — | *not started* |
+| Persistent Structures | expansion | tier2 | 1 (1+0) | 0 (—) | — | ❌ | — | *not started* |
+| Reservoir Sampling | expansion | tier1 | 1 (1+0) | 0 (—) | — | ❌ | — | *not started* |
+| SOS DP | expansion | tier2 | 1 (1+0) | 0 (—) | — | ❌ | — | *not started* |
+| Segment Tree | expansion | tier1 | 1 (1+0) | 0 (—) | — | ❌ | — | *not started* |
+| Segment Tree Beats | expansion | tier3 | 1 (1+0) | 0 (—) | — | ❌ | — | *not started* |
+| Sprague-Grundy | expansion | tier3 | 1 (1+0) | 0 (—) | — | ❌ | — | *not started* |
+| Suffix Automaton | expansion | tier2 | 1 (1+0) | 0 (—) | — | ❌ | — | *not started* |
+| Sweep Line | expansion | tier2 | 1 (1+0) | 0 (—) | — | ❌ | — | *not started* |
+| Tarjan's SCC | expansion | tier1 | 1 (1+0) | 0 (—) | — | ❌ | — | *not started* |
+| XOR Trie | expansion | tier1 | 1 (1+0) | 0 (—) | — | ❌ | — | *not started* |
+| BFS on Implicit Graph | graphs | core | 2 (2+0) | 1 (127) | 🟢 | ✅ | — | thin (1/2) · queued: 815 `solved:127`, 1197 `solved:127` |
+| Connected Components | graphs | core | 1 (1+0) | 1 *+2v* (323) | 🟢 | ✅ | DFS ×1 · BFS ×1 · Union-Find ×1 | — |
+| Cycle Detection in an Iterated Sequence | graphs | core | 1 (1+0) | 1 (202) | 🟢 | ✅ | Seen-Set ×1 · ~~Floyd Fast/Slow~~ *(queued: `🟡:202 — ready; rides 202's next rep`)* | queued: 287 `surplus>=1` |
+| Graph Clone (DFS + Hash Map) | graphs | core | 1 (1+0) | 1 (133) | 🟢 | ✅ | — | — |
+| Graph Cycle Detection (DFS) | graphs | core | 1 (1+0) | 1 (261) | 🟢 | ✅ | — | — |
+| Grid BFS | graphs | core | 2 (2+0) | 4 (130, 200, 417, 733) | 🎓 | ✅ | — | — |
+| Grid DFS | graphs | core | 1 (1+0) | 2 (200, 695) | 🎓 | ✅ | — | — |
+| Multi-source BFS | graphs | core | 1 (1+0) | 1 (994) | 🟢 | ✅ | — | — |
+| Topological Sort | graphs | core | 3 (3+0) | 3 (207, 210, 269) | 🎓 | ✅ | Kahn's (BFS) ×3 · ~~DFS postorder~~ *(queued: `graduates:210`)* | queued: 802 `surplus>=1`, 2115 `surplus>=1` |
+| Union-Find | graphs | core | 3 (2+1) | 4 (130, 261, 684, 721) | 🎓 | ✅ | — | — |
+| Heap / Priority Queue | heap | core | 4 (4+0) | 6 (347, 355, 621, 703, 973, 1046) | 🟢 | ✅ | — | queued: 23 `surplus>=1`, 295 `surplus>=1` |
+| Intervals (sort + sweep) | intervals | core | 3 (3+0) | 3 (56, 57, 435) | 🟢 | ✅ | Merge overlapping (sort by start) ×1 · Insert into sorted (3-phase sweep) ×1 · Interval scheduling (sort by end) ×1 · ~~Max concurrent (sweep line / min-heap of ends)~~ *(queued: `green:435`)* · ~~Two-list intersection (two pointers)~~ *(queued: `green:56`)* | queued: 252 `surplus>=1`, 253 `surplus>=1`, 1851 `surplus>=1` |
+| Deep Copy via Hash Map | linked_list | core | 1 (1+0) | 1 (138) | 🟢 | ✅ | — | — |
+| Dummy Node | linked_list | core | 2 (2+0) | 3 *+2v* (2, 19, 21) | 🎓 | ✅ | — | — |
+| Floyd's Cycle / Midpoint | linked_list | core | 1 (1+0) | 2 (141, 143) | 🟢 | ✅ | — | — |
+| HashMap + Doubly Linked List (LRU) | linked_list | core | 1 (1+0) | 1 (146) | 🟢 | ✅ | — | queued: 1472 `rated:146` |
+| Linked List Arithmetic | linked_list | core | 1 (1+0) | 1 (2) | 🟢 | ✅ | — | — |
+| Linked List Merge | linked_list | core | 1 (1+0) | 1 *+1v* (21) | 🎓 | ✅ | Iterative ×1 · Recursion ×1 | queued: 23 `surplus>=1` |
+| Linked List Reversal | linked_list | core | 1 (1+0) | 1 *+1v* (206) | 🎓 | ✅ | Iterative ×1 · Recursion ×1 | queued: 25 `surplus>=1` |
+| Remove Nth From End | linked_list | core | 1 (1+0) | 1 *+1v* (19) | 🟢 | ✅ | Iterative ×1 · Postorder Recursion ×1 · ~~Preorder Recursion~~ *(queued: `expansion — parked Jul 9`)* | — |
+| Math / Number Manipulation | math_sim | core | 2 (2+0) | 0 (—) | — | ❌ | — | *not started* |
+| Simulation / Matrix Walk | math_sim | core | 2 (2+0) | 0 (—) | — | ❌ | — | *not started* |
+| Kadane | prefix_sum | core | 1 (1+0) | 1 (53) | 🟢 | ✅ | — | — |
+| Prefix Sum | prefix_sum | core | 2 (1+1) | 2 (53, 560) | 🟢 | ✅ | — | — |
+| Recursion | recursion | core | 2 (2+0) | 3 (19, 21, 206) | 🎓 | ✅ | — | — |
+| Greedy (single pass) | sliding_window | core | 8 (4+4) | 6 (45, 55, 122, 134, 763, 846) | 🟢 | ✅ | — | thin (6/8) · queued: 678 `surplus>=1`, 1899 `surplus>=1` |
+| Sliding Window | sliding_window | core | 3 (3+0) | 4 (3, 121, 424, 567) | 🟢 | ✅ | — | queued: 76 `surplus>=1` |
+| Divide & Conquer / Sorting | sorting | core | 1 (1+0) | 1 (912) | 🟢 | ✅ | Merge Sort ×1 · ~~Quick Sort~~ *(queued: `expansion — sorting deep-dive`)* · ~~Radix Sort~~ *(queued: `expansion — sorting deep-dive`)* · ~~Counting Sort~~ *(queued: `expansion — sorting deep-dive`)* · ~~Timsort~~ *(queued: `expansion — sorting deep-dive`)* · ~~D&C on 53~~ *(queued: `rated:912 + surplus>=1`)* | — |
+| Monotonic Deque | stack | core | 1 (1+0) | 1 (239) | 🟢 | ✅ | — | — |
+| Monotonic Stack | stack | core | 6 (4+2) | 6 (84, 496, 503, 739, 853, 901) | 🟢 | ✅ | — | queued: 85 `solved:84`, 1504 `solved:84` |
+| Stack (augmented entries) | stack | core | 1 (1+0) | 1 (155) | 🟢 | ✅ | — | — |
+| Stack (expression evaluation) | stack | core | 1 (1+0) | 1 (150) | 🟢 | ✅ | — | queued: 394 `surplus>=1` |
+| Stack (matching) | stack | core | 1 (1+0) | 1 (20) | 🟢 | ✅ | — | — |
+| String Building & Encoding | strings | core | 1 (1+0) | 0 (—) | — | ❌ | — | *not started* |
+| String Parsing / Manipulation | strings | core | 1 (1+0) | 0 (—) | — | ❌ | — | *not started* |
+| BST Descent | trees | core | 2 (2+0) | 2 (98, 235) | 🟢 | ✅ | — | queued: 230 `surplus>=1` |
+| Tree BFS (level order) | trees | core | 1 (1+0) | 2 (102, 199) | 🎓 | ✅ | — | — |
+| Tree Construction (Divide & Conquer) | trees | core | 1 (1+0) | 1 (105) | 🟢 | ✅ | — | — |
+| Tree DFS (recursive) | trees | core | 4 (4+0) | 6 (100, 104, 110, 226, 572, 1448) | 🎓 | ✅ | — | queued: 297 `surplus>=1` |
+| Tree DFS with Postorder Return | trees | core | 1 (1+0) | 2 (124, 543) | 🟢 | ✅ | — | — |
+| Trie | tries | core | 3 (3+0) | 3 (208, 211, 648) | 🟢 | ✅ | — | queued: 212 `surplus>=1`, 472 `rated:139` |
+| Dutch National Flag | two_pointers | core | 1 (1+0) | 1 (75) | 🟢 | ✅ | — | — |
+| Fast/Slow In-Place Write | two_pointers | core | 2 (2+0) | 4 (26, 27, 80, 283) | 🎓 | ✅ | — | — |
+| Prefix/Suffix Max | two_pointers | core | 1 (1+0) | 1 (42) | 🟢 | ✅ | Array ×1 · ~~Two Pointer~~ *(queued: `graduates:42`)* | — |
+| Two Pointers (converging) | two_pointers | core | 4 (4+0) | 8 (11, 15, 88, 125, 167, 344, 680, 1768) | 🎓 | ✅ | — | — |
 
 ## Vocabulary maintenance
 
