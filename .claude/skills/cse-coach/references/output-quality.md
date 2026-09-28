@@ -42,6 +42,10 @@ result from THIS turn. Numbers come from scripts; links come from `scripts/links
 If you cannot point to the tool result, it did not happen. A claim with none is a plan, and is
 phrased as one ("adding that now"). Enforced by `.claude/hooks/grounded_claims.py`.
 
+## Asking the learner a question
+
+When you need an order or a ranking, ask the learner for the order itself, in their words. When a free-text answer comes back to a multiple-choice question, ask one clarifying question before it becomes a plan item. (Sep 26 and Sep 27, 2026: a menu that did not contain the learner's answer produced the wrong build twice — `self_eval_log.md`.)
+
 ## Pre-send check
 
 Run silently before sending, one line each:

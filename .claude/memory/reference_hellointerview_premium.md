@@ -9,12 +9,16 @@ reconciled: 2026-09-27
 **Link order for a problem, set by the learner Sep 27, 2026:**
 *"leetcode (free) -> neetcode (free) -> hellointerview (premium) in that order"*
 
+Extended the same day, when 1102 had none of the three: *"leetcode (free) -> neetcode (free) -> hellointerview
+(premium) -> others"*. The learner wants every rep submitted somewhere; the paywalled LeetCode page is the last resort.
+
 | Step | Use it when | How it is checked |
 |---|---|---|
 | 1. LeetCode | the problem is free there | LeetCode's GraphQL lookup: `isPaidOnly` is false |
 | 2. NeetCode | LeetCode paywalls it AND NeetCode lists it | NeetCode's public problem list (`neetcode-gh/leetcode`, `.problemSiteData.json`) |
 | 3. HelloInterview | neither of the above, AND its catalog has it | `hellointerview.yml`, built by crawling the catalog |
-| none of the three | | link LeetCode's page and SAY it is paywalled with no mirror known |
+| 4. others | none of the three carries it | another judge that carries the same problem (Kattis, CSES, LintCode…), found by search and named in the file's header link; say plainly if it could not be confirmed free |
+| none of the four | | SKIP the problem for now and look for a free problem of the same shape (learner, Sep 27: *"if nowhere available to practice it, we can skip it for now"*); a tracked problem keeps LeetCode's page, stated as paywalled |
 
 **The learner holds HelloInterview premium for coding**, not only system design (*"i have premium there so if a
 problem is available there on premium, i can do it there"*). It is still the LAST resort, after both free sites.
@@ -42,7 +46,7 @@ not the rule. See `self_eval_log.md` 2026-09-27.
   | 252 Meeting Rooms | yes | yes | NeetCode |
   | 253 Meeting Rooms II | yes | no | NeetCode |
   | 1197 Minimum Knight Moves | no | yes | HelloInterview |
-  | 1102 Path With Maximum Minimum Value | no | no | LeetCode, paywalled |
+  | 1102 Path With Maximum Minimum Value | no | no | none free (LintCode 1418 is premium too) → skipped |
   | 1135 Connecting Cities With Minimum Cost | no | no | LeetCode, paywalled |
 
 - On the site, a link's label is the judge's name in full ("HelloInterview"), per

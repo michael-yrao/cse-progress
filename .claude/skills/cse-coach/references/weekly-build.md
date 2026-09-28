@@ -105,7 +105,7 @@ workflow (`~/.claude/rules/execution-workflow.md`):
 | Phase | Model | What |
 |---|---|---|
 | **Plan** | tech lead (the session) | price capacity, read the coverage / ⚠️-Needs-work callout, decide the pulls + day placement — the whole build *design*. Get learner approval. |
-| **Execute** | `engineer` agent (Sonnet) | the mechanical writeback ONLY: `git mv` the archive, write the next-week file from the approved plan, run the checker scripts, report the diff. **Never commit/push.** |
+| **Execute** | tech lead + `engineer` agent (Sonnet) | the tech lead runs the archive `git mv` (the role gate denies state-changing git to engineers); the engineer writes the next-week file from the approved plan, runs the checker scripts, and reports the diff. The engineer leaves commit and push to the tech lead. |
 | **Review** | tech lead (the session) | review the engineer's diff, run `advisor`, then commit/push per the close-out authorization. |
 
 The build is one engineer's worth of writeback — under the spawn rule (2:1) that means no team lead; the
@@ -130,6 +130,7 @@ Two standing passes ride every Sunday close-out:
     the tracker row per the variant rule above);
   - **S / E** — start / end comfort glyph; **Next** — next-review glyph;
   - **Technique** — exactly **ONE word** (Backtracking · Dijkstra · Kruskal · Prefix-sum · …), nothing else.
+  - **Row order** — within each day, problems run from highest priority to lowest: 🔴/🟡 conversions first, then new problems, then 🟢 reviews, with easy reviews last. A board shown to the learner keeps that order.
 
   Three homes, so nothing is lost by leaving the table. *Rep rationale* ("was 🔴 Sep 10", "template
   writable cold?") goes to the mastery ledgers (`stuck_log.md` · `complexity_gotchas.md` ·

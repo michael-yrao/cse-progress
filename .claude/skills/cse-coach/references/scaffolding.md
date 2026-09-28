@@ -132,12 +132,18 @@ blocks a scaffold and is silent when offline.
   call forever, so silence would leave the check looking installed while never running. It
   prints one line naming the fix (`Install Certificates.command` / `pip install certifi`).
 
+## Where a problem links (learner's order, Sep 27–28, 2026)
+
+LeetCode if it is free there → NeetCode if its own list has it → HelloInterview if its catalog has it → another judge that carries the same problem (Kattis, CSES, LintCode), confirmed free. If none of these has it, skip the problem for now and find a free problem of the same shape with a pull. Confirm each step against that site's own list before linking it. full rule: [`reference_hellointerview_premium.md`](.claude/memory/reference_hellointerview_premium.md); `decisions.yml` `problem-link-order-sep27`.
+
 ## Presenting the kickoff / lineup board — name + links, NOTHING else
 
 A presented lineup carries **only the problem, as its links**: `[<n> <title>](repo-relative .py path) · [LC]`
 (or `[NC]` if premium), the pair inside the problem cell. This applies to the kickoff board, a
 mid-session restate, and a "what's next" hand-over alike. **No Note/Focus/technique/comfort/
 units/difficulty column,** and no technique parenthetical in the title.
+
+List the day's problems from highest priority to lowest: 🔴/🟡 conversions first, then new problems, then 🟢 reviews, with easy reviews last.
 
 ⚠️ **Any column beyond the name spoils the recognition front-gate** — the one thing the gate
 exists to measure. `Course Schedule IV (Floyd-Warshall)`, a "Focus" cell reading "post-order
@@ -181,6 +187,8 @@ hand-over ("let's do 102"). full rule: [`feedback_lineup_links_only.md`](.claude
 (name + `[file]·[LC]`). Refer to problems you're steering *away from* by **description, not number**. A
 link is an invitation, so linking a steer-away advertises the rep you're declining. full rule:
 [`feedback_recommend_by_number_steer_by_description`](.claude/memory/feedback_recommend_by_number_steer_by_description.md).
+
+⭐ **Before calling a rep optional or ranking it last, read its technique's row in `technique_coverage.md`.** A rep that closes a listed variant gap, or belongs to a technique with no 🟢 yet, stays a priority. (Sep 27, 2026: 1102 was called optional while it was Dijkstra's one missing variation.)
 
 full rule: [`feedback_lineup_links_only.md`](.claude/memory/feedback_lineup_links_only.md); the links
 pair itself is the links rule (both links, inside the problem cell, `NC` when premium).

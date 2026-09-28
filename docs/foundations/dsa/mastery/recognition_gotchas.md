@@ -1,3 +1,20 @@
+- **2026-09-27 · 2812 Find the Safest Path in a Grid** (🆕 consolidation rep; half-spoiled: the schedule named the
+  Dijkstra max-min seat and the learner asked for the swap by shape) — ✅ **hit on Dijkstra, ❌ miss on the precompute.**
+  "this is clearly dijkstra's … maxHeap … start all nodes with -math.inf" cold. The nearest-thief distance was first
+  a per-thief scan; multi-source BFS was named only after the "thieves reach out to the cells" hint. → 🟡.
+- **2026-09-27 · 721 Accounts Merge** (🟡 re-rep; retry, half-spoiled: tracker names Union-Find) — ✅ **hit.**
+  "this is union find" in the top comment, with a 5-step plan (UF over account indices → email→indices map →
+  union co-owners → root→email-set → sorted rows). Steps 0–2 clean; steps 3–4 had three index-vs-value slips
+  (`find(name)`, `enumerate` for `.items()`, row led by the index), fixed after a step-level localization hint.
+  Coach proposed 🟡; **learner overrode to 🟢** and asked for a new problem instead of more 721 reps → 1202 queued.
+- **2026-09-27 · 560 Subarray Sum Equals K** (🟡 re-rep; retry, half-spoiled: arrays_and_hash folder) — ✅ **hit.**
+  Prefix sum + running-sum hashmap called in the top comment, with the `prefix[j] - prefix[i] == k` identity. All
+  three past misses held: signed `runningSum - k` (no `abs`), `{0: 1}` seed, lookup-before-insert. Map still named
+  `diffMap` (holds prefix sums). Blank page, no hints. → 🟢 s1.
+- **2026-09-27 · 540 Single Element in a Sorted Array** (🟡 re-rep; retry, half-spoiled: binary_search folder) — ✅ **hit.**
+  "min boundary" in the top comment. The recurring stuck-log card held: snap to the pair start with index math
+  (`if m % 2: m -= 1`), then one `nums[m] != nums[m+1]` compare picks the side. Blank page, no hints; failed
+  submissions fixed unaided. → 🟢 s1.
 - **2026-09-26 · 169 Majority Element** (🟢 s2 review; retry, half-spoiled: tracker names Boyer-Moore) — ✅ **hit.**
   Boyer-Moore named in the top comment; first written as the 1-slot generalised form (a one-key map with
   decrement-all), then the two-variable form on request, both unaided and correct (v2 fuzzed 20k valid inputs).

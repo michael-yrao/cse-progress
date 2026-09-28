@@ -18,7 +18,7 @@
 
 **Thin-green (5) — proven but narrow, discretionary:**
 
-- **BFS on Implicit Graph** (1/2) · **Bellman-Ford** (1/2) · **Dijkstra** (3/4) · **Backtracking** (4/7) · **Greedy (single pass)** (6/8)
+- **BFS on Implicit Graph** (1/2) · **Bellman-Ford** (1/2) · **Backtracking** (4/7) · **Dijkstra** (4/5) · **Greedy (single pass)** (6/8)
 
 ## Started techniques
 
@@ -67,7 +67,7 @@
 |---|---|---|---|
 | Binary Search (exact match) | 🎓 | 2p · 2🟢 · 🟢→🎓 | 704 + 33, both clean; 33's rotated two-pass held cold Aug 24. **Graduated** — the settled base rung of the family. |
 | Binary Search (max boundary) | 🟢 | 3p · 2🟢 · 🟡→🟢 | **Thin — credited to 74 alone** (69 was a green probe, no row). 34 + 1552 intake queued to fix. |
-| Binary Search (min boundary) | 🎓 | 7p · 6🟢 · 🟡→🎓 | The bias the learner reaches for by default — answer at `r`, plain midpoint. Six problems, all green (153 Graduated Aug 30). Named Aug 30 so an unnamed default becomes measurable. |
+| Binary Search (min boundary) | 🎓 | 7p · 7🟢 · 🟢→🎓 | The bias the learner reaches for by default — answer at `r`, plain midpoint. Six problems, all green (153 Graduated Aug 30). Named Aug 30 so an unnamed default becomes measurable. |
 | Binary Search on Answer | 🟢 | 3p · 2🟢 · 🟡→🟢 | Koko/capacity clean; bounds derived not recalled. |
 
 ### linked_list
@@ -118,14 +118,14 @@
 | Grid DFS | 🎓 | 2p · 2🟢 · 🟢→🎓 | Clean. |
 | Multi-source BFS | 🟢 | 1p · 1🟢 · 🟢 | 994 clean; thin. |
 | Topological Sort | 🎓 | 3p · 3🟢 · 🟢→🎓 | Kahn's solid across three; **DFS-topo variant still never written** (the gap that motivated the coverage tool). |
-| Union-Find | 🎓 | 4p · 3🟢 · 🟡→🎓 | Clean and broad; α-complexity correct, no hints on recent reps. |
+| Union-Find | 🎓 | 4p · 4🟢 · 🟢→🎓 | Clean and broad; α-complexity correct, no hints on recent reps. |
 
 ### advanced_graphs
 
 | Technique | Comfort | Coverage | Why |
 |---|---|---|---|
 | Bellman-Ford | 🟢 | 1p · 1🟢 · 🟢 | 787 clean; thin. |
-| Dijkstra | 🟢 | 3p · 3🟢 · 🟡→🟢 | **First green Aug 22 (778) after 0-for-2 in August** — shallow but no longer a blocker. 743 still 🟡. |
+| Dijkstra | 🟢 | 4p · 3🟢 · 🟡→🟢 | **First green Aug 22 (778) after 0-for-2 in August** — shallow but no longer a blocker. 743 still 🟡. |
 | Floyd-Warshall (all-pairs shortest path) | 🟢 | 2p · 2🟢 · 🟢 | **1334, no green.** 1462/399 fills queued behind `rated:1334`. |
 | Hierholzer (Eulerian path) | 🟢 | 2p · 2🟢 · 🟢 | **332, no green — cost 5 sessions** because its first attempt was the introduction. The primer rule exists because of this. |
 | Kruskal's MST | 🟡 | 1p · 0🟢 · 🟡 |  |
@@ -142,7 +142,7 @@
 | Technique | Comfort | Coverage | Why |
 |---|---|---|---|
 | Kadane | 🟢 | 1p · 1🟢 · 🟢 | 53-Kadane clean (separate row from prefix-min); thin. |
-| Prefix Sum | 🟢 | 2p · 1🟢 · 🟡→🟢 | 53-prefix-min converted 🔴→🟢 Aug 22; **thin (2/3)** — 974 consolidation rep queued to add a third form. |
+| Prefix Sum | 🟢 | 2p · 2🟢 · 🟢 | 53-prefix-min converted 🔴→🟢 Aug 22; **thin (2/3)** — 974 consolidation rep queued to add a third form. |
 
 ### recursion
 

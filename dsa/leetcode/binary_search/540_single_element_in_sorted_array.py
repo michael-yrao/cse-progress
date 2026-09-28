@@ -24,6 +24,28 @@ from typing import List
 
 class Solution:
 
+    # ── Attempt · 2026-09-27 ──────────────
+    def singleNonDuplicate_20260927(self, nums: List[int]) -> int:
+        # min boundary
+        # [1,1,2,3,3,4,4,8,8]
+        #  l       m       r
+
+        l, r = 0, len(nums) - 1
+
+        while l < r:
+            m = (l + r) // 2
+            if m%2 != 0:
+                m-=1
+            # since m is now even
+            # if nums[m] != nums[m+1], then answer is on the left. this can also mean m is the answer
+            # if nums[m] == nums[m+1], then answer is on the right
+            if nums[m] != nums[m+1]:
+                r = m
+            else:
+                l = m + 2
+            
+        return nums[l]
+
     # ── Attempt · 2026-09-16 ──────────────
     def singleNonDuplicate_20260916(self, nums: List[int]) -> int:
         # min boundary binary search

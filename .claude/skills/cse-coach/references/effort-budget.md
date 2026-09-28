@@ -34,6 +34,10 @@ the lowered ceiling already accounts for it; charging both bills it twice. `syst
 still decides how many SD slots a week gets (placed at the weekly build); only the cost is gone.
 `effort_budget.py --sd` adds 0 and says so.
 
+## The ceiling is the daily goal (Sep 28, 2026)
+
+Build each day as close to the ceiling (`effort_budget.ceiling`) as possible. It is the daily goal, and a small overshoot is fine. Raising the ceiling itself to catch up is still off the table. `decisions.yml` `daily-goal-is-the-ceiling-sep28`.
+
 ## ⚠️ Never raise the ceiling to catch up on a backlog
 
 On a Medium row a 🟡 bills ~12× what a 🟢 s2 does. A rep rushed into a 🟡 costs 12× *forever*, so

@@ -65,6 +65,81 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-09-27 ──────────────
+    def accountsMerge_20260927(self, accounts: List[List[str]]) -> List[List[str]]:
+        # this is union find
+        # so a few things here, the person's name can be the same so we track via indices
+        # the way I approach this problem is probably a bit backwards but here would be the steps
+        # 0. set up union find based on number of accounts
+        # 1. map all emails to an account index
+        # 2. for all emails with two or more account indices in the map, union find those accounts
+        # 3. for each account, find the root account, create a map of root account to email sets
+        # 4. generate output based on map of step 3
+
+        # step 0 : set up union find based on number of accounts
+        numAccounts = len(accounts)
+        rankMap = {}
+        parentMap = {}
+        
+        for i in range(numAccounts):
+            rankMap[i] = 0
+            parentMap[i] = i
+        
+        def find(node):
+            if parentMap[node] != node:
+                parentMap[node] = find(parentMap[node])
+            return parentMap[node]
+        
+        def union(n1,n2):
+            n1r = find(n1)
+            n2r = find(n2)
+            if n1r == n2r:
+                return False
+            if rankMap[n1r] > rankMap[n2r]:
+                parentMap[n2r] = n1r
+            elif rankMap[n1r] < rankMap[n2r]:
+                parentMap[n1r] = n2r
+            else:
+                rankMap[n1r]+=1
+                parentMap[n2r] = n1r
+            return True
+        
+        # step 1 : map all emails to an account index
+        emailToAccountIndexMap = collections.defaultdict(list)
+
+        for i in range(len(accounts)):
+            for j in range(1,len(accounts[i])):
+                emailToAccountIndexMap[accounts[i][j]].append(i)
+        
+        # step 2 : for all emails with two or more account indices in the map, union find those accounts
+
+        for email in emailToAccountIndexMap:
+            listOfAccounts = emailToAccountIndexMap[email]
+            for i in range(1,len(listOfAccounts)):
+                account1 = listOfAccounts[i-1]
+                account2 = listOfAccounts[i]
+                union(account1,account2)
+        
+        # step 3 : for each account, find the root account, create a map of root account to email sets
+        rootAccountToEmailMap = collections.defaultdict(set)
+
+        for i in range(len(accounts)):
+            rootAccount = find(i)
+            for j in range(1,len(accounts[i])):
+                rootAccountToEmailMap[rootAccount].add(accounts[i][j])
+        
+        # step 4 : generate output based on map of step 3
+
+        result = []
+
+        for rootAccount, emails in rootAccountToEmailMap.items():
+            emailList = list(emails)
+            emailList.sort()
+            row = [accounts[rootAccount][0]] + emailList
+            result.append(row)
+        
+        return result
+
     # ── Attempt · 2026-09-17 ──────────────
     def accountsMerge_20260917(self, accounts: List[List[str]]) -> List[List[str]]:
         # we are essentially joining names together that have at least one email in common

@@ -25,6 +25,33 @@ from typing import List
 
 class Solution:
 
+    # ── Attempt · 2026-09-27 ──────────────
+    def subarraySum_20260927(self, nums: List[int], k: int) -> int:
+        # number of subarrays equalling k
+        # getting one sum is just prefix sum
+        # prefixSum[j] - prefixSum[i] == target -> increment result
+        # prefixSum[j] is just runningSum, prefixSum[i] is just runningSum of a prior iteration
+        # so have a runningSum, store runningSum in a hashmap and perform the validation check
+
+        totalCount = 0
+
+        diffMap = collections.defaultdict(int)
+        # handles case where prefixSum[j] == target
+        diffMap[0] = 1
+
+        runningSum = 0
+
+        for num in nums:
+            runningSum+=num
+            # we are looking for prefixSum[j] - target = prefixSum[i]
+            diff = runningSum - k
+            if diff in diffMap:
+                totalCount+=diffMap[diff]
+            # add runningSum to diffMap
+            diffMap[runningSum]+=1
+        
+        return totalCount
+
     # ── Attempt · 2026-09-17 ──────────────
     def subarraySum_20260917(self, nums: List[int], k: int) -> int:
          # total number of subarrays whose sum equals k is the nuance of the problem

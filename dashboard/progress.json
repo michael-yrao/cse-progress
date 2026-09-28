@@ -2,25 +2,25 @@
   "schemaVersion": 1,
   "generatedAt": "2026-09-27",
   "totals": {
-    "problems": 126,
-    "solutions": 137,
-    "reps": 615
+    "problems": 127,
+    "solutions": 138,
+    "reps": 618
   },
   "pipeline": {
     "blank": 0,
-    "shaky": 13,
+    "shaky": 12,
     "clean": {
       "s0": 3,
-      "s1": 30,
-      "s2plus": 69,
-      "total": 102
+      "s1": 32,
+      "s2plus": 68,
+      "total": 103
     },
-    "graduated": 22,
+    "graduated": 23,
     "retired": 0
   },
   "difficulty": {
     "Easy": 34,
-    "Medium": 92,
+    "Medium": 93,
     "Hard": 11
   },
   "streak": {
@@ -35,12 +35,12 @@
     "started": 60,
     "noGreen": 1,
     "thin": 6,
-    "variantGaps": 1
+    "variantGaps": 0
   },
   "onSchedule": {
-    "totalActive": 137,
-    "dueToday": 3,
-    "overdue": 6
+    "totalActive": 138,
+    "dueToday": 1,
+    "overdue": 5
   },
   "trophyCase": {
     "graduated": [
@@ -1031,6 +1031,46 @@
             "level": 3
           }
         ]
+      },
+      {
+        "lcNumber": 200,
+        "title": "Number of Islands (BFS)",
+        "url": "https://leetcode.com/problems/number-of-islands/",
+        "file": "dsa/leetcode/graphs/200_numbers_of_islands.py",
+        "difficulty": "Medium",
+        "category": "graphs",
+        "comfort": "🎓",
+        "level": 3,
+        "streak": 3,
+        "nextReview": "2027-01-14",
+        "repDates": [
+          "2026-05-30",
+          "2026-06-01",
+          "2026-06-07",
+          "2026-07-18"
+        ],
+        "timeline": [
+          {
+            "date": "2026-05-30",
+            "comfort": null,
+            "level": null
+          },
+          {
+            "date": "2026-06-01",
+            "comfort": null,
+            "level": null
+          },
+          {
+            "date": "2026-06-07",
+            "comfort": null,
+            "level": null
+          },
+          {
+            "date": "2026-07-18",
+            "comfort": "🎓",
+            "level": 3
+          }
+        ]
       }
     ],
     "retired": []
@@ -1080,32 +1120,26 @@
       "family": "advanced_graphs",
       "tier": "core",
       "started": true,
-      "minProblems": 4,
+      "minProblems": 5,
       "coverageFloor": 4,
-      "uncleanCount": 0,
-      "problemCount": 3,
+      "uncleanCount": 1,
+      "problemCount": 4,
       "problems": [
         743,
         778,
-        1631
+        1631,
+        2812
       ],
       "bestComfort": "🟢",
       "hasGreen": true,
       "thin": true,
-      "hasVariantGap": true,
+      "hasVariantGap": false,
       "buildsOn": [
         "Heap / Priority Queue",
         "Grid BFS"
       ],
       "graduatedCount": 0,
       "planned": [
-        {
-          "lcNumber": 1102,
-          "title": "Path With Maximum Minimum Value",
-          "url": "https://leetcode.com/problems/path-with-maximum-minimum-value/",
-          "difficulty": "Medium",
-          "trigger": null
-        },
         {
           "lcNumber": 3650,
           "title": "Minimum Cost Path with Edge Reversals",
@@ -1126,12 +1160,17 @@
           "url": "https://leetcode.com/problems/path-with-maximum-probability/",
           "difficulty": "Medium",
           "trigger": "surplus>=1"
+        },
+        {
+          "lcNumber": 3620,
+          "title": "Network Recovery Pathways",
+          "url": "https://leetcode.com/problems/network-recovery-pathways/",
+          "difficulty": "Hard",
+          "trigger": "surplus>=1"
         }
       ],
-      "plannedTotal": 7,
-      "untriedVariations": [
-        "Max-min bottleneck (maximize the minimum edge)"
-      ]
+      "plannedTotal": 8,
+      "untriedVariations": []
     },
     {
       "name": "Floyd-Warshall (all-pairs shortest path)",
@@ -1221,9 +1260,9 @@
       "graduatedCount": 0,
       "planned": [
         {
-          "lcNumber": 1135,
-          "title": "Connecting Cities With Minimum Cost",
-          "url": "https://leetcode.com/problems/connecting-cities-with-minimum-cost/",
+          "lcNumber": 9004,
+          "title": "Minimum Spanning Tree",
+          "url": "https://open.kattis.com/problems/minspantree",
           "difficulty": "Medium",
           "trigger": "surplus>=1"
         }
@@ -3073,8 +3112,8 @@
       "tier": "core",
       "started": true,
       "minProblems": 3,
-      "coverageFloor": 2,
-      "uncleanCount": 1,
+      "coverageFloor": 3,
+      "uncleanCount": 0,
       "problemCount": 4,
       "problems": [
         130,
@@ -3090,8 +3129,16 @@
         "Connected Components"
       ],
       "graduatedCount": 2,
-      "planned": [],
-      "plannedTotal": 4,
+      "planned": [
+        {
+          "lcNumber": 1202,
+          "title": "Smallest String With Swaps",
+          "url": "https://leetcode.com/problems/smallest-string-with-swaps/",
+          "difficulty": "Medium",
+          "trigger": "surplus>=1"
+        }
+      ],
+      "plannedTotal": 5,
       "untriedVariations": []
     },
     {
@@ -3523,9 +3570,9 @@
       "family": "prefix_sum",
       "tier": "core",
       "started": true,
-      "minProblems": 2,
+      "minProblems": 1,
       "coverageFloor": 1,
-      "uncleanCount": 1,
+      "uncleanCount": 0,
       "problemCount": 2,
       "problems": [
         53,
@@ -4891,10 +4938,10 @@
             "file": "dsa/leetcode/arrays_and_hash/560_subarray_sum_equals_k.py",
             "tags": [],
             "kind": "rep",
-            "done": false,
-            "endComfort": null,
-            "endNote": null,
-            "nextReview": null
+            "done": true,
+            "endComfort": "🟢",
+            "endNote": "s1",
+            "nextReview": "2026-10-27"
           },
           {
             "lcNumber": 721,
@@ -4906,10 +4953,10 @@
             "file": "dsa/leetcode/graphs/721_accounts_merge.py",
             "tags": [],
             "kind": "rep",
-            "done": false,
-            "endComfort": null,
-            "endNote": null,
-            "nextReview": null
+            "done": true,
+            "endComfort": "🟢",
+            "endNote": "s1 (learner over",
+            "nextReview": "2026-10-27"
           },
           {
             "lcNumber": 540,
@@ -4936,7 +4983,9 @@
             "difficulty": "Medium",
             "url": "https://leetcode.com/problems/longest-consecutive-sequence/",
             "file": "dsa/leetcode/arrays_and_hash/128_longest_consecutive_sequence.py",
-            "tags": [],
+            "tags": [
+              "moved"
+            ],
             "kind": "rep",
             "done": false,
             "endComfort": null,
@@ -4952,14 +5001,15 @@
             "url": "https://leetcode.com/problems/number-of-islands/",
             "file": "dsa/leetcode/graphs/200_numbers_of_islands.py",
             "tags": [
+              "moved",
               "backfill",
               "variant"
             ],
             "kind": "rep",
             "done": false,
-            "endComfort": null,
+            "endComfort": "🎓",
             "endNote": null,
-            "nextReview": null
+            "nextReview": "2027-01-14"
           },
           {
             "lcNumber": 1102,
@@ -4983,17 +5033,17 @@
             "title": "Find the Safest Path in a Grid",
             "technique": "Dijkstra",
             "startComfort": null,
-            "difficulty": null,
+            "difficulty": "Medium",
             "url": "https://leetcode.com/problems/find-the-safest-path-in-a-grid/",
             "file": "dsa/leetcode/graphs/2812_find_the_safest_path_in_a_grid.py",
             "tags": [
               "new"
             ],
             "kind": "new",
-            "done": false,
-            "endComfort": null,
+            "done": true,
+            "endComfort": "🟡",
             "endNote": null,
-            "nextReview": null
+            "nextReview": "2026-10-07"
           },
           {
             "lcNumber": 226,
@@ -5007,7 +5057,7 @@
               "probe"
             ],
             "kind": "complexity",
-            "done": false,
+            "done": true,
             "endComfort": null,
             "endNote": null,
             "nextReview": null
@@ -5024,7 +5074,7 @@
               "probe"
             ],
             "kind": "complexity",
-            "done": false,
+            "done": true,
             "endComfort": null,
             "endNote": null,
             "nextReview": null
@@ -5041,7 +5091,7 @@
               "probe"
             ],
             "kind": "complexity",
-            "done": false,
+            "done": true,
             "endComfort": null,
             "endNote": null,
             "nextReview": null
@@ -5058,7 +5108,7 @@
               "probe"
             ],
             "kind": "complexity",
-            "done": false,
+            "done": true,
             "endComfort": null,
             "endNote": null,
             "nextReview": null
@@ -5075,7 +5125,7 @@
               "probe"
             ],
             "kind": "complexity",
-            "done": false,
+            "done": true,
             "endComfort": null,
             "endNote": null,
             "nextReview": null
@@ -5424,8 +5474,57 @@
     {
       "date": "2026-09-27",
       "planned": 8.9,
-      "done": 1.6,
+      "done": 12.5,
       "built": 13.8,
+      "partial": true
+    },
+    {
+      "date": "2026-09-28",
+      "planned": 8.0,
+      "done": 0.0,
+      "built": 6.5,
+      "partial": true
+    },
+    {
+      "date": "2026-09-29",
+      "planned": 7.7,
+      "done": 0.0,
+      "built": 5.5,
+      "partial": true
+    },
+    {
+      "date": "2026-09-30",
+      "planned": 7.9,
+      "done": 0.0,
+      "built": 5.1,
+      "partial": true
+    },
+    {
+      "date": "2026-10-01",
+      "planned": 7.9,
+      "done": 0.0,
+      "built": 4.0,
+      "partial": true
+    },
+    {
+      "date": "2026-10-02",
+      "planned": 7.9,
+      "done": 0.0,
+      "built": 5.2,
+      "partial": true
+    },
+    {
+      "date": "2026-10-03",
+      "planned": 7.9,
+      "done": 0.0,
+      "built": 5.6,
+      "partial": true
+    },
+    {
+      "date": "2026-10-04",
+      "planned": 7.0,
+      "done": 0.0,
+      "built": 7.8,
       "partial": true
     }
   ],
@@ -5588,7 +5687,7 @@
       "description": "Reach 1 problem graduated or retired.",
       "earned": true,
       "progress": {
-        "current": 22,
+        "current": 23,
         "target": 1
       }
     },
@@ -5599,7 +5698,7 @@
       "description": "Reach 10 problems graduated or retired.",
       "earned": true,
       "progress": {
-        "current": 22,
+        "current": 23,
         "target": 10
       }
     },
@@ -5610,7 +5709,7 @@
       "description": "Reach 25 problems graduated or retired.",
       "earned": false,
       "progress": {
-        "current": 22,
+        "current": 23,
         "target": 25
       }
     },
@@ -5621,12 +5720,214 @@
       "description": "Reach 50 problems graduated or retired.",
       "earned": false,
       "progress": {
-        "current": 22,
+        "current": 23,
         "target": 50
       }
     }
   ],
   "problems": [
+    {
+      "lcNumber": 2812,
+      "title": "Find the Safest Path in a Grid (Dijkstra)",
+      "url": "https://leetcode.com/problems/find-the-safest-path-in-a-grid/",
+      "file": "dsa/leetcode/graphs/2812_find_the_safest_path_in_a_grid.py",
+      "difficulty": "Medium",
+      "category": "graphs",
+      "comfort": "🟡",
+      "level": 1,
+      "streak": 0,
+      "nextReview": "2026-10-07",
+      "repDates": [
+        "2026-09-27"
+      ],
+      "timeline": [
+        {
+          "date": "2026-09-27",
+          "comfort": "🟡",
+          "level": 1
+        }
+      ]
+    },
+    {
+      "lcNumber": 721,
+      "title": "Accounts Merge (Union-Find)",
+      "url": "https://leetcode.com/problems/accounts-merge/",
+      "file": "dsa/leetcode/graphs/721_accounts_merge.py",
+      "difficulty": "Medium",
+      "category": "graphs",
+      "comfort": "🟢",
+      "level": 2,
+      "streak": 1,
+      "nextReview": "2026-10-27",
+      "repDates": [
+        "2026-07-30",
+        "2026-08-09",
+        "2026-09-08",
+        "2026-09-17",
+        "2026-09-27"
+      ],
+      "timeline": [
+        {
+          "date": "2026-07-30",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-08-09",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-09-08",
+          "comfort": "🟡",
+          "level": 1
+        },
+        {
+          "date": "2026-09-17",
+          "comfort": "🟡",
+          "level": 1
+        },
+        {
+          "date": "2026-09-27",
+          "comfort": "🟢",
+          "level": 2
+        }
+      ]
+    },
+    {
+      "lcNumber": 560,
+      "title": "Subarray Sum Equals K",
+      "url": "https://leetcode.com/problems/subarray-sum-equals-k/",
+      "file": "dsa/leetcode/arrays_and_hash/560_subarray_sum_equals_k.py",
+      "difficulty": "Medium",
+      "category": "arrays_and_hash",
+      "comfort": "🟢",
+      "level": 2,
+      "streak": 1,
+      "nextReview": "2026-10-27",
+      "repDates": [
+        "2026-04-05",
+        "2026-06-26",
+        "2026-06-28",
+        "2026-07-29",
+        "2026-08-08",
+        "2026-08-18",
+        "2026-09-17",
+        "2026-09-27"
+      ],
+      "timeline": [
+        {
+          "date": "2026-04-05",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-06-26",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-06-28",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-07-29",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-08-08",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-08-18",
+          "comfort": "🟢",
+          "level": 2
+        },
+        {
+          "date": "2026-09-17",
+          "comfort": "🟡",
+          "level": 1
+        },
+        {
+          "date": "2026-09-27",
+          "comfort": "🟢",
+          "level": 2
+        }
+      ]
+    },
+    {
+      "lcNumber": 540,
+      "title": "Single Element in a Sorted Array",
+      "url": "https://leetcode.com/problems/single-element-in-a-sorted-array/",
+      "file": "dsa/leetcode/binary_search/540_single_element_in_sorted_array.py",
+      "difficulty": "Medium",
+      "category": "binary_search",
+      "comfort": "🟢",
+      "level": 2,
+      "streak": 1,
+      "nextReview": "2026-10-27",
+      "repDates": [
+        "2026-05-02",
+        "2026-06-12",
+        "2026-06-13",
+        "2026-07-17",
+        "2026-07-27",
+        "2026-08-06",
+        "2026-09-06",
+        "2026-09-16",
+        "2026-09-27"
+      ],
+      "timeline": [
+        {
+          "date": "2026-05-02",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-06-12",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-06-13",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-07-17",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-07-27",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-08-06",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-09-06",
+          "comfort": "🟡",
+          "level": 1
+        },
+        {
+          "date": "2026-09-16",
+          "comfort": "🟡",
+          "level": 1
+        },
+        {
+          "date": "2026-09-27",
+          "comfort": "🟢",
+          "level": 2
+        }
+      ]
+    },
     {
       "lcNumber": 648,
       "title": "Replace Words",
@@ -7070,46 +7371,6 @@
       ]
     },
     {
-      "lcNumber": 721,
-      "title": "Accounts Merge (Union-Find)",
-      "url": "https://leetcode.com/problems/accounts-merge/",
-      "file": "dsa/leetcode/graphs/721_accounts_merge.py",
-      "difficulty": "Medium",
-      "category": "graphs",
-      "comfort": "🟡",
-      "level": 1,
-      "streak": 0,
-      "nextReview": "2026-09-27",
-      "repDates": [
-        "2026-07-30",
-        "2026-08-09",
-        "2026-09-08",
-        "2026-09-17"
-      ],
-      "timeline": [
-        {
-          "date": "2026-07-30",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-08-09",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-09-08",
-          "comfort": "🟡",
-          "level": 1
-        },
-        {
-          "date": "2026-09-17",
-          "comfort": "🟡",
-          "level": 1
-        }
-      ]
-    },
-    {
       "lcNumber": 435,
       "title": "Non-overlapping Intervals",
       "url": "https://leetcode.com/problems/non-overlapping-intervals/",
@@ -7266,64 +7527,6 @@
       ]
     },
     {
-      "lcNumber": 560,
-      "title": "Subarray Sum Equals K",
-      "url": "https://leetcode.com/problems/subarray-sum-equals-k/",
-      "file": "dsa/leetcode/arrays_and_hash/560_subarray_sum_equals_k.py",
-      "difficulty": "Medium",
-      "category": "arrays_and_hash",
-      "comfort": "🟡",
-      "level": 1,
-      "streak": 0,
-      "nextReview": "2026-09-27",
-      "repDates": [
-        "2026-04-05",
-        "2026-06-26",
-        "2026-06-28",
-        "2026-07-29",
-        "2026-08-08",
-        "2026-08-18",
-        "2026-09-17"
-      ],
-      "timeline": [
-        {
-          "date": "2026-04-05",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-06-26",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-06-28",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-07-29",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-08-08",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-08-18",
-          "comfort": "🟢",
-          "level": 2
-        },
-        {
-          "date": "2026-09-17",
-          "comfort": "🟡",
-          "level": 1
-        }
-      ]
-    },
-    {
       "lcNumber": 102,
       "title": "Binary Tree Level Order Traversal",
       "url": "https://leetcode.com/problems/binary-tree-level-order-traversal/",
@@ -7360,76 +7563,6 @@
           "date": "2026-09-17",
           "comfort": "🎓",
           "level": 3
-        }
-      ]
-    },
-    {
-      "lcNumber": 540,
-      "title": "Single Element in a Sorted Array",
-      "url": "https://leetcode.com/problems/single-element-in-a-sorted-array/",
-      "file": "dsa/leetcode/binary_search/540_single_element_in_sorted_array.py",
-      "difficulty": "Medium",
-      "category": "binary_search",
-      "comfort": "🟢",
-      "level": 2,
-      "streak": 1,
-      "nextReview": "2026-10-27",
-      "repDates": [
-        "2026-05-02",
-        "2026-06-12",
-        "2026-06-13",
-        "2026-07-17",
-        "2026-07-27",
-        "2026-08-06",
-        "2026-09-06",
-        "2026-09-16",
-        "2026-09-27"
-      ],
-      "timeline": [
-        {
-          "date": "2026-05-02",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-06-12",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-06-13",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-07-17",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-07-27",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-08-06",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-09-06",
-          "comfort": "🟡",
-          "level": 1
-        },
-        {
-          "date": "2026-09-16",
-          "comfort": "🟡",
-          "level": 1
-        },
-        {
-          "date": "2026-09-27",
-          "comfort": "🟢",
-          "level": 2
         }
       ]
     },
@@ -11476,10 +11609,10 @@
       "file": "dsa/leetcode/graphs/200_numbers_of_islands.py",
       "difficulty": "Medium",
       "category": "graphs",
-      "comfort": "🟢",
-      "level": 2,
-      "streak": 2,
-      "nextReview": "2026-09-16",
+      "comfort": "🎓",
+      "level": 3,
+      "streak": 3,
+      "nextReview": "2027-01-14",
       "repDates": [
         "2026-05-30",
         "2026-06-01",
@@ -11504,8 +11637,8 @@
         },
         {
           "date": "2026-07-18",
-          "comfort": "🟢",
-          "level": 2
+          "comfort": "🎓",
+          "level": 3
         }
       ]
     }

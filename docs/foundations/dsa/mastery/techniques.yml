@@ -695,6 +695,7 @@ techniques:
       - {number: 261, method: Union-Find}
       - {number: 684, method: Union-Find}
       - {number: 721, method: Union-Find}
+      - {number: 1202, method: Union-Find, queued: "surplus>=1"}
 
   - name: Topological Sort
     family: graphs
@@ -737,10 +738,12 @@ techniques:
       - {number: 743, method: "Dijkstra — min-heap"}
       - {number: 778, method: Dijkstra / Min-Heap}
       - {number: 1631, method: Dijkstra, variant: Min-over-max (minimize the maximum edge)}
-      - {number: 1102, method: Dijkstra, variant: Max-min bottleneck (maximize the minimum edge)}
+      - {number: 2812, method: Dijkstra, variant: Max-min bottleneck (maximize the minimum edge)}
+      - {number: 1102, planned: false}  # LeetCode-premium, no free judge — skipped Sep 27, 2026 under the link rule; 2812 took its place
       - {number: 3650, method: Dijkstra, queued: "surplus>=1"}
       - {number: 1368, method: Dijkstra, variant: 0/1 edge weights (0-1 BFS vs Dijkstra), queued: "surplus>=1"}
       - {number: 1514, method: Dijkstra, variant: Multiplicative relaxation (maximize the product), queued: "surplus>=1"}
+      - {number: 3620, method: Dijkstra, variant: Max-min bottleneck (maximize the minimum edge), queued: "surplus>=1"}
 
   # 9001/9002 are hand-picked, non-LeetCode siblings (decision `external-judge-problems-sep26`):
   # the Sep 26, 2026 shortest-path company pull yielded zero negative-edge problems (LeetCode-only),
@@ -850,7 +853,8 @@ techniques:
     builds_on: ["Union-Find"]
     problems:
       - {number: 1489, method: Kruskal}
-      - {number: 1135, method: Kruskal, queued: "surplus>=1"}
+      - {number: 9004, method: Kruskal, queued: "surplus>=1"}  # Kattis minspantree — replaces 1135
+      - {number: 1135, planned: false}  # LeetCode-premium, no free judge — skipped Sep 28, 2026 under the link rule
 
   # ── Backtracking ────────────────────────────────────────────────────────────
   # Added for the /learn cheat-sheet contract (Sep 23, 2026) — backtracking.md carried no

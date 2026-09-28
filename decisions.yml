@@ -1461,6 +1461,16 @@ decisions:
       `PremiumLink`, `resolve_premium_link`, `verify_links`), `scripts/links.py` (comment
       only), `docs/foundations/dsa/mastery/hellointerview.yml` (header only),
       `scripts/test_new_problem.py` (extended).
+
+      AMENDED same day (owner's words: "leetcode (free) -> neetcode (free) ->
+      hellointerview (premium) -> others"): a new fourth step, ahead of the paywalled
+      fallback (now fifth) — another judge that carries the same problem (Kattis, CSES, LintCode…),
+      found by hand and passed as `--url`; the scaffold says so when it cannot be
+      confirmed free. The owner wants every rep submitted somewhere; a problem with no
+      free place to practice is SKIPPED for now and a free same-shape problem sought
+      instead ("if nowhere available to practice it, we can skip it for now"). First
+      case: 1102 — LintCode 1418 is premium too, so it is skipped.
+      `resolve_premium_link()` is unchanged: step 4 is manual.
     affects: [links, scaffolding]
 
   - id: coverage-threshold-formula-sep27
@@ -1536,3 +1546,13 @@ decisions:
       viewer's own current week (empty if no schedule exists yet) instead of falling
       back to the first day of whatever week the summary carries.
     affects: [gamification, scheduling]
+
+  - id: daily-goal-is-the-ceiling-sep28
+    date: 2026-09-28
+    summary: >-
+      The ceiling changes from a cap to build under into the daily goal. Each day is
+      built as close to it as possible, and a small overshoot is fine (learner, Sep 28,
+      2026: "as close to 8 as possible"). The value itself is unchanged in
+      cse.config.yml (`effort_budget.ceiling`); only how a build uses it changes. See
+      `references/effort-budget.md` "The ceiling is the daily goal".
+    affects: [effort_budget, scheduling]

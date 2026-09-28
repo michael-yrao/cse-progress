@@ -6,7 +6,7 @@
 
 > The tracker is keyed by **problem**; this is keyed by **technique**. Use it at the weekly build to decide what to pull, and at phase exit to check the per-algorithm bar (recognition + execution, ≥1 🟢 each).
 
-> **60/105** techniques started &nbsp;·&nbsp; **1** with no 🟢 &nbsp;·&nbsp; **6** thin &nbsp;·&nbsp; **1** unqueued variant gaps
+> **60/105** techniques started &nbsp;·&nbsp; **1** with no 🟢 &nbsp;·&nbsp; **6** thin &nbsp;·&nbsp; **0** unqueued variant gaps
 
 ## ⚠️ Action list
 
@@ -19,8 +19,8 @@
 - **BFS on Implicit Graph** (graphs) — 1/2: 127
 - **Bellman-Ford** (advanced_graphs) — 1/2: 787
 - **Kruskal's MST** (advanced_graphs) — 1/2: 1489
-- **Dijkstra** (advanced_graphs) — 3/4 (4 rows): 743, 778, 1631
 - **Backtracking** (backtracking) — 4/7: 22, 39, 46, 78
+- **Dijkstra** (advanced_graphs) — 4/5 (5 rows): 743, 778, 1631, 2812
 - **Greedy (single pass)** (sliding_window) — 6/8: 45, 55, 122, 134, 763, 846
 
 **Queued — declared, and already sitting in the Waiting Room / Expansion Queue.** A known gap with a fill already picked, not a new finding.
@@ -31,14 +31,14 @@
 - **Bellman-Ford** (advanced_graphs) — queued: 9001 (`surplus>=1`), 9002 (`surplus>=1`)
 - **Binary Search (min boundary)** (binary_search) — queued: 4 (`surplus>=1`)
 - **Cycle Detection in an Iterated Sequence** (graphs) — queued: 287 (`surplus>=1`)
-- **Dijkstra** (advanced_graphs) — queued: 1368 (`surplus>=1`), 1514 (`surplus>=1`), 3650 (`surplus>=1`)
+- **Dijkstra** (advanced_graphs) — queued: 1368 (`surplus>=1`), 1514 (`surplus>=1`), 3620 (`surplus>=1`), 3650 (`surplus>=1`)
 - **Floyd-Warshall (all-pairs shortest path)** (advanced_graphs) — queued: 399 (`rated:1334`)
 - **Greedy (single pass)** (sliding_window) — queued: 678 (`surplus>=1`), 1899 (`surplus>=1`)
 - **HashMap + Doubly Linked List (LRU)** (linked_list) — queued: 1472 (`rated:146`)
 - **Heap / Priority Queue** (heap) — queued: 23 (`surplus>=1`), 295 (`surplus>=1`)
 - **Hierholzer (Eulerian path)** (advanced_graphs) — queued: 753 (`surplus>=1`)
 - **Intervals (sort + sweep)** (intervals) — queued: 252 (`surplus>=1`), 253 (`surplus>=1`), 1851 (`surplus>=1`)
-- **Kruskal's MST** (advanced_graphs) — queued: 1135 (`surplus>=1`)
+- **Kruskal's MST** (advanced_graphs) — queued: 9004 (`surplus>=1`)
 - **Linked List Merge** (linked_list) — queued: 23 (`surplus>=1`)
 - **Linked List Reversal** (linked_list) — queued: 25 (`surplus>=1`)
 - **Monotonic Stack** (stack) — queued: 85 (`solved:84`), 1504 (`solved:84`)
@@ -48,10 +48,7 @@
 - **Topological Sort** (graphs) — queued: 802 (`surplus>=1`), 2115 (`surplus>=1`)
 - **Tree DFS (recursive)** (trees) — queued: 297 (`surplus>=1`)
 - **Trie** (tries) — queued: 212 (`surplus>=1`), 472 (`rated:139`)
-
-**Unqueued variant gaps — a method never once exercised, and not in any queue.**
-
-- **Dijkstra** — missing **Max-min bottleneck (maximize the minimum edge)**. Exercised: Min-over-max (minimize the maximum edge) ×1
+- **Union-Find** (graphs) — queued: 1202 (`surplus>=1`)
 
 ## Coverage
 
@@ -60,10 +57,10 @@ Every declared technique gets a row, started or not — a not-started row's Gaps
 | Technique | Family | Tier | Min | Problems | Best | 🟢 | Variants | Gaps |
 |---|---|---|---:|---:|:---:|:---:|---|---|
 | Bellman-Ford | advanced_graphs | core | 2 (2+0) | 1 (787) | 🟢 | ✅ | Standard ×1 · ~~Contrast rep on 743~~ *(queued: `graduates:743`)* · ~~Negative edges (SSSP, -Infinity propagation)~~ *(queued: `surplus>=1`)* · ~~Negative-cycle detection (arbitrage / log-transform)~~ *(queued: `surplus>=1`)* | thin (1/2) · queued: 9001 `surplus>=1`, 9002 `surplus>=1` |
-| Dijkstra | advanced_graphs | core | 4 (4+0) | 3 *+1v* (743, 778, 1631) | 🟢 | ✅ | Min-over-max (minimize the maximum edge) ×1 · **Max-min bottleneck (maximize the minimum edge) ×0** · ~~0/1 edge weights (0-1 BFS vs Dijkstra)~~ *(queued: `surplus>=1`)* · ~~Multiplicative relaxation (maximize the product)~~ *(queued: `surplus>=1`)* | thin (3/4) · queued: 1368 `surplus>=1`, 1514 `surplus>=1`, 3650 `surplus>=1` · variant: **Max-min bottleneck (maximize the minimum edge)** |
+| Dijkstra | advanced_graphs | core | 5 (4+1) | 4 *+1v* (743, 778, 1631, 2812) | 🟢 | ✅ | Min-over-max (minimize the maximum edge) ×1 · Max-min bottleneck (maximize the minimum edge) ×1 · ~~0/1 edge weights (0-1 BFS vs Dijkstra)~~ *(queued: `surplus>=1`)* · ~~Multiplicative relaxation (maximize the product)~~ *(queued: `surplus>=1`)* | thin (4/5) · queued: 1368 `surplus>=1`, 1514 `surplus>=1`, 3620 `surplus>=1`, 3650 `surplus>=1` |
 | Floyd-Warshall (all-pairs shortest path) | advanced_graphs | core | 2 (2+0) | 2 (1334, 1462) | 🟢 | ✅ | — | queued: 399 `rated:1334` |
 | Hierholzer (Eulerian path) | advanced_graphs | core | 2 (2+0) | 2 *+1v* (332, 2097) | 🟢 | ✅ | pre-sorted adjacency ×1 · min-heap ordering ×1 | queued: 753 `surplus>=1` |
-| Kruskal's MST | advanced_graphs | core | 2 (1+1) | 1 (1489) | 🟡 | ❌ | — | **no-green** · thin (1/2) · queued: 1135 `surplus>=1` |
+| Kruskal's MST | advanced_graphs | core | 2 (1+1) | 1 (1489) | 🟡 | ❌ | — | **no-green** · thin (1/2) · queued: 9004 `surplus>=1` |
 | Prim's MST | advanced_graphs | core | 1 (1+0) | 1 (1584) | 🟢 | ✅ | — | queued: 9003 `surplus>=1` |
 | Array/String Fundamentals | arrays_and_hash | core | 2 (2+0) | 3 (14, 66, 1929) | 🟢 | ✅ | — | — |
 | Boyer-Moore Voting | arrays_and_hash | core | 1 (1+0) | 2 (169, 229) | 🎓 | ✅ | — | — |
@@ -128,7 +125,7 @@ Every declared technique gets a row, started or not — a not-started row's Gaps
 | Grid DFS | graphs | core | 1 (1+0) | 2 (200, 695) | 🎓 | ✅ | — | — |
 | Multi-source BFS | graphs | core | 1 (1+0) | 1 (994) | 🟢 | ✅ | — | — |
 | Topological Sort | graphs | core | 3 (3+0) | 3 (207, 210, 269) | 🎓 | ✅ | Kahn's (BFS) ×3 · ~~DFS postorder~~ *(queued: `graduates:210`)* | queued: 802 `surplus>=1`, 2115 `surplus>=1` |
-| Union-Find | graphs | core | 3 (2+1) | 4 (130, 261, 684, 721) | 🎓 | ✅ | — | — |
+| Union-Find | graphs | core | 3 (3+0) | 4 (130, 261, 684, 721) | 🎓 | ✅ | — | queued: 1202 `surplus>=1` |
 | Heap / Priority Queue | heap | core | 4 (4+0) | 6 (347, 355, 621, 703, 973, 1046) | 🟢 | ✅ | — | queued: 23 `surplus>=1`, 295 `surplus>=1` |
 | Intervals (sort + sweep) | intervals | core | 3 (3+0) | 3 (56, 57, 435) | 🟢 | ✅ | Merge overlapping (sort by start) ×1 · Insert into sorted (3-phase sweep) ×1 · Interval scheduling (sort by end) ×1 · ~~Max concurrent (sweep line / min-heap of ends)~~ *(queued: `green:435`)* · ~~Two-list intersection (two pointers)~~ *(queued: `green:56`)* | queued: 252 `surplus>=1`, 253 `surplus>=1`, 1851 `surplus>=1` |
 | Deep Copy via Hash Map | linked_list | core | 1 (1+0) | 1 (138) | 🟢 | ✅ | — | — |
@@ -142,7 +139,7 @@ Every declared technique gets a row, started or not — a not-started row's Gaps
 | Math / Number Manipulation | math_sim | core | 2 (2+0) | 0 (—) | — | ❌ | — | *not started* |
 | Simulation / Matrix Walk | math_sim | core | 2 (2+0) | 0 (—) | — | ❌ | — | *not started* |
 | Kadane | prefix_sum | core | 1 (1+0) | 1 (53) | 🟢 | ✅ | — | — |
-| Prefix Sum | prefix_sum | core | 2 (1+1) | 2 (53, 560) | 🟢 | ✅ | — | — |
+| Prefix Sum | prefix_sum | core | 1 (1+0) | 2 (53, 560) | 🟢 | ✅ | — | — |
 | Recursion | recursion | core | 2 (2+0) | 3 (19, 21, 206) | 🎓 | ✅ | — | — |
 | Greedy (single pass) | sliding_window | core | 8 (4+4) | 6 (45, 55, 122, 134, 763, 846) | 🟢 | ✅ | — | thin (6/8) · queued: 678 `surplus>=1`, 1899 `surplus>=1` |
 | Sliding Window | sliding_window | core | 3 (3+0) | 4 (3, 121, 424, 567) | 🟢 | ✅ | — | queued: 76 `surplus>=1` |
@@ -167,7 +164,7 @@ Every declared technique gets a row, started or not — a not-started row's Gaps
 
 ## Vocabulary maintenance
 
-**Queued (78)** — listed in the Action list above; a known gap with a fill already picked, not counted below.
+**Queued (80)** — listed in the Action list above; a known gap with a fill already picked, not counted below.
 
-**Declared, not queued (2)** — declared in the vocabulary, no tracker row, and not yet in any queue. This is the normal state for curriculum ahead of the learner; it is a roadmap, not a finding: 1102 (Dijkstra), 547
+**Declared, not queued (3)** — declared in the vocabulary, no tracker row, and not yet in any queue. This is the normal state for curriculum ahead of the learner; it is a roadmap, not a finding: 1102, 1135, 547
 
