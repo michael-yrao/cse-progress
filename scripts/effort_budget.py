@@ -80,6 +80,18 @@ GLYPH = re.compile(r"[🔴🟡🟢🎓]")
 # fall through to the tracker's comfort, which by pricing time is what the row EARNED
 # from today's rep, not what it cost to start. A 🆕 row must always bill as Blank.
 NEW_GLYPH = "🆕"
+# A row whose Technique cell is "Complexity" is a cold re-ask of time/space on code that
+# already exists, not a rep -- see is_complexity_technique() and price_day_items().
+TECHNIQUE_COMPLEXITY = "complexity"
+
+
+def is_complexity_technique(technique: str | None) -> bool:
+    """Is the Technique cell a complexity re-ask rather than a rep of the problem?
+
+    Shared by price_day_items() (prices it at 0) and gamify.py's _schedule_item_kind()
+    (classifies it as KIND_COMPLEXITY) so the two checks cannot drift apart.
+    """
+    return technique is not None and technique.strip().lower() == TECHNIQUE_COMPLEXITY
 
 
 def load_config() -> dict:
@@ -417,6 +429,7 @@ def parse_schedule_day(path: Path, day: dt.date) -> tuple[list[dict], float | No
             "start": glyph.group(0) if glyph else None,
             "start_streak": int(streak_m.group(1)) if streak_m else 0,
             "is_new": NEW_GLYPH in (m["c2"] or ""),
+            "is_complexity": is_complexity_technique(m["c5"]),
             "done": "~~" in cell,
             "text": re.sub(r"\s+", " ", text).strip(" ·*"),
         })
@@ -446,7 +459,12 @@ def price_day_items(day: dt.date, items: list[dict], rows: list[dict], cfg: dict
             unpriced.append(it["text"][:62])
             continue
         tracked = by_num.get(it["num"])
-        if it["start"] and tracked:
+        if it.get("is_complexity"):
+            # Learner's decision (Sep 28, 2026): a complexity re-ask costs 0 units -- it
+            # is a cold re-ask on code that already exists, not a rep of the problem.
+            cost = 0.0
+            note = "🎯 complexity re-ask -- unpriced by design"
+        elif it["start"] and tracked:
             # START comfort + streak (build time) x difficulty (a stable property). Attempt
             # count is the familiarity GOING IN: attempts strictly before this day, joined
             # from the tracker's Rep Dates — so day-as-built pricing bills the row's state

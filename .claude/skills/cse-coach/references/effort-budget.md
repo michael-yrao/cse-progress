@@ -34,6 +34,12 @@ the lowered ceiling already accounts for it; charging both bills it twice. `syst
 still decides how many SD slots a week gets (placed at the weekly build); only the cost is gone.
 `effort_budget.py --sd` adds 0 and says so.
 
+## 🎯 Complexity re-asks are NOT priced (Sep 28, 2026)
+
+A row whose Technique is `Complexity` is a cold re-ask of time and space on code that already
+exists, not a rep. It adds 0 units, and `--schedule-day` lists it at 0.0.
+`decisions.yml` `complexity-reask-unpriced`.
+
 ## The ceiling is the daily goal (Sep 28, 2026)
 
 Build each day as close to the ceiling (`effort_budget.ceiling`) as possible. It is the daily goal, and a small overshoot is fine. Raising the ceiling itself to catch up is still off the table. `decisions.yml` `daily-goal-is-the-ceiling-sep28`.

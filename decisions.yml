@@ -1556,3 +1556,11 @@ decisions:
       cse.config.yml (`effort_budget.ceiling`); only how a build uses it changes. See
       `references/effort-budget.md` "The ceiling is the daily goal".
     affects: [effort_budget, scheduling]
+
+  - id: complexity-reask-unpriced
+    date: 2026-09-28
+    summary: >-
+      A complexity re-ask row (Technique `Complexity`) prices 0 units. The weekly build already
+      left these rows out of a day's header, but effort_budget.py priced each one as a full rep
+      of its problem, so the workload chart's done and built ran above the plan.
+    affects: [effort_budget]

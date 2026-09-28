@@ -391,7 +391,6 @@ KIND_COMPLEXITY = "complexity"
 # KIND_NEW/KIND_PRIMER/KIND_PROBE deliberately don't exist: those three `kind` values are
 # always exactly the TAG_NEW/TAG_PRIMER/TAG_PROBE tag word, so reusing the tag constant
 # keeps the two in lockstep instead of two literals that could drift apart.
-TECHNIQUE_COMPLEXITY = "complexity"
 
 
 def _leading_tags(cell: str) -> list[str]:
@@ -428,7 +427,7 @@ def _schedule_item_kind(technique: str | None, tags: list[str]) -> str:
     tests. Checking the 🎯 tag first would silently reclassify those rows as an ordinary
     probe and lose that distinction on the dashboard.
     """
-    if technique is not None and technique.strip().lower() == TECHNIQUE_COMPLEXITY:
+    if eb.is_complexity_technique(technique):
         return KIND_COMPLEXITY
     if TAG_NEW in tags:
         return TAG_NEW

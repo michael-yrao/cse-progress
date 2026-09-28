@@ -1148,14 +1148,15 @@ class BuildWorkloadTests(unittest.TestCase):
         "difficulty": {"Easy": 0.7, "Medium": 1.0, "Hard": 1.5},
     }
 
-    # Mon Aug 10 2026: a plain 🔴 Medium row (remaining, priced 3.0) and a struck 🟡 Easy
-    # row (done, priced 1.4) — the two-row done/remaining split. Tue Aug 11 2026: a struck
-    # 🆕 row for a number ROWS tracks at 🟢 s1 (its POST-rep state) — must price as Blank
-    # (🔴), never the tracker's green, and must NOT count as guessed. Wed Aug 12 2026: a
-    # struck 🆕 row for a number absent from ROWS entirely — untracked, so it still guesses
-    # Blank Medium and marks the day partial. Thu Aug 13 2026: a number-less 🔤 primer row
-    # only — no problem number to price, so `partial` must be true even though built/done
-    # both land at 0.0.
+    # Mon Aug 10 2026: a plain 🔴 Medium row (remaining, priced 3.0), a struck 🟡 Easy row
+    # (done, priced 1.4), and a struck, untracked 🎯 Complexity row on 507 (priced 0.0 by
+    # design) — the done/remaining split plus a zero-priced 🎯 complexity re-ask on 507.
+    # Tue Aug 11 2026: a struck 🆕 row for a number ROWS tracks at 🟢 s1 (its POST-rep
+    # state) — must price as Blank (🔴), never the tracker's green, and must NOT count as
+    # guessed. Wed Aug 12 2026: a struck 🆕 row for a number absent from ROWS entirely —
+    # untracked, so it still guesses Blank Medium and marks the day partial. Thu Aug 13
+    # 2026: a number-less 🔤 primer row only — no problem number to price, so `partial`
+    # must be true even though built/done both land at 0.0.
     LIVE_FIXTURE = (
         "## Daily Schedule\n\n"
         "| Problem | S | E | Next | Technique |\n"
@@ -1165,6 +1166,9 @@ class BuildWorkloadTests(unittest.TestCase):
         " · [LC](https://leetcode.com/problems/widget-one/) | 🔴 | | | Arrays |\n"
         "| ~~[502 Widget Two](../../../dsa/leetcode/arrays/502_widget_two.py)~~"
         " · [LC](https://leetcode.com/problems/widget-two/) | 🟡 | | | Arrays |\n"
+        "| 🎯 ~~[507 Widget Seven](../../../dsa/leetcode/arrays/507_widget_seven.py)~~"
+        " · [LC](https://leetcode.com/problems/widget-seven/) — complexity re-ask (time)"
+        " | 🎯 | | | Complexity |\n"
         "| |  |  |  |  |\n"
         "| ▸ **Tue Aug 11** · 3.0 units — New-row tracked day |  |  |  |  |\n"
         "| 🆕 ~~[505 Widget Five](../../../dsa/leetcode/arrays/505_widget_five.py)"
@@ -1253,6 +1257,17 @@ class BuildWorkloadTests(unittest.TestCase):
         self.assertAlmostEqual(sep16["built"], 3.5)    # + 504: 🟡 Medium = 2.0 * 1.0
         self.assertGreaterEqual(sep16["built"], sep16["done"])
 
+    def test_complexity_reask_row_prices_zero_and_is_not_partial(self):
+        # The untracked 🎯 row on 507 must cost 0, leaving done at 502's 1.4 and built at
+        # 501+502's 4.4. Without the fix, 507 falls to the untracked branch, is guessed
+        # as a Blank Medium (3.0), and marks the day partial.
+        workload = gamify.build_workload(self.ROWS, self.CFG)
+        by_date = {w["date"]: w for w in workload}
+        aug10 = by_date["2026-08-10"]
+        self.assertAlmostEqual(aug10["done"], 1.4)
+        self.assertAlmostEqual(aug10["built"], 4.4)
+        self.assertFalse(aug10["partial"])
+
     def test_pre_era_headerless_file_contributes_no_entries(self):
         workload = gamify.build_workload(self.ROWS, self.CFG)
         self.assertFalse(any(w["date"].startswith("2026-06") for w in workload))
@@ -1285,7 +1300,7 @@ class BuildWorkloadTests(unittest.TestCase):
         self.assertAlmostEqual(aug12["built"], 3.0)
         self.assertTrue(aug12["partial"])
 
-    def test_price_day_items_splits_done_from_remaining_on_a_two_row_day(self):
+    def test_price_day_items_splits_done_from_remaining(self):
         path = eb.SCHEDULES / "20260810_schedule.md"
         items, stated = eb.parse_schedule_day(path, dt.date(2026, 8, 10))
         priced = eb.price_day_items(dt.date(2026, 8, 10), items, self.ROWS, self.CFG)
