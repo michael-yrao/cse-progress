@@ -105,6 +105,7 @@ if [ -n "$GAMIFY_TRIGGER" ] || [ -n "$COVERAGE_TRIGGER" ]; then
   fi
   [ -f "dashboard/progress.json" ] && git add "dashboard/progress.json"
   [ -f "dashboard/progress-summary.json" ] && git add "dashboard/progress-summary.json"
+  [ -f "dashboard/schedule-history.json" ] && git add "dashboard/schedule-history.json"
   if [ -f "README.md" ]; then
     README_HASH_AFTER=$(git hash-object README.md)
     [ "$README_HASH_BEFORE" != "$README_HASH_AFTER" ] && git add "README.md"

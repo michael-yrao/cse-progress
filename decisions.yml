@@ -1523,3 +1523,16 @@ decisions:
       numbers (Hierholzer's two methods on 332 count once, not twice), confirming the
       formula was never the thing under-specified in the dry run — only the numerator was.
     affects: [technique_coverage, gamify, mastery]
+
+  - id: schedule-history
+    date: 2026-09-28
+    summary: >-
+      ADDS dashboard/schedule-history.json: every archived and live week whose Daily
+      Schedule table parses (non-empty), as {weekOf, days} in the same shape as
+      progress.json's schedule, ascending by weekOf. A separate file so the summary
+      and progress.json stay small; the site fetches it only when the Overview board
+      steps back a week. Weeks before 2026-08-10 use older table layouts that parse
+      empty and are skipped, never fabricated. The site's board now always shows the
+      viewer's own current week (empty if no schedule exists yet) instead of falling
+      back to the first day of whatever week the summary carries.
+    affects: [gamification, scheduling]

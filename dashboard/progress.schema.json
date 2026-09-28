@@ -129,13 +129,11 @@
       "items": { "type": "string", "format": "date" }
     },
     "schedule": {
-      "type": ["object", "null"],
       "description": "The CURRENT week's Daily Schedule table — the compact slice behind the dashboard's Today's-board drill (\"what do I do today\"). null when no current weekly schedule file was found. Present in BOTH progress.json and progress-summary.json (one week of compact rows, small either way). Carries ALL 7 days; the viewer picks 'today' by its OWN local date against each day's `date` — this file never bakes in a server-side today, since the summary can be viewed days after it was generated.",
-      "required": ["weekOf", "days"],
-      "properties": {
-        "weekOf": { "type": "string", "format": "date", "description": "ISO date of the week's Monday." },
-        "days": { "type": "array", "minItems": 7, "maxItems": 7, "items": { "$ref": "#/definitions/scheduleDay" } }
-      }
+      "oneOf": [
+        { "$ref": "#/definitions/scheduleWeek" },
+        { "type": "null" }
+      ]
     },
     "workload": {
       "type": "array",
@@ -279,6 +277,15 @@
         "done": { "type": "number", "description": "Sum of the struck-through rows' price, 1 decimal place." },
         "built": { "type": "number", "description": "Sum of ALL the day's rows' price (done + remaining), 1 decimal place." },
         "partial": { "type": "boolean", "description": "True when at least one row could not be priced exactly (no problem number, or untracked and guessed) — done/built are then a lower bound." }
+      }
+    },
+    "scheduleWeek": {
+      "type": "object",
+      "description": "One week's Daily Schedule table: weekOf (the Monday) and all 7 days.",
+      "required": ["weekOf", "days"],
+      "properties": {
+        "weekOf": { "type": "string", "format": "date", "description": "ISO date of the week's Monday." },
+        "days": { "type": "array", "minItems": 7, "maxItems": 7, "items": { "$ref": "#/definitions/scheduleDay" } }
       }
     },
     "scheduleDay": {

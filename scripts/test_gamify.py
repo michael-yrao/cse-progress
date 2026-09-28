@@ -1059,6 +1059,75 @@ class ParseCurrentWeekScheduleTests(unittest.TestCase):
         self.assertIsNone(primer["file"])                     # no number → no lookup
 
 
+class ParseScheduleHistoryTests(unittest.TestCase):
+    """parse_schedule_history() over a two-file fixture folder: one CURRENT-layout week
+    (a real `▸ **Mon ...** · N units` day header, one item) and one OLD-layout week (the
+    pre-2026-08-10 Morning/Evening Warmup + Slot 1/Slot 2 table — no `▸` day header at
+    all, so every day parses zero items). Only the current-layout week has any items, so
+    it alone must be emitted; the old-layout week must be skipped rather than emitted as
+    seven empty days. The old-layout stamp (June) sorts alphabetically/chronologically
+    BEFORE the current-layout stamp (September) — real repo history is exactly this
+    shape (every old-layout week predates every current-layout one) — so the single
+    surviving week is also pinned to have come through parse_schedule_history's own
+    `sorted(..., key=...)` call rather than whatever order `_schedule_weeks()` yielded
+    it in, even though a 2-week fixture where one week is always filtered out can't
+    exercise a genuine multi-week reordering."""
+
+    CURRENT_LAYOUT_FIXTURE = (
+        "## Daily Schedule\n\n"
+        "| Problem | S | E | Next | Technique |\n"
+        "|---|:-:|:-:|:-:|---|\n"
+        "| ▸ **Mon Sep 21** · 6.8 units — Test day |  |  |  |  |\n"
+        "| [22 Generate Parentheses](../../../dsa/leetcode/backtracking/22_generate_parentheses.py)"
+        " · [LC](https://leetcode.com/problems/generate-parentheses/) | 🔴 | | | Backtracking |\n"
+    )
+
+    # Mirrors the real pre-2026-08-10 layout (see docs/foundations/schedules/archive/
+    # 20260608_schedule.md): a `## Daily Schedule` section exists, but its day cells have
+    # no `▸ **Mon ...** · N units` header for eb.DAY_HEADER to match, so
+    # _parse_schedule_day_full never sets `inside = True` and every day parses [] items.
+    OLD_LAYOUT_FIXTURE = (
+        "# Week of June 1-7, 2026\n\n"
+        "## Daily Schedule\n\n"
+        "| Day | Morning Warmup (15 min) | Evening Warmup (15 min) | Active Block (45 min) |\n"
+        "|-----|------------------------|------------------------|-----------------------|\n"
+        "| **Mon Jun 1** | 1. Two Sum | 2. Add Two Numbers | 3. Longest Substring |\n"
+    )
+
+    URLS = {22: "https://leetcode.com/problems/generate-parentheses/"}
+
+    def setUp(self):
+        self._tmpdir = tempfile.TemporaryDirectory()
+        self._orig_schedules = eb.SCHEDULES
+        self._orig_tracker = eb.TRACKER
+        self._orig_gamify_tracker = gamify.TRACKER
+        sched_dir = Path(self._tmpdir.name)
+        (sched_dir / "20260921_schedule.md").write_text(self.CURRENT_LAYOUT_FIXTURE,
+                                                         encoding="utf-8")
+        (sched_dir / "20260601_schedule.md").write_text(self.OLD_LAYOUT_FIXTURE,
+                                                         encoding="utf-8")
+        eb.SCHEDULES = sched_dir
+        # No tracker file — eb.parse_rows() fails soft to [] (gamify._difficulty_by_num()
+        # catches the OSError), which is fine here: this test pins week SELECTION, not the
+        # per-item difficulty join already pinned by ParseCurrentWeekScheduleTests.
+        no_tracker = sched_dir / "dsa_progress.md"
+        eb.TRACKER = no_tracker
+        gamify.TRACKER = no_tracker
+
+    def tearDown(self):
+        eb.SCHEDULES = self._orig_schedules
+        eb.TRACKER = self._orig_tracker
+        gamify.TRACKER = self._orig_gamify_tracker
+        self._tmpdir.cleanup()
+
+    def test_only_current_layout_week_is_emitted_in_ascending_order(self):
+        result = gamify.parse_schedule_history(self.URLS)
+        self.assertEqual([w["weekOf"] for w in result], ["2026-09-21"])
+        self.assertEqual(len(result[0]["days"]), 7)
+        self.assertEqual(len(result[0]["days"][0]["items"]), 1)
+        self.assertEqual(result[0]["days"][0]["items"][0]["lcNumber"], 22)
+
+
 class BuildWorkloadTests(unittest.TestCase):
     """gamify.build_workload() — planned-vs-completed effort units per scheduled day,
     scanned across BOTH the live schedules folder and its archive/ subfolder, priced via

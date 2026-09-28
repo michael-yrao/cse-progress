@@ -50,6 +50,7 @@ import json
 import re
 import sys
 from pathlib import Path
+from typing import Iterator
 
 import _console
 
@@ -83,6 +84,10 @@ LEETCODE = REPO / "dsa/leetcode"
 DASHBOARD = REPO / "dashboard"
 OUT = DASHBOARD / "progress.json"
 OUT_SUMMARY = DASHBOARD / "progress-summary.json"
+# Every archived + live week, for the Overview board's past-week navigation (decisions.yml
+# `schedule-history`) — a SEPARATE file, not folded into progress.json/-summary.json, so
+# their own sizes stay small; the site fetches this one only when a viewer steps back a week.
+OUT_HISTORY = DASHBOARD / "schedule-history.json"
 README = REPO / "README.md"
 CONFIG = REPO / "cse.config.yml"
 
@@ -234,17 +239,17 @@ def category_map() -> dict[int, str]:
 
 # ── schedule index: date -> {problem number -> comfort glyph earned that rep} ───────
 
-def build_schedule_index() -> dict[str, dict[int, str]]:
-    """Reconstruct the comfort EARNED per rep, per problem, from the weekly schedules.
+def _schedule_weeks() -> Iterator[tuple[dt.date, Path]]:
+    """Every weekly schedule file (live folder first, then its archive/), each paired
+    with its Monday resolved from the filename stamp — the walk `build_schedule_index`,
+    `build_workload` and `parse_schedule_history` all need, so it lives in one place.
 
-    The tracker stores only a problem's CURRENT comfort; the per-rep history lives in
-    the schedules' End column (`🟢 s1 → 🎓`). Scan every week (live + archive), resolve
-    each daily block's real date from the filename stamp, and record the End glyph
-    (falling back to Start) for each problem number. A rep date with no schedule (the
-    pre-archive era) simply gets no entry — the timeline degrades to an activity dot,
-    it is never fabricated.
+    A malformed or non-8-digit stamp is silently skipped, same as every caller did
+    before this was pulled out. Callers that must never see the same Monday twice (a
+    week stamp filed in both the live folder and archive/) resolve that themselves —
+    `find_schedule`'s own convention is that the live folder wins, since it is walked
+    first here.
     """
-    index: dict[str, dict[int, str]] = {}
     for folder in (eb.SCHEDULES, eb.SCHEDULES / "archive"):
         if not folder.is_dir():
             continue
@@ -256,7 +261,22 @@ def build_schedule_index() -> dict[str, dict[int, str]]:
                 week_start = dt.date(int(stamp[:4]), int(stamp[4:6]), int(stamp[6:]))
             except ValueError:
                 continue
-            _scan_week(path, week_start, index)
+            yield week_start, path
+
+
+def build_schedule_index() -> dict[str, dict[int, str]]:
+    """Reconstruct the comfort EARNED per rep, per problem, from the weekly schedules.
+
+    The tracker stores only a problem's CURRENT comfort; the per-rep history lives in
+    the schedules' End column (`🟢 s1 → 🎓`). Scan every week (live + archive), resolve
+    each daily block's real date from the filename stamp, and record the End glyph
+    (falling back to Start) for each problem number. A rep date with no schedule (the
+    pre-archive era) simply gets no entry — the timeline degrades to an activity dot,
+    it is never fabricated.
+    """
+    index: dict[str, dict[int, str]] = {}
+    for week_start, path in _schedule_weeks():
+        _scan_week(path, week_start, index)
     return index
 
 
@@ -271,30 +291,20 @@ def build_workload(rows: list[dict], cfg: dict) -> list[dict]:
     entry rather than a fabricated zero.
     """
     workload: list[dict] = []
-    for folder in (eb.SCHEDULES, eb.SCHEDULES / "archive"):
-        if not folder.is_dir():
-            continue
-        for path in sorted(folder.glob("*_schedule.md")):
-            stamp = path.name.split("_")[0]
-            if len(stamp) != 8 or not stamp.isdigit():
+    for week_start, path in _schedule_weeks():
+        for offset in range(7):
+            day = week_start + dt.timedelta(days=offset)
+            items, stated = eb.parse_schedule_day(path, day)
+            if stated is None and not items:
                 continue
-            try:
-                week_start = dt.date(int(stamp[:4]), int(stamp[4:6]), int(stamp[6:]))
-            except ValueError:
-                continue
-            for offset in range(7):
-                day = week_start + dt.timedelta(days=offset)
-                items, stated = eb.parse_schedule_day(path, day)
-                if stated is None and not items:
-                    continue
-                p = eb.price_day_items(day, items, rows, cfg)
-                workload.append({
-                    "date": day.isoformat(),
-                    "planned": stated,
-                    "done": round(p["done"], 1),
-                    "built": round(p["built"], 1),
-                    "partial": bool(p["unpriced"] or p["guessed"]),
-                })
+            p = eb.price_day_items(day, items, rows, cfg)
+            workload.append({
+                "date": day.isoformat(),
+                "planned": stated,
+                "done": round(p["done"], 1),
+                "built": round(p["built"], 1),
+                "partial": bool(p["unpriced"] or p["guessed"]),
+            })
     workload.sort(key=lambda w: w["date"])
     return workload
 
@@ -610,6 +620,41 @@ def _parse_schedule_day_full(
     return items, label, units
 
 
+def _parse_week(path: Path, week_start: dt.date, difficulty_by_num: dict[int, str],
+                urls: dict[int, str],
+                files: dict[int, list[Path]] | None) -> dict:
+    """One week's `## Daily Schedule` table -> {weekOf, days:[...]} — the per-week body
+    shared by `parse_current_week_schedule` (one week, resolved from `today`) and
+    `parse_schedule_history` (every week). Emits ALL 7 days regardless of which ones
+    actually have items — see parse_current_week_schedule's own docstring for why the
+    board never bakes in a server-side "today"."""
+    days: list[dict] = []
+    for offset in range(7):
+        day_date = week_start + dt.timedelta(days=offset)
+        items, label, units = _parse_schedule_day_full(path, day_date, difficulty_by_num,
+                                                       urls, files)
+        days.append({
+            "date": day_date.isoformat(),
+            "weekday": day_date.strftime("%A"),
+            "label": label,
+            "units": units,
+            "items": items,
+        })
+    return {"weekOf": week_start.isoformat(), "days": days}
+
+
+def _difficulty_by_num() -> dict[int, str]:
+    """num -> Easy/Medium/Hard, joined from the tracker (a schedule file itself has no
+    difficulty column). A number with several tracker rows (method variants) just takes
+    the last one parse_rows() yields — difficulty is intrinsic to the LC problem, not the
+    method, so they should always agree in practice. Shared by parse_current_week_schedule
+    and parse_schedule_history so a tracker read never disagrees between the two."""
+    try:
+        return {int(r["num"]): r["diff"] for r in eb.parse_rows()}
+    except OSError:
+        return {}
+
+
 def parse_current_week_schedule(today: dt.date, urls: dict[int, str],
                                 files: dict[int, list[Path]] | None = None) -> dict | None:
     """The CURRENT week's `## Daily Schedule` table -> {weekOf, days:[...]} — the compact
@@ -629,29 +674,34 @@ def parse_current_week_schedule(today: dt.date, urls: dict[int, str],
         week_start = dt.date(int(path.name[:4]), int(path.name[4:6]), int(path.name[6:8]))
     except (ValueError, IndexError):
         return None
+    return _parse_week(path, week_start, _difficulty_by_num(), urls, files)
 
-    # num -> Easy/Medium/Hard, joined from the tracker (the schedule file itself has no
-    # difficulty column). A number with several tracker rows (method variants) just takes
-    # the last one parse_rows() yields — difficulty is intrinsic to the LC problem, not the
-    # method, so they should always agree in practice.
-    try:
-        difficulty_by_num = {int(r["num"]): r["diff"] for r in eb.parse_rows()}
-    except OSError:
-        difficulty_by_num = {}
 
-    days: list[dict] = []
-    for offset in range(7):
-        day_date = week_start + dt.timedelta(days=offset)
-        items, label, units = _parse_schedule_day_full(path, day_date, difficulty_by_num,
-                                                       urls, files)
-        days.append({
-            "date": day_date.isoformat(),
-            "weekday": day_date.strftime("%A"),
-            "label": label,
-            "units": units,
-            "items": items,
-        })
-    return {"weekOf": week_start.isoformat(), "days": days}
+def parse_schedule_history(urls: dict[int, str],
+                           files: dict[int, list[Path]] | None = None) -> list[dict]:
+    """Every week from `_schedule_weeks()` whose days hold at least one item -> a list of
+    {weekOf, days:[...]} (the same per-week shape `parse_current_week_schedule` emits),
+    sorted by `weekOf` ascending — the data behind the dashboard's past-week navigation.
+
+    A week whose Daily Schedule table parses empty (the pre-2026-08-10 Morning/Evening
+    Warmup + Slot 1/Slot 2 layouts `_parse_schedule_day_full` cannot read) is skipped
+    rather than emitted as seven empty days — the whole point is "was there really a
+    schedule this week", and an empty week answers no.
+
+    A Monday whose stamp is filed in BOTH the live folder and archive/ is emitted once,
+    keeping whichever occurrence `_schedule_weeks()` yields first — the live folder,
+    since it is walked first — matching `eb.find_schedule`'s own live-wins precedence for
+    the same stamp.
+    """
+    difficulty_by_num = _difficulty_by_num()
+    weeks_by_start: dict[dt.date, dict] = {}
+    for week_start, path in _schedule_weeks():
+        if week_start in weeks_by_start:
+            continue
+        week = _parse_week(path, week_start, difficulty_by_num, urls, files)
+        if any(day["items"] for day in week["days"]):
+            weeks_by_start[week_start] = week
+    return sorted(weeks_by_start.values(), key=lambda w: w["weekOf"])
 
 
 # ── streak (SR-honest: showing up when due, with a rest-day allowance) ──────────────
@@ -1522,6 +1572,23 @@ def summary_of(payload: dict) -> dict:
     return summary
 
 
+def build_schedule_history(today: dt.date) -> dict:
+    """dashboard/schedule-history.json's own payload (decisions.yml `schedule-history`):
+    `{schemaVersion, generatedAt, weeks}`, every archived + live week whose Daily
+    Schedule table parses non-empty, ascending by weekOf.
+
+    A separate function (not folded into build_payload/summary_of) because this is its
+    OWN file, never part of the progress.json/progress-summary.json contract — see
+    OUT_HISTORY. `urls`/`files` are read independently here rather than threaded in from
+    build_payload's own copies, the same per-function-read convention problem_urls() and
+    parse_retired() already follow elsewhere in this file.
+    """
+    urls = problem_urls()
+    files = links.solution_files()
+    return {"schemaVersion": SCHEMA_VERSION, "generatedAt": today.isoformat(),
+            "weeks": parse_schedule_history(urls, files)}
+
+
 # ── outputs ─────────────────────────────────────────────────────────────────────────
 
 def render_banner(stats: dict) -> str:
@@ -1616,8 +1683,13 @@ def main() -> None:
         # of its bytes once techniques[]/studyDays[] joined the summary (Sep 2026).
         summary_payload = json.dumps(summary_of(stats), ensure_ascii=False, separators=(",", ":"))
         OUT_SUMMARY.write_text(summary_payload + "\n", encoding="utf-8")
+        # Compact, same as progress-summary.json — see OUT_HISTORY.
+        history_payload = json.dumps(build_schedule_history(today), ensure_ascii=False,
+                                     separators=(",", ":"))
+        OUT_HISTORY.write_text(history_payload + "\n", encoding="utf-8")
         changed = update_readme_badge(badge_line(stats, args.repo))
-        print(f"wrote {OUT.relative_to(REPO)} + {OUT_SUMMARY.relative_to(REPO)} "
+        print(f"wrote {OUT.relative_to(REPO)} + {OUT_SUMMARY.relative_to(REPO)} + "
+              f"{OUT_HISTORY.relative_to(REPO)} "
               f"({stats['totals']['reps']} reps, "
               f"{stats['pipeline']['graduated']}🎓 {stats['pipeline']['retired']}🏆, "
               f"{stats['streak']['current']}-day streak)"
