@@ -143,7 +143,7 @@ A presented lineup carries **only the problem, as its links**: `[<n> <title>](re
 mid-session restate, and a "what's next" hand-over alike. **No Note/Focus/technique/comfort/
 units/difficulty column,** and no technique parenthetical in the title.
 
-List the day's problems from highest priority to lowest: 🔴/🟡 conversions first, then new problems, then 🟢 reviews, with easy reviews last.
+List the day's problems from highest priority to lowest: 🔴/🟡 conversions first, then new problems, then 🟢 reviews, with easy reviews last. `scripts/schedule_priority.py` sorts each day's rows into this order when a schedule is committed, and `remaining.py` prints them in this order.
 
 ⚠️ **Any column beyond the name spoils the recognition front-gate** — the one thing the gate
 exists to measure. `Course Schedule IV (Floyd-Warshall)`, a "Focus" cell reading "post-order
@@ -152,7 +152,7 @@ learner the call before they recall it. Comfort/units belong in the *schedule fi
 shown to the learner. (Learner, twice: *"The tables should just be the name of the problems and
 links, nothing else."*)
 
-⭐ **Build the lineup from `scripts/links.py <n> ...`, VERBATIM.** Never hand-copy schedule rows.
+⭐ **Build every lineup from a script, VERBATIM: `remaining.py` for a day's board, `links.py <n> ...` for a named hand-over.** Never hand-copy schedule rows.
 The script reads the title from each file's header, so it emits a clean pair with no technique
 parenthetical and no Note column. Hand-copying a row drags along its `(technique)` title and its
 rep-directive Note cell, which is exactly how the spoiler leaks. Run it, paste the lines, add
@@ -178,10 +178,9 @@ $ python scripts/remaining.py           # today's open board (session date)
 $ python scripts/remaining.py --date 2026-09-14   # → "Nothing left … ✅" when all struck
 ```
 
-**Division of labor:** `remaining.py` when the question is *"what is open right now"*. The open set must
-come from the schedule, not memory. `links.py <n> …` when you already hold the **exact** set. That's the
-kickoff board right after scaffolding (you have the numbers you just scaffolded) or a single named
-hand-over ("let's do 102"). full rule: [`feedback_lineup_links_only.md`](.claude/memory/feedback_lineup_links_only.md).
+**Division of labor:** `remaining.py` for any board of the day. That covers the kickoff board right after
+scaffolding (nothing is struck yet, so it prints the whole day) and *"what is open right now"* alike, both
+in priority order. `links.py <n> …` only for a single named hand-over ("let's do 102"). full rule: [`feedback_lineup_links_only.md`](.claude/memory/feedback_lineup_links_only.md).
 
 ⭐ **Recommend by number, steer by description.** When you suggest what to do next, link **only the pick**
 (name + `[file]·[LC]`). Refer to problems you're steering *away from* by **description, not number**. A

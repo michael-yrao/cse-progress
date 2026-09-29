@@ -93,5 +93,20 @@ A stray line of prose, not a table row at all — must not be read as one.
         self.assertEqual(self._numbers(), ["560", "846", "39", "57", "637"])
 
 
+class OrderByPriorityTests(unittest.TestCase):
+    """order_by_priority() is the tie-break main() applies between unstruck_numbers()'s
+    file order and schedule_priority.day_order()'s priority order: a day whose file order
+    puts a 🟢 review ahead of a 🟡 conversion must print the 🟡 first, and a number
+    day_order() never saw must sink to the end."""
+
+    def test_reorders_by_priority_and_sinks_an_unpriced_number(self):
+        numbers = ["560", "846", "999"]  # file order; 999 has no day_order entry
+        priority = ["846", "560"]  # 846 (🟡) outranks 560 (🟢) in the day's priority
+        self.assertEqual(
+            remaining.order_by_priority(numbers, priority),
+            ["846", "560", "999"],
+        )
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

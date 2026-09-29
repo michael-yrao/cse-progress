@@ -43,9 +43,15 @@ moving between days.
 
 ## Moving, adding or removing a row
 
+**A day that has started keeps its plan.** A row not done on it stays there, unstruck,
+prefixed `→`, with the new date in Next, and its header does not change. The copy on the new
+day is prefixed `→` and prices there. **A day that has not started is re-planned:** the row
+moves outright.
+
 1. **Start cell.** Moving: carry the Start cell verbatim. Adding: write it from the tracker —
    the comfort going in, with the streak on a 🟢 (`🟢 s2`), or `🆕` for an unseen problem.
-2. **Make the edit.** Every day it touches gets its header updated in the same edit.
+2. **Make the edit.** The new day's header always changes in the same edit; the old day's
+   header changes only if that day has not started.
 3. **Price each touched day** with `--schedule-day` and set the header to `built`.
 4. **Re-run and read the check.** It must read `matches`. `CANNOT VERIFY` means a row is
    unpriced or guessed: fix the row (its number, its difficulty, its Start cell), not the

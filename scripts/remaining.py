@@ -31,6 +31,7 @@ import _console
 
 _console.force_utf8()
 
+import schedule_priority
 import session_date
 from links import link_line, REPO_ROOT
 
@@ -99,6 +100,15 @@ def unstruck_numbers(schedule: Path, label: str) -> list[str] | None:
     return numbers if found_block else None
 
 
+def order_by_priority(numbers: list[str], priority: list[str]) -> list[str]:
+    """`numbers` (unstruck_numbers()'s file-order list) reordered by each number's index
+    in `priority` (schedule_priority.day_order()'s output for the day) — the board's
+    priority order. A number missing from `priority` sorts after every number that IS in
+    it, keeping its own relative order among the other missing numbers (a stable sort)."""
+    rank = {number: index for index, number in enumerate(priority)}
+    return sorted(numbers, key=lambda number: rank.get(number, len(priority)))
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description="Print today's un-struck board (name + links only).")
     ap.add_argument("--date", help="session date YYYY-MM-DD (default: detected session date)")
@@ -121,7 +131,9 @@ def main() -> None:
         print(f"Nothing left — every row in the {label} block is struck through. ✅")
         return
 
-    for number in numbers:
+    session_day = datetime.strptime(session, "%Y-%m-%d").date()
+    priority = schedule_priority.day_order(schedule, session_day)
+    for number in order_by_priority(numbers, priority):
         line = link_line(number)
         if line:
             print(line)

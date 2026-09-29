@@ -400,6 +400,48 @@ def find_schedule(day: dt.date) -> Path | None:
     return best[1] if best else None
 
 
+def parse_sched_line(line: str) -> dict | None:
+    """Parse one line of a schedule day's table into an item dict, or None if the line is
+    not a problem row (no SCHED_ROW match, a blank separator row, or a markdown rule).
+
+    Extracted from parse_schedule_day()'s per-row loop body so schedule_priority.py can
+    read a row (num/start/start_streak/is_new/is_probe/is_complexity/done/text) the same
+    way pricing does, without re-deriving the parse. See parse_schedule_day() for the item
+    shape and the START column's rationale.
+    """
+    m = SCHED_ROW.match(line)
+    if not m:
+        return None
+    cell = m["c1"]
+    if not cell.strip() or set(cell.strip()) <= {"-", ":"}:
+        return None            # blank separator row, or a markdown rule
+    glyph = GLYPH.search(m["c2"] or "")
+    streak_m = re.search(r"s(\d+)", m["c2"] or "")
+    text = re.sub(r"\[([^\]]*)\]\([^)]*\)", r"\1", cell)
+    # Strip markdown emphasis wherever it sits, not just at the ends: the strike
+    # wraps the LINK (`~~[496 ...](...)~~ · [LC](...)`), so trailing-only stripping
+    # leaves a stray `~~` in the middle of the printed title.
+    text = re.sub(r"~~|\*\*", "", text)
+    # text is computed before the number so sched_row_number()'s bare-number fallback
+    # can read off this same tag-stripped, link-unwrapped string.
+    num = sched_row_number(cell, text)
+    start_glyph = glyph.group(0) if glyph else None
+    return {
+        "num": num,
+        "start": start_glyph,
+        # A 🟢 Start cell with no `sN` carries no streak -- None, not 0, so
+        # price_day_items() can tell "streak zero" from "streak unknown" and
+        # print its own warning instead of silently pricing the highest 🟢 price.
+        "start_streak": (int(streak_m.group(1)) if streak_m
+                         else None if start_glyph == "🟢" else 0),
+        "is_new": NEW_GLYPH in (m["c2"] or ""),
+        "is_probe": PROBE_GLYPH in (m["c2"] or ""),
+        "is_complexity": is_complexity_technique(m["c5"]),
+        "done": "~~" in cell,
+        "text": re.sub(r"\s+", " ", text).strip(" ·*"),
+    }
+
+
 def parse_schedule_day(path: Path, day: dt.date) -> tuple[list[dict], float | None]:
     """Pull one day's block out of a weekly schedule's daily table.
 
@@ -445,37 +487,9 @@ def parse_schedule_day(path: Path, day: dt.date) -> tuple[list[dict], float | No
                                # EOF and any later 5-column table is priced into Sunday.
                                # A total that silently absorbs rows is the same class of
                                # error this whole flag exists to prevent.
-        m = SCHED_ROW.match(line)
-        if not m:
-            continue
-        cell = m["c1"]
-        if not cell.strip() or set(cell.strip()) <= {"-", ":"}:
-            continue           # blank separator row, or a markdown rule
-        glyph = GLYPH.search(m["c2"] or "")
-        streak_m = re.search(r"s(\d+)", m["c2"] or "")
-        text = re.sub(r"\[([^\]]*)\]\([^)]*\)", r"\1", cell)
-        # Strip markdown emphasis wherever it sits, not just at the ends: the strike
-        # wraps the LINK (`~~[496 ...](...)~~ · [LC](...)`), so trailing-only stripping
-        # leaves a stray `~~` in the middle of the printed title.
-        text = re.sub(r"~~|\*\*", "", text)
-        # text is computed before the number so sched_row_number()'s bare-number fallback
-        # can read off this same tag-stripped, link-unwrapped string.
-        num = sched_row_number(cell, text)
-        start_glyph = glyph.group(0) if glyph else None
-        items.append({
-            "num": num,
-            "start": start_glyph,
-            # A 🟢 Start cell with no `sN` carries no streak -- None, not 0, so
-            # price_day_items() can tell "streak zero" from "streak unknown" and
-            # print its own warning instead of silently pricing the highest 🟢 price.
-            "start_streak": (int(streak_m.group(1)) if streak_m
-                             else None if start_glyph == "🟢" else 0),
-            "is_new": NEW_GLYPH in (m["c2"] or ""),
-            "is_probe": PROBE_GLYPH in (m["c2"] or ""),
-            "is_complexity": is_complexity_technique(m["c5"]),
-            "done": "~~" in cell,
-            "text": re.sub(r"\s+", " ", text).strip(" ·*"),
-        })
+        item = parse_sched_line(line)
+        if item is not None:
+            items.append(item)
     return items, stated
 
 

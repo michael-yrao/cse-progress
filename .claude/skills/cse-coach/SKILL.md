@@ -171,8 +171,9 @@ link verification) are in `references/scaffolding.md`; the retry stash extract/r
 invariant is in `references/retry-and-restore.md`. Open the file before scaffolding.
 
 **Any board or lineup you present** (kickoff, restate, "what's next") carries **problem name +
-links only** — no Note/Focus/technique/comfort/units column, no technique parenthetical. Build it
-from `python scripts/links.py <n> ...` verbatim; anything more spoils the recognition gate. See
+links only** — no Note/Focus/technique/comfort/units column, no technique parenthetical.
+Build it from `python scripts/remaining.py` (a day's board, priority-sorted) or
+`python scripts/links.py <n> ...` (a named hand-over), verbatim; anything more spoils the recognition gate. See
 `references/scaffolding.md` → "Presenting the kickoff / lineup board".
 
 ## 5. Curriculum & technique coverage

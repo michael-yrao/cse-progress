@@ -37,6 +37,16 @@
 # "could a rule written before this still read as correct while now being wrong?"
 
 decisions:
+  - id: board-priority-sort-sep29
+    date: 2026-09-29
+    summary: >-
+      CHANGES who orders a day: the priority order (🔴/🟡 → 🆕 → 🎯 → 🟢 by streak, Easy last → 🎓 →
+      complexity re-asks) was applied by hand at the build; scripts/schedule_priority.py now sorts each
+      day's rows on commit, and remaining.py prints the board in that order. The kickoff board moves from
+      links.py to remaining.py. Strands any rule reading "build the lineup from links.py" for a day's board.
+      Learner's request, Sep 29.
+    affects: [kickoff, lineup, weekly_build]
+
   - id: hard-multiplier-1p3
     date: 2026-09-20
     summary: >-
@@ -1593,3 +1603,12 @@ decisions:
       the probe pool, in that order. A day header equals the script's `built`, and "header
       matches" never prints while a row is unpriced. Complexity re-asks stay at 0.
     affects: [effort-budget]
+
+  - id: deferred-rows-stay-on-planned-day-sep29
+    date: 2026-09-29
+    summary: >-
+      A row deferred off a day that has started stays on that day, unstruck, prefixed `→`, with
+      its new date in Next, and that day's header is not lowered. Only a day that has not started
+      is re-planned. Restores the Sep 24 convention that the Sep 28 edit and the first
+      effort-units skill broke; Mon Sep 28 (8.0) and Thu Sep 24 were restored.
+    affects: [effort-budget, scheduling]

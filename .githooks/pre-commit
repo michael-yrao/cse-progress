@@ -79,6 +79,28 @@ if [ -n "$COVERAGE_TRIGGER" ]; then
   [ -f "$COVERAGE" ] && git add "$COVERAGE"
 fi
 
+# Priority-sort a staged schedule. Source fix for a row landing out of order mid-week (the
+# order was applied by hand at the build until now — see decisions.yml
+# `board-priority-sort-sep29`). Live weeks only (docs/foundations/schedules/, not archive/):
+# a closed week is not re-ordered by an unrelated later commit. Must run BEFORE the
+# GAMIFY_TRIGGER block below, which reads the schedule to price and render it.
+SCHEDULE_FILES=$(echo "$STAGED" | grep -E "^docs/foundations/schedules/[0-9]{8}_schedule\.md$")
+if [ -n "$SCHEDULE_FILES" ]; then
+  echo "Priority-sorting the staged schedule..."
+  for FILE in $SCHEDULE_FILES; do
+    SCHEDULE_HASH_BEFORE=$(git hash-object "$FILE")
+    if command -v py >/dev/null 2>&1; then
+      py scripts/schedule_priority.py "$FILE" || true
+    elif command -v python >/dev/null 2>&1; then
+      python scripts/schedule_priority.py "$FILE" || true
+    elif command -v python3 >/dev/null 2>&1; then
+      python3 scripts/schedule_priority.py "$FILE" || true
+    fi
+    SCHEDULE_HASH_AFTER=$(git hash-object "$FILE")
+    [ "$SCHEDULE_HASH_BEFORE" != "$SCHEDULE_HASH_AFTER" ] && git add "$FILE"
+  done
+fi
+
 # Honest-progress contract. Regenerates progress.json (the data the progressiveoverflow.com
 # dashboard renders) from the tracker + schedules + coverage. Must run AFTER the two blocks
 # above, which rewrite dsa_progress.md and technique_coverage.md; this reads both. Fires when

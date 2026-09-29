@@ -97,12 +97,14 @@ full rule: [`feedback_read_before_asserting.md`](.claude/memory/feedback_read_be
 ## Schedule integrity
 
 **Any lineup or restate table you present** (mark-completed step, "what's next", hand-over) is **problem
-name + links only**. Build from `python scripts/links.py <n> ...`, no Note/Focus/technique/comfort column
+name + links only**. Build from `python scripts/remaining.py` (a day's board) or `python scripts/links.py <n> ...` (a named hand-over), no Note/Focus/technique/comfort column
 (it spoils the recognition gate). See `scaffolding.md` → "Presenting the kickoff / lineup board".
 
 When a problem is dropped or deferred, **a new specific slot is assigned in the same edit**.
 Never remove a problem without immediately adding it to another day. A deferred problem with no
-new date is a missed problem. After logging any result, add its computed next-review date to the
+new date is a missed problem. A row deferred off a day that has started stays on that day,
+unstruck, prefixed `→`, with its new date in Next. The day's plan is a record of what was
+planned, never rewritten after the fact. After logging any result, add its computed next-review date to the
 appropriate week's schedule (this week or further out). Don't leave it only in the tracker. The
 spaced-repetition dates are the source of truth; the schedules must reflect them. When the
 target week's file doesn't exist yet, note the problem in the nearest schedule's preview section.

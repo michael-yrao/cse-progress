@@ -4399,7 +4399,7 @@
         "date": "2026-09-28",
         "weekday": "Monday",
         "label": "Backtracking intake (40) + Greedy/Stack/Heap reviews",
-        "units": 7.4,
+        "units": 8.0,
         "items": [
           {
             "lcNumber": 45,
@@ -4477,6 +4477,40 @@
             "endComfort": "🟡",
             "endNote": null,
             "nextReview": "2026-10-08"
+          },
+          {
+            "lcNumber": 189,
+            "title": "Rotate Array",
+            "technique": "Array-rotation",
+            "startComfort": "🟢",
+            "difficulty": "Medium",
+            "url": "https://leetcode.com/problems/rotate-array/",
+            "file": "dsa/leetcode/arrays_and_hash/189_rotate_array.py",
+            "tags": [
+              "moved"
+            ],
+            "kind": "rep",
+            "done": false,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": "2026-10-04"
+          },
+          {
+            "lcNumber": 1046,
+            "title": "Last Stone Weight",
+            "technique": "Heap",
+            "startComfort": "🟢",
+            "difficulty": "Easy",
+            "url": "https://leetcode.com/problems/last-stone-weight/",
+            "file": "dsa/leetcode/heap/1046_last_stone_weight.py",
+            "tags": [
+              "moved"
+            ],
+            "kind": "rep",
+            "done": false,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": "2026-10-04"
           }
         ]
       },
@@ -4525,7 +4559,7 @@
             "startComfort": null,
             "difficulty": null,
             "url": "https://leetcode.com/problems/word-search/",
-            "file": null,
+            "file": "dsa/leetcode/backtracking/79_word_search.py",
             "tags": [
               "new"
             ],
@@ -5471,9 +5505,9 @@
     },
     {
       "date": "2026-09-24",
-      "planned": 5.5,
+      "planned": 6.5,
       "done": 2.0,
-      "built": 3.7,
+      "built": 6.5,
       "partial": false
     },
     {
@@ -5499,9 +5533,9 @@
     },
     {
       "date": "2026-09-28",
-      "planned": 7.4,
+      "planned": 8.0,
       "done": 7.4,
-      "built": 7.4,
+      "built": 8.0,
       "partial": false
     },
     {
