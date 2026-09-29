@@ -31,6 +31,29 @@ Constraints:
 from typing import List, Optional
 
 
+# ── Attempt · 2026-09-28 ──────────────
+class MinStack_20260928:
+# key here is really to store a tuple
+# so the stack stores the min with it
+    def __init__(self):
+        # value, min
+        self.stack = []
+
+    def push(self, value: int) -> None:
+        min_value = value
+        if self.stack:
+            min_value = min(min_value, self.stack[-1][1])
+        self.stack.append((value, min_value))
+        
+    def pop(self) -> None:
+        self.stack.pop()
+
+    def top(self) -> int:
+        return self.stack[-1][0]
+
+    def getMin(self) -> int:
+        return self.stack[-1][1]
+
 # ── Attempt · 2026-08-29 ──────────────
 class MinStack_20260829:
 # not a true min stack

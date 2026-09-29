@@ -49,6 +49,34 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-09-28 ──────────────
+    def carFleet_20260928(self, target: int, position: List[int], speed: List[int]) -> int:
+        # need to notice that position matters
+        # the position in front can never be passed
+        # so let's sort by position, we do need to create a new array since the indices in the two arrays need to be together
+        # we then need to see how long it takes for each car to get to target
+
+        car_position_and_speed = []
+        
+        for i in range(len(position)):
+            car_position_and_speed.append((position[i], speed[i]))
+        
+        # do descending so we have the highest position first
+        car_position_and_speed.sort(reverse=True)
+
+        fleet = []
+
+        for i in range(len(car_position_and_speed)):
+            # (target - position) / speed is how long it takes i to get to target
+            # we need a way to look at other car's time_to_target to see if we should add a new fleet
+            time_to_target = (target - car_position_and_speed[i][0]) / car_position_and_speed[i][1]
+
+            # if we form a new fleet, e.g. no fleet so far or we are slower than the latest, add in
+            if not fleet or time_to_target > fleet[-1]:
+                fleet.append(time_to_target)
+        
+        return len(fleet)
+
     # ── Attempt · 2026-08-29 ──────────────
     def carFleet_20260829(self, target: int, position: List[int], speed: List[int]) -> int:
         # main trick to notice with this problem is that if a car is in front

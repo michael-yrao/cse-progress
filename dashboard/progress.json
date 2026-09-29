@@ -2,17 +2,17 @@
   "schemaVersion": 1,
   "generatedAt": "2026-09-28",
   "totals": {
-    "problems": 127,
-    "solutions": 138,
-    "reps": 618
+    "problems": 128,
+    "solutions": 139,
+    "reps": 623
   },
   "pipeline": {
-    "blank": 0,
+    "blank": 1,
     "shaky": 12,
     "clean": {
       "s0": 3,
-      "s1": 32,
-      "s2plus": 68,
+      "s1": 30,
+      "s2plus": 70,
       "total": 103
     },
     "graduated": 23,
@@ -20,27 +20,27 @@
   },
   "difficulty": {
     "Easy": 34,
-    "Medium": 93,
+    "Medium": 94,
     "Hard": 11
   },
   "streak": {
-    "current": 123,
-    "longest": 123,
-    "lastStudyDay": "2026-09-27",
-    "studyDays": 181,
+    "current": 124,
+    "longest": 124,
+    "lastStudyDay": "2026-09-28",
+    "studyDays": 182,
     "restDayAllowance": 1
   },
   "coverage": {
     "total": 105,
     "started": 60,
     "noGreen": 1,
-    "thin": 6,
+    "thin": 7,
     "variantGaps": 0
   },
   "onSchedule": {
-    "totalActive": 138,
-    "dueToday": 3,
-    "overdue": 6
+    "totalActive": 139,
+    "dueToday": 0,
+    "overdue": 5
   },
   "trophyCase": {
     "graduated": [
@@ -1503,13 +1503,14 @@
       "family": "backtracking",
       "tier": "core",
       "started": true,
-      "minProblems": 7,
+      "minProblems": 8,
       "coverageFloor": 5,
-      "uncleanCount": 2,
-      "problemCount": 4,
+      "uncleanCount": 3,
+      "problemCount": 5,
       "problems": [
         22,
         39,
+        40,
         46,
         78
       ],
@@ -1526,13 +1527,6 @@
           "lcNumber": 90,
           "title": "Subsets II",
           "url": "https://leetcode.com/problems/subsets-ii/",
-          "difficulty": "Medium",
-          "trigger": "phase:Backtracking"
-        },
-        {
-          "lcNumber": 40,
-          "title": "Combination Sum II",
-          "url": "https://leetcode.com/problems/combination-sum-ii/",
           "difficulty": "Medium",
           "trigger": "phase:Backtracking"
         },
@@ -3619,9 +3613,9 @@
       "family": "sliding_window",
       "tier": "core",
       "started": true,
-      "minProblems": 8,
+      "minProblems": 7,
       "coverageFloor": 4,
-      "uncleanCount": 4,
+      "uncleanCount": 3,
       "problemCount": 6,
       "problems": [
         45,
@@ -3748,9 +3742,9 @@
       "family": "stack",
       "tier": "core",
       "started": true,
-      "minProblems": 6,
+      "minProblems": 7,
       "coverageFloor": 4,
-      "uncleanCount": 2,
+      "uncleanCount": 3,
       "problemCount": 6,
       "problems": [
         84,
@@ -3762,7 +3756,7 @@
       ],
       "bestComfort": "🟢",
       "hasGreen": true,
-      "thin": false,
+      "thin": true,
       "hasVariantGap": false,
       "buildsOn": [
         "Stack (matching)"
@@ -4395,7 +4389,8 @@
     "2026-09-24",
     "2026-09-25",
     "2026-09-26",
-    "2026-09-27"
+    "2026-09-27",
+    "2026-09-28"
   ],
   "schedule": {
     "weekOf": "2026-09-28",
@@ -4416,27 +4411,27 @@
             "file": "dsa/leetcode/greedy/45_jump_game_ii.py",
             "tags": [],
             "kind": "rep",
-            "done": false,
-            "endComfort": null,
+            "done": true,
+            "endComfort": "🟢",
             "endNote": null,
-            "nextReview": null
+            "nextReview": "2026-10-28"
           },
           {
             "lcNumber": 40,
             "title": "Combination Sum II",
             "technique": "Backtracking",
             "startComfort": null,
-            "difficulty": null,
+            "difficulty": "Medium",
             "url": "https://leetcode.com/problems/combination-sum-ii/",
-            "file": null,
+            "file": "dsa/leetcode/backtracking/40_combination_sum_ii.py",
             "tags": [
               "new"
             ],
             "kind": "new",
-            "done": false,
-            "endComfort": null,
+            "done": true,
+            "endComfort": "🔴",
             "endNote": null,
-            "nextReview": null
+            "nextReview": "2026-09-30"
           },
           {
             "lcNumber": 572,
@@ -4448,10 +4443,10 @@
             "file": "dsa/leetcode/trees/572_subtree_of_another_tree.py",
             "tags": [],
             "kind": "rep",
-            "done": false,
-            "endComfort": null,
+            "done": true,
+            "endComfort": "🟢",
             "endNote": null,
-            "nextReview": null
+            "nextReview": "2026-11-27"
           },
           {
             "lcNumber": 155,
@@ -4463,10 +4458,10 @@
             "file": "dsa/leetcode/stack/155_min_stack.py",
             "tags": [],
             "kind": "rep",
-            "done": false,
-            "endComfort": null,
+            "done": true,
+            "endComfort": "🟢",
             "endNote": null,
-            "nextReview": null
+            "nextReview": "2026-11-27"
           },
           {
             "lcNumber": 853,
@@ -4478,40 +4473,10 @@
             "file": "dsa/leetcode/stack/853_car_fleet.py",
             "tags": [],
             "kind": "rep",
-            "done": false,
-            "endComfort": null,
+            "done": true,
+            "endComfort": "🟡",
             "endNote": null,
-            "nextReview": null
-          },
-          {
-            "lcNumber": 1046,
-            "title": "Last Stone Weight",
-            "technique": "Heap",
-            "startComfort": "🟢",
-            "difficulty": "Easy",
-            "url": "https://leetcode.com/problems/last-stone-weight/",
-            "file": "dsa/leetcode/heap/1046_last_stone_weight.py",
-            "tags": [],
-            "kind": "rep",
-            "done": false,
-            "endComfort": null,
-            "endNote": null,
-            "nextReview": null
-          },
-          {
-            "lcNumber": 189,
-            "title": "Rotate Array",
-            "technique": "Array-rotation",
-            "startComfort": "🟢",
-            "difficulty": "Medium",
-            "url": "https://leetcode.com/problems/rotate-array/",
-            "file": "dsa/leetcode/arrays_and_hash/189_rotate_array.py",
-            "tags": [],
-            "kind": "rep",
-            "done": false,
-            "endComfort": null,
-            "endNote": null,
-            "nextReview": null
+            "nextReview": "2026-10-08"
           }
         ]
       },
@@ -4610,6 +4575,21 @@
         "label": "Monotonic-stack + Backtracking conversions + Backtracking intake (131) + Hash-set review",
         "units": 7.9,
         "items": [
+          {
+            "lcNumber": 40,
+            "title": "Combination Sum II",
+            "technique": "Backtracking",
+            "startComfort": "🔴",
+            "difficulty": "Medium",
+            "url": "https://leetcode.com/problems/combination-sum-ii/",
+            "file": "dsa/leetcode/backtracking/40_combination_sum_ii.py",
+            "tags": [],
+            "kind": "rep",
+            "done": false,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
+          },
           {
             "lcNumber": 84,
             "title": "Largest Rectangle in Histogram",
@@ -4941,7 +4921,7 @@
         "date": "2026-10-04",
         "weekday": "Sunday",
         "label": null,
-        "units": 7.0,
+        "units": 7.6,
         "items": [
           {
             "lcNumber": 9003,
@@ -5016,6 +4996,40 @@
             "url": "https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/",
             "file": "dsa/leetcode/graphs/323_number_of_connected_components_in_an_undirected_graph.py",
             "tags": [],
+            "kind": "rep",
+            "done": false,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
+          },
+          {
+            "lcNumber": 189,
+            "title": "Rotate Array",
+            "technique": "Array-rotation",
+            "startComfort": "🟢",
+            "difficulty": "Medium",
+            "url": "https://leetcode.com/problems/rotate-array/",
+            "file": "dsa/leetcode/arrays_and_hash/189_rotate_array.py",
+            "tags": [
+              "moved"
+            ],
+            "kind": "rep",
+            "done": false,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
+          },
+          {
+            "lcNumber": 1046,
+            "title": "Last Stone Weight",
+            "technique": "Heap",
+            "startComfort": "🟢",
+            "difficulty": "Easy",
+            "url": "https://leetcode.com/problems/last-stone-weight/",
+            "file": "dsa/leetcode/heap/1046_last_stone_weight.py",
+            "tags": [
+              "moved"
+            ],
             "kind": "rep",
             "done": false,
             "endComfort": null,
@@ -5486,9 +5500,9 @@
     {
       "date": "2026-09-28",
       "planned": 8.0,
-      "done": 0.0,
-      "built": 6.5,
-      "partial": true
+      "done": 8.0,
+      "built": 8.0,
+      "partial": false
     },
     {
       "date": "2026-09-29",
@@ -5501,7 +5515,7 @@
       "date": "2026-09-30",
       "planned": 7.9,
       "done": 0.0,
-      "built": 5.1,
+      "built": 8.1,
       "partial": true
     },
     {
@@ -5527,9 +5541,9 @@
     },
     {
       "date": "2026-10-04",
-      "planned": 7.0,
+      "planned": 7.6,
       "done": 0.0,
-      "built": 4.8,
+      "built": 6.3,
       "partial": true
     }
   ],
@@ -5659,7 +5673,7 @@
       "description": "Practice on 7 study-days without letting the streak lapse.",
       "earned": true,
       "progress": {
-        "current": 123,
+        "current": 124,
         "target": 7
       }
     },
@@ -5670,7 +5684,7 @@
       "description": "Practice on 30 study-days without letting the streak lapse.",
       "earned": true,
       "progress": {
-        "current": 123,
+        "current": 124,
         "target": 30
       }
     },
@@ -5681,7 +5695,7 @@
       "description": "Practice on 100 study-days without letting the streak lapse.",
       "earned": true,
       "progress": {
-        "current": 123,
+        "current": 124,
         "target": 100
       }
     },
@@ -5731,6 +5745,188 @@
     }
   ],
   "problems": [
+    {
+      "lcNumber": 40,
+      "title": "Combination Sum II",
+      "url": "https://leetcode.com/problems/combination-sum-ii/",
+      "file": "dsa/leetcode/backtracking/40_combination_sum_ii.py",
+      "difficulty": "Medium",
+      "category": "backtracking",
+      "comfort": "🔴",
+      "level": 0,
+      "streak": 0,
+      "nextReview": "2026-09-30",
+      "repDates": [
+        "2026-09-28"
+      ],
+      "timeline": [
+        {
+          "date": "2026-09-28",
+          "comfort": "🔴",
+          "level": 0
+        }
+      ]
+    },
+    {
+      "lcNumber": 45,
+      "title": "Jump Game II",
+      "url": "https://leetcode.com/problems/jump-game-ii/",
+      "file": "dsa/leetcode/greedy/45_jump_game_ii.py",
+      "difficulty": "Medium",
+      "category": "greedy",
+      "comfort": "🟢",
+      "level": 2,
+      "streak": 1,
+      "nextReview": "2026-10-28",
+      "repDates": [
+        "2026-09-08",
+        "2026-09-18",
+        "2026-09-28"
+      ],
+      "timeline": [
+        {
+          "date": "2026-09-08",
+          "comfort": "🟡",
+          "level": 1
+        },
+        {
+          "date": "2026-09-18",
+          "comfort": "🟡",
+          "level": 1
+        },
+        {
+          "date": "2026-09-28",
+          "comfort": "🟢",
+          "level": 2
+        }
+      ]
+    },
+    {
+      "lcNumber": 572,
+      "title": "Subtree Of Another Tree",
+      "url": "https://leetcode.com/problems/subtree-of-another-tree/",
+      "file": "dsa/leetcode/trees/572_subtree_of_another_tree.py",
+      "difficulty": "Medium",
+      "category": "trees",
+      "comfort": "🟢",
+      "level": 2,
+      "streak": 2,
+      "nextReview": "2026-11-27",
+      "repDates": [
+        "2026-05-02",
+        "2026-06-12",
+        "2026-08-15",
+        "2026-08-25",
+        "2026-09-28"
+      ],
+      "timeline": [
+        {
+          "date": "2026-05-02",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-06-12",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-08-15",
+          "comfort": "🟡",
+          "level": 1
+        },
+        {
+          "date": "2026-08-25",
+          "comfort": "🟢",
+          "level": 2
+        },
+        {
+          "date": "2026-09-28",
+          "comfort": "🟢",
+          "level": 2
+        }
+      ]
+    },
+    {
+      "lcNumber": 155,
+      "title": "Min Stack (Pair with Min-So-Far)",
+      "url": "https://leetcode.com/problems/min-stack/",
+      "file": "dsa/leetcode/stack/155_min_stack.py",
+      "difficulty": "Medium",
+      "category": "stack",
+      "comfort": "🟢",
+      "level": 2,
+      "streak": 2,
+      "nextReview": "2026-11-27",
+      "repDates": [
+        "2026-08-12",
+        "2026-08-14",
+        "2026-08-29",
+        "2026-09-28"
+      ],
+      "timeline": [
+        {
+          "date": "2026-08-12",
+          "comfort": "🔴",
+          "level": 0
+        },
+        {
+          "date": "2026-08-14",
+          "comfort": "🟢",
+          "level": 2
+        },
+        {
+          "date": "2026-08-29",
+          "comfort": "🟢",
+          "level": 2
+        },
+        {
+          "date": "2026-09-28",
+          "comfort": "🟢",
+          "level": 2
+        }
+      ]
+    },
+    {
+      "lcNumber": 853,
+      "title": "Car Fleet",
+      "url": "https://leetcode.com/problems/car-fleet/",
+      "file": "dsa/leetcode/stack/853_car_fleet.py",
+      "difficulty": "Medium",
+      "category": "stack",
+      "comfort": "🟡",
+      "level": 1,
+      "streak": 0,
+      "nextReview": "2026-10-08",
+      "repDates": [
+        "2026-08-15",
+        "2026-08-17",
+        "2026-08-29",
+        "2026-09-28"
+      ],
+      "timeline": [
+        {
+          "date": "2026-08-15",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-08-17",
+          "comfort": "🟢",
+          "level": 2
+        },
+        {
+          "date": "2026-08-29",
+          "comfort": "🟢",
+          "level": 2
+        },
+        {
+          "date": "2026-09-28",
+          "comfort": "🟡",
+          "level": 1
+        }
+      ]
+    },
     {
       "lcNumber": 2812,
       "title": "Find the Safest Path in a Grid (Dijkstra)",
@@ -7344,34 +7540,6 @@
           "date": "2026-09-19",
           "comfort": "🎓",
           "level": 3
-        }
-      ]
-    },
-    {
-      "lcNumber": 45,
-      "title": "Jump Game II",
-      "url": "https://leetcode.com/problems/jump-game-ii/",
-      "file": "dsa/leetcode/greedy/45_jump_game_ii.py",
-      "difficulty": "Medium",
-      "category": "greedy",
-      "comfort": "🟡",
-      "level": 1,
-      "streak": 0,
-      "nextReview": "2026-09-28",
-      "repDates": [
-        "2026-09-08",
-        "2026-09-18"
-      ],
-      "timeline": [
-        {
-          "date": "2026-09-08",
-          "comfort": "🟡",
-          "level": 1
-        },
-        {
-          "date": "2026-09-18",
-          "comfort": "🟡",
-          "level": 1
         }
       ]
     },
@@ -9028,74 +9196,6 @@
       ]
     },
     {
-      "lcNumber": 155,
-      "title": "Min Stack (Pair with Min-So-Far)",
-      "url": "https://leetcode.com/problems/min-stack/",
-      "file": "dsa/leetcode/stack/155_min_stack.py",
-      "difficulty": "Medium",
-      "category": "stack",
-      "comfort": "🟢",
-      "level": 2,
-      "streak": 1,
-      "nextReview": "2026-09-28",
-      "repDates": [
-        "2026-08-12",
-        "2026-08-14",
-        "2026-08-29"
-      ],
-      "timeline": [
-        {
-          "date": "2026-08-12",
-          "comfort": "🔴",
-          "level": 0
-        },
-        {
-          "date": "2026-08-14",
-          "comfort": "🟢",
-          "level": 2
-        },
-        {
-          "date": "2026-08-29",
-          "comfort": "🟢",
-          "level": 2
-        }
-      ]
-    },
-    {
-      "lcNumber": 853,
-      "title": "Car Fleet",
-      "url": "https://leetcode.com/problems/car-fleet/",
-      "file": "dsa/leetcode/stack/853_car_fleet.py",
-      "difficulty": "Medium",
-      "category": "stack",
-      "comfort": "🟢",
-      "level": 2,
-      "streak": 1,
-      "nextReview": "2026-09-28",
-      "repDates": [
-        "2026-08-15",
-        "2026-08-17",
-        "2026-08-29"
-      ],
-      "timeline": [
-        {
-          "date": "2026-08-15",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-08-17",
-          "comfort": "🟢",
-          "level": 2
-        },
-        {
-          "date": "2026-08-29",
-          "comfort": "🟢",
-          "level": 2
-        }
-      ]
-    },
-    {
       "lcNumber": 49,
       "title": "Group Anagrams",
       "url": "https://leetcode.com/problems/group-anagrams/",
@@ -9225,46 +9325,6 @@
           "date": "2026-07-25",
           "comfort": null,
           "level": null
-        },
-        {
-          "date": "2026-08-25",
-          "comfort": "🟢",
-          "level": 2
-        }
-      ]
-    },
-    {
-      "lcNumber": 572,
-      "title": "Subtree Of Another Tree",
-      "url": "https://leetcode.com/problems/subtree-of-another-tree/",
-      "file": "dsa/leetcode/trees/572_subtree_of_another_tree.py",
-      "difficulty": "Medium",
-      "category": "trees",
-      "comfort": "🟢",
-      "level": 2,
-      "streak": 1,
-      "nextReview": "2026-09-24",
-      "repDates": [
-        "2026-05-02",
-        "2026-06-12",
-        "2026-08-15",
-        "2026-08-25"
-      ],
-      "timeline": [
-        {
-          "date": "2026-05-02",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-06-12",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-08-15",
-          "comfort": "🟡",
-          "level": 1
         },
         {
           "date": "2026-08-25",

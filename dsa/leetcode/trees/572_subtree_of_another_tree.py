@@ -35,6 +35,41 @@ class TreeNode:
         self.right = right
 class Solution:
 
+    # ── Attempt · 2026-09-28 ──────────────
+    def isSubtree_20260928(self, root: Optional[TreeNode], subRoot: Optional[TreeNode]) -> bool:
+        # find the first node that matches the root of subroot
+        # then see if same tree
+        # if not, we continue, if yes, we return True
+        
+        # if both are None, return True
+        if not root and not subRoot:
+            return True
+        
+        # if root is None, return False
+        if not root or not subRoot:
+            return False
+        
+        def isSameTree(root, subRoot):
+            # if both are None, return True
+            if not root and not subRoot:
+                return True
+            
+            # if either is None, return False
+            if not root or not subRoot:
+                return False
+
+            if root.val != subRoot.val:
+                return False
+            
+            return isSameTree(root.left, subRoot.left) and isSameTree(root.right, subRoot.right)
+
+        # now we look for the same value
+        if root.val == subRoot.val:
+            if isSameTree(root, subRoot):
+                return True
+        # look left and right
+        return self.isSubtree_20260928(root.left, subRoot) or self.isSubtree_20260928(root.right, subRoot)
+
     # ── Attempt · 2026-08-25 ──────────────
     def isSubtree_20260825(self, root: Optional[TreeNode], subRoot: Optional[TreeNode]) -> bool:
         # go through the root, find the first node then see if it is same tree

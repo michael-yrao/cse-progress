@@ -1,3 +1,20 @@
+- **2026-09-28 · 853 Car Fleet** (🟢 s1 review; retry, half-spoiled: stack folder) — ⚠️ **partial.** Top comment named
+  sort-by-position (the car ahead can't be passed) + time-to-target, unaided. The picking feature — a stack of fleet
+  times, a car starting a new fleet only when strictly slower than `fleet[-1]` — needed an outside hint. → 🟡.
+- **2026-09-28 · 155 Min Stack** (🟢 review; retry, half-spoiled: stack folder) — ✅ **hit.** Top comment: "key here
+  is really to store a tuple so the stack stores the min with it" — pair each value with the min-so-far. Blank page,
+  no hints. → 🟢 s2.
+- **2026-09-28 · 572 Subtree Of Another Tree** (🟢 review; retry, half-spoiled: trees folder) — ✅ **hit.** Top
+  comment: "find the first node that matches the root of subroot, then see if same tree" — tree DFS with a
+  same-tree check at each candidate. Blank page, no hints; time O(m·n) and space O(h) both correct. → 🟢 s2.
+- **2026-09-28 · 40 Combination Sum II** (🆕 new, measured; folder half-spoils) — ⚠️ **partial.** Backtracking named
+  unaided via the 5-slot template (take/skip, state = index). The picking feature vs 39 — **candidates repeat, so
+  equal values must be decided once (sort + skip every copy)** — was not named; `setState` of indices was the stand-in,
+  and the dedup was coach-taught after two "no idea"s. → 🔴.
+- **2026-09-28 · 45 Jump Game II** (🟡 re-rep; retry, half-spoiled: greedy folder) — ✅ **hit.** Greedy called in the
+  top comment: "`i + nums[i]` is our jump distance … go to the one with the highest jump potential". Both Sep 18
+  coach-surfaced fixes held unaided (`>=` tie-break so the pick never stalls at `i`; window-covers-end → +1 exit).
+  Blank page, no hints. → 🟢 s1.
 - **2026-09-27 · 2812 Find the Safest Path in a Grid** (🆕 consolidation rep; half-spoiled: the schedule named the
   Dijkstra max-min seat and the learner asked for the swap by shape) — ✅ **hit on Dijkstra, ❌ miss on the precompute.**
   "this is clearly dijkstra's … maxHeap … start all nodes with -math.inf" cold. The nearest-thief distance was first

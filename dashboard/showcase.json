@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-28",
+  "generatedAt": "2026-09-29",
   "entries": [
     {
       "key": "733:bfs",
@@ -5881,8 +5881,8 @@
         {
           "kind": "attempt",
           "symbol": "isSubtree",
-          "startLine": 105,
-          "endLine": 143,
+          "startLine": 140,
+          "endLine": 178,
           "lines": [
             "    def isSubtree(self, root: Optional[TreeNode], subRoot: Optional[TreeNode]) -> bool:",
             "        # so this is like a combo problem",
@@ -7032,8 +7032,8 @@
         {
           "kind": "container",
           "symbol": "Solution",
-          "startLine": 31,
-          "endLine": 31,
+          "startLine": 32,
+          "endLine": 32,
           "lines": [
             "class Solution:"
           ]
@@ -7041,8 +7041,8 @@
         {
           "kind": "attempt",
           "symbol": "jump",
-          "startLine": 64,
-          "endLine": 95,
+          "startLine": 104,
+          "endLine": 135,
           "lines": [
             "    # ── Attempt 1 · 2026-09-08 ────────────────────────────────────────────",
             "    def jump(self, nums: List[int]) -> int:",
@@ -7606,8 +7606,8 @@
         {
           "kind": "attempt",
           "symbol": "MinStack",
-          "startLine": 83,
-          "endLine": 105,
+          "startLine": 106,
+          "endLine": 128,
           "lines": [
             "# ── Attempt 1 · 2026-08-12 ────────────────────────────────────────────",
             "class MinStack:",
@@ -8375,8 +8375,8 @@
         {
           "kind": "attempt",
           "symbol": "carFleet_20260829",
-          "startLine": 52,
-          "endLine": 86,
+          "startLine": 80,
+          "endLine": 114,
           "lines": [
             "    # ── Attempt · 2026-08-29 ──────────────",
             "    def carFleet_20260829(self, target: int, position: List[int], speed: List[int]) -> int:",

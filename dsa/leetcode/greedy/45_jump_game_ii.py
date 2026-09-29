@@ -25,10 +25,50 @@ Constraints:
 """
 # Write everything yourself from here — including any ListNode/TreeNode classes a
 # problem needs. No shared data-model imports (whiteboard fidelity).
+import math
 from typing import List, Optional
 
 
 class Solution:
+
+    # ── Attempt · 2026-09-28 ──────────────
+    def jump_20260928(self, nums: List[int]) -> int:
+        # min jump counter, so we do need to know how we are jumping
+        # we still follow a similar format
+        # i + nums[i] is our jump distance and we want to maximize it
+        # go through each node, go to the one with the highest jump potential
+
+        if len(nums) == 1:
+            return 0
+
+        jump_counter = 0
+
+        current_index = 0
+
+        def get_next_jump_point(input_index):
+            max_potential_index = input_index
+            max_potential = -math.inf 
+            current_index = input_index
+            while current_index < len(nums) and current_index <= input_index + nums[input_index]:
+                # print(f"{input_index}, {current_index}, {max_potential}")
+                new_potential = current_index + nums[current_index]
+                if new_potential >= max_potential:
+                    max_potential_index = current_index
+                    max_potential = new_potential
+                current_index+=1
+            return max_potential_index
+
+        while current_index < len(nums):
+            current_potential = current_index + nums[current_index]
+            # we are given that we are able to reach, so don't need to check for 0
+            # if potential passes len(nums), we can just return the jump + 1
+            if current_potential >= len(nums) - 1:
+                return jump_counter + 1
+            next_index = get_next_jump_point(current_index)
+            current_index = next_index
+            jump_counter+=1
+        
+        return jump_counter
 
     # ── Attempt · 2026-09-18 ──────────────
     def jump_20260918(self, nums: List[int]) -> int:

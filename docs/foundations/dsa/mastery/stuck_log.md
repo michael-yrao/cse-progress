@@ -2683,6 +2683,10 @@ one more jump") was coach-supplied. Complexity misread as O(n)/single-pass; corr
 space O(1). One coach-caught bug + a complexity correction ⟹ Shaky, no conversion. ⚠️ Owes an O(n)
 window-frontier re-teach (Waiting Room) — the linear framing didn't land this session.
 
+> **Correction 2026-09-28:** the O(n²) above was wrong. The `>=` farthest-reach pick puts each window's winner past the
+> previous window's end, so an index is read by at most 2 windows ⟹ **O(n)** (≤ 2n reads) with no reliance on the `nums[i]`
+> cap. The learner's O(n) bound was right; the why-clause is re-queued in `complexity_gotchas.md` (Sep 28 row).
+
 ### 2026-09-20 · 84 Largest Rectangle in Histogram · 🔴 → 🟡 (pure-execution re-rep, stronger than Fri)
 
 Recalled the whole skeleton cold — `-inf` sentinel flush, pop-on-decrease, height = popped bar, width `right-left-1` — all coach-built Fri, all theirs today. One nudge on the load-bearing piece: left boundary came back as `heightIndex-1` (self-flagged "something with width is messing me up"); a `[2,1,2]` trace (answer 3, not 2) surfaced it, learner corrected to `stack[-1]` and derived the why themselves (everything popped between `stack[-1]` and `i` was ≥ the popped bar, so it extends across them). Empty-stack `-1` idiom (`stack[-1] if stack else -1`) coach-supplied. Complexity clean both dims: amortized O(n) (each index pushed/popped once) / O(n) stack (increasing input holds all n). 🟡, no conversion off the 🔴→🟡 line — but the mechanism is closer to owned; the width left-boundary is the piece to watch on the Sep 30 re-rep.
@@ -2742,3 +2746,25 @@ Shape (yes/no reachability via `i + nums[i]`) was the learner's own; the techniq
 
 Backtracking named unaided with the five-slot comment. First version was the **take/skip template with an advancing index**, and the learner diagnosed its own failure ("I can't work backwards": a forward-only index can never place a later element before an earlier one). Coach-supplied on request: the reframe of `choice` from "use `nums[i]` or not" to "which number fills the next slot" (⟹ a `for` over all candidates, branching n, n−1, …), the observation that `path` alone can serve as state, and finally the pseudocode. Learner rejected the implicit-state version ("deviation from how we've been tackling backtracking") and wrote the explicit `used`-set version, correct first run on 4 cases (24/24 on n=4). Complexity: space O(n²) right and attributed (n frames × O(n) copies); time given as O(n!·n²), tightened to **O(n!·n)** — the two per-node copies add, they don't multiply (not carded: a tightening, not a category miss). Learner's own read: every prior backtracking rep was two calls (pick / not pick), so the **pick-next loop is the new shape**. Oct 5 watch item: **state the branching as "one call per remaining candidate" before coding**, and say what `used` is for.
 
+
+### 2026-09-28 · 40 Combination Sum II · 🆕 → 🔴 (backtracking intake, first attempt)
+
+The 5-slot template came back unaided (path / state = index / validity / take-or-skip / base case), take/skip form, with the take call moving the index — Sep 23's watch item (3) held. What didn't come back is **what makes 40 different from 39: the candidates repeat.** A `setState` of used indices stood in for dedup, but it never blocks anything (the index only moves forward) and it works on indices while the duplicates are *values*: `[1,7]` and `[7,1]` came out of `[10,1,2,7,6,1,5]`, one per copy of 1.
+
+- **Base-case order (coach-caught).** `index >= len` ran before `sum == target`, so any answer that used the last candidate was dropped (`[1,2]`, 3 → `[]`). The target check runs first: running out of candidates only fails a path that isn't already an answer.
+- **Dedup (coach-taught after two "no idea"s).** Decide once per *value*: sort so copies sit together; the take branch goes to `index + 1` (so `[1,1,6]` can take the next copy); the **skip branch jumps past every copy**. Sorting alone isn't enough — "take i0, skip i1" and "skip i0, take i1" still both build `[1,7]` on `[1,1,7]`.
+- **Loop direction (coach-caught).** The first skip loop compared with the element *behind* (`candidates[i-1]`): from the first copy it never moved, and from a later copy it stopped on the first different value and then `+ 1` stepped past it (`[1,1,1,7]`, 8 → `[]`). Fixed to look ahead:
+
+```python
+while indexState + 1 < len(candidates) and candidates[indexState] == candidates[indexState + 1]:
+    indexState += 1
+backtrack(path, indexState + 1)
+```
+
+- **Complexity (not rated, queued):** time O(n · 2ⁿ) right; space given O(n), actual O(n²) peak — every take frame keeps its own `path + [x]` copy.
+
+⚠️ **Sep 30 re-rep watch items:** (1) before coding, say whether the input can repeat and, if so, how equal values get decided once; (2) put the target check above the out-of-bounds check; (3) the skip loop compares with the *next* element and stops on the last copy.
+
+### 2026-09-28 · 853 Car Fleet · 🟢 s1 → 🟡 (decay after a month)
+
+Sticking point: **comparing each car against the fleet ahead.** Sort by position (descending) and time-to-target were unaided; the stack step — compare `time_to_target` with `fleet[-1]` and push only when strictly slower (otherwise it catches up and joins) — needed an outside hint. Code correct after. Complexity: time O(n log n) (sort dominates) right; space O(n) right but attributed to the sort alone with "the rest is smaller" — the pairs array and the `fleet` stack are each O(n) too (not carded: bound right, a named contributor correct). Watch item: **say what the stack holds and when a car starts a new fleet, before coding.**

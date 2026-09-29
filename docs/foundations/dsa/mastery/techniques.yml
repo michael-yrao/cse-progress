@@ -874,10 +874,10 @@ techniques:
       - {number: 22}
       - {number: 39}
       - {number: 46}
+      - {number: 40}   # take/skip with duplicate values: sort, skip branch jumps past every copy (Sep 28, 2026)
       # Declared Sep 26, 2026 (decision `mastery-ratio-done-over-planned-sep26`) —
       # roadmap.yml. 212 is ALSO declared under Trie above (dual credit).
       - {number: 90, queued: "phase:Backtracking"}
-      - {number: 40, queued: "phase:Backtracking"}
       - {number: 79, queued: "phase:Backtracking"}
       - {number: 131, queued: "phase:Backtracking"}
       - {number: 17, queued: "phase:Backtracking"}
