@@ -4573,7 +4573,7 @@
         "date": "2026-09-30",
         "weekday": "Wednesday",
         "label": "Monotonic-stack + Backtracking conversions + Backtracking intake (131) + Hash-set review",
-        "units": 7.9,
+        "units": 10.9,
         "items": [
           {
             "lcNumber": 40,
@@ -4660,7 +4660,7 @@
         "date": "2026-10-01",
         "weekday": "Thursday",
         "label": "Backtracking intake (90) + Bellman-Ford intake (9001) + Backtracking/Stack/Hash-set reviews",
-        "units": 7.9,
+        "units": 7.4,
         "items": [
           {
             "lcNumber": 90,
@@ -4921,7 +4921,7 @@
         "date": "2026-10-04",
         "weekday": "Sunday",
         "label": null,
-        "units": 7.6,
+        "units": 8.1,
         "items": [
           {
             "lcNumber": 9003,
@@ -5133,17 +5133,17 @@
             "nextReview": null
           },
           {
-            "lcNumber": 2,
-            "title": "cold complexity probes on mature 🟢/🎓 problems (picked at the close-out)",
-            "technique": null,
+            "lcNumber": null,
+            "title": "Two cold complexity probes on mature 🟢/🎓 problems (picked at the close-out)",
+            "technique": "Complexity",
             "startComfort": null,
-            "difficulty": "Medium",
-            "url": "https://leetcode.com/problems/add-two-numbers/",
-            "file": "dsa/leetcode/linked_list/2_add_two_numbers.py",
+            "difficulty": null,
+            "url": null,
+            "file": null,
             "tags": [
               "probe"
             ],
-            "kind": "probe",
+            "kind": "complexity",
             "done": false,
             "endComfort": null,
             "endNote": null,
@@ -5311,16 +5311,16 @@
     {
       "date": "2026-09-01",
       "planned": 8.0,
-      "done": 6.3,
-      "built": 6.3,
-      "partial": true
+      "done": 7.1,
+      "built": 7.1,
+      "partial": false
     },
     {
       "date": "2026-09-02",
       "planned": 6.0,
-      "done": 5.3,
-      "built": 5.3,
-      "partial": true
+      "done": 5.7,
+      "built": 5.7,
+      "partial": false
     },
     {
       "date": "2026-09-03",
@@ -5332,9 +5332,9 @@
     {
       "date": "2026-09-04",
       "planned": 6.5,
-      "done": 5.9,
-      "built": 5.9,
-      "partial": true
+      "done": 6.7,
+      "built": 6.7,
+      "partial": false
     },
     {
       "date": "2026-09-05",
@@ -5367,16 +5367,16 @@
     {
       "date": "2026-09-09",
       "planned": 9.0,
-      "done": 9.0,
-      "built": 9.0,
-      "partial": true
+      "done": 9.9,
+      "built": 9.9,
+      "partial": false
     },
     {
       "date": "2026-09-10",
       "planned": 7.8,
       "done": 3.0,
       "built": 7.6,
-      "partial": true
+      "partial": false
     },
     {
       "date": "2026-09-11",
@@ -5493,9 +5493,9 @@
     {
       "date": "2026-09-27",
       "planned": 8.9,
-      "done": 8.3,
-      "built": 8.9,
-      "partial": true
+      "done": 11.3,
+      "built": 11.9,
+      "partial": false
     },
     {
       "date": "2026-09-28",
@@ -5508,43 +5508,43 @@
       "date": "2026-09-29",
       "planned": 7.7,
       "done": 0.0,
-      "built": 4.7,
-      "partial": true
+      "built": 7.7,
+      "partial": false
     },
     {
       "date": "2026-09-30",
-      "planned": 7.9,
+      "planned": 10.9,
       "done": 0.0,
-      "built": 7.9,
-      "partial": true
+      "built": 10.9,
+      "partial": false
     },
     {
       "date": "2026-10-01",
-      "planned": 7.9,
+      "planned": 7.4,
       "done": 0.0,
-      "built": 2.9,
-      "partial": true
+      "built": 7.4,
+      "partial": false
     },
     {
       "date": "2026-10-02",
       "planned": 7.9,
       "done": 0.0,
-      "built": 4.9,
-      "partial": true
+      "built": 7.9,
+      "partial": false
     },
     {
       "date": "2026-10-03",
       "planned": 7.9,
       "done": 0.0,
-      "built": 4.0,
-      "partial": true
+      "built": 7.9,
+      "partial": false
     },
     {
       "date": "2026-10-04",
-      "planned": 7.6,
+      "planned": 8.1,
       "done": 0.0,
-      "built": 3.6,
-      "partial": true
+      "built": 8.1,
+      "partial": false
     }
   ],
   "effortCeiling": 8.0,

@@ -1584,3 +1584,12 @@ decisions:
       policy (ceiling, unpriced rows, never raising the ceiling) stays in
       `cse-coach/references/effort-budget.md`.
     affects: [effort-budget]
+
+  - id: every-coded-row-priced-sep29
+    date: 2026-09-29
+    summary: >-
+      Every row where the learner writes code is priced: a bare-number 🆕 or 🎯 row now parses its
+      number, and its difficulty comes from the tracker, its Waiting Room tables, roadmap.yml or
+      the probe pool, in that order. A day header equals the script's `built`, and "header
+      matches" never prints while a row is unpriced. Complexity re-asks stay at 0.
+    affects: [effort-budget]

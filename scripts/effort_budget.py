@@ -80,9 +80,44 @@ GLYPH = re.compile(r"[🔴🟡🟢🎓]")
 # fall through to the tracker's comfort, which by pricing time is what the row EARNED
 # from today's rep, not what it cost to start. A 🆕 row must always bill as Blank.
 NEW_GLYPH = "🆕"
+# A 🎯 Start cell means the row is a RECOGNITION PROBE on a problem with no tracker row
+# yet -- untracked and never repped, so it must bill Blank the same way an untracked 🆕
+# row does (see price_day_items()). A 🎯 row that IS already tracked is a cold re-ask on
+# something already seen, not a fresh exposure, and keeps the ordinary tracked pricing.
+PROBE_GLYPH = "🎯"
 # A row whose Technique cell is "Complexity" is a cold re-ask of time/space on code that
 # already exists, not a rep -- see is_complexity_technique() and price_day_items().
 TECHNIQUE_COMPLEXITY = "complexity"
+
+# A bare-number row has no `[`/`**` before its digits at all -- a 🆕 intake or 🎯 probe row
+# written `🆕 79 Word Search` rather than `🆕 [79 Word Search](...)`. SCHED_NUM alone cannot
+# find such a number (Sep 29, 2026: 79 and 452 were going UNPRICED for exactly this
+# reason), so sched_row_number() below falls back to the leading digits of the row's
+# tag-stripped title. This tag vocabulary mirrors gamify.py's own _SCHEDULE_TAGS -- kept as
+# a separate copy here rather than imported, because gamify.py imports effort_budget, not
+# the other way around.
+_SCHED_ROW_TAGS = "⚠️🔥🆕🎯⚙️🔤→"
+_LEADING_SCHED_TAGS = re.compile(rf"^[{re.escape(_SCHED_ROW_TAGS)}\s]+")
+_LEADING_SCHED_DIGITS = re.compile(r"^\s*(\d+)\b")
+
+
+def sched_row_number(cell: str, text: str) -> str | None:
+    """The problem number named by one schedule row's Problem cell.
+
+    SCHED_NUM first -- a `[` or `**` immediately before the digits, the shape almost every
+    row has. Falls back to the leading digits of `text` (the link-unwrapped,
+    `~~`/`**`-stripped title parse_schedule_day() already builds) once its leading tag
+    glyph is stripped, for a bare-number row SCHED_NUM cannot see at all.
+
+    Shared with gamify.py's _schedule_item_lc_number(), which delegates here so pricing
+    and the dashboard never disagree on which number a row names.
+    """
+    num = SCHED_NUM.search(cell)
+    if num:
+        return num.group(1)
+    stripped = _LEADING_SCHED_TAGS.sub("", text)
+    fallback = _LEADING_SCHED_DIGITS.match(stripped)
+    return fallback.group(1) if fallback else None
 
 
 def is_complexity_technique(technique: str | None) -> bool:
@@ -369,8 +404,8 @@ def parse_schedule_day(path: Path, day: dt.date) -> tuple[list[dict], float | No
     """Pull one day's block out of a weekly schedule's daily table.
 
     Returns (items, stated_units). Each item carries the problem number, the START
-    comfort glyph as written at build time, whether that Start cell was 🆕 (is_new --
-    see NEW_GLYPH), and whether the row is struck through.
+    comfort glyph as written at build time, whether that Start cell was 🆕 or 🎯
+    (is_new/is_probe -- see NEW_GLYPH/PROBE_GLYPH), and whether the row is struck through.
 
     The START column is the whole point of this function. It is written once, at the
     weekly build, and never mutated -- so it survives a rep being logged, which the
@@ -416,7 +451,6 @@ def parse_schedule_day(path: Path, day: dt.date) -> tuple[list[dict], float | No
         cell = m["c1"]
         if not cell.strip() or set(cell.strip()) <= {"-", ":"}:
             continue           # blank separator row, or a markdown rule
-        num = SCHED_NUM.search(cell)
         glyph = GLYPH.search(m["c2"] or "")
         streak_m = re.search(r"s(\d+)", m["c2"] or "")
         text = re.sub(r"\[([^\]]*)\]\([^)]*\)", r"\1", cell)
@@ -424,9 +458,12 @@ def parse_schedule_day(path: Path, day: dt.date) -> tuple[list[dict], float | No
         # wraps the LINK (`~~[496 ...](...)~~ · [LC](...)`), so trailing-only stripping
         # leaves a stray `~~` in the middle of the printed title.
         text = re.sub(r"~~|\*\*", "", text)
+        # text is computed before the number so sched_row_number()'s bare-number fallback
+        # can read off this same tag-stripped, link-unwrapped string.
+        num = sched_row_number(cell, text)
         start_glyph = glyph.group(0) if glyph else None
         items.append({
-            "num": num.group(1) if num else None,
+            "num": num,
             "start": start_glyph,
             # A 🟢 Start cell with no `sN` carries no streak -- None, not 0, so
             # price_day_items() can tell "streak zero" from "streak unknown" and
@@ -434,11 +471,91 @@ def parse_schedule_day(path: Path, day: dt.date) -> tuple[list[dict], float | No
             "start_streak": (int(streak_m.group(1)) if streak_m
                              else None if start_glyph == "🟢" else 0),
             "is_new": NEW_GLYPH in (m["c2"] or ""),
+            "is_probe": PROBE_GLYPH in (m["c2"] or ""),
             "is_complexity": is_complexity_technique(m["c5"]),
             "done": "~~" in cell,
             "text": re.sub(r"\s+", " ", text).strip(" ·*"),
         })
     return items, stated
+
+
+# Any OTHER table row in the tracker file shaped `| Easy|Medium|Hard | [N. Title](url) |
+# ...` -- the Waiting Room and Knowledge Expansion Queue tables, e.g. The tracker's OWN
+# review rows (ROW) share this same leading shape, so this also matches those -- harmless,
+# because source (a) (parse_rows(), the caller's `rows`) is always tried first and a
+# number found there never reaches this fallback.
+DIFFICULTY_TABLE_ROW = re.compile(
+    r"^\|\s*(?P<diff>Easy|Medium|Hard)\s*\|\s*\[(?P<num>\d+)\.\s*[^\]]*\]\([^)]*\)\s*\|",
+    re.MULTILINE)
+
+ROADMAP_YML = REPO / "docs/foundations/dsa/mastery/roadmap.yml"
+PROBE_POOL = REPO / "dsa/probes/README.md"
+# A queued-probe-candidate row: `| **452 Minimum ... Balloons** (Medium) | Technique | ...`
+PROBE_POOL_ROW = re.compile(r"\*\*(?P<num>\d+)\s+[^*]*\*\*\s*\((?P<diff>Easy|Medium|Hard)\)")
+
+
+def _tracker_table_difficulty() -> dict[str, str]:
+    """num -> difficulty from any OTHER table row in the tracker file (DIFFICULTY_TABLE_ROW
+    above). First occurrence wins. Source (b) in lookup_untracked_difficulty()'s order."""
+    out: dict[str, str] = {}
+    for m in DIFFICULTY_TABLE_ROW.finditer(TRACKER.read_text(encoding="utf-8")):
+        out.setdefault(m["num"], m["diff"])
+    return out
+
+
+def _roadmap_difficulty() -> dict[str, str]:
+    """num -> difficulty from roadmap.yml's `problems:` entries. Source (c). Tolerant like
+    load_config(): a missing file or missing PyYAML degrades to {}, never raises -- a
+    catalog that cannot be read is a normal state, not a reason to stop pricing a day."""
+    try:
+        import yaml  # noqa: PLC0415
+        config = yaml.safe_load(ROADMAP_YML.read_text(encoding="utf-8")) or {}
+    except Exception:  # noqa: BLE001 -- a missing/unparsable roadmap is a normal state
+        return {}
+    return {str(p["number"]): p["difficulty"] for p in config.get("problems") or []
+            if p.get("number") is not None and p.get("difficulty")}
+
+
+def _probe_pool_difficulty() -> dict[str, str]:
+    """num -> difficulty from dsa/probes/README.md's queued-candidate rows. Source (d)."""
+    if not PROBE_POOL.is_file():
+        return {}
+    out: dict[str, str] = {}
+    for m in PROBE_POOL_ROW.finditer(PROBE_POOL.read_text(encoding="utf-8")):
+        out.setdefault(m["num"], m["diff"])
+    return out
+
+
+def lookup_untracked_difficulty(num: str) -> tuple[str, bool]:
+    """Difficulty for a schedule row's problem NUMBER that has no row among the tracker's
+    own review rows (parse_rows() -- source (a), checked by the caller before this is ever
+    called). Tries, in order: (b) any other tracker-file table row shaped
+    `| Easy|Medium|Hard | [N. Title](url) | ...`, (c) roadmap.yml's `problems:` entries,
+    (d) dsa/probes/README.md's queued-candidate rows. Returns (difficulty, guessed) --
+    guessed is True only when none of (b)/(c)/(d) name the number, in which case the
+    difficulty is the honest guess ("Medium"), flagged so the day's total is not silently
+    understated.
+    """
+    for source in (_tracker_table_difficulty(), _roadmap_difficulty(),
+                   _probe_pool_difficulty()):
+        if num in source:
+            return source[num], False
+    return "Medium", True
+
+
+def _bill_blank(num: str, cfg: dict) -> tuple[float, str, bool]:
+    """Blank (🔴) pricing for an UNTRACKED numbered row: zero prior attempts, difficulty
+    from lookup_untracked_difficulty(). Shared by price_day_items()'s two untracked-row
+    branches (an intake row and a plain untracked row) so the note wording and the
+    guessed-bucket bookkeeping cannot drift apart between them.
+
+    Returns (cost, note, guessed).
+    """
+    diff, guess = lookup_untracked_difficulty(num)
+    cost = price("🔴", 0, diff, 0, cfg)
+    if guess:
+        return cost, "NEW !! untracked -- guessed as a new Blank Medium", True
+    return cost, f"NEW {diff[0]} (untracked; difficulty from the queue/roadmap/probe pool)", False
 
 
 def price_day_items(day: dt.date, items: list[dict], rows: list[dict], cfg: dict) -> dict:
@@ -461,57 +578,67 @@ def price_day_items(day: dt.date, items: list[dict], rows: list[dict], cfg: dict
     unpriced: list[str] = []
 
     for it in items:
-        if not it["num"]:
-            unpriced.append(it["text"][:62])
-            continue
-        tracked = by_num.get(it["num"])
         if it.get("is_complexity"):
             # Learner's decision (Sep 28, 2026): a complexity re-ask costs 0 units -- it
-            # is a cold re-ask on code that already exists, not a rep of the problem.
+            # is a cold re-ask on code that already exists, not a rep of the problem. This
+            # runs BEFORE the missing-number check below: the Sunday close-out's "N cold
+            # complexity probes ..." row carries no problem number at all and must still
+            # price 0 rather than land in `unpriced` (Sep 29, 2026).
             cost = 0.0
             note = "🎯 complexity re-ask -- unpriced by design"
-        elif it["start"] and tracked:
-            # START comfort + streak (build time) x difficulty (a stable property). Attempt
-            # count is the familiarity GOING IN: attempts strictly before this day, joined
-            # from the tracker's Rep Dates — so day-as-built pricing bills the row's state
-            # at build, not what later reps added.
-            diff = tracked[0]["diff"]
-            attempts = attempt_count(tracked[0].get("reps"), before=day)
-            if it["start"] == "🟢" and it["start_streak"] is None:
-                # A bare 🟢 Start cell (see parse_schedule_day()) has no recorded streak.
-                # Streak 0 is the most expensive 🟢 price, so pricing it there can only
-                # OVERSTATE the row. Price at s0 (an upper bound) but say so, rather than
-                # let it read the same as a genuine streak-0 row (Sep 28, 2026: 25 bare
-                # cells read Monday as "8.0, header matches" when the build's own basis
-                # was 7.4).
-                streakless += 1
-                cost = price("🟢", 0, diff, attempts, cfg)
-                note = (f"🟢 s? {diff[0]} !! no streak in the Start cell -- "
-                        f"priced as s0 (the highest 🟢 price)")
-            else:
-                cost = price(it["start"], it["start_streak"], diff, attempts, cfg)
-                streak_tag = f" s{it['start_streak']}" if it["start"] == "🟢" else ""
-                note = f"{it['start']}{streak_tag} {diff[0]}"
-        elif it.get("is_new"):
-            # 🆕 means unseen going in: bill Blank (🔴), zero prior attempts, regardless
-            # of what the tracker shows now -- see NEW_GLYPH. Only the difficulty is worth
-            # reading from the tracker when a row exists; there is no start comfort to read.
-            diff = tracked[0]["diff"] if tracked else "Medium"
-            cost = price("🔴", 0, diff, 0, cfg)
-            if tracked:
-                note = f"NEW {diff[0]}"
-            else:
-                note = "NEW !! untracked -- guessed as a new Blank Medium"
-                guessed += 1
-        elif tracked:
-            worst = max(tracked, key=lambda r: units(r, cfg))
-            cost = units(worst, cfg)
-            note = f"{label(worst)} !! no Start glyph -- priced from the tracker"
+        elif not it["num"]:
+            unpriced.append(it["text"][:62])
+            continue
         else:
-            cost = cfg["comfort_units"]["\U0001f534"] * cfg["difficulty"]["Medium"]
-            note = "NEW !! untracked -- guessed as a new Blank Medium"
-            guessed += 1
-        line = f"  {it['num']:>5}  {cost:4.1f}  {note}  {it['text'][:44]}"
+            tracked = by_num.get(it["num"])
+            # 🆕 OR 🎯 in the Start cell means unseen going in: a first exposure (🆕) or a
+            # recognition probe with nothing tracked yet (🎯) -- see NEW_GLYPH/PROBE_GLYPH.
+            is_intake = it.get("is_new") or it.get("is_probe")
+            if it["start"] and tracked:
+                # START comfort + streak (build time) x difficulty (a stable property).
+                # Attempt count is the familiarity GOING IN: attempts strictly before this
+                # day, joined from the tracker's Rep Dates — so day-as-built pricing bills
+                # the row's state at build, not what later reps added.
+                diff = tracked[0]["diff"]
+                attempts = attempt_count(tracked[0].get("reps"), before=day)
+                if it["start"] == "🟢" and it["start_streak"] is None:
+                    # A bare 🟢 Start cell (see parse_schedule_day()) has no recorded
+                    # streak. Streak 0 is the most expensive 🟢 price, so pricing it there
+                    # can only OVERSTATE the row. Price at s0 (an upper bound) but say so,
+                    # rather than let it read the same as a genuine streak-0 row (Sep 28,
+                    # 2026: 25 bare cells read Monday as "8.0, header matches" when the
+                    # build's own basis was 7.4).
+                    streakless += 1
+                    cost = price("🟢", 0, diff, attempts, cfg)
+                    note = (f"🟢 s? {diff[0]} !! no streak in the Start cell -- "
+                            f"priced as s0 (the highest 🟢 price)")
+                else:
+                    cost = price(it["start"], it["start_streak"], diff, attempts, cfg)
+                    streak_tag = f" s{it['start_streak']}" if it["start"] == "🟢" else ""
+                    note = f"{it['start']}{streak_tag} {diff[0]}"
+            elif is_intake and tracked:
+                # Bill Blank (🔴) regardless of what the tracker shows now -- see
+                # NEW_GLYPH/PROBE_GLYPH. Only the difficulty is worth reading from the
+                # tracker when a row exists; there is no start comfort to read.
+                diff = tracked[0]["diff"]
+                cost = price("🔴", 0, diff, 0, cfg)
+                note = f"NEW {diff[0]}"
+            elif is_intake:
+                # Untracked 🆕/🎯 row: same Blank billing, but the difficulty has to come
+                # from somewhere other than a tracker row that doesn't exist yet.
+                cost, note, guess = _bill_blank(it["num"], cfg)
+                if guess:
+                    guessed += 1
+            elif tracked:
+                worst = max(tracked, key=lambda r: units(r, cfg))
+                cost = units(worst, cfg)
+                note = f"{label(worst)} !! no Start glyph -- priced from the tracker"
+            else:
+                cost, note, guess = _bill_blank(it["num"], cfg)
+                if guess:
+                    guessed += 1
+        num_label = it["num"] or "—"
+        line = f"  {num_label:>5}  {cost:4.1f}  {note}  {it['text'][:44]}"
         if it["done"]:
             done_total += cost
             done_lines.append(line)
@@ -603,12 +730,16 @@ def price_schedule_day(day: dt.date, rows: list[dict], cfg: dict) -> None:
     # agreement this parser cannot actually vouch for.
     if stated is None:
         print("  !! the day header states no unit total -- add it so it can be checked")
-    elif abs(stated - built) <= 0.05 and not streakless:
-        print(f"  header says {stated:.1f} -- matches")
     elif partial or streakless:
+        # partial/streakless is checked BEFORE the "matches" comparison below, not after:
+        # a guessed or unpriced row's cost can coincidentally land the totals within 0.05
+        # of each other, and "matches" must never print while that is true (Sep 29, 2026 --
+        # a day with unpriced/guessed rows still read "header says X -- matches").
         print(f"  header says {stated:.1f}, priced rows sum to {built:.1f} "
               f"(difference {stated - built:+.1f}) -- CANNOT VERIFY while rows are "
               f"unpriced or guessed. Check that difference is what those rows are worth.")
+    elif abs(stated - built) <= 0.05:
+        print(f"  header says {stated:.1f} -- matches")
     else:
         print(f"  !! HEADER SAYS {stated:.1f}, rows sum to {built:.1f} -- every row "
               f"priced exactly, so one of them is wrong")

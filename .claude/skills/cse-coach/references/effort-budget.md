@@ -1,4 +1,4 @@
-<!-- reconciled: 2026-09-28 -->
+<!-- reconciled: 2026-09-29 -->
 # Daily load is an effort budget, not a problem count
 
 **Open this** at the weekly build, before accepting any overflow pull, and when re-pricing
@@ -33,6 +33,10 @@ still decides how many SD slots a week gets (placed at the weekly build); only t
 A row whose Technique is `Complexity` is a cold re-ask of time and space on code that already
 exists, not a rep. It adds 0 units, and `--schedule-day` lists it at 0.0.
 `decisions.yml` `complexity-reask-unpriced`.
+
+## Every coded row is priced (Sep 29, 2026)
+
+A row where the learner writes code is priced by the script. That covers a review, a 🆕 intake and a 🎯 recognition probe. A row the script cannot price is a defect in the row, such as a missing number or difficulty. Fix the row; don't estimate it. Complexity re-asks, including the close-out's cold complexity probes, write no code and stay at 0.
 
 ## The ceiling is the daily goal (Sep 28, 2026)
 

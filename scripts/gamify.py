@@ -438,26 +438,15 @@ def _schedule_item_kind(technique: str | None, tags: list[str]) -> str:
     return KIND_REP
 
 
-_LEADING_SCHED_NUM = re.compile(r"^\s*(\d+)\b")
-
-
 def _schedule_item_lc_number(cell: str, text: str) -> int | None:
-    """lcNumber for one schedule item: eb.SCHED_NUM first (the same parse effort_budget.py
-    prices with, so pricing and the dashboard never disagree on the common case), then a
-    fallback for a bare-number 🆕 intake row, which has no `[`/`**` before its number for
-    SCHED_NUM to find (by design — see effort_budget.py; that miss is fine for PRICING,
-    which only needs to know a row exists, not its number).
+    """lcNumber for one schedule item.
 
-    The fallback reads off `text` — the tag-stripped, link-unwrapped title string
-    _clean_schedule_title also starts from — so a leading tag glyph never gets misread as
-    part of the number.
+    Delegates to eb.sched_row_number() (the bare-number fallback moved there Sep 29,
+    2026, so pricing and the dashboard parse a bare-number row's number exactly the same
+    way — behaviour here is unchanged).
     """
-    num = eb.SCHED_NUM.search(cell)
-    if num:
-        return int(num.group(1))
-    stripped = _LEADING_TAGS.sub("", text)
-    fallback = _LEADING_SCHED_NUM.match(stripped)
-    return int(fallback.group(1)) if fallback else None
+    num = eb.sched_row_number(cell, text)
+    return int(num) if num else None
 
 
 _ROW_OWN_LC_URL = re.compile(r"\[LC\]\((https?://[^)]+)\)")

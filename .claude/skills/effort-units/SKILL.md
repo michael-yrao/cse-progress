@@ -8,7 +8,7 @@ description: >-
   checking the dashboard's workload numbers. Every number comes from
   scripts/effort_budget.py in one named mode — never hand-computed.
 ---
-<!-- reconciled: 2026-09-28 -->
+<!-- reconciled: 2026-09-29 -->
 # effort-units — every effort number from one script, on one basis
 
 The unit model, the weights and the policy live elsewhere: the policy (the ceiling is the
@@ -20,9 +20,8 @@ producing a number. It never restates a weight.
 ## Three rules
 
 1. **The script prices.** Every unit figure you state comes from a
-   `python scripts/effort_budget.py` run in this turn. The one sum you may write is a day
-   header's `built` + your estimate for rows the script cannot price, and you say which part
-   is the estimate.
+   `python scripts/effort_budget.py` run in this turn. A day header equals the script's
+   `built`. There are no estimates.
 2. **One mode per answer.** Name the mode next to every number ("7.4, `--schedule-day`").
    Never compare, add or subtract numbers from two modes.
 3. **A row bills the comfort it carried going in.** A day's cost is fixed at the build. A rep
@@ -47,10 +46,10 @@ moving between days.
 1. **Start cell.** Moving: carry the Start cell verbatim. Adding: write it from the tracker —
    the comfort going in, with the streak on a 🟢 (`🟢 s2`), or `🆕` for an unseen problem.
 2. **Make the edit.** Every day it touches gets its header updated in the same edit.
-3. **Price each touched day** with `--schedule-day`. Set the header to `built` when the script
-   priced every row; otherwise to `built` + your estimate for the unpriced rows, stated as one.
-4. **Re-run and read the check.** It reads `matches`, or `CANNOT VERIFY` with a difference
-   equal to your estimate. Anything else, fix the header or the row.
+3. **Price each touched day** with `--schedule-day` and set the header to `built`.
+4. **Re-run and read the check.** It must read `matches`. `CANNOT VERIFY` means a row is
+   unpriced or guessed: fix the row (its number, its difficulty, its Start cell), not the
+   header.
 
 ## Reading the output
 
@@ -58,8 +57,8 @@ moving between days.
 |---|---|---|
 | `header says X -- matches` | every row priced; the header agrees | nothing |
 | `!! HEADER SAYS X, rows sum to Y` | every row priced; the header is wrong | set the header to Y |
-| `CANNOT VERIFY` | some rows unpriced, guessed, or missing a streak | check the difference is what those rows are worth |
-| `LOWER BOUND` / `FLOOR` | unpriced rows are missing from the total | the day costs more than the total |
+| `CANNOT VERIFY` | some rows unpriced, guessed, or missing a streak | fix the row |
+| `LOWER BOUND` / `FLOOR` | unpriced rows are missing from the total | fix the row |
 | `no streak in the Start cell` | a 🟢 row priced at streak 0, the highest 🟢 price | write the streak into the Start cell (`🟢 sN`) |
 
 The last row exists because of Sep 28, 2026: 25 🟢 Start cells had lost their streak, and

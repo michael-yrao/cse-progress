@@ -1365,6 +1365,158 @@ class BuildWorkloadTests(unittest.TestCase):
         self.assertEqual(by_num["601"]["start_streak"], 1)
         self.assertIsNone(by_num["602"]["start_streak"])
 
+    def test_parse_schedule_day_bare_number_fallback(self):
+        """A 🆕 or 🎯 row written as bare digits -- no `[`/`**` before the number, e.g.
+        `🆕 79 Word Search` rather than `🆕 [79 Word Search](...)` -- still parses its
+        number, via sched_row_number()'s fallback (Sep 29, 2026: SCHED_NUM alone found
+        nothing for either tag, and both rows went UNPRICED). The close-out's cold-probe
+        row (Technique `Complexity`, no digits anywhere in its cell) parses num=None --
+        it has no leading digits to fall back to either."""
+        fixture = (
+            "## Daily Schedule\n\n"
+            "| Problem | S | E | Next | Technique |\n"
+            "|---|:-:|:-:|:-:|---|\n"
+            "| ▸ **Mon Aug 10** · 2.0 units — Bare-number test day |  |  |  |  |\n"
+            "| 🆕 79 Word Search · [LC](https://leetcode.com/problems/word-search/)"
+            " | 🆕 | | | Backtracking |\n"
+            "| 🎯 452 Minimum Number of Arrows to Burst Balloons | 🎯 | | | Probe |\n"
+            "| 🎯 Two cold complexity probes on mature 🟢/🎓 problems (picked at the close-out)"
+            " |  |  |  | Complexity |\n"
+            "| |  |  |  |  |\n"
+        )
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "20260810_schedule.md"
+            path.write_text(fixture, encoding="utf-8")
+            items, _ = eb.parse_schedule_day(path, dt.date(2026, 8, 10))
+        self.assertEqual(len(items), 3)
+        new_row, probe_row, complexity_row = items
+        self.assertEqual(new_row["num"], "79")
+        self.assertTrue(new_row["is_new"])
+        self.assertEqual(probe_row["num"], "452")
+        self.assertTrue(probe_row["is_probe"])
+        self.assertIsNone(complexity_row["num"])
+        self.assertTrue(complexity_row["is_complexity"])
+
+    def test_price_day_items_complexity_row_with_no_number_prices_zero_not_unpriced(self):
+        """A Complexity-technique row with no problem number (the close-out's cold-probe
+        row) must price 0 and be left OUT of `unpriced` -- the is_complexity check has to
+        run before the missing-number check (Sep 29, 2026 fix), or it lands there and is
+        double-counted as a partial/guessed row it never was."""
+        cfg = {"comfort_units": {"🔴": 3.0}, "difficulty": {"Medium": 1.0}}
+        item = {"num": None, "start": None, "start_streak": 0, "is_new": False,
+                "is_probe": False, "is_complexity": True, "done": False,
+                "text": "Two cold complexity probes on mature problems"}
+        priced = eb.price_day_items(dt.date(2026, 8, 10), [item], [], cfg)
+        self.assertAlmostEqual(priced["built"], 0.0)
+        self.assertEqual(priced["unpriced"], [])
+        self.assertEqual(priced["guessed"], 0)
+
+
+class UntrackedDifficultyLookupTests(unittest.TestCase):
+    """price_day_items()'s difficulty lookup for a numbered row with no tracker review row
+    (parse_rows() -- source (a), a caller-level check via the `rows` param) tries, in
+    order: (b) any other tracker-file table row shaped `| Easy|Medium|Hard |
+    [N. Title](url) | ...`, (c) roadmap.yml's `problems:` entries, (d)
+    dsa/probes/README.md's queued-candidate rows, then falls back to Medium + guessed.
+    One number lives in exactly each source (never live repo files) so each precedence
+    step is pinned on its own."""
+
+    CFG = {"comfort_units": {"🔴": 3.0}, "difficulty": {"Easy": 0.5, "Medium": 1.0, "Hard": 1.3}}
+
+    def setUp(self):
+        self._tmpdir = tempfile.TemporaryDirectory()
+        tmp = Path(self._tmpdir.name)
+        self._orig_tracker, self._orig_roadmap, self._orig_probes = (
+            eb.TRACKER, eb.ROADMAP_YML, eb.PROBE_POOL)
+        # 802 lives ONLY here (source b) -- 803/804/805 are absent from this table.
+        eb.TRACKER = tmp / "dsa_progress.md"
+        eb.TRACKER.write_text(
+            "| Medium | [802. Waiting Room Widget](https://leetcode.com/problems/x/) "
+            "| `surplus>=1` | notes |\n", encoding="utf-8")
+        # 803 lives ONLY here (source c).
+        eb.ROADMAP_YML = tmp / "roadmap.yml"
+        eb.ROADMAP_YML.write_text(
+            'problems:\n  - {number: 803, title: "Widget", url: "https://x", '
+            'difficulty: Easy}\n', encoding="utf-8")
+        # 804 lives ONLY here (source d).
+        eb.PROBE_POOL = tmp / "probes_readme.md"
+        eb.PROBE_POOL.write_text(
+            "| **804 Some Probe Widget** (Hard) | Technique | Trigger | Why |\n",
+            encoding="utf-8")
+
+    def tearDown(self):
+        eb.TRACKER, eb.ROADMAP_YML, eb.PROBE_POOL = (
+            self._orig_tracker, self._orig_roadmap, self._orig_probes)
+        self._tmpdir.cleanup()
+
+    @staticmethod
+    def _intake_item(num):
+        return {"num": num, "start": None, "start_streak": 0, "is_new": True,
+                "is_probe": False, "is_complexity": False, "done": False, "text": num}
+
+    def test_each_source_in_precedence_order_and_the_not_found_fallback(self):
+        day = dt.date(2026, 8, 10)
+        cases = [
+            ("(a) the tracker's own review rows", "801",
+             [_row(801, "🟢", 2, diff="Hard")], 3.9, 0),
+            ("(b) another tracker-file table row", "802", [], 3.0, 0),
+            ("(c) roadmap.yml", "803", [], 1.5, 0),
+            ("(d) the probe pool", "804", [], 3.9, 0),
+            ("not found -> Medium, guessed", "805", [], 3.0, 1),
+        ]
+        for name, num, rows, expected_cost, expected_guessed in cases:
+            with self.subTest(name):
+                priced = eb.price_day_items(day, [self._intake_item(num)], rows, self.CFG)
+                self.assertAlmostEqual(priced["built"], expected_cost)
+                self.assertEqual(priced["guessed"], expected_guessed)
+
+
+class PriceScheduleDayHeaderCheckTests(unittest.TestCase):
+    """price_schedule_day()'s header-vs-rows check must never print 'matches' while a row
+    is unpriced or guessed, even when the totals happen to agree numerically (Sep 29,
+    2026: a day with a guessed row still read 'header says X -- matches')."""
+
+    CFG = {"comfort_units": {"🔴": 3.0, "🟡": 2.0}, "difficulty": {"Medium": 1.0}, "ceiling": 8.0}
+
+    def setUp(self):
+        self._tmpdir = tempfile.TemporaryDirectory()
+        tmp = Path(self._tmpdir.name)
+        self._orig_schedules = eb.SCHEDULES
+        self._orig_tracker, self._orig_roadmap, self._orig_probes = (
+            eb.TRACKER, eb.ROADMAP_YML, eb.PROBE_POOL)
+        eb.SCHEDULES = tmp
+        eb.TRACKER = tmp / "dsa_progress.md"
+        eb.TRACKER.write_text("", encoding="utf-8")               # no rows anywhere
+        eb.ROADMAP_YML = tmp / "roadmap.yml"
+        eb.ROADMAP_YML.write_text("problems: []\n", encoding="utf-8")
+        eb.PROBE_POOL = tmp / "probes_readme.md"
+        eb.PROBE_POOL.write_text("", encoding="utf-8")
+        # The header states exactly what the untracked row below guesses to (Blank
+        # Medium = 3.0 under CFG) -- the numeric coincidence the fix must see through.
+        (tmp / "20260810_schedule.md").write_text(
+            "## Daily Schedule\n\n"
+            "| Problem | S | E | Next | Technique |\n"
+            "|---|:-:|:-:|:-:|---|\n"
+            "| ▸ **Mon Aug 10** · 3.0 units — Coincidence test day |  |  |  |  |\n"
+            "| [901 Unknown Widget](../../../dsa/leetcode/arrays/901_unknown_widget.py)"
+            " · [LC](https://leetcode.com/problems/unknown-widget/) | 🟡 | | | Arrays |\n"
+            "| |  |  |  |  |\n",
+            encoding="utf-8")
+
+    def tearDown(self):
+        eb.SCHEDULES = self._orig_schedules
+        eb.TRACKER, eb.ROADMAP_YML, eb.PROBE_POOL = (
+            self._orig_tracker, self._orig_roadmap, self._orig_probes)
+        self._tmpdir.cleanup()
+
+    def test_matches_never_prints_while_a_row_is_guessed(self):
+        buf = io.StringIO()
+        with contextlib.redirect_stdout(buf):
+            eb.price_schedule_day(dt.date(2026, 8, 10), [], self.CFG)
+        out = buf.getvalue()
+        self.assertNotIn("matches", out)
+        self.assertIn("CANNOT VERIFY", out)
+
 
 class SolutionFilesTests(unittest.TestCase):
     """links.solution_files() — the map gamify reads: keyed by the file's leading number,
