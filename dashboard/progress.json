@@ -4459,6 +4459,7 @@
             "tags": [],
             "kind": "rep",
             "done": true,
+            "deferredTo": null,
             "endComfort": "🟢",
             "endNote": null,
             "nextReview": "2026-10-28"
@@ -4476,6 +4477,7 @@
             ],
             "kind": "new",
             "done": true,
+            "deferredTo": null,
             "endComfort": "🔴",
             "endNote": null,
             "nextReview": "2026-09-30"
@@ -4491,6 +4493,7 @@
             "tags": [],
             "kind": "rep",
             "done": true,
+            "deferredTo": null,
             "endComfort": "🟢",
             "endNote": null,
             "nextReview": "2026-11-27"
@@ -4506,6 +4509,7 @@
             "tags": [],
             "kind": "rep",
             "done": true,
+            "deferredTo": null,
             "endComfort": "🟢",
             "endNote": null,
             "nextReview": "2026-11-27"
@@ -4521,6 +4525,7 @@
             "tags": [],
             "kind": "rep",
             "done": true,
+            "deferredTo": null,
             "endComfort": "🟡",
             "endNote": null,
             "nextReview": "2026-10-08"
@@ -4538,6 +4543,7 @@
             ],
             "kind": "rep",
             "done": false,
+            "deferredTo": "2026-10-04",
             "endComfort": null,
             "endNote": null,
             "nextReview": "2026-10-04"
@@ -4555,6 +4561,7 @@
             ],
             "kind": "rep",
             "done": false,
+            "deferredTo": "2026-10-04",
             "endComfort": null,
             "endNote": null,
             "nextReview": "2026-10-04"
@@ -4578,6 +4585,7 @@
             "tags": [],
             "kind": "rep",
             "done": true,
+            "deferredTo": null,
             "endComfort": "🟢",
             "endNote": null,
             "nextReview": "2026-10-29"
@@ -4595,6 +4603,7 @@
             ],
             "kind": "rep",
             "done": true,
+            "deferredTo": null,
             "endComfort": "🟢",
             "endNote": null,
             "nextReview": "2026-10-29"
@@ -4612,6 +4621,7 @@
             ],
             "kind": "new",
             "done": true,
+            "deferredTo": null,
             "endComfort": "🟡",
             "endNote": null,
             "nextReview": "2026-10-09"
@@ -4627,6 +4637,7 @@
             "tags": [],
             "kind": "rep",
             "done": true,
+            "deferredTo": null,
             "endComfort": "🎓",
             "endNote": null,
             "nextReview": "2027-03-28"
@@ -4644,6 +4655,7 @@
             ],
             "kind": "rep",
             "done": false,
+            "deferredTo": "2026-10-01",
             "endComfort": null,
             "endNote": null,
             "nextReview": "2026-10-01"
@@ -4667,6 +4679,7 @@
             "tags": [],
             "kind": "rep",
             "done": false,
+            "deferredTo": null,
             "endComfort": null,
             "endNote": null,
             "nextReview": null
@@ -4682,6 +4695,7 @@
             "tags": [],
             "kind": "rep",
             "done": false,
+            "deferredTo": null,
             "endComfort": null,
             "endNote": null,
             "nextReview": null
@@ -4697,6 +4711,7 @@
             "tags": [],
             "kind": "rep",
             "done": false,
+            "deferredTo": null,
             "endComfort": null,
             "endNote": null,
             "nextReview": null
@@ -4714,6 +4729,7 @@
             ],
             "kind": "new",
             "done": false,
+            "deferredTo": null,
             "endComfort": null,
             "endNote": null,
             "nextReview": null
@@ -4731,6 +4747,7 @@
             ],
             "kind": "rep",
             "done": false,
+            "deferredTo": null,
             "endComfort": null,
             "endNote": null,
             "nextReview": null
@@ -4756,6 +4773,7 @@
             ],
             "kind": "new",
             "done": false,
+            "deferredTo": null,
             "endComfort": null,
             "endNote": null,
             "nextReview": null
@@ -4773,6 +4791,7 @@
             ],
             "kind": "new",
             "done": false,
+            "deferredTo": null,
             "endComfort": null,
             "endNote": null,
             "nextReview": null
@@ -4788,6 +4807,7 @@
             "tags": [],
             "kind": "rep",
             "done": false,
+            "deferredTo": null,
             "endComfort": null,
             "endNote": null,
             "nextReview": null
@@ -4803,6 +4823,7 @@
             "tags": [],
             "kind": "rep",
             "done": false,
+            "deferredTo": null,
             "endComfort": null,
             "endNote": null,
             "nextReview": null
@@ -4818,6 +4839,7 @@
             "tags": [],
             "kind": "rep",
             "done": false,
+            "deferredTo": null,
             "endComfort": null,
             "endNote": null,
             "nextReview": null
@@ -4835,6 +4857,7 @@
             ],
             "kind": "rep",
             "done": false,
+            "deferredTo": null,
             "endComfort": null,
             "endNote": null,
             "nextReview": null
@@ -4852,6 +4875,7 @@
             ],
             "kind": "rep",
             "done": false,
+            "deferredTo": null,
             "endComfort": null,
             "endNote": null,
             "nextReview": null
@@ -4875,6 +4899,7 @@
             "tags": [],
             "kind": "rep",
             "done": false,
+            "deferredTo": null,
             "endComfort": null,
             "endNote": null,
             "nextReview": null
@@ -4890,6 +4915,7 @@
             "tags": [],
             "kind": "rep",
             "done": false,
+            "deferredTo": null,
             "endComfort": null,
             "endNote": null,
             "nextReview": null
@@ -4907,6 +4933,7 @@
             ],
             "kind": "new",
             "done": false,
+            "deferredTo": null,
             "endComfort": null,
             "endNote": null,
             "nextReview": null
@@ -4922,6 +4949,7 @@
             "tags": [],
             "kind": "rep",
             "done": false,
+            "deferredTo": null,
             "endComfort": null,
             "endNote": null,
             "nextReview": null
@@ -4945,6 +4973,7 @@
             "tags": [],
             "kind": "rep",
             "done": false,
+            "deferredTo": null,
             "endComfort": null,
             "endNote": null,
             "nextReview": null
@@ -4962,6 +4991,7 @@
             ],
             "kind": "new",
             "done": false,
+            "deferredTo": null,
             "endComfort": null,
             "endNote": null,
             "nextReview": null
@@ -4979,6 +5009,7 @@
             ],
             "kind": "rep",
             "done": false,
+            "deferredTo": null,
             "endComfort": null,
             "endNote": null,
             "nextReview": null
@@ -4994,6 +5025,7 @@
             "tags": [],
             "kind": "rep",
             "done": false,
+            "deferredTo": null,
             "endComfort": null,
             "endNote": null,
             "nextReview": null
@@ -5009,6 +5041,7 @@
             "tags": [],
             "kind": "rep",
             "done": false,
+            "deferredTo": null,
             "endComfort": null,
             "endNote": null,
             "nextReview": null
@@ -5034,6 +5067,7 @@
             ],
             "kind": "new",
             "done": false,
+            "deferredTo": null,
             "endComfort": null,
             "endNote": null,
             "nextReview": null
@@ -5051,6 +5085,7 @@
             ],
             "kind": "probe",
             "done": false,
+            "deferredTo": null,
             "endComfort": null,
             "endNote": null,
             "nextReview": null
@@ -5066,6 +5101,7 @@
             "tags": [],
             "kind": "rep",
             "done": false,
+            "deferredTo": null,
             "endComfort": null,
             "endNote": null,
             "nextReview": null
@@ -5081,6 +5117,7 @@
             "tags": [],
             "kind": "rep",
             "done": false,
+            "deferredTo": null,
             "endComfort": null,
             "endNote": null,
             "nextReview": null
@@ -5096,6 +5133,7 @@
             "tags": [],
             "kind": "rep",
             "done": false,
+            "deferredTo": null,
             "endComfort": null,
             "endNote": null,
             "nextReview": null
@@ -5113,6 +5151,7 @@
             ],
             "kind": "rep",
             "done": false,
+            "deferredTo": null,
             "endComfort": null,
             "endNote": null,
             "nextReview": null
@@ -5130,6 +5169,7 @@
             ],
             "kind": "rep",
             "done": false,
+            "deferredTo": null,
             "endComfort": null,
             "endNote": null,
             "nextReview": null
@@ -5145,6 +5185,7 @@
             "tags": [],
             "kind": "rep",
             "done": false,
+            "deferredTo": null,
             "endComfort": null,
             "endNote": null,
             "nextReview": null
@@ -5160,6 +5201,7 @@
             "tags": [],
             "kind": "rep",
             "done": false,
+            "deferredTo": null,
             "endComfort": null,
             "endNote": null,
             "nextReview": null
@@ -5175,6 +5217,7 @@
             "tags": [],
             "kind": "rep",
             "done": false,
+            "deferredTo": null,
             "endComfort": null,
             "endNote": null,
             "nextReview": null
@@ -5192,6 +5235,7 @@
             ],
             "kind": "complexity",
             "done": false,
+            "deferredTo": null,
             "endComfort": null,
             "endNote": null,
             "nextReview": null
@@ -5209,6 +5253,7 @@
             ],
             "kind": "complexity",
             "done": false,
+            "deferredTo": null,
             "endComfort": null,
             "endNote": null,
             "nextReview": null
@@ -5226,6 +5271,7 @@
             ],
             "kind": "complexity",
             "done": false,
+            "deferredTo": null,
             "endComfort": null,
             "endNote": null,
             "nextReview": null
@@ -5243,6 +5289,7 @@
             ],
             "kind": "complexity",
             "done": false,
+            "deferredTo": null,
             "endComfort": null,
             "endNote": null,
             "nextReview": null

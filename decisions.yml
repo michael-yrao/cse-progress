@@ -37,6 +37,16 @@
 # "could a rule written before this still read as correct while now being wrong?"
 
 decisions:
+  - id: schedule-item-deferred-to-sep29
+    date: 2026-09-29
+    summary: >-
+      ADDS scheduleItem.deferredTo: the Next-cell date of a row that is not struck, i.e. a row deferred
+      off a started day (deferred-rows-stay-on-planned-day-sep29). One helper in effort_budget.py
+      decides it for the export and for remaining.py, which now skips such a row. The Overview draws it
+      as ↷ + the new day, counts it as "moved", and the day bar adds a done fill from workload[].done.
+      The `moved` tag alone still draws nothing. Learner's request, Sep 29.
+    affects: [dashboard, lineup]
+
   - id: board-priority-sort-sep29
     date: 2026-09-29
     summary: >-

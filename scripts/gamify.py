@@ -603,6 +603,9 @@ def _parse_schedule_day_full(
             "tags": tags,
             "kind": _schedule_item_kind(technique, tags),
             "done": "~~" in cell,
+            # Shares eb.deferred_to's rule with parse_sched_line() and remaining.py's
+            # skip check (schedule-item-deferred-to-sep29) -- never re-derived here.
+            "deferredTo": eb.deferred_to("~~" in cell, m["c4"] or ""),
             **_schedule_item_outcome(m["c3"], m["c4"]),
         })
     return items, label, units

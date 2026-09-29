@@ -20,9 +20,11 @@ class UnstruckNumbersTests(unittest.TestCase):
     for: a plain linked row, a tag-glyph-prefixed linked row, a bare 🆕 intake with no
     local file yet to link, a struck-through row (done, must stay excluded), a line that
     is not a table row at all, a linked row behind a prefix OUTSIDE the tag-glyph legend
-    (🔁 review marker, a `**PROBE #6** —` label), and a plain summary/carry-table row
+    (🔁 review marker, a `**PROBE #6** —` label), a plain summary/carry-table row
     whose first cell is a bare count or number with no legend glyph (must NOT be misread
-    as a bare 🆕 intake)."""
+    as a bare 🆕 intake), and a deferred (→) row kept unstruck on its planned day with
+    an ISO date in its Next cell (schedule-item-deferred-to-sep29) — excluded even
+    though it carries no `~~`."""
 
     LABEL = "Wed Sep 23"
 
@@ -37,6 +39,7 @@ class UnstruckNumbersTests(unittest.TestCase):
 | ~~[134 Gas Station](../../../dsa/leetcode/greedy/134_gas_station.py) · [LC](https://leetcode.com/problems/gas-station/)~~ | 🟡 | 🟢 | 2026-10-21 | Greedy |
 | 🔁 [57 Insert Interval](../../../dsa/leetcode/arrays_and_hash/57_insert_interval.py) · [LC](https://leetcode.com/problems/insert-interval/) | 🟡 | | | Intervals |
 | 🎯 **PROBE #6** — [637 Average of Levels](../../../dsa/probes/637_average_of_levels_in_binary_tree.py) · [LC](https://leetcode.com/problems/average-of-levels-in-binary-tree/) | 🟢 | | | BFS |
+| → [202 Happy Number](../../../dsa/leetcode/graphs/202_happy_number.py) · [LC](https://leetcode.com/problems/happy-number/) | 🟢 s1 |  | 2026-10-01 | Cycle-detection |
 | 5 overdue rows | 9.0 |
 | 743 Network Delay Time | Aug 4 |
 A stray line of prose, not a table row at all — must not be read as one.
@@ -83,6 +86,12 @@ A stray line of prose, not a table row at all — must not be read as one.
     def test_bare_number_prefix_of_a_non_intake_row_is_not_counted(self):
         # Same trap, a real LC number as the bare leading token of a non-intake row.
         self.assertNotIn("743", self._numbers())
+
+    def test_deferred_row_is_excluded(self):
+        # A → row stays unstruck on its planned day with the day it moved TO in its
+        # Next cell (schedule-item-deferred-to-sep29) -- not actually open here, even
+        # though (unlike a struck row) it carries no `~~`.
+        self.assertNotIn("202", self._numbers())
 
     def test_non_row_prose_line_contributes_no_number(self):
         # Every number present is accounted for by the genuine problem rows above; any

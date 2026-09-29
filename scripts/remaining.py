@@ -31,6 +31,7 @@ import _console
 
 _console.force_utf8()
 
+import effort_budget as eb
 import schedule_priority
 import session_date
 from links import link_line, REPO_ROOT
@@ -95,6 +96,12 @@ def unstruck_numbers(schedule: Path, label: str) -> list[str] | None:
         if not m:
             continue
         if "~~" in line:  # struck through = done, skip
+            continue
+        # A row deferred off this day (→, kept here unstruck with its new day's date
+        # in the Next cell) is not actually open here -- eb.deferred_to is the one
+        # place that decides this, shared with parse_sched_line()/gamify.py's export.
+        cells = eb.SCHED_ROW.match(line)
+        if cells and eb.deferred_to(False, cells["c4"]):
             continue
         numbers.append(m.group(1) or m.group(2))
     return numbers if found_block else None

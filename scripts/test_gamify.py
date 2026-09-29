@@ -223,6 +223,25 @@ class BadgeTests(unittest.TestCase):
         self.assertIn("10 problems graduated", badges["trophies-10"])
 
 
+class DeferredToTests(unittest.TestCase):
+    """eb.deferred_to(done, next_cell) over its four meaningful cases (decision
+    `schedule-item-deferred-to-sep29`): `done` short-circuits before the Next cell is
+    even read, and a Next cell that is not, once stripped, nothing but an ISO date is
+    never mistaken for a deferral."""
+
+    CASES = [
+        ("not struck, ISO date -> that date", False, "2026-10-01", "2026-10-01"),
+        ("struck, ISO date -> None (done short-circuits)", True, "2026-10-01", None),
+        ("not struck, empty Next cell -> None", False, "", None),
+        ("not struck, free-form Next text -> None", False, "—", None),
+    ]
+
+    def test_deferred_to(self):
+        for label, done, next_cell, expected in self.CASES:
+            with self.subTest(label):
+                self.assertEqual(eb.deferred_to(done, next_cell), expected)
+
+
 class ParseTechniquesTests(unittest.TestCase):
     """parse_techniques() against a small fixture table, not the live repo file — pins the
     Problems-cell parsing (count vs. the parenthetical LC list) against the tricky tokens
@@ -892,7 +911,7 @@ class ParseCurrentWeekScheduleTests(unittest.TestCase):
                                  "url": "https://leetcode.com/problems/generate-parentheses/",
                                  "file": None,
                                  "tags": ["protected", "backfill"], "kind": "rep",
-                                 "done": False,
+                                 "done": False, "deferredTo": None,
                                  "endComfort": None, "endNote": None, "nextReview": None})
         # The 100 row's E cell is "🎓" (no trailing note) and Next is "2026-10-01" — pins
         # endComfort/nextReview are emitted, and a glyph with nothing following it yields
@@ -903,7 +922,7 @@ class ParseCurrentWeekScheduleTests(unittest.TestCase):
                                 "url": "https://leetcode.com/problems/same-tree/",
                                 "file": None,
                                 "tags": [], "kind": "rep",
-                                "done": True,
+                                "done": True, "deferredTo": None,
                                 "endComfort": "🎓", "endNote": None, "nextReview": "2026-10-01"})
         # 55 has a real lcNumber but is deliberately absent from TRACKER_FIXTURE — the
         # honest-null case for `difficulty` (a number the tracker doesn't have yet). `url`
@@ -915,7 +934,7 @@ class ParseCurrentWeekScheduleTests(unittest.TestCase):
                                      "url": "https://leetcode.com/problems/jump-game/",
                                      "file": None,
                                      "tags": [], "kind": "rep",
-                                     "done": False,
+                                     "done": False, "deferredTo": None,
                                      "endComfort": None, "endNote": None, "nextReview": None})
 
     def test_new_intake_row_gets_lcnumber_from_fallback_and_url_from_own_link(self):
@@ -932,7 +951,7 @@ class ParseCurrentWeekScheduleTests(unittest.TestCase):
                                            "url": "https://leetcode.com/problems/combination-sum/",
                                            "file": None,
                                            "tags": ["new"], "kind": "new",
-                                           "done": False,
+                                           "done": False, "deferredTo": None,
                                            "endComfort": None, "endNote": None, "nextReview": None})
 
     def test_row_own_link_url_wins_over_tracker_join(self):
@@ -947,7 +966,7 @@ class ParseCurrentWeekScheduleTests(unittest.TestCase):
                                            "url": "https://leetcode.com/problems/word-break/",
                                            "file": None,
                                            "tags": [], "kind": "rep",
-                                           "done": False,
+                                           "done": False, "deferredTo": None,
                                            "endComfort": None, "endNote": None, "nextReview": None})
 
     def test_primer_row_has_no_lcnumber_and_kind_primer(self):
@@ -964,7 +983,7 @@ class ParseCurrentWeekScheduleTests(unittest.TestCase):
             "difficulty": None, "url": None,
             "file": None,
             "tags": ["primer"], "kind": "primer",
-            "done": False,
+            "done": False, "deferredTo": None,
             "endComfort": None, "endNote": None, "nextReview": None})
 
     def test_emphasis_before_glyph_does_not_blank_out_tags(self):
@@ -983,7 +1002,7 @@ class ParseCurrentWeekScheduleTests(unittest.TestCase):
             "url": "https://leetcode.com/problems/combination-sum/",
             "file": None,
             "tags": ["new"], "kind": "new",
-            "done": True,
+            "done": True, "deferredTo": None,
             "endComfort": None, "endNote": None, "nextReview": None})
 
     def test_complexity_technique_wins_kind_over_the_probe_tag(self):
@@ -1015,7 +1034,7 @@ class ParseCurrentWeekScheduleTests(unittest.TestCase):
             "url": "https://leetcode.com/problems/number-of-islands/",
             "file": None,
             "tags": [], "kind": "rep",
-            "done": False,
+            "done": False, "deferredTo": None,
             "endComfort": None, "endNote": None, "nextReview": None})
 
     def test_nc_only_row_with_no_tracker_entry_uses_nc_as_last_resort(self):
@@ -1031,13 +1050,41 @@ class ParseCurrentWeekScheduleTests(unittest.TestCase):
             "url": "https://neetcode.io/problems/foreign-dictionary",
             "file": None,
             "tags": [], "kind": "rep",
-            "done": False,
+            "done": False, "deferredTo": None,
             "endComfort": None, "endNote": None, "nextReview": None})
 
     def test_day_with_no_block_has_no_items(self):
         result = gamify.parse_current_week_schedule(dt.date(2026, 9, 21), self.URLS)
         wed = result["days"][2]
         self.assertEqual(wed["items"], [])
+
+    def test_deferred_row_emits_date_and_its_new_day_copy_emits_null(self):
+        # A `→` row (decision `schedule-item-deferred-to-sep29`): stays on its ORIGINAL
+        # day, not struck, with the day it moved TO in its Next cell; the copy seated on
+        # the NEW day carries the same row with an empty Next cell. Shape mirrors the
+        # live board's own Tue -> Thu 202 Happy Number deferral
+        # (docs/foundations/schedules/20260928_schedule.md). The first fixture to cover
+        # a `→` row at all -- every other row in this class's FIXTURE is a plain,
+        # struck, or intake row.
+        deferred_fixture = (
+            "## Daily Schedule\n\n"
+            "| Problem | S | E | Next | Technique |\n"
+            "|---|:-:|:-:|:-:|---|\n"
+            "| ▸ **Mon Sep 28** · 8.0 units — deferred-row test |  |  |  |  |\n"
+            "| → [202 Happy Number](../../../dsa/leetcode/graphs/202_happy_number.py) · [LC]"
+            "(https://leetcode.com/problems/happy-number/) | 🟢 s1 |  | 2026-10-01 | "
+            "Cycle-detection |\n"
+            "|  |  |  |  |  |\n"
+            "| ▸ **Thu Oct 1** · 7.8 units — deferred-row test |  |  |  |  |\n"
+            "| → [202 Happy Number](../../../dsa/leetcode/graphs/202_happy_number.py) · [LC]"
+            "(https://leetcode.com/problems/happy-number/) | 🟢 s1 |  |  | Cycle-detection |\n"
+        )
+        sched_dir = Path(self._tmpdir.name)
+        (sched_dir / "20260928_schedule.md").write_text(deferred_fixture, encoding="utf-8")
+        result = gamify.parse_current_week_schedule(dt.date(2026, 9, 28), self.URLS)
+        mon, thu = result["days"][0], result["days"][3]
+        self.assertEqual(mon["items"][0]["deferredTo"], "2026-10-01")
+        self.assertIsNone(thu["items"][0]["deferredTo"])
 
     def test_no_current_schedule_file_is_none(self):
         result = gamify.parse_current_week_schedule(dt.date(2030, 1, 1), self.URLS)

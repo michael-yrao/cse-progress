@@ -400,6 +400,30 @@ def find_schedule(day: dt.date) -> Path | None:
     return best[1] if best else None
 
 
+_FULL_ISO_DATE = re.compile(r"\d{4}-\d{2}-\d{2}")
+
+
+def deferred_to(done: bool, next_cell: str) -> str | None:
+    """The ISO date a schedule row was deferred TO, or None.
+
+    A `→` row stays on its planned day, not struck, with the day it moved to written
+    into its Next cell (deferred-rows-stay-on-planned-day-sep29) -- the one clean
+    discriminator from every other row shape: a DONE row's Next cell holds its
+    ordinary spaced-repetition review date (a real date that is not a deferral), and
+    a fresh row's Next cell is blank. `done` is checked FIRST so a struck row's real
+    review date can never be misread as one.
+
+    ONE helper decides this, shared by parse_sched_line() below (pricing/priority)
+    and gamify.py's _parse_schedule_day_full() (the dashboard export) -- so pricing,
+    the export, and remaining.py's skip check can never disagree on which row counts
+    as deferred.
+    """
+    if done:
+        return None
+    stripped = next_cell.strip()
+    return stripped if _FULL_ISO_DATE.fullmatch(stripped) else None
+
+
 def parse_sched_line(line: str) -> dict | None:
     """Parse one line of a schedule day's table into an item dict, or None if the line is
     not a problem row (no SCHED_ROW match, a blank separator row, or a markdown rule).
@@ -438,6 +462,7 @@ def parse_sched_line(line: str) -> dict | None:
         "is_probe": PROBE_GLYPH in (m["c2"] or ""),
         "is_complexity": is_complexity_technique(m["c5"]),
         "done": "~~" in cell,
+        "deferred_to": deferred_to("~~" in cell, m["c4"]),
         "text": re.sub(r"\s+", " ", text).strip(" ·*"),
     }
 
