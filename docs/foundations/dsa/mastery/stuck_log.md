@@ -22,6 +22,9 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🟡 79. Word Search — 2026-09-29 *(NEW — Backtracking intake)*
+**Sticking point**: first called it plain DFS; reached "visited belongs to the current path, so unmark on return" only after the "what does visited mean here?" prompt (and likened it to Hierholzer's, which never undoes). In code, the success base case sat behind the bounds check (`[["A"]]`, `"A"` → False), and the cell was never removed from the set because the four-way `or` was returned directly; both bugs coach-located, learner-fixed.
+
 ## 🟡 2812. Find the Safest Path in a Grid — 2026-09-27 *(NEW — Dijkstra max-min consolidation, replaced 1102)*
 **Sticking point**: Dijkstra max-min + max-heap called cold, but (1) the per-cell thief distance was first a per-thief scan (O(n⁴)) — the multi-source BFS precompute came only after the "flip the direction: thieves reach out to cells" hint, then needed the thieves marked visited at seed; (2) the heap loop repeated 1631's distance-array slips — skip against a global max instead of a per-cell record, unconditional writes/pushes (infinite loop), `* -1` applied twice, `distance` holding both the thief distance and the path value, return of the global max instead of the target's pop. Finished in the visited-array shape after the per-cell-record explanation.
 

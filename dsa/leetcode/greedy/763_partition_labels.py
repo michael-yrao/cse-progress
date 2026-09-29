@@ -29,6 +29,35 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-09-29 ──────────────
+    def partitionLabels_20260929(self, s: str) -> List[int]:
+        # have a freqMap
+        # ababcc
+        # have a set for the current items seen
+        # when we see a char, we decrement freqMap and when it hits zero, we remove from set
+        # if set is empty, we add length into the result
+        # to keep track of the length, maybe a window size?
+
+        result = []
+
+        freq_map = Counter(s)
+
+        window_set = set()
+
+        l = r = 0
+
+        while r < len(s):
+            window_set.add(s[r])
+            freq_map[s[r]]-=1
+            if freq_map[s[r]] == 0:
+                window_set.remove(s[r])
+            if not window_set:
+                result.append(r - l + 1)
+                l = r + 1
+            r+=1
+        
+        return result
+
     # ── Attempt · 2026-09-19 ──────────────
     def partitionLabels_20260919(self, s: str) -> List[int]:
         # we need frequency of each char

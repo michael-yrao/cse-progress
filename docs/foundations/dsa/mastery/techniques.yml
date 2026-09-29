@@ -875,6 +875,7 @@ techniques:
       - {number: 39}
       - {number: 46}
       - {number: 40}   # take/skip with duplicate values: sort, skip branch jumps past every copy (Sep 28, 2026)
+      - {number: 79}   # grid path search: visited is per-path, add before the 4 calls, remove after (Sep 29, 2026)
       # Declared Sep 26, 2026 (decision `mastery-ratio-done-over-planned-sep26`) —
       # roadmap.yml. 212 is ALSO declared under Trie above (dual credit).
       - {number: 90, queued: "phase:Backtracking"}

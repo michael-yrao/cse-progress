@@ -35,6 +35,22 @@ from typing import List
 
 class Solution:
 
+    # ── Attempt · 2026-09-29 ──────────────
+    def maxSubArrayKadane_20260929(self, nums: List[int]) -> int:
+        # kadane's
+
+        max_sum = -math.inf
+        current_sum = 0
+
+        for num in nums:
+            current_sum+=num
+            # need to do this here in case the max is less than 0
+            max_sum = max(max_sum, current_sum)
+            if current_sum < 0:
+                current_sum = 0
+        
+        return max_sum # type: ignore
+
     # ── Attempt · 2026-09-01 ──────────────
     def maxSubArrayPrefixMin_20260901(self, nums: List[int]) -> int:
         # we are doing prefix sum today

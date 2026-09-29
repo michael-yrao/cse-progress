@@ -6,7 +6,7 @@
 
 > The tracker is keyed by **problem**; this is keyed by **technique**. Use it at the weekly build to decide what to pull, and at phase exit to check the per-algorithm bar (recognition + execution, ≥1 🟢 each).
 
-> **60/105** techniques started &nbsp;·&nbsp; **1** with no 🟢 &nbsp;·&nbsp; **7** thin &nbsp;·&nbsp; **0** unqueued variant gaps
+> **60/105** techniques started &nbsp;·&nbsp; **1** with no 🟢 &nbsp;·&nbsp; **6** thin &nbsp;·&nbsp; **0** unqueued variant gaps
 
 ## ⚠️ Action list
 
@@ -20,15 +20,14 @@
 - **Bellman-Ford** (advanced_graphs) — 1/2: 787
 - **Kruskal's MST** (advanced_graphs) — 1/2: 1489
 - **Dijkstra** (advanced_graphs) — 4/5 (5 rows): 743, 778, 1631, 2812
-- **Backtracking** (backtracking) — 5/8: 22, 39, 40, 46, 78
-- **Greedy (single pass)** (sliding_window) — 6/7: 45, 55, 122, 134, 763, 846
+- **Backtracking** (backtracking) — 6/9 (7 rows): 22, 39, 40, 46, 78, 79
 - **Monotonic Stack** (stack) — 6/7: 84, 496, 503, 739, 853, 901
 
 **Queued — declared, and already sitting in the Waiting Room / Expansion Queue.** A known gap with a fill already picked, not a new finding.
 
 - **BFS on Implicit Graph** (graphs) — queued: 815 (`solved:127`), 1197 (`solved:127`)
 - **BST Descent** (trees) — queued: 230 (`surplus>=1`)
-- **Backtracking** (backtracking) — queued: 17 (`phase:Backtracking`), 51 (`phase:Backtracking`), 79 (`phase:Backtracking`), 90 (`phase:Backtracking`), 131 (`phase:Backtracking`), 212 (`phase:Backtracking`)
+- **Backtracking** (backtracking) — queued: 17 (`phase:Backtracking`), 51 (`phase:Backtracking`), 90 (`phase:Backtracking`), 131 (`phase:Backtracking`), 212 (`phase:Backtracking`)
 - **Bellman-Ford** (advanced_graphs) — queued: 9001 (`surplus>=1`), 9002 (`surplus>=1`)
 - **Binary Search (min boundary)** (binary_search) — queued: 4 (`surplus>=1`)
 - **Cycle Detection in an Iterated Sequence** (graphs) — queued: 287 (`surplus>=1`)
@@ -71,7 +70,7 @@ Every declared technique gets a row, started or not — a not-started row's Gaps
 | In-Place Array Rotation | arrays_and_hash | core | 1 (1+0) | 1 (189) | 🟢 | ✅ | — | — |
 | Length-Prefix Encoding | arrays_and_hash | core | 1 (1+0) | 1 (271) | 🟢 | ✅ | — | — |
 | Prefix/Suffix Products | arrays_and_hash | core | 1 (1+0) | 1 (238) | 🟢 | ✅ | — | — |
-| Backtracking | backtracking | core | 8 (5+3) | 5 (22, 39, 40, 46, 78) | 🟢 | ✅ | — | thin (5/8) · queued: 17 `phase:Backtracking`, 51 `phase:Backtracking`, 79 `phase:Backtracking`, 90 `phase:Backtracking`, 131 `phase:Backtracking`, 212 `phase:Backtracking` |
+| Backtracking | backtracking | core | 9 (5+4) | 6 *+1v* (22, 39, 40, 46, 78, 79) | 🟢 | ✅ | — | thin (6/9) · queued: 17 `phase:Backtracking`, 51 `phase:Backtracking`, 90 `phase:Backtracking`, 131 `phase:Backtracking`, 212 `phase:Backtracking` |
 | Binary Search (exact match) | binary_search | core | 1 (1+0) | 2 (33, 704) | 🎓 | ✅ | — | — |
 | Binary Search (max boundary) | binary_search | core | 3 (2+1) | 3 (34, 74, 1552) | 🟢 | ✅ | — | — |
 | Binary Search (min boundary) | binary_search | core | 4 (4+0) | 7 (34, 153, 162, 540, 875, 1011, 2300) | 🎓 | ✅ | — | queued: 4 `surplus>=1` |
@@ -139,10 +138,10 @@ Every declared technique gets a row, started or not — a not-started row's Gaps
 | Remove Nth From End | linked_list | core | 1 (1+0) | 1 *+1v* (19) | 🟢 | ✅ | Iterative ×1 · Postorder Recursion ×1 · ~~Preorder Recursion~~ *(queued: `expansion — parked Jul 9`)* | — |
 | Math / Number Manipulation | math_sim | core | 2 (2+0) | 0 (—) | — | ❌ | — | *not started* |
 | Simulation / Matrix Walk | math_sim | core | 2 (2+0) | 0 (—) | — | ❌ | — | *not started* |
-| Kadane | prefix_sum | core | 1 (1+0) | 1 (53) | 🟢 | ✅ | — | — |
+| Kadane | prefix_sum | core | 1 (1+0) | 1 (53) | 🎓 | ✅ | — | — |
 | Prefix Sum | prefix_sum | core | 1 (1+0) | 2 (53, 560) | 🟢 | ✅ | — | — |
 | Recursion | recursion | core | 2 (2+0) | 3 (19, 21, 206) | 🎓 | ✅ | — | — |
-| Greedy (single pass) | sliding_window | core | 7 (4+3) | 6 (45, 55, 122, 134, 763, 846) | 🟢 | ✅ | — | thin (6/7) · queued: 678 `surplus>=1`, 1899 `surplus>=1` |
+| Greedy (single pass) | sliding_window | core | 5 (4+1) | 6 (45, 55, 122, 134, 763, 846) | 🟢 | ✅ | — | queued: 678 `surplus>=1`, 1899 `surplus>=1` |
 | Sliding Window | sliding_window | core | 3 (3+0) | 4 (3, 121, 424, 567) | 🟢 | ✅ | — | queued: 76 `surplus>=1` |
 | Divide & Conquer / Sorting | sorting | core | 1 (1+0) | 1 (912) | 🟢 | ✅ | Merge Sort ×1 · ~~Quick Sort~~ *(queued: `expansion — sorting deep-dive`)* · ~~Radix Sort~~ *(queued: `expansion — sorting deep-dive`)* · ~~Counting Sort~~ *(queued: `expansion — sorting deep-dive`)* · ~~Timsort~~ *(queued: `expansion — sorting deep-dive`)* · ~~D&C on 53~~ *(queued: `rated:912 + surplus>=1`)* | — |
 | Monotonic Deque | stack | core | 1 (1+0) | 1 (239) | 🟢 | ✅ | — | — |
@@ -165,7 +164,7 @@ Every declared technique gets a row, started or not — a not-started row's Gaps
 
 ## Vocabulary maintenance
 
-**Queued (79)** — listed in the Action list above; a known gap with a fill already picked, not counted below.
+**Queued (78)** — listed in the Action list above; a known gap with a fill already picked, not counted below.
 
 **Declared, not queued (3)** — declared in the vocabulary, no tracker row, and not yet in any queue. This is the normal state for curriculum ahead of the learner; it is a roadmap, not a finding: 1102, 1135, 547
 

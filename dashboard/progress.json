@@ -2,48 +2,100 @@
   "schemaVersion": 1,
   "generatedAt": "2026-09-29",
   "totals": {
-    "problems": 128,
-    "solutions": 139,
-    "reps": 623
+    "problems": 129,
+    "solutions": 140,
+    "reps": 627
   },
   "pipeline": {
     "blank": 1,
-    "shaky": 12,
+    "shaky": 11,
     "clean": {
       "s0": 3,
-      "s1": 30,
-      "s2plus": 70,
-      "total": 103
+      "s1": 32,
+      "s2plus": 69,
+      "total": 104
     },
-    "graduated": 23,
+    "graduated": 24,
     "retired": 0
   },
   "difficulty": {
     "Easy": 34,
-    "Medium": 94,
+    "Medium": 95,
     "Hard": 11
   },
   "streak": {
-    "current": 124,
-    "longest": 124,
-    "lastStudyDay": "2026-09-28",
-    "studyDays": 182,
+    "current": 125,
+    "longest": 125,
+    "lastStudyDay": "2026-09-29",
+    "studyDays": 183,
     "restDayAllowance": 1
   },
   "coverage": {
     "total": 105,
     "started": 60,
     "noGreen": 1,
-    "thin": 7,
+    "thin": 6,
     "variantGaps": 0
   },
   "onSchedule": {
-    "totalActive": 139,
-    "dueToday": 1,
-    "overdue": 5
+    "totalActive": 140,
+    "dueToday": 0,
+    "overdue": 4
   },
   "trophyCase": {
     "graduated": [
+      {
+        "lcNumber": 53,
+        "title": "Maximum Subarray (Kadane)",
+        "url": "https://leetcode.com/problems/maximum-subarray/",
+        "file": "dsa/leetcode/greedy/53_maximum_subarray.py",
+        "difficulty": "Medium",
+        "category": "greedy",
+        "comfort": "🎓",
+        "level": 3,
+        "streak": 3,
+        "nextReview": "2027-03-28",
+        "repDates": [
+          "2026-01-08",
+          "2026-04-02",
+          "2026-06-23",
+          "2026-06-24",
+          "2026-07-26",
+          "2026-09-29"
+        ],
+        "timeline": [
+          {
+            "date": "2026-01-08",
+            "comfort": null,
+            "level": null
+          },
+          {
+            "date": "2026-04-02",
+            "comfort": null,
+            "level": null
+          },
+          {
+            "date": "2026-06-23",
+            "comfort": null,
+            "level": null
+          },
+          {
+            "date": "2026-06-24",
+            "comfort": null,
+            "level": null
+          },
+          {
+            "date": "2026-07-26",
+            "comfort": null,
+            "level": null
+          },
+          {
+            "date": "2026-09-29",
+            "comfort": "🎓",
+            "level": 3
+          }
+        ]
+      },
       {
         "lcNumber": 169,
         "title": "Majority Element",
@@ -1503,16 +1555,17 @@
       "family": "backtracking",
       "tier": "core",
       "started": true,
-      "minProblems": 8,
+      "minProblems": 9,
       "coverageFloor": 5,
-      "uncleanCount": 3,
-      "problemCount": 5,
+      "uncleanCount": 4,
+      "problemCount": 6,
       "problems": [
         22,
         39,
         40,
         46,
-        78
+        78,
+        79
       ],
       "bestComfort": "🟢",
       "hasGreen": true,
@@ -1527,13 +1580,6 @@
           "lcNumber": 90,
           "title": "Subsets II",
           "url": "https://leetcode.com/problems/subsets-ii/",
-          "difficulty": "Medium",
-          "trigger": "phase:Backtracking"
-        },
-        {
-          "lcNumber": 79,
-          "title": "Word Search",
-          "url": "https://leetcode.com/problems/word-search/",
           "difficulty": "Medium",
           "trigger": "phase:Backtracking"
         },
@@ -3547,14 +3593,14 @@
       "problems": [
         53
       ],
-      "bestComfort": "🟢",
+      "bestComfort": "🎓",
       "hasGreen": true,
       "thin": false,
       "hasVariantGap": false,
       "buildsOn": [
         "Prefix Sum"
       ],
-      "graduatedCount": 0,
+      "graduatedCount": 1,
       "planned": [],
       "plannedTotal": 1,
       "untriedVariations": []
@@ -3579,7 +3625,7 @@
       "buildsOn": [
         "Array/String Fundamentals"
       ],
-      "graduatedCount": 0,
+      "graduatedCount": 1,
       "planned": [],
       "plannedTotal": 2,
       "untriedVariations": []
@@ -3613,9 +3659,9 @@
       "family": "sliding_window",
       "tier": "core",
       "started": true,
-      "minProblems": 7,
+      "minProblems": 5,
       "coverageFloor": 4,
-      "uncleanCount": 3,
+      "uncleanCount": 1,
       "problemCount": 6,
       "problems": [
         45,
@@ -3627,7 +3673,7 @@
       ],
       "bestComfort": "🟢",
       "hasGreen": true,
-      "thin": true,
+      "thin": false,
       "hasVariantGap": false,
       "buildsOn": [
         "Array/String Fundamentals"
@@ -4390,7 +4436,8 @@
     "2026-09-25",
     "2026-09-26",
     "2026-09-27",
-    "2026-09-28"
+    "2026-09-28",
+    "2026-09-29"
   ],
   "schedule": {
     "weekOf": "2026-09-28",
@@ -4530,10 +4577,10 @@
             "file": "dsa/leetcode/greedy/763_partition_labels.py",
             "tags": [],
             "kind": "rep",
-            "done": false,
-            "endComfort": null,
+            "done": true,
+            "endComfort": "🟢",
             "endNote": null,
-            "nextReview": null
+            "nextReview": "2026-10-29"
           },
           {
             "lcNumber": 846,
@@ -4547,27 +4594,27 @@
               "moved"
             ],
             "kind": "rep",
-            "done": false,
-            "endComfort": null,
+            "done": true,
+            "endComfort": "🟢",
             "endNote": null,
-            "nextReview": null
+            "nextReview": "2026-10-29"
           },
           {
             "lcNumber": 79,
             "title": "Word Search",
             "technique": "Backtracking",
             "startComfort": null,
-            "difficulty": null,
+            "difficulty": "Medium",
             "url": "https://leetcode.com/problems/word-search/",
             "file": "dsa/leetcode/backtracking/79_word_search.py",
             "tags": [
               "new"
             ],
             "kind": "new",
-            "done": false,
-            "endComfort": null,
+            "done": true,
+            "endComfort": "🟡",
             "endNote": null,
-            "nextReview": null
+            "nextReview": "2026-10-09"
           },
           {
             "lcNumber": 53,
@@ -4579,10 +4626,10 @@
             "file": "dsa/leetcode/greedy/53_maximum_subarray.py",
             "tags": [],
             "kind": "rep",
-            "done": false,
-            "endComfort": null,
+            "done": true,
+            "endComfort": "🎓",
             "endNote": null,
-            "nextReview": null
+            "nextReview": "2027-03-28"
           },
           {
             "lcNumber": 202,
@@ -4599,7 +4646,7 @@
             "done": false,
             "endComfort": null,
             "endNote": null,
-            "nextReview": null
+            "nextReview": "2026-10-01"
           }
         ]
       },
@@ -4693,8 +4740,8 @@
       {
         "date": "2026-10-01",
         "weekday": "Thursday",
-        "label": "Backtracking intake (90) + Bellman-Ford intake (9001) + Backtracking/Stack/Hash-set reviews",
-        "units": 7.4,
+        "label": "Backtracking intake (90) + Bellman-Ford intake (9001) + Backtracking/Stack/Hash-set/Cycle-detection reviews",
+        "units": 7.8,
         "items": [
           {
             "lcNumber": 90,
@@ -4783,6 +4830,23 @@
             "difficulty": "Medium",
             "url": "https://leetcode.com/problems/longest-consecutive-sequence/",
             "file": "dsa/leetcode/arrays_and_hash/128_longest_consecutive_sequence.py",
+            "tags": [
+              "moved"
+            ],
+            "kind": "rep",
+            "done": false,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
+          },
+          {
+            "lcNumber": 202,
+            "title": "Happy Number",
+            "technique": "Cycle-detection",
+            "startComfort": "🟢",
+            "difficulty": "Easy",
+            "url": "https://leetcode.com/problems/happy-number/",
+            "file": "dsa/leetcode/graphs/202_happy_number.py",
             "tags": [
               "moved"
             ],
@@ -5275,8 +5339,8 @@
     {
       "date": "2026-08-22",
       "planned": 15.5,
-      "done": 13.9,
-      "built": 13.9,
+      "done": 13.8,
+      "built": 13.8,
       "partial": false
     },
     {
@@ -5541,7 +5605,7 @@
     {
       "date": "2026-09-29",
       "planned": 7.7,
-      "done": 0.0,
+      "done": 7.3,
       "built": 7.7,
       "partial": false
     },
@@ -5554,9 +5618,9 @@
     },
     {
       "date": "2026-10-01",
-      "planned": 7.4,
+      "planned": 7.8,
       "done": 0.0,
-      "built": 7.4,
+      "built": 7.8,
       "partial": false
     },
     {
@@ -5707,7 +5771,7 @@
       "description": "Practice on 7 study-days without letting the streak lapse.",
       "earned": true,
       "progress": {
-        "current": 124,
+        "current": 125,
         "target": 7
       }
     },
@@ -5718,7 +5782,7 @@
       "description": "Practice on 30 study-days without letting the streak lapse.",
       "earned": true,
       "progress": {
-        "current": 124,
+        "current": 125,
         "target": 30
       }
     },
@@ -5729,7 +5793,7 @@
       "description": "Practice on 100 study-days without letting the streak lapse.",
       "earned": true,
       "progress": {
-        "current": 124,
+        "current": 125,
         "target": 100
       }
     },
@@ -5740,7 +5804,7 @@
       "description": "Reach 1 problem graduated or retired.",
       "earned": true,
       "progress": {
-        "current": 23,
+        "current": 24,
         "target": 1
       }
     },
@@ -5751,7 +5815,7 @@
       "description": "Reach 10 problems graduated or retired.",
       "earned": true,
       "progress": {
-        "current": 23,
+        "current": 24,
         "target": 10
       }
     },
@@ -5762,7 +5826,7 @@
       "description": "Reach 25 problems graduated or retired.",
       "earned": false,
       "progress": {
-        "current": 23,
+        "current": 24,
         "target": 25
       }
     },
@@ -5773,12 +5837,154 @@
       "description": "Reach 50 problems graduated or retired.",
       "earned": false,
       "progress": {
-        "current": 23,
+        "current": 24,
         "target": 50
       }
     }
   ],
   "problems": [
+    {
+      "lcNumber": 79,
+      "title": "Word Search",
+      "url": "https://leetcode.com/problems/word-search/",
+      "file": "dsa/leetcode/backtracking/79_word_search.py",
+      "difficulty": "Medium",
+      "category": "backtracking",
+      "comfort": "🟡",
+      "level": 1,
+      "streak": 0,
+      "nextReview": "2026-10-09",
+      "repDates": [
+        "2026-09-29"
+      ],
+      "timeline": [
+        {
+          "date": "2026-09-29",
+          "comfort": "🟡",
+          "level": 1
+        }
+      ]
+    },
+    {
+      "lcNumber": 763,
+      "title": "Partition Labels",
+      "url": "https://leetcode.com/problems/partition-labels/",
+      "file": "dsa/leetcode/greedy/763_partition_labels.py",
+      "difficulty": "Medium",
+      "category": "greedy",
+      "comfort": "🟢",
+      "level": 2,
+      "streak": 1,
+      "nextReview": "2026-10-29",
+      "repDates": [
+        "2026-09-09",
+        "2026-09-19",
+        "2026-09-29"
+      ],
+      "timeline": [
+        {
+          "date": "2026-09-09",
+          "comfort": "🟡",
+          "level": 1
+        },
+        {
+          "date": "2026-09-19",
+          "comfort": "🟡",
+          "level": 1
+        },
+        {
+          "date": "2026-09-29",
+          "comfort": "🟢",
+          "level": 2
+        }
+      ]
+    },
+    {
+      "lcNumber": 846,
+      "title": "Hand of Straights",
+      "url": "https://leetcode.com/problems/hand-of-straights/",
+      "file": "dsa/leetcode/greedy/846_hand_of_straights.py",
+      "difficulty": "Medium",
+      "category": "greedy",
+      "comfort": "🟢",
+      "level": 2,
+      "streak": 1,
+      "nextReview": "2026-10-29",
+      "repDates": [
+        "2026-09-11",
+        "2026-09-23",
+        "2026-09-29"
+      ],
+      "timeline": [
+        {
+          "date": "2026-09-11",
+          "comfort": "🟡",
+          "level": 1
+        },
+        {
+          "date": "2026-09-23",
+          "comfort": "🟡",
+          "level": 1
+        },
+        {
+          "date": "2026-09-29",
+          "comfort": "🟢",
+          "level": 2
+        }
+      ]
+    },
+    {
+      "lcNumber": 53,
+      "title": "Maximum Subarray (Kadane)",
+      "url": "https://leetcode.com/problems/maximum-subarray/",
+      "file": "dsa/leetcode/greedy/53_maximum_subarray.py",
+      "difficulty": "Medium",
+      "category": "greedy",
+      "comfort": "🎓",
+      "level": 3,
+      "streak": 3,
+      "nextReview": "2027-03-28",
+      "repDates": [
+        "2026-01-08",
+        "2026-04-02",
+        "2026-06-23",
+        "2026-06-24",
+        "2026-07-26",
+        "2026-09-29"
+      ],
+      "timeline": [
+        {
+          "date": "2026-01-08",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-04-02",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-06-23",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-06-24",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-07-26",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-09-29",
+          "comfort": "🎓",
+          "level": 3
+        }
+      ]
+    },
     {
       "lcNumber": 40,
       "title": "Combination Sum II",
@@ -6690,34 +6896,6 @@
       ]
     },
     {
-      "lcNumber": 846,
-      "title": "Hand of Straights",
-      "url": "https://leetcode.com/problems/hand-of-straights/",
-      "file": "dsa/leetcode/greedy/846_hand_of_straights.py",
-      "difficulty": "Medium",
-      "category": "greedy",
-      "comfort": "🟡",
-      "level": 1,
-      "streak": 0,
-      "nextReview": "2026-10-03",
-      "repDates": [
-        "2026-09-11",
-        "2026-09-23"
-      ],
-      "timeline": [
-        {
-          "date": "2026-09-11",
-          "comfort": "🟡",
-          "level": 1
-        },
-        {
-          "date": "2026-09-23",
-          "comfort": "🟡",
-          "level": 1
-        }
-      ]
-    },
-    {
       "lcNumber": 1489,
       "title": "Find Critical and Pseudo-Critical Edges in MST (Kruskal)",
       "url": "https://leetcode.com/problems/find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree/",
@@ -7270,34 +7448,6 @@
           "date": "2026-09-20",
           "comfort": "🎓",
           "level": 3
-        }
-      ]
-    },
-    {
-      "lcNumber": 763,
-      "title": "Partition Labels",
-      "url": "https://leetcode.com/problems/partition-labels/",
-      "file": "dsa/leetcode/greedy/763_partition_labels.py",
-      "difficulty": "Medium",
-      "category": "greedy",
-      "comfort": "🟡",
-      "level": 1,
-      "streak": 0,
-      "nextReview": "2026-09-29",
-      "repDates": [
-        "2026-09-09",
-        "2026-09-19"
-      ],
-      "timeline": [
-        {
-          "date": "2026-09-09",
-          "comfort": "🟡",
-          "level": 1
-        },
-        {
-          "date": "2026-09-19",
-          "comfort": "🟡",
-          "level": 1
         }
       ]
     },
@@ -11538,52 +11688,6 @@
           "date": "2026-07-29",
           "comfort": "🎓",
           "level": 3
-        }
-      ]
-    },
-    {
-      "lcNumber": 53,
-      "title": "Maximum Subarray (Kadane)",
-      "url": "https://leetcode.com/problems/maximum-subarray/",
-      "file": "dsa/leetcode/greedy/53_maximum_subarray.py",
-      "difficulty": "Medium",
-      "category": "greedy",
-      "comfort": "🟢",
-      "level": 2,
-      "streak": 2,
-      "nextReview": "2026-09-24",
-      "repDates": [
-        "2026-01-08",
-        "2026-04-02",
-        "2026-06-23",
-        "2026-06-24",
-        "2026-07-26"
-      ],
-      "timeline": [
-        {
-          "date": "2026-01-08",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-04-02",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-06-23",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-06-24",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-07-26",
-          "comfort": "🟢",
-          "level": 2
         }
       ]
     },

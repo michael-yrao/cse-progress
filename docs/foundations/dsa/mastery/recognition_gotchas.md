@@ -1,3 +1,18 @@
+- **2026-09-29 · 53 Maximum Subarray (Kadane)** (🟢 s2 review; retry, fully spoiled: the stub's method name says
+  Kadane) — ✅ **hit, habit only.** Top comment "kadane's"; max taken before the reset so an all-negative array
+  returns its largest element. Blank page, no hints. → 🎓.
+- **2026-09-29 · 79 Word Search** (🆕 new, measured; folder half-spoils) — ⚠️ **partial.** Asked "is this
+  backtracking?", then "this can be done with DFS". The picking feature — a cell is visited only for the current
+  path, so it is unmarked on return and another path can reuse it — came after the "what does visited mean here?"
+  prompt; the learner's Hierholzer analogy was corrected (Hierholzer never undoes). → 🟡.
+- **2026-09-29 · 846 Hand of Straights** (🟡 re-rep; retry, half-spoiled: greedy folder) — ✅ **hit.** Top comment:
+  "sort and then check if current number is starting of a sequence … freq counter … decrement when we use them" —
+  count map + smallest-first, unaided. Sep 23 watch item half met: the *why* (the smallest card left can only start a
+  group) was not stated, though the code relies on it correctly; `range(num, num + groupSize)` bound right. → 🟢 s1.
+- **2026-09-29 · 763 Partition Labels** (🟡 re-rep; retry, half-spoiled: greedy folder) — ✅ **hit.** Top comment:
+  freq map counted down + "a set for the current items seen … if set is empty, we add length into the result" — the
+  cut is a property of the whole window, not the current char (the Sep 19 coach-supplied fix, now unaided). Blank
+  page, no hints. → 🟢 s1.
 - **2026-09-28 · 853 Car Fleet** (🟢 s1 review; retry, half-spoiled: stack folder) — ⚠️ **partial.** Top comment named
   sort-by-position (the car ahead can't be passed) + time-to-target, unaided. The picking feature — a stack of fleet
   times, a car starting a new fleet only when strictly slower than `fleet[-1]` — needed an outside hint. → 🟡.

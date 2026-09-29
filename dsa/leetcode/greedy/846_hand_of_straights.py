@@ -28,6 +28,35 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-09-29 ──────────────
+    def isNStraightHand_20260929(self, hand: List[int], groupSize: int) -> bool:
+        # sort and then check if current number is starting of a sequence
+        # we do need a freq counter as well though to make sure we can use the number
+        # we decrement the freq counter when we use them as part of a sequence
+
+        freq_map = Counter(hand)
+
+        hand.sort()
+
+        def is_sequence(num):
+            for seq_number in range(num, num + groupSize):
+                # if next number does not exist or does not have freq left, return False
+                if seq_number not in freq_map or freq_map[seq_number] == 0:
+                    return False
+                # if it does exist, decrement by 1
+                freq_map[seq_number]-=1
+            return True
+
+        for num in hand:
+            # start of sequence
+            if freq_map[num] > 0:
+                # if we are not able to do a sequence with num, return False immediately
+                if not is_sequence(num):
+                    return False
+            # if zero, then this is already used by another sequence and just continue
+        
+        return True
+
     # ── Attempt · 2026-09-23 ──────────────
     def isNStraightHand_20260923(self, hand: List[int], groupSize: int) -> bool:
         # we can use freqMap here
