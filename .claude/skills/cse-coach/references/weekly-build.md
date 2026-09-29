@@ -128,7 +128,7 @@ Two standing passes ride every Sunday close-out:
   **`| Problem | S | E | Next | Technique |`**:
   - **Problem** — glyph prefix(es) + `[name](file) · [LC](url)` (a variant parenthetical stays, read from
     the tracker row per the variant rule above);
-  - **S / E** — start / end comfort glyph; **Next** — next-review glyph;
+  - **S / E** — start / end comfort glyph; a 🟢 in **S** carries its streak going in (`🟢 s1`), which `effort_budget.py` prices from; **Next** — next-review glyph;
   - **Technique** — exactly **ONE word** (Backtracking · Dijkstra · Kruskal · Prefix-sum · …), nothing else.
   - **Row order** — within each day, problems run from highest priority to lowest: 🔴/🟡 conversions first, then new problems, then 🟢 reviews, with easy reviews last. A board shown to the learner keeps that order.
 

@@ -424,10 +424,15 @@ def parse_schedule_day(path: Path, day: dt.date) -> tuple[list[dict], float | No
         # wraps the LINK (`~~[496 ...](...)~~ · [LC](...)`), so trailing-only stripping
         # leaves a stray `~~` in the middle of the printed title.
         text = re.sub(r"~~|\*\*", "", text)
+        start_glyph = glyph.group(0) if glyph else None
         items.append({
             "num": num.group(1) if num else None,
-            "start": glyph.group(0) if glyph else None,
-            "start_streak": int(streak_m.group(1)) if streak_m else 0,
+            "start": start_glyph,
+            # A 🟢 Start cell with no `sN` carries no streak -- None, not 0, so
+            # price_day_items() can tell "streak zero" from "streak unknown" and
+            # print its own warning instead of silently pricing the highest 🟢 price.
+            "start_streak": (int(streak_m.group(1)) if streak_m
+                             else None if start_glyph == "🟢" else 0),
             "is_new": NEW_GLYPH in (m["c2"] or ""),
             "is_complexity": is_complexity_technique(m["c5"]),
             "done": "~~" in cell,
@@ -450,6 +455,7 @@ def price_day_items(day: dt.date, items: list[dict], rows: list[dict], cfg: dict
 
     done_total = rest_total = 0.0
     guessed = 0
+    streakless = 0
     done_lines: list[str] = []
     rest_lines: list[str] = []
     unpriced: list[str] = []
@@ -471,9 +477,21 @@ def price_day_items(day: dt.date, items: list[dict], rows: list[dict], cfg: dict
             # at build, not what later reps added.
             diff = tracked[0]["diff"]
             attempts = attempt_count(tracked[0].get("reps"), before=day)
-            cost = price(it["start"], it["start_streak"], diff, attempts, cfg)
-            streak_tag = f" s{it['start_streak']}" if it["start"] == "🟢" else ""
-            note = f"{it['start']}{streak_tag} {diff[0]}"
+            if it["start"] == "🟢" and it["start_streak"] is None:
+                # A bare 🟢 Start cell (see parse_schedule_day()) has no recorded streak.
+                # Streak 0 is the most expensive 🟢 price, so pricing it there can only
+                # OVERSTATE the row. Price at s0 (an upper bound) but say so, rather than
+                # let it read the same as a genuine streak-0 row (Sep 28, 2026: 25 bare
+                # cells read Monday as "8.0, header matches" when the build's own basis
+                # was 7.4).
+                streakless += 1
+                cost = price("🟢", 0, diff, attempts, cfg)
+                note = (f"🟢 s? {diff[0]} !! no streak in the Start cell -- "
+                        f"priced as s0 (the highest 🟢 price)")
+            else:
+                cost = price(it["start"], it["start_streak"], diff, attempts, cfg)
+                streak_tag = f" s{it['start_streak']}" if it["start"] == "🟢" else ""
+                note = f"{it['start']}{streak_tag} {diff[0]}"
         elif it.get("is_new"):
             # 🆕 means unseen going in: bill Blank (🔴), zero prior attempts, regardless
             # of what the tracker shows now -- see NEW_GLYPH. Only the difficulty is worth
@@ -506,6 +524,7 @@ def price_day_items(day: dt.date, items: list[dict], rows: list[dict], cfg: dict
         "remaining": rest_total,
         "built": done_total + rest_total,
         "guessed": guessed,
+        "streakless": streakless,
         "unpriced": unpriced,
         "done_lines": done_lines,
         "rest_lines": rest_lines,
@@ -534,7 +553,7 @@ def price_schedule_day(day: dt.date, rows: list[dict], cfg: dict) -> None:
 
     p = price_day_items(day, items, rows, cfg)
     done_total, rest_total, built = p["done"], p["remaining"], p["built"]
-    guessed, unpriced = p["guessed"], p["unpriced"]
+    guessed, unpriced, streakless = p["guessed"], p["unpriced"], p["streakless"]
     done_lines, rest_lines = p["done_lines"], p["rest_lines"]
 
     print(f"{day:%a %b %d} - {path.name}\n")
@@ -565,6 +584,9 @@ def price_schedule_day(day: dt.date, rows: list[dict], cfg: dict) -> None:
             bits.append(f"{guessed} untracked row(s) guessed at Blank Medium -- a new "
                         f"HARD really costs 1.5x that")
         print(f"     !! this total is a LOWER BOUND: {'; '.join(bits)}.")
+    if streakless:
+        print(f"  !! {streakless} 🟢 row(s) carry no streak in the Start cell -- "
+              f"priced at s0, so this total may OVERSTATE the day")
     if built > ceiling:
         print(f"  !! the day as BUILT is OVER by {built - ceiling:.1f}")
     elif not partial:
@@ -576,12 +598,14 @@ def price_schedule_day(day: dt.date, rows: list[dict], cfg: dict) -> None:
     # nothing had ever checked it against the rows underneath it. Only assert a real
     # mismatch when EVERY row was priced from a Start glyph against a tracked row --
     # otherwise the difference is just the part this parser admits it cannot see, and
-    # crying wrong on that is how a check stops being read.
+    # crying wrong on that is how a check stops being read. A streakless 🟢 row is priced
+    # from a guessed streak (s0), so it is in the same boat -- "matches" would claim an
+    # agreement this parser cannot actually vouch for.
     if stated is None:
         print("  !! the day header states no unit total -- add it so it can be checked")
-    elif abs(stated - built) <= 0.05:
+    elif abs(stated - built) <= 0.05 and not streakless:
         print(f"  header says {stated:.1f} -- matches")
-    elif partial:
+    elif partial or streakless:
         print(f"  header says {stated:.1f}, priced rows sum to {built:.1f} "
               f"(difference {stated - built:+.1f}) -- CANNOT VERIFY while rows are "
               f"unpriced or guessed. Check that difference is what those rows are worth.")

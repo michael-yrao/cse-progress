@@ -34,6 +34,7 @@ problem statements, no recaps. Rules unchanged — only verbosity drops.
 
 ## Key files
 - `.claude/skills/cse-coach/SKILL.md` + `references/` — the coaching engine (read first)
+- `.claude/skills/effort-units/SKILL.md` — every effort-unit calculation: which command, one pricing basis, moving a row and its day headers
 - `CLAUDE.md` — always-on gates, repo-maintenance rules, pointers (thin)
 - `cse.config.yml` — engine settings
 - `scripts/update_review_dates.py` — Comfort→interval engine (runs on commit)

@@ -1309,6 +1309,62 @@ class BuildWorkloadTests(unittest.TestCase):
         self.assertAlmostEqual(priced["remaining"], 3.0)
         self.assertAlmostEqual(priced["built"], 4.4)
 
+    def test_price_day_items_bills_start_streak(self):
+        """A 🟢 Start cell bills the streak it carries (parse_schedule_day() reads it
+        from `sN`), not a flat s0 -- except a BARE 🟢 (start_streak=None), which has no
+        recorded streak and must price as s0 while counting as `streakless`, so a day
+        with bare 🟢 cells is flagged rather than silently priced as if s0 were known
+        (Sep 28, 2026: 25 bare cells read as "8.0, header matches" when the built basis
+        was 7.4). `green_streak_units` makes s0 and s1 price differently, so a fix that
+        dropped the streak on the floor (or crashed on `None`) could not pass this."""
+        cfg = {
+            "comfort_units": {"🔴": 3.0, "🟡": 2.0, "🟢": 1.0},
+            "difficulty": {"Medium": 1.0},
+            "green_streak_units": {0: 1.0, 1: 0.8, 2: 0.6},
+        }
+        tracked = [_row(601, "🟢", 2, diff="Medium")]
+        day = dt.date(2026, 8, 10)
+        base_item = {"num": "601", "is_complexity": False, "done": False, "text": "601"}
+        cases = [
+            ("known streak", {**base_item, "start": "🟢", "start_streak": 1,
+                              "is_new": False},
+             0.8, 0),
+            ("bare 🟢 (no streak)", {**base_item, "start": "🟢", "start_streak": None,
+                                     "is_new": False},
+             1.0, 1),
+            ("new intake", {**base_item, "start": None, "start_streak": 0,
+                            "is_new": True},
+             3.0, 0),
+        ]
+        for name, item, expected_cost, expected_streakless in cases:
+            with self.subTest(name):
+                priced = eb.price_day_items(day, [item], tracked, cfg)
+                self.assertAlmostEqual(priced["built"], expected_cost)
+                self.assertEqual(priced["streakless"], expected_streakless)
+
+    def test_parse_schedule_day_start_streak(self):
+        """parse_schedule_day() reads a 🟢 Start cell's `sN` into start_streak, and
+        returns None (not a silent 0) for a bare 🟢 with no streak written -- the
+        signal price_day_items() needs to tell 'streak zero' from 'streak unknown'."""
+        fixture = (
+            "## Daily Schedule\n\n"
+            "| Problem | S | E | Next | Technique |\n"
+            "|---|:-:|:-:|:-:|---|\n"
+            "| ▸ **Mon Aug 10** · 2.0 units — Streak test day |  |  |  |  |\n"
+            "| [601 Widget One](../../../dsa/leetcode/arrays/601_widget_one.py)"
+            " · [LC](https://leetcode.com/problems/widget-one/) | 🟢 s1 | | | Arrays |\n"
+            "| [602 Widget Two](../../../dsa/leetcode/arrays/602_widget_two.py)"
+            " · [LC](https://leetcode.com/problems/widget-two/) | 🟢 | | | Arrays |\n"
+            "| |  |  |  |  |\n"
+        )
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "20260810_schedule.md"
+            path.write_text(fixture, encoding="utf-8")
+            items, _ = eb.parse_schedule_day(path, dt.date(2026, 8, 10))
+        by_num = {it["num"]: it for it in items}
+        self.assertEqual(by_num["601"]["start_streak"], 1)
+        self.assertIsNone(by_num["602"]["start_streak"])
+
 
 class SolutionFilesTests(unittest.TestCase):
     """links.solution_files() — the map gamify reads: keyed by the file's leading number,

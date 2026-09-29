@@ -41,7 +41,7 @@ resources it may also cite (a `*_gotchas.md` ledger, `cse.config.yml`, a generat
 | A retry — hiding/restoring prior attempts | `references/retry-and-restore.md` |
 | Any problem discussion (solve/review/mention) | `references/review-workflow.md` |
 | Proposing a comfort rating / next interval | `references/spaced-repetition.md` |
-| Pricing a day, accepting an overflow pull, mid-week re-price | `references/effort-budget.md` |
+| Effort policy: the ceiling, what is unpriced, accepting an overflow pull | `references/effort-budget.md` — any unit NUMBER goes through the `effort-units` skill |
 | Last session of the week — the close-out | `references/weekly-build.md` |
 | "Do I actually know technique X?" / phase exit | `references/technique-coverage.md` |
 | Running or scheduling a System Design mock | `references/system-design.md` |
@@ -184,9 +184,9 @@ promoting a method variant.
 
 ## 6. Effort budget
 
-A day is budgeted in **units**, not a problem count. Never hand-compute — run
-`python scripts/effort_budget.py`. The unit model, the `--day` vs `--schedule-day`
-distinction, familiarity discounts, and the "never raise the ceiling to catch up" rule
+A day is budgeted in **units**, not a problem count. Every unit number — pricing a day,
+moving a row, updating a day header — goes through the `effort-units` skill. The unit model,
+familiarity discounts and the policy (the ceiling is the goal; never raise it to catch up)
 are in `references/effort-budget.md`. SD is **not** priced.
 
 ## 7. System Design — the learner studies, you interview

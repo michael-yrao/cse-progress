@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-28",
+  "generatedAt": "2026-09-29",
   "totals": {
     "problems": 128,
     "solutions": 139,
@@ -39,7 +39,7 @@
   },
   "onSchedule": {
     "totalActive": 139,
-    "dueToday": 0,
+    "dueToday": 1,
     "overdue": 5
   },
   "trophyCase": {
@@ -4399,7 +4399,7 @@
         "date": "2026-09-28",
         "weekday": "Monday",
         "label": "Backtracking intake (40) + Greedy/Stack/Heap reviews",
-        "units": 8.0,
+        "units": 7.4,
         "items": [
           {
             "lcNumber": 45,
@@ -5473,14 +5473,14 @@
       "date": "2026-09-24",
       "planned": 5.5,
       "done": 2.0,
-      "built": 5.5,
+      "built": 3.7,
       "partial": false
     },
     {
       "date": "2026-09-25",
       "planned": 13.1,
-      "done": 13.5,
-      "built": 13.5,
+      "done": 12.7,
+      "built": 12.7,
       "partial": false
     },
     {
@@ -5494,56 +5494,56 @@
       "date": "2026-09-27",
       "planned": 8.9,
       "done": 8.3,
-      "built": 9.6,
+      "built": 8.9,
       "partial": true
     },
     {
       "date": "2026-09-28",
-      "planned": 8.0,
-      "done": 8.0,
-      "built": 8.0,
+      "planned": 7.4,
+      "done": 7.4,
+      "built": 7.4,
       "partial": false
     },
     {
       "date": "2026-09-29",
       "planned": 7.7,
       "done": 0.0,
-      "built": 5.5,
+      "built": 4.7,
       "partial": true
     },
     {
       "date": "2026-09-30",
       "planned": 7.9,
       "done": 0.0,
-      "built": 8.1,
+      "built": 7.9,
       "partial": true
     },
     {
       "date": "2026-10-01",
       "planned": 7.9,
       "done": 0.0,
-      "built": 4.0,
+      "built": 2.9,
       "partial": true
     },
     {
       "date": "2026-10-02",
       "planned": 7.9,
       "done": 0.0,
-      "built": 5.2,
+      "built": 4.9,
       "partial": true
     },
     {
       "date": "2026-10-03",
       "planned": 7.9,
       "done": 0.0,
-      "built": 5.6,
+      "built": 4.0,
       "partial": true
     },
     {
       "date": "2026-10-04",
       "planned": 7.6,
       "done": 0.0,
-      "built": 6.3,
+      "built": 3.6,
       "partial": true
     }
   ],

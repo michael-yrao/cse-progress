@@ -1564,3 +1564,23 @@ decisions:
       left these rows out of a day's header, but effort_budget.py priced each one as a full rep
       of its problem, so the workload chart's done and built ran above the plan.
     affects: [effort_budget]
+
+  - id: start-cell-carries-streak-sep28
+    date: 2026-09-28
+    summary: >-
+      A 🟢 Start cell carries its streak going in (`🟢 s1`), and `effort_budget.py` prices from
+      it. A bare 🟢 used to price silently as streak 0, the most expensive green, so the Sep 28
+      build (25 bare cells) priced Monday's done reps at 8.0 when they cost 7.4. The bare cells
+      in the 0921 and 0928 schedules are backfilled from the tracker as of each rep. A bare 🟢
+      now prints its own warning and blocks the "header matches" line.
+    affects: [effort-budget, weekly-build]
+
+  - id: effort-units-skill-sep28
+    date: 2026-09-28
+    summary: >-
+      Every effort-unit calculation moves to a dedicated `effort-units` skill: which command
+      answers which question, one pricing mode per answer, the move/add/remove procedure that
+      sets each touched day header from `--schedule-day`, and how to read its warnings. The
+      policy (ceiling, unpriced rows, never raising the ceiling) stays in
+      `cse-coach/references/effort-budget.md`.
+    affects: [effort-budget]
