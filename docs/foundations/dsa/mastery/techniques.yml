@@ -874,8 +874,9 @@ techniques:
       - {number: 22}
       - {number: 39}
       - {number: 46}
-      - {number: 40}   # take/skip with duplicate values: sort, skip branch jumps past every copy (Sep 28, 2026)
+      - {number: 40}   # duplicate values, sorted: take/skip skips every copy (Sep 28); pick-next loop skips a value already tried by `prev` (Sep 30, 2026)
       - {number: 79}   # grid path search: visited is per-path, add before the 4 calls, remove after (Sep 29, 2026)
+      - {number: 131}  # partition a string: path = list of pieces, the loop picks where the next piece ends, palindrome check per piece (Sep 30, 2026)
       # Declared Sep 26, 2026 (decision `mastery-ratio-done-over-planned-sep26`) —
       # roadmap.yml. 212 is ALSO declared under Trie above (dual credit).
       - {number: 90, queued: "phase:Backtracking"}

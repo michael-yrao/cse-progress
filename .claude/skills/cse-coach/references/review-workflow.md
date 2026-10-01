@@ -76,7 +76,13 @@ the rep and is a spoiler. It then contaminated the *rating*: 🔴 was proposed o
 and the learner had to correct the person rating them. Ratings set intervals, so an unverified
 premise here outlives the session. 3+ occurrences (Jul 25/27/29).
 
-full rule: [`feedback_read_before_asserting.md`](.claude/memory/feedback_read_before_asserting.md).
+**Struggling with a technique? The remedy is the next real rep.** Do not offer a no-code drill or a
+detached exercise in its place. The learner learns by doing the problem again and asking questions
+as they come up (learner's call, 2026-09-30). Answer those questions in full, then let the schedule
+bring the problem back.
+
+full rule: [`feedback_read_before_asserting.md`](.claude/memory/feedback_read_before_asserting.md),
+[`feedback_reps_over_drills.md`](.claude/memory/feedback_reps_over_drills.md).
 
 ## Steps 3–5 — Mark, rate, log
 

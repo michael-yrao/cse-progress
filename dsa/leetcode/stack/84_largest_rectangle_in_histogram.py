@@ -17,6 +17,34 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-09-30 ──────────────
+    def largestRectangleArea_20260930(self, heights: List[int]) -> int:
+        # this is a stack problem where when we see a lower boundary, we calc the area of what the boundaries contain. so this means this is an non-decreasing or increasing stack
+        # since our right side is the max boundary that is not included, we need a left side that is our min boundary that is not included, this would be index -1
+        # so this means our width is max boundary - min boundary - 1 (4 - 1 - 1)
+        # we do need to add -math.inf to the end to ensure we run a calc if we are ever increasing
+        largest_rectangle = -math.inf
+
+        heights.append(-math.inf)
+
+        increasing_stack = []
+        
+        for i in range(len(heights)):
+            while increasing_stack and heights[i] < heights[increasing_stack[-1]]:
+                height_index = increasing_stack.pop()
+                height = heights[height_index]
+                # the element before this index is the min boundary so stack[-1]
+                if increasing_stack:
+                    min_boundary = increasing_stack[-1]
+                else:
+                    min_boundary = -1
+                width = i - min_boundary - 1
+                largest_rectangle = max(largest_rectangle, height * width)
+            # now we are abiding by the increasing_stack rules, add in i
+            increasing_stack.append(i)
+        
+        return largest_rectangle # type: ignore
+
     # ── Attempt · 2026-09-20 ──────────────
     def largestRectangleArea_20260920(self, heights: List[int]) -> int:
         # we want to calculate the area whenever we go down in height, this is increasing stack

@@ -75,19 +75,22 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/dsa/mastery/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **129+6** problems &nbsp;·&nbsp; **140+6** solutions &nbsp;·&nbsp; **627+6** reps
+> **130+6** problems &nbsp;·&nbsp; **141+6** solutions &nbsp;·&nbsp; **631+6** reps
 
 | | 🏆 Retired | 🎓 Graduated | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|:---:|
-| **Solutions** | 0 | 24 | 104 | 11 | 1 |
+| **Solutions** | 0 | 24 | 106 | 9 | 2 |
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Rep Date | Rep Dates |
 |---|---|---|---|---|---|---|
+| Medium | [40. Combination Sum II](https://leetcode.com/problems/combination-sum-ii/) | 🔴 | 0 | 2026-10-02 | 2026-09-30 | 2026-09-28, 2026-09-30 |
+| Hard | [84. Largest Rectangle in Histogram](https://leetcode.com/problems/largest-rectangle-in-histogram/) | 🟢 | 1 | 2026-10-30 | 2026-09-30 | 2026-09-04, 2026-09-18, 2026-09-20, 2026-09-30 |
+| Medium | [78. Subsets](https://leetcode.com/problems/subsets/) | 🟢 | 1 | 2026-10-30 | 2026-09-30 | 2026-09-20, 2026-09-30 |
+| Medium | [131. Palindrome Partitioning](https://leetcode.com/problems/palindrome-partitioning/) | 🔴 | 0 | 2026-10-02 | 2026-09-30 | 2026-09-30 |
 | Medium | [79. Word Search](https://leetcode.com/problems/word-search/) | 🟡 | 0 | 2026-10-09 | 2026-09-29 | 2026-09-29 |
 | Medium | [763. Partition Labels](https://leetcode.com/problems/partition-labels/) | 🟢 | 1 | 2026-10-29 | 2026-09-29 | 2026-09-09, 2026-09-19, 2026-09-29 |
 | Medium | [846. Hand of Straights](https://leetcode.com/problems/hand-of-straights/) | 🟢 | 1 | 2026-10-29 | 2026-09-29 | 2026-09-11, 2026-09-23, 2026-09-29 |
 | Medium | [53. Maximum Subarray (Kadane)](https://leetcode.com/problems/maximum-subarray/) | 🎓 | 3 | 2027-03-28 | 2026-09-29 | 2026-01-08, 2026-04-02, 2026-06-23, 2026-06-24, 2026-07-26, 2026-09-29 |
-| Medium | [40. Combination Sum II](https://leetcode.com/problems/combination-sum-ii/) | 🔴 | 0 | 2026-09-30 | 2026-09-28 | 2026-09-28 |
 | Medium | [45. Jump Game II](https://leetcode.com/problems/jump-game-ii/) | 🟢 | 1 | 2026-10-28 | 2026-09-28 | 2026-09-08, 2026-09-18, 2026-09-28 |
 | Medium | [572. Subtree Of Another Tree](https://leetcode.com/problems/subtree-of-another-tree/) | 🟢 | 2 | 2026-11-27 | 2026-09-28 | 2026-05-02, 2026-06-12, 2026-08-15, 2026-08-25, 2026-09-28 |
 | Medium | [155. Min Stack (Pair with Min-So-Far)](https://leetcode.com/problems/min-stack/) | 🟢 | 2 | 2026-11-27 | 2026-09-28 | 2026-08-12, 2026-08-14, 2026-08-29, 2026-09-28 |
@@ -118,8 +121,6 @@ Notes for future agents:
 | Medium | [134. Gas Station](https://leetcode.com/problems/gas-station/) | 🟢 | 1 | 2026-10-21 | 2026-09-21 | 2026-09-09, 2026-09-11, 2026-09-21 |
 | Hard | [778. Swim in Rising Water (Dijkstra / Min-Heap)](https://leetcode.com/problems/swim-in-rising-water/) | 🟢 | 2 | 2026-11-20 | 2026-09-21 | 2026-07-23, 2026-08-02, 2026-08-12, 2026-08-22, 2026-09-21 |
 | Medium | [211. Design Add and Search Words Data Structure](https://leetcode.com/problems/design-add-and-search-words-data-structure/) | 🟢 | 2 | 2026-11-20 | 2026-09-21 | 2026-07-09, 2026-07-11, 2026-07-21, 2026-07-23, 2026-08-02, 2026-08-12, 2026-08-22, 2026-09-21 |
-| Hard | [84. Largest Rectangle in Histogram](https://leetcode.com/problems/largest-rectangle-in-histogram/) | 🟡 | 0 | 2026-09-30 | 2026-09-20 | 2026-09-04, 2026-09-18, 2026-09-20 |
-| Medium | [78. Subsets](https://leetcode.com/problems/subsets/) | 🟡 | 0 | 2026-09-30 | 2026-09-20 | 2026-09-20 |
 | Medium | [138. Copy List with Random Pointer](https://leetcode.com/problems/copy-list-with-random-pointer/) | 🟢 | 2 | 2026-11-19 | 2026-09-20 | 2026-07-03, 2026-07-05, 2026-08-04, 2026-08-13, 2026-09-20 |
 | Medium | [199. Binary Tree Right Side View](https://leetcode.com/problems/binary-tree-right-side-view/) | 🎓 | 3 | 2027-03-19 | 2026-09-20 | 2026-05-09, 2026-06-13, 2026-07-14, 2026-09-20 |
 | Hard | [2097. Valid Arrangement of Pairs](https://leetcode.com/problems/valid-arrangement-of-pairs/) | 🟢 | 1 | 2026-10-19 | 2026-09-19 | 2026-09-05, 2026-09-07, 2026-09-19 |

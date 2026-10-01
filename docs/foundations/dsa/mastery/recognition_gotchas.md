@@ -1,3 +1,19 @@
+- **2026-09-30 · 131 Palindrome Partitioning** (🆕 new, measured; folder half-spoils) — ⚠️ **partial.** "all possible
+  palindrome is obviously backtracking" in the top comment, unaided. The picking feature (the choice is where the
+  next piece ends, so each child is one whole substring and the path is a list of pieces) was not named: choice and
+  validity were both "n/a ?", and the five slots were coach-supplied on request. → 🔴.
+- **2026-09-30 · 78 Subsets** (🟡 re-rep; retry, half-spoiled: backtracking folder) — ✅ **hit.** Top comment: "the
+  basic backtracking problem where we choose or not choose a number", five slots with validity none and the index as
+  state. Blank page, no hints; both Sep 20 coach fixes held (`>=` base case, `return` after recording). Still the
+  `path + [x]` form, so the append/pop undo watch item stays open. Same session as the 40 loop-form teach. → 🟢 s1.
+- **2026-09-30 · 84 Largest Rectangle in Histogram** (🟡 re-rep; retry, half-spoiled: stack folder, the stub names
+  the pattern) — ✅ **hit.** Top comment: "when we see a lower boundary, we calc the area of what the boundaries
+  contain … increasing stack", both boundaries excluded, width = max boundary − min boundary − 1, a `-math.inf`
+  sentinel to flush a rising run. Blank page, no hints; 3,007/3,007 against brute force. → 🟢 s1.
+- **2026-09-30 · 40 Combination Sum II** (🔴 re-rep; retry, half-spoiled: backtracking folder) — ⚠️ **partial.**
+  Backtracking + "sort" + "no duplicate combinations, handle in validity" in the top comment, unaided. The picking
+  feature (a repeated value is tried once per node's loop, so equal siblings are skipped) was not named; the take/skip
+  `setState` stand-in came back, and the sibling-skip rule was coach-taught. → 🔴.
 - **2026-09-29 · 53 Maximum Subarray (Kadane)** (🟢 s2 review; retry, fully spoiled: the stub's method name says
   Kadane) — ✅ **hit, habit only.** Top comment "kadane's"; max taken before the reset so an all-negative array
   returns its largest element. Blank page, no hints. → 🎓.

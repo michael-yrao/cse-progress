@@ -28,6 +28,39 @@ from typing import List, Optional
 
 
 class Solution:
+
+    # ── Attempt · 2026-09-30 ──────────────
+    def combinationSum2_20260930(self, candidates: List[int], target: int) -> List[List[int]]:
+        # all unique combinations = backtracking
+        # no duplicates combinations so will need to consider that in validity
+        # sort and then go through each node in a loop
+        # path: current array for solution
+        # state: index state, first index this path can pick from
+        # validity: if candidates[i] != candidates[i-1] and sum(path) + candidates[index] <= target
+        # choice: choose next index to include
+        # base case: sum is equal to target
+
+        result = []
+
+        candidates.sort()
+
+        def backtrack(path, indexState):
+            if sum(path) == target:
+                result.append(path)
+                return
+            
+            # for loop is our breadth and tells us to do recursion on each of current node's children based on validity
+            for i in range(indexState, len(candidates)):
+                if i > indexState and candidates[i] == candidates[i-1]:
+                    continue
+                if sum(path) + candidates[i] <= target:
+                    # recursion call is our depth
+                    # pick i and then pick i + 1 onwards in our recursion calls
+                    backtrack(path + [candidates[i]], i + 1)
+                
+        backtrack([], 0)
+        return result
+
     # ── Attempt 1 · 2026-09-28 ────────────────────────────────────────────
     def combinationSum2(self, candidates: List[int], target: int) -> List[List[int]]:
         # path: current array

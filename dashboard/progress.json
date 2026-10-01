@@ -34,7 +34,7 @@
     "total": 105,
     "started": 60,
     "noGreen": 1,
-    "thin": 6,
+    "thin": 5,
     "variantGaps": 0
   },
   "onSchedule": {
@@ -1558,14 +1558,15 @@
       "minProblems": 9,
       "coverageFloor": 5,
       "uncleanCount": 4,
-      "problemCount": 6,
+      "problemCount": 7,
       "problems": [
         22,
         39,
         40,
         46,
         78,
-        79
+        79,
+        131
       ],
       "bestComfort": "🟢",
       "hasGreen": true,
@@ -1605,7 +1606,7 @@
           "trigger": "phase:Backtracking"
         }
       ],
-      "plannedTotal": 10,
+      "plannedTotal": 11,
       "untriedVariations": []
     },
     {
@@ -3781,9 +3782,9 @@
       "family": "stack",
       "tier": "core",
       "started": true,
-      "minProblems": 7,
+      "minProblems": 6,
       "coverageFloor": 4,
-      "uncleanCount": 3,
+      "uncleanCount": 2,
       "problemCount": 6,
       "problems": [
         84,
@@ -3795,7 +3796,7 @@
       ],
       "bestComfort": "🟢",
       "hasGreen": true,
-      "thin": true,
+      "thin": false,
       "hasVariantGap": false,
       "buildsOn": [
         "Stack (matching)"
@@ -4722,11 +4723,11 @@
               "new"
             ],
             "kind": "new",
-            "done": false,
+            "done": true,
             "deferredTo": null,
-            "endComfort": null,
+            "endComfort": "🔴",
             "endNote": null,
-            "nextReview": null
+            "nextReview": "2026-10-02"
           },
           {
             "lcNumber": 219,
@@ -4741,10 +4742,10 @@
             ],
             "kind": "rep",
             "done": false,
-            "deferredTo": null,
+            "deferredTo": "2026-10-03",
             "endComfort": null,
             "endNote": null,
-            "nextReview": null
+            "nextReview": "2026-10-03"
           }
         ]
       },
@@ -4880,7 +4881,7 @@
         "date": "2026-10-02",
         "weekday": "Friday",
         "label": "Backtracking/Binary-search/Monotonic-stack conversions + Kruskal intake (9004) + BFS review",
-        "units": 10.9,
+        "units": 13.9,
         "items": [
           {
             "lcNumber": 40,
@@ -4890,6 +4891,22 @@
             "difficulty": "Medium",
             "url": "https://leetcode.com/problems/combination-sum-ii/",
             "file": "dsa/leetcode/backtracking/40_combination_sum_ii.py",
+            "tags": [],
+            "kind": "rep",
+            "done": false,
+            "deferredTo": null,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
+          },
+          {
+            "lcNumber": 131,
+            "title": "Palindrome Partitioning",
+            "technique": "Backtracking",
+            "startComfort": "🔴",
+            "difficulty": "Medium",
+            "url": "https://leetcode.com/problems/palindrome-partitioning/",
+            "file": "dsa/leetcode/backtracking/131_palindrome_partitioning.py",
             "tags": [],
             "kind": "rep",
             "done": false,
@@ -4969,8 +4986,8 @@
       {
         "date": "2026-10-03",
         "weekday": "Saturday",
-        "label": "Kruskal conversion (1489) + Dijkstra intake (3620) + Prefix-sum/Multi-source-BFS/Linked-list reviews",
-        "units": 7.9,
+        "label": "Kruskal conversion (1489) + Dijkstra intake (3620) + Prefix-sum/Multi-source-BFS/Linked-list/Hash-set reviews",
+        "units": 8.2,
         "items": [
           {
             "lcNumber": 1489,
@@ -5049,6 +5066,24 @@
             "url": "https://leetcode.com/problems/add-two-numbers/",
             "file": "dsa/leetcode/linked_list/2_add_two_numbers.py",
             "tags": [],
+            "kind": "rep",
+            "done": false,
+            "deferredTo": null,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
+          },
+          {
+            "lcNumber": 219,
+            "title": "Contains Duplicate II",
+            "technique": "Hash-set",
+            "startComfort": "🟢",
+            "difficulty": "Easy",
+            "url": "https://leetcode.com/problems/contains-duplicate-ii/",
+            "file": "dsa/leetcode/sliding_window/219_contains_duplicate_ii.py",
+            "tags": [
+              "moved"
+            ],
             "kind": "rep",
             "done": false,
             "deferredTo": null,
@@ -5669,7 +5704,7 @@
     {
       "date": "2026-09-30",
       "planned": 10.9,
-      "done": 7.6,
+      "done": 10.6,
       "built": 10.9,
       "partial": false
     },
@@ -5682,16 +5717,16 @@
     },
     {
       "date": "2026-10-02",
-      "planned": 10.9,
+      "planned": 13.9,
       "done": 0.0,
-      "built": 10.9,
+      "built": 13.9,
       "partial": false
     },
     {
       "date": "2026-10-03",
-      "planned": 7.9,
+      "planned": 8.2,
       "done": 0.0,
-      "built": 7.9,
+      "built": 8.2,
       "partial": false
     },
     {

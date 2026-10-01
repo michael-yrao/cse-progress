@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-29",
+  "generatedAt": "2026-10-01",
   "entries": [
     {
       "key": "733:bfs",
@@ -7287,8 +7287,8 @@
         {
           "kind": "attempt",
           "symbol": "subsets",
-          "startLine": 19,
-          "endLine": 47,
+          "startLine": 46,
+          "endLine": 74,
           "lines": [
             "    # ── Attempt 1 · 2026-09-20 ────────────────────────────────────────────",
             "    def subsets(self, nums: List[int]) -> List[List[int]]:",
@@ -7345,8 +7345,8 @@
         {
           "kind": "attempt",
           "symbol": "largestRectangleArea",
-          "startLine": 80,
-          "endLine": 113,
+          "startLine": 108,
+          "endLine": 141,
           "lines": [
             "    # ── Attempt 1 · 2026-09-04 ────────────────────────────────────────────",
             "    def largestRectangleArea(self, heights: List[int]) -> int:",

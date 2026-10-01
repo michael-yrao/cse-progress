@@ -16,6 +16,33 @@ from typing import List, Optional
 
 
 class Solution:
+
+    # ── Attempt · 2026-09-30 ──────────────
+    def subsets_20260930(self, nums: List[int]) -> List[List[int]]:
+        # this is the basic backtracking problem where we choose or not choose a number
+        # path: current array so far
+        # state: current index that we are performing the choice on
+        # validity: none
+        # choice: choose or not choose current index
+        # base case: current index is greater than len(nums)
+
+        result = []
+
+        def backtrack(path, index_state):
+            if index_state >= len(nums):
+                result.append(path)
+                return
+            
+            # choose the index
+            backtrack(path + [nums[index_state]], index_state + 1)
+
+            # do not choose the index
+            backtrack(path, index_state + 1)
+        
+        backtrack([], 0)
+
+        return result
+
     # ── Attempt 1 · 2026-09-20 ────────────────────────────────────────────
     def subsets(self, nums: List[int]) -> List[List[int]]:
         # returning all possible subsets is backtracking

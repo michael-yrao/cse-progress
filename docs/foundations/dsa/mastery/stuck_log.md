@@ -22,6 +22,60 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🔴 131. Palindrome Partitioning — 2026-09-30 *(NEW — Backtracking intake)*
+**Topic**: Backtracking, pick-next loop over where the next piece ends (partition a string into palindromes)
+
+### Where did I get stuck?
+- Backtracking named unaided, but the model was one string grown a character at a time and recorded when it became a palindrome ("choice: n/a ?", "validity: n/a ?"). That cannot represent `["a","a","b"]`, and it needs to pass through non-palindromes to reach `"abba"`.
+- Asked for the possible first pieces of `"aab"`, answered "a, a, b" (one finished answer, not three options). The prefixes `"a"`, `"aa"`, `"aab"` were coach-supplied, then the tree, then all five slots on request ("help me with the 5").
+- The unlock was "oh substring": each child is one whole slice `s[start..end]`, so `"ab"`, `"abb"`, `"abba"` are siblings, not a chain.
+- Code: `isPalindrome` moved `l` and `r` outward (coach-located, learner-fixed); slice written `s[i:index_state]` (reversed), then `s[start:end]` (dropped single characters, learner gave `end + 1`); the piece replaced the path instead of being added to it; "when do I add it to the result?" answered by the coach (when `start` reaches `len(s)`).
+- Naming: `index_state` did not say start or end; renamed to `start_index` / `end` on the coach's suggestion.
+- Complexity: time O(n · 2ⁿ) right, reasoned from the cut-or-not count on 40 the same day; space O(n²) right, then collapsed to O(1) from n ≤ 16 (carded).
+
+### Core Realization
+The path is a list of pieces, not a string. One call starts at the first unused character; its loop tries every end, each end is one child (one whole substring), a child is entered only if that substring is a palindrome, and the path is recorded when nothing is left to cut.
+
+### Code Snippet
+```python
+def backtrack(path, start_index):
+    if start_index >= len(s):
+        result.append(path.copy())
+        return
+    for end in range(start_index, len(s)):
+        substring = s[start_index:end+1]
+        if isPalindrome(substring):
+            backtrack(path + [substring], end + 1)
+```
+
+⚠️ **Oct 2 re-rep watch items:** (1) before coding, list the root's children for `"aab"`; (2) say what the path holds (a list of pieces) and when it is recorded; (3) name the two indices `start` and `end` and write the inclusive slice.
+
+## 🔴 40. Combination Sum II — 2026-09-30 *(re-rep of the Sep 28 🔴 — Backtracking)*
+**Topic**: Backtracking, pick-next loop with repeated values (sort + skip a value already tried among siblings)
+
+### Where did I get stuck?
+- Opened in the take/skip form again with an index `setState` (the Sep 28 stand-in), then said the problem "should be a looped backtracking" but couldn't see how the loop form works. Sep 28 watch item (1) half met: the comment says duplicates must be handled in validity, not how equal values get decided once.
+- Loop mechanics coach-taught: one call is one node; its `for` walks that node's children (the options for the next slot); the recursive call steps down into one child; returning hands control back to the loop for the next sibling.
+- First loop recursed with `indexState + 1` instead of `i + 1`, so every child restarted at the same index (`[3,2]` and `[3,3]` out of `[1,2,3]`, target 6). Answered "it can't" on the trace prompt, then "no idea"; `i + 1` coach-supplied.
+- Dedup: skipped the `[1,1,2]` trace; the sibling-skip rule (`i > start and candidates[i] == candidates[i-1]`) was coach-taught ("I would never think of that"). A `prev`-variable version then appeared in the file and the coach explained why it works.
+- Complexity: space O(n²) unaided; time needed the "nodes × work per node" method and the in/out-per-index count of 2ⁿ nodes.
+
+### Core Realization
+In the loop form a call is a node, its `for` is that node's children, and the recursive call with `i + 1` fills the next slot from the right of the pick. A local `prev`, reset to -1 in every call, remembers only this node's earlier siblings: a repeated value is skipped among siblings, while `[1,1]` stays reachable through a child.
+
+### Code Snippet
+```python
+prev = -1
+for i in range(indexState, len(candidates)):
+    if candidates[i] == prev:
+        continue
+    if sum(path) + candidates[i] <= target:
+        backtrack(path + [candidates[i]], i + 1)
+    prev = candidates[i]
+```
+
+⚠️ **Oct 2 re-rep watch items:** (1) before coding, say what one call is and what its loop's children are; (2) recurse with `i + 1` (where the pick sits), not the call's own start; (3) say how a repeated value is skipped among siblings and why `[1,1]` still survives.
+
 ## 🟡 79. Word Search — 2026-09-29 *(NEW — Backtracking intake)*
 **Sticking point**: first called it plain DFS; reached "visited belongs to the current path, so unmark on return" only after the "what does visited mean here?" prompt (and likened it to Hierholzer's, which never undoes). In code, the success base case sat behind the bounds check (`[["A"]]`, `"A"` → False), and the cell was never removed from the set because the four-way `or` was returned directly; both bugs coach-located, learner-fixed.
 
