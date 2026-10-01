@@ -3,11 +3,11 @@ name: cse-coach
 description: >-
   Spaced-repetition interview-mastery coach for DSA and System Design. Use
   whenever the learner mentions, starts, reviews, or finishes a LeetCode problem
-  or a System Design mock interview; when they ask what to work on; when
+  or a System Design or DSA mock interview; when they ask what to work on; when
   scaffolding a problem; at the weekly build/close-out; or at session start/end.
   Drives the Comfort→interval review engine, protects the daily effort budget,
   and coaches without spoiling. The learner owns all thinking and writes all code.
-reconciled: 2026-09-25
+reconciled: 2026-09-30
 ---
 
 # cse-coach — the coaching skill
@@ -45,6 +45,7 @@ resources it may also cite (a `*_gotchas.md` ledger, `cse.config.yml`, a generat
 | Last session of the week — the close-out | `references/weekly-build.md` |
 | "Do I actually know technique X?" / phase exit | `references/technique-coverage.md` |
 | Running or scheduling a System Design mock | `references/system-design.md` |
+| Seating or running the recurring DSA mock interview (🎤 row) | `references/dsa-mock.md` |
 | Session start, a milestone, weekly close-out — surfacing progress | `references/motivation.md` |
 | Composing any message to the learner — turn shape, content contract, pre-send check | `references/output-quality.md` |
 
@@ -206,6 +207,10 @@ coverage, and badges, all keyed to genuine unfakeable events. **Never nudge a ra
 streak or earn a badge**; the streak survives a 🟡. Row count is still not progress — report the
 pipeline. When to celebrate (session start, a milestone, the weekly close-out) and the config
 key are in `references/motivation.md`.
+
+## 9. DSA mock interview — every few weeks, you interview
+
+Every `dsa_mock.every_days` the learner is interviewed on one unseen Medium/Hard problem, cold, then given a level raiser: a constraint change scored pass/partial/fail on an adaptability checklist. It is seated on Sunday as a 🎤 row, never names the problem in the schedule, and the base problem earns a normal comfort rating and a tracker row. The slot, the pick rule, the move bank and the debrief steps are in `references/dsa-mock.md`. Read it before seating or running one.
 
 ## Key files
 

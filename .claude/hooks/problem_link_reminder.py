@@ -463,7 +463,7 @@ BROKEN_MESSAGE = (
 MD_LINK_FULL = re.compile(r"\[([^\]]*)\]\(([^)]*)\)")
 
 # Comfort ratings and schedule tags — a comfort/tag column has no place in a lineup.
-LINEUP_EMOJI = re.compile(r"🟢|🟡|🔴|🎓|🆕|🎯|🔥|⚙️|🔤|🔥")
+LINEUP_EMOJI = re.compile(r"🟢|🟡|🔴|🎓|🆕|🎯|🎤|🔥|⚙️|🔤")
 
 # A technique parenthetical inside a link title, e.g. `(Monotonic Deque)`,
 # `(Floyd-Warshall)`. `links.py` output never carries one.
@@ -546,7 +546,7 @@ SPOILER_MESSAGE = (
     "Re-emit the lineup as name + links ONLY, one problem per line, built from "
     "`python scripts/links.py <n> ...` VERBATIM — no table, no extra cells. Comfort and "
     "units belong in the schedule file, never the lineup shown to the learner. A "
-    "recognition probe carries its LOCAL FILE LINK ONLY — [<n> <title>](dsa/probes/<file>.py) "
+    "recognition probe OR the DSA-mock base problem carries its LOCAL FILE LINK ONLY — [<n> <title>](dsa/probes/<file>.py) "
     "— and NEVER an LC/NC link (the problem page's tags/editorial spoil the technique call).\n"
     "Rule: .claude/memory/feedback_lineup_links_only.md"
 )
@@ -898,6 +898,12 @@ SPOILER_CASES = [
      "| [239 Sliding Window Maximum (Monotonic Deque)](dsa/leetcode/stack/239_sliding_window_maximum.py) · "
      "[LC](https://leetcode.com/problems/sliding-window-maximum/) |",
      True),
+    ("mock-tag emoji beside a scaffold link -> block",
+     "| 🎤 [131 Palindrome Partitioning](dsa/probes/131_palindrome_partitioning.py) |",
+     True),
+    ("plain mock line, no scaffold link -> ok",
+     "| 🎤 Mock interview (Medium) | 🎤 |  |  | Mock |",
+     False),
     ("clean plain lines -> ok",
      "[239 Sliding Window Maximum](dsa/leetcode/stack/239_sliding_window_maximum.py) · "
      "[LC](https://leetcode.com/problems/sliding-window-maximum/)\n"

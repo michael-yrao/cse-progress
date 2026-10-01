@@ -82,7 +82,7 @@ fixes climbed the ladder:
 - ⚠️ **A retry's file link is a spoiler until scaffolded.** Kickoff-table files are safe (scaffolded
   first, prior attempts stashed). In a **selection/candidate menu** the retry isn't scaffolded yet →
   **LC/NC only**; surface the file link only after the pick is scaffolded. (Learned Jul 20.)
-- ⚠️ **A recognition probe is the INVERSE pair: local file link YES, LC/NC link NO** (Sep 14, 2026).
+- ⚠️ **A recognition probe is the INVERSE pair: local file link YES, LC/NC link NO** (Sep 14, 2026; the DSA-mock base problem too, Sep 30, 2026).
   It is the one on-board item where the *problem-page* link is the spoiler — LC's topic tags / editorial
   name the technique, which is the whole thing the probe measures. The `dsa/probes/<n>_<snake>.py` path
   names the *problem*, not the technique, and the learner must open the file to do the rep — so present it

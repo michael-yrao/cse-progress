@@ -3,9 +3,10 @@ used to be applied by hand at the weekly build (`weekly-build.md`, `scaffolding.
 
 The priority order (rank, then a streak tie-break for a clean 🟢 review):
 
-    0 Start 🔴 · 1 Start 🟡 · 2 Start 🆕 · 3 Start 🎯 · 4 Start 🟢 not Easy (streak asc)
-    5 Start 🟢 Easy (streak asc) · 6 Start 🎓 · 7 Technique = Complexity (checked first,
-    whatever the Start glyph) · 8 anything unclassified (stays in file order)
+    0 Start 🎤 mock interview (checked right after Complexity) · 1 Start 🔴 · 2 Start 🟡
+    · 3 Start 🆕 · 4 Start 🎯 · 5 Start 🟢 not Easy (streak asc) · 6 Start 🟢 Easy
+    (streak asc) · 7 Start 🎓 · 8 Technique = Complexity (checked first, whatever the
+    Start glyph) · 9 anything unclassified (stays in file order)
 
 `priority_key()` is the one place that order lives. `sort_day_blocks()` applies it to a
 whole schedule file's text (a day block at a time, header and trailing blank separator
@@ -35,15 +36,16 @@ import session_date
 
 # The rank table above, as return values of priority_key(). Named so the table in the
 # module docstring and the code cannot silently drift apart.
-RANK_RED = 0
-RANK_YELLOW = 1
-RANK_NEW = 2
-RANK_PROBE = 3
-RANK_GREEN_NOT_EASY = 4
-RANK_GREEN_EASY = 5
-RANK_GRADUATED = 6
-RANK_COMPLEXITY = 7
-RANK_UNCLASSIFIED = 8
+RANK_MOCK = 0
+RANK_RED = 1
+RANK_YELLOW = 2
+RANK_NEW = 3
+RANK_PROBE = 4
+RANK_GREEN_NOT_EASY = 5
+RANK_GREEN_EASY = 6
+RANK_GRADUATED = 7
+RANK_COMPLEXITY = 8
+RANK_UNCLASSIFIED = 9
 
 # Start glyphs with a fixed rank and no streak tie-break.
 _FIXED_RANK_BY_START = {
@@ -57,14 +59,18 @@ def priority_key(item: dict, difficulty: str | None) -> tuple[int, int]:
     """The priority-sort key for one schedule row: (rank, streak).
 
     `item` is a `effort_budget.parse_sched_line()` dict. A Complexity re-ask (a cold
-    time/space re-ask on code that already exists) ranks 7 regardless of its Start glyph
+    time/space re-ask on code that already exists) ranks 8 regardless of its Start glyph
     — checked before any glyph-based rank, because the Start glyph on a re-ask describes
-    the PROBLEM's comfort, not this row's kind. Only a clean 🟢 review (ranks 4-5) uses
+    the PROBLEM's comfort, not this row's kind. The 🎤 mock interview is checked right
+    after it and ranks first (0): the day's one cold, timed block goes at the top. Only a
+    clean 🟢 review (ranks 5-6) uses
     the streak tie-break; every other rank ties on 0 and keeps file order, because the
     sort this key feeds is stable.
     """
     if item.get("is_complexity"):
         return (RANK_COMPLEXITY, 0)
+    if item.get("is_mock"):
+        return (RANK_MOCK, 0)
     start = item.get("start")
     if start in _FIXED_RANK_BY_START:
         return (_FIXED_RANK_BY_START[start], 0)

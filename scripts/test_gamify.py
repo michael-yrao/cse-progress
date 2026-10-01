@@ -1086,6 +1086,35 @@ class ParseCurrentWeekScheduleTests(unittest.TestCase):
         self.assertEqual(mon["items"][0]["deferredTo"], "2026-10-01")
         self.assertIsNone(thu["items"][0]["deferredTo"])
 
+    def test_mock_rows_tags_kind_and_lcnumber_before_and_after_the_session(self):
+        # The pre-session row names no problem (lcNumber null); the post-session row is
+        # struck and linked, so it carries the base problem's number. Both are kind "mock"
+        # via the 🎤 tag -- the Technique cell ("Mock") plays no part in the kind.
+        mock_fixture = (
+            "## Daily Schedule\n\n"
+            "| Problem | S | E | Next | Technique |\n"
+            "|---|:-:|:-:|:-:|---|\n"
+            "| ▸ **Sun Oct 4** · 3.0 units — mock before |  |  |  |  |\n"
+            "| 🎤 Mock interview (Medium) | 🎤 |  |  | Mock |\n"
+            "|  |  |  |  |  |\n"
+            "| ▸ **Mon Oct 5** · 3.0 units — mock after |  |  |  |  |\n"
+            "| 🎤 ~~[131 Palindrome Partitioning](../../../dsa/leetcode/backtracking/"
+            "131_palindrome_partitioning.py) · [LC](https://leetcode.com/problems/"
+            "palindrome-partitioning/)~~ | 🎤 | 🟡 | 2026-10-21 | Mock |\n"
+        )
+        sched_dir = Path(self._tmpdir.name)
+        (sched_dir / "20261004_schedule.md").write_text(mock_fixture, encoding="utf-8")
+        result = gamify.parse_current_week_schedule(dt.date(2026, 10, 4), self.URLS)
+        before, after = result["days"][0]["items"][0], result["days"][1]["items"][0]
+        cases = [(before, ["mock"], "mock", None, False),
+                 (after, ["mock"], "mock", 131, True)]
+        for item, tags, kind, lc_number, done in cases:
+            with self.subTest(lcNumber=lc_number):
+                self.assertEqual(item["tags"], tags)
+                self.assertEqual(item["kind"], kind)
+                self.assertEqual(item["lcNumber"], lc_number)
+                self.assertEqual(item["done"], done)
+
     def test_no_current_schedule_file_is_none(self):
         result = gamify.parse_current_week_schedule(dt.date(2030, 1, 1), self.URLS)
         self.assertIsNone(result)
@@ -1457,6 +1486,32 @@ class BuildWorkloadTests(unittest.TestCase):
         self.assertAlmostEqual(priced["built"], 0.0)
         self.assertEqual(priced["unpriced"], [])
         self.assertEqual(priced["guessed"], 0)
+
+
+    def test_parse_sched_line_mock_row_has_no_number_and_is_mock_only(self):
+        """The pre-session mock row (`🎤 Mock interview (Medium)`) names no problem: num
+        is None, is_mock is True, and it is neither an intake (🆕) nor a probe (🎯) row."""
+        row = eb.parse_sched_line("| 🎤 Mock interview (Medium) | 🎤 |  |  | Mock |")
+        self.assertIsNone(row["num"])
+        self.assertTrue(row["is_mock"])
+        self.assertFalse(row["is_new"])
+        self.assertFalse(row["is_probe"])
+
+    def test_price_day_items_unnumbered_mock_row_bills_blank_at_its_hinted_difficulty(self):
+        """A pre-session mock row prices Blank at the `(Easy|Medium|Hard)` hint, defaults to
+        Medium with a `guessed` count when there is no hint, and never lands in `unpriced`
+        (the is_mock branch must run before the missing-number check)."""
+        cfg = {"comfort_units": {"🔴": 3.0},
+               "difficulty": {"Easy": 0.5, "Medium": 1.0, "Hard": 1.3}}
+        cases = [("(Medium)", 3.0, 0), ("(Hard)", 3.9, 0), ("", 3.0, 1)]
+        for hint, expected_cost, expected_guessed in cases:
+            with self.subTest(hint=hint):
+                row = f"| 🎤 Mock interview {hint} | 🎤 |  |  | Mock |"
+                item = eb.parse_sched_line(row)
+                priced = eb.price_day_items(dt.date(2026, 8, 10), [item], [], cfg)
+                self.assertAlmostEqual(priced["built"], expected_cost)
+                self.assertEqual(priced["guessed"], expected_guessed)
+                self.assertEqual(priced["unpriced"], [])
 
 
 class UntrackedDifficultyLookupTests(unittest.TestCase):

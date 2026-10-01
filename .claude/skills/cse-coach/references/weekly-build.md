@@ -1,4 +1,4 @@
-<!-- reconciled: 2026-09-26 -->
+<!-- reconciled: 2026-09-30 -->
 # End-of-week close-out & schedule build
 
 **Open this** when today is the last session of the week. **Not for** a mid-week rep (that's
@@ -58,7 +58,7 @@ week's assumptions.
   measures nothing. What measures it is whether the recognition call fires. 332 cost five sessions
   because its first attempt WAS the introduction to Eulerian paths.
 - **⚠️ Every day with NO SD slot carries at least one UNSEEN problem** — new intake from the active
-  phase, or a recognition probe. Place these **before** any 🟢 backlog: a problem seen 3+ times
+  phase, or a recognition probe, or the Sunday 🎤 mock in a mock week. Place these **before** any 🟢 backlog: a problem seen 3+ times
   measures retention of that problem's solution, not the technique; unseen problems are the only
   test of recognition and transfer.
 - **⚠️ Recompute any NUMERIC reason before renewing a deferral.** An item held because "surplus is
@@ -87,6 +87,7 @@ week's assumptions.
   outside `solutions.roots`, where the tooling can't maintain it (self_eval 2026-09-16). `git mv` it to
   its canonical `dsa/leetcode/<category>/` path. The upfront kickoff scaffold makes phantoms systematic,
   so this reconcile runs every close-out.
+- **Is a DSA mock due in the week being built?** The SessionStart banner says so (`dsa_mock.every_days` since the last row of `docs/foundations/dsa/mocks/README.md`). Due → seat the exact row `| 🎤 Mock interview (<Diff>) | 🎤 |  |  | Mock |` on Sunday (the 🎤 in the S cell is what every parser keys off), priced by `--schedule-day`; that Sunday carries no 🎯 probe. Not due → say nothing.
 - **If the AI pillar is still PARKED, test its activation trigger** (see
   [`project_ai_pillar`](.claude/memory/project_ai_pillar.md)): DP/Backtracking phases closed AND
   `effort_budget.py` shows ≥2 days/week well under the ceiling for 2 weeks. Met → raise starting it

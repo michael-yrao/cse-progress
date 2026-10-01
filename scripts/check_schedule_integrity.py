@@ -97,7 +97,7 @@ PROSE_NUMBER_MAX_DIGITS = 4
 # Comfort glyphs AND build-tag glyphs both end a genuine mention ("22 🔴", "🆕 1631
 # Dijkstra" reads its glyph before the number, "1489 🟡" reads it after — either shape
 # needs to close a match here).
-PROSE_FOLLOW_GLYPHS = "🔴🟡🟢🎓🆕🎯⚙️🔥⚠️"
+PROSE_FOLLOW_GLYPHS = "🔴🟡🟢🎓🆕🎯🎤⚙️🔥⚠️"
 # A number is a genuine MENTION — not a date, a decimal, a rep count, or a "+2"/"×2"
 # interval suffix — when it is 2-4 digits, not glued to another digit/decimal-point/`+`/`~`
 # or a month abbreviation on its LEFT, and followed by either a Capitalized word, one of
@@ -111,7 +111,7 @@ PROSE_NUMBER = re.compile(
     rf"(?=\s*[{PROSE_FOLLOW_GLYPHS}·,)]|\s+[A-Z])"
 )
 
-# A row's build-time tag glyphs (⚠️ protected · 🔥 backfill · 🆕 new · 🎯 probe · ⚙️
+# A row's build-time tag glyphs (⚠️ protected · 🔥 backfill · 🆕 new · 🎯 probe · 🎤 mock · ⚙️
 # variant · 🔤 primer · → moved — the legend on any schedule file's "Tags:" line) AND the
 # `~~`/`**` emphasis that can wrap them (a struck or bolded 🆕/🎯 row), stripped from the
 # front so a bare-numbered row still yields its number. A single repeated alternation
@@ -121,7 +121,7 @@ PROSE_NUMBER = re.compile(
 # false positive, not the under-extraction this module tolerates elsewhere. Kept local:
 # gamify.py solves the identical problem with its own `_LEADING_EMPHASIS`, but importing it
 # here would couple two independently-owned scripts over an incidental shared string.
-ROW_TAG_PREFIX = re.compile(r"^(?:~~|\*\*|[⚠️🔥🆕🎯⚙️🔤→\s])+")
+ROW_TAG_PREFIX = re.compile(r"^(?:~~|\*\*|[⚠️🔥🆕🎯🎤⚙️🔤→\s])+")
 ROW_BARE_NUMBER = re.compile(r"^(\d{1,4})\b")
 
 # The Daily Schedule section's own heading — week_row_numbers() scans ONLY between here
@@ -273,10 +273,26 @@ def schedule_rows(path: Path) -> list[tuple[str, bool, list[str]]]:
         problem = cells[0]
         if "▸" in problem or problem.startswith("---") or not problem:
             continue  # day header, separator, spacer
-        if not MENTION.search(problem) and "PROBE" not in problem and "PRIMER" not in problem:
+        is_daily_row = (MENTION.search(problem) or "PROBE" in problem
+                        or "PRIMER" in problem or "Mock" in problem)
+        if not is_daily_row:
             continue  # a table that is not the daily board (capacity, triggers, landing list)
         rows.append((problem, "~~" in problem, cells[1:4]))
     return rows
+
+
+def done_row_findings(rows: list[tuple[str, bool, list[str]]]) -> list[str]:
+    """Check 1 — a struck (done) row whose End comfort or Next review date is still blank."""
+    findings: list[str] = []
+    for problem, struck, (start, end, nxt) in rows:
+        if not struck:
+            continue
+        label = re.sub(r"[~*]", "", problem).split("]")[0].lstrip("[")[:60]
+        if not end:
+            findings.append(f"struck but no End (comfort) — {label}")
+        if not nxt and not INTENTIONAL.match(end or ""):
+            findings.append(f"struck, rated {end}, but no Next (review date) — {label}")
+    return findings
 
 
 def tracker_attempts(path: Path) -> list[tuple[str, int, dt.date]]:
@@ -400,14 +416,7 @@ def main() -> None:
     findings: list[str] = []
 
     # 1 — a done row that never got its result written back.
-    for problem, struck, (start, end, nxt) in rows:
-        if not struck:
-            continue
-        label = re.sub(r"[~*]", "", problem).split("]")[0].lstrip("[")[:60]
-        if not end:
-            findings.append(f"struck but no End (comfort) — {label}")
-        if not nxt and not INTENTIONAL.match(end or ""):
-            findings.append(f"struck, rated {end}, but no Next (review date) — {label}")
+    findings.extend(done_row_findings(rows))
 
     # 2 — a rep the tracker says happened this week, still advertised as pending.
     struck_numbers = {

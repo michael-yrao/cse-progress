@@ -41,8 +41,9 @@ SCHEDULES = REPO_ROOT / "docs" / "foundations" / "schedules"
 # A day-block header: `| ▸ **Thu Sep 17** · 7.7 units — ...`. We match on the date fragment.
 DAY_HEADER = re.compile(r"▸\s*\*\*[^*]*\*\*")
 # Tag glyphs a row can carry before its number — the schedule's own "Tags:" legend:
-# 🔥 backfill · 🎯 probe · ⚙️ variant · 🆕 new · → moved · ⚠️ protected · 🔤 primer.
-ROW_TAG_GLYPHS = "🔥🎯⚙️🆕→⚠️🔤"
+# 🔥 backfill · 🎯 probe · 🎤 mock · ⚙️ variant · 🆕 new · → moved · ⚠️ protected · 🔤 primer.
+ROW_TAG_GLYPHS = "🔥🎯🎤⚙️🆕→⚠️🔤"
+MOCK_LINE = "🎤 DSA mock interview — unseen; named when the mock starts (dsa-mock.md)"
 # A problem row's number: `[N ` for a linked row, with ANY non-bracket prefix allowed in
 # front of it (the original, permissive shape — a tag glyph, a review marker like `🔁 `,
 # a probe label like `🎯 **PROBE #6** — `, ...): `| [560 Subarray Sum ...](...path...) ·
@@ -74,13 +75,13 @@ def day_label(session: str) -> str:
     return f"{d.strftime('%b')} {d.day}"
 
 
-def unstruck_numbers(schedule: Path, label: str) -> list[str] | None:
-    """Problem numbers of the un-struck rows in the day-block whose header contains `label`.
+def day_block_lines(schedule: Path, label: str) -> list[str] | None:
+    """The lines of the day-block whose header contains `label`, header excluded.
     None if no block matches the label (a day with no schedule / a wrong date)."""
     lines = schedule.read_text(encoding="utf-8").splitlines()
     in_block = False
     found_block = False
-    numbers: list[str] = []
+    block: list[str] = []
     for line in lines:
         header = DAY_HEADER.search(line)
         if header:
@@ -90,21 +91,45 @@ def unstruck_numbers(schedule: Path, label: str) -> list[str] | None:
             if in_block:
                 found_block = True
             continue
-        if not in_block:
-            continue
+        if in_block:
+            block.append(line)
+    return block if found_block else None
+
+
+def is_open_row(line: str) -> bool:
+    """True for a row that is neither struck through (done) nor deferred off its day.
+
+    A row deferred off this day (→, kept here unstruck with its new day's date in the
+    Next cell) is not actually open here -- eb.deferred_to is the one place that decides
+    this, shared with parse_sched_line()/gamify.py's export."""
+    if "~~" in line:  # struck through = done
+        return False
+    cells = eb.SCHED_ROW.match(line)
+    return not (cells and eb.deferred_to(False, cells["c4"]))
+
+
+def unstruck_numbers(schedule: Path, label: str) -> list[str] | None:
+    """Problem numbers of the un-struck rows in the day-block whose header contains `label`.
+    None if no block matches the label (a day with no schedule / a wrong date)."""
+    block = day_block_lines(schedule, label)
+    if block is None:
+        return None
+    numbers: list[str] = []
+    for line in block:
         m = ROW_NUMBER.match(line)
-        if not m:
-            continue
-        if "~~" in line:  # struck through = done, skip
-            continue
-        # A row deferred off this day (→, kept here unstruck with its new day's date
-        # in the Next cell) is not actually open here -- eb.deferred_to is the one
-        # place that decides this, shared with parse_sched_line()/gamify.py's export.
+        if m and is_open_row(line):
+            numbers.append(m.group(1) or m.group(2))
+    return numbers
+
+
+def open_mock(schedule: Path, label: str) -> bool:
+    """True when the day-block whose header contains `label` holds an un-struck,
+    un-deferred row whose Start cell carries 🎤 (the monthly DSA mock interview)."""
+    for line in day_block_lines(schedule, label) or []:
         cells = eb.SCHED_ROW.match(line)
-        if cells and eb.deferred_to(False, cells["c4"]):
-            continue
-        numbers.append(m.group(1) or m.group(2))
-    return numbers if found_block else None
+        if cells and eb.MOCK_GLYPH in cells["c2"] and is_open_row(line):
+            return True
+    return False
 
 
 def order_by_priority(numbers: list[str], priority: list[str]) -> list[str]:
@@ -134,7 +159,10 @@ def main() -> None:
         print(f"No day-block for '{label}' in {schedule.relative_to(REPO_ROOT).as_posix()}.",
               file=sys.stderr)
         sys.exit(1)
-    if not numbers:
+    has_mock = open_mock(schedule, label)
+    if has_mock:
+        print(MOCK_LINE)
+    if not numbers and not has_mock:
         print(f"Nothing left — every row in the {label} block is struck through. ✅")
         return
 

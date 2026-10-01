@@ -679,6 +679,8 @@ isn't in `solutions.roots`, so discovery never sees them (needs a `--probe` flag
 works today with no code change but grows that list without bound. **(a) is the right design; (b) is
 the stopgap.**
 
+**Related:** the DSA mock interview's base problem is the opposite case — it always earns a row; see [`mocks/README.md`](mocks/README.md).
+
 #### ⚡ The over-learned fast-track (added Jul 26, 2026)
 
 Some problems cannot plausibly decay. Standard binary search, after four clean reps, is a motor skill

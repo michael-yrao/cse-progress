@@ -85,6 +85,14 @@ NEW_GLYPH = "🆕"
 # row does (see price_day_items()). A 🎯 row that IS already tracked is a cold re-ask on
 # something already seen, not a fresh exposure, and keeps the ordinary tracked pricing.
 PROBE_GLYPH = "🎯"
+# A 🎤 Start cell means the row is the monthly DSA MOCK INTERVIEW: a cold, timed problem
+# the learner has never seen. Pre-session the row carries no problem number (the base is
+# named only when the mock starts), so it bills Blank at the difficulty named in its
+# `(Easy|Medium|Hard)` hint -- see price_day_items(). Post-session the row is numbered
+# and still bills Blank (is_mock folds into is_intake there).
+MOCK_GLYPH = "🎤"
+MOCK_DIFFICULTY = re.compile(r"\((Easy|Medium|Hard)\)")
+DEFAULT_MOCK_DIFFICULTY = "Medium"
 # A row whose Technique cell is "Complexity" is a cold re-ask of time/space on code that
 # already exists, not a rep -- see is_complexity_technique() and price_day_items().
 TECHNIQUE_COMPLEXITY = "complexity"
@@ -96,7 +104,7 @@ TECHNIQUE_COMPLEXITY = "complexity"
 # tag-stripped title. This tag vocabulary mirrors gamify.py's own _SCHEDULE_TAGS -- kept as
 # a separate copy here rather than imported, because gamify.py imports effort_budget, not
 # the other way around.
-_SCHED_ROW_TAGS = "⚠️🔥🆕🎯⚙️🔤→"
+_SCHED_ROW_TAGS = "⚠️🔥🆕🎯🎤⚙️🔤→"
 _LEADING_SCHED_TAGS = re.compile(rf"^[{re.escape(_SCHED_ROW_TAGS)}\s]+")
 _LEADING_SCHED_DIGITS = re.compile(r"^\s*(\d+)\b")
 
@@ -429,7 +437,7 @@ def parse_sched_line(line: str) -> dict | None:
     not a problem row (no SCHED_ROW match, a blank separator row, or a markdown rule).
 
     Extracted from parse_schedule_day()'s per-row loop body so schedule_priority.py can
-    read a row (num/start/start_streak/is_new/is_probe/is_complexity/done/text) the same
+    read a row (num/start/start_streak/is_new/is_probe/is_mock/is_complexity/done/text) the same
     way pricing does, without re-deriving the parse. See parse_schedule_day() for the item
     shape and the START column's rationale.
     """
@@ -460,6 +468,7 @@ def parse_sched_line(line: str) -> dict | None:
                          else None if start_glyph == "🟢" else 0),
         "is_new": NEW_GLYPH in (m["c2"] or ""),
         "is_probe": PROBE_GLYPH in (m["c2"] or ""),
+        "is_mock": MOCK_GLYPH in (m["c2"] or ""),
         "is_complexity": is_complexity_technique(m["c5"]),
         "done": "~~" in cell,
         "deferred_to": deferred_to("~~" in cell, m["c4"]),
@@ -625,6 +634,17 @@ def price_day_items(day: dt.date, items: list[dict], rows: list[dict], cfg: dict
             # price 0 rather than land in `unpriced` (Sep 29, 2026).
             cost = 0.0
             note = "🎯 complexity re-ask -- unpriced by design"
+        elif it.get("is_mock") and not it["num"]:
+            # The pre-session mock row (`🎤 Mock interview (Medium)`) names no problem yet.
+            # Unseen, so it bills Blank at the hinted difficulty; no hint means a guess
+            # (Medium), counted so the day's total reads as a floor. Runs BEFORE the
+            # missing-number check below or the row would land in `unpriced`.
+            hint = MOCK_DIFFICULTY.search(it["text"])
+            diff = hint.group(1) if hint else DEFAULT_MOCK_DIFFICULTY
+            if not hint:
+                guessed += 1
+            cost = price("🔴", 0, diff, 0, cfg)
+            note = f"🎤 MOCK {diff} (unseen -- billed Blank)"
         elif not it["num"]:
             unpriced.append(it["text"][:62])
             continue
@@ -632,7 +652,7 @@ def price_day_items(day: dt.date, items: list[dict], rows: list[dict], cfg: dict
             tracked = by_num.get(it["num"])
             # 🆕 OR 🎯 in the Start cell means unseen going in: a first exposure (🆕) or a
             # recognition probe with nothing tracked yet (🎯) -- see NEW_GLYPH/PROBE_GLYPH.
-            is_intake = it.get("is_new") or it.get("is_probe")
+            is_intake = it.get("is_new") or it.get("is_probe") or it.get("is_mock")
             if it["start"] and tracked:
                 # START comfort + streak (build time) x difficulty (a stable property).
                 # Attempt count is the familiarity GOING IN: attempts strictly before this
@@ -747,7 +767,7 @@ def price_schedule_day(day: dt.date, rows: list[dict], cfg: dict) -> None:
             bits.append(f"{len(unpriced)} row(s) carry no problem number "
                         f"(primer / probe / free text)")
         if guessed:
-            bits.append(f"{guessed} untracked row(s) guessed at Blank Medium -- a new "
+            bits.append(f"{guessed} untracked or hint-less mock row(s) guessed at Blank Medium -- a new "
                         f"HARD really costs 1.5x that")
         print(f"     !! this total is a LOWER BOUND: {'; '.join(bits)}.")
     if streakless:

@@ -3,7 +3,7 @@ name: project-upstream-candidates
 description: Findings from cse-progress that belong in canonical cse-coach, split into shipped-behaviour defects (send now) and new instruments (soak first)
 metadata:
   type: project
-reconciled: 2026-09-21
+reconciled: 2026-09-30
 ---
 
 **Started Aug 9, 2026.** Upstream flow is a **deliberate human PR**, never automatic — one learner's
@@ -62,6 +62,7 @@ this round's `v0.6.0`.
 **Soaking (instruments — ~4 weeks per the standing bar):**
 
 - `scripts/reconcile.py` + `decisions.yml` — the temporal reconciliation mechanism. **One day old.** It is the right idea and it works here, but "rules are reconciled against dated decisions" is a *new workflow* for an adopter, not a fix to something already broken. Soak until ~Sep 14, 2026, then re-assess with real usage data (how often does the backlog actually get worked?).
+- The DSA mock interview (`decisions.yml` `dsa-mock-interview-sep30`, [[project_dsa_mock]]) — soaking here first.
 
 **Still untriaged — 11 memory files + 6 fundamentals cards.** Each needs the per-file check the bar demands (*"before declining on the skill-already-covers-it basis, actually grep the skill for it"*), and none is urgent. `feedback_answer_length` and `feedback_midweek_reprice` are the two strongest: both are general coaching rules with no learner-specific content, and both are one day old, so they soak with the instruments.
 

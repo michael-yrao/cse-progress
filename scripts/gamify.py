@@ -351,7 +351,7 @@ def _scan_week(path: Path, week_start: dt.date, index: dict[str, dict[int, str]]
 # The legend's tag glyphs (see any schedule file's "Tags:" line) — stripped from a title's
 # front so the dashboard shows the problem name, not the build-time tag. → is a real arrow,
 # not emoji, but it prefixes a moved row the same way, so it's in the same strip set.
-_SCHEDULE_TAGS = "⚠️🔥🆕🎯⚙️🔤→"
+_SCHEDULE_TAGS = "⚠️🔥🆕🎯🎤⚙️🔤→"
 _LEADING_TAGS = re.compile(rf"^[{re.escape(_SCHEDULE_TAGS)}\s]+")
 _LEADING_NUM = re.compile(r"^\d+\.?\s*")
 DAY_LABEL = re.compile(r"units\s*—\s*(?P<label>[^|]+)")
@@ -368,11 +368,13 @@ TAG_PROBE = "probe"
 TAG_VARIANT = "variant"
 TAG_PRIMER = "primer"
 TAG_MOVED = "moved"
+TAG_MOCK = "mock"
 TAG_BY_GLYPH = {
     "⚠️": TAG_PROTECTED,
     "🔥": TAG_BACKFILL,
     "🆕": TAG_NEW,
     "🎯": TAG_PROBE,
+    "🎤": TAG_MOCK,
     "⚙️": TAG_VARIANT,
     "🔤": TAG_PRIMER,
     "→": TAG_MOVED,
@@ -419,7 +421,7 @@ def _leading_tags(cell: str) -> list[str]:
 
 
 def _schedule_item_kind(technique: str | None, tags: list[str]) -> str:
-    """rep|new|probe|complexity|primer for one schedule item.
+    """rep|new|probe|mock|complexity|primer for one schedule item.
 
     `complexity` is checked BEFORE any tag: the three Sunday complexity re-ask rows are
     both 🎯-tagged (they're still a cold-call-style probe) AND carry `Complexity` in the
@@ -429,6 +431,8 @@ def _schedule_item_kind(technique: str | None, tags: list[str]) -> str:
     """
     if eb.is_complexity_technique(technique):
         return KIND_COMPLEXITY
+    if TAG_MOCK in tags:
+        return TAG_MOCK
     if TAG_NEW in tags:
         return TAG_NEW
     if TAG_PRIMER in tags:

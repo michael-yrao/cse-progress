@@ -15,6 +15,7 @@ operational copy is in a skill reference or CLAUDE.md. Grouped for scanning.
 - [Explanation register](feedback_explanation_register.md) — show values before naming; no-nonsense engineer voice; on "I don't understand" ask which link broke; banned vocab.
 - [Answer length](feedback_answer_length.md) — an answer to a question is one small paragraph; offer expansions, don't dump. Rationale/artifacts exempt.
 - [Let the learner pace](feedback_let_learner_pace.md) — end the turn after answering; no "next?" tail; the learner drives advancement.
+- [Reps over drills](feedback_reps_over_drills.md) — technique not landing → the next real rep, never a no-code drill or detached exercise (learner's call, 2026-09-30).
 - [Interactive learning](feedback_interactive_learning.md) — derive/Socratic for heavy concepts, but spine-then-pull; at TRUE ZERO it degrades → teach the spine, let them pull.
 - [Concept primer](feedback_concept_primer.md) — before the FIRST exposure to a named algorithm, a short UNRATED session on the object it finds + its name; the procedure comes later, another day.
 - [Expand acronyms](feedback_expand_acronyms.md) — expand every acronym on first use, chat + note.
@@ -72,6 +73,7 @@ operational copy is in a skill reference or CLAUDE.md. Grouped for scanning.
 - [AI pillar (parked)](project_ai_pillar.md) — AI Engineering is a planned THIRD pillar, PARKED behind a measured trigger (DSA must lighten); active/scored/spaced like SD, interview-first path, ~1 notebook/wk on activation. Don't nudge until the trigger fires.
 - [SD ROI line (L6)](project_sd_roi_line.md) — the bar for every SD add/decline; board = HelloInterview 35; parked designs carry state triggers.
 - [Recognition probes](project_recognition_probes.md) — 1 cold label-stripped probe/week from a 🟢 technique; disposable (no row on 🟢); the recognition axis the board can't test.
+- [DSA mock interview](project_dsa_mock.md) — every `dsa_mock.every_days` a cold unseen Medium/Hard + a level raiser (pass/partial/fail); 🎤 Sunday row, priced blank, never named in the schedule; debriefs in docs/foundations/dsa/mocks/.
 - [Library carrying capacity](project_library_carrying_capacity.md) — a tracked problem bills ~0.039 slots/wk forever → cap ~500–600; valves: 🏆 retirement, disposable reps.
 - [November breaks](project_november_breaks.md) — two ~1-wk light-maintenance breaks in the Nov DP phase; don't teach a new DP pattern in the 2–3 days before one.
 - [Agent latitude modes](project_agent_latitude_modes.md) — two registers: latitude when thinking/teaching, stringency when executing (the CLAUDE.md "Two registers" rule's why).

@@ -14,12 +14,13 @@ import schedule_priority
 
 
 class PriorityKeyTests(unittest.TestCase):
-    """The rank table (0-8) from the module docstring, in one shuffled-then-sorted pass:
-    🔴 < 🟡 < 🆕 < 🎯 < 🟢 Medium s0 < 🟢 Medium s2 < 🟢 Easy s1 < 🎓 < a Complexity row
+    """The rank table (0-9) from the module docstring, in one shuffled-then-sorted pass:
+    🎤 < 🔴 < 🟡 < 🆕 < 🎯 < 🟢 Medium s0 < 🟢 Medium s2 < 🟢 Easy s1 < 🎓 < a Complexity row
     whose Start is 🟢 < an unclassified row."""
 
     def test_priority_order(self):
         rows = [
+            ("mock", {"start": None, "is_mock": True}, None),
             ("red", {"start": "🔴"}, None),
             ("yellow", {"start": "🟡"}, None),
             ("new", {"start": None, "is_new": True}, None),

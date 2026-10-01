@@ -232,6 +232,10 @@ self_eval:
   meta_review_days: 14
   open_threshold: 8
 
+dsa_mock:
+  every_days: 28          # cadence between DSA mock interviews (the Sunday 🎤 slot)
+  first_due: 2026-10-11   # anchor for the first mock; afterwards the clock reads docs/foundations/dsa/mocks/README.md's log
+
 # Gamification thresholds — read by scripts/gamify.py, which emits progress.json (the
 # honest-progress data contract the progressiveoverflow.com dashboard renders). Only
 # TUNED NUMBERS live here; the badge catalog (names/icons/descriptions) is content and

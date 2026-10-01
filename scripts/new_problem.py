@@ -235,21 +235,27 @@ def recognition_block(indent: str) -> list[str]:
     return [f"{indent}{ln}" for ln in RECOGNITION_LINES]
 
 
+PROBE_BANNER = "Pattern: 🎯 RECOGNITION PROBE — you name it. Do not look it up."
+MOCK_BANNER = "Pattern: 🎤 MOCK INTERVIEW — cold, timed."
+
+
 def build_probe(number: str, title: str, url: str, method: str,
-                params: str, ret: str) -> str:
+                params: str, ret: str, banner: str = PROBE_BANNER) -> str:
     """A blind recognition-probe file (dsa/probes/README.md).
 
     The header names the PROBLEM and its URL (the learner reads the statement here), but
     NOT the technique — that is the one thing the probe measures. The "you name it" banner
     and the shape -> technique -> picking-feature prompt are the gate the learner answers
     before coding. `report_links` prints the LOCAL path only for a probe: the LC page's
-    topic tags / editorial would hand over the technique call.
+    topic tags / editorial would hand over the technique call. `banner` is the header's
+    Pattern line: PROBE_BANNER, or MOCK_BANNER for a DSA mock interview base problem
+    (same blind scaffold, same neutral path).
     """
     ret_suffix = f" {ret}" if ret else ""
     return (
         '"""\n'
         f"{number}. {title}   ·   {url}\n"
-        "Pattern: 🎯 RECOGNITION PROBE — you name it. Do not look it up.\n"
+        f"{banner}\n"
         "\n"
         f"{STATEMENT_STUB}\n"
         "\n"
@@ -823,6 +829,10 @@ def main() -> None:
                          "'you name it' header, no technique). Prints the LOCAL file link "
                          "ONLY — no judge link (the problem page spoils the technique call). "
                          "For a NEW probe; see dsa/probes/README.md")
+    ap.add_argument("--mock", action="store_true",
+                    help="scaffold the DSA MOCK INTERVIEW base problem: the same blind "
+                         "dsa/probes/ scaffold as --probe, with a 'MOCK INTERVIEW — cold, "
+                         "timed' header. Prints the LOCAL file link ONLY")
     ap.add_argument("--url", default="")
     ap.add_argument("--method", action="append", default=[],
                     help="method name; for a multi-method problem either comma-separate "
@@ -853,8 +863,9 @@ def main() -> None:
                          "(see scripts/session_date.py). Override only when the "
                          "auto-detection announces something wrong")
     args = ap.parse_args()
-    if not args.probe and not args.pattern:
-        ap.error("--pattern is required (the category folder), unless --probe.")
+    is_blind = args.probe or args.mock
+    if not is_blind and not args.pattern:
+        ap.error("--pattern is required (the category folder), unless --probe or --mock.")
 
     # NOT datetime.now(): a session that crosses midnight keeps its START date, and
     # stamping wall clock here wrote the wrong attempt date into both the method name
@@ -901,7 +912,7 @@ def main() -> None:
     else:
         url = f"https://leetcode.com/problems/{slug}/"
 
-    if args.probe:
+    if is_blind:
         # A blind probe: neutral dsa/probes/ path (no technique folder), local-link-only
         # report. New probe only — a probe that earned a tracker row is retried as a normal
         # problem, not through this branch.
@@ -915,7 +926,8 @@ def main() -> None:
         probe_path.parent.mkdir(parents=True, exist_ok=True)
         params0, ret0 = signatures[0]
         probe_path.write_text(
-            build_probe(str(args.number), args.title, url, method, params0, ret0),
+            build_probe(str(args.number), args.title, url, method, params0, ret0,
+                        MOCK_BANNER if args.mock else PROBE_BANNER),
             encoding="utf-8", newline="\n",
         )
         print(f"Created probe {probe_path} (blind — technique stripped from path + header).")

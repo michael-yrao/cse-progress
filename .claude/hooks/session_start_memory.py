@@ -46,6 +46,24 @@ SELF_EVAL_LOG = Path("memory") / "self_eval_log.md"
 _META_REVIEW_DAYS_FALLBACK = 14
 _OPEN_THRESHOLD_FALLBACK = 8
 
+# The monthly DSA mock interview (the Sunday mock slot). Cadence lives in cse.config.yml
+# under `dsa_mock:` (`every_days`, `first_due`); like the meta-review thresholds, a regex
+# read keeps this hook dependency-free. There is NO `first_due` fallback: with the key
+# absent and no mock logged yet, the banner stays silent rather than invent an anchor.
+_DSA_MOCK_BLOCK = "dsa_mock"
+_DSA_MOCK_EVERY_DAYS_FALLBACK = 28
+# The banner opens this many days before the due date.
+_DSA_MOCK_WINDOW_DAYS = 7
+# A schedule file is named for its MONDAY; its Sunday is this many days later.
+_MONDAY_TO_SUNDAY_DAYS = 6
+_DSA_MOCK_LOG = Path("docs") / "foundations" / "dsa" / "mocks" / "README.md"
+_SCHEDULES_DIR = Path("docs") / "foundations" / "schedules"
+_MOCK_GLYPH = "🎤"
+# A Log-table row: `| 3 | 2026-11-08 | ...` -- the first date cell after the number.
+_MOCK_LOG_ROW = re.compile(r"(?m)^\|\s*\d+\s*\|\s*(\d{4}-\d{2}-\d{2})\s*\|")
+# A schedule table row whose Start (S, second) cell carries the mock glyph.
+_MOCK_SEATED_ROW = re.compile(rf"(?m)^\|[^|\n]*\|[^|\n]*{_MOCK_GLYPH}[^|\n]*\|")
+
 # Gates that must fire without being asked for.
 #
 # **Keep this list short and keep it earned.** It is injected every single session, so
@@ -102,16 +120,33 @@ def project_root() -> Path:
     return Path(__file__).resolve().parent.parent
 
 
-def _config_int(claude_dir: Path, key: str, fallback: int) -> int:
-    """Read one `self_eval.<key>` int from cse.config.yml via regex (no PyYAML dep)."""
+def _block_scope(text: str, block: str) -> "str | None":
+    """The body of one top-level `block:` mapping in cse.config.yml, or None if absent."""
+    match = re.search(rf"(?ms)^{re.escape(block)}:\s*$(.*?)^\S", text + "\n\\Z")
+    return match.group(1) if match else None
+
+
+def _config_int(claude_dir: Path, key: str, fallback: int, block: str = "self_eval") -> int:
+    """Read one `<block>.<key>` int from cse.config.yml via regex (no PyYAML dep)."""
     try:
         text = (claude_dir.parent / "cse.config.yml").read_text(encoding="utf-8")
-        block = re.search(r"(?ms)^self_eval:\s*$(.*?)^\S", text + "\n\\Z")
-        scope = block.group(1) if block else text
+        scope = _block_scope(text, block)
+        if scope is None:
+            scope = text
         m = re.search(rf"^\s+{re.escape(key)}:\s*(\d+)", scope, re.M)
         return int(m.group(1)) if m else fallback
     except Exception:
         return fallback
+
+
+def _config_date(claude_dir: Path, key: str, block: str) -> "_dt.date | None":
+    """Read one `<block>.<key>` ISO date from cse.config.yml, or None if absent."""
+    text = (claude_dir.parent / "cse.config.yml").read_text(encoding="utf-8")
+    scope = _block_scope(text, block)
+    if scope is None:
+        return None
+    m = re.search(rf"^\s+{re.escape(key)}:\s*(\d{{4}}-\d{{2}}-\d{{2}})", scope, re.M)
+    return _dt.date.fromisoformat(m.group(1)) if m else None
 
 
 def meta_review_banner(claude_dir: Path) -> str:
@@ -195,6 +230,72 @@ def _streak_is_live(streak: dict, today: _dt.date) -> "bool | None":
     return (today - last_study_day).days <= allowance + _STREAK_LIVE_GRACE_DAYS
 
 
+def dsa_mock_due(today: _dt.date, last_logged: "_dt.date | None",
+                 first_due: "_dt.date | None", every_days: int,
+                 seated: "list[_dt.date]") -> "str | None":
+    """The DSA-mock-due banner, or None when it should stay silent. Pure.
+
+    Due date = last logged mock + every_days, else the configured first_due (None when
+    neither exists). Fires once the due date is within the window (or overdue) AND no
+    mock row is seated on a Sunday inside the due week: `seated` holds the Sundays whose
+    live schedule carries a mock row, and any Sunday >= due - 6 days counts as seating it.
+    """
+    due = last_logged + _dt.timedelta(days=every_days) if last_logged else first_due
+    if due is None:
+        return None
+    if (due - today).days > _DSA_MOCK_WINDOW_DAYS:
+        return None
+    due_week_start = due - _dt.timedelta(days=_MONDAY_TO_SUNDAY_DAYS)
+    if any(sunday >= due_week_start for sunday in seated):
+        return None
+    since = (f" ({(today - last_logged).days}d since last {last_logged})"
+             if last_logged else "")
+    return (
+        f"!! DSA MOCK DUE {due}{since} -- seat a mock row on that week's Sunday and skip "
+        "the recognition probe that week. See references/dsa-mock.md.\n\n"
+    )
+
+
+def _logged_mock_dates(root: Path) -> "list[_dt.date]":
+    """Every date in the mock log's table rows; [] when the README is absent."""
+    try:
+        text = (root / _DSA_MOCK_LOG).read_text(encoding="utf-8")
+    except OSError:
+        return []
+    return [_dt.date.fromisoformat(d) for d in _MOCK_LOG_ROW.findall(text)]
+
+
+def _seated_mock_sundays(root: Path) -> "list[_dt.date]":
+    """The Sunday of every LIVE (non-archive) schedule week that has a mock row seated."""
+    sundays = []
+    for path in sorted((root / _SCHEDULES_DIR).glob("[0-9]" * 8 + "_schedule.md")):
+        monday = _dt.datetime.strptime(path.name[:8], "%Y%m%d").date()
+        if _MOCK_SEATED_ROW.search(path.read_text(encoding="utf-8")):
+            sundays.append(monday + _dt.timedelta(days=_MONDAY_TO_SUNDAY_DAYS))
+    return sundays
+
+
+def dsa_mock_banner(claude_dir: Path, today: "_dt.date | None" = None) -> str:
+    """Return the DSA-mock-due banner for this repo, else ''.
+
+    Fail-soft like meta_review_banner: any parsing problem returns '' -- a broken check
+    must never block session start.
+    """
+    try:
+        root = claude_dir.parent
+        logged = _logged_mock_dates(root)
+        return dsa_mock_due(
+            today or _dt.date.today(),
+            max(logged) if logged else None,
+            _config_date(claude_dir, "first_due", _DSA_MOCK_BLOCK),
+            _config_int(claude_dir, "every_days", _DSA_MOCK_EVERY_DAYS_FALLBACK,
+                        _DSA_MOCK_BLOCK),
+            _seated_mock_sundays(root),
+        ) or ""
+    except Exception:
+        return ""
+
+
 def progress_banner(claude_dir: Path) -> str:
     """Return one honest progress line from dashboard/progress.json, or '' if unavailable.
 
@@ -276,7 +377,7 @@ def main() -> None:
     except Exception as exc:  # noqa: BLE001 - the memory index must still load either way
         canary = f"!! global-layer canary crashed ({exc.__class__.__name__}: {exc})\n\n"
 
-    emit(f"{canary}{meta_review_banner(claude_dir)}{progress_banner(claude_dir)}{ALWAYS_ON}\n{index}")
+    emit(f"{canary}{meta_review_banner(claude_dir)}{dsa_mock_banner(claude_dir)}{progress_banner(claude_dir)}{ALWAYS_ON}\n{index}")
 
 
 if __name__ == "__main__":

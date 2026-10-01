@@ -207,7 +207,7 @@ and the AI track were both retired Aug 13, 2026.)
   It writes the blind file to `dsa/probes/<n>_<snake>.py` (the "🎯 RECOGNITION PROBE — you
   name it" header + the shape→technique→picking-feature prompt). It skips the tracker entirely
   (outside `solutions.roots`), and prints the **local file link ONLY**. Fill the statement.
-- **Present a probe** with its LOCAL file link only — never LC/NC. `[<n> <title>](dsa/probes/…py)`
+- **Present a probe (or the DSA-mock base problem)** with its LOCAL file link only — never LC/NC. `[<n> <title>](dsa/probes/…py)`
   and nothing else. The problem/number/title do not spoil; only the technique-bearing LC page
   (its tags/editorial) does. This is the inverse of the normal `[file] · [LC]` pair — see
   [[feedback_lineup_links_only]] ("a recognition probe is the INVERSE pair"). Don't leave it

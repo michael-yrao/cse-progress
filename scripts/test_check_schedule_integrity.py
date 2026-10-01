@@ -342,6 +342,25 @@ class IsSeatedTests(unittest.TestCase):
         self.assertTrue(seated)
 
 
+class DoneRowFindingsTests(unittest.TestCase):
+    """Check 1 on the UNNUMBERED mock row shape (`🎤 Mock interview (Medium)`: no `[N`/`**N`
+    for MENTION to match), read through schedule_rows() so the test also proves its
+    "Mock" whitelist -- without it the row is dropped before check 1 ever sees it."""
+
+    def test_struck_mock_row_with_blank_end_is_flagged_and_unstruck_is_not(self):
+        cases = [
+            ("| ~~🎤 Mock interview (Medium)~~ | 🎤 |  | 2026-10-21 | Mock |", 1),
+            ("| 🎤 Mock interview (Medium) | 🎤 |  |  | Mock |", 0),
+        ]
+        for row, expected_findings in cases:
+            with self.subTest(row=row):
+                with tempfile.TemporaryDirectory() as tmp:
+                    path = Path(tmp) / "20261004_schedule.md"
+                    path.write_text(_TABLE_HEAD + row + "\n", encoding="utf-8")
+                    findings = csi.done_row_findings(csi.schedule_rows(path))
+                self.assertEqual(len(findings), expected_findings)
+
+
 class LiveCurrentWeekTests(unittest.TestCase):
     """A soft check against the repo's real current-week schedule, not a fixture. Skips
     rather than fails when the schedule tree isn't present (e.g. a checkout of just this

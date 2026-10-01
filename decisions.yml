@@ -1622,3 +1622,15 @@ decisions:
       is re-planned. Restores the Sep 24 convention that the Sep 28 edit and the first
       effort-units skill broke; Mon Sep 28 (8.0) and Thu Sep 24 were restored.
     affects: [effort-budget, scheduling]
+
+  - id: dsa-mock-interview-sep30
+    date: 2026-09-30
+    summary: >-
+      A recurring DSA mock interview joins the DSA pillar: every `dsa_mock.every_days`, one
+      unseen Medium/Hard problem run cold as an interviewer, then a level raiser (a constraint
+      change scored pass/partial/fail on an adaptability checklist). Seated Sunday as a 🎤 row
+      priced as a 🔴 blank at the named difficulty; it is that week's unseen problem, so no 🎯
+      probe that week. The base problem is a real rep (tracker row always); the level raiser
+      earns no row. The schedule names the slot, never the problem. Debriefs are public in
+      docs/foundations/dsa/mocks/. Anchor: first mock 2026-10-11 (`dsa_mock.first_due`).
+    affects: [weekly-build, effort-budget, scheduling, gamification, hooks, dsa-mock]

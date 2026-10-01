@@ -1,6 +1,6 @@
 # cse-progress
 
-<!-- reconciled: 2026-09-23 -->
+<!-- reconciled: 2026-09-30 -->
 
 This is a personal spaced-repetition practice log + coaching workflow (DSA, with a System
 Design pillar). **The coaching engine is a skill; this file carries only the always-on
@@ -43,7 +43,7 @@ them. The *how* is in the named skill reference.
 3. **Learner says they're stuck?** Read their solution file **before hinting** — one free
    call. (`review-workflow.md` §2.)
 4. **Mentioning a problem by number/name?** It must be a markdown link (`[file] · [LC]`) —
-   **except a recognition probe, which carries its LOCAL file link only, never LC/NC** (the
+   **except a recognition probe or the DSA-mock base problem, which carry their LOCAL file link only, never LC/NC** (the
    problem page spoils the technique call). (Enforced by `problem_link_reminder.py`.)
 5. **Something got corrected — by you or the learner?** Append a dated entry to
    `.claude/memory/self_eval_log.md` **in the same turn**, and climb the intervention ladder

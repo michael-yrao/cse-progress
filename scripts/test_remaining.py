@@ -102,6 +102,28 @@ A stray line of prose, not a table row at all — must not be read as one.
         self.assertEqual(self._numbers(), ["560", "846", "39", "57", "637"])
 
 
+class OpenMockTests(unittest.TestCase):
+    """open_mock() is true only for a 🎤 row that is neither struck (done) nor deferred
+    (→, an ISO date in its Next cell) -- the same openness test unstruck_numbers() uses."""
+
+    LABEL = "Sun Oct 11"
+
+    def test_open_only_for_an_unstruck_undeferred_mock_row(self):
+        cases = [
+            ("| 🎤 Mock interview (Medium) | 🎤 |  |  | Mock |", True),
+            ("| ~~🎤 Mock interview (Medium)~~ | 🎤 | 🟡 | 2026-10-21 | Mock |", False),
+            ("| → 🎤 Mock interview (Medium) | 🎤 |  | 2026-10-12 | Mock |", False),
+        ]
+        for row, expected in cases:
+            with self.subTest(row=row):
+                text = ("| ▸ **" + self.LABEL + "** · 3.0 units — mock day |  |  |  |  |"
+                        + "\n" + row + "\n")
+                with tempfile.TemporaryDirectory() as tmp:
+                    schedule = Path(tmp) / "20261005_schedule.md"
+                    schedule.write_text(text, encoding="utf-8")
+                    self.assertEqual(remaining.open_mock(schedule, self.LABEL), expected)
+
+
 class OrderByPriorityTests(unittest.TestCase):
     """order_by_priority() is the tie-break main() applies between unstruck_numbers()'s
     file order and schedule_priority.day_order()'s priority order: a day whose file order

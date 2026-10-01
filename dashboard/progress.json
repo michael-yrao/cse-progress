@@ -1,33 +1,33 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-29",
+  "generatedAt": "2026-09-30",
   "totals": {
-    "problems": 129,
-    "solutions": 140,
-    "reps": 627
+    "problems": 130,
+    "solutions": 141,
+    "reps": 631
   },
   "pipeline": {
-    "blank": 1,
-    "shaky": 11,
+    "blank": 2,
+    "shaky": 9,
     "clean": {
       "s0": 3,
-      "s1": 32,
+      "s1": 34,
       "s2plus": 69,
-      "total": 104
+      "total": 106
     },
     "graduated": 24,
     "retired": 0
   },
   "difficulty": {
     "Easy": 34,
-    "Medium": 95,
+    "Medium": 96,
     "Hard": 11
   },
   "streak": {
-    "current": 125,
-    "longest": 125,
-    "lastStudyDay": "2026-09-29",
-    "studyDays": 183,
+    "current": 126,
+    "longest": 126,
+    "lastStudyDay": "2026-09-30",
+    "studyDays": 184,
     "restDayAllowance": 1
   },
   "coverage": {
@@ -38,7 +38,7 @@
     "variantGaps": 0
   },
   "onSchedule": {
-    "totalActive": 140,
+    "totalActive": 141,
     "dueToday": 0,
     "overdue": 4
   },
@@ -1584,13 +1584,6 @@
           "trigger": "phase:Backtracking"
         },
         {
-          "lcNumber": 131,
-          "title": "Palindrome Partitioning",
-          "url": "https://leetcode.com/problems/palindrome-partitioning/",
-          "difficulty": "Medium",
-          "trigger": "phase:Backtracking"
-        },
-        {
           "lcNumber": 17,
           "title": "Letter Combinations of a Phone Number",
           "url": "https://leetcode.com/problems/letter-combinations-of-a-phone-number/",
@@ -1612,7 +1605,7 @@
           "trigger": "phase:Backtracking"
         }
       ],
-      "plannedTotal": 11,
+      "plannedTotal": 10,
       "untriedVariations": []
     },
     {
@@ -4437,7 +4430,8 @@
     "2026-09-26",
     "2026-09-27",
     "2026-09-28",
-    "2026-09-29"
+    "2026-09-29",
+    "2026-09-30"
   ],
   "schedule": {
     "weekOf": "2026-09-28",
@@ -4678,11 +4672,11 @@
             "file": "dsa/leetcode/backtracking/40_combination_sum_ii.py",
             "tags": [],
             "kind": "rep",
-            "done": false,
+            "done": true,
             "deferredTo": null,
-            "endComfort": null,
+            "endComfort": "🔴",
             "endNote": null,
-            "nextReview": null
+            "nextReview": "2026-10-02"
           },
           {
             "lcNumber": 84,
@@ -4694,11 +4688,11 @@
             "file": "dsa/leetcode/stack/84_largest_rectangle_in_histogram.py",
             "tags": [],
             "kind": "rep",
-            "done": false,
+            "done": true,
             "deferredTo": null,
-            "endComfort": null,
+            "endComfort": "🟢",
             "endNote": null,
-            "nextReview": null
+            "nextReview": "2026-10-30"
           },
           {
             "lcNumber": 78,
@@ -4710,20 +4704,20 @@
             "file": "dsa/leetcode/backtracking/78_subsets.py",
             "tags": [],
             "kind": "rep",
-            "done": false,
+            "done": true,
             "deferredTo": null,
-            "endComfort": null,
+            "endComfort": "🟢",
             "endNote": null,
-            "nextReview": null
+            "nextReview": "2026-10-30"
           },
           {
             "lcNumber": 131,
             "title": "Palindrome Partitioning",
             "technique": "Backtracking",
             "startComfort": null,
-            "difficulty": null,
+            "difficulty": "Medium",
             "url": "https://leetcode.com/problems/palindrome-partitioning/",
-            "file": null,
+            "file": "dsa/leetcode/backtracking/131_palindrome_partitioning.py",
             "tags": [
               "new"
             ],
@@ -4885,9 +4879,25 @@
       {
         "date": "2026-10-02",
         "weekday": "Friday",
-        "label": "Binary-search/Monotonic-stack conversions + Kruskal intake (9004) + BFS review",
-        "units": 7.9,
+        "label": "Backtracking/Binary-search/Monotonic-stack conversions + Kruskal intake (9004) + BFS review",
+        "units": 10.9,
         "items": [
+          {
+            "lcNumber": 40,
+            "title": "Combination Sum II",
+            "technique": "Backtracking",
+            "startComfort": "🔴",
+            "difficulty": "Medium",
+            "url": "https://leetcode.com/problems/combination-sum-ii/",
+            "file": "dsa/leetcode/backtracking/40_combination_sum_ii.py",
+            "tags": [],
+            "kind": "rep",
+            "done": false,
+            "deferredTo": null,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
+          },
           {
             "lcNumber": 1552,
             "title": "Magnetic Force Between Two Balls",
@@ -5659,7 +5669,7 @@
     {
       "date": "2026-09-30",
       "planned": 10.9,
-      "done": 0.0,
+      "done": 7.6,
       "built": 10.9,
       "partial": false
     },
@@ -5672,9 +5682,9 @@
     },
     {
       "date": "2026-10-02",
-      "planned": 7.9,
+      "planned": 10.9,
       "done": 0.0,
-      "built": 7.9,
+      "built": 10.9,
       "partial": false
     },
     {
@@ -5818,7 +5828,7 @@
       "description": "Practice on 7 study-days without letting the streak lapse.",
       "earned": true,
       "progress": {
-        "current": 125,
+        "current": 126,
         "target": 7
       }
     },
@@ -5829,7 +5839,7 @@
       "description": "Practice on 30 study-days without letting the streak lapse.",
       "earned": true,
       "progress": {
-        "current": 125,
+        "current": 126,
         "target": 30
       }
     },
@@ -5840,7 +5850,7 @@
       "description": "Practice on 100 study-days without letting the streak lapse.",
       "earned": true,
       "progress": {
-        "current": 125,
+        "current": 126,
         "target": 100
       }
     },
@@ -5890,6 +5900,124 @@
     }
   ],
   "problems": [
+    {
+      "lcNumber": 40,
+      "title": "Combination Sum II",
+      "url": "https://leetcode.com/problems/combination-sum-ii/",
+      "file": "dsa/leetcode/backtracking/40_combination_sum_ii.py",
+      "difficulty": "Medium",
+      "category": "backtracking",
+      "comfort": "🔴",
+      "level": 0,
+      "streak": 0,
+      "nextReview": "2026-10-02",
+      "repDates": [
+        "2026-09-28",
+        "2026-09-30"
+      ],
+      "timeline": [
+        {
+          "date": "2026-09-28",
+          "comfort": "🔴",
+          "level": 0
+        },
+        {
+          "date": "2026-09-30",
+          "comfort": "🔴",
+          "level": 0
+        }
+      ]
+    },
+    {
+      "lcNumber": 84,
+      "title": "Largest Rectangle in Histogram",
+      "url": "https://leetcode.com/problems/largest-rectangle-in-histogram/",
+      "file": "dsa/leetcode/stack/84_largest_rectangle_in_histogram.py",
+      "difficulty": "Hard",
+      "category": "stack",
+      "comfort": "🟢",
+      "level": 2,
+      "streak": 1,
+      "nextReview": "2026-10-30",
+      "repDates": [
+        "2026-09-04",
+        "2026-09-18",
+        "2026-09-20",
+        "2026-09-30"
+      ],
+      "timeline": [
+        {
+          "date": "2026-09-04",
+          "comfort": "🔴",
+          "level": 0
+        },
+        {
+          "date": "2026-09-18",
+          "comfort": "🔴",
+          "level": 0
+        },
+        {
+          "date": "2026-09-20",
+          "comfort": "🟡",
+          "level": 1
+        },
+        {
+          "date": "2026-09-30",
+          "comfort": "🟢",
+          "level": 2
+        }
+      ]
+    },
+    {
+      "lcNumber": 78,
+      "title": "Subsets",
+      "url": "https://leetcode.com/problems/subsets/",
+      "file": "dsa/leetcode/backtracking/78_subsets.py",
+      "difficulty": "Medium",
+      "category": "backtracking",
+      "comfort": "🟢",
+      "level": 2,
+      "streak": 1,
+      "nextReview": "2026-10-30",
+      "repDates": [
+        "2026-09-20",
+        "2026-09-30"
+      ],
+      "timeline": [
+        {
+          "date": "2026-09-20",
+          "comfort": "🟡",
+          "level": 1
+        },
+        {
+          "date": "2026-09-30",
+          "comfort": "🟢",
+          "level": 2
+        }
+      ]
+    },
+    {
+      "lcNumber": 131,
+      "title": "Palindrome Partitioning",
+      "url": "https://leetcode.com/problems/palindrome-partitioning/",
+      "file": "dsa/leetcode/backtracking/131_palindrome_partitioning.py",
+      "difficulty": "Medium",
+      "category": "backtracking",
+      "comfort": "🔴",
+      "level": 0,
+      "streak": 0,
+      "nextReview": "2026-10-02",
+      "repDates": [
+        "2026-09-30"
+      ],
+      "timeline": [
+        {
+          "date": "2026-09-30",
+          "comfort": "🔴",
+          "level": 0
+        }
+      ]
+    },
     {
       "lcNumber": 79,
       "title": "Word Search",
@@ -6029,28 +6157,6 @@
           "date": "2026-09-29",
           "comfort": "🎓",
           "level": 3
-        }
-      ]
-    },
-    {
-      "lcNumber": 40,
-      "title": "Combination Sum II",
-      "url": "https://leetcode.com/problems/combination-sum-ii/",
-      "file": "dsa/leetcode/backtracking/40_combination_sum_ii.py",
-      "difficulty": "Medium",
-      "category": "backtracking",
-      "comfort": "🔴",
-      "level": 0,
-      "streak": 0,
-      "nextReview": "2026-09-30",
-      "repDates": [
-        "2026-09-28"
-      ],
-      "timeline": [
-        {
-          "date": "2026-09-28",
-          "comfort": "🔴",
-          "level": 0
         }
       ]
     },
@@ -7353,62 +7459,6 @@
           "date": "2026-09-21",
           "comfort": "🟢",
           "level": 2
-        }
-      ]
-    },
-    {
-      "lcNumber": 84,
-      "title": "Largest Rectangle in Histogram",
-      "url": "https://leetcode.com/problems/largest-rectangle-in-histogram/",
-      "file": "dsa/leetcode/stack/84_largest_rectangle_in_histogram.py",
-      "difficulty": "Hard",
-      "category": "stack",
-      "comfort": "🟡",
-      "level": 1,
-      "streak": 0,
-      "nextReview": "2026-09-30",
-      "repDates": [
-        "2026-09-04",
-        "2026-09-18",
-        "2026-09-20"
-      ],
-      "timeline": [
-        {
-          "date": "2026-09-04",
-          "comfort": "🔴",
-          "level": 0
-        },
-        {
-          "date": "2026-09-18",
-          "comfort": "🔴",
-          "level": 0
-        },
-        {
-          "date": "2026-09-20",
-          "comfort": "🟡",
-          "level": 1
-        }
-      ]
-    },
-    {
-      "lcNumber": 78,
-      "title": "Subsets",
-      "url": "https://leetcode.com/problems/subsets/",
-      "file": "dsa/leetcode/backtracking/78_subsets.py",
-      "difficulty": "Medium",
-      "category": "backtracking",
-      "comfort": "🟡",
-      "level": 1,
-      "streak": 0,
-      "nextReview": "2026-09-30",
-      "repDates": [
-        "2026-09-20"
-      ],
-      "timeline": [
-        {
-          "date": "2026-09-20",
-          "comfort": "🟡",
-          "level": 1
         }
       ]
     },
