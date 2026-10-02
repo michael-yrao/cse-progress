@@ -57,6 +57,12 @@ class ValidationTests(unittest.TestCase):
              _spec(cases=[{"args": [1], "example": True}])),
             ("no example case", FILENAME,
              _spec(cases=[{"args": [1], "expected": 1}])),
+            ("figure.kind unknown", FILENAME,
+             _spec(figure={"kind": "tree", "edgesArg": 0})),
+            ("figure arg index not an integer", FILENAME,
+             _spec(figure={"kind": "graph", "edgesArg": "0"})),
+            ("figure arg index beyond an example case's args", FILENAME,
+             _spec(figure={"kind": "grid", "gridArg": 1})),
         ]
         for label, filename, spec in rows:
             with self.subTest(label):
@@ -74,6 +80,7 @@ class ValidationTests(unittest.TestCase):
             self.assertEqual([p["number"] for p in payload["problems"]], [90])
             self.assertEqual([c["example"] for c in payload["problems"][0]["cases"]],
                              [True, False])
+            self.assertIsNone(payload["problems"][0]["figure"])
 
 
 class RenderStubTests(unittest.TestCase):

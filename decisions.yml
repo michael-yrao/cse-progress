@@ -1656,3 +1656,11 @@ decisions:
       resume-claim notes) moved to the private repo `interview-problems` under `career/`.
       cse-progress links to it by URL and keeps no copy.
     affects: [memory, docs]
+
+  - id: practice-figure
+    date: 2026-10-02
+    summary: >-
+      ADDS an optional `figure` to a practice spec. It names which arguments hold a graph's
+      edge list or a grid, and the site draws each example's input from it. Additive:
+      `schemaVersion` stays 1. No `cse.config.yml` value changed.
+    affects: [scaffolding, practice]

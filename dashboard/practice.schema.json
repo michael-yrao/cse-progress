@@ -39,6 +39,10 @@
           "enum": ["exact", "unordered", "unordered-nested"],
           "description": "How a returned value is matched to `expected`: exact = equal as is; unordered = top-level list order ignored; unordered-nested = top-level order ignored and each inner list's order ignored."
         },
+        "figure": {
+          "description": "Optional. Names which `args` of a case hold a graph's edge list or a grid, so the site can draw each example's input. null when the problem has none.",
+          "oneOf": [{ "type": "null" }, { "$ref": "#/definitions/figure" }]
+        },
         "cases": {
           "type": "array",
           "minItems": 1,
@@ -46,6 +50,28 @@
           "items": { "$ref": "#/definitions/case" }
         }
       }
+    },
+    "figure": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": ["kind", "directed", "edgesArg", "nodeCountArg"],
+          "properties": {
+            "kind": { "const": "graph" },
+            "directed": { "type": "boolean" },
+            "edgesArg": { "type": "integer", "minimum": 0, "description": "Index into a case's args: the edge list, [u, v] or [u, v, w]." },
+            "nodeCountArg": { "type": ["integer", "null"], "minimum": 0, "description": "Index into a case's args: the node count, so isolated nodes are drawn." }
+          }
+        },
+        {
+          "type": "object",
+          "required": ["kind", "gridArg"],
+          "properties": {
+            "kind": { "const": "grid" },
+            "gridArg": { "type": "integer", "minimum": 0, "description": "Index into a case's args: the matrix." }
+          }
+        }
+      ]
     },
     "case": {
       "type": "object",

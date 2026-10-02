@@ -53,6 +53,7 @@ SCHEMA_VERSION = 1
 STUB_PREAMBLE = "from typing import List, Optional\n\n\n"
 
 COMPARE_MODES = frozenset({"exact", "unordered", "unordered-nested"})
+FIGURE_KINDS = frozenset({"graph", "grid"})
 REQUIRED_SPEC_KEYS = ("number", "title", "url", "statement", "entry", "signature",
                       "compare", "cases")
 REQUIRED_ENTRY_KEYS = ("class", "method")
@@ -107,6 +108,43 @@ def _validate_cases(cases: object, filename: str) -> None:
         raise PracticeError(f"{filename}: no case has 'example: true'")
 
 
+def _validate_figure_index(figure: dict, key: str, spec: dict, filename: str) -> None:
+    """`figure[key]` must be an int (never a bool) that indexes every example case's args."""
+    index = figure[key]
+    if isinstance(index, bool) or not isinstance(index, int):
+        raise PracticeError(f"{filename}: figure.{key} must be an integer")
+    if index < 0:
+        raise PracticeError(f"{filename}: figure.{key} must not be negative")
+    for case_number, case in enumerate(spec["cases"]):
+        if case.get("example") is True and index >= len(case["args"]):
+            raise PracticeError(
+                f"{filename}: figure.{key} {index} is beyond case {case_number}'s args")
+
+
+def _validate_figure(spec: dict, filename: str) -> None:
+    """Validate the optional `figure`; absent is valid. Needs `cases` already validated."""
+    if "figure" not in spec:
+        return
+    figure = spec["figure"]
+    if not isinstance(figure, dict):
+        raise PracticeError(f"{filename}: 'figure' must be a mapping")
+    kind = figure.get("kind")
+    if kind not in FIGURE_KINDS:
+        raise PracticeError(
+            f"{filename}: figure.kind {kind!r} is not one of {sorted(FIGURE_KINDS)}")
+    if kind == "grid":
+        required_keys, optional_keys = ("gridArg",), ()
+    else:
+        required_keys, optional_keys = ("edgesArg",), ("nodeCountArg",)
+        if "directed" in figure and not isinstance(figure["directed"], bool):
+            raise PracticeError(f"{filename}: figure.directed must be a boolean")
+    for key in required_keys:
+        if key not in figure:
+            raise PracticeError(f"{filename}: figure is missing '{key}'")
+    for key in required_keys + tuple(k for k in optional_keys if k in figure):
+        _validate_figure_index(figure, key, spec, filename)
+
+
 def validate_spec(spec: object, filename: str) -> None:
     """Raise `PracticeError` naming `filename` on the first way `spec` is unusable."""
     if not isinstance(spec, dict):
@@ -124,6 +162,19 @@ def validate_spec(spec: object, filename: str) -> None:
             f"{filename}: compare {spec['compare']!r} is not one of "
             f"{sorted(COMPARE_MODES)}")
     _validate_cases(spec["cases"], filename)
+    _validate_figure(spec, filename)
+
+
+def build_figure(figure: dict | None) -> dict | None:
+    """The emitted `figure` from a validated spec's figure, or None when it has none."""
+    if figure is None:
+        return None
+    if figure["kind"] == "grid":
+        return {"kind": "grid", "gridArg": figure["gridArg"]}
+    return {"kind": "graph",
+            "directed": figure.get("directed", False),
+            "edgesArg": figure["edgesArg"],
+            "nodeCountArg": figure.get("nodeCountArg")}
 
 
 def build_problem(spec: dict) -> dict:
@@ -137,6 +188,7 @@ def build_problem(spec: dict) -> dict:
         "stub": render_stub(entry["class"], entry["method"], spec["signature"]),
         "entry": {"className": entry["class"], "method": entry["method"]},
         "compare": spec["compare"],
+        "figure": build_figure(spec.get("figure")),
         "cases": [
             {"args": case["args"], "expected": case["expected"],
              "example": case.get("example") is True}

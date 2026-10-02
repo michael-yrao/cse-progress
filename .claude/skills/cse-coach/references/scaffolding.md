@@ -1,4 +1,4 @@
-<!-- reconciled: 2026-10-01 -->
+<!-- reconciled: 2026-10-02 -->
 # Scaffolding a problem
 
 **Open this** before you create or set up any problem file for the learner.
@@ -98,7 +98,8 @@ python scripts/new_problem.py --number 743 --title "Network Delay Time" --patter
   problem will be run on the site and has no spec, write the spec first: the statement, the
   entry point, the signature, the comparison mode, the statement's examples, and about 30
   stored random cases. Compute their expected values with a reference kept out of the repo.
-  Then run `python scripts/export_practice.py --check`.
+  Then run `python scripts/export_practice.py --check`. Add a `figure` when the input is a
+  graph or a grid, so the site draws each example.
 
 **Fill the problem statement for them** — the learner never pastes it. Fetch it from the
 source and write it into the `{statement}` slot. In low-token / caveman mode, write a
