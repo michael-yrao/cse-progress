@@ -10,7 +10,8 @@ statement: |
 
       the distance    e.g. "2", when a minimum distance exists
       "Impossible"    when there is no path from s to that node
-      "-Infinity"     when there are arbitrarily short paths from s to that node
+      "-Infinity"     when there are arbitrarily short paths
+                      from s to that node
 
   Example 1:
       Input:  n = 5, s = 0

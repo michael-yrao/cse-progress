@@ -8,8 +8,9 @@ statement: |
   Find a minimum spanning tree of the graph. Return `[cost, tree_edges]`:
 
       cost         the total weight of the tree
-      tree_edges   the tree's edges, each written `[x, y]` with x < y,
-                   listed in ascending order (by x, then by y)
+      tree_edges   the tree's edges, each written `[x, y]`
+                   with x < y, listed in ascending order
+                   (by x, then by y)
 
   If the graph has no spanning tree, return `None`.
 
@@ -37,6 +38,7 @@ statement: |
   accepts any minimum spanning tree when several exist.)
 
   ────────────────────────────────────────────────────────────────────────────
+
   Submitting on Kattis (only needed once the method works)
 
   The judge sends several test cases on stdin, one after another.
@@ -46,8 +48,9 @@ statement: |
           next m lines    u v w
       End of input:       a line "0 0", which is not a test case
 
-      Per test case print "Impossible" on its own line when there is no spanning tree.
-      Otherwise print the cost on one line, then one tree edge per line as "x y".
+      Per test case print "Impossible" on its own line when
+      there is no spanning tree. Otherwise print the cost on
+      one line, then one tree edge per line as "x y".
 
       Sample input        Sample output
           4 4                 3

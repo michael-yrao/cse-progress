@@ -52,6 +52,11 @@ SCHEMA_VERSION = 1
 # What the site's worker needs above the stub so the stub runs unmodified.
 STUB_PREAMBLE = "from typing import List, Optional\n\n\n"
 
+# The site draws a statement's indented lines verbatim (alignment matters) in a pane about 68
+# characters wide, so a longer one would wrap mid-row. Unindented lines are not limited: the
+# site reflows them to the pane's width.
+MAX_VERBATIM_LINE = 64
+
 COMPARE_MODES = frozenset({"exact", "unordered", "unordered-nested"})
 FIGURE_KINDS = frozenset({"graph", "grid"})
 REQUIRED_SPEC_KEYS = ("number", "title", "url", "statement", "entry", "signature",
@@ -145,6 +150,15 @@ def _validate_figure(spec: dict, filename: str) -> None:
         _validate_figure_index(figure, key, spec, filename)
 
 
+def _validate_statement_lines(statement: object, filename: str) -> None:
+    """No indented statement line may exceed `MAX_VERBATIM_LINE` characters."""
+    for line_number, line in enumerate(str(statement).splitlines(), start=1):
+        if line[:1].isspace() and len(line) > MAX_VERBATIM_LINE:
+            raise PracticeError(
+                f"{filename}: statement line {line_number} is indented and {len(line)} "
+                f"characters long (max {MAX_VERBATIM_LINE})")
+
+
 def validate_spec(spec: object, filename: str) -> None:
     """Raise `PracticeError` naming `filename` on the first way `spec` is unusable."""
     if not isinstance(spec, dict):
@@ -156,6 +170,7 @@ def validate_spec(spec: object, filename: str) -> None:
         raise PracticeError(
             f"{filename}: number {spec['number']!r} does not match the filename's "
             f"leading number")
+    _validate_statement_lines(spec["statement"], filename)
     _validate_entry(spec["entry"], filename)
     if spec["compare"] not in COMPARE_MODES:
         raise PracticeError(

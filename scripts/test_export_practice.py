@@ -63,6 +63,8 @@ class ValidationTests(unittest.TestCase):
              _spec(figure={"kind": "graph", "edgesArg": "0"})),
             ("figure arg index beyond an example case's args", FILENAME,
              _spec(figure={"kind": "grid", "gridArg": 1})),
+            ("indented statement line of 65 characters", FILENAME,
+             _spec(statement="Return it.\n" + " " * 4 + "x" * 61 + "\n")),
         ]
         for label, filename, spec in rows:
             with self.subTest(label):
@@ -81,6 +83,11 @@ class ValidationTests(unittest.TestCase):
             self.assertEqual([c["example"] for c in payload["problems"][0]["cases"]],
                              [True, False])
             self.assertIsNone(payload["problems"][0]["figure"])
+
+        with self.subTest("unindented 120-character line is accepted"):
+            long_prose = "Return it. " + "word " * 22
+            ep.build_payload([(FILENAME, _spec(statement=long_prose.strip()[:120] + "\n"))],
+                             TODAY)
 
 
 class RenderStubTests(unittest.TestCase):
