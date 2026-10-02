@@ -32,7 +32,7 @@ financial event that happens to correlate. Correlation is not a gate.
 2. **The job search still informs *what* is worth learning** — interview ROI is a legitimate input to
    curriculum priority ([[feedback-roi-promotes-to-curriculum]]). It just never determines **when**
    you're ready to move on.
-3. Keep the two separated by file: job-search planning lives in `career/career_trajectory.md` and the
+3. Keep the two separated by file: job-search planning lives in [career_trajectory.md](https://github.com/michael-yrao/interview-problems/blob/main/career/career_trajectory.md) and the
    company-tier tables in the DSA study guide; study gates live with the mechanics they measure.
 4. I proposed offer-gating for the ROI-line crossing on Jul 26 and was corrected before it was written
    to disk. Watch for it recurring — it's a tempting framing precisely because the timelines *look*

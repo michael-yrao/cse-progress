@@ -1213,7 +1213,7 @@ shape (`PROPOSED_ONLY` → `⚠️ PROPOSED-ONLY` per line + a count), so it can
 3. **advance-prompt-tail** (09-23 ×2) → **hook** (rung 2): `problem_link_reminder.py::ADVANCE_PHRASE` now catches
    `go ahead and …` and `write the/your code|solution`; +2 positive, +1 negative self-test case, all passing. The
    leading-question variant is not regex-shaped and stays a habit under the same `fam:`.
-5. **retry-stash-leak** (09-23 1489 `UF`, 09-24 648 `TrieNode` = 2×) → **source fix DUE, not landed** — it is a
+4. **retry-stash-leak** (09-23 1489 `UF`, 09-24 648 `TrieNode` = 2×) → **source fix DUE, not landed** — it is a
    two-script change with tests, so it goes through the engineer workflow after the learner approves the plan:
    - `new_problem.py` retry extract: also move module-level `class`/`def` blocks that sit between the last import
      and `class Solution` into the stash, tagged so restore knows their level (e.g. a `# ── module-level ──`
@@ -1224,7 +1224,7 @@ shape (`PROPOSED_ONLY` → `⚠️ PROPOSED-ONLY` per line + a count), so it can
      one is unchanged; the un-attempted guard still declines.
    Interim (rung 3, landed tonight): `retry-and-restore.md` tells the coach to read the lines above `class
    Solution` after every retry scaffold and name any helper in the hand-over.
-6. **release-step-unverified** (1×, but the fix is a one-line recipe edit) → landed in cse-coach `CLAUDE.md`
+5. **release-step-unverified** (1×, but the fix is a one-line recipe edit) → landed in cse-coach `CLAUDE.md`
    (annotated tag + `ls-remote` verify). Uncommitted in the canonical repo.
 
 **Bookkeeping:** 12 `##` entries + the bullet-format 09-23 read-before-asserting entry consolidated and moved to

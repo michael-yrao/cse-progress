@@ -1,6 +1,6 @@
 # System Design Study Guide — the mock-interview model
 
-> **📍 Overarching career goal & apply strategy → [`career_strategy.md`](https://github.com/michael-yrao/cse-progress/blob/main/docs/foundations/career_strategy.md).**
+> **📍 Overarching career goal & apply strategy → [`career_strategy.md`](https://github.com/michael-yrao/interview-problems/blob/main/career/career_strategy.md).**
 > SD *sequence, rubric and phase gates* → [`senior_ramp.md`](https://github.com/michael-yrao/sd-progress/blob/main/senior_ramp.md).
 > This guide is the SD *mechanics*: how a mock runs, how it is scored, what gets written down.
 

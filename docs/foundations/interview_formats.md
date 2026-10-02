@@ -2,7 +2,7 @@
 
 <!-- reconciled: 2026-09-30 -->
 
-> **Scope.** Cross-track, like [`career_strategy.md`](career_strategy.md): it describes the *round shapes*
+> **Scope.** Cross-track, like [`career_strategy.md`](https://github.com/michael-yrao/interview-problems/blob/main/career/career_strategy.md): it describes the *round shapes*
 > the route's companies run today, which pillar in this repo already trains each shape, and where the
 > gaps are. It does not restate the goal (that is `career_strategy.md`) or how DSA / SD are studied
 > (`dsa/study_guide.md`, `system_design/study_guide.md`). **Problem demand by company** is a separate,

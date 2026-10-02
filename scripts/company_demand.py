@@ -58,7 +58,7 @@ YELLOW_GLYPH = "\U0001f7e1"  # 🟡
 RED_GLYPH = "\U0001f534"  # 🔴
 
 # ── Company tiers ────────────────────────────────────────────────────────────
-# Source of truth for the ROSTER is docs/foundations/career_strategy.md §2 (the route
+# Source of truth for the ROSTER is interview-problems/career/career_strategy.md (private repo) §2 (the route
 # table). Folder names below are the source repo's exact spelling (verified by fetch,
 # 2026-09-26) — a couple differ from the prose in career_strategy.md (e.g. "J.P. Morgan"
 # vs "JPMorgan").

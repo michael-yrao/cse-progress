@@ -1,13 +1,13 @@
 ---
 name: project_interview_goal
-description: End goal is big tech / MANGA-adjacent at senior/staff (L6); fintech & other domain roles are paid waypoints. SD is the binding constraint; DSA (incl. DP) still ahead. Full strategy in docs/foundations/career_strategy.md.
+description: End goal is big tech / MANGA-adjacent at senior/staff (L6); fintech & other domain roles are paid waypoints. SD is the binding constraint; DSA (incl. DP) still ahead. Full strategy in interview-problems/career/career_strategy.md.
 metadata:
   type: project
 reconciled: 2026-09-06
 ---
 
 **Compact recall pointer — the full goal/strategy lives in
-[`docs/foundations/career_strategy.md`](../../docs/foundations/career_strategy.md)** (single source of
+[`career_strategy.md`](https://github.com/michael-yrao/interview-problems/blob/main/career/career_strategy.md)** (single source of
 truth, cross-track). Read that when planning; this file only carries the load-bearing facts so they surface
 in recall. Do NOT restate the strategy here — that's how it drifted to three stale "Staff fintech" copies on
 Aug 6, 2026.

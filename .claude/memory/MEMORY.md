@@ -67,7 +67,7 @@ operational copy is in a skill reference or CLAUDE.md. Grouped for scanning.
 - [Session dating](feedback_session_dating.md) — date by study session, not wall clock; a past-midnight session keeps its start date (source-fixed in the scripts).
 
 ## Project state (standing)
-- [Interview goal](project_interview_goal.md) — L6 big-tech; fintech is a paid waypoint; DP still ahead; apply-gate is repo-evaluable. Full strategy = `docs/foundations/career_strategy.md`.
+- [Interview goal](project_interview_goal.md) — L6 big-tech; fintech is a paid waypoint; DP still ahead; apply-gate is repo-evaluable. Full strategy = [career_strategy.md](https://github.com/michael-yrao/interview-problems/blob/main/career/career_strategy.md).
 - [Interview formats 2026](project_interview_formats.md) — AI-assisted + bug-squash rounds are the two untrained shapes; the Practical Coding Rep is PARKED behind Gate-1-DSA + "applications opening"; `company_demand.md` is the demand sibling.
 - [SD = mock interviews](project_sd_mock_model.md) ⭐ — learner studies SD on HelloInterview; coach runs cold mocks + scores; currently STUDY MODE (zero SD slots, don't nudge). The SD-state decision record.
 - [AI pillar (parked)](project_ai_pillar.md) — AI Engineering is a planned THIRD pillar, PARKED behind a measured trigger (DSA must lighten); active/scored/spaced like SD, interview-first path, ~1 notebook/wk on activation. Don't nudge until the trigger fires.

@@ -201,7 +201,7 @@ If you finish an active block problem in under 15 minutes, don't move on to a ne
 | **Glassdoor interview questions** | Medium | Less technical detail but useful for recency confirmation |
 
 **Company targeting, the tier route, the "why," and the apply gates now live in
-[`../career_strategy.md`](../career_strategy.md)** — the single cross-track home for the goal (relocated out
+[`../career_strategy.md`](https://github.com/michael-yrao/interview-problems/blob/main/career/career_strategy.md)** — the single cross-track home for the goal (relocated out
 of this guide Aug 6, 2026 so it stops drifting across copies). This guide is *how to study DSA*; the north
 star is one click away.
 
@@ -745,7 +745,7 @@ without confirmed transfer just means room to learn new things on a shaky base):
 > learned.
 >
 > Every gate here resolves against something **measurable in this repo**: a comfort rating, a streak, a
-> surplus computation, a pull rate. The job-search timeline lives in `career/career_trajectory.md` and
+> surplus computation, a pull rate. The job-search timeline lives in [career_trajectory.md](https://github.com/michael-yrao/interview-problems/blob/main/career/career_trajectory.md) and
 > the company-tier tables above — it informs *what* is worth learning (interview ROI), never *when*
 > you're ready to move on.
 

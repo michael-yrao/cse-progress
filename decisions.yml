@@ -1130,7 +1130,7 @@ decisions:
       curriculum entry. Memory: `.claude/memory/project_interview_formats.md`. See
       `docs/foundations/interview_formats.md`,
       `.claude/skills/cse-coach/references/weekly-build.md` (the trigger-check bullet),
-      `docs/foundations/career_strategy.md` §5.
+      `interview-problems/career/career_strategy.md` §5.
     affects: [scheduling, weekly_build]
 
   - id: external-judge-problems-sep26
@@ -1648,3 +1648,11 @@ decisions:
       `new_problem.py` reads the statement and signature from the spec when one exists. Stage 1
       covers single-method problems only. No `cse.config.yml` value changed.
     affects: [scaffolding, weekly-build, hooks, practice]
+
+  - id: career-material-private
+    date: 2026-10-01
+    summary: >-
+      Career material (resumes, performance review, career strategy, behavioral notes,
+      resume-claim notes) moved to the private repo `interview-problems` under `career/`.
+      cse-progress links to it by URL and keeps no copy.
+    affects: [memory, docs]

@@ -48,7 +48,6 @@ cse-progress/
 │   ├── restore_history.py            # restores stashed prior attempts at session end
 │   ├── update_review_dates.py        # Comfort→interval engine (runs on commit)
 │   └── pull_interview.py
-├── career/                           # resume + trajectory notes
 ├── cse.config.yml                    # engine settings
 ├── README.md
 ├── CLAUDE.md                         # full workflow (source of truth)
