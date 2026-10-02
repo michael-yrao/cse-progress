@@ -24,6 +24,10 @@ Usage:
                                                      # exit 1 on any failure
     python scripts/export_practice.py --date 2026-10-01   # override generatedAt (default: today)
 
+Beyond the single-method shape a spec may set `result` (compare an argument after the call),
+`types` (node codecs per argument and result) and `entry.kind` (`ops` or `round-trip`). See
+decisions.yml `practice-contract-shapes`.
+
 `--check` also fails when `dashboard/practice.json` already exists on disk and differs from
 what the specs would produce right now. `generatedAt` is ignored in that comparison, so a
 regeneration on a later day is not drift.
@@ -57,11 +61,52 @@ STUB_PREAMBLE = "from typing import List, Optional\n\n\n"
 # site reflows them to the pane's width.
 MAX_VERBATIM_LINE = 64
 
+KIND_METHOD = "method"
+KIND_OPS = "ops"
+KIND_ROUND_TRIP = "round-trip"
+ENTRY_KINDS = frozenset({KIND_OPS, KIND_ROUND_TRIP})
+
+RESULT_RETURN = "return"
+RESULT_ARG = "arg"
+RESULT_ARG_PREFIX = "arg-prefix"
+# Spec spelling of a `result` mapping's key → the emitted `result.kind`.
+RESULT_SPEC_KEYS = {"arg": RESULT_ARG, "argPrefix": RESULT_ARG_PREFIX}
+
+CODEC_TREE_NODE = "tree-node"
+CODEC_TREE_VALUE = "tree-value"
+CODEC_LIST_NODE_CYCLE = "list-node-cycle"
+
+# LeetCode's node classes, rendered above the stub when a codec needs them.
+LIST_NODE_SOURCE = ("class ListNode:\n    def __init__(self, val=0, next=None):\n"
+                    "        self.val = val\n        self.next = next\n\n\n")
+TREE_NODE_SOURCE = ("class TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n"
+                    "        self.val = val\n        self.left = left\n"
+                    "        self.right = right\n\n\n")
+RANDOM_NODE_SOURCE = ("class Node:\n"
+                      "    def __init__(self, x: int, next: 'Node' = None, "
+                      "random: 'Node' = None):\n"
+                      "        self.val = int(x)\n        self.next = next\n"
+                      "        self.random = random\n\n\n")
+GRAPH_NODE_SOURCE = ("class Node:\n    def __init__(self, val=0, neighbors=None):\n"
+                     "        self.val = val\n"
+                     "        self.neighbors = neighbors if neighbors is not None else []\n"
+                     "\n\n")
+CODEC_PREAMBLES = {
+    "list-node": LIST_NODE_SOURCE,
+    CODEC_LIST_NODE_CYCLE: LIST_NODE_SOURCE,
+    CODEC_TREE_NODE: TREE_NODE_SOURCE,
+    CODEC_TREE_VALUE: TREE_NODE_SOURCE,
+    "random-list": RANDOM_NODE_SOURCE,
+    "graph-node": GRAPH_NODE_SOURCE,
+}
+CODECS = frozenset(CODEC_PREAMBLES)
+
+# `name(params) -> ret` as written in an ops spec's `methods` list.
+_METHOD_LINE = re.compile(r"^(\w+)\((.*)\)\s*(?:->\s*(.+))?$")
+
 COMPARE_MODES = frozenset({"exact", "unordered", "unordered-nested"})
 FIGURE_KINDS = frozenset({"graph", "grid"})
-REQUIRED_SPEC_KEYS = ("number", "title", "url", "statement", "entry", "signature",
-                      "compare", "cases")
-REQUIRED_ENTRY_KEYS = ("class", "method")
+REQUIRED_SPEC_KEYS = ("number", "title", "url", "entry", "compare", "cases")
 
 _FILENAME_NUMBER = re.compile(r"^(\d+)_")
 
@@ -73,14 +118,51 @@ class PracticeError(Exception):
 
 # ── pure helpers (no filesystem access) ─────────────────────────────────────────────
 
-def render_stub(class_name: str, method: str, signature: str) -> str:
-    """The blank starting code: `STUB_PREAMBLE` + the class + one `pass` method, with the
-    signature parsed by `new_problem.parse_signature` (`self` implied)."""
+def split_method_line(line: str) -> tuple[str, str] | None:
+    """`get(key: int) -> int` → `("get", "key: int -> int")`, the form
+    `new_problem.parse_signature` takes; None when the line is not `name(params)[ -> ret]`."""
+    match = _METHOD_LINE.match(line.strip())
+    if not match:
+        return None
+    name, params, ret = match.groups()
+    return name, f"{params} -> {ret}" if ret else params
+
+
+def _method_source(name: str, signature: str) -> str:
     params, ret = new_problem.parse_signature(signature)
     ret_suffix = f" {ret}" if ret else ""
-    return (f"{STUB_PREAMBLE}class {class_name}:\n"
-            f"    def {method}({params}){ret_suffix}:\n"
-            f"        pass\n")
+    return f"    def {name}({params}){ret_suffix}:\n        pass\n"
+
+
+def _node_preambles(types: dict | None) -> str:
+    """The node classes the codecs in `types` need, each class once, in first-use order."""
+    if not types:
+        return ""
+    codecs = [*types.get("args", []), types.get("result")]
+    by_class_line: dict[str, str] = {}
+    for codec in codecs:
+        source = CODEC_PREAMBLES.get(codec)
+        if source is not None:
+            by_class_line.setdefault(source.split(":", 1)[0], source)
+    return "".join(by_class_line.values())
+
+
+def render_stub(class_name: str, method: str, signature: str | None = None, *,
+                types: dict | None = None, kind: str = KIND_METHOD,
+                methods: tuple[str, ...] = (), decode: str | None = None,
+                decode_signature: str | None = None) -> str:
+    """The blank starting code: `STUB_PREAMBLE`, any node classes `types` needs, then the
+    class with one `pass` method per entry point. Signatures are parsed by
+    `new_problem.parse_signature` (`self` implied). `kind` `ops` renders one method per
+    `methods` line; `round-trip` renders `method` (encode) and `decode`."""
+    head = f"{STUB_PREAMBLE}{_node_preambles(types)}class {class_name}:\n"
+    if kind == KIND_OPS:
+        parts = [split_method_line(line) for line in methods]
+        return head + "".join(_method_source(name, sig) for name, sig in parts)
+    body = _method_source(method, signature or "")
+    if kind == KIND_ROUND_TRIP:
+        body += _method_source(decode or "", decode_signature or "")
+    return head + body
 
 
 def _filename_number(filename: str) -> int | None:
@@ -88,18 +170,71 @@ def _filename_number(filename: str) -> int | None:
     return int(match.group(1)) if match else None
 
 
+def entry_kind(entry: dict) -> str:
+    """The entry's kind; `method` when the spec sets none."""
+    return entry.get("kind", KIND_METHOD)
+
+
+def _require_text(mapping: dict, key: str, label: str, filename: str) -> None:
+    if not isinstance(mapping.get(key), str) or not mapping[key].strip():
+        raise PracticeError(f"{filename}: {label} must be a non-empty string")
+
+
 def _validate_entry(entry: object, filename: str) -> None:
     if not isinstance(entry, dict):
         raise PracticeError(f"{filename}: 'entry' must be a mapping")
-    for key in REQUIRED_ENTRY_KEYS:
-        if key not in entry:
-            raise PracticeError(f"{filename}: entry is missing '{key}'")
-    for key in REQUIRED_ENTRY_KEYS:
-        if not isinstance(entry[key], str) or not entry[key].strip():
-            raise PracticeError(f"{filename}: entry.{key} must be a non-empty string")
+    if "kind" in entry and entry["kind"] not in ENTRY_KINDS:
+        raise PracticeError(
+            f"{filename}: entry.kind {entry['kind']!r} is not one of {sorted(ENTRY_KINDS)}")
+    if "class" not in entry:
+        raise PracticeError(f"{filename}: entry is missing 'class'")
+    _require_text(entry, "class", "entry.class", filename)
+    kind = entry_kind(entry)
+    if kind == KIND_METHOD or "method" in entry:
+        if "method" not in entry:
+            raise PracticeError(f"{filename}: entry is missing 'method'")
+        _require_text(entry, "method", "entry.method", filename)
+    if kind == KIND_ROUND_TRIP:
+        for key in ("encode", "decode"):
+            if key not in entry:
+                raise PracticeError(f"{filename}: round-trip entry is missing '{key}'")
+            _require_text(entry, key, f"entry.{key}", filename)
 
 
-def _validate_cases(cases: object, filename: str) -> None:
+def _validate_signatures(spec: dict, filename: str) -> None:
+    """`signature` is required for method and round-trip, `decodeSignature` for round-trip,
+    and `methods` (parsable `name(params) -> ret` lines) for ops."""
+    kind = entry_kind(spec["entry"])
+    if kind == KIND_OPS:
+        methods = spec.get("methods")
+        if not isinstance(methods, list) or not methods:
+            raise PracticeError(f"{filename}: an ops spec needs a non-empty 'methods' list")
+        for line in methods:
+            if not isinstance(line, str) or split_method_line(line) is None:
+                raise PracticeError(
+                    f"{filename}: methods entry {line!r} is not 'name(params) -> ret'")
+        return
+    if not isinstance(spec.get("signature"), str):
+        raise PracticeError(f"{filename}: missing required key 'signature'")
+    if kind == KIND_ROUND_TRIP and not isinstance(spec.get("decodeSignature"), str):
+        raise PracticeError(f"{filename}: a round-trip spec needs 'decodeSignature'")
+
+
+def _validate_op_case(case: dict, index: int, class_name: str, filename: str) -> None:
+    ops = case.get("ops")
+    if not isinstance(ops, list) or not ops or not all(isinstance(op, str) for op in ops):
+        raise PracticeError(f"{filename}: case {index} 'ops' must be a list of names")
+    if ops[0] != class_name:
+        raise PracticeError(
+            f"{filename}: case {index} ops[0] {ops[0]!r} must be the class {class_name!r}")
+    if len(case["args"]) != len(ops):
+        raise PracticeError(f"{filename}: case {index} 'ops' and 'args' differ in length")
+    if not isinstance(case["expected"], list) or len(case["expected"]) != len(ops):
+        raise PracticeError(
+            f"{filename}: case {index} 'expected' must be a list as long as 'ops'")
+
+
+def _validate_cases(cases: object, filename: str, entry: dict) -> None:
     if not isinstance(cases, list) or not cases:
         raise PracticeError(f"{filename}: 'cases' must be a non-empty list")
     for index, case in enumerate(cases):
@@ -109,8 +244,76 @@ def _validate_cases(cases: object, filename: str) -> None:
             raise PracticeError(f"{filename}: case {index} 'args' must be a list")
         if "expected" not in case:
             raise PracticeError(f"{filename}: case {index} has no 'expected'")
+        if entry_kind(entry) == KIND_OPS:
+            _validate_op_case(case, index, entry["class"], filename)
     if not any(case.get("example") is True for case in cases):
         raise PracticeError(f"{filename}: no case has 'example: true'")
+
+
+def _result_index(result: object, filename: str) -> tuple[str, int] | None:
+    """`(kind, index)` for a `{arg: i}` / `{argPrefix: i}` result, None for `return`/absent."""
+    if result is None or result == RESULT_RETURN:
+        return None
+    if not isinstance(result, dict) or len(result) != 1 \
+            or next(iter(result)) not in RESULT_SPEC_KEYS:
+        raise PracticeError(
+            f"{filename}: result must be 'return', {{arg: i}} or {{argPrefix: i}}")
+    spec_key, index = next(iter(result.items()))
+    if isinstance(index, bool) or not isinstance(index, int) or index < 0:
+        raise PracticeError(f"{filename}: result.{spec_key} must be an integer >= 0")
+    return RESULT_SPEC_KEYS[spec_key], index
+
+
+def _validate_result(spec: dict, filename: str) -> None:
+    picked = _result_index(spec.get("result"), filename)
+    if picked is None:
+        return
+    _, index = picked
+    for case_number, case in enumerate(spec["cases"]):
+        if index >= len(case["args"]):
+            raise PracticeError(
+                f"{filename}: result index {index} is beyond case {case_number}'s args")
+
+
+def _parameter_count(signature: str) -> int:
+    """Parameters in `signature`, split at top-level commas (`self` not counted). The text
+    itself is still parsed only by `new_problem.parse_signature`."""
+    params, _ = new_problem.parse_signature(signature)
+    depth, count, has_text = 0, 0, False
+    for char in params:
+        if char in "[(":
+            depth += 1
+        elif char in "])":
+            depth -= 1
+        if char == "," and depth == 0:
+            count += has_text
+            has_text = False
+        elif not char.isspace():
+            has_text = True
+    return count + has_text - 1  # minus the implied `self`
+
+
+def _validate_types(spec: dict, filename: str) -> None:
+    """Validate the optional `types`; absent is valid. Needs the signatures validated."""
+    if "types" not in spec:
+        return
+    types = spec["types"]
+    if not isinstance(types, dict) or not isinstance(types.get("args"), list):
+        raise PracticeError(f"{filename}: 'types' must be a mapping with an 'args' list")
+    result_codec = types.get("result")
+    for codec in [*types["args"], result_codec]:
+        if codec is not None and codec not in CODECS:
+            raise PracticeError(f"{filename}: codec {codec!r} is not one of {sorted(CODECS)}")
+    if result_codec == CODEC_LIST_NODE_CYCLE:
+        raise PracticeError(f"{filename}: {CODEC_LIST_NODE_CYCLE} cannot be a result codec")
+    if CODEC_TREE_VALUE in types["args"] and CODEC_TREE_NODE not in types["args"]:
+        raise PracticeError(
+            f"{filename}: a {CODEC_TREE_VALUE} arg needs a {CODEC_TREE_NODE} arg")
+    if entry_kind(spec["entry"]) != KIND_OPS \
+            and len(types["args"]) != _parameter_count(spec["signature"]):
+        raise PracticeError(
+            f"{filename}: types.args has {len(types['args'])} codecs but the signature "
+            f"has {_parameter_count(spec['signature'])} parameters")
 
 
 def _validate_figure_index(figure: dict, key: str, spec: dict, filename: str) -> None:
@@ -170,14 +373,18 @@ def validate_spec(spec: object, filename: str) -> None:
         raise PracticeError(
             f"{filename}: number {spec['number']!r} does not match the filename's "
             f"leading number")
-    _validate_statement_lines(spec["statement"], filename)
+    if spec.get("statement") is not None:
+        _validate_statement_lines(spec["statement"], filename)
     _validate_entry(spec["entry"], filename)
+    _validate_signatures(spec, filename)
     if spec["compare"] not in COMPARE_MODES:
         raise PracticeError(
             f"{filename}: compare {spec['compare']!r} is not one of "
             f"{sorted(COMPARE_MODES)}")
-    _validate_cases(spec["cases"], filename)
+    _validate_cases(spec["cases"], filename, spec["entry"])
     _validate_figure(spec, filename)
+    _validate_result(spec, filename)
+    _validate_types(spec, filename)
 
 
 def build_figure(figure: dict | None) -> dict | None:
@@ -192,24 +399,69 @@ def build_figure(figure: dict | None) -> dict | None:
             "nodeCountArg": figure.get("nodeCountArg")}
 
 
+def build_result(result: object) -> dict | None:
+    """The emitted `result` from a validated spec's result, or None when it sets none."""
+    if result is None:
+        return None
+    if result == RESULT_RETURN:
+        return {"kind": RESULT_RETURN}
+    spec_key, index = next(iter(result.items()))
+    return {"kind": RESULT_SPEC_KEYS[spec_key], "index": index}
+
+
+def build_types(types: dict | None) -> dict | None:
+    """The emitted `types` from a validated spec's types, or None when it sets none."""
+    if types is None:
+        return None
+    return {"args": list(types["args"]), "result": types.get("result")}
+
+
+def build_entry(entry: dict) -> dict:
+    """The emitted `entry`; `kind`, `encode` and `decode` only when the spec sets them."""
+    built = {"className": entry["class"], "method": entry.get("method", "")}
+    for spec_key in ("kind", "encode", "decode"):
+        if spec_key in entry:
+            built[spec_key] = entry[spec_key]
+    return built
+
+
+def build_case(case: dict) -> dict:
+    built = {"args": case["args"], "expected": case["expected"],
+             "example": case.get("example") is True}
+    if "ops" in case:
+        built = {"ops": case["ops"], **built}
+    return built
+
+
 def build_problem(spec: dict) -> dict:
-    """One `problems` entry from a validated spec."""
+    """One `problems` entry from a validated spec. Optional fields are left out, never
+    emitted as null, when the spec does not set them."""
     entry = spec["entry"]
-    return {
+    kind = entry_kind(entry)
+    statement = spec.get("statement")
+    types = build_types(spec.get("types"))
+    problem = {
         "number": spec["number"],
         "title": spec["title"],
         "url": spec["url"],
-        "statement": str(spec["statement"]).rstrip("\n"),
-        "stub": render_stub(entry["class"], entry["method"], spec["signature"]),
-        "entry": {"className": entry["class"], "method": entry["method"]},
+        "statement": None if statement is None else str(statement).rstrip("\n"),
+        "stub": render_stub(
+            entry["class"], entry.get("encode", entry.get("method", "")),
+            spec.get("signature"), types=types, kind=kind,
+            methods=tuple(spec.get("methods", ())), decode=entry.get("decode"),
+            decode_signature=spec.get("decodeSignature")),
+        "entry": build_entry(entry),
         "compare": spec["compare"],
         "figure": build_figure(spec.get("figure")),
-        "cases": [
-            {"args": case["args"], "expected": case["expected"],
-             "example": case.get("example") is True}
-            for case in spec["cases"]
-        ],
+        "cases": [build_case(case) for case in spec["cases"]],
     }
+    if kind == KIND_ROUND_TRIP:
+        problem["signature"] = spec["signature"]
+        problem["decodeSignature"] = spec["decodeSignature"]
+    for key, value in (("result", build_result(spec.get("result"))), ("types", types)):
+        if value is not None:
+            problem[key] = value
+    return problem
 
 
 def build_payload(named_specs: list[tuple[str, object]], today: dt.date) -> dict:
