@@ -17,17 +17,17 @@
 **Thin — below its computed coverage bar** (`cse.config.yml`'s `coverage_threshold`). One instance trains recall of that problem, not the skill.
 
 - **BFS on Implicit Graph** (graphs) — 1/2: 127
-- **Bellman-Ford** (advanced_graphs) — 1/2: 787
 - **Kruskal's MST** (advanced_graphs) — 1/2: 1489
+- **Bellman-Ford** (advanced_graphs) — 2/3: 787, 9001
 - **Dijkstra** (advanced_graphs) — 4/5 (5 rows): 743, 778, 1631, 2812
-- **Backtracking** (backtracking) — 7/9 (9 rows): 22, 39, 40, 46, 78, 79, 131
+- **Backtracking** (backtracking) — 8/10 (11 rows): 22, 39, 40, 46, 78, 79, 90, 131
 
 **Queued — declared, and already sitting in the Waiting Room / Expansion Queue.** A known gap with a fill already picked, not a new finding.
 
 - **BFS on Implicit Graph** (graphs) — queued: 815 (`solved:127`), 1197 (`solved:127`)
 - **BST Descent** (trees) — queued: 230 (`surplus>=1`)
-- **Backtracking** (backtracking) — queued: 17 (`phase:Backtracking`), 51 (`phase:Backtracking`), 90 (`phase:Backtracking`), 212 (`phase:Backtracking`)
-- **Bellman-Ford** (advanced_graphs) — queued: 9001 (`surplus>=1`), 9002 (`surplus>=1`)
+- **Backtracking** (backtracking) — queued: 17 (`phase:Backtracking`), 51 (`phase:Backtracking`), 212 (`phase:Backtracking`)
+- **Bellman-Ford** (advanced_graphs) — queued: 9002 (`surplus>=1`)
 - **Binary Search (min boundary)** (binary_search) — queued: 4 (`surplus>=1`)
 - **Cycle Detection in an Iterated Sequence** (graphs) — queued: 287 (`surplus>=1`)
 - **Dijkstra** (advanced_graphs) — queued: 1368 (`surplus>=1`), 1514 (`surplus>=1`), 3620 (`surplus>=1`), 3650 (`surplus>=1`)
@@ -55,7 +55,7 @@ Every declared technique gets a row, started or not — a not-started row's Gaps
 
 | Technique | Family | Tier | Min | Problems | Best | 🟢 | Variants | Gaps |
 |---|---|---|---:|---:|:---:|:---:|---|---|
-| Bellman-Ford | advanced_graphs | core | 2 (2+0) | 1 (787) | 🟢 | ✅ | Standard ×1 · ~~Contrast rep on 743~~ *(queued: `graduates:743`)* · ~~Negative edges (SSSP, -Infinity propagation)~~ *(queued: `surplus>=1`)* · ~~Negative-cycle detection (arbitrage / log-transform)~~ *(queued: `surplus>=1`)* | thin (1/2) · queued: 9001 `surplus>=1`, 9002 `surplus>=1` |
+| Bellman-Ford | advanced_graphs | core | 3 (2+1) | 2 (787, 9001) | 🟢 | ✅ | Standard ×1 · ~~Contrast rep on 743~~ *(queued: `graduates:743`)* · Negative edges (SSSP, -Infinity propagation) ×1 · ~~Negative-cycle detection (arbitrage / log-transform)~~ *(queued: `surplus>=1`)* | thin (2/3) · queued: 9002 `surplus>=1` |
 | Dijkstra | advanced_graphs | core | 5 (4+1) | 4 *+1v* (743, 778, 1631, 2812) | 🟢 | ✅ | Min-over-max (minimize the maximum edge) ×1 · Max-min bottleneck (maximize the minimum edge) ×1 · ~~0/1 edge weights (0-1 BFS vs Dijkstra)~~ *(queued: `surplus>=1`)* · ~~Multiplicative relaxation (maximize the product)~~ *(queued: `surplus>=1`)* | thin (4/5) · queued: 1368 `surplus>=1`, 1514 `surplus>=1`, 3620 `surplus>=1`, 3650 `surplus>=1` |
 | Floyd-Warshall (all-pairs shortest path) | advanced_graphs | core | 2 (2+0) | 2 (1334, 1462) | 🟢 | ✅ | — | queued: 399 `rated:1334` |
 | Hierholzer (Eulerian path) | advanced_graphs | core | 2 (2+0) | 2 *+1v* (332, 2097) | 🟢 | ✅ | pre-sorted adjacency ×1 · min-heap ordering ×1 | queued: 753 `surplus>=1` |
@@ -65,11 +65,11 @@ Every declared technique gets a row, started or not — a not-started row's Gaps
 | Boyer-Moore Voting | arrays_and_hash | core | 1 (1+0) | 2 (169, 229) | 🎓 | ✅ | — | — |
 | Frequency Counting | arrays_and_hash | core | 1 (1+0) | 2 (49, 242) | 🎓 | ✅ | — | — |
 | Hash Map Lookup | arrays_and_hash | core | 1 (1+0) | 2 (1, 219) | 🎓 | ✅ | — | — |
-| Hash Set Membership | arrays_and_hash | core | 2 (2+0) | 3 (36, 128, 217) | 🟢 | ✅ | — | — |
+| Hash Set Membership | arrays_and_hash | core | 2 (2+0) | 3 (36, 128, 217) | 🎓 | ✅ | — | — |
 | In-Place Array Rotation | arrays_and_hash | core | 1 (1+0) | 1 (189) | 🟢 | ✅ | — | — |
 | Length-Prefix Encoding | arrays_and_hash | core | 1 (1+0) | 1 (271) | 🟢 | ✅ | — | — |
 | Prefix/Suffix Products | arrays_and_hash | core | 1 (1+0) | 1 (238) | 🟢 | ✅ | — | — |
-| Backtracking | backtracking | core | 9 (5+4) | 7 *+2v* (22, 39, 40, 46, 78, 79, 131) | 🟢 | ✅ | — | thin (7/9) · queued: 17 `phase:Backtracking`, 51 `phase:Backtracking`, 90 `phase:Backtracking`, 212 `phase:Backtracking` |
+| Backtracking | backtracking | core | 10 (5+5) | 8 *+3v* (22, 39, 40, 46, 78, 79, 90, 131) | 🟢 | ✅ | — | thin (8/10) · queued: 17 `phase:Backtracking`, 51 `phase:Backtracking`, 212 `phase:Backtracking` |
 | Binary Search (exact match) | binary_search | core | 1 (1+0) | 2 (33, 704) | 🎓 | ✅ | — | — |
 | Binary Search (max boundary) | binary_search | core | 3 (2+1) | 3 (34, 74, 1552) | 🟢 | ✅ | — | — |
 | Binary Search (min boundary) | binary_search | core | 4 (4+0) | 7 (34, 153, 162, 540, 875, 1011, 2300) | 🎓 | ✅ | — | queued: 4 `surplus>=1` |
@@ -163,7 +163,7 @@ Every declared technique gets a row, started or not — a not-started row's Gaps
 
 ## Vocabulary maintenance
 
-**Queued (77)** — listed in the Action list above; a known gap with a fill already picked, not counted below.
+**Queued (75)** — listed in the Action list above; a known gap with a fill already picked, not counted below.
 
 **Declared, not queued (3)** — declared in the vocabulary, no tracker row, and not yet in any queue. This is the normal state for curriculum ahead of the learner; it is a roadmap, not a finding: 1102, 1135, 547
 

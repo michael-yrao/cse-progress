@@ -1,3 +1,32 @@
+- **2026-10-01 · 202 Happy Number (Seen-Set)** (🟢 s1 review; retry, half-spoiled: the tracker row names the method,
+  the stub still reads "recognition probe") — ✅ **hit.** Top comment: "we can use a set to make sure we don't revisit
+  the same number". Blank page, no hints on the code; the learner asked for the Big-O variables and was given n and d
+  only. 20,003/20,003 against a reference. → 🟢 s2.
+- **2026-10-01 · 128 Longest Consecutive Sequence** (🟢 s2 review; retry, half-spoiled: arrays_and_hash folder, no
+  pattern line in the stub) — ✅ **hit.** Top comment: "we want to find the start number here and just check if the
+  next number exists so that means we should convert nums to a set". Blank page, no hints; loops over the set, so a
+  duplicate start is counted once; 3,000/3,000 against a sort-based reference. → 🎓.
+- **2026-10-01 · 271 Encode and Decode Strings** (🟢 s1 review; retry, half-spoiled: arrays_and_hash folder, no
+  pattern line in the stub) — ✅ **hit.** Comment above the methods: "prefix length framing … length + # + string +
+  length + # + string". Blank page, no hints; the scan compares the character (`s[j] != '#'`), so the Jul 3 / Aug 2
+  index-vs-value bug held; 3,000/3,000 round trips over all 256 characters. → 🟢 s2.
+- **2026-10-01 · 150 Evaluate Reverse Polish Notation** (🟢 s1 review; retry, fully spoiled: the stub's `Pattern: stack`
+  line and the folder) — ✅ **hit, habit only.** Top comment: "stack problem … we see an operator, we pop the two latest
+  and push result into the stack". Blank page, no hints; both old bugs held (first pop is the right-hand operand,
+  `int()` on the float truncates toward zero); 3,000/3,000 against a reference evaluator. → 🟢 s2.
+- **2026-10-01 · 22 Generate Parentheses** (🟢 s0 lock-down; retry, fully spoiled: the stub's `Pattern: backtracking`
+  line and the folder) — ✅ **hit, habit only.** Top comment: the five slots, no technique word, with both prune rules
+  stated ("if left parentheses < n, we can add left, if right counter is less than left, we can add right") and the base
+  case at length 2n. Blank page, no hints. → 🟢 s1.
+- **2026-10-01 · 9001 Single Source Shortest Path, Negative Weights** (🆕 new, measured; the title names the shape, the
+  `graphs` folder does not name the method) — ✅ **hit.** Before any code: "first thing that comes to mind is bellman ford
+  since it helps me handle negative edges", and the top comment says the same. Shape, technique and picking feature all
+  stated unprompted. The rating follows execution: the round count and the cycle handling were coach-taught. → 🔴.
+- **2026-10-01 · 90 Subsets II** (🆕 new, measured; folder half-spoils) — ⚠️ **partial.** Top comment, unaided: "we are
+  getting all subsets but this time we have duplicates in here", then the five slots in the take/skip form (state = the
+  index being decided). Backtracking is never named as a word; the five-slot plan is the call. The picking feature vs 78
+  (a repeated value is decided once: sort, and the exclude branch jumps every copy) was not named. It was asked for
+  before any attempt and coach-supplied, the same rule taught on 40 on Sep 28. → 🔴.
 - **2026-09-30 · 131 Palindrome Partitioning** (🆕 new, measured; folder half-spoils) — ⚠️ **partial.** "all possible
   palindrome is obviously backtracking" in the top comment, unaided. The picking feature (the choice is where the
   next piece ends, so each child is one whole substring and the path is a list of pieces) was not named: choice and

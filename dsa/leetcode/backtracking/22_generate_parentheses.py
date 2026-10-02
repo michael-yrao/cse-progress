@@ -21,6 +21,36 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-10-01 ──────────────
+    def generateParenthesis_20261001(self, n: int) -> List[str]:
+        # path: current parentheses
+        # state: left parentheses counter, right parentheses counter
+        # validity: if left parentheses < n, we can add left, if right counter is less than left, we can add right
+        # decision: add left or right parentheses
+        # base case: when path is at n * 2, add to result
+
+        result = []
+
+        def backtrack(path, left_count, right_count):
+            # base case
+            if len(path) == 2*n:
+                # path is string, immutable, no need for copies
+                result.append(path)
+                return
+
+            # validity check
+            # decision #1: add left
+            if left_count < n:
+                backtrack(path + '(', left_count+1, right_count)
+
+            # validity check
+            # decision #2: add right
+            if right_count < left_count:
+                backtrack(path + ')', left_count, right_count+1)
+        
+        backtrack("", 0, 0)
+        return result
+
     # ── Attempt · 2026-09-21 ──────────────
     def generateParenthesis_20260921(self, n: int) -> List[str]:
         # generating all combinations = backtracking

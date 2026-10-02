@@ -31,6 +31,37 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-10-01 ──────────────
+    def evalRPN_20261001(self, tokens: List[str]) -> int:
+        # stack problem
+        # we see an operator, we pop the two latest and push result into the stack
+        # we are given this is always valid as well
+
+        stack = []
+
+        for i in range(len(tokens)):
+            if tokens[i] == '+':
+                num2 = int(stack.pop())
+                num1 = int(stack.pop())
+                stack.append(num1 + num2)
+            elif tokens[i] == '-':
+                num2 = int(stack.pop())
+                num1 = int(stack.pop())
+                stack.append(num1 - num2)
+            elif tokens[i] == '*':
+                num2 = int(stack.pop())
+                num1 = int(stack.pop())
+                stack.append(num1 * num2)
+            elif tokens[i] == '/':
+                num2 = int(stack.pop())
+                num1 = int(stack.pop())
+                stack.append(num1 / num2)
+            else:
+                stack.append(tokens[i])
+        
+        if stack:
+            return int(stack[-1])
+
     # ── Attempt · 2026-09-01 ──────────────
     def evalRPN_20260901(self, tokens: List[str]) -> int:
         # insert into the stack until we see an operator

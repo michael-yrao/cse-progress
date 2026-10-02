@@ -647,7 +647,7 @@
       "lcNumber": 271,
       "variant": "length-prefix",
       "title": "Encode and Decode Strings",
-      "url": "https://leetcode.com/problems/encode-and-decode-strings/",
+      "url": "https://neetcode.io/problems/string-encode-and-decode",
       "file": "dsa/leetcode/arrays_and_hash/271_encode_and_decode_string.py",
       "symbol": "Solution_20260802",
       "attemptDate": "2026-08-02",
@@ -655,8 +655,8 @@
         {
           "kind": "attempt",
           "symbol": "Solution_20260802",
-          "startLine": 163,
-          "endLine": 198,
+          "startLine": 195,
+          "endLine": 230,
           "lines": [
             "# ── Attempt · 2026-08-02 ──────────────",
             "class Solution_20260802:",
@@ -831,8 +831,8 @@
         {
           "kind": "container",
           "symbol": "Solution",
-          "startLine": 32,
-          "endLine": 32,
+          "startLine": 33,
+          "endLine": 33,
           "lines": [
             "class Solution:"
           ]
@@ -840,8 +840,8 @@
         {
           "kind": "attempt",
           "symbol": "longestConsecutive_20260629",
-          "startLine": 104,
-          "endLine": 117,
+          "startLine": 131,
+          "endLine": 144,
           "lines": [
             "    def longestConsecutive_20260629(self, nums: List[int]) -> int:",
             "        # key to this problem is that we don't want to do anything unless we are start of the sequence",
@@ -874,8 +874,8 @@
         {
           "kind": "container",
           "symbol": "Solution",
-          "startLine": 32,
-          "endLine": 32,
+          "startLine": 33,
+          "endLine": 33,
           "lines": [
             "class Solution:"
           ]
@@ -883,8 +883,8 @@
         {
           "kind": "attempt",
           "symbol": "longestConsecutiveMap",
-          "startLine": 68,
-          "endLine": 86,
+          "startLine": 95,
+          "endLine": 113,
           "lines": [
             "    def longestConsecutiveMap(self, nums: List[int]) -> int:",
             "        numSet = set(nums)",
@@ -6904,8 +6904,8 @@
         {
           "kind": "attempt",
           "symbol": "generateParenthesis",
-          "startLine": 54,
-          "endLine": 88,
+          "startLine": 84,
+          "endLine": 118,
           "lines": [
             "    # ── Attempt 1 · 2026-09-19 ────────────────────────────────────────────",
             "    def generateParenthesis(self, n: int) -> List[str]:",
@@ -7549,8 +7549,8 @@
         {
           "kind": "attempt",
           "symbol": "evalRPN_20260821",
-          "startLine": 66,
-          "endLine": 102,
+          "startLine": 97,
+          "endLine": 133,
           "lines": [
             "    # ── Attempt · 2026-08-21 ──────────────",
             "    # ── RECOGNITION — fill BEFORE coding, before the coach says anything ──",
@@ -7658,8 +7658,8 @@
         {
           "kind": "attempt",
           "symbol": "isHappy_20260902",
-          "startLine": 37,
-          "endLine": 53,
+          "startLine": 56,
+          "endLine": 72,
           "lines": [
             "    # ── Attempt · 2026-09-02 ──────────────",
             "    def isHappy_20260902(self, n: int) -> bool:",

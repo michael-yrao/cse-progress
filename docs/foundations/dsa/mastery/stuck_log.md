@@ -22,6 +22,57 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🔴 9001. Single Source Shortest Path, Negative Weights — 2026-10-01 *(NEW — Bellman-Ford consolidation, Kattis `shortestpath3`)*
+**Topic**: Bellman-Ford with negative edges: the `n - 1` round count, detecting a node with no minimum, spreading the -Infinity mark
+
+### Where did I get stuck?
+- Recognition cold and right: "first thing that comes to mind is bellman ford since it helps me handle negative edges". The relax loop with a working copy came back from 787 and was correct as first written.
+- **Round count.** Asked "how do i know when to stop? e.g. my outer loop": 787's rounds came from the stop limit, and here there is none. `n - 1` was coach-supplied and took three passes to land: the edge count of a path that repeats no node; a 4-node line traced round by round; then the graph-theory form (k edges visit k + 1 nodes, so a simple path has ≤ n − 1 edges, and a cycle costing ≥ 0 can be cut out). Learner's summary: "a shortest path maxes out at n - 1 edges".
+- **Cycle handling.** Asked "how do i handle the cycle issue". Coach-taught on Example 1: one more round, and any edge that still improves marks its destination; that round alone misses nodes (node 2), so the mark must spread to everything reachable.
+- The first version ran one marking round and marked both ends of the edge. It passed both samples and failed 1,062 of 20,000 random graphs: Example 1 plus `1 → 4` (weight 5) returned 1003 for node 4. Coach-located.
+- The fix was the learner's idea ("run a few more times?"). The count of `n` marking rounds and the reason were coach-supplied: `-inf + weight` stays `-inf`, the mark moves one edge per round, and the farthest node is ≤ n − 1 edges away. Offered the collect-then-traverse alternative; the learner kept the repeated rounds.
+- Also asked whether Union-Find works on directed edges (no: a group has no direction).
+- Returns numbers (distance / `inf` / `-inf`) instead of the statement's strings, by choice. Not submitted to Kattis (the learner dislikes its UI); 20,000/20,000 against a local reference.
+- Complexity: space O(V) right and itemized; time given as O(V · E), the per-round O(V) copy omitted (carded).
+
+### Core Realization
+Three steps. (1) `n - 1` rounds finish every node that has a minimum, because a shortest path never needs to repeat a node. (2) One more round: an edge that still improves proves its destination has no minimum. (3) That mark spreads to everything reachable from it. `-inf + weight` is still `-inf`, so repeating the marking round `n` times carries it one edge per round.
+
+### Code Snippet
+```python
+for _ in range(n):
+    working_distance = distance.copy()
+    for src, dst, weight in edges:
+        if distance[src] + weight < working_distance[dst]:
+            working_distance[dst] = -math.inf
+            working_distance[src] = -math.inf
+    distance = working_distance
+```
+
+⚠️ **Oct 3 re-rep watch items:** (1) say the round count and why before coding; (2) say how a node with no minimum is detected; (3) say why one marking round is not enough and how the mark spreads.
+
+## 🔴 90. Subsets II — 2026-10-01 *(NEW — Backtracking intake)*
+**Topic**: Backtracking, take/skip with repeated values (sort + the skip branch jumps past every copy)
+
+### Where did I get stuck?
+- The five-slot plan and the take/skip skeleton were written unaided, with one shared `path` and append/pop undo, the form 78's watch item was waiting on. The first version had no duplicate handling: on `[1,2,2]` it builds `[1,2]` twice ("take i1, skip i2" and "skip i1, take i2").
+- Asked "how do we handle duplicates in 90?" before trying anything. The whole rule was coach-supplied: sort; the exclude branch moves the index past every copy of `nums[index]`; the include branch stays at `index + 1`, so `[2,2]` is still built. This is the take/skip rule taught on 40 on Sep 28 (the Sep 30 re-rep used the loop form's sibling skip instead).
+- From that description the skip loop was written looking ahead and correct on the first try (Sep 28's first version compared with the element behind). 4,006/4,006 against an itertools reference.
+- Complexity: time O(n · 2ⁿ) right and itemized; space given as O(n²), depth × path length (carded).
+
+### Core Realization
+Decide once per value, not once per index. After sorting, copies sit together. Taking a value may go on to its next copy, but skipping a value skips all of its copies, so each subset is reached by exactly one route.
+
+### Code Snippet
+```python
+# decision 2: exclude
+while index + 1 < len(nums) and nums[index] == nums[index + 1]:
+    index+=1
+backtrack(path, index + 1)
+```
+
+⚠️ **Oct 3 re-rep watch items:** (1) before coding, say why `[1,2,2]` produces `[1,2]` twice; (2) state the rule (sort, the exclude branch skips every copy, the include branch goes to `index + 1`) without asking; (3) space: one shared list and n frames add.
+
 ## 🔴 131. Palindrome Partitioning — 2026-09-30 *(NEW — Backtracking intake)*
 **Topic**: Backtracking, pick-next loop over where the next piece ends (partition a string into palindromes)
 
@@ -128,6 +179,7 @@ if close < open:  backtrack(path+')', open, close+1)
 - **Time O(4^n / n^1.5) ≈ O(4^n)** — exponential. Reasoning chain the learner built: 2n positions × 2 choices = 2^(2n) = 4^n leaves *unpruned*; pruning restricts to only valid strings, and the count of valid n-pair paren strings **is** the Catalan number C(n) = (2n)!/((n+1)!·n!) ~ 4^n/n^1.5. Key correction that landed: pruning shaves a **polynomial** factor off an exponential — it does NOT cross into polynomial; still exponential.
 - **Space O(n) auxiliary** — the durable insight: **time = node count (exponential), space = tree depth (O(n))**, because DFS keeps only one root-to-leaf branch on the stack at a time (each `return` frees its frame before the next branch). Output excluded; counting it is O(n·4^n/n^1.5).
 - Durable one-liner: *"backtracking time is the node count; backtracking space is the tree depth."*
+- ⚠️ **Corrected 2026-10-01:** the O(n) space above counts frames only. This code passes `path + '('`, so every frame on the stack keeps its own string and lengths 0, 1, …, 2n are alive at once ⟹ **O(n²)** as written. "Space is the tree depth" holds when one path object is shared by every frame (a list with append/pop); with a new copy per call it is depth × path length.
 
 ## 🟡 763. Partition Labels — 2026-09-19
 **Sticking point**: closed a partition on a **single char's** count hitting 0 (`freqMap[s[right]] == 0`), which cuts too early when an earlier char in the window reappears downstream (traced on `"abac"` — cut `"ab"`, but `'a'` returns). Symptom self-diagnosed in the comment ("what if it is a sequence in between"); the fix — a partition closes only when **every open char in the window** is exhausted, tracked with a set (add on entry, drop when count hits 0, cut when empty) — was coach-supplied. Durable handle: "the boundary is a property of the whole window, not the current char." Alt framing (rejected for interview-instinct reasons): greedy last-index `end = max(end, last[c])`, cut at `i == end`.

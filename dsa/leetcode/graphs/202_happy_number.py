@@ -34,6 +34,25 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-10-01 ──────────────
+    def isHappy_20261001(self, n: int) -> bool:
+        # we can use a set to make sure we don't revisit the same number
+        num_set = set()
+
+        def get_digit_sum(num):
+            digit_sum = 0
+            for digit in str(num):
+                digit_sum += int(digit)**2
+            return digit_sum
+
+        while n not in num_set:
+            num_set.add(n)
+            n = get_digit_sum(n)
+            if n == 1:
+                return True
+        
+        return False
+
     # ── Attempt · 2026-09-02 ──────────────
     def isHappy_20260902(self, n: int) -> bool:
         # if we have seen this number, we are repeating, so a set

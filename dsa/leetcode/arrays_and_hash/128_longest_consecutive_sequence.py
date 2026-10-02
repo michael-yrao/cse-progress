@@ -27,9 +27,36 @@ Constraints:
 
 """
 from collections import defaultdict
+import math
 from typing import List
 
 class Solution:
+
+    # ── Attempt · 2026-10-01 ──────────────
+    def longestConsecutive_20261001(self, nums: List[int]) -> int:
+        # this is actually the same as another problem we do down the line for something else
+        # but essentially we want to find the start number here and just check if the next number exists
+        # so that means we should convert nums to a set
+
+        if not nums:
+            return 0
+
+        longest = -math.inf
+
+        num_set = set(nums)
+
+        def count_sequence(num):
+            current_seq_counter = 0
+            while num in num_set:
+                current_seq_counter+=1
+                num+=1
+            return current_seq_counter
+
+        for num in num_set:
+            if num - 1 not in num_set:
+                longest = max(longest, count_sequence(num))
+        
+        return longest # type: ignore
 
     # ── Attempt · 2026-07-29 ──────────────
     def longestConsecutive_20260729(self, nums: List[int]) -> int:

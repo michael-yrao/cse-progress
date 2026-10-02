@@ -1,33 +1,33 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-30",
+  "generatedAt": "2026-10-01",
   "totals": {
-    "problems": 130,
-    "solutions": 141,
-    "reps": 631
+    "problems": 132,
+    "solutions": 143,
+    "reps": 638
   },
   "pipeline": {
-    "blank": 2,
+    "blank": 4,
     "shaky": 9,
     "clean": {
-      "s0": 3,
-      "s1": 34,
-      "s2plus": 69,
-      "total": 106
+      "s0": 2,
+      "s1": 32,
+      "s2plus": 71,
+      "total": 105
     },
-    "graduated": 24,
+    "graduated": 25,
     "retired": 0
   },
   "difficulty": {
-    "Easy": 34,
-    "Medium": 96,
+    "Easy": 35,
+    "Medium": 97,
     "Hard": 11
   },
   "streak": {
-    "current": 126,
-    "longest": 126,
-    "lastStudyDay": "2026-09-30",
-    "studyDays": 184,
+    "current": 127,
+    "longest": 127,
+    "lastStudyDay": "2026-10-01",
+    "studyDays": 185,
     "restDayAllowance": 1
   },
   "coverage": {
@@ -38,12 +38,64 @@
     "variantGaps": 0
   },
   "onSchedule": {
-    "totalActive": 141,
-    "dueToday": 0,
-    "overdue": 4
+    "totalActive": 143,
+    "dueToday": 1,
+    "overdue": 3
   },
   "trophyCase": {
     "graduated": [
+      {
+        "lcNumber": 128,
+        "title": "Longest Consecutive Sequence",
+        "url": "https://leetcode.com/problems/longest-consecutive-sequence/",
+        "file": "dsa/leetcode/arrays_and_hash/128_longest_consecutive_sequence.py",
+        "difficulty": "Medium",
+        "category": "arrays_and_hash",
+        "comfort": "🎓",
+        "level": 3,
+        "streak": 3,
+        "nextReview": "2027-03-30",
+        "repDates": [
+          "2026-01-26",
+          "2026-04-14",
+          "2026-06-27",
+          "2026-06-29",
+          "2026-07-29",
+          "2026-10-01"
+        ],
+        "timeline": [
+          {
+            "date": "2026-01-26",
+            "comfort": null,
+            "level": null
+          },
+          {
+            "date": "2026-04-14",
+            "comfort": null,
+            "level": null
+          },
+          {
+            "date": "2026-06-27",
+            "comfort": null,
+            "level": null
+          },
+          {
+            "date": "2026-06-29",
+            "comfort": null,
+            "level": null
+          },
+          {
+            "date": "2026-07-29",
+            "comfort": null,
+            "level": null
+          },
+          {
+            "date": "2026-10-01",
+            "comfort": "🎓",
+            "level": 3
+          }
+        ]
+      },
       {
         "lcNumber": 53,
         "title": "Maximum Subarray (Kadane)",
@@ -1133,12 +1185,13 @@
       "family": "advanced_graphs",
       "tier": "core",
       "started": true,
-      "minProblems": 2,
+      "minProblems": 3,
       "coverageFloor": 2,
-      "uncleanCount": 0,
-      "problemCount": 1,
+      "uncleanCount": 1,
+      "problemCount": 2,
       "problems": [
-        787
+        787,
+        9001
       ],
       "bestComfort": "🟢",
       "hasGreen": true,
@@ -1149,13 +1202,6 @@
       ],
       "graduatedCount": 0,
       "planned": [
-        {
-          "lcNumber": 9001,
-          "title": "Single Source Shortest Path, Negative Weights",
-          "url": "https://open.kattis.com/problems/shortestpath3",
-          "difficulty": "Easy",
-          "trigger": "surplus>=1"
-        },
         {
           "lcNumber": 9002,
           "title": "Arbitrage",
@@ -1466,14 +1512,14 @@
         128,
         217
       ],
-      "bestComfort": "🟢",
+      "bestComfort": "🎓",
       "hasGreen": true,
       "thin": false,
       "hasVariantGap": false,
       "buildsOn": [
         "Hash Map Lookup"
       ],
-      "graduatedCount": 0,
+      "graduatedCount": 1,
       "planned": [],
       "plannedTotal": 3,
       "untriedVariations": []
@@ -1555,10 +1601,10 @@
       "family": "backtracking",
       "tier": "core",
       "started": true,
-      "minProblems": 9,
+      "minProblems": 10,
       "coverageFloor": 5,
-      "uncleanCount": 4,
-      "problemCount": 7,
+      "uncleanCount": 5,
+      "problemCount": 8,
       "problems": [
         22,
         39,
@@ -1566,6 +1612,7 @@
         46,
         78,
         79,
+        90,
         131
       ],
       "bestComfort": "🟢",
@@ -1577,13 +1624,6 @@
       ],
       "graduatedCount": 0,
       "planned": [
-        {
-          "lcNumber": 90,
-          "title": "Subsets II",
-          "url": "https://leetcode.com/problems/subsets-ii/",
-          "difficulty": "Medium",
-          "trigger": "phase:Backtracking"
-        },
         {
           "lcNumber": 17,
           "title": "Letter Combinations of a Phone Number",
@@ -4432,7 +4472,8 @@
     "2026-09-27",
     "2026-09-28",
     "2026-09-29",
-    "2026-09-30"
+    "2026-09-30",
+    "2026-10-01"
   ],
   "schedule": {
     "weekOf": "2026-09-28",
@@ -4760,36 +4801,36 @@
             "title": "Subsets II",
             "technique": "Backtracking",
             "startComfort": null,
-            "difficulty": null,
+            "difficulty": "Medium",
             "url": "https://leetcode.com/problems/subsets-ii/",
-            "file": null,
+            "file": "dsa/leetcode/backtracking/90_subsets_ii.py",
             "tags": [
               "new"
             ],
             "kind": "new",
-            "done": false,
+            "done": true,
             "deferredTo": null,
-            "endComfort": null,
+            "endComfort": "🔴",
             "endNote": null,
-            "nextReview": null
+            "nextReview": "2026-10-03"
           },
           {
             "lcNumber": 9001,
             "title": "Single Source Shortest Path, Negative Weights",
             "technique": "Bellman-Ford",
             "startComfort": null,
-            "difficulty": null,
+            "difficulty": "Easy",
             "url": "https://open.kattis.com/problems/shortestpath3",
-            "file": null,
+            "file": "dsa/leetcode/graphs/9001_single_source_shortest_path_negative_weights.py",
             "tags": [
               "new"
             ],
             "kind": "new",
-            "done": false,
+            "done": true,
             "deferredTo": null,
-            "endComfort": null,
+            "endComfort": "🔴",
             "endNote": null,
-            "nextReview": null
+            "nextReview": "2026-10-03"
           },
           {
             "lcNumber": 22,
@@ -4801,11 +4842,11 @@
             "file": "dsa/leetcode/backtracking/22_generate_parentheses.py",
             "tags": [],
             "kind": "rep",
-            "done": false,
+            "done": true,
             "deferredTo": null,
-            "endComfort": null,
+            "endComfort": "🟢",
             "endNote": null,
-            "nextReview": null
+            "nextReview": "2026-10-31"
           },
           {
             "lcNumber": 150,
@@ -4817,11 +4858,11 @@
             "file": "dsa/leetcode/stack/150_evaluate_reverse_polish_notation.py",
             "tags": [],
             "kind": "rep",
-            "done": false,
+            "done": true,
             "deferredTo": null,
-            "endComfort": null,
+            "endComfort": "🟢",
             "endNote": null,
-            "nextReview": null
+            "nextReview": "2026-11-30"
           },
           {
             "lcNumber": 271,
@@ -4833,11 +4874,11 @@
             "file": "dsa/leetcode/arrays_and_hash/271_encode_and_decode_string.py",
             "tags": [],
             "kind": "rep",
-            "done": false,
+            "done": true,
             "deferredTo": null,
-            "endComfort": null,
+            "endComfort": "🟢",
             "endNote": null,
-            "nextReview": null
+            "nextReview": "2026-11-30"
           },
           {
             "lcNumber": 128,
@@ -4851,11 +4892,11 @@
               "moved"
             ],
             "kind": "rep",
-            "done": false,
+            "done": true,
             "deferredTo": null,
-            "endComfort": null,
+            "endComfort": "🎓",
             "endNote": null,
-            "nextReview": null
+            "nextReview": "2027-03-30"
           },
           {
             "lcNumber": 202,
@@ -4869,11 +4910,11 @@
               "moved"
             ],
             "kind": "rep",
-            "done": false,
+            "done": true,
             "deferredTo": null,
-            "endComfort": null,
+            "endComfort": "🟢",
             "endNote": null,
-            "nextReview": null
+            "nextReview": "2026-11-30"
           }
         ]
       },
@@ -4986,9 +5027,41 @@
       {
         "date": "2026-10-03",
         "weekday": "Saturday",
-        "label": "Kruskal conversion (1489) + Dijkstra intake (3620) + Prefix-sum/Multi-source-BFS/Linked-list/Hash-set reviews",
-        "units": 8.2,
+        "label": "Backtracking + Bellman-Ford + Kruskal conversions (90, 9001, 1489) + Dijkstra intake (3620) + Prefix-sum/Multi-source-BFS/Linked-list/Hash-set reviews",
+        "units": 12.7,
         "items": [
+          {
+            "lcNumber": 90,
+            "title": "Subsets II",
+            "technique": "Backtracking",
+            "startComfort": "🔴",
+            "difficulty": "Medium",
+            "url": "https://leetcode.com/problems/subsets-ii/",
+            "file": "dsa/leetcode/backtracking/90_subsets_ii.py",
+            "tags": [],
+            "kind": "rep",
+            "done": false,
+            "deferredTo": null,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
+          },
+          {
+            "lcNumber": 9001,
+            "title": "Single Source Shortest Path, Negative Weights",
+            "technique": "Bellman-Ford",
+            "startComfort": "🔴",
+            "difficulty": "Easy",
+            "url": "https://open.kattis.com/problems/shortestpath3",
+            "file": "dsa/leetcode/graphs/9001_single_source_shortest_path_negative_weights.py",
+            "tags": [],
+            "kind": "rep",
+            "done": false,
+            "deferredTo": null,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
+          },
           {
             "lcNumber": 1489,
             "title": "Find Critical and Pseudo-Critical Edges in MST",
@@ -5508,8 +5581,8 @@
     {
       "date": "2026-09-02",
       "planned": 6.0,
-      "done": 5.7,
-      "built": 5.7,
+      "done": 5.6,
+      "built": 5.6,
       "partial": false
     },
     {
@@ -5711,7 +5784,7 @@
     {
       "date": "2026-10-01",
       "planned": 7.8,
-      "done": 0.0,
+      "done": 7.8,
       "built": 7.8,
       "partial": false
     },
@@ -5724,9 +5797,9 @@
     },
     {
       "date": "2026-10-03",
-      "planned": 8.2,
+      "planned": 12.7,
       "done": 0.0,
-      "built": 8.2,
+      "built": 12.7,
       "partial": false
     },
     {
@@ -5863,7 +5936,7 @@
       "description": "Practice on 7 study-days without letting the streak lapse.",
       "earned": true,
       "progress": {
-        "current": 126,
+        "current": 127,
         "target": 7
       }
     },
@@ -5874,7 +5947,7 @@
       "description": "Practice on 30 study-days without letting the streak lapse.",
       "earned": true,
       "progress": {
-        "current": 126,
+        "current": 127,
         "target": 30
       }
     },
@@ -5885,7 +5958,7 @@
       "description": "Practice on 100 study-days without letting the streak lapse.",
       "earned": true,
       "progress": {
-        "current": 126,
+        "current": 127,
         "target": 100
       }
     },
@@ -5896,7 +5969,7 @@
       "description": "Reach 1 problem graduated or retired.",
       "earned": true,
       "progress": {
-        "current": 24,
+        "current": 25,
         "target": 1
       }
     },
@@ -5907,7 +5980,7 @@
       "description": "Reach 10 problems graduated or retired.",
       "earned": true,
       "progress": {
-        "current": 24,
+        "current": 25,
         "target": 10
       }
     },
@@ -5916,9 +5989,9 @@
       "title": "25 Mastered",
       "icon": "💎",
       "description": "Reach 25 problems graduated or retired.",
-      "earned": false,
+      "earned": true,
       "progress": {
-        "current": 24,
+        "current": 25,
         "target": 25
       }
     },
@@ -5929,12 +6002,292 @@
       "description": "Reach 50 problems graduated or retired.",
       "earned": false,
       "progress": {
-        "current": 24,
+        "current": 25,
         "target": 50
       }
     }
   ],
   "problems": [
+    {
+      "lcNumber": 90,
+      "title": "Subsets II",
+      "url": "https://leetcode.com/problems/subsets-ii/",
+      "file": "dsa/leetcode/backtracking/90_subsets_ii.py",
+      "difficulty": "Medium",
+      "category": "backtracking",
+      "comfort": "🔴",
+      "level": 0,
+      "streak": 0,
+      "nextReview": "2026-10-03",
+      "repDates": [
+        "2026-10-01"
+      ],
+      "timeline": [
+        {
+          "date": "2026-10-01",
+          "comfort": "🔴",
+          "level": 0
+        }
+      ]
+    },
+    {
+      "lcNumber": 9001,
+      "title": "Single Source Shortest Path, Negative Weights (Bellman-Ford)",
+      "url": "https://open.kattis.com/problems/shortestpath3",
+      "file": "dsa/leetcode/graphs/9001_single_source_shortest_path_negative_weights.py",
+      "difficulty": "Easy",
+      "category": "graphs",
+      "comfort": "🔴",
+      "level": 0,
+      "streak": 0,
+      "nextReview": "2026-10-03",
+      "repDates": [
+        "2026-10-01"
+      ],
+      "timeline": [
+        {
+          "date": "2026-10-01",
+          "comfort": "🔴",
+          "level": 0
+        }
+      ]
+    },
+    {
+      "lcNumber": 22,
+      "title": "Generate Parentheses",
+      "url": "https://leetcode.com/problems/generate-parentheses/",
+      "file": "dsa/leetcode/backtracking/22_generate_parentheses.py",
+      "difficulty": "Medium",
+      "category": "backtracking",
+      "comfort": "🟢",
+      "level": 2,
+      "streak": 1,
+      "nextReview": "2026-10-31",
+      "repDates": [
+        "2026-09-19",
+        "2026-09-21",
+        "2026-10-01"
+      ],
+      "timeline": [
+        {
+          "date": "2026-09-19",
+          "comfort": "🔴",
+          "level": 0
+        },
+        {
+          "date": "2026-09-21",
+          "comfort": "🟢",
+          "level": 2
+        },
+        {
+          "date": "2026-10-01",
+          "comfort": "🟢",
+          "level": 2
+        }
+      ]
+    },
+    {
+      "lcNumber": 150,
+      "title": "Evaluate Reverse Polish Notation",
+      "url": "https://leetcode.com/problems/evaluate-reverse-polish-notation/",
+      "file": "dsa/leetcode/stack/150_evaluate_reverse_polish_notation.py",
+      "difficulty": "Medium",
+      "category": "stack",
+      "comfort": "🟢",
+      "level": 2,
+      "streak": 2,
+      "nextReview": "2026-11-30",
+      "repDates": [
+        "2026-08-11",
+        "2026-08-21",
+        "2026-09-01",
+        "2026-10-01"
+      ],
+      "timeline": [
+        {
+          "date": "2026-08-11",
+          "comfort": "🟡",
+          "level": 1
+        },
+        {
+          "date": "2026-08-21",
+          "comfort": "🟡",
+          "level": 1
+        },
+        {
+          "date": "2026-09-01",
+          "comfort": "🟢",
+          "level": 2
+        },
+        {
+          "date": "2026-10-01",
+          "comfort": "🟢",
+          "level": 2
+        }
+      ]
+    },
+    {
+      "lcNumber": 271,
+      "title": "Encode and Decode Strings",
+      "url": "https://leetcode.com/problems/encode-and-decode-strings/",
+      "file": "dsa/leetcode/arrays_and_hash/271_encode_and_decode_string.py",
+      "difficulty": "Medium",
+      "category": "arrays_and_hash",
+      "comfort": "🟢",
+      "level": 2,
+      "streak": 2,
+      "nextReview": "2026-11-30",
+      "repDates": [
+        "2026-07-01",
+        "2026-07-03",
+        "2026-07-13",
+        "2026-07-23",
+        "2026-08-02",
+        "2026-08-12",
+        "2026-08-22",
+        "2026-09-01",
+        "2026-10-01"
+      ],
+      "timeline": [
+        {
+          "date": "2026-07-01",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-07-03",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-07-13",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-07-23",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-08-02",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-08-12",
+          "comfort": "🟡",
+          "level": 1
+        },
+        {
+          "date": "2026-08-22",
+          "comfort": "🟡",
+          "level": 1
+        },
+        {
+          "date": "2026-09-01",
+          "comfort": "🟢",
+          "level": 2
+        },
+        {
+          "date": "2026-10-01",
+          "comfort": "🟢",
+          "level": 2
+        }
+      ]
+    },
+    {
+      "lcNumber": 128,
+      "title": "Longest Consecutive Sequence",
+      "url": "https://leetcode.com/problems/longest-consecutive-sequence/",
+      "file": "dsa/leetcode/arrays_and_hash/128_longest_consecutive_sequence.py",
+      "difficulty": "Medium",
+      "category": "arrays_and_hash",
+      "comfort": "🎓",
+      "level": 3,
+      "streak": 3,
+      "nextReview": "2027-03-30",
+      "repDates": [
+        "2026-01-26",
+        "2026-04-14",
+        "2026-06-27",
+        "2026-06-29",
+        "2026-07-29",
+        "2026-10-01"
+      ],
+      "timeline": [
+        {
+          "date": "2026-01-26",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-04-14",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-06-27",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-06-29",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-07-29",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-10-01",
+          "comfort": "🎓",
+          "level": 3
+        }
+      ]
+    },
+    {
+      "lcNumber": 202,
+      "title": "Happy Number (Seen-Set)",
+      "url": "https://leetcode.com/problems/happy-number/",
+      "file": "dsa/leetcode/graphs/202_happy_number.py",
+      "difficulty": "Easy",
+      "category": "graphs",
+      "comfort": "🟢",
+      "level": 2,
+      "streak": 2,
+      "nextReview": "2026-11-30",
+      "repDates": [
+        "2026-08-11",
+        "2026-08-21",
+        "2026-09-02",
+        "2026-10-01"
+      ],
+      "timeline": [
+        {
+          "date": "2026-08-11",
+          "comfort": "🟡",
+          "level": 1
+        },
+        {
+          "date": "2026-08-21",
+          "comfort": "🟡",
+          "level": 1
+        },
+        {
+          "date": "2026-09-02",
+          "comfort": "🟢",
+          "level": 2
+        },
+        {
+          "date": "2026-10-01",
+          "comfort": "🟢",
+          "level": 2
+        }
+      ]
+    },
     {
       "lcNumber": 40,
       "title": "Combination Sum II",
@@ -7322,34 +7675,6 @@
           "date": "2026-09-22",
           "comfort": "🟡",
           "level": 1
-        }
-      ]
-    },
-    {
-      "lcNumber": 22,
-      "title": "Generate Parentheses",
-      "url": "https://leetcode.com/problems/generate-parentheses/",
-      "file": "dsa/leetcode/backtracking/22_generate_parentheses.py",
-      "difficulty": "Medium",
-      "category": "backtracking",
-      "comfort": "🟢",
-      "level": 2,
-      "streak": 0,
-      "nextReview": "2026-10-01",
-      "repDates": [
-        "2026-09-19",
-        "2026-09-21"
-      ],
-      "timeline": [
-        {
-          "date": "2026-09-19",
-          "comfort": "🔴",
-          "level": 0
-        },
-        {
-          "date": "2026-09-21",
-          "comfort": "🟢",
-          "level": 2
         }
       ]
     },
@@ -9108,40 +9433,6 @@
       ]
     },
     {
-      "lcNumber": 202,
-      "title": "Happy Number (Seen-Set)",
-      "url": "https://leetcode.com/problems/happy-number/",
-      "file": "dsa/leetcode/graphs/202_happy_number.py",
-      "difficulty": "Easy",
-      "category": "graphs",
-      "comfort": "🟢",
-      "level": 2,
-      "streak": 1,
-      "nextReview": "2026-10-02",
-      "repDates": [
-        "2026-08-11",
-        "2026-08-21",
-        "2026-09-02"
-      ],
-      "timeline": [
-        {
-          "date": "2026-08-11",
-          "comfort": "🟡",
-          "level": 1
-        },
-        {
-          "date": "2026-08-21",
-          "comfort": "🟡",
-          "level": 1
-        },
-        {
-          "date": "2026-09-02",
-          "comfort": "🟢",
-          "level": 2
-        }
-      ]
-    },
-    {
       "lcNumber": 229,
       "title": "Majority Element II",
       "url": "https://leetcode.com/problems/majority-element-ii/",
@@ -9200,104 +9491,6 @@
         },
         {
           "date": "2026-09-02",
-          "comfort": "🟢",
-          "level": 2
-        }
-      ]
-    },
-    {
-      "lcNumber": 150,
-      "title": "Evaluate Reverse Polish Notation",
-      "url": "https://leetcode.com/problems/evaluate-reverse-polish-notation/",
-      "file": "dsa/leetcode/stack/150_evaluate_reverse_polish_notation.py",
-      "difficulty": "Medium",
-      "category": "stack",
-      "comfort": "🟢",
-      "level": 2,
-      "streak": 1,
-      "nextReview": "2026-10-01",
-      "repDates": [
-        "2026-08-11",
-        "2026-08-21",
-        "2026-09-01"
-      ],
-      "timeline": [
-        {
-          "date": "2026-08-11",
-          "comfort": "🟡",
-          "level": 1
-        },
-        {
-          "date": "2026-08-21",
-          "comfort": "🟡",
-          "level": 1
-        },
-        {
-          "date": "2026-09-01",
-          "comfort": "🟢",
-          "level": 2
-        }
-      ]
-    },
-    {
-      "lcNumber": 271,
-      "title": "Encode and Decode Strings",
-      "url": "https://leetcode.com/problems/encode-and-decode-strings/",
-      "file": "dsa/leetcode/arrays_and_hash/271_encode_and_decode_string.py",
-      "difficulty": "Medium",
-      "category": "arrays_and_hash",
-      "comfort": "🟢",
-      "level": 2,
-      "streak": 1,
-      "nextReview": "2026-10-01",
-      "repDates": [
-        "2026-07-01",
-        "2026-07-03",
-        "2026-07-13",
-        "2026-07-23",
-        "2026-08-02",
-        "2026-08-12",
-        "2026-08-22",
-        "2026-09-01"
-      ],
-      "timeline": [
-        {
-          "date": "2026-07-01",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-07-03",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-07-13",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-07-23",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-08-02",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-08-12",
-          "comfort": "🟡",
-          "level": 1
-        },
-        {
-          "date": "2026-08-22",
-          "comfort": "🟡",
-          "level": 1
-        },
-        {
-          "date": "2026-09-01",
           "comfort": "🟢",
           "level": 2
         }
@@ -11732,52 +11925,6 @@
         },
         {
           "date": "2026-08-03",
-          "comfort": "🟢",
-          "level": 2
-        }
-      ]
-    },
-    {
-      "lcNumber": 128,
-      "title": "Longest Consecutive Sequence",
-      "url": "https://leetcode.com/problems/longest-consecutive-sequence/",
-      "file": "dsa/leetcode/arrays_and_hash/128_longest_consecutive_sequence.py",
-      "difficulty": "Medium",
-      "category": "arrays_and_hash",
-      "comfort": "🟢",
-      "level": 2,
-      "streak": 2,
-      "nextReview": "2026-09-27",
-      "repDates": [
-        "2026-01-26",
-        "2026-04-14",
-        "2026-06-27",
-        "2026-06-29",
-        "2026-07-29"
-      ],
-      "timeline": [
-        {
-          "date": "2026-01-26",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-04-14",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-06-27",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-06-29",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-07-29",
           "comfort": "🟢",
           "level": 2
         }

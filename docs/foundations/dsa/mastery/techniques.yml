@@ -758,11 +758,11 @@ techniques:
     variants:
       - {name: Standard}
       - {name: Contrast rep on 743, queued: "graduates:743"}
-      - {name: "Negative edges (SSSP, -Infinity propagation)", queued: "surplus>=1"}
+      - {name: "Negative edges (SSSP, -Infinity propagation)"}
       - {name: "Negative-cycle detection (arbitrage / log-transform)", queued: "surplus>=1"}
     problems:
       - {number: 787, method: Bellman-Ford, variant: Standard}
-      - {number: 9001, method: Bellman-Ford, variant: "Negative edges (SSSP, -Infinity propagation)", queued: "surplus>=1"}
+      - {number: 9001, method: Bellman-Ford, variant: "Negative edges (SSSP, -Infinity propagation)"}  # n - 1 rounds, then n marking rounds that spread -inf to everything reachable (Oct 1, 2026)
       - {number: 9002, method: Bellman-Ford, variant: "Negative-cycle detection (arbitrage / log-transform)", queued: "surplus>=1"}
 
   # min_problems dropped Aug 15, 2026 — no override; the coverage floor is the formula's
@@ -877,6 +877,7 @@ techniques:
       - {number: 40}   # duplicate values, sorted: take/skip skips every copy (Sep 28); pick-next loop skips a value already tried by `prev` (Sep 30, 2026)
       - {number: 79}   # grid path search: visited is per-path, add before the 4 calls, remove after (Sep 29, 2026)
       - {number: 131}  # partition a string: path = list of pieces, the loop picks where the next piece ends, palindrome check per piece (Sep 30, 2026)
+      - {number: 90}   # subsets with duplicate values: take/skip, sort, the exclude branch jumps past every copy; one shared path with append/pop (Oct 1, 2026)
       # Declared Sep 26, 2026 (decision `mastery-ratio-done-over-planned-sep26`) —
       # roadmap.yml. 212 is ALSO declared under Trie above (dual credit).
       - {number: 90, queued: "phase:Backtracking"}

@@ -1,4 +1,7 @@
 """
+271. Encode and Decode Strings   ·   https://neetcode.io/problems/string-encode-and-decode
+LeetCode (premium/paywalled): https://leetcode.com/problems/encode-and-decode-strings/
+
 Design an algorithm to encode a list of strings to a string. The encoded string is then sent over the network and is decoded back to the original list of strings.
 
 Machine 1 (sender) has the function:
@@ -60,6 +63,35 @@ Follow up: Could you write a generalized algorithm to work on any possible set o
 """
 from typing import List
 
+
+# ── Attempt · 2026-10-01 ──────────────
+class Solution_20261001:
+# prefix length framing
+# length + # + string + length + # + string + ....
+
+    def encode(self, strs: List[str]) -> str:
+        string_array = []
+        for string in strs:
+            current_string = []
+            current_string.append(str(len(string)))
+            current_string.append('#')
+            current_string.append(string)
+            string_array.append("".join(current_string))
+        return "".join(string_array)
+
+    def decode(self, s: str) -> List[str]:
+        # use two pointers to move around the string and length
+        result = []
+        i = 0
+        while i < len(s):
+            j = i
+            while s[j] != '#':
+                j+=1
+            len_string = int(s[i:j])
+            string = s[j+1:j+1+len_string]
+            result.append(string)
+            i = j+1+len_string
+        return result
 
 # ── Attempt · 2026-09-01 ──────────────
 class Solution_20260901:
