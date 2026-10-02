@@ -87,6 +87,8 @@ week's assumptions.
   outside `solutions.roots`, where the tooling can't maintain it (self_eval 2026-09-16). `git mv` it to
   its canonical `dsa/leetcode/<category>/` path. The upfront kickoff scaffold makes phantoms systematic,
   so this reconcile runs every close-out.
+- **Write a practice spec for every seated problem that has none**, then run
+  `python scripts/export_practice.py`. A spec creates no solution file, so it plants no tracker row.
 - **Is a DSA mock due in the week being built?** The SessionStart banner says so (`dsa_mock.every_days` since the last row of `docs/foundations/dsa/mocks/README.md`). Due → seat the exact row `| 🎤 Mock interview (<Diff>) | 🎤 |  |  | Mock |` on Sunday (the 🎤 in the S cell is what every parser keys off), priced by `--schedule-day`; that Sunday carries no 🎯 probe. Not due → say nothing.
 - **If the AI pillar is still PARKED, test its activation trigger** (see
   [`project_ai_pillar`](.claude/memory/project_ai_pillar.md)): DP/Backtracking phases closed AND

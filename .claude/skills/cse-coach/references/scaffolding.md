@@ -1,4 +1,4 @@
-<!-- reconciled: 2026-09-25 -->
+<!-- reconciled: 2026-10-01 -->
 # Scaffolding a problem
 
 **Open this** before you create or set up any problem file for the learner.
@@ -93,6 +93,12 @@ python scripts/new_problem.py --number 743 --title "Network Delay Time" --patter
 - `--premium` links the free NeetCode mirror instead of the paywalled LC page. **Usually
   unnecessary since Aug 7, 2026** — the script asks LeetCode's GraphQL API whether the
   problem is paid-only and switches hosts on its own.
+- **When a spec exists, the scaffold reads it.** If `dsa/tests/<number>_<snake>.yml` exists,
+  `new_problem.py` takes the statement and the signature from it, so pass neither. If the
+  problem will be run on the site and has no spec, write the spec first: the statement, the
+  entry point, the signature, the comparison mode, the statement's examples, and about 30
+  stored random cases. Compute their expected values with a reference kept out of the repo.
+  Then run `python scripts/export_practice.py --check`.
 
 **Fill the problem statement for them** — the learner never pastes it. Fetch it from the
 source and write it into the `{statement}` slot. In low-token / caveman mode, write a

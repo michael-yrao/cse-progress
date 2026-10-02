@@ -182,6 +182,28 @@ if [ -n "$BIGO_TRIGGER" ]; then
   [ -f "dashboard/big-o.json" ] && git add "dashboard/big-o.json"
 fi
 
+# Practice-runner contract. Regenerates dashboard/practice.json (the statements, stubs and stored
+# test cases the progressiveoverflow.com practice page runs code against) from the hand-authored
+# specs in dsa/tests/, mirroring the showcase block above. Fires when a spec, the generator, or
+# new_problem.py (which reads the same specs for statement and signature) is staged. Report-only,
+# same as showcase: a bad spec doesn't block the commit, but the report is worth seeing at commit
+# time. See decisions.yml `practice-contract`.
+PRACTICE_TRIGGER=$(echo "$STAGED" | grep -E "^dsa/tests/.*\.yml$|scripts/export_practice\.py$|scripts/new_problem\.py$")
+if [ -n "$PRACTICE_TRIGGER" ]; then
+  echo "Regenerating practice.json..."
+  if command -v py >/dev/null 2>&1; then
+    py scripts/export_practice.py || true
+    py scripts/export_practice.py --check || true
+  elif command -v python >/dev/null 2>&1; then
+    python scripts/export_practice.py || true
+    python scripts/export_practice.py --check || true
+  elif command -v python3 >/dev/null 2>&1; then
+    python3 scripts/export_practice.py || true
+    python3 scripts/export_practice.py --check || true
+  fi
+  [ -f "dashboard/practice.json" ] && git add "dashboard/practice.json"
+fi
+
 # Single source of truth for tuned values (see CLAUDE.md). Fires when the config, a script
 # that carries defaults, or a rules document is staged — i.e. exactly the three places a
 # value can be copied to. Reports; never blocks.

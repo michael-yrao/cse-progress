@@ -291,6 +291,55 @@ def source_root() -> Path:
     return Path(DEFAULT_ROOT)
 
 
+# Hand-authored per-problem specs (statement, entry point, signature, test cases) that
+# scripts/export_practice.py turns into dashboard/practice.json. A NEW scaffold reads the
+# statement and signature from the spec when one exists, so the file and the site's practice
+# page cannot drift. See decisions.yml `practice-contract`.
+SPEC_DIR = Path("dsa/tests")
+
+
+def load_spec(number: str, spec_dir: Path = SPEC_DIR) -> tuple[Path, dict] | None:
+    """`(path, parsed spec)` for `dsa/tests/<number>_*.yml`, or None when there is none.
+
+    Fail-soft like the other scaffold-time loaders: a spec that cannot be read is announced
+    with one NOTE and the scaffold proceeds as if there were none. Validation is the
+    exporter's job (`export_practice.py --check`), not the scaffolder's.
+    """
+    paths = sorted(spec_dir.glob(f"{number}_*.yml"))
+    if not paths:
+        return None
+    try:
+        import yaml  # noqa: PLC0415
+        spec = yaml.safe_load(paths[0].read_text(encoding="utf-8"))
+    except Exception as exc:  # noqa: BLE001 — unreadable spec degrades to "no spec"
+        print(f"NOTE: {paths[0].as_posix()} not readable ({exc}) — scaffolding without it.")
+        return None
+    if not isinstance(spec, dict) or not isinstance(spec.get("entry"), dict):
+        print(f"NOTE: {paths[0].as_posix()} is not a valid spec — scaffolding without it.")
+        return None
+    return paths[0], spec
+
+
+def apply_spec(spec: dict, methods: list[str], signatures: list[tuple[str, str]],
+               named_methods: list[str], signature_args: list[str],
+               ) -> tuple[list[str], list[tuple[str, str]], str]:
+    """`(methods, signatures, statement)` after filling the gaps from `spec`.
+
+    Explicit `--method` / `--signature` flags win; the spec supplies a method or signature
+    only when its flag was not passed (and only for a single-method scaffold, the one shape
+    a spec describes). Returns new lists, never mutating the inputs.
+    """
+    spec_method = str(spec["entry"].get("method") or "").strip()
+    spec_signature = spec.get("signature")
+    new_methods = [spec_method] if spec_method and not named_methods else list(methods)
+    is_single = len(new_methods) == 1
+    new_signatures = list(signatures)
+    if is_single and not signature_args and isinstance(spec_signature, str):
+        new_signatures = [parse_signature(spec_signature)]
+    statement = str(spec.get("statement") or "").rstrip("\n") or STATEMENT_STUB
+    return new_methods, new_signatures, statement
+
+
 def snake(title: str) -> str:
     s = re.sub(r"[^0-9a-zA-Z]+", "_", title.strip().lower())
     return re.sub(r"_+", "_", s).strip("_")
@@ -957,6 +1006,14 @@ def main() -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
 
     if not path.exists():
+        statement = STATEMENT_STUB
+        loaded_spec = load_spec(str(args.number))
+        if loaded_spec:
+            spec_path, spec = loaded_spec
+            methods, signatures, statement = apply_spec(
+                spec, methods, signatures, named_methods, args.signature)
+            method = methods[0]
+            print(f"Statement and signature read from {spec_path.as_posix()}")
         body = TEMPLATE.read_text(encoding="utf-8")
         body = (
             body.replace("{number}", str(args.number))
@@ -967,7 +1024,7 @@ def main() -> None:
             .replace("{method}", method)
             .replace("{params}", signatures[0][0])
             .replace("{ret}", f" {signatures[0][1]}" if signatures[0][1] else "")
-            .replace("{statement}", STATEMENT_STUB)
+            .replace("{statement}", statement)
             .replace("{recognition}", "\n".join(recognition_block("    ")))
         )
         # The template holds ONE method under `class Solution` — correct for the common

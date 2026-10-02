@@ -9,6 +9,10 @@ live repo files, never the network.
 """
 from __future__ import annotations
 
+import contextlib
+import io
+import os
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -194,6 +198,60 @@ class EndToEndPremiumResolutionTests(unittest.TestCase):
             link = new_problem.resolve_premium_link("two-sum", neetcode_slugs, {})
         self.assertEqual(link.url, "https://neetcode.io/problems/two-sum")
         self.assertEqual(link.judge, "NeetCode")
+
+
+class SpecScaffoldTests(unittest.TestCase):
+    """A NEW scaffold with `dsa/tests/<number>_*.yml` present reads the statement and
+    signature from it; an explicit --signature still wins."""
+
+    SPEC = (
+        "number: 7\n"
+        "title: Demo Problem\n"
+        "statement: |\n"
+        "  Spec statement line.\n"
+        "entry: {class: Solution, method: demoMethod}\n"
+        'signature: "nums: List[int] -> int"\n'
+    )
+
+    def setUp(self):
+        self._tmpdir = tempfile.TemporaryDirectory()
+        self.tmp_path = Path(self._tmpdir.name)
+        repo = Path(__file__).resolve().parent.parent
+        template = (repo / new_problem.TEMPLATE).read_text(encoding="utf-8")
+        (self.tmp_path / new_problem.TEMPLATE).parent.mkdir(parents=True)
+        (self.tmp_path / new_problem.TEMPLATE).write_text(template, encoding="utf-8")
+        (self.tmp_path / "dsa" / "tests").mkdir(parents=True)
+        (self.tmp_path / "dsa" / "tests" / "7_demo_problem.yml").write_text(
+            self.SPEC, encoding="utf-8")
+
+    def tearDown(self):
+        self._tmpdir.cleanup()
+
+    def _scaffold(self, extra_args: list[str]) -> str:
+        argv = ["new_problem.py", "--number", "7", "--title", "Demo Problem",
+                "--pattern", "demo", "--url", "https://example.com/demo",
+                "--no-link-check", "--date", "2026-10-01", *extra_args]
+        previous_cwd = Path.cwd()
+        os.chdir(self.tmp_path)
+        try:
+            with mock.patch.object(sys, "argv", argv), \
+                    contextlib.redirect_stdout(io.StringIO()):
+                new_problem.main()
+        finally:
+            os.chdir(previous_cwd)
+        return (self.tmp_path / new_problem.DEFAULT_ROOT / "demo"
+                / "7_demo_problem.py").read_text(encoding="utf-8")
+
+    def test_spec_fills_statement_and_signature_and_flag_wins(self):
+        from_spec = self._scaffold([])
+        self.assertIn("Spec statement line.", from_spec)
+        self.assertNotIn(new_problem.STATEMENT_STUB, from_spec)
+        self.assertIn("def demoMethod(self, nums: List[int]) -> int:", from_spec)
+
+        (self.tmp_path / new_problem.DEFAULT_ROOT / "demo" / "7_demo_problem.py").unlink()
+        flagged = self._scaffold(["--signature", "x: str -> bool"])
+        self.assertIn("Spec statement line.", flagged)
+        self.assertIn("def demoMethod(self, x: str) -> bool:", flagged)
 
 
 if __name__ == "__main__":

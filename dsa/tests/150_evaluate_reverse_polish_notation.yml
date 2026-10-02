@@ -1,0 +1,64 @@
+number: 150
+title: Evaluate Reverse Polish Notation
+url: https://leetcode.com/problems/evaluate-reverse-polish-notation/
+statement: |
+  You are given an array of strings `tokens` that represents an arithmetic
+  expression in Reverse Polish Notation (operators come AFTER their operands).
+
+  Evaluate the expression and return an integer that represents its value.
+
+  Note:
+    - The valid operators are '+', '-', '*', and '/'.
+    - Each operand may be an integer or another expression.
+    - The division between two integers always TRUNCATES TOWARD ZERO.
+    - There will not be any division by zero.
+    - The input represents a valid arithmetic expression in RPN.
+    - The answer and all intermediate calculations fit in a 32-bit integer.
+
+      tokens = ["2","1","+","3","*"]        ->  9      ((2 + 1) * 3)
+      tokens = ["4","13","5","/","+"]       ->  6      (4 + (13 / 5))
+      tokens = ["10","6","9","3","+","-11","*","/","*","17","+","5","+"]  ->  22
+
+  Constraints:
+      1 <= tokens.length <= 10^4
+      tokens[i] is either an operator ("+", "-", "*", "/") or an integer
+      in the range [-200, 200]
+entry:
+  class: Solution
+  method: evalRPN
+signature: "tokens: List[str] -> int"
+compare: exact
+cases:
+  - {args: [["2", "1", "+", "3", "*"]], expected: 9, example: true}
+  - {args: [["4", "13", "5", "/", "+"]], expected: 6, example: true}
+  - {args: [["10", "6", "9", "3", "+", "-11", "*", "/", "*", "17", "+", "5", "+"]], expected: 22, example: true}
+  - {args: [["10", "11", "*"]], expected: 110}
+  - {args: [["-12", "-2", "/"]], expected: 6}
+  - {args: [["-20", "15", "*", "3", "5", "+", "-"]], expected: -308}
+  - {args: [["15"]], expected: 15}
+  - {args: [["15", "-5", "5", "/", "+"]], expected: 14}
+  - {args: [["3", "13", "-"]], expected: -10}
+  - {args: [["-16", "-18", "+", "-20", "14", "*", "-"]], expected: 246}
+  - {args: [["5"]], expected: 5}
+  - {args: [["-1"]], expected: -1}
+  - {args: [["4", "20", "*"]], expected: 80}
+  - {args: [["-18", "-13", "-13", "/", "-18", "15", "-", "-", "/"]], expected: 0}
+  - {args: [["-6"]], expected: -6}
+  - {args: [["9", "-13", "/"]], expected: 0}
+  - {args: [["16", "9", "+", "1", "-18", "/", "+"]], expected: 25}
+  - {args: [["1", "-7", "*", "-4", "20", "+", "/"]], expected: 0}
+  - {args: [["17", "19", "*", "-17", "8", "/", "-"]], expected: 325}
+  - {args: [["7", "-20", "/"]], expected: 0}
+  - {args: [["-16"]], expected: -16}
+  - {args: [["15", "3", "/", "13", "*", "14", "/"]], expected: 4}
+  - {args: [["-2", "-4", "-15", "-", "-11", "1", "-", "+", "-"]], expected: -1}
+  - {args: [["-4"]], expected: -4}
+  - {args: [["-16", "-10", "*", "-10", "5", "/", "/", "6", "/"]], expected: -13}
+  - {args: [["14", "19", "+", "3", "15", "/", "*"]], expected: 0}
+  - {args: [["-10", "-10", "-"]], expected: 0}
+  - {args: [["6", "15", "*", "7", "-2", "-", "-"]], expected: 81}
+  - {args: [["7", "-13", "17", "/", "18", "-", "*"]], expected: -126}
+  - {args: [["19", "-19", "*"]], expected: -361}
+  - {args: [["-13", "-19", "8", "-", "-15", "9", "/", "-", "-"]], expected: 13}
+  - {args: [["7", "4", "-"]], expected: 3}
+  - {args: [["17", "-5", "*"]], expected: -85}

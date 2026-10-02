@@ -1634,3 +1634,17 @@ decisions:
       earns no row. The schedule names the slot, never the problem. Debriefs are public in
       docs/foundations/dsa/mocks/. Anchor: first mock 2026-10-11 (`dsa_mock.first_due`).
     affects: [weekly-build, effort-budget, scheduling, gamification, hooks, dsa-mock]
+
+  - id: practice-contract
+    date: 2026-10-01
+    summary: >-
+      ADDS the practice contract. A hand-written spec per problem in
+      `dsa/tests/<number>_<snake>.yml` (statement, entry point, signature, comparison mode,
+      cases as args plus expected) is exported by `scripts/export_practice.py` to
+      `dashboard/practice.json`. The site's practice page fetches that file and runs the
+      learner's code against it in the browser. Cases are the statement's examples plus stored
+      random cases whose expected values were computed offline; no reference solution is
+      published. A spec is written when a problem is seated on a week's schedule.
+      `new_problem.py` reads the statement and signature from the spec when one exists. Stage 1
+      covers single-method problems only. No `cse.config.yml` value changed.
+    affects: [scaffolding, weekly-build, hooks, practice]

@@ -1,0 +1,60 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://progressiveoverflow.com/schemas/practice.v1.json",
+  "title": "cse-progress practice-runner contract",
+  "description": "The data contract emitted by scripts/export_practice.py from the hand-authored specs in dsa/tests/, and consumed by the progressiveoverflow.com practice page, which runs the viewer's Python in the browser against the stored cases. It carries inputs and expected outputs only: no reference solution is published, and no technique or pattern name appears anywhere in it. schemaVersion is bumped on any breaking change so a viewer can refuse an incompatible file. The specs are validated by `export_practice.py --check`; a malformed spec is a hard failure there, never a silently dropped problem.",
+  "type": "object",
+  "required": ["schemaVersion", "generatedAt", "problems"],
+  "additionalProperties": true,
+  "properties": {
+    "schemaVersion": { "type": "integer", "const": 1 },
+    "generatedAt": { "type": "string", "format": "date" },
+    "problems": {
+      "type": "array",
+      "description": "One entry per spec file, sorted by `number`.",
+      "items": { "$ref": "#/definitions/problem" }
+    }
+  },
+  "definitions": {
+    "problem": {
+      "type": "object",
+      "required": ["number", "title", "url", "statement", "stub", "entry", "compare", "cases"],
+      "properties": {
+        "number": { "type": "integer", "minimum": 1, "description": "The problem number, unique across the file and equal to the spec filename's leading number." },
+        "title": { "type": "string" },
+        "url": { "type": "string", "description": "The judge's problem page." },
+        "statement": { "type": "string", "description": "Plain-text statement, examples and constraints included." },
+        "stub": { "type": "string", "description": "The blank starting code. Begins with the typing import and runs unmodified." },
+        "entry": {
+          "type": "object",
+          "description": "What the driver calls: `className().method(*args)`.",
+          "required": ["className", "method"],
+          "properties": {
+            "className": { "type": "string", "minLength": 1 },
+            "method": { "type": "string", "minLength": 1 }
+          }
+        },
+        "compare": {
+          "type": "string",
+          "enum": ["exact", "unordered", "unordered-nested"],
+          "description": "How a returned value is matched to `expected`: exact = equal as is; unordered = top-level list order ignored; unordered-nested = top-level order ignored and each inner list's order ignored."
+        },
+        "cases": {
+          "type": "array",
+          "minItems": 1,
+          "description": "At least one case has `example: true`.",
+          "items": { "$ref": "#/definitions/case" }
+        }
+      }
+    },
+    "case": {
+      "type": "object",
+      "required": ["args", "expected", "example"],
+      "properties": {
+        "args": { "type": "array", "description": "Positional arguments, JSON values only." },
+        "expected": { "description": "The expected return value, any JSON value." },
+        "example": { "type": "boolean", "description": "True for a case taken from the statement's own examples." }
+      }
+    }
+  }
+}
