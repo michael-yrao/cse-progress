@@ -1,0 +1,32 @@
+number: 344
+title: "Reverse String"
+url: https://leetcode.com/problems/reverse-string/
+entry:
+  class: Solution
+  method: reverseString
+signature: "s: List[str] -> None"
+compare: exact
+result: {arg: 0}
+cases:
+  - {args: [["h", "e", "l", "l", "o"]], expected: ["o", "l", "l", "e", "h"], example: true}
+  - {args: [["H", "a", "n", "n", "a", "h"]], expected: ["h", "a", "n", "n", "a", "H"], example: true}
+  - {args: [["a"]], expected: ["a"]}
+  - {args: [["a", "b"]], expected: ["b", "a"]}
+  - {args: [["A", "B", "C"]], expected: ["C", "B", "A"]}
+  - {args: [["a", "b", "a"]], expected: ["a", "b", "a"]}
+  - {args: [[" ", "!", "~", "0"]], expected: ["0", "~", "!", " "]}
+  - {args: [["1", "2", "3", "4", "5", "6"]], expected: ["6", "5", "4", "3", "2", "1"]}
+  - {args: [["a", "a", "a", "a"]], expected: ["a", "a", "a", "a"]}
+  - {args: [["r", "a", "c", "e", "c", "a", "r"]], expected: ["r", "a", "c", "e", "c", "a", "r"]}
+  - {args: [["H", "e", "l", "l", "o", " ", "W", "o", "r", "l", "d"]], expected: ["d", "l", "r", "o", "W", " ", "o", "l", "l", "e", "H"]}
+  - {args: [["z", "y"]], expected: ["y", "z"]}
+  - {args: [["A", "b", "y", " ", "1", " ", "C"]], expected: ["C", " ", "1", " ", "y", "b", "A"]}
+  - {args: [["y", "A", "A", "1", "1", "y"]], expected: ["y", "1", "1", "A", "A", "y"]}
+  - {args: [["0", "A", "A", "!", "x", "c"]], expected: ["c", "x", "!", "A", "A", "0"]}
+  - {args: [[" ", "9", "c", "!", "A", "1"]], expected: ["1", "A", "!", "c", "9", " "]}
+  - {args: [["b", "y", "a", "0", "z", "z", "0", "!"]], expected: ["!", "0", "z", "z", "0", "a", "y", "b"]}
+  - {args: [["y", "x"]], expected: ["x", "y"]}
+  - {args: [["a", "y", "9", "b", "B", "~", "B", "b", "b"]], expected: ["b", "b", "B", "~", "B", "b", "9", "y", "a"]}
+  - {args: [["1", "9", "~", "z", "~", "~", "b"]], expected: ["b", "~", "~", "z", "~", "9", "1"]}
+  - {args: [["a", "1", "A"]], expected: ["A", "1", "a"]}
+  - {args: [[" ", " "]], expected: [" ", " "]}

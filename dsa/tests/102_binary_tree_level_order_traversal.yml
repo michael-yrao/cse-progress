@@ -1,0 +1,30 @@
+number: 102
+title: Binary Tree Level Order Traversal
+url: https://leetcode.com/problems/binary-tree-level-order-traversal/
+entry:
+  class: Solution
+  method: levelOrder
+signature: "root: Optional[TreeNode] -> List[List[int]]"
+compare: exact
+types:
+  args: [tree-node]
+cases:
+  - {args: [[3, 9, 20, null, null, 15, 7]], expected: [[3], [9, 20], [15, 7]], example: true}
+  - {args: [[1]], expected: [[1]]}
+  - {args: [[]], expected: []}
+  - {args: [[1, 2]], expected: [[1], [2]]}
+  - {args: [[1, null, 2]], expected: [[1], [2]]}
+  - {args: [[1, 2, 3]], expected: [[1], [2, 3]]}
+  - {args: [[1, 2, 3, 4, 5, 6, 7]], expected: [[1], [2, 3], [4, 5, 6, 7]]}
+  - {args: [[1, 2, null, 3, null, 4, null, 5]], expected: [[1], [2], [3], [4], [5]]}
+  - {args: [[1, null, 2, null, 3, null, 4, null, 5]], expected: [[1], [2], [3], [4], [5]]}
+  - {args: [[-1000, 1000, -1000]], expected: [[-1000], [1000, -1000]]}
+  - {args: [[0, -1, null, -2, null, -3]], expected: [[0], [-1], [-2], [-3]]}
+  - {args: [[1, 2, 3, null, 4, 5, null]], expected: [[1], [2, 3], [4, 5]]}
+  - {args: [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]], expected: [[1], [2, 3], [4, 5, 6, 7], [8, 9, 10, 11, 12, 13, 14, 15]]}
+  - {args: [[1, 2, 2, 3, null, null, 3, 4, null, null, 4]], expected: [[1], [2, 2], [3, 3], [4, 4]]}
+  - {args: [[2, -2, 9, null, null, -1, null, 11, -10, null, null, null, 5]], expected: [[2], [-2, 9], [-1], [11, -10], [5]]}
+  - {args: [[0, null, 11, -9, -4, 14, -2, 13, null, null, null, null, -19]], expected: [[0], [11], [-9, -4], [14, -2, 13], [-19]]}
+  - {args: [[-9, -9, -17, 11, 1, null, null, null, null, -10]], expected: [[-9], [-9, -17], [11, 1], [-10]]}
+  - {args: [[20, 4, -19, null, null, 14, 9, null, 8, null, 1, -15, 11, null, null, null, -7, null, null, null, 11, null, -14]], expected: [[20], [4, -19], [14, 9], [8, 1], [-15, 11], [-7], [11], [-14]]}
+  - {args: [[-62, 515, 925, null, 166, 485, -415, 343, 236, null, 622, 901, 153, -534, null, 128, 917, null, null, -649, null, 232, 171, 647, null, -225, 880, 597, -765, 711, -160, null, 373, 779, -335, null, null, null, 42, -250, 690, null, -652, 446, null, -478, null, -639, -974, null, -771, 109, -32, null, null, null, -634, -491, -656, -252, 801, 521, null, null, null, 282, 138, null, null, -3, null, null, 958, null, null, null, null, null, null, -681, -490, 345, null, null, 536, null, null, -559, null, 998, null, null, null, null, null, null, null, null, -746, null, 193, null, null, 843, null, null, null, null, -318, -499, null, null, null, null, -697]], expected: [[-62], [515, 925], [166, 485, -415], [343, 236, 622, 901, 153], [-534, 128, 917, -649, 232, 171], [647, -225, 880, 597, -765, 711, -160, 373, 779, -335], [42, -250, 690, -652, 446, -478, -639, -974, -771, 109, -32], [-634, -491, -656, -252, 801, 521, 282, 138, -3, 958], [-681, -490, 345, 536, -559, 998], [-746, 193, 843, -318], [-499, -697]]}

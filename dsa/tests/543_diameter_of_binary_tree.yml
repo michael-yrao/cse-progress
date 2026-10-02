@@ -1,0 +1,29 @@
+number: 543
+title: Diameter of Binary Tree
+url: https://leetcode.com/problems/diameter-of-binary-tree/
+entry:
+  class: Solution
+  method: diameterOfBinaryTree
+signature: "root: Optional[TreeNode] -> int"
+compare: exact
+types:
+  args: [tree-node]
+cases:
+  - {args: [[1, 2, 3, 4, 5]], expected: 3, example: true}
+  - {args: [[1, 2]], expected: 1}
+  - {args: [[1]], expected: 0}
+  - {args: [[1, 2, null, 3, null, 4, null, 5]], expected: 4}
+  - {args: [[1, 2, 3]], expected: 2}
+  - {args: [[1, 2, null, 3, 4, 5, null, null, 6, 7, null, null, 8]], expected: 6}
+  - {args: [[1, 2, 3, 4, 5, 6, 7]], expected: 4}
+  - {args: [[1, null, 2, null, 3]], expected: 2}
+  - {args: [[1, 2, 3, 4, null, null, 5, 6, null, null, 7]], expected: 6}
+  - {args: [[-100, 100]], expected: 1}
+  - {args: [[1, 2, 3, 4, 5, null, null, 6, null, null, 7]], expected: 4}
+  - {args: [[1, 2, null, null, 3, 4, null, null, 5, 6, null, null, 7, 8, null, null, 9, 10]], expected: 9}
+  - {args: [[87, -16, 29, -69, null, -22, 90, null, 15, -58, -10, null, null, 43, -71]], expected: 7}
+  - {args: [[-85, -76, 81, -79, 82, 75, null, 83, -74, null, null, null, -70, null, null, null, null, null, 69, null, -97, 94]], expected: 9}
+  - {args: [[11, null, 78, -80, -86, null, null, -24, null, null, -16, null, -28]], expected: 5}
+  - {args: [[32, 56, 4, 10, null, -13, null, null, null, -29, null, -9, null, -44]], expected: 7}
+  - {args: [[14, -5, 57, -75, null, null, -52, null, null, null, -22]], expected: 5}
+  - {args: [[4, -15, -55, -28, -42, -79, -26, 62, 92, null, null, -91, -92, 33, -50, null, 31, -98, 25, null, -44, 54, null, null, 47, null, null, -62, 30, -20, -95, -22, 24, -91, null, 55, null, -27, null, -57, 89, null, null, 88, -37, 5, 47, 5, 78, -24, -37, 89, null, 57, null, null, null, -83, null, null, -20, -37, -18, null, null, null, 30, 41, -43, null, null, null, null, -79, 91, null, null, null, null, null, null, null, 52, null, null, null, 32, null, null, null, null, null, null, null, null, -36, 6, null, null, -71, null, null, null, null, -74, 52, 51, null, 17, 84, null, null, null, null, null, null, -34]], expected: 17}

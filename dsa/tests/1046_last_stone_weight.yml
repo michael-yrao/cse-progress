@@ -1,0 +1,38 @@
+number: 1046
+title: Last Stone Weight
+url: https://leetcode.com/problems/last-stone-weight/
+entry:
+  class: Solution
+  method: lastStoneWeight
+signature: "stones: List[int] -> int"
+compare: exact
+cases:
+  - {args: [[2, 7, 4, 1, 8, 1]], expected: 1, example: true}
+  - {args: [[1]], expected: 1, example: true}
+  - {args: [[5, 5]], expected: 0}
+  - {args: [[3, 3, 3]], expected: 3}
+  - {args: [[4, 4, 4, 4]], expected: 0}
+  - {args: [[2, 9]], expected: 7}
+  - {args: [[1, 2, 3]], expected: 0}
+  - {args: [[1000]], expected: 1000}
+  - {args: [[1000, 1000]], expected: 0}
+  - {args: [[1000, 1]], expected: 999}
+  - {args: [[1, 1000, 1000, 1]], expected: 0}
+  - {args: [[1, 2, 3, 4, 5, 6]], expected: 1}
+  - {args: [[6, 5, 4, 3, 2, 1]], expected: 1}
+  - {args: [[10, 4, 2, 10]], expected: 2}
+  - {args: [[9, 3, 2, 10]], expected: 0}
+  - {args: [[7, 6, 7, 6, 9]], expected: 3}
+  - {args: [[31, 26, 33, 21, 40]], expected: 9}
+  - {args: [[1, 1, 1, 1, 1]], expected: 1}
+  - {args: [[2, 2, 1]], expected: 1}
+  - {args: [[8, 3]], expected: 5}
+  - {args: [[20, 16, 3, 12, 12]], expected: 1}
+  - {args: [[7, 5, 2, 6, 3, 9, 9, 7]], expected: 0}
+  - {args: [[14, 18, 11, 19, 7, 14, 13]], expected: 4}
+  - {args: [[8, 5, 17]], expected: 4}
+  - {args: [[4, 14, 1, 4, 15, 11]], expected: 1}
+  - {args: [[6, 10, 17]], expected: 1}
+  - {args: [[4, 5, 13, 10, 13, 15]], expected: 0}
+  - {args: [[571, 616, 642, 968, 31, 46, 994, 375, 848, 454, 199, 361, 158, 574, 338, 261, 519, 787, 457, 602, 226, 420, 717, 182, 253, 752, 152, 897, 522, 50]], expected: 0}
+  - {args: [[1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000]], expected: 0}

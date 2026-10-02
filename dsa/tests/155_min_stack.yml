@@ -1,0 +1,36 @@
+number: 155
+title: Min Stack
+url: https://leetcode.com/problems/min-stack/
+entry: {class: MinStack, kind: ops}
+methods:
+  - "__init__()"
+  - "push(val: int) -> None"
+  - "pop() -> None"
+  - "top() -> int"
+  - "getMin() -> int"
+compare: exact
+cases:
+  - {ops: ["MinStack", "push", "push", "push", "getMin", "pop", "top", "getMin"], args: [[], [-2], [0], [-3], [], [], [], []], expected: [null, null, null, null, -3, null, 0, -2], example: true}
+  - {ops: ["MinStack", "push", "top", "getMin"], args: [[], [5], [], []], expected: [null, null, 5, 5]}
+  - {ops: ["MinStack", "push", "push", "push", "getMin", "pop", "getMin", "pop", "getMin"], args: [[], [0], [1], [0], [], [], [], [], []], expected: [null, null, null, null, 0, null, 0, null, 0]}
+  - {ops: ["MinStack", "push", "getMin", "push", "getMin", "push", "getMin", "pop", "getMin", "pop", "getMin"], args: [[], [1], [], [2], [], [3], [], [], [], [], []], expected: [null, null, 1, null, 1, null, 1, null, 1, null, 1]}
+  - {ops: ["MinStack", "push", "getMin", "push", "getMin", "push", "getMin", "pop", "getMin", "pop", "getMin"], args: [[], [3], [], [2], [], [1], [], [], [], [], []], expected: [null, null, 3, null, 2, null, 1, null, 2, null, 3]}
+  - {ops: ["MinStack", "push", "push", "getMin", "top", "pop", "getMin", "top"], args: [[], [2147483647], [-2147483648], [], [], [], [], []], expected: [null, null, null, -2147483648, -2147483648, null, 2147483647, 2147483647]}
+  - {ops: ["MinStack", "push", "push", "push", "push", "getMin", "pop", "pop", "getMin", "pop", "getMin"], args: [[], [-1], [-3], [-3], [-2], [], [], [], [], [], []], expected: [null, null, null, null, null, -3, null, null, -3, null, -1]}
+  - {ops: ["MinStack", "push", "push", "pop", "getMin", "top"], args: [[], [3], [5], [], [], []], expected: [null, null, null, null, 3, 3]}
+  - {ops: ["MinStack", "push", "pop", "push", "getMin", "top"], args: [[], [4], [], [9], [], []], expected: [null, null, null, null, 9, 9]}
+  - {ops: ["MinStack", "push", "push", "top", "getMin"], args: [[], [1], [8], [], []], expected: [null, null, null, 8, 1]}
+  - {ops: ["MinStack", "push", "push", "push", "getMin", "pop", "getMin", "pop", "top", "getMin"], args: [[], [7], [7], [7], [], [], [], [], [], []], expected: [null, null, null, null, 7, null, 7, null, 7, 7]}
+  - {ops: ["MinStack", "push", "getMin", "pop", "push", "getMin", "push", "getMin", "top"], args: [[], [0], [], [], [-1], [], [1], [], []], expected: [null, null, 0, null, null, -1, null, -1, 1]}
+  - {ops: ["MinStack", "push", "push", "getMin", "pop", "getMin"], args: [[], [2147483647], [2147483647], [], [], []], expected: [null, null, null, 2147483647, null, 2147483647]}
+  - {ops: ["MinStack", "push", "push", "push", "getMin", "pop", "pop", "getMin", "top"], args: [[], [-2147483648], [0], [2147483647], [], [], [], [], []], expected: [null, null, null, null, -2147483648, null, null, -2147483648, -2147483648]}
+  - {ops: ["MinStack", "push", "getMin", "pop", "push", "top", "top", "pop", "push", "push", "top", "top", "top"], args: [[], [0], [], [], [9], [], [], [], [-7], [-2], [], [], []], expected: [null, null, 0, null, null, 9, 9, null, null, null, -2, -2, -2]}
+  - {ops: ["MinStack", "push", "push", "pop", "push", "push", "pop", "getMin", "pop", "pop", "push"], args: [[], [6], [7], [], [-6], [2], [], [], [], [], [-9]], expected: [null, null, null, null, null, null, null, -6, null, null, null]}
+  - {ops: ["MinStack", "push", "push", "pop", "push", "push", "push", "top", "push", "pop", "top", "pop", "pop"], args: [[], [-8], [7], [], [1], [3], [5], [], [4], [], [], [], []], expected: [null, null, null, null, null, null, null, 5, null, null, 5, null, null]}
+  - {ops: ["MinStack", "push", "top", "top", "push", "push", "getMin", "pop", "push"], args: [[], [3], [], [], [0], [3], [], [], [1]], expected: [null, null, 3, 3, null, null, 0, null, null]}
+  - {ops: ["MinStack", "push", "pop", "push", "push", "push", "top", "pop", "getMin", "getMin"], args: [[], [5], [], [8], [-7], [5], [], [], [], []], expected: [null, null, null, null, null, null, 5, null, -7, -7]}
+  - {ops: ["MinStack", "push", "push", "pop", "getMin", "push", "push", "push", "pop", "getMin"], args: [[], [7], [-9], [], [], [-1], [4], [4], [], []], expected: [null, null, null, null, 7, null, null, null, null, -1]}
+  - {ops: ["MinStack", "push", "top", "pop", "push", "top", "getMin", "top", "push", "getMin", "push", "getMin"], args: [[], [-2], [], [], [-3], [], [], [], [0], [], [4], []], expected: [null, null, -2, null, null, -3, -3, -3, null, -3, null, -3]}
+  - {ops: ["MinStack", "push", "push", "push", "pop", "getMin", "push", "push", "top", "push"], args: [[], [-3], [2], [-6], [], [], [-7], [0], [], [-9]], expected: [null, null, null, null, null, -3, null, null, 0, null]}
+  - {ops: ["MinStack", "push", "push", "top", "getMin", "getMin", "push", "push", "getMin", "push", "top", "push", "push", "top", "getMin", "pop", "push", "top", "push", "getMin", "push", "getMin", "pop", "getMin", "push", "pop", "push", "push", "push", "top", "pop", "push", "push", "push", "getMin", "top", "pop", "getMin", "pop", "push", "pop", "push", "top", "push", "top", "push"], args: [[], [-9], [9], [], [], [], [4], [3], [], [8], [], [3], [6], [], [], [], [-4], [], [-7], [], [3], [], [], [], [5], [], [8], [4], [3], [], [], [-9], [2], [-4], [], [], [], [], [], [3], [], [-3], [], [-5], [], [2]], expected: [null, null, null, 9, -9, -9, null, null, -9, null, 8, null, null, 6, -9, null, null, -4, null, -9, null, -9, null, -9, null, null, null, null, null, 3, null, null, null, null, -9, -4, null, -9, null, null, null, null, -3, null, -5, null]}
+  - {ops: ["MinStack", "push", "push", "push", "push", "push", "push", "pop", "push", "push", "push", "push", "getMin", "pop", "getMin", "push", "pop", "pop", "pop", "push", "getMin", "pop", "push", "getMin", "push", "push", "top", "push", "pop", "pop", "push", "getMin", "pop", "getMin", "push", "push", "pop", "top", "top", "getMin", "pop", "push", "pop", "getMin", "push", "top", "getMin", "push", "push", "push", "push", "top", "push", "push", "push", "push", "getMin", "pop", "push", "push", "pop"], args: [[], [6], [4], [8], [0], [2], [-8], [], [-2], [-4], [8], [4], [], [], [], [2], [], [], [], [-6], [], [], [-7], [], [5], [-2], [], [1], [], [], [-9], [], [], [], [-3], [0], [], [], [], [], [], [9], [], [], [6], [], [], [8], [-7], [-8], [1], [], [-5], [4], [6], [-3], [], [], [8], [4], []], expected: [null, null, null, null, null, null, null, null, null, null, null, null, -4, null, -4, null, null, null, null, null, -6, null, null, -7, null, null, -2, null, null, null, null, -9, null, -7, null, null, null, -3, -3, -7, null, null, null, -7, null, 6, -7, null, null, null, null, 1, null, null, null, null, -8, null, null, null, null]}

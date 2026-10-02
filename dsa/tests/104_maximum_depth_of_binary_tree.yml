@@ -1,0 +1,29 @@
+number: 104
+title: Maximum Depth of Binary Tree
+url: https://leetcode.com/problems/maximum-depth-of-binary-tree/
+entry:
+  class: Solution
+  method: maxDepth
+signature: "root: Optional[TreeNode] -> int"
+compare: exact
+types:
+  args: [tree-node]
+cases:
+  - {args: [[3, 9, 20, null, null, 15, 7]], expected: 3, example: true}
+  - {args: [[1, null, 2]], expected: 2}
+  - {args: [[]], expected: 0}
+  - {args: [[1]], expected: 1}
+  - {args: [[1, 2]], expected: 2}
+  - {args: [[1, 2, 3]], expected: 2}
+  - {args: [[1, 2, 3, 4, 5, 6, 7]], expected: 3}
+  - {args: [[1, 2, null, 3, null, 4, null, 5, null, 6, null, 7, null, 8, null, 9, null, 10, null, 11, null, 12, null, 13, null, 14, null, 15, null, 16, null, 17, null, 18, null, 19, null, 20]], expected: 20}
+  - {args: [[1, null, 2, null, 3, null, 4, null, 5, null, 6, null, 7, null, 8, null, 9, null, 10, null, 11, null, 12, null, 13, null, 14, null, 15]], expected: 15}
+  - {args: [[1, 2, null, null, 3, 4, null, null, 5, 6, null, null, 7, 8]], expected: 8}
+  - {args: [[-100, 100, -100, null, 0]], expected: 3}
+  - {args: [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]], expected: 4}
+  - {args: [[1, 2, 3, 4, null, null, null, 5]], expected: 4}
+  - {args: [[-69, null, 82, -2, 71, null, null, null, 6]], expected: 4}
+  - {args: [[-51, null, -28, -77, -32, 55, 72, 1, -53, -82, 76, 90, null, -69]], expected: 5}
+  - {args: [[-13, 63, 79, -6, 3, null, -15, -66, 24, null, null, -52, 8, -73, 82, null, null, null, null, 21, null, null, null, null, -24]], expected: 6}
+  - {args: [[-45, -15, 85, null, 25, -68]], expected: 3}
+  - {args: [[63, 56, 81, 63, -6, -84, 50, -5, -61, 1, -25, null, -64, -49, -60, null, null, null, -45, -91, -8, 70, -25, 8, -34, null, 2, 53, 95, null, null, null, 41, -77, -87, -38, 71, -65, 68, null, 16, null, null, null, null, -22, null, -83, null, -14, null, -70, 43, 60, -7, null, null, null, null, -80, null, 30, 68, null, null, null, 57, null, null, -5, -37, 45, 88, null, -53, -94, null, null, null, -37, 91, 64, 34, null, null, -21, null, null, null, 60, null, null, null, -63, 84, null, 21, null, null, null, null, null, null, 56, -19, null, -28, null, null, null, null, 96, -82, null, -13, null, null, null, null, 44, 7, null, null, null, null, -92, -1, null, null, 5, -10, 49, -85, null, 17, null, null, null, null, null, -88, null, -43, -22, null, null, null, 42, null, null, null, null, null, 45, 82, null, 25]], expected: 15}

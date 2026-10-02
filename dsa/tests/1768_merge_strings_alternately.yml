@@ -1,0 +1,32 @@
+number: 1768
+title: "Merge Strings Alternately"
+url: https://leetcode.com/problems/merge-strings-alternately/
+entry:
+  class: Solution
+  method: mergeAlternately
+signature: "word1: str, word2: str -> str"
+compare: exact
+cases:
+  - {args: ["abc", "pqr"], expected: "apbqcr", example: true}
+  - {args: ["ab", "pqrs"], expected: "apbqrs", example: true}
+  - {args: ["abcd", "pq"], expected: "apbqcd", example: true}
+  - {args: ["a", "b"], expected: "ab"}
+  - {args: ["a", "bcdefg"], expected: "abcdefg"}
+  - {args: ["abcdefg", "z"], expected: "azbcdefg"}
+  - {args: ["ab", "cd"], expected: "acbd"}
+  - {args: ["abc", "abc"], expected: "aabbcc"}
+  - {args: ["zzzz", "a"], expected: "zazzz"}
+  - {args: ["a", "zzzz"], expected: "azzzz"}
+  - {args: ["xy", "x"], expected: "xxy"}
+  - {args: ["hello", "world"], expected: "hweolrllod"}
+  - {args: ["bgecbeg", "dahb"], expected: "bdgaehcbbeg"}
+  - {args: ["hgff", "dfhahdg"], expected: "hdgffhfahdg"}
+  - {args: ["abgbdbf", "a"], expected: "aabgbdbf"}
+  - {args: ["fea", "dgfeef"], expected: "fdegafeef"}
+  - {args: ["fd", "fhecgh"], expected: "ffdhecgh"}
+  - {args: ["dadgg", "ddhehga"], expected: "ddaddhgeghga"}
+  - {args: ["bfhhaa", "cbbe"], expected: "bcfbhbheaa"}
+  - {args: ["a", "agfaef"], expected: "aagfaef"}
+  - {args: ["c", "chbgbca"], expected: "cchbgbca"}
+  - {args: ["fb", "facac"], expected: "ffbacac"}
+  - {args: ["hda", "fdbd"], expected: "hfddabd"}

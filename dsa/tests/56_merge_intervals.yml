@@ -1,0 +1,38 @@
+number: 56
+title: Merge Intervals
+url: https://leetcode.com/problems/merge-intervals/
+entry:
+  class: Solution
+  method: merge
+signature: "intervals: List[List[int]] -> List[List[int]]"
+# the merged intervals are disjoint, so the set is unique; any order is accepted
+compare: unordered
+cases:
+  - {args: [[[1, 3], [2, 6], [8, 10], [15, 18]]], expected: [[1, 6], [8, 10], [15, 18]], example: true}
+  - {args: [[[1, 4], [4, 5]]], expected: [[1, 5]], example: true}
+  - {args: [[[1, 4], [0, 4]]], expected: [[0, 4]]}
+  - {args: [[[1, 4], [2, 3]]], expected: [[1, 4]]}
+  - {args: [[[1, 4], [5, 6]]], expected: [[1, 4], [5, 6]]}
+  - {args: [[[2, 3], [1, 5]]], expected: [[1, 5]]}
+  - {args: [[[0, 0]]], expected: [[0, 0]]}
+  - {args: [[[3, 3], [3, 3]]], expected: [[3, 3]]}
+  - {args: [[[0, 10000]]], expected: [[0, 10000]]}
+  - {args: [[[0, 0], [10000, 10000]]], expected: [[0, 0], [10000, 10000]]}
+  - {args: [[[2, 3], [4, 5], [6, 7], [8, 9], [1, 10]]], expected: [[1, 10]]}
+  - {args: [[[1, 2], [3, 4], [5, 6]]], expected: [[1, 2], [3, 4], [5, 6]]}
+  - {args: [[[5, 6], [3, 4], [1, 2]]], expected: [[1, 2], [3, 4], [5, 6]]}
+  - {args: [[[1, 4], [2, 3], [3, 8], [10, 12]]], expected: [[1, 8], [10, 12]]}
+  - {args: [[[2, 2], [1, 3], [3, 3]]], expected: [[1, 3]]}
+  - {args: [[[1, 2], [2, 3], [3, 4]]], expected: [[1, 4]]}
+  - {args: [[[6, 8], [1, 9], [2, 4], [4, 7]]], expected: [[1, 9]]}
+  - {args: [[[1, 3], [1, 3]]], expected: [[1, 3]]}
+  - {args: [[[9999, 10000], [0, 1], [1, 9999]]], expected: [[0, 10000]]}
+  - {args: [[[0, 3], [9, 13], [13, 14], [3, 5], [2, 4], [8, 12]]], expected: [[0, 5], [8, 14]]}
+  - {args: [[[0, 4], [6, 6], [4, 7]]], expected: [[0, 7]]}
+  - {args: [[[0, 1], [12, 13], [5, 5], [6, 10], [6, 9], [5, 8], [4, 4]]], expected: [[0, 1], [4, 4], [5, 10], [12, 13]]}
+  - {args: [[[5, 6], [5, 6], [15, 17]]], expected: [[5, 6], [15, 17]]}
+  - {args: [[[1, 5], [11, 11]]], expected: [[1, 5], [11, 11]]}
+  - {args: [[[0, 4], [3, 7], [15, 18], [11, 14], [11, 12], [14, 18]]], expected: [[0, 7], [11, 18]]}
+  - {args: [[[1, 2], [5, 7], [14, 15], [0, 1], [9, 10]]], expected: [[0, 2], [5, 7], [9, 10], [14, 15]]}
+  - {args: [[[8, 11], [0, 1], [0, 4], [9, 13], [5, 9], [2, 2]]], expected: [[0, 4], [5, 13]]}
+  - {args: [[[9, 13], [12, 13], [1, 5], [15, 19], [9, 13], [6, 6]]], expected: [[1, 5], [6, 6], [9, 13], [15, 19]]}

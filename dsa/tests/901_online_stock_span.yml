@@ -1,0 +1,34 @@
+number: 901
+title: Online Stock Span
+url: https://leetcode.com/problems/online-stock-span/
+entry: {class: StockSpanner, kind: ops}
+methods:
+  - "__init__()"
+  - "next(price: int) -> int"
+compare: exact
+cases:
+  - {ops: ["StockSpanner", "next", "next", "next", "next", "next", "next", "next"], args: [[], [100], [80], [60], [70], [60], [75], [85]], expected: [null, 1, 1, 1, 2, 1, 4, 6], example: true}
+  - {ops: ["StockSpanner", "next"], args: [[], [1]], expected: [null, 1]}
+  - {ops: ["StockSpanner", "next", "next", "next", "next", "next", "next"], args: [[], [1], [2], [3], [4], [5], [6]], expected: [null, 1, 2, 3, 4, 5, 6]}
+  - {ops: ["StockSpanner", "next", "next", "next", "next", "next", "next"], args: [[], [6], [5], [4], [3], [2], [1]], expected: [null, 1, 1, 1, 1, 1, 1]}
+  - {ops: ["StockSpanner", "next", "next", "next", "next"], args: [[], [5], [5], [5], [5]], expected: [null, 1, 2, 3, 4]}
+  - {ops: ["StockSpanner", "next", "next", "next", "next", "next"], args: [[], [100000], [1], [100000], [1], [100000]], expected: [null, 1, 1, 3, 1, 5]}
+  - {ops: ["StockSpanner", "next", "next", "next", "next", "next", "next", "next", "next"], args: [[], [3], [1], [4], [1], [5], [9], [2], [6]], expected: [null, 1, 1, 3, 1, 5, 6, 1, 2]}
+  - {ops: ["StockSpanner", "next", "next", "next", "next", "next", "next", "next"], args: [[], [2], [2], [3], [3], [1], [1], [3]], expected: [null, 1, 2, 3, 4, 1, 2, 7]}
+  - {ops: ["StockSpanner", "next", "next"], args: [[], [1], [1]], expected: [null, 1, 2]}
+  - {ops: ["StockSpanner", "next", "next", "next", "next", "next"], args: [[], [10], [1], [1], [1], [10]], expected: [null, 1, 1, 2, 3, 5]}
+  - {ops: ["StockSpanner", "next", "next", "next", "next", "next", "next", "next"], args: [[], [7], [3], [5], [4], [6], [2], [8]], expected: [null, 1, 1, 2, 1, 4, 1, 7]}
+  - {ops: ["StockSpanner", "next", "next", "next", "next", "next", "next", "next", "next"], args: [[], [31], [41], [59], [26], [53], [58], [97], [93]], expected: [null, 1, 2, 3, 1, 2, 3, 7, 1]}
+  - {ops: ["StockSpanner", "next", "next"], args: [[], [100000], [100000]], expected: [null, 1, 2]}
+  - {ops: ["StockSpanner", "next", "next", "next", "next", "next"], args: [[], [4], [9], [9], [2], [9]], expected: [null, 1, 2, 3, 1, 5]}
+  - {ops: ["StockSpanner", "next", "next", "next", "next", "next", "next", "next"], args: [[], [20], [10], [15], [12], [18], [11], [25]], expected: [null, 1, 1, 2, 1, 4, 1, 7]}
+  - {ops: ["StockSpanner", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next"], args: [[], [5], [2], [3], [7], [8], [5], [6], [8], [7], [7], [8]], expected: [null, 1, 1, 2, 4, 5, 1, 2, 8, 1, 2, 11]}
+  - {ops: ["StockSpanner", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next"], args: [[], [2], [2], [5], [7], [2], [6], [2], [1], [7], [8], [5], [5], [7]], expected: [null, 1, 2, 3, 4, 1, 2, 1, 1, 9, 10, 1, 2, 3]}
+  - {ops: ["StockSpanner", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next"], args: [[], [7], [3], [1], [6], [1], [5], [4], [2], [7], [6], [2], [6], [7]], expected: [null, 1, 1, 1, 3, 1, 2, 1, 1, 9, 1, 1, 3, 13]}
+  - {ops: ["StockSpanner", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next"], args: [[], [6], [8], [1], [6], [8], [6], [1], [7], [2], [4]], expected: [null, 1, 2, 1, 2, 5, 1, 1, 3, 1, 2]}
+  - {ops: ["StockSpanner", "next", "next", "next", "next", "next", "next", "next", "next"], args: [[], [7], [1], [8], [3], [7], [3], [6], [2]], expected: [null, 1, 1, 3, 1, 2, 1, 2, 1]}
+  - {ops: ["StockSpanner", "next", "next", "next", "next", "next", "next", "next", "next", "next"], args: [[], [1], [1], [2], [5], [5], [1], [6], [8], [6]], expected: [null, 1, 2, 3, 4, 5, 1, 7, 8, 1]}
+  - {ops: ["StockSpanner", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next"], args: [[], [3], [6], [5], [6], [5], [1], [4], [7], [4], [1], [4]], expected: [null, 1, 2, 1, 4, 1, 1, 2, 8, 1, 1, 3]}
+  - {ops: ["StockSpanner", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next"], args: [[], [7], [8], [1], [5], [2], [6], [1], [7], [3], [4], [1], [8]], expected: [null, 1, 2, 1, 2, 1, 4, 1, 6, 1, 2, 1, 12]}
+  - {ops: ["StockSpanner", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next"], args: [[], [11], [17], [13], [10], [14], [10], [16], [20], [12], [14], [4], [15], [19], [19], [6], [15], [9], [6], [12], [11], [2], [12], [15], [8], [18], [18], [1], [2], [13], [17], [15], [6], [14], [13], [12], [13], [5], [19], [6], [20], [7], [9], [9], [20], [12]], expected: [null, 1, 2, 1, 1, 3, 1, 5, 8, 1, 2, 1, 4, 5, 6, 1, 2, 1, 1, 3, 1, 1, 6, 9, 1, 11, 12, 1, 2, 3, 4, 1, 1, 2, 1, 1, 3, 1, 30, 1, 40, 1, 2, 3, 44, 1]}
+  - {ops: ["StockSpanner", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next", "next"], args: [[], [50474], [7409], [73050], [75328], [71727], [46352], [38390], [39122], [5843], [34888], [17923], [94658], [72699], [60365], [72610], [86985], [83074], [56674], [11356], [58171], [51883], [46863], [38433], [45473], [53063], [92994], [57923], [80626], [4519], [49648], [98211], [74263], [54999], [56723], [93128], [74106], [13220], [21238], [86865], [1712], [72206], [93787], [96493], [18708], [4505], [57806], [82124], [35652], [65765], [56857], [77134], [83199], [48501], [95094], [62351], [97690], [81887], [93794], [12393], [21600]], expected: [null, 1, 1, 3, 4, 1, 1, 1, 2, 1, 2, 1, 12, 1, 1, 2, 4, 1, 1, 1, 3, 1, 1, 1, 2, 5, 14, 1, 2, 1, 2, 31, 1, 1, 2, 4, 1, 1, 2, 4, 1, 2, 11, 12, 1, 1, 3, 4, 1, 2, 1, 4, 9, 1, 11, 1, 25, 1, 2, 1, 2]}

@@ -1,0 +1,33 @@
+number: 14
+title: Longest Common Prefix
+url: https://leetcode.com/problems/longest-common-prefix/
+entry:
+  class: Solution
+  method: longestCommonPrefix
+signature: "strs: List[str] -> str"
+compare: exact
+cases:
+  - {args: [["flower", "flow", "flight"]], expected: "fl", example: true}
+  - {args: [["dog", "racecar", "car"]], expected: "", example: true}
+  - {args: [["a"]], expected: "a"}
+  - {args: [[""]], expected: ""}
+  - {args: [["", ""]], expected: ""}
+  - {args: [["", "b"]], expected: ""}
+  - {args: [["abc", "abc", "abc"]], expected: "abc"}
+  - {args: [["ab", "abc"]], expected: "ab"}
+  - {args: [["abc", "ab"]], expected: "ab"}
+  - {args: [["a", "b"]], expected: ""}
+  - {args: [["cir", "car"]], expected: "c"}
+  - {args: [["aaa", "aa", "aaa"]], expected: "aa"}
+  - {args: [["prefix", "prefixes", "prefixed"]], expected: "prefix"}
+  - {args: [["ab", "ab", ""]], expected: ""}
+  - {args: [["babba", "babb", "babbabb"]], expected: "babb"}
+  - {args: [["aabbb", "aab", "aabaa", "aab"]], expected: "aab"}
+  - {args: [["baab"]], expected: "baab"}
+  - {args: [["bbaa", "bbb", "baab", "bbb"]], expected: "b"}
+  - {args: [["aba", "ab", "a", "bbb"]], expected: ""}
+  - {args: [["", "b", "bbb"]], expected: ""}
+  - {args: [["b", "", "a"]], expected: ""}
+  - {args: [["bbaaa"]], expected: "bbaaa"}
+  - {args: [["abaab"]], expected: "abaab"}
+  - {args: [["aaa", "aa", "aabb", "aabb", "aa"]], expected: "aa"}

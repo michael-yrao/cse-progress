@@ -1,0 +1,37 @@
+number: 134
+title: Gas Station
+url: https://leetcode.com/problems/gas-station/
+entry:
+  class: Solution
+  method: canCompleteCircuit
+signature: "gas: List[int], cost: List[int] -> int"
+compare: exact
+cases:
+  - {args: [[1, 2, 3, 4, 5], [3, 4, 5, 1, 2]], expected: 3, example: true}
+  - {args: [[2, 3, 4], [3, 4, 3]], expected: -1, example: true}
+  - {args: [[1], [1]], expected: 0}
+  - {args: [[1], [2]], expected: -1}
+  - {args: [[5], [4]], expected: 0}
+  - {args: [[0], [0]], expected: 0}
+  - {args: [[5, 1, 2, 3, 4], [4, 4, 1, 5, 1]], expected: 4}
+  - {args: [[3, 1, 1], [1, 2, 2]], expected: 0}
+  - {args: [[1, 2], [2, 1]], expected: 1}
+  - {args: [[2, 1], [1, 2]], expected: 0}
+  - {args: [[10000, 0], [0, 10000]], expected: 0}
+  - {args: [[0, 10000], [10000, 0]], expected: 1}
+  - {args: [[4, 5, 2, 6, 5, 3], [3, 2, 7, 3, 2, 9]], expected: -1}
+  - {args: [[3, 3, 4], [3, 4, 4]], expected: -1}
+  - {args: [[5, 8, 2, 8], [6, 5, 6, 6]], expected: 3}
+  - {args: [[1, 1, 1, 1, 10], [2, 2, 2, 2, 1]], expected: 4}
+  - {args: [[8, 3, 8, 2, 0], [7, 1, 6, 3, 7]], expected: -1}
+  - {args: [[8, 4, 4, 1, 9, 4, 6], [5, 4, 5, 2, 8, 6, 9]], expected: -1}
+  - {args: [[2, 1, 2], [1, 5, 3]], expected: -1}
+  - {args: [[4, 5, 6, 3, 4, 2, 0], [6, 2, 3, 5, 9, 9, 1]], expected: -1}
+  - {args: [[8, 3, 8, 7, 2, 2, 1], [1, 2, 1, 9, 9, 6, 3]], expected: 0}
+  - {args: [[8, 6, 7, 9, 7, 1, 0], [8, 9, 8, 4, 5, 2, 2]], expected: 3}
+  - {args: [[3, 9], [5, 4]], expected: 1}
+  - {args: [[9, 7], [6, 8]], expected: 0}
+  - {args: [[9, 0, 4, 5, 6, 7, 6], [4, 7, 5, 0, 4, 6, 9]], expected: 3}
+  - {args: [[9, 4], [0, 6]], expected: 0}
+  - {args: [[7, 2], [6, 3]], expected: 0}
+  - {args: [[3, 8], [7, 1]], expected: 1}

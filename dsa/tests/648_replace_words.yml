@@ -1,0 +1,36 @@
+number: 648
+title: Replace Words
+url: https://leetcode.com/problems/replace-words/
+entry:
+  class: Solution
+  method: replaceWords
+signature: "dictionary: List[str], sentence: str -> str"
+compare: exact
+cases:
+  - {args: [["cat", "bat", "rat"], "the cattle was rattled by the battery"], expected: "the cat was rat by the bat", example: true}
+  - {args: [["a", "b", "c"], "aadsfasf absbs bbab cadsfafs"], expected: "a a b c", example: true}
+  - {args: [["cat", "ca"], "cattle"], expected: "ca"}
+  - {args: [["ca", "cat"], "cattle"], expected: "ca"}
+  - {args: [["xyz"], "the quick brown fox"], expected: "the quick brown fox"}
+  - {args: [["cat"], "cat"], expected: "cat"}
+  - {args: [["cattle"], "cat"], expected: "cat"}
+  - {args: [["a"], "a"], expected: "a"}
+  - {args: [["at"], "cat at hat"], expected: "cat at hat"}
+  - {args: [["a", "ab", "abc"], "abcd abc ab a b"], expected: "a a a a b"}
+  - {args: [["ab"], "abab ab a b ba"], expected: "ab ab a b ba"}
+  - {args: [["z"], "zzz zz z y"], expected: "z z z y"}
+  - {args: [["he", "hello", "h"], "hello help hi"], expected: "h h h"}
+  - {args: [["the", "th"], "then they that"], expected: "th th th"}
+  - {args: [["ba", "b"], "banana band bat"], expected: "b b b"}
+  - {args: [["ap", "app", "apple"], "apple application apt"], expected: "ap ap ap"}
+  - {args: [["x"], "x"], expected: "x"}
+  - {args: [["mm", "m"], "mmm m"], expected: "m m"}
+  - {args: [["q"], "a b c"], expected: "a b c"}
+  - {args: [["b", "bca"], "bcaab a b bbaac bab"], expected: "b a b b b"}
+  - {args: [["ba", "a", "ab", "abc"], "c a aaa bcbbb cbb"], expected: "c a a bcbbb cbb"}
+  - {args: [["aa", "a"], "acc acaac bac aacbc b abacbc"], expected: "a a bac a b a"}
+  - {args: [["a", "ca", "bc"], "cbbcba abaabc cc"], expected: "cbbcba a cc"}
+  - {args: [["cc", "c", "b"], "abc c cbbcb"], expected: "abc c c"}
+  - {args: [["a", "aa"], "bcac b abb a ac cabba"], expected: "bcac b a a a cabba"}
+  - {args: [["cc", "c", "caa"], "abba bb"], expected: "abba bb"}
+  - {args: [["ca", "cc", "c", "ac"], "cb aaaacb bcbcb bc bcb abbbcc"], expected: "c aaaacb bcbcb bc bcb abbbcc"}

@@ -1,0 +1,30 @@
+number: 130
+title: Surrounded Regions
+url: https://leetcode.com/problems/surrounded-regions/
+entry:
+  class: Solution
+  method: solve
+signature: "board: List[List[str]] -> None"
+compare: exact
+result: {arg: 0}
+figure:
+  kind: grid
+  gridArg: 0
+cases:
+  - {args: [[["X", "X", "X", "X"], ["X", "O", "O", "X"], ["X", "X", "O", "X"], ["X", "O", "X", "X"]]], expected: [["X", "X", "X", "X"], ["X", "X", "X", "X"], ["X", "X", "X", "X"], ["X", "O", "X", "X"]], example: true}
+  - {args: [[["O"]]], expected: [["O"]]}
+  - {args: [[["X"]]], expected: [["X"]]}
+  - {args: [[["O", "O", "O", "O"]]], expected: [["O", "O", "O", "O"]]}
+  - {args: [[["O"], ["O"], ["O"]]], expected: [["O"], ["O"], ["O"]]}
+  - {args: [[["O", "O"], ["O", "O"]]], expected: [["O", "O"], ["O", "O"]]}
+  - {args: [[["O", "O", "O"], ["O", "O", "O"], ["O", "O", "O"]]], expected: [["O", "O", "O"], ["O", "O", "O"], ["O", "O", "O"]]}
+  - {args: [[["X", "X", "X"], ["X", "X", "X"], ["X", "X", "X"]]], expected: [["X", "X", "X"], ["X", "X", "X"], ["X", "X", "X"]]}
+  - {args: [[["X", "X", "X", "X", "X"], ["X", "O", "O", "O", "X"], ["X", "O", "X", "O", "X"], ["X", "O", "O", "O", "X"], ["X", "X", "X", "X", "X"]]], expected: [["X", "X", "X", "X", "X"], ["X", "X", "X", "X", "X"], ["X", "X", "X", "X", "X"], ["X", "X", "X", "X", "X"], ["X", "X", "X", "X", "X"]]}
+  - {args: [[["X", "O", "X"], ["O", "O", "O"], ["X", "O", "X"]]], expected: [["X", "O", "X"], ["O", "O", "O"], ["X", "O", "X"]]}
+  - {args: [[["X", "X", "X", "X"], ["X", "O", "O", "X"], ["X", "O", "O", "X"], ["X", "X", "X", "O"]]], expected: [["X", "X", "X", "X"], ["X", "X", "X", "X"], ["X", "X", "X", "X"], ["X", "X", "X", "O"]]}
+  - {args: [[["O", "X", "O"], ["X", "O", "X"], ["O", "X", "O"]]], expected: [["O", "X", "O"], ["X", "X", "X"], ["O", "X", "O"]]}
+  - {args: [[["X", "X", "O", "O"], ["O", "O", "O", "O"], ["X", "X", "X", "O"], ["X", "X", "X", "O"], ["O", "X", "O", "X"]]], expected: [["X", "X", "O", "O"], ["O", "O", "O", "O"], ["X", "X", "X", "O"], ["X", "X", "X", "O"], ["O", "X", "O", "X"]]}
+  - {args: [[["O", "X", "X", "O", "X", "O", "O"], ["O", "X", "X", "X", "O", "X", "O"], ["O", "O", "O", "O", "O", "O", "X"], ["O", "O", "X", "O", "O", "O", "O"]]], expected: [["O", "X", "X", "O", "X", "O", "O"], ["O", "X", "X", "X", "O", "X", "O"], ["O", "O", "O", "O", "O", "O", "X"], ["O", "O", "X", "O", "O", "O", "O"]]}
+  - {args: [[["O", "O", "O", "X", "X"], ["O", "O", "O", "O", "O"], ["X", "O", "O", "O", "O"], ["O", "X", "O", "O", "X"], ["O", "O", "O", "X", "O"]]], expected: [["O", "O", "O", "X", "X"], ["O", "O", "O", "O", "O"], ["X", "O", "O", "O", "O"], ["O", "X", "O", "O", "X"], ["O", "O", "O", "X", "O"]]}
+  - {args: [[["O", "O", "X"]]], expected: [["O", "O", "X"]]}
+  - {args: [[["O", "O"], ["X", "O"], ["O", "O"], ["O", "O"], ["O", "X"]]], expected: [["O", "O"], ["X", "O"], ["O", "O"], ["O", "O"], ["O", "X"]]}

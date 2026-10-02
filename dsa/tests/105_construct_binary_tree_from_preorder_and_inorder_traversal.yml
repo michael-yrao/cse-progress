@@ -1,0 +1,30 @@
+number: 105
+title: Construct Binary Tree from Preorder and Inorder Traversal
+url: https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/
+entry:
+  class: Solution
+  method: buildTree
+signature: "preorder: List[int], inorder: List[int] -> Optional[TreeNode]"
+compare: exact
+types:
+  args: [null, null]
+  result: tree-node
+cases:
+  - {args: [[3, 9, 20, 15, 7], [9, 3, 15, 20, 7]], expected: [3, 9, 20, null, null, 15, 7], example: true}
+  - {args: [[-1], [-1]], expected: [-1], example: true}
+  - {args: [[1, 2], [2, 1]], expected: [1, 2]}
+  - {args: [[1, 2], [1, 2]], expected: [1, null, 2]}
+  - {args: [[1, 2, 3], [3, 2, 1]], expected: [1, 2, null, 3]}
+  - {args: [[1, 2, 3], [1, 2, 3]], expected: [1, null, 2, null, 3]}
+  - {args: [[1, 2, 4, 5, 3, 6, 7], [4, 2, 5, 1, 6, 3, 7]], expected: [1, 2, 3, 4, 5, 6, 7]}
+  - {args: [[1, 2, 4, 5, 3], [4, 2, 5, 1, 3]], expected: [1, 2, 3, 4, 5]}
+  - {args: [[3000, -3000], [-3000, 3000]], expected: [3000, -3000]}
+  - {args: [[0, -1, -2], [-2, -1, 0]], expected: [0, -1, null, -2]}
+  - {args: [[5, 4, 3, 2, 1], [1, 2, 3, 4, 5]], expected: [5, 4, null, 3, null, 2, null, 1]}
+  - {args: [[1, 2, 3, 4, 5], [1, 2, 3, 4, 5]], expected: [1, null, 2, null, 3, null, 4, null, 5]}
+  - {args: [[10, 5, 3, 7, 15, 12, 20], [3, 5, 7, 10, 12, 15, 20]], expected: [10, 5, 15, 3, 7, 12, 20]}
+  - {args: [[42, -19, 0, -27, 6, 1, -12], [0, -27, -19, -12, 1, 6, 42]], expected: [42, -19, null, 0, 6, null, -27, 1, null, null, null, -12]}
+  - {args: [[-2, -3, -34, 1, -45, 50, 42, 35, 30, 18, 47], [-34, -3, -2, -45, 1, 35, 42, 30, 18, 50, 47]], expected: [-2, -3, 1, -34, null, -45, 50, null, null, null, null, 42, 47, 35, 30, null, null, null, null, null, 18]}
+  - {args: [[-33, -17, -39, 47, -11, 5, -40, 3, -14], [47, -11, -39, 5, -17, -14, 3, -40, -33]], expected: [-33, -17, null, -39, -40, 47, 5, 3, null, null, -11, null, null, -14]}
+  - {args: [[30, 38, 3, 22, -10, 6, -20, -40, -1, 24], [22, -10, 3, -40, -20, 6, 38, 30, -1, 24]], expected: [30, 38, -1, 3, null, null, 24, 22, 6, null, null, null, -10, -20, null, null, null, -40]}
+  - {args: [[1100, 2255, -738, 1040, -1129, -774, -2557, 1989, 909, -1083, -2312, 278, -26, -1197, 2215, 1010, -1772, -1969, 731, -2303, 423, 2404, 822, -2930, 195, 2154, 148, -939, -513, 1980, -264, -2571, -947, -782, -1911, -2980, -2407, 1392, -153, 1530], [-738, 2255, -774, -1129, -2557, 1040, 1989, 1100, 278, -26, -2312, 2215, -1197, -1083, -1969, -1772, -2303, 423, 731, 822, 2404, 1010, 195, 2154, -2930, -513, 1980, -939, 148, -947, -782, -1911, -2980, -2571, -2407, 1392, -153, 1530, -264, 909]], expected: [1100, 2255, 909, -738, 1040, -1083, null, null, null, -1129, 1989, -2312, 1010, -774, -2557, null, null, 278, -1197, -1772, -2930, null, null, null, null, null, -26, 2215, null, -1969, 731, 195, 148, null, null, null, null, null, null, -2303, 2404, null, 2154, -939, -264, null, 423, 822, null, null, null, -513, null, -2571, null, null, null, null, null, null, 1980, -947, -2407, null, null, null, -782, null, 1392, null, -1911, null, -153, null, -2980, null, 1530]}

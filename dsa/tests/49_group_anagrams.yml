@@ -1,0 +1,29 @@
+number: 49
+title: Group Anagrams
+url: https://leetcode.com/problems/group-anagrams/
+entry:
+  class: Solution
+  method: groupAnagrams
+signature: "strs: List[str] -> List[List[str]]"
+compare: unordered-nested
+cases:
+  - {args: [["eat", "tea", "tan", "ate", "nat", "bat"]], expected: [["bat"], ["nat", "tan"], ["ate", "eat", "tea"]], example: true}
+  - {args: [[""]], expected: [[""]], example: true}
+  - {args: [["a"]], expected: [["a"]]}
+  - {args: [["", ""]], expected: [["", ""]]}
+  - {args: [["a", "a"]], expected: [["a", "a"]]}
+  - {args: [["ab", "ba", "ab"]], expected: [["ab", "ba", "ab"]]}
+  - {args: [["abc", "bca", "cab", "xyz"]], expected: [["abc", "bca", "cab"], ["xyz"]]}
+  - {args: [["a", "b", "c"]], expected: [["a"], ["b"], ["c"]]}
+  - {args: [["aab", "aba", "baa", "abb"]], expected: [["aab", "aba", "baa"], ["abb"]]}
+  - {args: [["ab", "a", "b", "ba"]], expected: [["ab", "ba"], ["a"], ["b"]]}
+  - {args: [["cca", "", "bc", ""]], expected: [["cca"], ["", ""], ["bc"]]}
+  - {args: [["a", "", "ba", "ab", "b", "ab", "c", ""]], expected: [["a"], ["", ""], ["ba", "ab", "ab"], ["b"], ["c"]]}
+  - {args: [["ccc", "c", "ba", "ccc"]], expected: [["ccc", "ccc"], ["c"], ["ba"]]}
+  - {args: [["aa", "", "b", "b", "a", "", "ac"]], expected: [["aa"], ["", ""], ["b", "b"], ["a"], ["ac"]]}
+  - {args: [["ac", "", "", "c", "ca", "bca", ""]], expected: [["ac", "ca"], ["", "", ""], ["c"], ["bca"]]}
+  - {args: [["bc", "a"]], expected: [["bc"], ["a"]]}
+  - {args: [["cca"]], expected: [["cca"]]}
+  - {args: [["a", "ca", "c", "a"]], expected: [["a", "a"], ["ca"], ["c"]]}
+  - {args: [["", "c", "a"]], expected: [[""], ["c"], ["a"]]}
+  - {args: [["baa", "cc", "aca", "b", "c", "abb", "bcc"]], expected: [["baa"], ["cc"], ["aca"], ["b"], ["c"], ["abb"], ["bcc"]]}

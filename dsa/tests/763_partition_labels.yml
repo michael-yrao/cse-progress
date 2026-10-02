@@ -1,0 +1,36 @@
+number: 763
+title: Partition Labels
+url: https://leetcode.com/problems/partition-labels/
+entry:
+  class: Solution
+  method: partitionLabels
+signature: "s: str -> List[int]"
+compare: exact
+cases:
+  - {args: ["ababcbacadefegdehijhklij"], expected: [9, 7, 8], example: true}
+  - {args: ["a"], expected: [1]}
+  - {args: ["aaaa"], expected: [4]}
+  - {args: ["abc"], expected: [1, 1, 1]}
+  - {args: ["abab"], expected: [4]}
+  - {args: ["eccbbbbdec"], expected: [10]}
+  - {args: ["caedbdedda"], expected: [1, 9]}
+  - {args: ["qiejxqfnqceocmy"], expected: [13, 1, 1]}
+  - {args: ["abcabc"], expected: [6]}
+  - {args: ["abcdabcd"], expected: [8]}
+  - {args: ["aabbcc"], expected: [2, 2, 2]}
+  - {args: ["abbaccd"], expected: [4, 2, 1]}
+  - {args: ["zzzza"], expected: [4, 1]}
+  - {args: ["ababcc"], expected: [4, 2]}
+  - {args: ["eaaaabaaec"], expected: [9, 1]}
+  - {args: ["vhaagbqkaq"], expected: [1, 1, 8]}
+  - {args: ["abaccbdeffed"], expected: [6, 6]}
+  - {args: ["abcdefghijklmnopqrstuvwxyz"], expected: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]}
+  - {args: ["zyxwvutsrqponmlkjihgfedcbaa"], expected: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2]}
+  - {args: ["adaaeafceffbf"], expected: [13]}
+  - {args: ["ebeccddaecfbef"], expected: [14]}
+  - {args: ["fdeccdbdbecded"], expected: [1, 13]}
+  - {args: ["dbdbfeadfdfa"], expected: [12]}
+  - {args: ["dcabeabc"], expected: [1, 7]}
+  - {args: ["debeabfebeaaba"], expected: [1, 13]}
+  - {args: ["efeeb"], expected: [4, 1]}
+  - {args: ["defefff"], expected: [1, 6]}

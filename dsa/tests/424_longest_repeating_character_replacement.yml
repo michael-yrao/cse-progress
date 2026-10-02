@@ -1,0 +1,36 @@
+number: 424
+title: Longest Repeating Character Replacement
+url: https://leetcode.com/problems/longest-repeating-character-replacement/
+entry:
+  class: Solution
+  method: characterReplacement
+signature: "s: str, k: int -> int"
+compare: exact
+cases:
+  - {args: ["ABAB", 2], expected: 4, example: true}
+  - {args: ["AABABBA", 1], expected: 4, example: true}
+  - {args: ["A", 0], expected: 1}
+  - {args: ["A", 1], expected: 1}
+  - {args: ["AB", 0], expected: 1}
+  - {args: ["AB", 1], expected: 2}
+  - {args: ["AAAA", 2], expected: 4}
+  - {args: ["ABC", 3], expected: 3}
+  - {args: ["ABBB", 2], expected: 4}
+  - {args: ["ABCDE", 2], expected: 3}
+  - {args: ["AABA", 0], expected: 2}
+  - {args: ["ABAB", 0], expected: 1}
+  - {args: ["AAABBBCCC", 3], expected: 6}
+  - {args: ["ZZZZ", 0], expected: 4}
+  - {args: ["ABBBCCC", 2], expected: 5}
+  - {args: ["BC", 2], expected: 2}
+  - {args: ["CBCBBABABCB", 8], expected: 11}
+  - {args: ["BBBBB", 4], expected: 5}
+  - {args: ["C", 1], expected: 1}
+  - {args: ["ACABACCCBBC", 2], expected: 6}
+  - {args: ["AC", 2], expected: 2}
+  - {args: ["CAA", 2], expected: 3}
+  - {args: ["BACBCBAAA", 4], expected: 8}
+  - {args: ["CBBCCCABCAA", 9], expected: 11}
+  - {args: ["ACA", 2], expected: 3}
+  - {args: ["ACCABB", 2], expected: 4}
+  - {args: ["BC", 0], expected: 1}

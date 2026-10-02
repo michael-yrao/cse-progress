@@ -210,6 +210,15 @@ ROWS = [
      "    def f_20261002(self, n):\n        return True\n", None,
      [(True, "PASS f_20261001 (2/2)"),
       (False, "FAIL f_20261002 (1/2): case 1 expected false got true")]),
+    ("a tuple result compares as the JSON array the site sees",
+     _spec("n: int -> List[List[int]]", [_case([0], [[1, 2]], True)]),
+     "class Solution:\n    def f(self, n):\n        return [(1, 2)]\n", None,
+     [(True, "PASS f (1/1)")]),
+    ("a module-level unittest.main() does not stop the load", PLAIN,
+     "import unittest\n"
+     "class Solution:\n    def f(self, n):\n        return n % 2 == 1\n"
+     "unittest.main()\n", None,
+     [(True, "PASS f (2/2)")]),
     ("--method picks one", PLAIN,
      "class Solution:\n"
      "    def f_a(self, n):\n        return n % 2 == 1\n"

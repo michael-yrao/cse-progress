@@ -1,0 +1,32 @@
+number: 34
+title: "Find First and Last Position of Element in Sorted Array"
+url: https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/
+entry:
+  class: Solution
+  method: searchRange
+signature: "nums: List[int], target: int -> List[int]"
+compare: exact
+cases:
+  - {args: [[5, 7, 7, 8, 8, 10], 8], expected: [3, 4], example: true}
+  - {args: [[5, 7, 7, 8, 8, 10], 6], expected: [-1, -1], example: true}
+  - {args: [[], 0], expected: [-1, -1], example: true}
+  - {args: [[8, 8, 8, 8], 8], expected: [0, 3]}
+  - {args: [[5, 7, 7, 8, 8, 10], 5], expected: [0, 0]}
+  - {args: [[5, 7, 7, 8, 8, 10], 10], expected: [5, 5]}
+  - {args: [[5, 7, 7, 8, 8, 10], 4], expected: [-1, -1]}
+  - {args: [[5, 7, 7, 8, 8, 10], 11], expected: [-1, -1]}
+  - {args: [[1], 1], expected: [0, 0]}
+  - {args: [[1], 0], expected: [-1, -1]}
+  - {args: [[2, 2], 2], expected: [0, 1]}
+  - {args: [[1, 2, 3], 2], expected: [1, 1]}
+  - {args: [[1, 1, 1, 2, 3, 3, 3], 1], expected: [0, 2]}
+  - {args: [[1, 1, 1, 2, 3, 3, 3], 3], expected: [4, 6]}
+  - {args: [[-1000000000, 0, 0, 1000000000], 0], expected: [1, 2]}
+  - {args: [[-1000000000, -1000000000], -1000000000], expected: [0, 1]}
+  - {args: [[1, 3, 5, 7], 4], expected: [-1, -1]}
+  - {args: [[0, 0, 0, 1, 2, 2, 3, 4], 5], expected: [-1, -1]}
+  - {args: [[0, 2, 4, 4], 1], expected: [-1, -1]}
+  - {args: [[2], 4], expected: [-1, -1]}
+  - {args: [[0, 0, 0, 1, 2, 2, 4, 4, 5], -1], expected: [-1, -1]}
+  - {args: [[1, 2, 2, 3, 4, 5], 4], expected: [4, 4]}
+  - {args: [[1, 3, 4], 1], expected: [0, 0]}

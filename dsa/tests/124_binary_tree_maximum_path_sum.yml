@@ -1,0 +1,35 @@
+number: 124
+title: Binary Tree Maximum Path Sum
+url: https://leetcode.com/problems/binary-tree-maximum-path-sum/
+entry:
+  class: Solution
+  method: maxPathSum
+signature: "root: Optional[TreeNode] -> int"
+compare: exact
+types:
+  args: [tree-node]
+cases:
+  - {args: [[1, 2, 3]], expected: 6, example: true}
+  - {args: [[-10, 9, 20, null, null, 15, 7]], expected: 42, example: true}
+  - {args: [[-3]], expected: -3}
+  - {args: [[-1, -2, -3]], expected: -1}
+  - {args: [[2, -1]], expected: 2}
+  - {args: [[-2, 1]], expected: 1}
+  - {args: [[1, -2, 3]], expected: 4}
+  - {args: [[1000, 1000, 1000]], expected: 3000}
+  - {args: [[-1000]], expected: -1000}
+  - {args: [[5, 4, 8, 11, null, 13, 4, 7, 2, null, null, null, 1]], expected: 48}
+  - {args: [[9, 6, -3, null, null, -6, 2, null, null, 2, null, -6, -6, -6]], expected: 16}
+  - {args: [[1, -2, -3, 1, 3, -2, null, -1]], expected: 3}
+  - {args: [[-1000, -1000, -1000]], expected: -1000}
+  - {args: [[-5, -4, null, 100, null, -3, null, -2]], expected: 100}
+  - {args: [[1, null, -10, null, 2, null, -10, null, 3]], expected: 3}
+  - {args: [[0, 0, 0]], expected: 0}
+  - {args: [[1, 2]], expected: 3}
+  - {args: [[-1, null, -2]], expected: -1}
+  - {args: [[14, null, 29, null, -28, -12, null, -8]], expected: 43}
+  - {args: [[-21, 11, -13, -6, null, null, null, 11, null, null, -29]], expected: 16}
+  - {args: [[-28, -19, 15, 13, null, -24, 13, -7, 1, -18, null, null, null, null, null, null, 4, -13, -15]], expected: 28}
+  - {args: [[-25, 2, null, -25, -14, 0, -29, null, 21, 11, -14, null, null, null, -20, null, null, -12, -1]], expected: 21}
+  - {args: [[-20, 20, -28, null, null, 7, 12, null, -4, null, null, -27]], expected: 20}
+  - {args: [[-602, -68, 951, 970, -797, -235, null, -330, 433, 362, 147, null, null, null, 336, -701, null, -92, -193, 713, 625, 113, 957, null, null, -252, null, 264, -342, 762, 341, null, -199, -523, null, 363, null, null, null, null, 651, null, -661, -471, -565, 834, 856, 656, null, null, -862, null, null, null, null, null, null, 627, 487, 711, null, null, null, null, null, 576, null, null, null, null, null, null, null, 70, null, null, null, 989]], expected: 4485}

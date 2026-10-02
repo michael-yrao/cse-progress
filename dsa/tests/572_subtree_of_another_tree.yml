@@ -1,0 +1,36 @@
+number: 572
+title: Subtree of Another Tree
+url: https://leetcode.com/problems/subtree-of-another-tree/
+entry:
+  class: Solution
+  method: isSubtree
+signature: "root: Optional[TreeNode], subRoot: Optional[TreeNode] -> bool"
+compare: exact
+types:
+  args: [tree-node, tree-node]
+cases:
+  - {args: [[3, 4, 5, 1, 2], [4, 1, 2]], expected: true, example: true}
+  - {args: [[3, 4, 5, 1, 2, null, null, null, null, 0], [4, 1, 2]], expected: false}
+  - {args: [[1], [1]], expected: true}
+  - {args: [[1], [2]], expected: false}
+  - {args: [[12], [2]], expected: false}
+  - {args: [[1, 2, 3], [1, 2, 3]], expected: true}
+  - {args: [[1, 2, 3], [3]], expected: true}
+  - {args: [[1, 2, 3], [4]], expected: false}
+  - {args: [[1, 1], [1]], expected: true}
+  - {args: [[1, 1], [1, 1]], expected: true}
+  - {args: [[1, null, 1], [1, 1]], expected: false}
+  - {args: [[1, 1, null], [1, null, 1]], expected: false}
+  - {args: [[1, 2, 3, 4, 5], [2, 4, 5]], expected: true}
+  - {args: [[1, 2, 3, 4, 5], [2, 4]], expected: false}
+  - {args: [[1, 2, 3, 4, 5], [2, 4, 5, 6]], expected: false}
+  - {args: [[1, 2, null, 3, null, 4, null, 5], [3, 4, null, 5]], expected: true}
+  - {args: [[1, 2, null, 3, null, 4, null, 5], [3, null, 4, null, 5]], expected: false}
+  - {args: [[-10000, 10000], [10000]], expected: true}
+  - {args: [[2, 12, 2, null, null, null, 12], [12]], expected: true}
+  - {args: [[7, 3, 6, null, 2, 7, null, null, null, -8, -3, null, null, null, 7, 2, null, 7], [7]], expected: true}
+  - {args: [[8, -6, 4, -1, -4, -7, -3, null, null, 4, 1, null, null, null, null, -9, null, null, null, null, 2], [-9, null, 2]], expected: true}
+  - {args: [[9, -2, -9, 5, 9, -2, 1, 8, 5, null, null, null, null, null, null, null, 2, null, 0, null, -7], [0]], expected: true}
+  - {args: [[1, 8, 7, -7, null, null, null, -7, null, null, 4, -3, -6], [28, -7, null, -7, null, null, 4, -3, -6]], expected: false}
+  - {args: [[-9, 7, -6, 0, 3, null, -7, -8, null, null, 5, null, null, null, null, 2], [11, 7, -6, 0, 3, null, -7, -8, null, null, 5, null, null, null, null, 2]], expected: false}
+  - {args: [[-1, null, 7, -5, 6, -5, 7, 2, null, null, -1, 4, null, 9, null, null, null, null, null, 8], [15, null, -1]], expected: false}

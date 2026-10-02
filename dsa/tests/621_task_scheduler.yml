@@ -1,0 +1,40 @@
+number: 621
+title: Task Scheduler
+url: https://leetcode.com/problems/task-scheduler/
+entry:
+  class: Solution
+  method: leastInterval
+signature: "tasks: List[str], n: int -> int"
+compare: exact
+cases:
+  - {args: [["A", "A", "A", "B", "B", "B"], 2], expected: 8, example: true}
+  - {args: [["A", "C", "A", "B", "D", "B"], 1], expected: 6, example: true}
+  - {args: [["A", "A", "A", "B", "B", "B"], 3], expected: 10, example: true}
+  - {args: [["A"], 0], expected: 1}
+  - {args: [["A"], 100], expected: 1}
+  - {args: [["A", "A", "A", "A"], 0], expected: 4}
+  - {args: [["A", "A", "A", "A"], 2], expected: 10}
+  - {args: [["A", "A", "A", "B", "B", "B"], 0], expected: 6}
+  - {args: [["A", "A", "A", "A", "A", "A", "B", "C", "D", "E", "F", "G"], 2], expected: 16}
+  - {args: [["A", "A", "A", "B", "B", "B", "C", "C", "C"], 2], expected: 9}
+  - {args: [["A", "A", "A", "B", "B", "B", "C", "C", "C"], 3], expected: 11}
+  - {args: [["A", "B"], 5], expected: 2}
+  - {args: [["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"], 100], expected: 26}
+  - {args: [["A", "A", "A", "A", "B", "B", "B", "B", "C", "C", "D", "D"], 3], expected: 14}
+  - {args: [["A", "A", "B", "B", "C", "C"], 1], expected: 6}
+  - {args: [["A", "B", "C", "A", "B", "C", "A", "B", "C"], 1], expected: 9}
+  - {args: [["A", "B", "C", "A", "B", "C", "A", "B", "C"], 5], expected: 15}
+  - {args: [["A", "A", "A", "A", "B"], 1], expected: 7}
+  - {args: [["A", "A", "A", "B", "B", "B", "C", "C", "C", "D", "D", "D"], 4], expected: 14}
+  - {args: [["Z", "Z", "Z", "Y", "Y", "X"], 2], expected: 7}
+  - {args: [["A", "A", "A", "A", "A", "A", "A", "A", "A", "A", "B", "C"], 100], expected: 910}
+  - {args: [["A", "B", "A", "B"], 1], expected: 4}
+  - {args: [["A", "B", "A", "B"], 0], expected: 4}
+  - {args: [["C", "C", "D", "C", "B", "D", "D", "C"], 4], expected: 16}
+  - {args: [["C", "A", "B", "B", "B", "A", "B", "C", "B"], 2], expected: 13}
+  - {args: [["D", "A", "A", "D", "C", "A", "B", "C", "D"], 0], expected: 9}
+  - {args: [["B", "C", "B", "C", "D", "C", "D", "C", "D", "C", "A"], 1], expected: 11}
+  - {args: [["A", "B", "D", "B", "D", "A"], 1], expected: 6}
+  - {args: [["B", "C", "D", "A", "C", "C", "A", "D", "C", "D"], 0], expected: 10}
+  - {args: [["D", "C", "A", "D", "A"], 2], expected: 5}
+  - {args: [["B", "A", "C", "B", "D", "B", "C", "C", "B"], 4], expected: 16}

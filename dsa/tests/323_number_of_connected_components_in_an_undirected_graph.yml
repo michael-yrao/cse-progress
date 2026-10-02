@@ -1,0 +1,36 @@
+number: 323
+title: Number of Connected Components in an Undirected Graph
+url: https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/
+entry:
+  class: Solution
+  method: countComponents
+signature: "n: int, edges: List[List[int]] -> int"
+compare: exact
+figure:
+  kind: graph
+  directed: false
+  edgesArg: 1
+  nodeCountArg: 0
+cases:
+  - {args: [5, [[0, 1], [1, 2], [3, 4]]], expected: 2, example: true}
+  - {args: [5, [[0, 1], [1, 2], [2, 3], [3, 4]]], expected: 1, example: true}
+  - {args: [2, [[0, 1]]], expected: 1}
+  - {args: [3, [[0, 1]]], expected: 2}
+  - {args: [3, [[1, 2]]], expected: 2}
+  - {args: [4, [[0, 1], [2, 3]]], expected: 2}
+  - {args: [4, [[0, 3]]], expected: 3}
+  - {args: [5, [[0, 1], [0, 2], [0, 3], [0, 4]]], expected: 1}
+  - {args: [4, [[0, 1], [1, 2], [0, 2]]], expected: 2}
+  - {args: [6, [[0, 1], [2, 3], [4, 5], [1, 2]]], expected: 2}
+  - {args: [2000, [[0, 1999]]], expected: 1999}
+  - {args: [6, [[1, 5]]], expected: 5}
+  - {args: [9, [[1, 7], [2, 3], [2, 8], [3, 5], [4, 5], [4, 8]]], expected: 4}
+  - {args: [3, [[0, 1], [0, 2], [1, 2]]], expected: 1}
+  - {args: [4, [[0, 1], [0, 2], [0, 3], [2, 3]]], expected: 1}
+  - {args: [10, [[0, 7], [1, 2], [1, 5], [2, 3], [3, 6], [5, 9], [6, 8]]], expected: 3}
+  - {args: [3, [[0, 1], [0, 2]]], expected: 1}
+  - {args: [8, [[0, 5], [0, 7], [1, 6], [2, 5], [2, 7], [3, 7], [4, 6], [4, 7], [6, 7]]], expected: 1}
+  - {args: [4, [[0, 1], [0, 2], [0, 3], [1, 3]]], expected: 1}
+  - {args: [8, [[0, 1], [0, 5], [1, 3], [1, 6], [2, 7], [5, 7]]], expected: 2}
+  - {args: [3, [[0, 1], [1, 2]]], expected: 1}
+  - {args: [10, [[0, 7], [0, 9], [1, 8], [2, 7], [2, 9], [3, 5], [4, 6], [5, 9]]], expected: 3}

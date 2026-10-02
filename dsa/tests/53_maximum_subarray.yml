@@ -1,0 +1,40 @@
+number: 53
+title: Maximum Subarray
+url: https://leetcode.com/problems/maximum-subarray/
+entry:
+  class: Solution
+  method: maxSubArray
+signature: "nums: List[int] -> int"
+compare: exact
+cases:
+  - {args: [[-2, 1, -3, 4, -1, 2, 1, -5, 4]], expected: 6, example: true}
+  - {args: [[1]], expected: 1, example: true}
+  - {args: [[5, 4, -1, 7, 8]], expected: 23, example: true}
+  - {args: [[-1]], expected: -1}
+  - {args: [[0]], expected: 0}
+  - {args: [[-3, -2, -1]], expected: -1}
+  - {args: [[-1, -2, -3]], expected: -1}
+  - {args: [[0, 0, 0]], expected: 0}
+  - {args: [[10000]], expected: 10000}
+  - {args: [[-10000]], expected: -10000}
+  - {args: [[10000, -10000, 10000]], expected: 10000}
+  - {args: [[-10000, 10000]], expected: 10000}
+  - {args: [[1, 2, 3, 4]], expected: 10}
+  - {args: [[-1, 1]], expected: 1}
+  - {args: [[2, -1, 2]], expected: 3}
+  - {args: [[-2, -1]], expected: -1}
+  - {args: [[8, -19, 5, -4, 20]], expected: 21}
+  - {args: [[1, -1, 1, -1, 1]], expected: 1}
+  - {args: [[3, -4, 5]], expected: 5}
+  - {args: [[-2, 1]], expected: 1}
+  - {args: [[4, -1, 2, 1]], expected: 6}
+  - {args: [[0, -3, 0]], expected: 0}
+  - {args: [[5, 7, 6, 7, 2, 5]], expected: 32}
+  - {args: [[-8, -4, 2]], expected: 2}
+  - {args: [[-1, -8, -4, -8, 2]], expected: 2}
+  - {args: [[5, -3, -2, -5, -5, 2]], expected: 5}
+  - {args: [[7, 3, -8, 1, -1, -5, -7, 8]], expected: 10}
+  - {args: [[3, 5, -2, -5, -8, 5, 6, -2, 2]], expected: 11}
+  - {args: [[-5, -7, -8, -6, -8, 6]], expected: 6}
+  - {args: [[8, 1, -1, -2, -8, 3, 4, -5, -4]], expected: 9}
+  - {args: [[-3475, 7536, 790, 1972, -3742, 5542]], expected: 12098}

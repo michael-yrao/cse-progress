@@ -1,0 +1,29 @@
+number: 1584
+title: Min Cost to Connect All Points
+url: https://leetcode.com/problems/min-cost-to-connect-all-points/
+entry:
+  class: Solution
+  method: minCostConnectPoints
+signature: "points: List[List[int]] -> int"
+compare: exact
+cases:
+  - {args: [[[0, 0], [2, 2], [3, 10], [5, 2], [7, 0]]], expected: 20, example: true}
+  - {args: [[[3, 12], [-2, 5], [-4, 1]]], expected: 18, example: true}
+  - {args: [[[0, 0]]], expected: 0}
+  - {args: [[[0, 0], [1, 1]]], expected: 2}
+  - {args: [[[-1000000, -1000000], [1000000, 1000000]]], expected: 4000000}
+  - {args: [[[0, 0], [0, 1], [0, 2], [0, 3]]], expected: 3}
+  - {args: [[[0, 0], [1, 0], [0, 1], [1, 1]]], expected: 3}
+  - {args: [[[-5, -5], [-5, 5], [5, -5], [5, 5]]], expected: 30}
+  - {args: [[[1000000, 0], [0, 1000000], [-1000000, 0]]], expected: 4000000}
+  - {args: [[[2, -3], [-2, 4], [0, 0]]], expected: 11}
+  - {args: [[[4, -6], [6, -1], [0, -1], [-5, 7], [6, -8], [9, -7], [-8, -3], [9, 9]]], expected: 57}
+  - {args: [[[-3, -7], [-6, 4], [-5, 9]]], expected: 20}
+  - {args: [[[-6, -9], [-5, 8], [-7, 3], [-1, -3], [3, 6], [-8, 9], [-4, 9], [-4, -5]]], expected: 45}
+  - {args: [[[0, -1], [10, 7], [5, 6], [-3, 2], [2, -8]]], expected: 33}
+  - {args: [[[-4, -9], [-7, -1], [-4, -10], [7, 6], [-9, 1], [6, 7], [2, 1]]], expected: 39}
+  - {args: [[[-6, -2], [-9, 3], [-5, 0], [0, -1], [5, -8], [10, -2], [8, 0], [-2, -5]]], expected: 45}
+  - {args: [[[-8, -8], [-8, 7], [8, -4], [-8, 2], [-8, -7], [9, -9], [-10, -3], [-5, -10]]], expected: 45}
+  - {args: [[[-7, 4], [9, -9], [0, 6], [10, 2], [3, 3]]], expected: 35}
+  - {args: [[[-1, -5], [4, 5], [3, 8], [-8, 9], [5, 1], [-9, 7], [10, 7], [6, 4]]], expected: 45}
+  - {args: [[[9, -9], [5, 3], [-2, 9], [7, 4], [10, -5], [6, 1]]], expected: 34}

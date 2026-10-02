@@ -1,0 +1,31 @@
+number: 242
+title: Valid Anagram
+url: https://leetcode.com/problems/valid-anagram/
+entry:
+  class: Solution
+  method: isAnagram
+signature: "s: str, t: str -> bool"
+compare: exact
+cases:
+  - {args: ["anagram", "nagaram"], expected: true, example: true}
+  - {args: ["rat", "car"], expected: false, example: true}
+  - {args: ["a", "a"], expected: true}
+  - {args: ["a", "b"], expected: false}
+  - {args: ["ab", "a"], expected: false}
+  - {args: ["aab", "abb"], expected: false}
+  - {args: ["abc", "cab"], expected: true}
+  - {args: ["listen", "silent"], expected: true}
+  - {args: ["aacc", "ccac"], expected: false}
+  - {args: ["rat", "tar"], expected: true}
+  - {args: ["aabb", "abab"], expected: true}
+  - {args: ["ab", "abc"], expected: false}
+  - {args: ["bcbbbc", "bbcbbc"], expected: true}
+  - {args: ["bc", "cbc"], expected: false}
+  - {args: ["bb", "bb"], expected: true}
+  - {args: ["aabaca", "aacbaa"], expected: true}
+  - {args: ["ccbb", "ccbb"], expected: true}
+  - {args: ["bbccaa", "cbaacb"], expected: true}
+  - {args: ["acbca", "cabaa"], expected: false}
+  - {args: ["bc", "bc"], expected: true}
+  - {args: ["abb", "bab"], expected: true}
+  - {args: ["babcb", "cbbab"], expected: true}

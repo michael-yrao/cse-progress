@@ -1,0 +1,33 @@
+number: 141
+title: Linked List Cycle
+url: https://leetcode.com/problems/linked-list-cycle/
+entry:
+  class: Solution
+  method: hasCycle
+signature: "head: Optional[ListNode] -> bool"
+compare: exact
+types:
+  args: [list-node-cycle]
+cases:
+  - {args: [[[3, 2, 0, -4], 1]], expected: true, example: true}
+  - {args: [[[1, 2], 0]], expected: true, example: true}
+  - {args: [[[1], -1]], expected: false, example: true}
+  - {args: [[[], -1]], expected: false}
+  - {args: [[[1], 0]], expected: true}
+  - {args: [[[1, 2], -1]], expected: false}
+  - {args: [[[1, 2], 1]], expected: true}
+  - {args: [[[1, 2, 3], 0]], expected: true}
+  - {args: [[[1, 2, 3, 4, 5], 2]], expected: true}
+  - {args: [[[1, 2, 3, 4, 5], 4]], expected: true}
+  - {args: [[[1, 2, 3, 4, 5], -1]], expected: false}
+  - {args: [[[1, 1, 1, 1], -1]], expected: false}
+  - {args: [[[1, 1, 1, 1], 0]], expected: true}
+  - {args: [[[1, 1, 1, 1], 3]], expected: true}
+  - {args: [[[-100000, 100000, -100000], -1]], expected: false}
+  - {args: [[[-100000, 100000, -100000], 1]], expected: true}
+  - {args: [[[0, 0], -1]], expected: false}
+  - {args: [[[5, 6, 5, 6, 5, 6], 2]], expected: true}
+  - {args: [[[5, 6, 5, 6, 5, 6], -1]], expected: false}
+  - {args: [[[21, 24, -1, 28, 34, 19, -11, 41, -29, 3, 27, 27], -1]], expected: false}
+  - {args: [[[-24, -28, 12, 47, -37, -17, -43, -10, -40, -26, -49, -37], 7]], expected: true}
+  - {args: [[[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99], 50]], expected: true}

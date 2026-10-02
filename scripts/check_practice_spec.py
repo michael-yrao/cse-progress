@@ -22,6 +22,7 @@ import argparse
 import copy
 import json
 import sys
+import unittest
 from collections import deque
 from pathlib import Path
 
@@ -219,9 +220,19 @@ def _sorted_items(items) -> list:
     return sorted(items, key=_canonical)
 
 
+def _as_json_value(value):
+    """What the site sees: the result after a JSON round trip (a tuple becomes a list)."""
+    try:
+        return json.loads(json.dumps(value, allow_nan=False))
+    except (TypeError, ValueError):
+        return value
+
+
 def values_match(actual, expected, mode: str) -> bool:
     """`exact` is equality; `unordered` ignores the order of the top-level items;
-    `unordered-nested` also ignores the order inside each inner list."""
+    `unordered-nested` also ignores the order inside each inner list. The result is compared
+    in its JSON form, as the site compares it."""
+    actual = _as_json_value(actual)
     if mode == "exact" or not isinstance(actual, list) or not isinstance(expected, list):
         return actual == expected
     if mode == "unordered":
@@ -236,13 +247,19 @@ def _sort_inner(items: list) -> list:
 # ── running ───────────────────────────────────────────────────────────────────────────
 
 def load_solution(path: Path) -> dict:
-    """Execute the solution file in a fresh namespace with the node classes seeded."""
+    """Execute the solution file in a fresh namespace with the node classes seeded. A
+    module-level `unittest.main()` (some learner files end in one) must not run the file's
+    own tests, so it is a no-op while the file loads."""
     namespace: dict = {"__name__": "solution"}
+    real_main = unittest.main
+    unittest.main = lambda *args, **kwargs: None
     try:
         exec(compile(SEED_SOURCE, "<seed>", "exec"), namespace)
         exec(compile(path.read_text(encoding="utf-8"), str(path), "exec"), namespace)
     except Exception as exc:  # noqa: BLE001 — any failure in the learner's file is reported
         raise CheckError(f"{path.name}: cannot load: {type(exc).__name__}: {exc}") from exc
+    finally:
+        unittest.main = real_main
     return namespace
 
 

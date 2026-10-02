@@ -1,0 +1,34 @@
+# every case has exactly one valid alphabet, or none (enumerated by brute force; the 26-letter case is a forced chain)
+number: 269
+title: Alien Dictionary
+url: https://leetcode.com/problems/alien-dictionary/
+entry:
+  class: Solution
+  method: alienOrder
+signature: "words: List[str] -> str"
+compare: exact
+cases:
+  - {args: [["wrt", "wrf", "er", "ett", "rftt"]], expected: "wertf", example: true}
+  - {args: [["z", "x"]], expected: "zx", example: true}
+  - {args: [["z", "x", "z"]], expected: "", example: true}
+  - {args: [["z"]], expected: "z"}
+  - {args: [["abc", "ab"]], expected: ""}
+  - {args: [["a", "b", "a"]], expected: ""}
+  - {args: [["ab", "a"]], expected: ""}
+  - {args: [["z", "z"]], expected: "z"}
+  - {args: [["x", "y", "z", "x"]], expected: ""}
+  - {args: [["ba", "bc", "ac", "ab"]], expected: ""}
+  - {args: [["m", "gg", "lzg", "z"]], expected: "mglz"}
+  - {args: [["sq", "q", "ggs", "wuw", "jgw", "uuq"]], expected: "sqgwju"}
+  - {args: [["rk", "t", "ktt"]], expected: "rtk"}
+  - {args: [["q", "qq", "qq", "qq", "qqq"]], expected: "q"}
+  - {args: [["vpq", "phr", "w", "r", "qq", "hv"]], expected: "vpwrqh"}
+  - {args: [["ep", "pp"]], expected: "ep"}
+  - {args: [["xx", "xxx"]], expected: "x"}
+  - {args: [["uu", "y", "j", "tt", "pp"]], expected: "uyjtp"}
+  - {args: [["j", "iij", "uue", "tei", "ejj"]], expected: "jiute"}
+  - {args: [["ktk", "tk", "tt", "tkk", "ktt"]], expected: ""}
+  - {args: [["tt", "d", "y", "k", "nyn", "rdy"]], expected: "tdyknr"}
+  - {args: [["nnv", "vn", "dn", "on"]], expected: "nvdo"}
+  - {args: [["j", "jj", "js", "s", "s", "sj", "ssj"]], expected: "js"}
+  - {args: [["l", "o", "e", "h", "r", "n", "d", "i", "s", "y", "u", "p", "z", "w", "m", "f", "x", "q", "v", "k", "g", "j", "t", "c", "a", "b"]], expected: "loehrndisyupzwmfxqvkgjtcab"}

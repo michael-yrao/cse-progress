@@ -1,0 +1,35 @@
+number: 146
+title: LRU Cache
+url: https://leetcode.com/problems/lru-cache/
+entry: {class: LRUCache, kind: ops}
+methods:
+  - "__init__(capacity: int)"
+  - "get(key: int) -> int"
+  - "put(key: int, value: int) -> None"
+compare: exact
+cases:
+  - {ops: ["LRUCache", "put", "put", "get", "put", "get", "put", "get", "get", "get"], args: [[2], [1, 1], [2, 2], [1], [3, 3], [2], [4, 4], [1], [3], [4]], expected: [null, null, null, 1, null, -1, null, -1, 3, 4], example: true}
+  - {ops: ["LRUCache", "put", "put", "get", "get"], args: [[1], [1, 1], [2, 2], [1], [2]], expected: [null, null, null, -1, 2]}
+  - {ops: ["LRUCache", "put", "put", "get"], args: [[1], [1, 1], [1, 2], [1]], expected: [null, null, null, 2]}
+  - {ops: ["LRUCache", "get"], args: [[2], [5]], expected: [null, -1]}
+  - {ops: ["LRUCache", "put", "put", "put", "get", "get"], args: [[2], [1, 1], [2, 2], [1, 10], [1], [2]], expected: [null, null, null, null, 10, 2]}
+  - {ops: ["LRUCache", "put", "put", "get", "put", "get", "get", "get"], args: [[2], [1, 1], [2, 2], [1], [3, 3], [2], [1], [3]], expected: [null, null, null, 1, null, -1, 1, 3]}
+  - {ops: ["LRUCache", "put", "put", "put", "put", "get", "get", "get"], args: [[2], [1, 1], [2, 2], [1, 5], [3, 3], [1], [2], [3]], expected: [null, null, null, null, null, 5, -1, 3]}
+  - {ops: ["LRUCache", "put", "get", "get"], args: [[2], [0, 0], [0], [1]], expected: [null, null, 0, -1]}
+  - {ops: ["LRUCache", "put", "put", "get", "put", "get", "get"], args: [[2], [10000, 100000], [0, 0], [10000], [1, 1], [0], [10000]], expected: [null, null, null, 100000, null, -1, 100000]}
+  - {ops: ["LRUCache", "put", "put", "put", "put", "get", "get", "get", "get"], args: [[3], [1, 1], [2, 2], [3, 3], [4, 4], [1], [2], [3], [4]], expected: [null, null, null, null, null, -1, 2, 3, 4]}
+  - {ops: ["LRUCache", "put", "put", "put", "put", "get", "get"], args: [[2], [2, 1], [1, 1], [2, 3], [4, 1], [1], [2]], expected: [null, null, null, null, null, -1, 3]}
+  - {ops: ["LRUCache", "put", "put", "put", "get", "get", "put", "get", "get", "get", "get"], args: [[3], [1, 1], [2, 2], [3, 3], [1], [2], [4, 4], [3], [1], [2], [4]], expected: [null, null, null, null, 1, 2, null, -1, 1, 2, 4]}
+  - {ops: ["LRUCache", "get", "put", "get", "put", "get", "get"], args: [[1], [1], [1, 7], [1], [2, 8], [1], [2]], expected: [null, -1, null, 7, null, -1, 8]}
+  - {ops: ["LRUCache", "put", "get", "get", "put", "put", "get", "get", "get"], args: [[2], [1, 1], [1], [1], [2, 2], [3, 3], [1], [2], [3]], expected: [null, null, 1, 1, null, null, -1, 2, 3]}
+  - {ops: ["LRUCache", "put", "put", "put", "get", "put", "put", "put", "get", "get"], args: [[3], [5, 50], [5, 51], [5, 52], [5], [6, 60], [7, 70], [8, 80], [5], [6]], expected: [null, null, null, null, 52, null, null, null, -1, 60]}
+  - {ops: ["LRUCache", "put", "get", "put", "get", "put", "get", "get", "put", "get"], args: [[2], [4, 8], [1], [0, 5], [1], [3, 68], [5], [1], [2, 4], [0]], expected: [null, null, -1, null, -1, null, -1, -1, null, -1]}
+  - {ops: ["LRUCache", "get", "put", "put", "put", "put", "put", "get", "put"], args: [[4], [3], [5, 76], [1, 28], [3, 43], [3, 61], [2, 18], [2], [4, 21]], expected: [null, -1, null, null, null, null, null, 18, null]}
+  - {ops: ["LRUCache", "put", "put", "put", "put", "put", "put", "get", "put", "put"], args: [[1], [2, 46], [3, 53], [2, 99], [2, 9], [0, 56], [5, 90], [4], [5, 68], [3, 39]], expected: [null, null, null, null, null, null, null, -1, null, null]}
+  - {ops: ["LRUCache", "get", "get", "get", "get", "get", "put", "put", "get", "get", "put", "get", "put", "put"], args: [[1], [5], [3], [1], [4], [3], [2, 17], [3, 33], [4], [5], [1, 86], [3], [4, 88], [4, 26]], expected: [null, -1, -1, -1, -1, -1, null, null, -1, -1, null, -1, null, null]}
+  - {ops: ["LRUCache", "put", "get", "get", "put", "put", "put", "put", "put", "put", "put", "get"], args: [[4], [3, 19], [1], [0], [5, 75], [4, 97], [3, 16], [4, 10], [1, 42], [0, 41], [0, 1], [4]], expected: [null, null, -1, -1, null, null, null, null, null, null, null, 10]}
+  - {ops: ["LRUCache", "put", "get", "put", "get", "get", "put", "put", "put", "get"], args: [[1], [3, 66], [1], [4, 76], [3], [4], [3, 15], [2, 62], [1, 63], [3]], expected: [null, null, -1, null, -1, 76, null, null, null, -1]}
+  - {ops: ["LRUCache", "put", "get", "put", "put", "put", "put", "get", "put", "put"], args: [[4], [3, 67], [4], [3, 44], [1, 70], [2, 6], [0, 69], [1], [5, 4], [1, 69]], expected: [null, null, -1, null, null, null, null, 70, null, null]}
+  - {ops: ["LRUCache", "get", "get", "put", "get", "put", "put", "put", "get", "put", "get", "put", "put", "put", "get"], args: [[4], [4], [5], [5, 7], [5], [5, 65], [0, 89], [2, 66], [2], [5, 67], [0], [0, 71], [4, 56], [4, 51], [4]], expected: [null, -1, -1, null, 7, null, null, null, 66, null, 89, null, null, null, 51]}
+  - {ops: ["LRUCache", "get", "get", "put", "put", "put", "get", "get", "get", "put", "get", "put", "get", "put", "put", "get", "put", "put", "put", "put", "get", "get", "put", "put", "get", "put", "put", "put", "get", "put", "put", "put", "put", "put", "put", "get", "put", "get", "put", "put", "put", "get", "get", "get", "put", "put"], args: [[3], [6], [2], [2, 174], [2, 881], [6, 275], [5], [0], [4], [0, 197], [4], [2, 446], [3], [1, 579], [5, 702], [7], [1, 119], [5, 519], [0, 287], [5, 78], [1], [5], [3, 481], [5, 650], [0], [1, 590], [0, 703], [6, 541], [1], [0, 843], [3, 861], [5, 867], [2, 661], [3, 374], [3, 270], [4], [1, 240], [0], [6, 917], [4, 13], [5, 515], [7], [0], [0], [1, 871], [0, 210]], expected: [null, -1, -1, null, null, null, -1, -1, -1, null, -1, null, -1, null, null, -1, null, null, null, null, 119, 78, null, null, -1, null, null, null, 590, null, null, null, null, null, null, -1, null, -1, null, null, null, -1, -1, -1, null, null]}
+  - {ops: ["LRUCache", "put", "put", "put", "put", "get", "put", "put", "get", "put", "put", "get", "get", "put", "get", "get", "put", "get", "get", "put", "get", "put", "get", "get", "get", "put", "put", "put", "put", "put", "put", "put", "get", "get", "get", "get", "put", "get", "put", "get", "get", "get", "put", "put", "put", "get", "put", "get", "put", "get", "put", "put", "put", "put", "put", "put", "put", "put", "get", "put", "put"], args: [[5], [1, 397], [0, 935], [2, 603], [6, 349], [1], [3, 909], [6, 329], [1], [6, 134], [5, 46], [6], [0], [0, 632], [3], [0], [6, 635], [3], [2], [2, 860], [3], [1, 983], [0], [3], [0], [6, 666], [2, 307], [0, 554], [3, 468], [3, 196], [6, 424], [1, 356], [1], [6], [2], [3], [1, 983], [6], [2, 585], [2], [6], [3], [3, 421], [4, 937], [6, 657], [7], [7, 904], [6], [2, 594], [3], [5, 972], [1, 518], [4, 322], [4, 794], [7, 60], [0, 115], [3, 942], [2, 278], [7], [7, 547], [5, 860]], expected: [null, null, null, null, null, 397, null, null, 397, null, null, 134, -1, null, 909, 632, null, 909, -1, null, 909, null, 632, 909, 632, null, null, null, null, null, null, null, 356, 424, 307, 196, null, 424, null, 585, 424, 196, null, null, null, -1, null, 657, null, 421, null, null, null, null, null, null, null, null, 60, null, null]}

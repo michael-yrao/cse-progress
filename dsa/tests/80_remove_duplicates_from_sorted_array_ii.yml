@@ -1,0 +1,32 @@
+number: 80
+title: "Remove Duplicates from Sorted Array II"
+url: https://leetcode.com/problems/remove-duplicates-from-sorted-array-ii/
+entry:
+  class: Solution
+  method: removeDuplicates
+signature: "nums: List[int] -> int"
+compare: exact
+result: {argPrefix: 0}
+cases:
+  - {args: [[1, 1, 1, 2, 2, 3]], expected: [1, 1, 2, 2, 3], example: true}
+  - {args: [[0, 0, 1, 1, 1, 1, 2, 3, 3]], expected: [0, 0, 1, 1, 2, 3, 3], example: true}
+  - {args: [[1]], expected: [1]}
+  - {args: [[1, 1]], expected: [1, 1]}
+  - {args: [[1, 1, 1]], expected: [1, 1]}
+  - {args: [[1, 1, 1, 1, 1]], expected: [1, 1]}
+  - {args: [[0, 1, 2]], expected: [0, 1, 2]}
+  - {args: [[1, 1, 1, 2, 2, 2, 3, 3, 3]], expected: [1, 1, 2, 2, 3, 3]}
+  - {args: [[-10000, -10000, -10000, 10000, 10000, 10000]], expected: [-10000, -10000, 10000, 10000]}
+  - {args: [[1, 2, 2, 2, 3]], expected: [1, 2, 2, 3]}
+  - {args: [[1, 1, 2, 2, 2, 2, 3]], expected: [1, 1, 2, 2, 3]}
+  - {args: [[7, 7, 7, 7]], expected: [7, 7]}
+  - {args: [[0, 1, 1, 2, 3]], expected: [0, 1, 1, 2, 3]}
+  - {args: [[-2, 0, 1, 1, 2, 2]], expected: [-2, 0, 1, 1, 2, 2]}
+  - {args: [[-2, -1, 1, 2]], expected: [-2, -1, 1, 2]}
+  - {args: [[-2, 2, 2]], expected: [-2, 2, 2]}
+  - {args: [[-1, 1, 2]], expected: [-1, 1, 2]}
+  - {args: [[-1, 0, 0]], expected: [-1, 0, 0]}
+  - {args: [[-2, -2, -2, -1, -1, 0, 0, 0, 3, 3]], expected: [-2, -2, -1, -1, 0, 0, 3, 3]}
+  - {args: [[-2, -2, -1, 0, 0, 0, 0, 1, 2, 2, 2, 3]], expected: [-2, -2, -1, 0, 0, 1, 2, 2, 3]}
+  - {args: [[-1, 3]], expected: [-1, 3]}
+  - {args: [[-2, -1, 0, 0, 1, 2, 2, 3]], expected: [-2, -1, 0, 0, 1, 2, 2, 3]}

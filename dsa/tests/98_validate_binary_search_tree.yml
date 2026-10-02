@@ -1,0 +1,38 @@
+number: 98
+title: Validate Binary Search Tree
+url: https://leetcode.com/problems/validate-binary-search-tree/
+entry:
+  class: Solution
+  method: isValidBST
+signature: "root: Optional[TreeNode] -> bool"
+compare: exact
+types:
+  args: [tree-node]
+cases:
+  - {args: [[5, 3, 6, 2, 4, null, 7]], expected: true, example: true}
+  - {args: [[2, 1, 3]], expected: true}
+  - {args: [[5, 1, 4, null, null, 3, 6]], expected: false}
+  - {args: [[1]], expected: true}
+  - {args: [[2, 2, 2]], expected: false}
+  - {args: [[2, 1, 1]], expected: false}
+  - {args: [[2, 2, 3]], expected: false}
+  - {args: [[2, 1, 2]], expected: false}
+  - {args: [[1, 1]], expected: false}
+  - {args: [[1, null, 1]], expected: false}
+  - {args: [[5, 4, 6, null, null, 3, 7]], expected: false}
+  - {args: [[-2147483648]], expected: true}
+  - {args: [[2147483647]], expected: true}
+  - {args: [[-2147483648, null, 2147483647]], expected: true}
+  - {args: [[2147483647, 2147483647]], expected: false}
+  - {args: [[0, -1]], expected: true}
+  - {args: [[3, 1, 5, 0, 2, 4, 6]], expected: true}
+  - {args: [[10, 5, 15, null, null, 6, 20]], expected: false}
+  - {args: [[32, 26, 47, 19, null, null, 56, null, 27]], expected: false}
+  - {args: [[-2147483648, -2147483648]], expected: false}
+  - {args: [[2147483647, null, 2147483647]], expected: false}
+  - {args: [[15, 0, 25, -49, 1, 22, null, null, -11]], expected: true}
+  - {args: [[-25, -42, 21, null, -34, -3, null, null, null, -6]], expected: true}
+  - {args: [[1, -41, 41, null, null, 15, null, 12]], expected: true}
+  - {args: [[10, 42, null, -15, null, -19, 33, null, null, -1, null, null, 47]], expected: false}
+  - {args: [[45, -14, null, -38, -5, null, -22, null, -17, null, 39, 34, null, null, null, 24]], expected: false}
+  - {args: [[-43, -50, 33, null, null, -2, null, -4, 21, -31, null, null, 13, null, -12, null, 9]], expected: false}

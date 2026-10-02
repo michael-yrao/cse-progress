@@ -1,0 +1,30 @@
+number: 332
+title: Reconstruct Itinerary
+url: https://leetcode.com/problems/reconstruct-itinerary/
+entry:
+  class: Solution
+  method: findItinerary
+signature: "tickets: List[List[str]] -> List[str]"
+compare: exact
+cases:
+  - {args: [[["MUC", "LHR"], ["JFK", "MUC"], ["SFO", "SJC"], ["LHR", "SFO"]]], expected: ["JFK", "MUC", "LHR", "SFO", "SJC"], example: true}
+  - {args: [[["JFK", "SFO"], ["JFK", "ATL"], ["SFO", "ATL"], ["ATL", "JFK"], ["ATL", "SFO"]]], expected: ["JFK", "ATL", "JFK", "SFO", "ATL", "SFO"]}
+  - {args: [[["JFK", "KUL"], ["JFK", "NRT"], ["NRT", "JFK"]]], expected: ["JFK", "NRT", "JFK", "KUL"]}
+  - {args: [[["JFK", "LAX"]]], expected: ["JFK", "LAX"]}
+  - {args: [[["JFK", "ATL"], ["ATL", "JFK"], ["JFK", "ATL"]]], expected: ["JFK", "ATL", "JFK", "ATL"]}
+  - {args: [[["JFK", "AAA"], ["JFK", "BBB"], ["BBB", "JFK"], ["AAA", "JFK"]]], expected: ["JFK", "AAA", "JFK", "BBB", "JFK"]}
+  - {args: [[["JFK", "ZZZ"], ["ZZZ", "AAA"], ["AAA", "ZZZ"], ["ZZZ", "AAA"]]], expected: ["JFK", "ZZZ", "AAA", "ZZZ", "AAA"]}
+  - {args: [[["SFO", "JFK"], ["SJC", "JFK"], ["JFK", "KUL"], ["KUL", "SFO"], ["KUL", "JFK"], ["JFK", "KUL"], ["SFO", "SJC"], ["KUL", "SFO"], ["JFK", "KUL"]]], expected: ["JFK", "KUL", "JFK", "KUL", "SFO", "JFK", "KUL", "SFO", "SJC", "JFK"]}
+  - {args: [[["NRT", "JFK"], ["NRT", "KUL"], ["JFK", "NRT"], ["KUL", "NRT"]]], expected: ["JFK", "NRT", "KUL", "NRT", "JFK"]}
+  - {args: [[["SFO", "JFK"], ["JFK", "SFO"], ["SJC", "SFO"], ["SFO", "JFK"], ["JFK", "SJC"], ["LAX", "SJC"], ["SJC", "SFO"], ["JFK", "LAX"]]], expected: ["JFK", "LAX", "SJC", "SFO", "JFK", "SFO", "JFK", "SJC", "SFO"]}
+  - {args: [[["JFK", "KUL"], ["LHR", "MUC"], ["LHR", "JFK"], ["JFK", "MUC"], ["MUC", "LHR"], ["KUL", "JFK"], ["JFK", "MUC"], ["MUC", "KUL"], ["KUL", "LHR"]]], expected: ["JFK", "KUL", "JFK", "MUC", "KUL", "LHR", "JFK", "MUC", "LHR", "MUC"]}
+  - {args: [[["KUL", "NRT"], ["ATL", "KUL"], ["SFO", "ATL"], ["NRT", "ATL"], ["JFK", "KUL"], ["SFO", "ATL"], ["KUL", "ATL"], ["ATL", "SFO"], ["ATL", "SFO"]]], expected: ["JFK", "KUL", "ATL", "KUL", "NRT", "ATL", "SFO", "ATL", "SFO", "ATL"]}
+  - {args: [[["JFK", "KUL"], ["KUL", "MUC"], ["JFK", "KUL"], ["MUC", "JFK"]]], expected: ["JFK", "KUL", "MUC", "JFK", "KUL"]}
+  - {args: [[["SFO", "JFK"], ["JFK", "NRT"], ["JFK", "NRT"], ["NRT", "SFO"], ["NRT", "SFO"]]], expected: ["JFK", "NRT", "SFO", "JFK", "NRT", "SFO"]}
+  - {args: [[["KUL", "LAX"], ["LAX", "KUL"], ["JFK", "KUL"], ["LAX", "MUC"], ["KUL", "LAX"], ["JFK", "LAX"], ["MUC", "JFK"], ["LAX", "KUL"]]], expected: ["JFK", "KUL", "LAX", "KUL", "LAX", "MUC", "JFK", "LAX", "KUL"]}
+  - {args: [[["KUL", "SJC"], ["JFK", "KUL"], ["SJC", "NRT"]]], expected: ["JFK", "KUL", "SJC", "NRT"]}
+  - {args: [[["JFK", "KUL"], ["JFK", "ATL"], ["ATL", "JFK"], ["NRT", "SJC"], ["JFK", "NRT"], ["JFK", "ATL"], ["NRT", "KUL"], ["SJC", "JFK"], ["KUL", "JFK"], ["KUL", "NRT"]]], expected: ["JFK", "ATL", "JFK", "KUL", "JFK", "NRT", "KUL", "NRT", "SJC", "JFK", "ATL"]}
+  - {args: [[["JFK", "MUC"], ["NRT", "JFK"], ["MUC", "KUL"], ["MUC", "JFK"], ["JFK", "SJC"], ["SJC", "NRT"], ["JFK", "SJC"], ["MUC", "NRT"], ["NRT", "SJC"], ["SJC", "JFK"], ["JFK", "MUC"], ["KUL", "MUC"]]], expected: ["JFK", "MUC", "JFK", "MUC", "KUL", "MUC", "NRT", "JFK", "SJC", "JFK", "SJC", "NRT", "SJC"]}
+  - {args: [[["LAX", "KUL"], ["JFK", "LAX"], ["KUL", "LAX"], ["LAX", "JFK"], ["KUL", "LAX"], ["JFK", "LAX"], ["LAX", "JFK"], ["LAX", "KUL"], ["JFK", "LAX"]]], expected: ["JFK", "LAX", "JFK", "LAX", "JFK", "LAX", "KUL", "LAX", "KUL", "LAX"]}
+  - {args: [[["KUL", "ATL"], ["ATL", "JFK"], ["JFK", "KUL"], ["JFK", "KUL"], ["JFK", "KUL"], ["JFK", "KUL"], ["KUL", "JFK"], ["KUL", "ATL"], ["KUL", "JFK"], ["ATL", "JFK"]]], expected: ["JFK", "KUL", "ATL", "JFK", "KUL", "ATL", "JFK", "KUL", "JFK", "KUL", "JFK"]}
+  - {args: [[["JFK", "LAX"], ["KUL", "SFO"], ["JFK", "KUL"], ["LAX", "JFK"], ["LAX", "SFO"], ["SFO", "LAX"], ["LAX", "KUL"], ["SFO", "JFK"], ["KUL", "JFK"], ["JFK", "LAX"]]], expected: ["JFK", "KUL", "JFK", "LAX", "JFK", "LAX", "KUL", "SFO", "LAX", "SFO", "JFK"]}

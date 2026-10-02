@@ -1,0 +1,32 @@
+number: 1011
+title: "Capacity To Ship Packages Within D Days"
+url: https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/
+entry:
+  class: Solution
+  method: shipWithinDays
+signature: "weights: List[int], days: int -> int"
+compare: exact
+cases:
+  - {args: [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 5], expected: 15, example: true}
+  - {args: [[3, 2, 2, 4, 1, 4], 3], expected: 6, example: true}
+  - {args: [[1, 2, 3, 1, 1], 4], expected: 3, example: true}
+  - {args: [[5], 1], expected: 5}
+  - {args: [[1, 2, 3, 4, 5], 1], expected: 15}
+  - {args: [[1, 2, 3, 4, 5], 5], expected: 5}
+  - {args: [[500, 500, 500, 500], 2], expected: 1000}
+  - {args: [[10, 50, 100, 100, 50, 100, 100, 100], 5], expected: 160}
+  - {args: [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 1], expected: 55}
+  - {args: [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 10], expected: 10}
+  - {args: [[1, 1, 1, 1], 2], expected: 2}
+  - {args: [[7, 2, 5, 10, 8], 2], expected: 18}
+  - {args: [[500, 500, 500, 500, 500, 500, 500, 500, 500, 500], 3], expected: 2000}
+  - {args: [[9, 1, 14, 6, 15, 13], 6], expected: 15}
+  - {args: [[17, 9, 6, 4, 15, 10, 13, 20], 2], expected: 51}
+  - {args: [[7, 3, 14, 19, 12, 16], 1], expected: 71}
+  - {args: [[6, 18, 1, 9, 17, 18, 6, 4], 5], expected: 24}
+  - {args: [[8, 9, 16, 5, 16, 3, 5, 14], 4], expected: 21}
+  - {args: [[10, 6, 4, 17, 16], 4], expected: 17}
+  - {args: [[6], 1], expected: 6}
+  - {args: [[5, 5, 5, 12, 5, 2], 2], expected: 19}
+  - {args: [[17, 9, 19, 7, 9], 1], expected: 61}
+  - {args: [[15, 3, 8, 7, 10], 2], expected: 25}

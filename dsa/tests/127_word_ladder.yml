@@ -1,0 +1,31 @@
+number: 127
+title: Word Ladder
+url: https://leetcode.com/problems/word-ladder/
+entry:
+  class: Solution
+  method: ladderLength
+signature: "beginWord: str, endWord: str, wordList: List[str] -> int"
+compare: exact
+cases:
+  - {args: ["hit", "cog", ["hot", "dot", "dog", "lot", "log", "cog"]], expected: 5, example: true}
+  - {args: ["hit", "cog", ["hot", "dot", "dog", "lot", "log"]], expected: 0, example: true}
+  - {args: ["a", "c", ["a", "b", "c"]], expected: 2}
+  - {args: ["hot", "dog", ["hot", "dog"]], expected: 0}
+  - {args: ["hit", "hot", ["hot"]], expected: 2}
+  - {args: ["abcdefghij", "abcdefghik", ["abcdefghik"]], expected: 2}
+  - {args: ["red", "tax", ["ted", "tex", "red", "tax", "tad", "den", "rex", "pee"]], expected: 4}
+  - {args: ["aa", "bb", ["ab", "bb"]], expected: 3}
+  - {args: ["aabb", "aaaa", ["aaaa", "abaa", "abbb", "bbba", "bbbb", "babb"]], expected: 0}
+  - {args: ["bcc", "cbc", ["aba", "bba", "ccc", "aac", "cbc", "bac", "cba", "aaa", "bca", "abc", "cac", "bbb"]], expected: 3}
+  - {args: ["aabb", "abab", ["aaab", "abab", "abba", "baab", "aaaa", "bbba", "abaa", "abbb", "aaba", "bbab"]], expected: 3}
+  - {args: ["abab", "dbba", ["baab", "accb", "dbac", "dbba", "dcdb", "dbaa", "cbad", "dbcc", "ddab", "cdab", "ccbc", "cbcd"]], expected: 0}
+  - {args: ["ca", "ac", ["cc", "cb", "bb", "ab", "aa", "ac"]], expected: 3}
+  - {args: ["bba", "aaa", ["aaa", "abb", "bbb", "aab", "baa", "bab", "aba"]], expected: 3}
+  - {args: ["aba", "bbb", ["bbb", "bba", "abb", "baa", "bab", "aab"]], expected: 3}
+  - {args: ["bcc", "bbc", ["bbc", "aab", "bcb", "acb", "cbc", "cbb"]], expected: 2}
+  - {args: ["bab", "bbb", ["baa", "aaa", "aba", "bbb", "abb", "aab"]], expected: 2}
+  - {args: ["aa", "ac", ["dd", "cc", "bd", "bb", "ab", "ca", "bc", "db", "ba", "ac", "ad", "da"]], expected: 2}
+  - {args: ["bbd", "ddb", ["bac", "acc", "aaa", "dab", "dbd", "ddb", "bdb"]], expected: 0}
+  - {args: ["ccac", "cacd", ["babb", "cacd", "bccd", "baba", "dddb", "adac", "bbba"]], expected: 0}
+  - {args: ["ccb", "abb", ["cba", "cac", "aaa", "cab", "bac", "bbb", "aca", "bbc", "bcc", "abb", "cca"]], expected: 7}
+  - {args: ["ca", "ad", ["cd", "dd", "bb", "db", "ab", "aa", "ad"]], expected: 3}
