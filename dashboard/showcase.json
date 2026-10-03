@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-01",
+  "generatedAt": "2026-10-03",
   "entries": [
     {
       "key": "733:bfs",
@@ -407,8 +407,8 @@
         {
           "kind": "attempt",
           "symbol": "StockSpanner_20260823",
-          "startLine": 54,
-          "endLine": 74,
+          "startLine": 68,
+          "endLine": 88,
           "lines": [
             "# ── Attempt · 2026-08-23 ──────────────",
             "class StockSpanner_20260823:",
@@ -7408,8 +7408,8 @@
         {
           "kind": "attempt",
           "symbol": "ladderLength_20260902",
-          "startLine": 42,
-          "endLine": 97,
+          "startLine": 95,
+          "endLine": 150,
           "lines": [
             "    # ── Attempt · 2026-09-02 ──────────────",
             "    def ladderLength_20260902(self, beginWord: str, endWord: str, wordList: List[str]) -> int:",
@@ -8577,8 +8577,8 @@
         {
           "kind": "attempt",
           "symbol": "maxDistance_20260922",
-          "startLine": 21,
-          "endLine": 61,
+          "startLine": 58,
+          "endLine": 98,
           "lines": [
             "    # ── Attempt · 2026-09-22 ──────────────",
             "    def maxDistance_20260922(self, position: List[int], m: int) -> int:",

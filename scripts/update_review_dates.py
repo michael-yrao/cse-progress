@@ -7,6 +7,7 @@ from datetime import datetime, timedelta
 from pathlib import Path
 
 import session_date
+from new_problem import slice_has_real_attempt
 
 # Git runs hooks with a cp1252 console on Windows; the first emoji printed would
 # otherwise kill the script mid-report while the commit still succeeds. See _console.
@@ -607,6 +608,15 @@ def update_existing_row_difficulties(table_rows: list[dict], staged_files: list[
     return updated_count
 
 
+def has_real_attempt(path: Path) -> bool:
+    """True if the file holds a real attempt; a non-UTF-8 file counts as one (old behavior)."""
+    try:
+        text = path.read_text(encoding="utf-8")
+    except UnicodeDecodeError:
+        return True
+    return slice_has_real_attempt(text.splitlines())
+
+
 def discover_source_problems(existing_titles: set[str], staged_files: list[Path] | None = None) -> list[dict]:
     missing_rows: list[dict] = []
     if staged_files is None:
@@ -636,6 +646,10 @@ def discover_source_problems(existing_titles: set[str], staged_files: list[Path]
         if number in existing_numbers:
             continue
         if number in DISCOVERY_SKIP_NUMBERS:
+            continue
+        # A scaffolded-but-never-attempted file (every body `pass`) is not a rep: a row for
+        # it is phantom (references/scaffolding.md, blast radius). Unreadable → discovered.
+        if not has_real_attempt(path):
             continue
         difficulty = extract_difficulty_from_source(path) or "Unknown"
         slug = raw_name.lower().replace("_", "-")

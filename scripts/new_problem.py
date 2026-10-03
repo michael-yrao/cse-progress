@@ -744,6 +744,12 @@ HISTORY_DIRNAME = ".history"
 POINTER_PREFIX = "# ⤵ prior attempts stashed"
 
 DEF_OR_CLASS = re.compile(r"^\s*(?:async\s+def|def|class)\s+\w")
+# Separates a stash's prior-attempt section from the module-level helpers (UF, TrieNode, …)
+# that sat above `class Solution`. A stash without it is the OLD format: attempts only.
+MODULE_SECTION_MARKER = "# ── module-level helpers (restored above class Solution) ──"
+TOP_LEVEL_DEF = re.compile(r"^(?:async\s+def|def|class)\s+(\w+)")
+BLOCK_PREFIX = re.compile(r"^[@#]")  # decorator or comment line attached to the def below it
+BLOCK_SEPARATOR = ["", ""]  # two blank lines between top-level blocks
 
 
 def history_dir() -> Path:
@@ -830,6 +836,105 @@ def module_level_insert_at(lines: list[str]) -> int:
         elif lines[j].strip() and not lines[j].startswith("#"):
             break  # first real code — imports are done
     return last_import
+
+
+def helper_note(stamp: str) -> str:
+    """The banner NOTE both retry layouts write when a helper class is in play."""
+    return (f"# NOTE: suffix any helper class you write (Node, TrieNode, …) with "
+            f"_{stamp} too — an undated helper collides with the restored canonical one.")
+
+
+def trim_trailing_blanks(lines: list[str]) -> list[str]:
+    end = len(lines)
+    while end and not lines[end - 1].strip():
+        end -= 1
+    return lines[:end]
+
+
+def join_sections(sections: list[list[str]], separator: list[str]) -> list[str]:
+    """Non-empty sections (trailing blanks trimmed) joined by `separator`; never mutates."""
+    out: list[str] = []
+    for section in (trim_trailing_blanks(s) for s in sections):
+        if section:
+            out = out + (separator if out else []) + section
+    return out
+
+
+def _is_column_zero_code(line: str) -> bool:
+    return bool(line.strip()) and not line[0].isspace() and not line.startswith("#")
+
+
+def top_level_blocks(gap: list[str]) -> list[tuple[int, int, str]]:
+    """(start, end, name) of each column-0 def/class in `gap`, end exclusive.
+
+    A block runs from its def/class line (plus any decorator or column-0 comment lines
+    directly above) to the line before the next column-0 CODE line (non-blank, not a
+    comment), so it carries its own trailing blanks and any column-0 comments inside its
+    body. The end then backs off over the `#` / `@` run directly above that next code line
+    (or the end of the gap): those belong to the next block, or to `class Solution`. Only
+    column-0 boundaries are read; nothing inside a block is parsed.
+    """
+    blocks = []
+    for i, line in enumerate(gap):
+        m = TOP_LEVEL_DEF.match(line)
+        if not m:
+            continue
+        start = i
+        while start > 0 and BLOCK_PREFIX.match(gap[start - 1]):
+            start -= 1
+        end = i + 1
+        while end < len(gap) and not _is_column_zero_code(gap[end]):
+            end += 1
+        while end > i + 1 and BLOCK_PREFIX.match(gap[end - 1]):
+            end -= 1
+        blocks.append((start, end, m.group(1)))
+    return blocks
+
+
+def lift_helpers(lines: list[str], cls: int, head: str) -> tuple[list[str], int, list[str]]:
+    """Take the learner's module-level helpers out of the gap above `class Solution`.
+
+    Returns (lines without them, the new `class Solution` index, the helper lines verbatim).
+    A def/class the stub's signature names (TreeNode, ListNode, Node) is the problem's
+    interface and stays. Helpers move only when they hold a real body; otherwise nothing
+    changes. Everything else in the gap (constants, stray comments, blanks) stays put.
+    """
+    gap_start = module_level_insert_at(lines)
+    gap = lines[gap_start:cls]
+    moved = [
+        (start, end) for start, end, name in top_level_blocks(gap)
+        if not re.search(rf"\b{re.escape(name)}\b", head)
+    ]
+    helper_lines = join_sections([gap[start:end] for start, end in moved], BLOCK_SEPARATOR)
+    if not slice_has_real_attempt(helper_lines):
+        return lines, cls, []
+    moved_indices = {i for start, end in moved for i in range(start, end)}
+    kept_gap = [ln for i, ln in enumerate(gap) if i not in moved_indices]
+    return lines[:gap_start] + kept_gap + lines[cls:], gap_start + len(kept_gap), helper_lines
+
+
+def split_stash(text: str) -> tuple[list[str], list[str]]:
+    """(prior-attempt lines, module-level helper lines) of a stash. No marker → helpers empty."""
+    lines = text.splitlines()
+    marker_at = next(
+        (i for i, ln in enumerate(lines) if ln.rstrip() == MODULE_SECTION_MARKER), None)
+    if marker_at is None:
+        return lines, []
+    return lines[:marker_at], lines[marker_at + 1:]
+
+
+def merge_stash(prior: list[str], helpers: list[str], existing_text: str) -> str:
+    """Stash text for today's slices on top of an existing stash, section by section.
+
+    The two sections never interleave: prior attempts first (new above old), then the
+    marker and the helpers (new above old). No helpers anywhere → the old attempts-only format.
+    """
+    old_prior, old_helpers = split_stash(existing_text)
+    out = join_sections([prior, old_prior], [""])
+    helper_part = join_sections([helpers, old_helpers], BLOCK_SEPARATOR)
+    if helper_part:
+        out = out + ([""] if out else []) + [MODULE_SECTION_MARKER] + helper_part
+    return "\n".join(out) + "\n"
 
 
 def warn_legacy_dupes(text: str, path: Path) -> None:
@@ -1126,12 +1231,19 @@ def main() -> None:
         # shape (dated methods, dated sibling classes, trailing unittest blocks all vary
         # and are not ours to interpret). restore_history.py pastes that same slice back
         # after the completed attempt at session end, reconstructing the single file.
+        helper_lines: list[str] = []  # module-level helpers lifted into the stash (single-method)
         if len(methods) == 1 and cls is not None:
             # Dated method on the existing `class Solution` — the common case.
+            stub_lines = stub(method, "    ", f"_{stamp}")
+            # Module-level helpers above `class Solution` (UF, TrieNode, …) are prior work
+            # too — lift them out, or the blank page shows a filled-in helper.
+            lines, cls, helper_lines = lift_helpers(lines, cls, stub_lines[0])
             at = cls + 1
             block = ["", f"    # ── Attempt · {today} ──────────────"]
+            if helper_lines:
+                block.append("    " + helper_note(stamp))
             block += recognition_block("    ")
-            block += stub(method, "    ", f"_{stamp}")
+            block += stub_lines
             what = f"{method}_{stamp}()"
         else:
             # Dated sibling class — for multi-method problems (271 encode/decode, design
@@ -1170,10 +1282,7 @@ def main() -> None:
             )
             banner = [f"# ── Attempt · {today} ──────────────"]
             if has_helper:
-                banner.append(
-                    f"# NOTE: suffix any helper class you write (Node, TrieNode, …) with "
-                    f"_{stamp} too — an undated helper collides with the restored canonical one."
-                )
+                banner.append(helper_note(stamp))
             block = ["", ""] + banner + [f"class {base}_{stamp}:"]
             block += recognition_block("    ")
             for m in members:
@@ -1190,14 +1299,14 @@ def main() -> None:
         stash = stash_path(args.number, name)
         active = lines[:at + len(block)]
         stashed = True
-        if slice_has_real_attempt(prior):
-            # Real prior attempts → move them out. A pre-existing stash (a session cut
-            # short before restore) keeps its older attempts; today's prior goes on top.
+        if slice_has_real_attempt(prior) or helper_lines:
+            # Real prior attempts (or lifted helpers) → move them out. A pre-existing stash
+            # (a session cut short before restore) keeps its older content; today's goes on
+            # top, section by section.
             history_dir().mkdir(parents=True, exist_ok=True)
-            body = "\n".join(prior)
-            if stash.exists():
-                body = body + "\n\n" + stash.read_text(encoding="utf-8").rstrip("\n")
-            stash.write_text(body + "\n", encoding="utf-8", newline="\n")
+            existing = stash.read_text(encoding="utf-8") if stash.exists() else ""
+            stash.write_text(merge_stash(prior, helper_lines, existing),
+                             encoding="utf-8", newline="\n")
         elif not stash.exists():
             # Nothing real to hide and no stash — leave the file whole (no pointer).
             active, stashed = lines, False

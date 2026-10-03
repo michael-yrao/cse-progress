@@ -22,6 +22,38 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🟡 9004. Minimum Spanning Tree — 2026-10-02 *(NEW — Kruskal's intake, Kattis `minspantree`)*
+**Sticking point**: wrote `edges.sort()` on `[u, v, w]` lists, which orders by the first node, not the weight, so Example 1's weight-0 edge came last and was refused (cost 6, not 3); the sort key was coach-located after "whats the issue with my code here". Kruskal's call, the Union-Find and the disconnected-graph check were all unaided.
+
+## 🔴 131. Palindrome Partitioning — 2026-10-02 *(re-rep of the Sep 30 🔴 — Backtracking)*
+**Topic**: Backtracking as take/skip over cut points: state (start, end), extend always, cut only on a palindrome
+
+### Where did I get stuck?
+- Chose a new form unaided: "i remember we did for loop 2 days ago, but am i able to do this with start and end index as state". Path (a list of pieces), state (start, end) and validity (the piece is a palindrome) were all the learner's. Sep 30 watch item (3) met: named `start` and `end`.
+- **Decision rule.** First plan: "if palindrome, pick … if not palindrome, just move end+1", making the two moves exclusive. Coach-corrected on `"aab"`: cutting at `"a"` only would never reach `"aa"`. Extend is always allowed; cut is allowed only on a palindrome, and on a palindrome both run. Linked to 40's not-pick-always / pick-when-valid shape the same session.
+- **Base case.** Planned "if end >= len(s), add array". Traced the cut-cut branch of `"ab"` instead of the extend-only one; after the coach's step table showed path `[]` reaching the end with start 0, answered "not sure". `start == len(s)` (every character placed) was coach-supplied. Sep 30 watch item (2) not met.
+- **Code.** First run returned `[[]]` for every input. Two bugs, both coach-located: (1) `s[start:end]` with end exclusive made the first piece `s[0:0] = ""`, which passes the palindrome check; (2) the moves were crossed with the plan (cut kept `start`, extend slid `start` too). Learner fixed both to match the plan. Sep 30 watch item (3)'s inclusive slice not met; the exclusive form works once `end` starts at `start + 1`.
+- Complexity: space O(n) right; time O(n · 2ⁿ) right, but the why counted only the leaf `path.copy()`, not the O(n) slice-and-reverse palindrome check at every node (same size, so the bound holds).
+
+### Core Realization
+Each character boundary is a yes/no choice: cut here or keep growing the piece. Growing is always allowed; cutting needs the current piece to be a palindrome. A cut moves `start` to where the piece ended, so `start == len(s)` means every character is inside some piece, and only then is `path` an answer. `end` running off the string with `start` behind it is a dead end.
+
+### Code Snippet
+```python
+if start_index >= len(s):
+    result.append(path.copy())
+    return
+if end_index > len(s):
+    return
+if isPalindrome(s[start_index:end_index]):
+    path.append(s[start_index:end_index])
+    backtrack(path, end_index, end_index + 1)
+    path.pop()
+backtrack(path, start_index, end_index + 1)
+```
+
+⚠️ **Oct 4 re-rep watch items:** (1) before coding, say which move is always allowed and which needs the palindrome; (2) say when `path` is recorded and why `end` reaching the end is not enough; (3) say whether your slice's `end` is inside or outside the piece, and start `end` to match.
+
 ## 🔴 9001. Single Source Shortest Path, Negative Weights — 2026-10-01 *(NEW — Bellman-Ford consolidation, Kattis `shortestpath3`)*
 **Topic**: Bellman-Ford with negative edges: the `n - 1` round count, detecting a node with no minimum, spreading the -Infinity mark
 

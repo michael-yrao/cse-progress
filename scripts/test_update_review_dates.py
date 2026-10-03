@@ -23,6 +23,9 @@ from unittest import mock
 
 import update_review_dates as uprd
 
+TEMPLATE_PATH = (Path(__file__).resolve().parent.parent
+                 / "docs" / "foundations" / "dsa" / "templates" / "solution_template.py")
+
 
 class ExtractUrlFromSourceTests(unittest.TestCase):
     """extract_url_from_source() reads the header's own URL, scanning only the first
@@ -94,9 +97,9 @@ class DiscoverSourceProblemsUrlTests(unittest.TestCase):
             "https://open.kattis.com/problems/shortestpath3\n"
             'Pattern: graphs\n'
             '"""\n'
-            "class Solution:\n    pass\n",
+            "class Solution:\n    def f(self):\n        return 1\n",
         )
-        rows = uprd.discover_source_problems(set(), staged_files=[path])
+        rows =uprd.discover_source_problems(set(), staged_files=[path])
         self.assertEqual(len(rows), 1)
         self.assertEqual(rows[0]["url"], "https://open.kattis.com/problems/shortestpath3")
 
@@ -107,11 +110,38 @@ class DiscoverSourceProblemsUrlTests(unittest.TestCase):
             "39. Combination Sum\n"
             'Pattern: backtracking\n'
             '"""\n'
-            "class Solution:\n    pass\n",
+            "class Solution:\n    def f(self):\n        return 1\n",
         )
-        rows = uprd.discover_source_problems(set(), staged_files=[path])
+        rows =uprd.discover_source_problems(set(), staged_files=[path])
         self.assertEqual(len(rows), 1)
         self.assertEqual(rows[0]["url"], "https://leetcode.com/problems/combination-sum/")
+
+    def _filled_template(self, body_line: str) -> str:
+        """The real scaffold template with its placeholders filled, `pass` swapped for body_line."""
+        text = TEMPLATE_PATH.read_text(encoding="utf-8")
+        placeholders = {"number": "7", "title": "Demo", "url": "https://example.com/demo",
+                        "pattern": "demo", "statement": "stmt", "date": "2026-10-02",
+                        "method": "demo", "params": "self", "ret": ""}
+        for key, value in placeholders.items():
+            text = text.replace("{" + key + "}", value)
+        return text.replace("        pass", body_line)
+
+    def test_unattempted_scaffold_is_not_discovered(self):
+        design_scaffold = (
+            "class Cache:\n"
+            "    def __init__(self):\n        pass\n\n"
+            "    def get(self, key):\n        pass\n"
+        )
+        cases = [
+            ("fresh single-method scaffold", self._filled_template("        pass"), 0),
+            ("scaffold with one real statement", self._filled_template("        return 1"), 1),
+            ("design-class scaffold, every body pass", design_scaffold, 0),
+        ]
+        for label, body, expected_rows in cases:
+            with self.subTest(label):
+                path = self._write("7_demo.py", body)
+                rows = uprd.discover_source_problems(set(), staged_files=[path])
+                self.assertEqual(len(rows), expected_rows)
 
 
 if __name__ == "__main__":

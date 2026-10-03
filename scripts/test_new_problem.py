@@ -9,6 +9,7 @@ live repo files, never the network.
 """
 from __future__ import annotations
 
+import ast
 import contextlib
 import io
 import os
@@ -252,6 +253,126 @@ class SpecScaffoldTests(unittest.TestCase):
         flagged = self._scaffold(["--signature", "x: str -> bool"])
         self.assertIn("Spec statement line.", flagged)
         self.assertIn("def demoMethod(self, x: str) -> bool:", flagged)
+
+
+class RetryHelperStashTests(unittest.TestCase):
+    """A single-method retry stashes the module-level helpers above `class Solution` (the
+    learner's UF, TrieNode, …) with the prior attempts; a def/class the stub's signature
+    names (TreeNode) is the problem's interface and stays."""
+
+    HEADER = '"""\n7. Demo Problem\n"""\nfrom typing import List, Optional\n'
+    UF = "class UF:\n    def __init__(self, n):\n        self.p = list(range(n))\n"
+    UF_COMMENTED = ("class UF:\n# a column-0 comment inside the class body\n# a second one\n\n"
+                    "    def __init__(self, n):\n        self.p = list(range(n))\n")
+    TREE_NODE = "class TreeNode:\n    def __init__(self, val=0):\n        self.val = val\n"
+    HELPER = "class Helper:\n    def run(self):\n        return 1\n"
+    SOLVED = "    def find(self, n: int) -> int:\n        return n + 1\n"
+    SOLVED_TREE = "    def find(self, root: Optional[TreeNode]) -> int:\n        return 1\n"
+    OLD_ATTEMPT = "    def find_20260901(self, n: int) -> int:\n        return n\n"
+    MARKER = new_problem.MODULE_SECTION_MARKER
+
+    def setUp(self):
+        self._tmpdir = tempfile.TemporaryDirectory()
+        self.addCleanup(self._tmpdir.cleanup)
+        self.tmp_path = Path(self._tmpdir.name)
+        self.source = self.tmp_path / new_problem.DEFAULT_ROOT / "demo" / "7_demo_problem.py"
+        self.stash = self.tmp_path / new_problem.DEFAULT_ROOT / ".history" / "7_demo_problem.txt"
+
+    def _source_text(self, gap: str, solved: str) -> str:
+        return f"{self.HEADER}\n\n{gap}\n\nclass Solution:\n{solved}"
+
+    def _retry(self, source_text: str, existing_stash: str | None) -> tuple[str, str]:
+        self.source.parent.mkdir(parents=True)
+        self.source.write_text(source_text, encoding="utf-8")
+        if existing_stash is not None:
+            self.stash.parent.mkdir(parents=True)
+            self.stash.write_text(existing_stash, encoding="utf-8")
+        argv = ["new_problem.py", "--number", "7", "--title", "Demo Problem",
+                "--pattern", "demo", "--no-link-check", "--date", "2026-10-02"]
+        previous_cwd = Path.cwd()
+        os.chdir(self.tmp_path)
+        try:
+            with mock.patch.object(sys, "argv", argv), \
+                    contextlib.redirect_stdout(io.StringIO()):
+                new_problem.main()
+        finally:
+            os.chdir(previous_cwd)
+        return self.source.read_text(encoding="utf-8"), self.stash.read_text(encoding="utf-8")
+
+    def test_retry_extract_moves_only_helpers_the_signature_does_not_name(self):
+        note = "    # NOTE: suffix any helper class you write"
+        cases = [
+            {
+                "label": "helper class moves with a marker",
+                "source": self._source_text(self.UF, self.SOLVED),
+                "existing_stash": None,
+                "source_has": [new_problem.POINTER_PREFIX, note],
+                "source_lacks": ["class UF"],
+                "stash": f"{self.SOLVED}\n{self.MARKER}\n{self.UF}",
+            },
+            {
+                "label": "class the signature names stays",
+                "source": self._source_text(self.TREE_NODE, self.SOLVED_TREE),
+                "existing_stash": None,
+                "source_has": [f"{self.TREE_NODE}\n\nclass Solution:"],
+                "source_lacks": [note],
+                "stash": self.SOLVED_TREE,
+            },
+            {
+                "label": "comment and constant stay",
+                "source": self._source_text("# a note\nLIMIT = 10\n", self.SOLVED),
+                "existing_stash": None,
+                "source_has": ["# a note\nLIMIT = 10\n"],
+                "source_lacks": [note],
+                "stash": self.SOLVED,
+            },
+            {
+                "label": "named class stays, other helper moves",
+                "source": self._source_text(f"{self.TREE_NODE}\n\n{self.HELPER}", self.SOLVED_TREE),
+                "existing_stash": None,
+                "source_has": [f"{self.TREE_NODE}\n\nclass Solution:"],
+                "source_lacks": ["class Helper"],
+                "stash": f"{self.SOLVED_TREE}\n{self.MARKER}\n{self.HELPER}",
+            },
+            {
+                "label": "column-0 comments inside a helper stay with it",
+                "source": self._source_text(self.UF_COMMENTED, self.SOLVED),
+                "existing_stash": None,
+                "source_has": [new_problem.POINTER_PREFIX],
+                "source_lacks": ["class UF", "self.p = list(range(n))"],
+                "stash": f"{self.SOLVED}\n{self.MARKER}\n{self.UF_COMMENTED}",
+                "parses": True,
+            },
+            {
+                "label": "comment directly above Solution stays attached to it",
+                "source": (f"{self.HEADER}\n\n{self.UF_COMMENTED}\n# banner for Solution\n"
+                           f"class Solution:\n{self.SOLVED}"),
+                "existing_stash": None,
+                "source_has": ["# banner for Solution\nclass Solution:"],
+                "source_lacks": ["class UF", "self.p = list(range(n))"],
+                "stash": f"{self.SOLVED}\n{self.MARKER}\n{self.UF_COMMENTED}",
+                "parses": True,
+            },
+            {
+                "label": "merge into an old-format stash keeps the sections apart",
+                "source": self._source_text(self.UF, self.SOLVED),
+                "existing_stash": self.OLD_ATTEMPT,
+                "source_has": [new_problem.POINTER_PREFIX],
+                "source_lacks": ["class UF"],
+                "stash": f"{self.SOLVED}\n{self.OLD_ATTEMPT}\n{self.MARKER}\n{self.UF}",
+            },
+        ]
+        for case in cases:
+            with self.subTest(case["label"]):
+                self.setUp()
+                source_after, stash_after = self._retry(case["source"], case["existing_stash"])
+                for piece in case["source_has"]:
+                    self.assertIn(piece, source_after)
+                for piece in case["source_lacks"]:
+                    self.assertNotIn(piece, source_after)
+                self.assertEqual(stash_after, case["stash"])
+                if case.get("parses"):
+                    ast.parse(source_after)
 
 
 if __name__ == "__main__":

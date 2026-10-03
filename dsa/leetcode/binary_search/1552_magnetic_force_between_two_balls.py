@@ -18,6 +18,43 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-10-02 ──────────────
+    def maxDistance_20261002(self, position: List[int], m: int) -> int:
+        # if we ignore the fact that we have only n number of buckets, we would be just placing based on position[0] to position[-1], e.g. one at each end and repeat by cutting by half dependent on how many balls, which means this is a solution based binary search
+        # and that we need to sort
+        # so the maximum force we can possibly get is position[-1] - position[0], this is our upper bound
+        # min bound, we'll say it is 1 since position is given to be min of 2
+        # we are trying to maximize the the force, so this is max boundary
+
+        position.sort()
+
+        l, r = 1, position[-1] - position[0]
+
+        def can_achieve(force):
+            # we always place a ball at the beginning since that is the best min boundary
+            latest_ball = position[0]
+            ball_counter = 1
+            # we can then just loop through and just place balls to get force
+            # if we can't, we return false
+            for i in range(1,len(position)):
+                # if we can place ball here to achieve force, place it
+                if position[i] - latest_ball >= force:
+                    latest_ball = position[i]
+                    ball_counter+=1
+            # we can means we can put m balls to achieve this force
+            return ball_counter>=m
+
+        while l < r:
+            # mid is the force we are seeing if we can achieve
+            mid = (l + r + 1) // 2
+            
+            if can_achieve(mid):
+                l = mid
+            else:
+                r = mid - 1
+        
+        return l
+
     # ── Attempt · 2026-09-22 ──────────────
     def maxDistance_20260922(self, position: List[int], m: int) -> int:
         # the entire array's position is kinda irrelevant

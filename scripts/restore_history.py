@@ -29,11 +29,16 @@ from datetime import datetime
 from pathlib import Path
 
 from new_problem import (
+    BLOCK_SEPARATOR,
     REGION_HEAD,
     history_dir,
+    module_level_insert_at,
+    solution_class_start,
     source_root,
+    split_stash,
     strip_pointer,
     strip_spoiler_region,
+    trim_trailing_blanks,
 )
 
 # Git runs hooks with a cp1252 console on Windows; the first emoji printed would
@@ -167,6 +172,20 @@ def collision_warnings(path: Path, text: str) -> list[str]:
     ]
 
 
+def insert_helpers(lines: list[str], helpers: list[str]) -> list[str]:
+    """`lines` with the stashed module-level helpers placed directly above `class Solution:`
+    (below anything the learner wrote in the gap), or past the imports when there is none.
+    The helpers go in as the verbatim slice they were stashed as; two blank lines frame them."""
+    at = solution_class_start(lines)
+    if at is None:
+        at = module_level_insert_at(lines)
+    head = trim_trailing_blanks(lines[:at])
+    tail = lines[at:]
+    while tail and not tail[0].strip():
+        tail = tail[1:]
+    return (head + BLOCK_SEPARATOR if head else []) + helpers + (BLOCK_SEPARATOR + tail if tail else [])
+
+
 def restore_stash(stash: Path, stamp: str | None, dry_run: bool,
                   warnings: list[str]) -> str | None:
     """Paste `stash` back into its source file. Returns a skip reason, or None if restored."""
@@ -182,7 +201,10 @@ def restore_stash(stash: Path, stamp: str | None, dry_run: bool,
         return f"attempt {stamp} still empty — keeping stash out"
 
     body = strip_pointer(src_lines)                 # drop the breadcrumb
-    merged = body + [""] + stash.read_text(encoding="utf-8").splitlines()
+    prior, helpers = split_stash(stash.read_text(encoding="utf-8"))  # no marker → old format
+    merged = body + [""] + prior if prior else body
+    if helpers:
+        merged = insert_helpers(merged, helpers)
     text = "\n".join(merged).rstrip() + "\n"
     # Checked on --dry-run too: the whole point is to see the collision BEFORE it lands.
     warnings.extend(collision_warnings(src, text))

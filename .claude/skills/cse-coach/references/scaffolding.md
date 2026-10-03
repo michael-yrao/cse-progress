@@ -43,9 +43,11 @@ A scaffolded-but-unattempted file is not inert — its blast radius is the track
 
 - **Discovery plants phantom rows.** `update_review_dates.py` auto-adds any problem file
   with no tracker row as **🔴 Blank / streak 0 / attempt date = today / next review = the
-  Blank interval** (`discover_source_problems`). Commit a scaffold never attempted and the
-  tracker gains a Blank that never happened, plus a near-term rep to service it (the Blank
-  interval is the shortest). This collides with the end-of-session `git status` sweep.
+  Blank interval** (`discover_source_problems`). Since Oct 2, 2026 it skips a file whose
+  every stub body is still `pass`, so a scaffold never attempted no longer gains a row. A
+  file with one line of real code in it is still discovered: an abandoned half-attempt
+  committed by the end-of-session `git status` sweep gains a Blank that never happened,
+  plus a near-term rep to service it (the Blank interval is the shortest).
   - ⚠️ **DELETING THE SCAFFOLD DOES NOT DELETE THE ROW.** Undo BOTH, in the same edit.
     Once discovery has run, the row is independent of the file; removing the `.py` leaves
     the row and the script has nothing to reconcile it against. Delete the file AND the

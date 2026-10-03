@@ -39,6 +39,59 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-10-02 ──────────────
+    def ladderLength_20261002(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
+        # endword must be in the wordlist or the beginWord
+        # so first thing is to add beginword to wordlist
+        # then we need to create a map of .it -> hit, h.t -> hit, hi. -> hit 
+        # and repeat this for all words
+        # this is actually just a BFS navigating to nearest neighbors
+
+        adjMap = collections.defaultdict(list)
+        
+        wordList.append(beginWord)
+
+        def get_regex_word(index, input_word):
+            # we replace word[index] with .
+            pre = input_word[:index]
+            post = input_word[index+1:]
+            regex_word = pre + '.' + post
+            return regex_word
+        
+        for word in wordList:
+            for i in range(len(word)):
+                regex_word = get_regex_word(i, word)
+                adjMap[regex_word].append(word)
+
+        # now we add beginWord to the queue and go through all keys that own it
+
+        # need a visited set here to avoid revisiting
+        visited = set()
+        
+        queue = collections.deque()
+        queue.append(beginWord)
+        
+        visited.add(beginWord)
+        
+        # keep track of iterations we are doing
+        iteration = 1
+        
+        while queue:
+            lenQueue = len(queue)
+            for _ in range(lenQueue):
+                current_word = queue.popleft()
+                if current_word == endWord:
+                    return iteration
+                for i in range(len(current_word)):
+                    regex_word = get_regex_word(i, current_word)
+                    for neighbor in adjMap[regex_word]:
+                        if neighbor not in visited:
+                            queue.append(neighbor)
+                            visited.add(neighbor)
+            iteration+=1
+
+        return 0
+
     # ── Attempt · 2026-09-02 ──────────────
     def ladderLength_20260902(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
         # graph to try to get from start node of beginWord to end node of endWord

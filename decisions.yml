@@ -1664,3 +1664,17 @@ decisions:
       edge list or a grid, and the site draws each example's input from it. Additive:
       `schemaVersion` stays 1. No `cse.config.yml` value changed.
     affects: [scaffolding, practice]
+
+  - id: retry-helpers-and-discovery-oct2
+    date: 2026-10-02
+    summary: >-
+      Three tooling changes from the Oct 2 meta-review. (1) A retry scaffold in the
+      single-method layout also stashes the learner's module-level helpers above
+      `class Solution`, below a marker line in the stash; restore puts them back above
+      `class Solution`. A class the stub's signature names stays in the file. (2)
+      `update_review_dates.py` discovery skips a file whose every stub body is `pass`, so an
+      unattempted scaffold gains no tracker row. (3) `.claude/hooks/commit_push_gate.py`
+      denies one command that chains a commit and a push. Also: rule, skill and memory
+      files no longer need the learner's review before a commit
+      (`~/.claude/rules/execution-workflow.md`). No `cse.config.yml` value changed.
+    affects: [scaffolding, retry, hooks, review-workflow]

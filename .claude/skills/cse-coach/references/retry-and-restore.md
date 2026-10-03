@@ -1,4 +1,4 @@
-<!-- reconciled: 2026-09-25 -->
+<!-- reconciled: 2026-10-02 -->
 # Retries: hide prior attempts, restore at session end
 
 **Open this** when scaffolding a retry (a problem whose file already exists) or when
@@ -22,13 +22,13 @@ be reproduced by hand on every machine — all gone. It's a speed bump, not a lo
 is one click away, and that's accepted. What it buys is that seeing your old solution becomes
 a deliberate act, not an accident.
 
-⚠️ **Known gap.** It happened 2× — 1489 on Sep 23, 648 on Sep 24, 2026. The extract cuts only
-INSIDE `class Solution`. A module-level helper the learner wrote above it (`class UF`, `class TrieNode`) stays in view — a filled-in
-helper on what should be a blank page. Until the source fix lands, **after
-every retry scaffold read the lines between the imports and `class Solution`**. If a helper sits
-there, say so in the hand-over ("a helper from a prior attempt is above the stub — write your
-own"), never silently. The planned fix stashes module-level defs between the imports and
-`class Solution` and restores them at module level. The plan is in the 2026-09-24 meta-review.
+**Module-level helpers move too (source fix, Oct 2, 2026).** A helper the learner wrote above
+`class Solution` (`class UF`, `class TrieNode`) goes to the stash with the prior attempts, below a
+marker line, and restore puts it back directly above `class Solution`. A class the stub's own
+signature names (`TreeNode`, `ListNode`, `Node`) is the problem's interface and stays in the file.
+A stash with no marker line is the older format and restores as before. One case still stays in
+view, so name it in the hand-over when you see it: a module-level helper that is not a `def` or
+`class` (an assignment, a lambda). (The gap happened 2×: 1489 on Sep 23, 648 on Sep 24, 2026.)
 
 ## Restore the stash once the day's reps are done
 

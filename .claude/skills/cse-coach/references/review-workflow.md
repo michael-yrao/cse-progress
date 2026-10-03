@@ -62,6 +62,12 @@ a bare "O(1)"). Don't move on until they answer or explicitly pass.
   end-of-week complexity cleanup**, re-asked cold at the close-out (`weekly-build.md`). A real
   fix to the *code* can still affect the rating through the code criterion. That's the code
   being shaky, not the complexity miss capping it.
+- **Before correcting the learner's bound, prove yours.** Apply the problem's constraints to both
+  bounds first. Then name a worst-case input that forces the bound you are about to claim, or count
+  the operations by running the code. For space, price what each stack frame holds, not only how
+  many frames there are. When a complexity rule is taught for the first time, search `stuck_log.md`
+  for earlier entries on the same technique and correct any that contradict it. (Three coach-written
+  bounds were wrong: 45 on Sep 18, 22 on Sep 19, 1489 on Sep 23, 2026.)
 
 full rule: [`complexity_gotchas.md`](docs/foundations/dsa/mastery/complexity_gotchas.md),
 [`feedback_ask_complexity.md`](.claude/memory/feedback_ask_complexity.md); `decisions.yml`

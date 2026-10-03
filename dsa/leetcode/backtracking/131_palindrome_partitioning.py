@@ -23,6 +23,43 @@ from typing import List, Optional
 
 
 class Solution:
+
+    # ── Attempt · 2026-10-02 ──────────────
+    def partition_20261002(self, s: str) -> List[List[str]]:
+        # substring, so that means everything has a start and an end
+        # so we can't just pick randomly, we need to do substring[start:end]
+        # path: list of palindromes
+        # state: start and end indices for the substring
+        # validity: if substring[start:end] is a palindrome
+        # decision: if palindrome, pick and do backtrack of end:end+1. if not palindrome, just move end+1
+        # base case: if start >= len(s), add array. when this is true, that means we covered all chars.
+        # if end > len(s), it means we are now passed all chars, do a return
+
+        result = []
+
+        def isPalindrome(string):
+            return string==string[::-1]
+
+        def backtrack(path, start_index, end_index):
+            if start_index >= len(s):
+                result.append(path.copy())
+                return
+            if end_index > len(s):
+                return
+
+            # validity
+            # decision #1: pick
+            if isPalindrome(s[start_index:end_index]):
+                path.append(s[start_index:end_index])
+                backtrack(path, end_index, end_index + 1)
+                path.pop()
+            
+            # decision #2: do not pick
+            backtrack(path, start_index, end_index + 1)
+            
+        backtrack([], 0, 1)
+        return result
+
     # ── Attempt 1 · 2026-09-30 ────────────────────────────────────────────
     def partition(self, s: str) -> List[List[str]]:
         # all possible palindrome is obviously backtracking

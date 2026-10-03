@@ -29,6 +29,44 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-10-02 ──────────────
+    def combinationSum2_20261002(self, candidates: List[int], target: int) -> List[List[int]]:
+        # example 1 output are all sorted, we sort first
+        # path: current combination
+        # state: current target and current index and whether or not we pick it
+        # validity: if adding, must be less than target, if not adding, ignore other values that are equal
+        # decision: pick or not pick value at current index
+        # base case: if current target == 0 is success, if index >= len, exit
+
+        candidates.sort()
+        result = []
+
+        def backtrack(path, current_target, current_index):
+            # base case
+            if current_target == 0:
+                result.append(path.copy())
+                return
+            if current_index >= len(candidates):
+                return
+            
+            # validity
+            # decision 1: add number at current index
+            if candidates[current_index] <= current_target:
+                path.append(candidates[current_index])
+                backtrack(path, current_target - candidates[current_index], current_index + 1)
+                path.pop()
+
+            # validity
+            # decision 2: do not add number at current index
+            # need to skip duplicates here
+            while current_index + 1 < len(candidates) and candidates[current_index] == candidates[current_index+1]:
+                current_index+=1
+            
+            backtrack(path, current_target, current_index + 1)
+        
+        backtrack([], target, 0)
+        return result
+
     # ── Attempt · 2026-09-30 ──────────────
     def combinationSum2_20260930(self, candidates: List[int], target: int) -> List[List[int]]:
         # all unique combinations = backtracking

@@ -25,7 +25,7 @@ class Solution:
         # we do need to add -math.inf to the end to ensure we run a calc if we are ever increasing
         largest_rectangle = -math.inf
 
-        heights.append(-math.inf)
+        heights.append(-math.inf) # type: ignore
 
         increasing_stack = []
         

@@ -12,15 +12,15 @@
 
 **No 🟢 — blocks per-algorithm phase exit.** Execution is unproven.
 
-- **Kruskal's MST** (advanced_graphs) — best 🟡 across 1489
+- **Kruskal's MST** (advanced_graphs) — best 🟡 across 1489, 9004
 
 **Thin — below its computed coverage bar** (`cse.config.yml`'s `coverage_threshold`). One instance trains recall of that problem, not the skill.
 
 - **BFS on Implicit Graph** (graphs) — 1/2: 127
-- **Kruskal's MST** (advanced_graphs) — 1/2: 1489
 - **Bellman-Ford** (advanced_graphs) — 2/3: 787, 9001
+- **Kruskal's MST** (advanced_graphs) — 2/3: 1489, 9004
 - **Dijkstra** (advanced_graphs) — 4/5 (5 rows): 743, 778, 1631, 2812
-- **Backtracking** (backtracking) — 8/10 (11 rows): 22, 39, 40, 46, 78, 79, 90, 131
+- **Backtracking** (backtracking) — 8/9 (11 rows): 22, 39, 40, 46, 78, 79, 90, 131
 
 **Queued — declared, and already sitting in the Waiting Room / Expansion Queue.** A known gap with a fill already picked, not a new finding.
 
@@ -37,7 +37,6 @@
 - **Heap / Priority Queue** (heap) — queued: 23 (`surplus>=1`), 295 (`surplus>=1`)
 - **Hierholzer (Eulerian path)** (advanced_graphs) — queued: 753 (`surplus>=1`)
 - **Intervals (sort + sweep)** (intervals) — queued: 252 (`surplus>=1`), 253 (`surplus>=1`), 1851 (`surplus>=1`)
-- **Kruskal's MST** (advanced_graphs) — queued: 9004 (`surplus>=1`)
 - **Linked List Merge** (linked_list) — queued: 23 (`surplus>=1`)
 - **Linked List Reversal** (linked_list) — queued: 25 (`surplus>=1`)
 - **Monotonic Stack** (stack) — queued: 85 (`solved:84`), 1504 (`solved:84`)
@@ -59,7 +58,7 @@ Every declared technique gets a row, started or not — a not-started row's Gaps
 | Dijkstra | advanced_graphs | core | 5 (4+1) | 4 *+1v* (743, 778, 1631, 2812) | 🟢 | ✅ | Min-over-max (minimize the maximum edge) ×1 · Max-min bottleneck (maximize the minimum edge) ×1 · ~~0/1 edge weights (0-1 BFS vs Dijkstra)~~ *(queued: `surplus>=1`)* · ~~Multiplicative relaxation (maximize the product)~~ *(queued: `surplus>=1`)* | thin (4/5) · queued: 1368 `surplus>=1`, 1514 `surplus>=1`, 3620 `surplus>=1`, 3650 `surplus>=1` |
 | Floyd-Warshall (all-pairs shortest path) | advanced_graphs | core | 2 (2+0) | 2 (1334, 1462) | 🟢 | ✅ | — | queued: 399 `rated:1334` |
 | Hierholzer (Eulerian path) | advanced_graphs | core | 2 (2+0) | 2 *+1v* (332, 2097) | 🟢 | ✅ | pre-sorted adjacency ×1 · min-heap ordering ×1 | queued: 753 `surplus>=1` |
-| Kruskal's MST | advanced_graphs | core | 2 (1+1) | 1 (1489) | 🟡 | ❌ | — | **no-green** · thin (1/2) · queued: 9004 `surplus>=1` |
+| Kruskal's MST | advanced_graphs | core | 3 (1+2) | 2 (1489, 9004) | 🟡 | ❌ | — | **no-green** · thin (2/3) |
 | Prim's MST | advanced_graphs | core | 1 (1+0) | 1 (1584) | 🟢 | ✅ | — | queued: 9003 `surplus>=1` |
 | Array/String Fundamentals | arrays_and_hash | core | 2 (2+0) | 3 (14, 66, 1929) | 🟢 | ✅ | — | — |
 | Boyer-Moore Voting | arrays_and_hash | core | 1 (1+0) | 2 (169, 229) | 🎓 | ✅ | — | — |
@@ -69,11 +68,11 @@ Every declared technique gets a row, started or not — a not-started row's Gaps
 | In-Place Array Rotation | arrays_and_hash | core | 1 (1+0) | 1 (189) | 🟢 | ✅ | — | — |
 | Length-Prefix Encoding | arrays_and_hash | core | 1 (1+0) | 1 (271) | 🟢 | ✅ | — | — |
 | Prefix/Suffix Products | arrays_and_hash | core | 1 (1+0) | 1 (238) | 🟢 | ✅ | — | — |
-| Backtracking | backtracking | core | 10 (5+5) | 8 *+3v* (22, 39, 40, 46, 78, 79, 90, 131) | 🟢 | ✅ | — | thin (8/10) · queued: 17 `phase:Backtracking`, 51 `phase:Backtracking`, 212 `phase:Backtracking` |
+| Backtracking | backtracking | core | 9 (5+4) | 8 *+3v* (22, 39, 40, 46, 78, 79, 90, 131) | 🟢 | ✅ | — | thin (8/9) · queued: 17 `phase:Backtracking`, 51 `phase:Backtracking`, 212 `phase:Backtracking` |
 | Binary Search (exact match) | binary_search | core | 1 (1+0) | 2 (33, 704) | 🎓 | ✅ | — | — |
-| Binary Search (max boundary) | binary_search | core | 3 (2+1) | 3 (34, 74, 1552) | 🟢 | ✅ | — | — |
+| Binary Search (max boundary) | binary_search | core | 2 (2+0) | 3 (34, 74, 1552) | 🟢 | ✅ | — | — |
 | Binary Search (min boundary) | binary_search | core | 4 (4+0) | 7 (34, 153, 162, 540, 875, 1011, 2300) | 🎓 | ✅ | — | queued: 4 `surplus>=1` |
-| Binary Search on Answer | binary_search | core | 3 (2+1) | 3 (875, 1011, 1552) | 🟢 | ✅ | — | — |
+| Binary Search on Answer | binary_search | core | 2 (2+0) | 3 (875, 1011, 1552) | 🟢 | ✅ | — | — |
 | Bit Manipulation | bit_manipulation | core | 3 (3+0) | 0 (—) | — | ❌ | — | *not started* |
 | Design (composed data structures) | design | core | 1 (1+0) | 0 (—) | — | ❌ | — | *not started* |
 | 1D Dynamic Programming | dynamic_programming | dp | 5 (5+0) | 0 (—) | — | ❌ | — | *not started* |
@@ -144,7 +143,7 @@ Every declared technique gets a row, started or not — a not-started row's Gaps
 | Sliding Window | sliding_window | core | 3 (3+0) | 4 (3, 121, 424, 567) | 🟢 | ✅ | — | queued: 76 `surplus>=1` |
 | Divide & Conquer / Sorting | sorting | core | 1 (1+0) | 1 (912) | 🟢 | ✅ | Merge Sort ×1 · ~~Quick Sort~~ *(queued: `expansion — sorting deep-dive`)* · ~~Radix Sort~~ *(queued: `expansion — sorting deep-dive`)* · ~~Counting Sort~~ *(queued: `expansion — sorting deep-dive`)* · ~~Timsort~~ *(queued: `expansion — sorting deep-dive`)* · ~~D&C on 53~~ *(queued: `rated:912 + surplus>=1`)* | — |
 | Monotonic Deque | stack | core | 1 (1+0) | 1 (239) | 🟢 | ✅ | — | — |
-| Monotonic Stack | stack | core | 6 (4+2) | 6 (84, 496, 503, 739, 853, 901) | 🟢 | ✅ | — | queued: 85 `solved:84`, 1504 `solved:84` |
+| Monotonic Stack | stack | core | 5 (4+1) | 6 (84, 496, 503, 739, 853, 901) | 🟢 | ✅ | — | queued: 85 `solved:84`, 1504 `solved:84` |
 | Stack (augmented entries) | stack | core | 1 (1+0) | 1 (155) | 🟢 | ✅ | — | — |
 | Stack (expression evaluation) | stack | core | 1 (1+0) | 1 (150) | 🟢 | ✅ | — | queued: 394 `surplus>=1` |
 | Stack (matching) | stack | core | 1 (1+0) | 1 (20) | 🟢 | ✅ | — | — |
@@ -163,7 +162,7 @@ Every declared technique gets a row, started or not — a not-started row's Gaps
 
 ## Vocabulary maintenance
 
-**Queued (75)** — listed in the Action list above; a known gap with a fill already picked, not counted below.
+**Queued (74)** — listed in the Action list above; a known gap with a fill already picked, not counted below.
 
 **Declared, not queued (3)** — declared in the vocabulary, no tracker row, and not yet in any queue. This is the normal state for curriculum ahead of the learner; it is a roadmap, not a finding: 1102, 1135, 547
 

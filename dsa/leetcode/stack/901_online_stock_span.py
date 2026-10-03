@@ -36,6 +36,20 @@ Constraints:
 """
 
 
+# ── Attempt · 2026-10-02 ──────────────
+class StockSpanner_20261002:
+# non increasing stack (decreasing with equality check), each stack node keeps its span so (value, span) tuple
+    def __init__(self):
+        self.decreasing_stack = []
+
+    def next(self, price: int) -> int:
+        span = 1
+        while self.decreasing_stack and price >= self.decreasing_stack[-1][0]:
+            previous_value, previous_span = self.decreasing_stack.pop()
+            span+=previous_span
+        self.decreasing_stack.append((price, span))
+        return span
+
 # ── Attempt · 2026-09-22 ──────────────
 class StockSpanner_20260922:
 # in example 1, if we do a traditional decreasingStack, we lose the details to populate 4 for 75

@@ -1,33 +1,33 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-01",
+  "generatedAt": "2026-10-02",
   "totals": {
-    "problems": 132,
-    "solutions": 143,
-    "reps": 638
+    "problems": 133,
+    "solutions": 144,
+    "reps": 644
   },
   "pipeline": {
-    "blank": 4,
-    "shaky": 9,
+    "blank": 3,
+    "shaky": 8,
     "clean": {
-      "s0": 2,
-      "s1": 32,
-      "s2plus": 71,
-      "total": 105
+      "s0": 3,
+      "s1": 33,
+      "s2plus": 72,
+      "total": 108
     },
     "graduated": 25,
     "retired": 0
   },
   "difficulty": {
     "Easy": 35,
-    "Medium": 97,
+    "Medium": 98,
     "Hard": 11
   },
   "streak": {
-    "current": 127,
-    "longest": 127,
-    "lastStudyDay": "2026-10-01",
-    "studyDays": 185,
+    "current": 128,
+    "longest": 128,
+    "lastStudyDay": "2026-10-02",
+    "studyDays": 186,
     "restDayAllowance": 1
   },
   "coverage": {
@@ -38,9 +38,9 @@
     "variantGaps": 0
   },
   "onSchedule": {
-    "totalActive": 143,
-    "dueToday": 1,
-    "overdue": 3
+    "totalActive": 144,
+    "dueToday": 2,
+    "overdue": 4
   },
   "trophyCase": {
     "graduated": [
@@ -1341,12 +1341,13 @@
       "family": "advanced_graphs",
       "tier": "core",
       "started": true,
-      "minProblems": 2,
+      "minProblems": 3,
       "coverageFloor": 1,
-      "uncleanCount": 1,
-      "problemCount": 1,
+      "uncleanCount": 2,
+      "problemCount": 2,
       "problems": [
-        1489
+        1489,
+        9004
       ],
       "bestComfort": "🟡",
       "hasGreen": false,
@@ -1356,15 +1357,7 @@
         "Union-Find"
       ],
       "graduatedCount": 0,
-      "planned": [
-        {
-          "lcNumber": 9004,
-          "title": "Minimum Spanning Tree",
-          "url": "https://open.kattis.com/problems/minspantree",
-          "difficulty": "Medium",
-          "trigger": "surplus>=1"
-        }
-      ],
+      "planned": [],
       "plannedTotal": 2,
       "untriedVariations": []
     },
@@ -1601,9 +1594,9 @@
       "family": "backtracking",
       "tier": "core",
       "started": true,
-      "minProblems": 10,
+      "minProblems": 9,
       "coverageFloor": 5,
-      "uncleanCount": 5,
+      "uncleanCount": 4,
       "problemCount": 8,
       "problems": [
         22,
@@ -1679,9 +1672,9 @@
       "family": "binary_search",
       "tier": "core",
       "started": true,
-      "minProblems": 3,
+      "minProblems": 2,
       "coverageFloor": 2,
-      "uncleanCount": 1,
+      "uncleanCount": 0,
       "problemCount": 3,
       "problems": [
         34,
@@ -1743,9 +1736,9 @@
       "family": "binary_search",
       "tier": "core",
       "started": true,
-      "minProblems": 3,
+      "minProblems": 2,
       "coverageFloor": 2,
-      "uncleanCount": 1,
+      "uncleanCount": 0,
       "problemCount": 3,
       "problems": [
         875,
@@ -3822,9 +3815,9 @@
       "family": "stack",
       "tier": "core",
       "started": true,
-      "minProblems": 6,
+      "minProblems": 5,
       "coverageFloor": 4,
-      "uncleanCount": 2,
+      "uncleanCount": 1,
       "problemCount": 6,
       "problems": [
         84,
@@ -4473,7 +4466,8 @@
     "2026-09-28",
     "2026-09-29",
     "2026-09-30",
-    "2026-10-01"
+    "2026-10-01",
+    "2026-10-02"
   ],
   "schedule": {
     "weekOf": "2026-09-28",
@@ -4934,11 +4928,11 @@
             "file": "dsa/leetcode/backtracking/40_combination_sum_ii.py",
             "tags": [],
             "kind": "rep",
-            "done": false,
+            "done": true,
             "deferredTo": null,
-            "endComfort": null,
-            "endNote": null,
-            "nextReview": null
+            "endComfort": "🟢",
+            "endNote": "prov",
+            "nextReview": "2026-10-12"
           },
           {
             "lcNumber": 131,
@@ -4950,11 +4944,11 @@
             "file": "dsa/leetcode/backtracking/131_palindrome_partitioning.py",
             "tags": [],
             "kind": "rep",
-            "done": false,
+            "done": true,
             "deferredTo": null,
-            "endComfort": null,
+            "endComfort": "🔴",
             "endNote": null,
-            "nextReview": null
+            "nextReview": "2026-10-04"
           },
           {
             "lcNumber": 1552,
@@ -4966,11 +4960,11 @@
             "file": "dsa/leetcode/binary_search/1552_magnetic_force_between_two_balls.py",
             "tags": [],
             "kind": "rep",
-            "done": false,
+            "done": true,
             "deferredTo": null,
-            "endComfort": null,
+            "endComfort": "🟢",
             "endNote": null,
-            "nextReview": null
+            "nextReview": "2026-11-01"
           },
           {
             "lcNumber": 901,
@@ -4982,29 +4976,29 @@
             "file": "dsa/leetcode/stack/901_online_stock_span.py",
             "tags": [],
             "kind": "rep",
-            "done": false,
+            "done": true,
             "deferredTo": null,
-            "endComfort": null,
+            "endComfort": "🟢",
             "endNote": null,
-            "nextReview": null
+            "nextReview": "2026-11-01"
           },
           {
             "lcNumber": 9004,
             "title": "Minimum Spanning Tree",
             "technique": "Kruskal",
             "startComfort": null,
-            "difficulty": null,
+            "difficulty": "Medium",
             "url": "https://open.kattis.com/problems/minspantree",
-            "file": null,
+            "file": "dsa/leetcode/graphs/9004_minimum_spanning_tree.py",
             "tags": [
               "new"
             ],
             "kind": "new",
-            "done": false,
+            "done": true,
             "deferredTo": null,
-            "endComfort": null,
+            "endComfort": "🟡",
             "endNote": null,
-            "nextReview": null
+            "nextReview": "2026-10-12"
           },
           {
             "lcNumber": 127,
@@ -5016,11 +5010,11 @@
             "file": "dsa/leetcode/graphs/127_word_ladder.py",
             "tags": [],
             "kind": "rep",
-            "done": false,
+            "done": true,
             "deferredTo": null,
-            "endComfort": null,
+            "endComfort": "🟢",
             "endNote": null,
-            "nextReview": null
+            "nextReview": "2026-12-01"
           }
         ]
       },
@@ -5170,8 +5164,24 @@
         "date": "2026-10-04",
         "weekday": "Sunday",
         "label": null,
-        "units": 8.1,
+        "units": 11.1,
         "items": [
+          {
+            "lcNumber": 131,
+            "title": "Palindrome Partitioning",
+            "technique": "Backtracking",
+            "startComfort": "🔴",
+            "difficulty": "Medium",
+            "url": "https://leetcode.com/problems/palindrome-partitioning/",
+            "file": "dsa/leetcode/backtracking/131_palindrome_partitioning.py",
+            "tags": [],
+            "kind": "rep",
+            "done": false,
+            "deferredTo": null,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
+          },
           {
             "lcNumber": 9003,
             "title": "Lost Map",
@@ -5791,7 +5801,7 @@
     {
       "date": "2026-10-02",
       "planned": 13.9,
-      "done": 0.0,
+      "done": 13.9,
       "built": 13.9,
       "partial": false
     },
@@ -5804,9 +5814,9 @@
     },
     {
       "date": "2026-10-04",
-      "planned": 8.1,
+      "planned": 11.1,
       "done": 0.0,
-      "built": 8.1,
+      "built": 11.1,
       "partial": false
     }
   ],
@@ -5936,7 +5946,7 @@
       "description": "Practice on 7 study-days without letting the streak lapse.",
       "earned": true,
       "progress": {
-        "current": 127,
+        "current": 128,
         "target": 7
       }
     },
@@ -5947,7 +5957,7 @@
       "description": "Practice on 30 study-days without letting the streak lapse.",
       "earned": true,
       "progress": {
-        "current": 127,
+        "current": 128,
         "target": 30
       }
     },
@@ -5958,7 +5968,7 @@
       "description": "Practice on 100 study-days without letting the streak lapse.",
       "earned": true,
       "progress": {
-        "current": 127,
+        "current": 128,
         "target": 100
       }
     },
@@ -6008,6 +6018,234 @@
     }
   ],
   "problems": [
+    {
+      "lcNumber": 9004,
+      "title": "Minimum Spanning Tree (Kruskal)",
+      "url": "https://open.kattis.com/problems/minspantree",
+      "file": "dsa/leetcode/graphs/9004_minimum_spanning_tree.py",
+      "difficulty": "Medium",
+      "category": "graphs",
+      "comfort": "🟡",
+      "level": 1,
+      "streak": 0,
+      "nextReview": "2026-10-12",
+      "repDates": [
+        "2026-10-02"
+      ],
+      "timeline": [
+        {
+          "date": "2026-10-02",
+          "comfort": "🟡",
+          "level": 1
+        }
+      ]
+    },
+    {
+      "lcNumber": 40,
+      "title": "Combination Sum II",
+      "url": "https://leetcode.com/problems/combination-sum-ii/",
+      "file": "dsa/leetcode/backtracking/40_combination_sum_ii.py",
+      "difficulty": "Medium",
+      "category": "backtracking",
+      "comfort": "🟢",
+      "level": 2,
+      "streak": 0,
+      "nextReview": "2026-10-12",
+      "repDates": [
+        "2026-09-28",
+        "2026-09-30",
+        "2026-10-02"
+      ],
+      "timeline": [
+        {
+          "date": "2026-09-28",
+          "comfort": "🔴",
+          "level": 0
+        },
+        {
+          "date": "2026-09-30",
+          "comfort": "🔴",
+          "level": 0
+        },
+        {
+          "date": "2026-10-02",
+          "comfort": "🟢",
+          "level": 2
+        }
+      ]
+    },
+    {
+      "lcNumber": 131,
+      "title": "Palindrome Partitioning",
+      "url": "https://leetcode.com/problems/palindrome-partitioning/",
+      "file": "dsa/leetcode/backtracking/131_palindrome_partitioning.py",
+      "difficulty": "Medium",
+      "category": "backtracking",
+      "comfort": "🔴",
+      "level": 0,
+      "streak": 0,
+      "nextReview": "2026-10-04",
+      "repDates": [
+        "2026-09-30",
+        "2026-10-02"
+      ],
+      "timeline": [
+        {
+          "date": "2026-09-30",
+          "comfort": "🔴",
+          "level": 0
+        },
+        {
+          "date": "2026-10-02",
+          "comfort": "🔴",
+          "level": 0
+        }
+      ]
+    },
+    {
+      "lcNumber": 1552,
+      "title": "Magnetic Force Between Two Balls",
+      "url": "https://leetcode.com/problems/magnetic-force-between-two-balls/",
+      "file": "dsa/leetcode/binary_search/1552_magnetic_force_between_two_balls.py",
+      "difficulty": "Medium",
+      "category": "binary_search",
+      "comfort": "🟢",
+      "level": 2,
+      "streak": 1,
+      "nextReview": "2026-11-01",
+      "repDates": [
+        "2026-09-20",
+        "2026-09-22",
+        "2026-10-02"
+      ],
+      "timeline": [
+        {
+          "date": "2026-09-20",
+          "comfort": "🔴",
+          "level": 0
+        },
+        {
+          "date": "2026-09-22",
+          "comfort": "🟡",
+          "level": 1
+        },
+        {
+          "date": "2026-10-02",
+          "comfort": "🟢",
+          "level": 2
+        }
+      ]
+    },
+    {
+      "lcNumber": 901,
+      "title": "Online Stock Span",
+      "url": "https://leetcode.com/problems/online-stock-span/",
+      "file": "dsa/leetcode/stack/901_online_stock_span.py",
+      "difficulty": "Medium",
+      "category": "stack",
+      "comfort": "🟢",
+      "level": 2,
+      "streak": 1,
+      "nextReview": "2026-11-01",
+      "repDates": [
+        "2026-07-12",
+        "2026-07-14",
+        "2026-08-13",
+        "2026-08-23",
+        "2026-09-22",
+        "2026-10-02"
+      ],
+      "timeline": [
+        {
+          "date": "2026-07-12",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-07-14",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-08-13",
+          "comfort": "🟡",
+          "level": 1
+        },
+        {
+          "date": "2026-08-23",
+          "comfort": "🟢",
+          "level": 2
+        },
+        {
+          "date": "2026-09-22",
+          "comfort": "🟡",
+          "level": 1
+        },
+        {
+          "date": "2026-10-02",
+          "comfort": "🟢",
+          "level": 2
+        }
+      ]
+    },
+    {
+      "lcNumber": 127,
+      "title": "Word Ladder (BFS)",
+      "url": "https://leetcode.com/problems/word-ladder/",
+      "file": "dsa/leetcode/graphs/127_word_ladder.py",
+      "difficulty": "Hard",
+      "category": "graphs",
+      "comfort": "🟢",
+      "level": 2,
+      "streak": 2,
+      "nextReview": "2026-12-01",
+      "repDates": [
+        "2026-07-18",
+        "2026-07-21",
+        "2026-08-03",
+        "2026-08-13",
+        "2026-08-23",
+        "2026-09-02",
+        "2026-10-02"
+      ],
+      "timeline": [
+        {
+          "date": "2026-07-18",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-07-21",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-08-03",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-08-13",
+          "comfort": "🟡",
+          "level": 1
+        },
+        {
+          "date": "2026-08-23",
+          "comfort": "🟡",
+          "level": 1
+        },
+        {
+          "date": "2026-09-02",
+          "comfort": "🟢",
+          "level": 2
+        },
+        {
+          "date": "2026-10-02",
+          "comfort": "🟢",
+          "level": 2
+        }
+      ]
+    },
     {
       "lcNumber": 90,
       "title": "Subsets II",
@@ -6289,34 +6527,6 @@
       ]
     },
     {
-      "lcNumber": 40,
-      "title": "Combination Sum II",
-      "url": "https://leetcode.com/problems/combination-sum-ii/",
-      "file": "dsa/leetcode/backtracking/40_combination_sum_ii.py",
-      "difficulty": "Medium",
-      "category": "backtracking",
-      "comfort": "🔴",
-      "level": 0,
-      "streak": 0,
-      "nextReview": "2026-10-02",
-      "repDates": [
-        "2026-09-28",
-        "2026-09-30"
-      ],
-      "timeline": [
-        {
-          "date": "2026-09-28",
-          "comfort": "🔴",
-          "level": 0
-        },
-        {
-          "date": "2026-09-30",
-          "comfort": "🔴",
-          "level": 0
-        }
-      ]
-    },
-    {
       "lcNumber": 84,
       "title": "Largest Rectangle in Histogram",
       "url": "https://leetcode.com/problems/largest-rectangle-in-histogram/",
@@ -6381,28 +6591,6 @@
           "date": "2026-09-30",
           "comfort": "🟢",
           "level": 2
-        }
-      ]
-    },
-    {
-      "lcNumber": 131,
-      "title": "Palindrome Partitioning",
-      "url": "https://leetcode.com/problems/palindrome-partitioning/",
-      "file": "dsa/leetcode/backtracking/131_palindrome_partitioning.py",
-      "difficulty": "Medium",
-      "category": "backtracking",
-      "comfort": "🔴",
-      "level": 0,
-      "streak": 0,
-      "nextReview": "2026-10-02",
-      "repDates": [
-        "2026-09-30"
-      ],
-      "timeline": [
-        {
-          "date": "2026-09-30",
-          "comfort": "🔴",
-          "level": 0
         }
       ]
     },
@@ -7465,34 +7653,6 @@
       ]
     },
     {
-      "lcNumber": 1552,
-      "title": "Magnetic Force Between Two Balls",
-      "url": "https://leetcode.com/problems/magnetic-force-between-two-balls/",
-      "file": "dsa/leetcode/binary_search/1552_magnetic_force_between_two_balls.py",
-      "difficulty": "Medium",
-      "category": "binary_search",
-      "comfort": "🟡",
-      "level": 1,
-      "streak": 0,
-      "nextReview": "2026-10-02",
-      "repDates": [
-        "2026-09-20",
-        "2026-09-22"
-      ],
-      "timeline": [
-        {
-          "date": "2026-09-20",
-          "comfort": "🔴",
-          "level": 0
-        },
-        {
-          "date": "2026-09-22",
-          "comfort": "🟡",
-          "level": 1
-        }
-      ]
-    },
-    {
       "lcNumber": 424,
       "title": "Longest Repeating Character Replacement",
       "url": "https://leetcode.com/problems/longest-repeating-character-replacement/",
@@ -7629,52 +7789,6 @@
           "date": "2026-09-22",
           "comfort": "🟢",
           "level": 2
-        }
-      ]
-    },
-    {
-      "lcNumber": 901,
-      "title": "Online Stock Span",
-      "url": "https://leetcode.com/problems/online-stock-span/",
-      "file": "dsa/leetcode/stack/901_online_stock_span.py",
-      "difficulty": "Medium",
-      "category": "stack",
-      "comfort": "🟡",
-      "level": 1,
-      "streak": 0,
-      "nextReview": "2026-10-02",
-      "repDates": [
-        "2026-07-12",
-        "2026-07-14",
-        "2026-08-13",
-        "2026-08-23",
-        "2026-09-22"
-      ],
-      "timeline": [
-        {
-          "date": "2026-07-12",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-07-14",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-08-13",
-          "comfort": "🟡",
-          "level": 1
-        },
-        {
-          "date": "2026-08-23",
-          "comfort": "🟢",
-          "level": 2
-        },
-        {
-          "date": "2026-09-22",
-          "comfort": "🟡",
-          "level": 1
         }
       ]
     },
@@ -9375,58 +9489,6 @@
         },
         {
           "date": "2026-09-03",
-          "comfort": "🟢",
-          "level": 2
-        }
-      ]
-    },
-    {
-      "lcNumber": 127,
-      "title": "Word Ladder (BFS)",
-      "url": "https://leetcode.com/problems/word-ladder/",
-      "file": "dsa/leetcode/graphs/127_word_ladder.py",
-      "difficulty": "Hard",
-      "category": "graphs",
-      "comfort": "🟢",
-      "level": 2,
-      "streak": 1,
-      "nextReview": "2026-10-02",
-      "repDates": [
-        "2026-07-18",
-        "2026-07-21",
-        "2026-08-03",
-        "2026-08-13",
-        "2026-08-23",
-        "2026-09-02"
-      ],
-      "timeline": [
-        {
-          "date": "2026-07-18",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-07-21",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-08-03",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-08-13",
-          "comfort": "🟡",
-          "level": 1
-        },
-        {
-          "date": "2026-08-23",
-          "comfort": "🟡",
-          "level": 1
-        },
-        {
-          "date": "2026-09-02",
           "comfort": "🟢",
           "level": 2
         }

@@ -853,7 +853,7 @@ techniques:
     builds_on: ["Union-Find"]
     problems:
       - {number: 1489, method: Kruskal}
-      - {number: 9004, method: Kruskal, queued: "surplus>=1"}  # Kattis minspantree — replaces 1135
+      - {number: 9004, method: Kruskal}  # Kattis minspantree — replaces 1135; sort edges BY WEIGHT, then Union-Find; V = n stays in the bound because the graph may be disconnected (Oct 2, 2026)
       - {number: 1135, planned: false}  # LeetCode-premium, no free judge — skipped Sep 28, 2026 under the link rule
 
   # ── Backtracking ────────────────────────────────────────────────────────────

@@ -1,3 +1,26 @@
+- **2026-10-02 · 127 Word Ladder** (🟢 s1 review; retry, half-spoiled: graphs folder, tracker title names BFS) — ✅
+  **hit.** Top comment, unaided: wildcard-pattern map (`.it`, `h.t`, `hi.`), "this is actually just a BFS navigating
+  to nearest neighbors"; visited marked on enqueue, levels counted. 3,000/3,000 against a reference BFS. → 🟢 s2.
+- **2026-10-02 · 9004 Minimum Spanning Tree** (🆕 new, measured; the title names the object, the folder says graphs) —
+  ✅ **hit.** Top comment, unaided: "since we already have edges here, this is Kruskal's MST, so we sort and do UF",
+  with the no-tree condition "not all nodes are connected". Union-Find written correctly from a blank page. The sort
+  key (`edges.sort()` sorted by u, not weight) was coach-located; output format pointed out. 33/33 stored cases. → 🟡.
+- **2026-10-02 · 901 Online Stock Span** (🟡 re-rep; retry, half-spoiled: stack folder) — ✅ **hit.** Top comment,
+  unaided: "non increasing stack (decreasing with equality check), each stack node keeps its span so (value, span)
+  tuple". Both pieces that needed coach input on Sep 22 (direction, carrying the span) came unaided. 2,000/2,000
+  random runs against a brute-force span. → 🟢 s1.
+- **2026-10-02 · 1552 Magnetic Force Between Two Balls** (🟡 re-rep; retry, half-spoiled: binary_search folder) — ✅
+  **hit.** Top comment, unaided: "this is a solution based binary search", sort first, bounds 1 and
+  `position[-1] - position[0]`, maximizing. Greedy left-to-right check and the upper-mid form written without help.
+  3,000/3,000 against a brute force. → 🟢 s1.
+- **2026-10-02 · 131 Palindrome Partitioning** (🔴 re-rep; retry, half-spoiled: backtracking folder) — ⚠️ **partial.**
+  Backtracking with path, state (start, end) and validity (palindrome) named unaided, choosing a new take/skip form
+  over Sep 30's loop. The decision rule ("cut only if palindrome, else extend" → extend always, cut on a palindrome)
+  and the base case (`start == len(s)`) were coach-supplied. Two code bugs coach-located. 2,000/2,000 after the fix. → 🔴.
+- **2026-10-02 · 40 Combination Sum II** (🔴 re-rep; retry, half-spoiled: backtracking folder) — ✅ **hit.** Top
+  comment, unaided: sort first; decision "pick or not pick value at current index"; validity "if not adding, ignore
+  other values that are equal". The duplicate skip sits on the not-pick branch, the piece missed on Sep 28 and Sep 30.
+  Blank page, no hints (the coach was running the meta-review). 3,000/3,000 against a brute force. → 🟢 s0 (provisional).
 - **2026-10-01 · 202 Happy Number (Seen-Set)** (🟢 s1 review; retry, half-spoiled: the tracker row names the method,
   the stub still reads "recognition probe") — ✅ **hit.** Top comment: "we can use a set to make sure we don't revisit
   the same number". Blank page, no hints on the code; the learner asked for the Big-O variables and was given n and d
