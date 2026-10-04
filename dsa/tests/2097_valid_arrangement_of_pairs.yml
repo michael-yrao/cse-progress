@@ -7,6 +7,10 @@ entry:
   method: validArrangement
 signature: "pairs: List[List[int]] -> List[List[int]]"
 compare: exact
+figure:
+  kind: graph
+  directed: true
+  edgesArg: 0
 cases:
   - {args: [[[5, 1], [4, 5], [11, 9], [9, 4]]], expected: [[11, 9], [9, 4], [4, 5], [5, 1]], example: true}
   - {args: [[[1, 2]]], expected: [[1, 2]]}

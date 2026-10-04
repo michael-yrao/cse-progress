@@ -6,6 +6,10 @@ entry:
   method: findItinerary
 signature: "tickets: List[List[str]] -> List[str]"
 compare: exact
+figure:
+  kind: graph
+  directed: true
+  edgesArg: 0
 cases:
   - {args: [[["MUC", "LHR"], ["JFK", "MUC"], ["SFO", "SJC"], ["LHR", "SFO"]]], expected: ["JFK", "MUC", "LHR", "SFO", "SJC"], example: true}
   - {args: [[["JFK", "SFO"], ["JFK", "ATL"], ["SFO", "ATL"], ["ATL", "JFK"], ["ATL", "SFO"]]], expected: ["JFK", "ATL", "JFK", "SFO", "ATL", "SFO"]}

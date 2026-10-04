@@ -6,6 +6,11 @@ entry:
   method: checkIfPrerequisite
 signature: "numCourses: int, prerequisites: List[List[int]], queries: List[List[int]] -> List[bool]"
 compare: exact
+figure:
+  kind: graph
+  directed: true
+  edgesArg: 1
+  nodeCountArg: 0
 cases:
   - {args: [2, [[1, 0]], [[0, 1], [1, 0]]], expected: [false, true], example: true}
   - {args: [2, [], [[0, 1], [1, 0]]], expected: [false, false]}

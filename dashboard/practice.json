@@ -23616,7 +23616,12 @@
         "method": "cloneGraph"
       },
       "compare": "exact",
-      "figure": null,
+      "figure": {
+        "kind": "graph",
+        "directed": false,
+        "adjArg": 0,
+        "oneBased": true
+      },
       "cases": [
         {
           "args": [
@@ -34504,7 +34509,12 @@
         "method": "canFinish"
       },
       "compare": "exact",
-      "figure": null,
+      "figure": {
+        "kind": "graph",
+        "directed": true,
+        "edgesArg": 1,
+        "nodeCountArg": 0
+      },
       "cases": [
         {
           "args": [
@@ -36720,7 +36730,12 @@
         "method": "findOrder"
       },
       "compare": "exact",
-      "figure": null,
+      "figure": {
+        "kind": "graph",
+        "directed": true,
+        "edgesArg": 1,
+        "nodeCountArg": 0
+      },
       "cases": [
         {
           "args": [
@@ -45139,7 +45154,12 @@
         "method": "findItinerary"
       },
       "compare": "exact",
-      "figure": null,
+      "figure": {
+        "kind": "graph",
+        "directed": true,
+        "edgesArg": 0,
+        "nodeCountArg": null
+      },
       "cases": [
         {
           "args": [
@@ -68828,7 +68848,12 @@
         "method": "checkIfPrerequisite"
       },
       "compare": "exact",
-      "figure": null,
+      "figure": {
+        "kind": "graph",
+        "directed": true,
+        "edgesArg": 1,
+        "nodeCountArg": 0
+      },
       "cases": [
         {
           "args": [
@@ -71217,7 +71242,12 @@
         "method": "validArrangement"
       },
       "compare": "exact",
-      "figure": null,
+      "figure": {
+        "kind": "graph",
+        "directed": true,
+        "edgesArg": 0,
+        "nodeCountArg": null
+      },
       "cases": [
         {
           "args": [
@@ -74348,7 +74378,13 @@
         "method": "hasArbitrage"
       },
       "compare": "exact",
-      "figure": null,
+      "figure": {
+        "kind": "graph",
+        "directed": true,
+        "edgesArg": 1,
+        "nodeCountArg": null,
+        "nodesArg": 0
+      },
       "cases": [
         {
           "args": [
@@ -75807,7 +75843,12 @@
         "method": "lostMap"
       },
       "compare": "unordered-nested",
-      "figure": null,
+      "figure": {
+        "kind": "graph",
+        "directed": false,
+        "matrixArg": 0,
+        "highlight": "expected"
+      },
       "cases": [
         {
           "args": [

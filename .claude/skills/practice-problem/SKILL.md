@@ -38,7 +38,7 @@ A problem may have either half or both. The site's catalogue reads them separate
 
 | Subject | Source |
 |---|---|
-| The spec contract, its shapes, its figure | `decisions.yml` `practice-contract`, `practice-contract-shapes`, `practice-figure`; `scripts/export_practice.py` docstring and `validate_spec` |
+| The spec contract, its shapes, its figure | `decisions.yml` `practice-contract`, `practice-contract-shapes`, `practice-figure`, `practice-figure-shapes-oct4`; `scripts/export_practice.py` docstring and `validate_spec` |
 | Running a solution file against a spec | `scripts/check_practice_spec.py` docstring |
 | Spec at seating | `cse-coach/references/weekly-build.md` ("Write a practice spec for every seated problem that has none") and `scaffolding.md` ("When a spec exists, the scaffold reads it") |
 | Grounded code | `decisions.yml` `showcase-contract`; `dashboard/showcase.yml` header; `scripts/showcase_candidates.py` |

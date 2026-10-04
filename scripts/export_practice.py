@@ -107,6 +107,8 @@ _METHOD_LINE = re.compile(r"^(\w+)\((.*)\)\s*(?:->\s*(.+))?$")
 
 COMPARE_MODES = frozenset({"exact", "unordered", "unordered-nested"})
 FIGURE_KINDS = frozenset({"graph", "grid"})
+EDGE_SOURCE_KEYS = ("edgesArg", "matrixArg", "adjArg")  # exactly one per graph figure
+FIGURE_HIGHLIGHT = "expected"
 REQUIRED_SPEC_KEYS = ("number", "title", "url", "entry", "compare", "cases")
 
 _FILENAME_NUMBER = re.compile(r"^(\d+)_")
@@ -344,16 +346,40 @@ def _validate_figure(spec: dict, filename: str) -> None:
         raise PracticeError(
             f"{filename}: figure.kind {kind!r} is not one of {sorted(FIGURE_KINDS)}")
     if kind == "grid":
-        required_keys, optional_keys = ("gridArg",), ()
-    else:
-        required_keys, optional_keys = ("edgesArg",), ("nodeCountArg",)
-        if "directed" in figure and not isinstance(figure["directed"], bool):
-            raise PracticeError(f"{filename}: figure.directed must be a boolean")
-    for key in required_keys:
-        if key not in figure:
-            raise PracticeError(f"{filename}: figure is missing '{key}'")
-    for key in required_keys + tuple(k for k in optional_keys if k in figure):
-        _validate_figure_index(figure, key, spec, filename)
+        if "gridArg" not in figure:
+            raise PracticeError(f"{filename}: figure is missing 'gridArg'")
+        _validate_figure_index(figure, "gridArg", spec, filename)
+        return
+    _validate_graph_figure(figure, spec, filename)
+
+
+def _validate_graph_figure(figure: dict, spec: dict, filename: str) -> None:
+    """Rules for a graph figure: one edge source, and the keys that go with it."""
+    sources = [key for key in EDGE_SOURCE_KEYS if key in figure]
+    if len(sources) != 1:
+        raise PracticeError(
+            f"{filename}: figure needs exactly one of {list(EDGE_SOURCE_KEYS)}, "
+            f"got {sources}")
+    source = sources[0]
+    for key in ("directed", "oneBased"):
+        if key in figure and not isinstance(figure[key], bool):
+            raise PracticeError(f"{filename}: figure.{key} must be a boolean")
+    if "oneBased" in figure and source != "adjArg":
+        raise PracticeError(f"{filename}: figure.oneBased needs adjArg")
+    if source == "matrixArg" and figure.get("directed") is True:
+        raise PracticeError(f"{filename}: figure.matrixArg cannot be directed")
+    for key in ("nodesArg", "nodeCountArg"):
+        if key in figure and source != "edgesArg":
+            raise PracticeError(f"{filename}: figure.{key} needs edgesArg")
+    if "nodesArg" in figure and "nodeCountArg" in figure:
+        raise PracticeError(
+            f"{filename}: figure.nodesArg and figure.nodeCountArg are exclusive")
+    if "highlight" in figure and figure["highlight"] != FIGURE_HIGHLIGHT:
+        raise PracticeError(
+            f"{filename}: figure.highlight must be {FIGURE_HIGHLIGHT!r}")
+    for key in (source, "nodesArg", "nodeCountArg"):
+        if key in figure:
+            _validate_figure_index(figure, key, spec, filename)
 
 
 def _validate_statement_lines(statement: object, filename: str) -> None:
@@ -396,10 +422,29 @@ def build_figure(figure: dict | None) -> dict | None:
         return None
     if figure["kind"] == "grid":
         return {"kind": "grid", "gridArg": figure["gridArg"]}
-    return {"kind": "graph",
-            "directed": figure.get("directed", False),
-            "edgesArg": figure["edgesArg"],
-            "nodeCountArg": figure.get("nodeCountArg")}
+    return _with_highlight(_build_graph_figure(figure), figure)
+
+
+def _build_graph_figure(figure: dict) -> dict:
+    """The graph figure's shape-specific keys, in the order existing figures use."""
+    if "matrixArg" in figure:
+        return {"kind": "graph", "directed": False, "matrixArg": figure["matrixArg"]}
+    directed = figure.get("directed", False)
+    if "adjArg" in figure:
+        return {"kind": "graph", "directed": directed, "adjArg": figure["adjArg"],
+                "oneBased": figure.get("oneBased", False)}
+    emitted = {"kind": "graph", "directed": directed, "edgesArg": figure["edgesArg"],
+               "nodeCountArg": figure.get("nodeCountArg")}
+    if "nodesArg" in figure:
+        return {**emitted, "nodesArg": figure["nodesArg"]}
+    return emitted
+
+
+def _with_highlight(emitted: dict, figure: dict) -> dict:
+    """`emitted` plus the spec's `highlight`, when it has one."""
+    if "highlight" in figure:
+        return {**emitted, "highlight": figure["highlight"]}
+    return emitted
 
 
 def build_result(result: object) -> dict | None:

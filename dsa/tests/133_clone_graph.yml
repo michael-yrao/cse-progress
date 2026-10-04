@@ -7,6 +7,10 @@ entry:
 signature: "node: Optional[Node] -> Optional[Node]"
 compare: exact
 types: {args: [graph-node], result: graph-node}
+figure:
+  kind: graph
+  adjArg: 0
+  oneBased: true
 cases:
   - {args: [[[2, 4], [1, 3], [2, 4], [1, 3]]], expected: [[2, 4], [1, 3], [2, 4], [1, 3]], example: true}
   - {args: [[[]]], expected: [[]], example: true}

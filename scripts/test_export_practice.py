@@ -162,6 +162,26 @@ class ValidationTests(unittest.TestCase):
              _spec(figure={"kind": "graph", "edgesArg": "0"})),
             ("figure arg index beyond an example case's args", FILENAME,
              _spec(figure={"kind": "grid", "gridArg": 1})),
+            ("figure with no edge source", FILENAME,
+             _spec(figure={"kind": "graph"})),
+            ("figure with two edge sources", FILENAME,
+             _spec(figure={"kind": "graph", "edgesArg": 0, "matrixArg": 0})),
+            ("figure matrixArg with directed true", FILENAME,
+             _spec(figure={"kind": "graph", "matrixArg": 0, "directed": True})),
+            ("figure oneBased not a boolean", FILENAME,
+             _spec(figure={"kind": "graph", "adjArg": 0, "oneBased": "yes"})),
+            ("figure oneBased without adjArg", FILENAME,
+             _spec(figure={"kind": "graph", "edgesArg": 0, "oneBased": True})),
+            ("figure nodesArg without edgesArg", FILENAME,
+             _spec(figure={"kind": "graph", "matrixArg": 0, "nodesArg": 0})),
+            ("figure nodeCountArg without edgesArg", FILENAME,
+             _spec(figure={"kind": "graph", "adjArg": 0, "nodeCountArg": 0})),
+            ("figure nodesArg with nodeCountArg", FILENAME,
+             _spec(figure={"kind": "graph", "edgesArg": 0, "nodesArg": 0, "nodeCountArg": 0})),
+            ("figure highlight not 'expected'", FILENAME,
+             _spec(figure={"kind": "graph", "edgesArg": 0, "highlight": "input"})),
+            ("figure matrixArg beyond an example case's args", FILENAME,
+             _spec(figure={"kind": "graph", "matrixArg": 1})),
             ("indented statement line of 65 characters", FILENAME,
              _spec(statement="Return it.\n" + " " * 4 + "x" * 61 + "\n")),
         ]
@@ -187,6 +207,32 @@ class ValidationTests(unittest.TestCase):
             long_prose = "Return it. " + "word " * 22
             ep.build_payload([(FILENAME, _spec(statement=long_prose.strip()[:120] + "\n"))],
                              TODAY)
+
+
+class BuildFigureTests(unittest.TestCase):
+    def test_emitted_figure_per_shape(self):
+        rows = [
+            ("edges only", {"kind": "graph", "edgesArg": 0},
+             {"kind": "graph", "directed": False, "edgesArg": 0, "nodeCountArg": None}),
+            ("edges with nodesArg", {"kind": "graph", "directed": True, "edgesArg": 1,
+                                     "nodesArg": 0},
+             {"kind": "graph", "directed": True, "edgesArg": 1, "nodeCountArg": None,
+              "nodesArg": 0}),
+            ("matrix with highlight",
+             {"kind": "graph", "matrixArg": 0, "highlight": "expected"},
+             {"kind": "graph", "directed": False, "matrixArg": 0,
+              "highlight": "expected"}),
+            ("adjacency one-based", {"kind": "graph", "adjArg": 0, "oneBased": True},
+             {"kind": "graph", "directed": False, "adjArg": 0, "oneBased": True}),
+        ]
+        for label, figure, expected in rows:
+            with self.subTest(label):
+                self.assertEqual(ep.build_figure(figure), expected)
+
+        with self.subTest("edges-only key order is unchanged"):
+            result = ep.build_figure({"kind": "graph", "edgesArg": 0})
+            self.assertEqual(list(result),
+                             ["kind", "directed", "edgesArg", "nodeCountArg"])
 
 
 class RenderStubTests(unittest.TestCase):

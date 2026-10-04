@@ -7,6 +7,11 @@ entry:
   method: findOrder
 signature: "numCourses: int, prerequisites: List[List[int]] -> List[int]"
 compare: exact
+figure:
+  kind: graph
+  directed: true
+  edgesArg: 1
+  nodeCountArg: 0
 cases:
   - {args: [2, [[1, 0]]], expected: [0, 1], example: true}
   - {args: [1, []], expected: [0], example: true}

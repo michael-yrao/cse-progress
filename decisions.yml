@@ -1665,6 +1665,17 @@ decisions:
       `schemaVersion` stays 1. No `cse.config.yml` value changed.
     affects: [scaffolding, practice]
 
+  - id: practice-figure-shapes-oct4
+    date: 2026-10-04
+    summary: >-
+      EXTENDS the practice spec's `figure` for graphs. A graph figure takes exactly one edge
+      source: `edgesArg` (edge list), `matrixArg` (square matrix, undirected) or `adjArg`
+      (neighbour list, with `oneBased`). Nodes can be named: `nodesArg` names the argument
+      that lists the node names, so node ids are strings. `highlight: expected` marks the
+      expected value as a list of the drawn graph's edges. Additive: existing figures emit
+      byte-identically and `schemaVersion` stays 1. No `cse.config.yml` value changed.
+    affects: [scaffolding, practice]
+
   - id: retry-helpers-and-discovery-oct2
     date: 2026-10-02
     summary: >-

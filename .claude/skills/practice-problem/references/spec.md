@@ -8,7 +8,7 @@ The weekly build requires one per seated problem (`cse-coach/references/weekly-b
 
 ## Read first, in this order
 
-1. `decisions.yml` `practice-contract`, `practice-figure`, `practice-contract-shapes`.
+1. `decisions.yml` `practice-contract`, `practice-figure`, `practice-figure-shapes-oct4`, `practice-contract-shapes`.
 2. `scripts/export_practice.py`: the docstring, then `validate_spec` (every rule a spec must meet).
 3. One existing spec in `dsa/tests/` for the shape you need (table below).
 4. `scripts/check_practice_spec.py`: the docstring.
@@ -24,7 +24,7 @@ The weekly build requires one per seated problem (`cse-coach/references/weekly-b
 | `signature` | LeetCode's Python signature without `self`, e.g. `"n: int -> bool"`. Parsed by `new_problem.parse_signature`, so a scaffold and the site's blank editor agree. |
 | `compare` | `exact`, `unordered` or `unordered-nested`. Read the statement: if any order is accepted, say so here. `unordered` is any order at the top level; `unordered-nested` is also any order inside each inner list. |
 | `cases` | The statement's examples first, each `example: true`, with `args` parsed from the site's `examples[].input` strings exactly. Then the stored random cases, sized per `scaffolding.md` ("When a spec exists…"). At least one case has `example: true`. One case per line, in flow style, as the existing specs do. |
-| `figure` | Add one when an example input is a graph edge list or a grid (`practice-figure`; `200_number_of_islands.yml` for a grid, `9004_minimum_spanning_tree.yml` for a graph). The site draws each `example: true` input from it. |
+| `figure` | Add one when an example input is a drawable graph or a grid (`practice-figure`, `practice-figure-shapes-oct4`). A grid: `kind: grid`, `gridArg` (`200_number_of_islands.yml`). A graph: `kind: graph` and exactly one edge source: `edgesArg` (an edge list whose endpoints are ints or names, `332_reconstruct_itinerary.yml`; an int node count via `nodeCountArg`, or named nodes via `nodesArg`, an argument listing the node names, never both; `9004_minimum_spanning_tree.yml`, `9002_arbitrage.yml`), `matrixArg` (a square matrix; undirected only; `9003_lost_map.yml`) or `adjArg` (a neighbour list; `oneBased: true` when its entries count from 1; `133_clone_graph.yml`). `directed: true` for a directed graph. `highlight: expected` when the problem's expected value is a list of the drawn graph's edges (`9003_lost_map.yml`). The site draws each `example: true` input from it. |
 | `result`, `types`, `entry.kind`, `methods` | Only for the shapes below. |
 
 **External-judge problems (9001–9999)** (decision `external-judge-plain-values-oct4`). `url` is the judge's
