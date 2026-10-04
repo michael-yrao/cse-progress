@@ -24,6 +24,47 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-10-04 ──────────────
+    def partition_20261004(self, s: str) -> List[List[str]]:
+        # if we use abba as an example, we cant build on a path incrementally
+        # since abb is not a palindrome but abba is
+        # what this means is we need a start index and end index to track, we also should determine if we want to do inclusive or exclusive for end index. let's do exclusive
+        # path: current list of palindrome for this string
+        # state: start index of potential palindrome, end index of potential palindrome
+        # decision: choose vs not choose
+        # validity: choose only if substr[start:end] is palindrome
+        #   choose: add substr[start:end] to path and go down the tree via end -> end + 1
+        #   not choose: path unchanged, go breadth via start -> end + 1
+        # base case: end+1 tells us that we looked at all the strings but start tells us whether or not we added it to a result yet. so if start >= len(s) then we add as a result, if end > len(s) and it did not hit the start case, there is no palindrome possible this route
+
+        result = []
+
+        def isPalindrome(string):
+            return string==string[::-1]
+
+        def backtrack(path, start, end):
+            # base case
+            if start >= len(s):
+                result.append(path.copy())
+                return
+            
+            # since we don't include end, we need to check if end > len(s)
+            if end > len(s):
+                return
+            
+            # validity and decision #1
+            if isPalindrome(s[start:end]):
+                path.append(s[start:end])
+                backtrack(path, end, end + 1)
+                # backtrack
+                path.pop()
+            # decision #2
+            backtrack(path, start, end + 1)
+        
+        backtrack([],0,1)
+
+        return result
+
     # ── Attempt · 2026-10-02 ──────────────
     def partition_20261002(self, s: str) -> List[List[str]]:
         # substring, so that means everything has a start and an end

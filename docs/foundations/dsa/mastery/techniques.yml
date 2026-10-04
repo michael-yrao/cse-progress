@@ -337,6 +337,7 @@ techniques:
       - {number: 875}    # => also axis 1, min
       - {number: 1011}   # => also axis 1, min
       - {number: 1552}   # => also axis 1, max — maximize the minimum gap
+      - {number: 3620}   # => also axis 1, max — the check is a Dijkstra on cost ≤ k
 
   # Added Aug 17, 2026. The learner noticed 69 was only their SECOND max-boundary rep and
   # asked to fill the technique — and nothing in the repo could have surfaced that, because
@@ -360,6 +361,7 @@ techniques:
       - {number: 74}     # largest row whose first element <= target
       - {number: 34}     # both boundaries in one problem — the two biases side by side (done Sep 6, 🟡)
       - {number: 1552}   # ⏳ maximize the minimum gap — => also axis 2 (on answer)
+      - {number: 3620}   # largest score T whose Dijkstra check still says yes — => also axis 2
 
   # ── Stack ───────────────────────────────────────────────────────────────────
   - name: Stack (matching)
@@ -734,7 +736,6 @@ techniques:
       - {name: 0/1 edge weights (0-1 BFS vs Dijkstra), queued: "surplus>=1"}
       - {name: Multiplicative relaxation (maximize the product), queued: "surplus>=1"}
     problems:
-      - {number: 743, method: "Dijkstra — array-scan"}
       - {number: 743, method: "Dijkstra — min-heap"}
       - {number: 778, method: Dijkstra / Min-Heap}
       - {number: 1631, method: Dijkstra, variant: Min-over-max (minimize the maximum edge)}
@@ -743,7 +744,31 @@ techniques:
       - {number: 3650, method: Dijkstra, queued: "surplus>=1"}
       - {number: 1368, method: Dijkstra, variant: 0/1 edge weights (0-1 BFS vs Dijkstra), queued: "surplus>=1"}
       - {number: 1514, method: Dijkstra, variant: Multiplicative relaxation (maximize the product), queued: "surplus>=1"}
-      - {number: 3620, method: Dijkstra, variant: Max-min bottleneck (maximize the minimum edge), queued: "surplus>=1"}
+      # 3620 rated 🔴 Oct 4, 2026: the max-min score is NOT found by a max-min relaxation here — a
+      # budget on total cost sits on top, so Dijkstra (on cost) is the yes/no check inside a
+      # max-boundary binary search on the score. Credited there too, not to the Max-min variant.
+      - {number: 3620, method: Dijkstra}
+
+  # Split from Dijkstra, Oct 4, 2026 (decision `dense-dijkstra-split-oct04`) — learner's call:
+  # "it should have its own section. two sections for dijkstra". Same rule as the Prim's /
+  # Kruskal's split: credited by the implementation you would CHOOSE. Dense = edges allowed up
+  # to ~n², where the O(V²) linear min-scan beats the O(E log V) heap; the code is array-scan
+  # Prim's (1584) with the relax key changed from the bare edge to dist[u] + w.
+  - name: Dense Dijkstra
+    family: advanced_graphs
+    builds_on: ["Dijkstra"]
+    problems:
+      - {number: 743, method: "Dijkstra — array-scan"}
+      # The set, Oct 4, 2026 — learner's call: 4–5 problems, seated in the
+      # Bit-Math phase so it takes no focus off Backtracking/DP. Company pull first
+      # (`pull_interview.py --company Google,Amazon,Meta,Microsoft,Apple --technique "Shortest
+      # Path" --no-gate`): 1976 (n ≤ 200, roads ≤ n(n−1)/2; Amazon·Google·Meta·Microsoft) and 2699
+      # (n ≤ 100, edges ≤ n(n−1)/2). The pull had no third dense problem, so 2662 is hand-picked
+      # (a complete graph over ≤ 402 points). 2642 (n ≤ 100) was declined so it stays in the
+      # Floyd-Warshall queue.
+      - {number: 1976, queued: "phase:Bit-Math"}
+      - {number: 2662, queued: "phase:Bit-Math"}
+      - {number: 2699, queued: "phase:Bit-Math"}
 
   # 9001/9002 are hand-picked, non-LeetCode siblings (decision `external-judge-problems-sep26`):
   # the Sep 26, 2026 shortest-path company pull yielded zero negative-edge problems (LeetCode-only),

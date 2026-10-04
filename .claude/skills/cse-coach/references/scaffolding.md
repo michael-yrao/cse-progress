@@ -161,6 +161,8 @@ learner the call before they recall it. Comfort/units belong in the *schedule fi
 shown to the learner. (Learner, twice: *"The tables should just be the name of the problems and
 links, nothing else."*)
 
+⚠️ **Any table whose rows are linked problems is a lineup**, whatever the turn is about: a work report and a plan count as much as a board. List the problems as name + links only, and key any detail by something other than the problem. A size constraint is a spoiler too, because density is a recognition cue. (2× on Oct 4, 2026: a plan table, then a work report table.)
+
 ⭐ **Build every lineup from a script, VERBATIM: `remaining.py` for a day's board, `links.py <n> ...` for a named hand-over.** Never hand-copy schedule rows.
 The script reads the title from each file's header, so it emits a clean pair with no technique
 parenthetical and no Note column. Hand-copying a row drags along its `(technique)` title and its

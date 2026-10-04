@@ -1,14 +1,14 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-03",
+  "generatedAt": "2026-10-04",
   "totals": {
-    "problems": 133,
-    "solutions": 144,
-    "reps": 647
+    "problems": 134,
+    "solutions": 145,
+    "reps": 649
   },
   "pipeline": {
     "blank": 1,
-    "shaky": 10,
+    "shaky": 11,
     "clean": {
       "s0": 3,
       "s1": 33,
@@ -21,26 +21,26 @@
   "difficulty": {
     "Easy": 34,
     "Medium": 99,
-    "Hard": 11
+    "Hard": 12
   },
   "streak": {
-    "current": 129,
-    "longest": 129,
-    "lastStudyDay": "2026-10-03",
-    "studyDays": 187,
+    "current": 130,
+    "longest": 130,
+    "lastStudyDay": "2026-10-04",
+    "studyDays": 188,
     "restDayAllowance": 1
   },
   "coverage": {
-    "total": 105,
-    "started": 60,
-    "noGreen": 1,
-    "thin": 5,
+    "total": 106,
+    "started": 61,
+    "noGreen": 2,
+    "thin": 6,
     "variantGaps": 0
   },
   "onSchedule": {
-    "totalActive": 144,
-    "dueToday": 2,
-    "overdue": 6
+    "totalActive": 145,
+    "dueToday": 5,
+    "overdue": 8
   },
   "trophyCase": {
     "graduated": [
@@ -1214,19 +1214,66 @@
       "untriedVariations": []
     },
     {
+      "name": "Dense Dijkstra",
+      "family": "advanced_graphs",
+      "tier": "core",
+      "started": true,
+      "minProblems": 3,
+      "coverageFloor": 2,
+      "uncleanCount": 1,
+      "problemCount": 1,
+      "problems": [
+        743
+      ],
+      "bestComfort": "🟡",
+      "hasGreen": false,
+      "thin": true,
+      "hasVariantGap": false,
+      "buildsOn": [
+        "Dijkstra"
+      ],
+      "graduatedCount": 0,
+      "planned": [
+        {
+          "lcNumber": 1976,
+          "title": "Number of Ways to Arrive at Destination",
+          "url": "https://leetcode.com/problems/number-of-ways-to-arrive-at-destination/",
+          "difficulty": "Medium",
+          "trigger": "phase:Bit-Math"
+        },
+        {
+          "lcNumber": 2662,
+          "title": "Minimum Cost of a Path With Special Roads",
+          "url": "https://leetcode.com/problems/minimum-cost-of-a-path-with-special-roads/",
+          "difficulty": "Medium",
+          "trigger": "phase:Bit-Math"
+        },
+        {
+          "lcNumber": 2699,
+          "title": "Modify Graph Edge Weights",
+          "url": "https://leetcode.com/problems/modify-graph-edge-weights/",
+          "difficulty": "Hard",
+          "trigger": "phase:Bit-Math"
+        }
+      ],
+      "plannedTotal": 4,
+      "untriedVariations": []
+    },
+    {
       "name": "Dijkstra",
       "family": "advanced_graphs",
       "tier": "core",
       "started": true,
-      "minProblems": 6,
+      "minProblems": 7,
       "coverageFloor": 5,
-      "uncleanCount": 1,
-      "problemCount": 4,
+      "uncleanCount": 2,
+      "problemCount": 5,
       "problems": [
         743,
         778,
         1631,
-        2812
+        2812,
+        3620
       ],
       "bestComfort": "🟢",
       "hasGreen": true,
@@ -1264,13 +1311,6 @@
           "title": "Path with Maximum Probability",
           "url": "https://leetcode.com/problems/path-with-maximum-probability/",
           "difficulty": "Medium",
-          "trigger": "surplus>=1"
-        },
-        {
-          "lcNumber": 3620,
-          "title": "Network Recovery Pathways",
-          "url": "https://leetcode.com/problems/network-recovery-pathways/",
-          "difficulty": "Hard",
           "trigger": "surplus>=1"
         }
       ],
@@ -1687,14 +1727,15 @@
       "family": "binary_search",
       "tier": "core",
       "started": true,
-      "minProblems": 2,
+      "minProblems": 3,
       "coverageFloor": 2,
-      "uncleanCount": 0,
-      "problemCount": 3,
+      "uncleanCount": 1,
+      "problemCount": 4,
       "problems": [
         34,
         74,
-        1552
+        1552,
+        3620
       ],
       "bestComfort": "🟢",
       "hasGreen": true,
@@ -1705,7 +1746,7 @@
       ],
       "graduatedCount": 0,
       "planned": [],
-      "plannedTotal": 3,
+      "plannedTotal": 4,
       "untriedVariations": []
     },
     {
@@ -1751,14 +1792,15 @@
       "family": "binary_search",
       "tier": "core",
       "started": true,
-      "minProblems": 2,
+      "minProblems": 3,
       "coverageFloor": 2,
-      "uncleanCount": 0,
-      "problemCount": 3,
+      "uncleanCount": 1,
+      "problemCount": 4,
       "problems": [
         875,
         1011,
-        1552
+        1552,
+        3620
       ],
       "bestComfort": "🟢",
       "hasGreen": true,
@@ -1769,7 +1811,7 @@
       ],
       "graduatedCount": 0,
       "planned": [],
-      "plannedTotal": 3,
+      "plannedTotal": 4,
       "untriedVariations": []
     },
     {
@@ -4483,7 +4525,8 @@
     "2026-09-30",
     "2026-10-01",
     "2026-10-02",
-    "2026-10-03"
+    "2026-10-03",
+    "2026-10-04"
   ],
   "schedule": {
     "weekOf": "2026-09-28",
@@ -5093,7 +5136,7 @@
             "title": "Network Recovery Pathways",
             "technique": "Dijkstra",
             "startComfort": null,
-            "difficulty": null,
+            "difficulty": "Hard",
             "url": "https://leetcode.com/problems/network-recovery-pathways/",
             "file": "dsa/leetcode/graphs/3620_network_recovery_pathways.py",
             "tags": [
@@ -5197,11 +5240,11 @@
             "file": "dsa/leetcode/backtracking/131_palindrome_partitioning.py",
             "tags": [],
             "kind": "rep",
-            "done": false,
+            "done": true,
             "deferredTo": null,
-            "endComfort": null,
+            "endComfort": "🟡",
             "endNote": null,
-            "nextReview": null
+            "nextReview": "2026-10-14"
           },
           {
             "lcNumber": 9003,
@@ -5226,7 +5269,7 @@
             "title": "Network Recovery Pathways",
             "technique": "Dijkstra",
             "startComfort": null,
-            "difficulty": null,
+            "difficulty": "Hard",
             "url": "https://leetcode.com/problems/network-recovery-pathways/",
             "file": "dsa/leetcode/graphs/3620_network_recovery_pathways.py",
             "tags": [
@@ -5234,11 +5277,11 @@
               "new"
             ],
             "kind": "new",
-            "done": false,
+            "done": true,
             "deferredTo": null,
-            "endComfort": null,
+            "endComfort": "🔴",
             "endNote": null,
-            "nextReview": null
+            "nextReview": "2026-10-06"
           },
           {
             "lcNumber": 452,
@@ -5755,7 +5798,7 @@
     {
       "date": "2026-10-04",
       "planned": 14.7,
-      "done": 0.0,
+      "done": 6.9,
       "built": 14.7,
       "partial": false
     }
@@ -5876,7 +5919,7 @@
       "earned": false,
       "progress": {
         "current": 59,
-        "target": 105
+        "target": 106
       }
     },
     {
@@ -5886,7 +5929,7 @@
       "description": "Practice on 7 study-days without letting the streak lapse.",
       "earned": true,
       "progress": {
-        "current": 129,
+        "current": 130,
         "target": 7
       }
     },
@@ -5897,7 +5940,7 @@
       "description": "Practice on 30 study-days without letting the streak lapse.",
       "earned": true,
       "progress": {
-        "current": 129,
+        "current": 130,
         "target": 30
       }
     },
@@ -5908,7 +5951,7 @@
       "description": "Practice on 100 study-days without letting the streak lapse.",
       "earned": true,
       "progress": {
-        "current": 129,
+        "current": 130,
         "target": 100
       }
     },
@@ -5958,6 +6001,62 @@
     }
   ],
   "problems": [
+    {
+      "lcNumber": 3620,
+      "title": "Network Recovery Pathways (Dijkstra)",
+      "url": "https://leetcode.com/problems/network-recovery-pathways/",
+      "file": "dsa/leetcode/graphs/3620_network_recovery_pathways.py",
+      "difficulty": "Hard",
+      "category": "graphs",
+      "comfort": "🔴",
+      "level": 0,
+      "streak": 0,
+      "nextReview": "2026-10-06",
+      "repDates": [
+        "2026-10-04"
+      ],
+      "timeline": [
+        {
+          "date": "2026-10-04",
+          "comfort": "🔴",
+          "level": 0
+        }
+      ]
+    },
+    {
+      "lcNumber": 131,
+      "title": "Palindrome Partitioning",
+      "url": "https://leetcode.com/problems/palindrome-partitioning/",
+      "file": "dsa/leetcode/backtracking/131_palindrome_partitioning.py",
+      "difficulty": "Medium",
+      "category": "backtracking",
+      "comfort": "🟡",
+      "level": 1,
+      "streak": 0,
+      "nextReview": "2026-10-14",
+      "repDates": [
+        "2026-09-30",
+        "2026-10-02",
+        "2026-10-04"
+      ],
+      "timeline": [
+        {
+          "date": "2026-09-30",
+          "comfort": "🔴",
+          "level": 0
+        },
+        {
+          "date": "2026-10-02",
+          "comfort": "🔴",
+          "level": 0
+        },
+        {
+          "date": "2026-10-04",
+          "comfort": "🟡",
+          "level": 1
+        }
+      ]
+    },
     {
       "lcNumber": 90,
       "title": "Subsets II",
@@ -6101,34 +6200,6 @@
           "date": "2026-10-02",
           "comfort": "🟢",
           "level": 2
-        }
-      ]
-    },
-    {
-      "lcNumber": 131,
-      "title": "Palindrome Partitioning",
-      "url": "https://leetcode.com/problems/palindrome-partitioning/",
-      "file": "dsa/leetcode/backtracking/131_palindrome_partitioning.py",
-      "difficulty": "Medium",
-      "category": "backtracking",
-      "comfort": "🔴",
-      "level": 0,
-      "streak": 0,
-      "nextReview": "2026-10-04",
-      "repDates": [
-        "2026-09-30",
-        "2026-10-02"
-      ],
-      "timeline": [
-        {
-          "date": "2026-09-30",
-          "comfort": "🔴",
-          "level": 0
-        },
-        {
-          "date": "2026-10-02",
-          "comfort": "🔴",
-          "level": 0
         }
       ]
     },

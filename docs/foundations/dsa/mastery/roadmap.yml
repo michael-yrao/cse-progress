@@ -111,4 +111,7 @@ problems:
   - {number: 1197, title: "Minimum Knight Moves", url: "https://www.hellointerview.com/learn/code/breadth-first-search/minimum-knight-moves", difficulty: Medium, phase: backlog}
   - {number: 1851, title: "Minimum Interval to Include Each Query", url: "https://leetcode.com/problems/minimum-interval-to-include-each-query/", difficulty: Hard, phase: backlog}
   - {number: 1899, title: "Merge Triplets to Form Target Triplet", url: "https://leetcode.com/problems/merge-triplets-to-form-target-triplet/", difficulty: Medium, phase: backlog}
+  - {number: 1976, title: "Number of Ways to Arrive at Destination", url: "https://leetcode.com/problems/number-of-ways-to-arrive-at-destination/", difficulty: Medium, phase: Bit-Math}
   - {number: 2013, title: "Detect Squares", url: "https://leetcode.com/problems/detect-squares/", difficulty: Medium, phase: Bit-Math}
+  - {number: 2662, title: "Minimum Cost of a Path With Special Roads", url: "https://leetcode.com/problems/minimum-cost-of-a-path-with-special-roads/", difficulty: Medium, phase: Bit-Math}
+  - {number: 2699, title: "Modify Graph Edge Weights", url: "https://leetcode.com/problems/modify-graph-edge-weights/", difficulty: Hard, phase: Bit-Math}

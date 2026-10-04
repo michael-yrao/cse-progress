@@ -22,6 +22,37 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🔴 3620. Network Recovery Pathways — 2026-10-04 *(NEW — Dijkstra as the check inside a max-boundary binary search on the answer)*
+**Topic**: Two objectives on one path: maximize the score (the smallest edge) under a separate budget (total cost ≤ k). Fix the score, check the budget, binary search the score.
+
+### Where did I get stuck?
+- **Recognition.** First call: "just dijkstra's where we are finding a path from 0 to n - 1 under k", with a dense "Prim's-esque" Dijkstra over n × n distance/visited matrices. The score was dropped, and the matrices were all-pairs at n = 5·10⁴ (2.5·10⁹ cells). Coach-corrected with a 4-node graph (k = 10): the cheapest path 0→1→3 (cost 2) scores 1, while 0→2→3 (cost 8) scores 4. m ≤ 10⁵ is sparse, so the learner switched to a heap unaided after the size argument.
+- **Approach.** "how do i get the max of the min edge cost here". Coach showed that one label per node can't hold two numbers that pull against each other, then gave the flip: fix T, drop edges < T, run Dijkstra on cost, check ≤ k. The learner proposed "work our way backwards" (step T down from the top): correct, but up to 10⁵ checks. The binary search was then led to, and the full pseudocode was coach-supplied on request. The learner named it afterwards: "a max boundary binary search on a dijkstra problem".
+- **Code.** Written by the learner from the pseudocode, binary-searching the value range 0..max edge (their own choice; about 30 checks) with the upper-mid `m = (l + r + 1) // 2`. One bug, coach-located by running the file: it never returned −1 (over budget `[[0,1,5]]`, k = 4 → 0; no edges → 0), and a cost of 0 is a legal answer. The first fix proposed (check `max_edge_weight` against −∞) covered only the no-edges case. After the hint "try `can_reach_with_edge(0)`", the learner said it "tells whether or not we can reach at all" and added the −1 guard.
+- Complexity: right on both, unaided. Time O(log W · (V + E log E)), with log W checks, O(V) setup and E log E heap work per check. Space O(V + E).
+
+### Core Realization
+When a problem says "maximize X" and also gives a separate limit, a single Dijkstra label can't track both. Fix X instead and ask a yes/no question. Here: with every edge below T dropped, does the cheapest path still cost ≤ k? The answer is yes for small T and no past some point, and it flips only once, so a max-boundary binary search finds the last yes. Check the loosest T first (0, nothing filtered): if that says no, no valid path exists at all → −1.
+
+### Code Snippet
+```python
+if not can_reach_with_edge(0):
+    return -1
+l, r = 0, max_edge_weight
+while l < r:
+    m = (l + r + 1) // 2          # upper mid: l = m on a yes must still move
+    if can_reach_with_edge(m):
+        l = m
+    else:
+        r = m - 1
+return l
+```
+
+⚠️ **Re-rep watch items:** (1) before coding, name both numbers on a path and say which one is maximized and which one is only checked; (2) say what the yes/no check is and why it flips only once; (3) say what returns −1, and why 0 is not "no path".
+
+## 🟡 131. Palindrome Partitioning — 2026-10-04 *(re-rep of the Oct 2 🔴 — Backtracking)*
+**Sticking point**: the decision rule, again. Cut and extend were written as `if`/`else`, so a palindrome piece was never grown (`"aab"` lost `["aa","b"]`); this is the Oct 2 miss, and the top comment still asked "do we consider this as choose vs not choose" before code. Second bug: the guard `end >= len(s)` on an exclusive end, so the last character was never tested (`"a"` → `[]`). Both coach-located after "help me understand what issues i have here"; the `else` fix was the learner's once the `"aab"` trace was shown. The (start, end) state, the exclusive slice from (0, 1), the base case on `start` and both index moves were unaided (the last two were coach-supplied on Oct 2). Taught after the fix: decision is the list of options a frame has, validity removes an option and never picks one, so cut is allowed only on a palindrome and extend always runs. 204/204 against a reference after the fix.
+
 ## 🟡 1489. Find Critical and Pseudo-Critical Edges in MST — 2026-10-03 *(re-rep of the Sep 23 🟡 — Kruskal)*
 **Sticking point**: no connectivity check in the MST helpers. Excluding a bridge left the graph disconnected, so the build returned a *smaller* weight and the bridge was never flagged critical; found by a failed LeetCode submission and fixed unaided (`numComponents` decremented in `union`, `math.inf` unless it reaches 1). Learner rated 🟡 for the miss. The exclude/include plan, index-carrying sort and Union-Find were unaided; 3,000/3,000 against a brute-force MST enumeration after the fix.
 

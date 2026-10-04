@@ -1815,3 +1815,22 @@ decisions:
       problems (9001-9999)", and the `dsa_progress.md` "Notes for future agents" legend. No
       `cse.config.yml` value changed.
     affects: [practice, scaffolding, dsa_progress]
+
+  - id: dense-dijkstra-split-oct04
+    date: 2026-10-04
+    summary: >-
+      SPLITS dense (array-scan, O(V²)) Dijkstra out of the `Dijkstra` `techniques.yml` entry
+      into its own technique, `Dense Dijkstra` (family advanced_graphs, `builds_on:
+      ["Dijkstra"]`), credited by the implementation you would CHOOSE, the same rule as
+      `mst-split-sep26`. Learner's words, Oct 4, 2026: "it should have its own section. two
+      sections for dijkstra". The 743 "Dijkstra — array-scan" tracker row moves there; the
+      743 min-heap row stays under `Dijkstra`. It takes a set of 4: 743 plus 1976 and 2699 (a
+      company pull, `pull_interview.py --company Google,Amazon,Meta,Microsoft,Apple
+      --technique "Shortest Path" --no-gate`) and 2662 (hand-picked: the pull had only two
+      dense problems, `coverage-sibling-pulled-not-authored`), queued `phase:Bit-Math` so
+      they take no focus off Backtracking/DP (learner's call). 2642 was declined to keep it
+      in the Floyd-Warshall queue. `roadmap.yml` gains the three; `study_guide.md`'s
+      Bit-Math row goes 15 → 18 and names them as "graph reps", not by technique, so the
+      phase table does not spoil the call (learner approved the wording). No
+      `cse.config.yml` value changed.
+    affects: [techniques_vocabulary, technique_coverage, roadmap]

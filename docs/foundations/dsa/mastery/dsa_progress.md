@@ -75,20 +75,21 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/dsa/mastery/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **133+6** problems &nbsp;·&nbsp; **144+6** solutions &nbsp;·&nbsp; **647+6** reps
+> **134+6** problems &nbsp;·&nbsp; **145+6** solutions &nbsp;·&nbsp; **649+6** reps
 
 | | 🏆 Retired | 🎓 Graduated | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|:---:|
-| **Solutions** | 0 | 25 | 108 | 10 | 1 |
+| **Solutions** | 0 | 25 | 108 | 11 | 1 |
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Rep Date | Rep Dates |
 |---|---|---|---|---|---|---|
+| Hard | [3620. Network Recovery Pathways (Dijkstra)](https://leetcode.com/problems/network-recovery-pathways/) | 🔴 | 0 | 2026-10-06 | 2026-10-04 | 2026-10-04 |
+| Medium | [131. Palindrome Partitioning](https://leetcode.com/problems/palindrome-partitioning/) | 🟡 | 0 | 2026-10-14 | 2026-10-04 | 2026-09-30, 2026-10-02, 2026-10-04 |
 | Medium | [90. Subsets II](https://leetcode.com/problems/subsets-ii/) | 🟡 | 0 | 2026-10-13 | 2026-10-03 | 2026-10-01, 2026-10-03 |
 | Medium | [9001. Single Source Shortest Path, Negative Weights (Bellman-Ford)](https://progressiveoverflow.com/practice/9001) | 🟡 | 0 | 2026-10-13 | 2026-10-03 | 2026-10-01, 2026-10-03 |
 | Hard | [1489. Find Critical and Pseudo-Critical Edges in MST (Kruskal)](https://leetcode.com/problems/find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree/) | 🟡 | 0 | 2026-10-13 | 2026-10-03 | 2026-09-13, 2026-09-23, 2026-10-03 |
 | Medium | [9004. Minimum Spanning Tree (Kruskal)](https://progressiveoverflow.com/practice/9004) | 🟡 | 0 | 2026-10-12 | 2026-10-02 | 2026-10-02 |
 | Medium | [40. Combination Sum II](https://leetcode.com/problems/combination-sum-ii/) | 🟢 | 0 | 2026-10-12 | 2026-10-02 | 2026-09-28, 2026-09-30, 2026-10-02 |
-| Medium | [131. Palindrome Partitioning](https://leetcode.com/problems/palindrome-partitioning/) | 🔴 | 0 | 2026-10-04 | 2026-10-02 | 2026-09-30, 2026-10-02 |
 | Medium | [1552. Magnetic Force Between Two Balls](https://leetcode.com/problems/magnetic-force-between-two-balls/) | 🟢 | 1 | 2026-11-01 | 2026-10-02 | 2026-09-20, 2026-09-22, 2026-10-02 |
 | Medium | [901. Online Stock Span](https://leetcode.com/problems/online-stock-span/) | 🟢 | 1 | 2026-11-01 | 2026-10-02 | 2026-07-12, 2026-07-14, 2026-08-13, 2026-08-23, 2026-09-22, 2026-10-02 |
 | Hard | [127. Word Ladder (BFS)](https://leetcode.com/problems/word-ladder/) | 🟢 | 2 | 2026-12-01 | 2026-10-02 | 2026-07-18, 2026-07-21, 2026-08-03, 2026-08-13, 2026-08-23, 2026-09-02, 2026-10-02 |
@@ -289,7 +290,6 @@ note is the failure mode this section exists to prevent.
 | Medium | [6. Zigzag Conversion](https://leetcode.com/problems/zigzag-conversion/) | `surplus>=1` | **String Parsing / Manipulation — first rep for the new family** (decision `company-demand-families-sep26`). Sourced from the company pull, Sep 26, 2026: asked by 5 targets (Amazon, Bloomberg, Google, Meta, Microsoft; freq 53.3), the highest-frequency untracked Medium carrying only the String tag. ⭐ **Why this one:** pure index arithmetic on a string (row period = 2·(numRows−1)) with no data-structure crutch — the String family's demand is exactly this kind of manipulation, and the tracker has nothing like it. Fintech alternative for a 2nd rep: 68 Text Justification (Hard; Bloomberg/Robinhood 100.0). |
 | Hard | [753. Cracking the Safe](https://leetcode.com/problems/cracking-the-safe/) | `surplus>=1` | **Hierholzer's 3rd problem.** Row added Sep 26, 2026 to close a record gap: 753 sat only in the weekly schedule's Waiting Room (`20260921_schedule.md`), under the ad-hoc trigger `green:2097` — not a form in the vocabulary above. That condition **fired Sep 7, 2026**, and 753 has been held since purely for consolidation slots, so the machine-checkable trigger is `surplus>=1`. The Sep 26, 2026 Eulerian-Circuit company pull confirms it is the only eligible Eulerian problem (freq 23.3) — de Bruijn sequence construction via an Eulerian circuit over the k^n possible strings. |
 | Medium | [1202. Smallest String With Swaps](https://leetcode.com/problems/smallest-string-with-swaps/) | `surplus>=1` | **Union-Find new-problem rep, in place of more 721 retries** (learner's call Sep 27, 2026: 721 logged 🟢 by override — "too much work for too little gain, we can do 1202 to compensate"). Same group-then-regroup-and-sort shape as 721, unseen, so it trains problem-solving rather than recall. Big-five pull (`pull_interview.py --company Google,Amazon,Meta,Microsoft,Apple --no-gate`): freq 31.1, 3 of 5 lists (Amazon, Google, Microsoft). Free (LeetCode API `isPaidOnly: false`, Sep 27). ⚠️ **Lowest priority — learner: "ok to push back on 1202 as well to prioritize backtracking and DP".** Seat only when surplus remains after backtracking/DP intake. |
-| Hard | [3620. Network Recovery Pathways](https://leetcode.com/problems/network-recovery-pathways/) | `surplus>=1` | **Dijkstra max-min variant, composed with a second constraint** — learner's request Sep 27, 2026 after 2812 (🟡): *"im good with shaky if we get another of these variants in, this was very cool"*. Score = the minimum edge cost on a path (maximize it), subject to total path cost ≤ k and offline intermediate nodes excluded — the same max-min objective as 2812, with a budget on top (directed acyclic graph input). Big-five pull (`pull_interview.py --company Google,Amazon,Meta,Microsoft,Apple --technique "Shortest Path"`): freq 10.3. Free (LeetCode API `isPaidOnly: false`, Sep 27). Competes with 3650 · 1368 · 1514 for the ≤2 Dijkstra consolidation slots — the learner asked for this shape specifically. **Seated Sat Oct 3 (Sep 28 build).** |
 | Medium | [394. Decode String](https://leetcode.com/problems/decode-string/) | `surplus>=1` | **Stack (expression evaluation)'s 2nd problem.** Row added Sep 26, 2026 to close a record gap: 394 was named in `.claude/skills/cse-coach/references/technique-coverage.md` (Google company pull, freq 58.3 at the time) as Stack-expression's 2nd problem in place of the parked 224/227 rungs, but never carried a tracker or Waiting Room row of its own — the Sep 26, 2026 pull confirms it broader still, 75.9 across 6 companies. The parked 224/227 rungs (Basic Calculator I/II) **re-gate on `rated:394`** — nested-bracket decode is the simpler form of the same stack-of-partial-results idea. |
 
 ---

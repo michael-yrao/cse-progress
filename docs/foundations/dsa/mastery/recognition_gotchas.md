@@ -1,3 +1,15 @@
+- **2026-10-04 · 3620 Network Recovery Pathways** (🆕 new; half-spoiled: graphs folder, learner knew it was seated as
+  Dijkstra) — ❌ **miss.** Top comment, unaided: "just dijkstra's where we are finding a path from 0 to n - 1 under k",
+  with a dense "Prim's-esque" Dijkstra over n × n distance/visited matrices. Two objectives were collapsed into one:
+  the score (maximize the minimum edge) was dropped, and only the budget (total cost ≤ k) was kept. The matrices are
+  all-pairs (Floyd-Warshall shape) at n = 5·10^4 → 2.5·10^9 cells; m ≤ 10^5 is sparse → adjacency list + heap.
+  Coach-corrected before any search code. The picking feature (a maximized score plus a separate budget → binary
+  search on the score, Dijkstra as the check) was coach-led, then named by the learner after the pseudocode. → 🔴.
+- **2026-10-04 · 131 Palindrome Partitioning** (🔴 re-rep; retry, half-spoiled: backtracking folder) — ⚠️ **partial.**
+  Top comment, unaided: "abb is not a palindrome but abba is" as the reason for a (start, end) state, an exclusive
+  end, and the five slots. The decision slot was left as a question ("do we consider this as choose vs not choose")
+  and validity was written as picking the branch (palindrome → cut, otherwise extend), so the feature that sets the
+  option list (extend always, cut only on a palindrome) was not stated before code. → 🟡.
 - **2026-10-03 · 1489 Find Critical and Pseudo-Critical Edges in MST** (🟡 re-rep; retry, half-spoiled: the title
   names the MST, the tracker names Kruskal) — ✅ **hit.** Top comment, unaided: "there are already edges here ... this
   means Kruskal's", with exclude-each-edge for critical and force-each-edge for pseudo-critical. → 🟡 (connectivity check
