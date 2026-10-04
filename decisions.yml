@@ -1782,3 +1782,25 @@ decisions:
       `features/practice/practice-results.ts` (+ specs). `schemaVersion` stays 1. No
       `cse.config.yml` value changed.
     affects: [practice]
+
+  - id: external-judge-plain-values-oct4
+    date: 2026-10-04
+    summary: >-
+      AMENDS `external-judge-problems-sep26`: an external-judge problem (9001-9999) is
+      rebuilt as our own variant on progressiveoverflow: a method call, 0-indexed, returning
+      plain Python values (numbers, bools, lists, `None`), never the judge's output strings
+      (`impossible`, `-Infinity`, `Arbitrage` / `Ok`), 1-indexed lines or stdin layout. The
+      spec's `url:` stays the judge's page (`problem-link-order-oct04`) and its `statement`
+      is always written, since the site has no steps file for these. Learner's words, Oct 4,
+      2026: Kattis's output conventions (strings such as `impossible` for `math.inf`) should
+      be cleaned out of our variants, and the queued Kattis problems are rebuilt on
+      progressiveoverflow. Per problem: 9001 numeric, `math.inf` / `-math.inf` (Oct 3, the
+      `number-inf` codec, `practice-number-inf-codec`); 9002 a bool, with one float rate per
+      row `[src, dst, rate]` (replaces the two-int rate form in its Waiting Room row); 9003
+      the n-1 roads as `[u, v]` pairs in any order and either orientation
+      (`compare: unordered-nested`); 9004 kept as is, `[cost, tree_edges]` with `None` for no
+      tree (learner's call). The 9002 and 9003 specs landed Oct 4 (`dsa/tests/9002_arbitrage.yml`,
+      `dsa/tests/9003_lost_map.yml`). Normative sentence: `spec.md` Fields, "External-judge
+      problems (9001-9999)", and the `dsa_progress.md` "Notes for future agents" legend. No
+      `cse.config.yml` value changed.
+    affects: [practice, scaffolding, dsa_progress]

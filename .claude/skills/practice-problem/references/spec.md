@@ -27,6 +27,12 @@ The weekly build requires one per seated problem (`cse-coach/references/weekly-b
 | `figure` | Add one when an example input is a graph edge list or a grid (`practice-figure`; `200_number_of_islands.yml` for a grid, `9004_minimum_spanning_tree.yml` for a graph). The site draws each `example: true` input from it. |
 | `result`, `types`, `entry.kind`, `methods` | Only for the shapes below. |
 
+**External-judge problems (9001–9999)** (decision `external-judge-plain-values-oct4`). `url` is the judge's
+page (the practice page links its title to it) and `statement` is always written. The method name is the
+title in camelCase. The problem is rebuilt as our own variant: a method call, 0-indexed, plain Python values,
+never the judge's output strings (`impossible`, `Arbitrage`) or its stdin layout. A result that can be
+infinite uses `number-inf` (Shapes).
+
 A spec is data: no prose beyond a `#` comment where a rule below asks for one.
 
 ## Shapes
@@ -66,7 +72,9 @@ admit one, or use an unordered mode.
 2. Generate the extra cases with a small script in the scratchpad: the edge cases the
    constraints imply (empty where allowed, size 1, all equal, sorted, reversed, the maximum
    value, k at both ends) and random ones small enough to read by eye. Use a large size only
-   where the constraint's upper bound matters, and sparingly.
+   where the constraint's upper bound matters, and sparingly. A matrix or grid input grows
+   with n squared and `practice.json` is downloaded whole: keep every case line under about
+   1,500 characters (9003 stops near n = 14).
 3. Check the reference against the spec:
    `python scripts/check_practice_spec.py dsa/tests/<spec>.yml <scratchpad>/<n>.py` must print PASS.
 4. Check the learner's file against the same spec. Find it with
