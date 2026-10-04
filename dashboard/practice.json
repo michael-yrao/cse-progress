@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-03",
+  "generatedAt": "2026-10-04",
   "problems": [
     {
       "number": 1,
@@ -72794,8 +72794,8 @@
       "number": 9001,
       "title": "Single Source Shortest Path, Negative Weights",
       "url": "https://open.kattis.com/problems/shortestpath3",
-      "statement": "You are given a directed graph with `n` nodes numbered 0 to n-1. `edges[i] = [u, v, w]`\nis an edge from `u` to `v` with weight `w`. Weights may be negative.\n\nFor each node in `queries`, report the minimum distance from the start node `s` to\nthat node. Return one string per query, in the same order:\n\n    the distance    e.g. \"2\", when a minimum distance exists\n    \"Impossible\"    when there is no path from s to that node\n    \"-Infinity\"     when there are arbitrarily short paths\n                    from s to that node\n\nExample 1:\n    Input:  n = 5, s = 0\n            edges = [[0,1,999],[1,2,-2],[2,1,1],[0,3,2]]\n            queries = [1,3,4]\n    Output: [\"-Infinity\",\"2\",\"Impossible\"]\n\nExample 2:\n    Input:  n = 2, s = 0\n            edges = [[0,1,-100]]\n            queries = [1]\n    Output: [\"-100\"]\n\nConstraints:\n    1 <= n <= 1000\n    0 <= edges.length <= 5000\n    1 <= queries.length <= 100\n    0 <= s < n\n    -2000 <= w <= 2000",
-      "stub": "from typing import List, Optional\n\n\nclass Solution:\n    def shortestPaths(self, n: int, edges: List[List[int]], s: int, queries: List[int]) -> List[str]:\n        pass\n",
+      "statement": "You are given a directed graph with `n` nodes numbered 0 to n-1. `edges[i] = [u, v, w]`\nis an edge from `u` to `v` with weight `w`. Weights may be negative.\n\nFor each node in `queries`, report the minimum distance from the start node `s` to\nthat node. Return one number per query, in the same order:\n\n    the distance    e.g. 2, when a minimum distance exists\n    math.inf        when there is no path from s to that node\n    -math.inf       when there are arbitrarily short paths\n                    from s to that node\n\nExample 1:\n    Input:  n = 5, s = 0\n            edges = [[0,1,999],[1,2,-2],[2,1,1],[0,3,2]]\n            queries = [1,3,4]\n    Output: [-math.inf, 2, math.inf]\n\nExample 2:\n    Input:  n = 2, s = 0\n            edges = [[0,1,-100]]\n            queries = [1]\n    Output: [-100]\n\nConstraints:\n    1 <= n <= 1000\n    0 <= edges.length <= 5000\n    1 <= queries.length <= 100\n    0 <= s < n\n    -2000 <= w <= 2000",
+      "stub": "from typing import List, Optional\n\n\nclass Solution:\n    def shortestPaths(self, n: int, edges: List[List[int]], s: int, queries: List[int]) -> List[float]:\n        pass\n",
       "entry": {
         "className": "Solution",
         "method": "shortestPaths"
@@ -72842,8 +72842,8 @@
           ],
           "expected": [
             "-Infinity",
-            "2",
-            "Impossible"
+            2,
+            "Infinity"
           ],
           "example": true
         },
@@ -72863,7 +72863,7 @@
             ]
           ],
           "expected": [
-            "-100"
+            -100
           ],
           "example": true
         },
@@ -73058,10 +73058,10 @@
             ]
           ],
           "expected": [
-            "0",
-            "Impossible",
-            "Impossible",
-            "Impossible"
+            0,
+            "Infinity",
+            "Infinity",
+            "Infinity"
           ],
           "example": false
         },
@@ -73181,7 +73181,7 @@
             ]
           ],
           "expected": [
-            "Impossible"
+            "Infinity"
           ],
           "example": false
         },
@@ -73223,9 +73223,9 @@
             ]
           ],
           "expected": [
-            "-3",
-            "-5",
-            "-2"
+            -3,
+            -5,
+            -2
           ],
           "example": false
         },
@@ -73298,8 +73298,8 @@
             ]
           ],
           "expected": [
-            "0",
-            "2"
+            0,
+            2
           ],
           "example": false
         },
@@ -73358,11 +73358,11 @@
             ]
           ],
           "expected": [
-            "-1",
-            "-2",
-            "4",
-            "-1",
-            "0"
+            -1,
+            -2,
+            4,
+            -1,
+            0
           ],
           "example": false
         },
@@ -73466,7 +73466,7 @@
             ]
           ],
           "expected": [
-            "0"
+            0
           ],
           "example": false
         },
@@ -73506,7 +73506,7 @@
             ]
           ],
           "expected": [
-            "0"
+            0
           ],
           "example": false
         },
@@ -73575,11 +73575,11 @@
             ]
           ],
           "expected": [
-            "0",
+            0,
             "-Infinity",
-            "0",
-            "Impossible",
-            "Impossible"
+            0,
+            "Infinity",
+            "Infinity"
           ],
           "example": false
         },
@@ -73698,7 +73698,7 @@
             ]
           ],
           "expected": [
-            "1"
+            1
           ],
           "example": false
         },
@@ -73786,8 +73786,8 @@
             ]
           ],
           "expected": [
-            "0",
-            "-2"
+            0,
+            -2
           ],
           "example": false
         },
@@ -73829,7 +73829,7 @@
             ]
           ],
           "expected": [
-            "Impossible",
+            "Infinity",
             "-Infinity",
             "-Infinity"
           ],
@@ -73897,8 +73897,8 @@
             ]
           ],
           "expected": [
-            "Impossible",
-            "Impossible"
+            "Infinity",
+            "Infinity"
           ],
           "example": false
         },
@@ -73960,8 +73960,8 @@
             ]
           ],
           "expected": [
-            "Impossible",
-            "0"
+            "Infinity",
+            0
           ],
           "example": false
         },
@@ -74023,9 +74023,9 @@
             ]
           ],
           "expected": [
-            "4",
-            "Impossible",
-            "0"
+            4,
+            "Infinity",
+            0
           ],
           "example": false
         },
@@ -74047,9 +74047,9 @@
             ]
           ],
           "expected": [
-            "Impossible",
-            "Impossible",
-            "Impossible"
+            "Infinity",
+            "Infinity",
+            "Infinity"
           ],
           "example": false
         },
@@ -74164,10 +74164,10 @@
             ]
           ],
           "expected": [
-            "-5",
-            "-5",
-            "Impossible",
-            "-2"
+            -5,
+            -5,
+            "Infinity",
+            -2
           ],
           "example": false
         },
@@ -74220,10 +74220,10 @@
             ]
           ],
           "expected": [
-            "Impossible",
-            "Impossible",
-            "Impossible",
-            "0"
+            "Infinity",
+            "Infinity",
+            "Infinity",
+            0
           ],
           "example": false
         },
@@ -74322,17 +74322,26 @@
             ]
           ],
           "expected": [
-            "0"
+            0
           ],
           "example": false
         }
-      ]
+      ],
+      "types": {
+        "args": [
+          null,
+          null,
+          null,
+          null
+        ],
+        "result": "number-inf"
+      }
     },
     {
       "number": 9004,
       "title": "Minimum Spanning Tree",
       "url": "https://open.kattis.com/problems/minspantree",
-      "statement": "You are given an undirected graph with `n` nodes numbered 0 to n-1. `edges[i] = [u, v, w]`\nis an edge between `u` and `v` with weight `w`. Weights may be negative.\n\nFind a minimum spanning tree of the graph. Return `[cost, tree_edges]`:\n\n    cost         the total weight of the tree\n    tree_edges   the tree's edges, each written `[x, y]`\n                 with x < y, listed in ascending order\n                 (by x, then by y)\n\nIf the graph has no spanning tree, return `None`.\n\nExample 1:\n    Input:  n = 4\n            edges = [[0,1,1],[1,2,2],[1,3,3],[2,3,0]]\n    Output: [3, [[0,1],[1,2],[2,3]]]\n\nExample 2:\n    Input:  n = 2\n            edges = [[0,1,100]]\n    Output: [100, [[0,1]]]\n\nExample 3:\n    Input:  n = 3\n            edges = []\n    Output: None\n\nConstraints:\n    1 <= n <= 20000\n    0 <= edges.length <= 30000\n    -20000 <= w <= 20000\n\nEvery stored case here has distinct edge weights, so its answer is unique. (Kattis itself\naccepts any minimum spanning tree when several exist.)\n\n────────────────────────────────────────────────────────────────────────────\n\nSubmitting on Kattis (only needed once the method works)\n\nThe judge sends several test cases on stdin, one after another.\n\n    One test case:\n        line 1          n m          (m = number of edges)\n        next m lines    u v w\n    End of input:       a line \"0 0\", which is not a test case\n\n    Per test case print \"Impossible\" on its own line when\n    there is no spanning tree. Otherwise print the cost on\n    one line, then one tree edge per line as \"x y\".\n\n    Sample input        Sample output\n        4 4                 3\n        0 1 1               0 1\n        1 2 2               1 2\n        1 3 3               2 3\n        2 3 0               100\n        2 1                 0 1\n        0 1 100             Impossible\n        3 0\n        0 0\n\n    Limits: CPU time 2 seconds, memory 1024 MB.",
+      "statement": "You are given an undirected graph with `n` nodes numbered 0 to n-1. `edges[i] = [u, v, w]`\nis an edge between `u` and `v` with weight `w`. Weights may be negative.\n\nFind a minimum spanning tree of the graph. Return `[cost, tree_edges]`:\n\n    cost         the total weight of the tree\n    tree_edges   the tree's edges, each written `[x, y]`\n                 with x < y, listed in ascending order\n                 (by x, then by y)\n\nIf the graph has no spanning tree, return `None`.\n\nExample 1:\n    Input:  n = 4\n            edges = [[0,1,1],[1,2,2],[1,3,3],[2,3,0]]\n    Output: [3, [[0,1],[1,2],[2,3]]]\n\nExample 2:\n    Input:  n = 2\n            edges = [[0,1,100]]\n    Output: [100, [[0,1]]]\n\nExample 3:\n    Input:  n = 3\n            edges = []\n    Output: None\n\nConstraints:\n    1 <= n <= 20000\n    0 <= edges.length <= 30000\n    -20000 <= w <= 20000\n\nEvery stored case here has distinct edge weights, so its answer is unique.",
       "stub": "from typing import List, Optional\n\n\nclass Solution:\n    def minimumSpanningTree(self, n: int, edges: List[List[int]]) -> Optional[List]:\n        pass\n",
       "entry": {
         "className": "Solution",

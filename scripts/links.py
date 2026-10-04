@@ -59,14 +59,18 @@ TRACKER_CELL = re.compile(r"\[(\d{1,4})\.\s*([^\]]+?)\]\((https?://[^)]+)\)")
 # the SAME LeetCode-numbered problem, just linked to the owner's premium judge there
 # instead of the free NeetCode mirror — no synthetic id involved; its label is spelled
 # out in full ("HelloInterview"), the owner's plain-language rule, not abbreviated the
-# way LC/NC are. Any host not listed here falls back to its bare hostname (judge_label
-# below) rather than silently mislabeling it "LC".
+# way LC/NC are. The learner's own site practice page (progressiveoverflow.com/practice/<n>)
+# is the fourth link step after LeetCode, NeetCode and HelloInterview (decision
+# `problem-link-order-oct04`); it exists for any number with a spec in dsa/tests. Any host
+# not listed here falls back to its bare hostname (judge_label below) rather than silently
+# mislabeling it "LC".
 JUDGE_LABELS = {
     "leetcode.com": "LC",
     "neetcode.io": "NC",
     "open.kattis.com": "Kattis",
     "cses.fi": "CSES",
     "hellointerview.com": "HelloInterview",
+    "progressiveoverflow.com": "progressiveoverflow",
 }
 
 

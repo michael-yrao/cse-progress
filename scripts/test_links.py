@@ -50,6 +50,11 @@ class JudgeLabelTests(unittest.TestCase):
                 "https://www.hellointerview.com/learn/code/intervals/can-attend-meetings"),
             "HelloInterview")
 
+    def test_progressiveoverflow_practice_page(self):
+        self.assertEqual(
+            links.judge_label("https://progressiveoverflow.com/practice/9001"),
+            "progressiveoverflow")
+
     def test_hellointerview_without_www(self):
         self.assertEqual(
             links.judge_label(

@@ -99,7 +99,8 @@ CODEC_PREAMBLES = {
     "random-list": RANDOM_NODE_SOURCE,
     "graph-node": GRAPH_NODE_SOURCE,
 }
-CODECS = frozenset(CODEC_PREAMBLES)
+CODEC_NUMBER_INF = "number-inf"  # result-only; needs no node class, so no preamble
+CODECS = frozenset(CODEC_PREAMBLES) | {CODEC_NUMBER_INF}
 
 # `name(params) -> ret` as written in an ops spec's `methods` list.
 _METHOD_LINE = re.compile(r"^(\w+)\((.*)\)\s*(?:->\s*(.+))?$")
@@ -306,6 +307,8 @@ def _validate_types(spec: dict, filename: str) -> None:
             raise PracticeError(f"{filename}: codec {codec!r} is not one of {sorted(CODECS)}")
     if result_codec == CODEC_LIST_NODE_CYCLE:
         raise PracticeError(f"{filename}: {CODEC_LIST_NODE_CYCLE} cannot be a result codec")
+    if CODEC_NUMBER_INF in types["args"]:
+        raise PracticeError(f"{filename}: {CODEC_NUMBER_INF} can only be a result codec")
     if CODEC_TREE_VALUE in types["args"] and CODEC_TREE_NODE not in types["args"]:
         raise PracticeError(
             f"{filename}: a {CODEC_TREE_VALUE} arg needs a {CODEC_TREE_NODE} arg")

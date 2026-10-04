@@ -1,4 +1,4 @@
-<!-- reconciled: 2026-10-02 -->
+<!-- reconciled: 2026-10-04 -->
 # Spec half — a problem number to a verified `dsa/tests/<n>_<snake>.yml`
 
 A spec is one YAML file. `scripts/export_practice.py` turns every spec into
@@ -42,6 +42,7 @@ A spec is data: no prose beyond a `#` comment where a rule below asks for one.
 | Binary tree | `types: {args: [tree-node, …]}`; add `result: tree-node` when a tree comes back | `104_maximum_depth_of_binary_tree.yml`; `226_invert_binary_tree.yml` returns a tree |
 | Tree plus node arguments | `tree-value` args and result address a node by its value; a `tree-value` arg needs a `tree-node` arg | `235_lowest_common_ancestor_of_a_binary_search_tree.yml` |
 | Graph node | `types: {args: [graph-node], result: graph-node}`, a 1-indexed adjacency list | `133_clone_graph.yml` |
+| Number result that can be ±infinity | `types: {args: [null, …], result: number-inf}` (result only); `expected` writes `math.inf` / `-math.inf` as `"Infinity"` / `"-Infinity"`, other numbers bare | `9001_single_source_shortest_path_negative_weights.yml` |
 | Design class | `entry: {class: <Class>, kind: ops}`, a `methods:` list of `name(params) -> ret` lines, cases `{ops: [Class, put, get, …], args: [[…], …], expected: [null, …]}`. `ops[0]` is the class; `ops`, `args` and `expected` have equal length. | `146_lru_cache.yml` |
 | Encode / decode | `entry: {class: Codec, kind: round-trip, encode: encode, decode: decode}`, `signature`, `decodeSignature`; `expected` is the input | `271_encode_and_decode_strings.yml` |
 

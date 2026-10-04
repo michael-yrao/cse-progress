@@ -1,3 +1,15 @@
+- **2026-10-03 · 1489 Find Critical and Pseudo-Critical Edges in MST** (🟡 re-rep; retry, half-spoiled: the title
+  names the MST, the tracker names Kruskal) — ✅ **hit.** Top comment, unaided: "there are already edges here ... this
+  means Kruskal's", with exclude-each-edge for critical and force-each-edge for pseudo-critical. → 🟡 (connectivity check
+  missed until a failed submission).
+- **2026-10-03 · 9001 Single Source Shortest Path, Negative Weights** (🔴 re-rep; retry, half-spoiled: the title names
+  the shape, the tracker names the method) — ✅ **hit.** Top comment, unaided: "shortest path with negative weights with
+  1000 nodes and edges of 5000 means this should be bellman ford", then the n − 1 rounds and the extra marking rounds.
+  Code correct from a blank page; the marking loop's pass count was explained wrongly and coach-corrected. → 🟡.
+- **2026-10-03 · 90 Subsets II** (🔴 re-rep; retry, half-spoiled: backtracking folder) — ✅ **hit.** Top comment,
+  unaided: "sort then backtrack", the five slots in the take/skip form, validity "if not choosing, we need to move
+  until index + 1 is not equal to current index". The picking feature missed on Oct 1 (a repeated value is decided
+  once) was stated before code. Two code bugs coach-located (reversed skip test, sort not written). → 🟡.
 - **2026-10-02 · 127 Word Ladder** (🟢 s1 review; retry, half-spoiled: graphs folder, tracker title names BFS) — ✅
   **hit.** Top comment, unaided: wildcard-pattern map (`.it`, `h.t`, `hi.`), "this is actually just a BFS navigating
   to nearest neighbors"; visited marked on enqueue, levels counted. 3,000/3,000 against a reference BFS. → 🟢 s2.

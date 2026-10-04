@@ -7,6 +7,7 @@ Stdlib unittest. Run it with:
 from __future__ import annotations
 
 import json
+import math
 import tempfile
 import unittest
 from pathlib import Path
@@ -232,6 +233,58 @@ class CheckPracticeSpecTests(unittest.TestCase):
         for label, spec, source, method, expected in ROWS:
             with self.subTest(label):
                 self.assertEqual(_run(spec, source, method), expected)
+
+
+class DecodeNumberInfTests(unittest.TestCase):
+    def test_infinities_become_the_sites_strings_and_everything_else_passes_through(self):
+        original = [math.inf, [-math.inf, 3]]
+        rows = [
+            ("+inf", [math.inf], ["Infinity"]),
+            ("-inf", [-math.inf], ["-Infinity"]),
+            ("an int", [5, True], [5, True]),
+            ("a nested list mixing them", [[math.inf, 2], -math.inf, [[-4]]],
+             [["Infinity", 2], "-Infinity", [[-4]]]),
+        ]
+        for label, value, expected in rows:
+            with self.subTest(label):
+                self.assertEqual(cps.decode_value(value, "number-inf"), expected)
+        with self.subTest("the input list is not mutated"):
+            cps.decode_value(original, "number-inf")
+            self.assertEqual(original, [math.inf, [-math.inf, 3]])
+        with self.subTest("NaN passes through and never matches"):
+            decoded = cps.decode_value([math.nan], "number-inf")
+            self.assertFalse(cps.values_match(decoded, ["Infinity"], "exact"))
+
+
+REAL_9001_SPEC = (Path(__file__).resolve().parent.parent / "dsa" / "tests"
+                  / "9001_single_source_shortest_path_negative_weights.yml")
+
+BELLMAN_FORD_SOURCE = """
+import math
+
+class Solution:
+    def shortestPaths(self, n, edges, s, queries):
+        dist = [math.inf] * n
+        dist[s] = 0
+        for _ in range(n - 1):
+            for u, v, w in edges:
+                if dist[u] + w < dist[v]:
+                    dist[v] = dist[u] + w
+        for _ in range(n):
+            for u, v, w in edges:
+                if dist[u] != math.inf and dist[u] + w < dist[v]:
+                    dist[v] = -math.inf
+        return [dist[q] for q in queries]
+"""
+
+
+class Real9001SpecTests(unittest.TestCase):
+    def test_a_bellman_ford_returning_math_inf_passes_the_real_spec(self):
+        with tempfile.TemporaryDirectory() as directory:
+            solution_path = Path(directory) / "s.py"
+            solution_path.write_text(BELLMAN_FORD_SOURCE, encoding="utf-8")
+            lines = cps.report_lines(cps.load_problem(REAL_9001_SPEC, solution_path), None)
+        self.assertEqual([is_passing for is_passing, _ in lines], [True], lines)
 
 
 if __name__ == "__main__":

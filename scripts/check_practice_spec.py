@@ -21,6 +21,7 @@ from __future__ import annotations
 import argparse
 import copy
 import json
+import math
 import sys
 import unittest
 from collections import deque
@@ -197,7 +198,18 @@ def decode_tree_value(node):
     return None if node is None else node.val
 
 
+def decode_number_inf(value):
+    """The site's JSON form of a number result: +/-inf become "Infinity" / "-Infinity".
+    Lists are rebuilt, never mutated; ints, bools and NaN pass through unchanged."""
+    if isinstance(value, list):
+        return [decode_number_inf(item) for item in value]
+    if isinstance(value, float) and value in (math.inf, -math.inf):
+        return "Infinity" if value > 0 else "-Infinity"
+    return value
+
+
 DECODERS = {
+    "number-inf": decode_number_inf,
     "list-node": decode_list_node,
     "random-list": decode_random_list,
     "tree-node": decode_tree_node,

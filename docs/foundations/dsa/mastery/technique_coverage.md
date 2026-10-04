@@ -18,8 +18,8 @@
 
 - **BFS on Implicit Graph** (graphs) — 1/2: 127
 - **Bellman-Ford** (advanced_graphs) — 2/3: 787, 9001
-- **Kruskal's MST** (advanced_graphs) — 2/3: 1489, 9004
-- **Dijkstra** (advanced_graphs) — 4/5 (5 rows): 743, 778, 1631, 2812
+- **Kruskal's MST** (advanced_graphs) — 2/4: 1489, 9004
+- **Dijkstra** (advanced_graphs) — 4/6 (5 rows): 743, 778, 1631, 2812
 - **Backtracking** (backtracking) — 8/9 (11 rows): 22, 39, 40, 46, 78, 79, 90, 131
 
 **Queued — declared, and already sitting in the Waiting Room / Expansion Queue.** A known gap with a fill already picked, not a new finding.
@@ -30,13 +30,14 @@
 - **Bellman-Ford** (advanced_graphs) — queued: 9002 (`surplus>=1`)
 - **Binary Search (min boundary)** (binary_search) — queued: 4 (`surplus>=1`)
 - **Cycle Detection in an Iterated Sequence** (graphs) — queued: 287 (`surplus>=1`)
-- **Dijkstra** (advanced_graphs) — queued: 1368 (`surplus>=1`), 1514 (`surplus>=1`), 3620 (`surplus>=1`), 3650 (`surplus>=1`)
+- **Dijkstra** (advanced_graphs) — queued: 1102 (`surplus>=1`), 1368 (`surplus>=1`), 1514 (`surplus>=1`), 3620 (`surplus>=1`), 3650 (`surplus>=1`)
 - **Floyd-Warshall (all-pairs shortest path)** (advanced_graphs) — queued: 399 (`rated:1334`)
 - **Greedy (single pass)** (sliding_window) — queued: 678 (`surplus>=1`), 1899 (`surplus>=1`)
 - **HashMap + Doubly Linked List (LRU)** (linked_list) — queued: 1472 (`rated:146`)
 - **Heap / Priority Queue** (heap) — queued: 23 (`surplus>=1`), 295 (`surplus>=1`)
 - **Hierholzer (Eulerian path)** (advanced_graphs) — queued: 753 (`surplus>=1`)
 - **Intervals (sort + sweep)** (intervals) — queued: 252 (`surplus>=1`), 253 (`surplus>=1`), 1851 (`surplus>=1`)
+- **Kruskal's MST** (advanced_graphs) — queued: 1135 (`surplus>=1`)
 - **Linked List Merge** (linked_list) — queued: 23 (`surplus>=1`)
 - **Linked List Reversal** (linked_list) — queued: 25 (`surplus>=1`)
 - **Monotonic Stack** (stack) — queued: 85 (`solved:84`), 1504 (`solved:84`)
@@ -55,10 +56,10 @@ Every declared technique gets a row, started or not — a not-started row's Gaps
 | Technique | Family | Tier | Min | Problems | Best | 🟢 | Variants | Gaps |
 |---|---|---|---:|---:|:---:|:---:|---|---|
 | Bellman-Ford | advanced_graphs | core | 3 (2+1) | 2 (787, 9001) | 🟢 | ✅ | Standard ×1 · ~~Contrast rep on 743~~ *(queued: `graduates:743`)* · Negative edges (SSSP, -Infinity propagation) ×1 · ~~Negative-cycle detection (arbitrage / log-transform)~~ *(queued: `surplus>=1`)* | thin (2/3) · queued: 9002 `surplus>=1` |
-| Dijkstra | advanced_graphs | core | 5 (4+1) | 4 *+1v* (743, 778, 1631, 2812) | 🟢 | ✅ | Min-over-max (minimize the maximum edge) ×1 · Max-min bottleneck (maximize the minimum edge) ×1 · ~~0/1 edge weights (0-1 BFS vs Dijkstra)~~ *(queued: `surplus>=1`)* · ~~Multiplicative relaxation (maximize the product)~~ *(queued: `surplus>=1`)* | thin (4/5) · queued: 1368 `surplus>=1`, 1514 `surplus>=1`, 3620 `surplus>=1`, 3650 `surplus>=1` |
+| Dijkstra | advanced_graphs | core | 6 (5+1) | 4 *+1v* (743, 778, 1631, 2812) | 🟢 | ✅ | Min-over-max (minimize the maximum edge) ×1 · Max-min bottleneck (maximize the minimum edge) ×1 · ~~0/1 edge weights (0-1 BFS vs Dijkstra)~~ *(queued: `surplus>=1`)* · ~~Multiplicative relaxation (maximize the product)~~ *(queued: `surplus>=1`)* | thin (4/6) · queued: 1102 `surplus>=1`, 1368 `surplus>=1`, 1514 `surplus>=1`, 3620 `surplus>=1`, 3650 `surplus>=1` |
 | Floyd-Warshall (all-pairs shortest path) | advanced_graphs | core | 2 (2+0) | 2 (1334, 1462) | 🟢 | ✅ | — | queued: 399 `rated:1334` |
 | Hierholzer (Eulerian path) | advanced_graphs | core | 2 (2+0) | 2 *+1v* (332, 2097) | 🟢 | ✅ | pre-sorted adjacency ×1 · min-heap ordering ×1 | queued: 753 `surplus>=1` |
-| Kruskal's MST | advanced_graphs | core | 3 (1+2) | 2 (1489, 9004) | 🟡 | ❌ | — | **no-green** · thin (2/3) |
+| Kruskal's MST | advanced_graphs | core | 4 (2+2) | 2 (1489, 9004) | 🟡 | ❌ | — | **no-green** · thin (2/4) · queued: 1135 `surplus>=1` |
 | Prim's MST | advanced_graphs | core | 1 (1+0) | 1 (1584) | 🟢 | ✅ | — | queued: 9003 `surplus>=1` |
 | Array/String Fundamentals | arrays_and_hash | core | 2 (2+0) | 3 (14, 66, 1929) | 🟢 | ✅ | — | — |
 | Boyer-Moore Voting | arrays_and_hash | core | 1 (1+0) | 2 (169, 229) | 🎓 | ✅ | — | — |
@@ -162,7 +163,7 @@ Every declared technique gets a row, started or not — a not-started row's Gaps
 
 ## Vocabulary maintenance
 
-**Queued (74)** — listed in the Action list above; a known gap with a fill already picked, not counted below.
+**Queued (76)** — listed in the Action list above; a known gap with a fill already picked, not counted below.
 
-**Declared, not queued (3)** — declared in the vocabulary, no tracker row, and not yet in any queue. This is the normal state for curriculum ahead of the learner; it is a roadmap, not a finding: 1102, 1135, 547
+**Declared, not queued (1)** — declared in the vocabulary, no tracker row, and not yet in any queue. This is the normal state for curriculum ahead of the learner; it is a roadmap, not a finding: 547
 

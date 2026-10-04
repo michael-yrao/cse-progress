@@ -1,4 +1,4 @@
-<!-- reconciled: 2026-09-26 -->
+<!-- reconciled: 2026-10-04 -->
 # Technique coverage — keyed by technique, not by problem
 
 **Open this** at the weekly build (to pick which technique to pull), at phase exit (the
@@ -55,9 +55,9 @@ reach for others if there is not enough coverage."*
 
 - **A judge-sourced sibling** (Kattis, CSES, …) is allowed when the LeetCode pull yields no fitting
   problem at all — say so in the build. It gets a synthetic id in `9001`–`9999`, lives under the
-  normal root in its pattern folder like any other problem, and its file header carries the real
-  judge URL (`9001. Single Source Shortest Path, Negative Weights   ·   https://open.kattis.com/problems/shortestpath3`).
-  `decisions.yml` `external-judge-problems-sep26`.
+  normal root in its pattern folder like any other problem, and its file header carries the problem's
+  progressiveoverflow practice url (`9001. Single Source Shortest Path, Negative Weights   ·   https://progressiveoverflow.com/practice/9001`), and the spec's `url:` keeps the judge page. A LeetCode-premium problem no free site carries is no longer skipped: it gets a spec and the progressiveoverflow link (`problem-link-order-oct04`).
+  `decisions.yml` `external-judge-problems-sep26`. Its **Difficulty is the LeetCode-equivalent tier**, judged against the LC problem that uses the same technique (9001 ↔ 743/787 Medium), never the judge's own label, whose scale is set for competitive programmers (decision `external-judge-difficulty-oct4`).
 
 - ⭐ **The sharper half:** if a rung exists only to justify the problem below it, re-examine the
   RUNG — do not schedule the sequel. The 227 failure: authored Aug 11 to defend 150 after the

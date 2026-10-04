@@ -1679,6 +1679,52 @@ decisions:
       (`~/.claude/rules/execution-workflow.md`). No `cse.config.yml` value changed.
     affects: [scaffolding, retry, hooks, review-workflow]
 
+  - id: practice-contract-shapes
+    date: 2026-10-02
+    summary: >-
+      ADDS three optional shapes to a practice spec: `result` (compare an argument after the
+      call, whole or its first k items), `types` (list-node, list-node-cycle, random-list,
+      tree-node, tree-value, graph-node codecs per argument and result), and `entry.kind`
+      (`ops` for a design class driven by an operation sequence, `round-trip` for
+      decode(encode(x))). `statement` becomes optional: the site shows its own description
+      when a spec has none. `scripts/check_practice_spec.py` runs a solution file against a
+      spec with the site's semantics. Additive: `schemaVersion` stays 1. No `cse.config.yml`
+      value changed.
+    affects: [scaffolding, practice]
+
+  - id: external-judge-difficulty-oct4
+    date: 2026-10-04
+    summary: >-
+      AMENDS `external-judge-problems-sep26`: an external-judge problem's Difficulty is the
+      LeetCode-equivalent tier, judged against the same-technique LC comparator, never the
+      judge's label. Kattis's 1–10 scale puts textbook-algorithm problems in its Easy band.
+      Origin: the learner flagged 9001 (Bellman-Ford) as Medium on 2026-10-04. Re-tiered 9001
+      and 9003 Easy → Medium; 9002 and 9004 stay Medium (9004 had already been hand-raised
+      from Kattis-Easy). No `cse.config.yml` value changed.
+    affects: [dsa_progress, technique_coverage, effort_budget]
+
+  - id: problem-link-order-oct04
+    date: 2026-10-04
+    summary: >-
+      SUPERSEDES the fourth and fifth steps of `problem-link-order-sep27` (the "others"
+      judge step and the skip/paywalled fallback). Learner's words, Oct 4, 2026: "new
+      priority for problem links: leetcode (free) -> neetcode (free) -> hellointerview
+      (premium) -> progressiveoverflow. if something doesn't exist in any of the above,
+      make it available in progressiveoverflow". Step 4 is
+      `https://progressiveoverflow.com/practice/<n>`, label `progressiveoverflow`. Nothing
+      is skipped: a problem none of the first three carries gets a practice spec so the
+      page exists. A spec's `url:` keeps the problem's source page (Kattis, or LeetCode's
+      paywalled page), because the practice page links its title to that field and
+      pointing it at progressiveoverflow would make the page link to itself. Relinked now:
+      9002, 9003, 9004. 9001 is held until its in-progress rep is rated. 1102 and 1135 are
+      restored to the plan (`surplus>=1`), specs pending: written at the weekly close-out
+      with the `practice-problem` skill, along with 9002 and 9003. Code:
+      `scripts/links.py` adds the label; `scripts/new_problem.py`'s premium fallback and
+      its 9001-9999 default become the site url, and `verify_links` notes a missing spec;
+      the site's technique-list label map gains the same entry. No `cse.config.yml` value
+      changed.
+    affects: [links, scaffolding, practice]
+
   - id: tech-lead-owns-optimization-oct4
     date: 2026-10-04
     summary: >-
@@ -1716,3 +1762,23 @@ decisions:
       execution-workflow-global-sep21, execution-workflow-pyramid-sep21) keep theirs as history. No
       `cse.config.yml` value changed.
     affects: [execution_workflow, weekly_build]
+
+  - id: practice-number-inf-codec
+    date: 2026-10-04
+    summary: >-
+      ADDS a result-only practice codec, `number-inf` (extends `practice-contract-shapes`).
+      Learner's request, Oct 4, 2026: 9001 returns numbers, "-math.inf for cycles and
+      math.inf if impossible", on the site as well as locally. JSON has no infinity, so the
+      codec decodes a returned value (recursing through lists, never mutating) by mapping a
+      float +inf / -inf to the strings "Infinity" / "-Infinity" before the exact compare;
+      the spec's `expected` uses that same form, other numbers bare. Rejected as an argument
+      codec by both validators. A returned NaN passes through and fails the case without
+      crashing. The site's results pane shows those strings as Python's `inf` / `-inf`,
+      unquoted. 9001's spec moved from string answers ("Impossible" / "-Infinity" / "-5")
+      to `List[float]`; its statement now reads "Return one number per query". Files:
+      `scripts/export_practice.py`, `scripts/check_practice_spec.py` (+ tests),
+      `dsa/tests/9001_*.yml`, the site's `core/runner/python-driver.ts`,
+      `core/models/practice.model.ts`, `core/practice/practice-validation.ts`,
+      `features/practice/practice-results.ts` (+ specs). `schemaVersion` stays 1. No
+      `cse.config.yml` value changed.
+    affects: [practice]

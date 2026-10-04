@@ -1,9 +1,9 @@
 ---
 name: reference_hellointerview_premium
-description: problem link order is LeetCode (free) → NeetCode (free) → HelloInterview (premium, the learner subscribes); each step is checked against that site's own list, never guessed; planned problems only
+description: problem link order is LeetCode (free) → NeetCode (free) → HelloInterview (premium, the learner subscribes) → progressiveoverflow (a spec is written so the page exists); each of the first three is checked against that site's own list, never guessed; nothing is skipped
 metadata:
   type: reference
-reconciled: 2026-09-27
+reconciled: 2026-10-04
 ---
 
 **Link order for a problem, set by the learner Sep 27, 2026:**
@@ -12,13 +12,14 @@ reconciled: 2026-09-27
 Extended the same day, when 1102 had none of the three: *"leetcode (free) -> neetcode (free) -> hellointerview
 (premium) -> others"*. The learner wants every rep submitted somewhere; the paywalled LeetCode page is the last resort.
 
+Replaced the fourth step Oct 4, 2026: *"new priority for problem links: leetcode (free) -> neetcode (free) -> hellointerview (premium) -> progressiveoverflow. if something doesn't exist in any of the above, make it available in progressiveoverflow"* (decision `problem-link-order-oct04`).
+
 | Step | Use it when | How it is checked |
 |---|---|---|
 | 1. LeetCode | the problem is free there | LeetCode's GraphQL lookup: `isPaidOnly` is false |
 | 2. NeetCode | LeetCode paywalls it AND NeetCode lists it | NeetCode's public problem list (`neetcode-gh/leetcode`, `.problemSiteData.json`) |
 | 3. HelloInterview | neither of the above, AND its catalog has it | `hellointerview.yml`, built by crawling the catalog |
-| 4. others | none of the three carries it | another judge that carries the same problem (Kattis, CSES, LintCode…), found by search and named in the file's header link; say plainly if it could not be confirmed free |
-| none of the four | | SKIP the problem for now and look for a free problem of the same shape (learner, Sep 27: *"if nowhere available to practice it, we can skip it for now"*); a tracked problem keeps LeetCode's page, stated as paywalled |
+| 4. progressiveoverflow | none of the three carries it | `https://progressiveoverflow.com/practice/<n>`, label `progressiveoverflow`; a practice spec is written so the page exists. The spec's own `url:` keeps the problem's source page. Nothing is skipped. |
 
 **The learner holds HelloInterview premium for coding**, not only system design (*"i have premium there so if a
 problem is available there on premium, i can do it there"*). It is still the LAST resort, after both free sites.
@@ -28,7 +29,7 @@ paywalled" from a menu I wrote, and I implemented HelloInterview AHEAD of the Ne
 stated the order outright. The menu never offered "NeetCode first", so the first answer was the nearest option,
 not the rule. See `self_eval_log.md` 2026-09-27.
 
-**Scope: planned problems and future scaffolds only.** A tracked problem keeps the link it was solved against.
+**Scope, as of Oct 4, 2026:** the learner had existing Kattis-linked rows relinked too: 9001 (after its rep), 9002, 9003 and 9004.
 
 **How to apply:**
 - **Never guess a mirror URL.** NeetCode's site answers 200 for any slug, so a NeetCode link for a problem
@@ -46,8 +47,8 @@ not the rule. See `self_eval_log.md` 2026-09-27.
   | 252 Meeting Rooms | yes | yes | NeetCode |
   | 253 Meeting Rooms II | yes | no | NeetCode |
   | 1197 Minimum Knight Moves | no | yes | HelloInterview |
-  | 1102 Path With Maximum Minimum Value | no | no | none free (LintCode 1418 is premium too) → skipped |
-  | 1135 Connecting Cities With Minimum Cost | no | no | LeetCode, paywalled |
+  | 1102 Path With Maximum Minimum Value | no | no | restored Oct 4 → progressiveoverflow (spec pending); was none free (LintCode 1418 is premium too) → skipped |
+  | 1135 Connecting Cities With Minimum Cost | no | no | restored Oct 4 → progressiveoverflow (spec pending); was LeetCode, paywalled |
 
 - On the site, a link's label is the judge's name in full ("HelloInterview"), per
   [[feedback_site_plain_language]].

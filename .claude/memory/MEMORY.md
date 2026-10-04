@@ -20,7 +20,7 @@ operational copy is in a skill reference or CLAUDE.md. Grouped for scanning.
 - [Concept primer](feedback_concept_primer.md) — before the FIRST exposure to a named algorithm, a short UNRATED session on the object it finds + its name; the procedure comes later, another day.
 - [Expand acronyms](feedback_expand_acronyms.md) — expand every acronym on first use, chat + note.
 - [Site plain language](feedback_site_plain_language.md) — every label and number on the site is understandable on its own; no coach vocabulary or bare ratios.
-- [Problem link order](reference_hellointerview_premium.md) — LeetCode (free) → NeetCode (free) → HelloInterview (premium, learner subscribes); each step checked against that site's list, never guessed; planned problems only.
+- [Problem link order](reference_hellointerview_premium.md) — LeetCode (free) → NeetCode (free) → HelloInterview (premium, learner subscribes) → progressiveoverflow (spec written so the page exists); each of the first three checked against that site's list, never guessed.
 - [Output quality](feedback_output_quality.md) — one message per turn after the last tool call; F1 · groundedness · narrative · readability; every repo-state claim names its tool result.
 - [Positive phrasing + priority order](feedback_positive_phrasing.md) — rules say what to do; a day's problems run highest priority first; build each day toward the ceiling.
 

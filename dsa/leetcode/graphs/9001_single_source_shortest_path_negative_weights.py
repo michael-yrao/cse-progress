@@ -1,28 +1,29 @@
 """
-9001. Single Source Shortest Path, Negative Weights   ·   https://open.kattis.com/problems/shortestpath3
+9001. Single Source Shortest Path, Negative Weights   ·   https://progressiveoverflow.com/practice/9001
 Pattern: graphs
+Difficulty: Medium
 
 You are given a directed graph with `n` nodes numbered 0 to n-1. `edges[i] = [u, v, w]`
 is an edge from `u` to `v` with weight `w`. Weights may be negative.
 
 For each node in `queries`, report the minimum distance from the start node `s` to
-that node. Return one string per query, in the same order:
+that node. Return one number per query, in the same order:
 
-    the distance    e.g. "2", when a minimum distance exists
-    "Impossible"    when there is no path from s to that node
-    "-Infinity"     when there are arbitrarily short paths from s to that node
+    the distance    e.g. 2, when a minimum distance exists
+    math.inf        when there is no path from s to that node
+    -math.inf       when there are arbitrarily short paths from s to that node
 
 Example 1:
     Input:  n = 5, s = 0
             edges = [[0,1,999],[1,2,-2],[2,1,1],[0,3,2]]
             queries = [1,3,4]
-    Output: ["-Infinity","2","Impossible"]
+    Output: [-math.inf, 2, math.inf]
 
 Example 2:
     Input:  n = 2, s = 0
             edges = [[0,1,-100]]
             queries = [1]
-    Output: ["-100"]
+    Output: [-100]
 
 Constraints:
     1 <= n <= 1000
@@ -30,37 +31,6 @@ Constraints:
     1 <= queries.length <= 100
     0 <= s < n
     -2000 <= w <= 2000
-
-────────────────────────────────────────────────────────────────────────────
-Submitting on Kattis (only needed once the method works)
-
-The judge sends several test cases on stdin, one after another. You write the loop
-that reads them, calls the method once per test case, and prints the answers.
-
-    One test case:
-        line 1          n m q s      (m = number of edges, q = number of queries)
-        next m lines    u v w
-        next q lines    one queried node per line
-    End of input:       a line "0 0 0 0", which is not a test case
-
-    Print one answer per line. The page says: "For clarity, the sample output has a
-    blank line between the output for different cases."
-
-    Sample input        Sample output
-        5 4 3 0             -Infinity
-        0 1 999             2
-        1 2 -2              Impossible
-        2 1 1
-        0 3 2               -100
-        1
-        3
-        4
-        2 1 1 0
-        0 1 -100
-        1
-        0 0 0 0
-
-    Limits: CPU time 3 seconds, memory 1024 MB.
 """
 # Write everything yourself from here — including any ListNode/TreeNode classes a
 # problem needs. No shared data-model imports (whiteboard fidelity).
@@ -69,6 +39,47 @@ from typing import List, Optional
 
 
 class Solution:
+
+    # ── Attempt · 2026-10-03 ──────────────
+    def singleSourceShortestPathNegativeWeights_20261003(self, n: int, edges: List[List[int]], s: int, queries: List[int]) -> List[int]:
+        # shortest path with negative weights with 1000 nodes and edges of 5000 means this should be bellman ford
+        # with bellman ford, we go through the edges n - 1 times. This should give us the best possible route to all nodes
+        # with example 1, we can see there is a cycle, so what we can do is run n - 1 more times to see if the min changed. if it did, that means there is a cycle and any nodes involved in the cycle will always be infinitely decreasing
+        
+        distance = [math.inf] * n
+        # distance from src to src is zero
+        distance[s] = 0
+
+        # n - 1 and not n because no cycle means n - 1 edges
+        for _ in range(n - 1):
+            working_distance = distance.copy()
+            for src,dst,weight in edges:
+                if distance[src] == math.inf:
+                    continue
+                if distance[src] + weight < working_distance[dst]:
+                    working_distance[dst] = distance[src] + weight
+            distance = working_distance
+
+        # now that we have the smallest for all assuming no cycles
+        # let's check for cycles
+
+        # if there are cycles, we could go around all n nodes, so let's do n cycles
+        for _ in range(n):
+            working_distance = distance.copy()
+            for src,dst,weight in edges:
+                # if still decreasing, cycle
+                if distance[src] + weight < working_distance[dst]:
+                    working_distance[src] = -math.inf
+                    working_distance[dst] = -math.inf
+            distance = working_distance
+
+        result = []
+
+        for query_dst in queries:
+            result.append(distance[query_dst])
+
+        return result
+
     # ── Attempt 1 · 2026-10-01 ────────────────────────────────────────────
     def singleSourceShortestPathNegativeWeights(self, n: int, edges: List[List[int]], s: int, queries: List[int]) -> List[int]:
         # we have negative edges so I want to use bellman ford here

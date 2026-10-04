@@ -1,14 +1,14 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-02",
+  "generatedAt": "2026-10-03",
   "totals": {
     "problems": 133,
     "solutions": 144,
-    "reps": 644
+    "reps": 647
   },
   "pipeline": {
-    "blank": 3,
-    "shaky": 8,
+    "blank": 1,
+    "shaky": 10,
     "clean": {
       "s0": 3,
       "s1": 33,
@@ -19,15 +19,15 @@
     "retired": 0
   },
   "difficulty": {
-    "Easy": 35,
-    "Medium": 98,
+    "Easy": 34,
+    "Medium": 99,
     "Hard": 11
   },
   "streak": {
-    "current": 128,
-    "longest": 128,
-    "lastStudyDay": "2026-10-02",
-    "studyDays": 186,
+    "current": 129,
+    "longest": 129,
+    "lastStudyDay": "2026-10-03",
+    "studyDays": 187,
     "restDayAllowance": 1
   },
   "coverage": {
@@ -40,7 +40,7 @@
   "onSchedule": {
     "totalActive": 144,
     "dueToday": 2,
-    "overdue": 4
+    "overdue": 6
   },
   "trophyCase": {
     "graduated": [
@@ -1205,7 +1205,7 @@
         {
           "lcNumber": 9002,
           "title": "Arbitrage",
-          "url": "https://open.kattis.com/problems/arbitrage",
+          "url": "https://progressiveoverflow.com/practice/9002",
           "difficulty": "Medium",
           "trigger": "surplus>=1"
         }
@@ -1218,8 +1218,8 @@
       "family": "advanced_graphs",
       "tier": "core",
       "started": true,
-      "minProblems": 5,
-      "coverageFloor": 4,
+      "minProblems": 6,
+      "coverageFloor": 5,
       "uncleanCount": 1,
       "problemCount": 4,
       "problems": [
@@ -1238,6 +1238,13 @@
       ],
       "graduatedCount": 0,
       "planned": [
+        {
+          "lcNumber": 1102,
+          "title": "Path With Maximum Minimum Value",
+          "url": "https://progressiveoverflow.com/practice/1102",
+          "difficulty": "Medium",
+          "trigger": "surplus>=1"
+        },
         {
           "lcNumber": 3650,
           "title": "Minimum Cost Path with Edge Reversals",
@@ -1267,7 +1274,7 @@
           "trigger": "surplus>=1"
         }
       ],
-      "plannedTotal": 8,
+      "plannedTotal": 9,
       "untriedVariations": []
     },
     {
@@ -1341,8 +1348,8 @@
       "family": "advanced_graphs",
       "tier": "core",
       "started": true,
-      "minProblems": 3,
-      "coverageFloor": 1,
+      "minProblems": 4,
+      "coverageFloor": 2,
       "uncleanCount": 2,
       "problemCount": 2,
       "problems": [
@@ -1357,8 +1364,16 @@
         "Union-Find"
       ],
       "graduatedCount": 0,
-      "planned": [],
-      "plannedTotal": 2,
+      "planned": [
+        {
+          "lcNumber": 1135,
+          "title": "Connecting Cities With Minimum Cost",
+          "url": "https://progressiveoverflow.com/practice/1135",
+          "difficulty": "Medium",
+          "trigger": "surplus>=1"
+        }
+      ],
+      "plannedTotal": 3,
       "untriedVariations": []
     },
     {
@@ -1386,8 +1401,8 @@
         {
           "lcNumber": 9003,
           "title": "Lost Map",
-          "url": "https://open.kattis.com/problems/lostmap",
-          "difficulty": "Easy",
+          "url": "https://progressiveoverflow.com/practice/9003",
+          "difficulty": "Medium",
           "trigger": "surplus>=1"
         }
       ],
@@ -4467,7 +4482,8 @@
     "2026-09-29",
     "2026-09-30",
     "2026-10-01",
-    "2026-10-02"
+    "2026-10-02",
+    "2026-10-03"
   ],
   "schedule": {
     "weekOf": "2026-09-28",
@@ -4573,10 +4589,10 @@
             ],
             "kind": "rep",
             "done": false,
-            "deferredTo": "2026-10-04",
+            "deferredTo": "2026-10-08",
             "endComfort": null,
             "endNote": null,
-            "nextReview": "2026-10-04"
+            "nextReview": "2026-10-08"
           },
           {
             "lcNumber": 1046,
@@ -4591,10 +4607,10 @@
             ],
             "kind": "rep",
             "done": false,
-            "deferredTo": "2026-10-04",
+            "deferredTo": "2026-10-08",
             "endComfort": null,
             "endNote": null,
-            "nextReview": "2026-10-04"
+            "nextReview": "2026-10-08"
           }
         ]
       },
@@ -4813,8 +4829,8 @@
             "title": "Single Source Shortest Path, Negative Weights",
             "technique": "Bellman-Ford",
             "startComfort": null,
-            "difficulty": "Easy",
-            "url": "https://open.kattis.com/problems/shortestpath3",
+            "difficulty": "Medium",
+            "url": "https://progressiveoverflow.com/practice/9001",
             "file": "dsa/leetcode/graphs/9001_single_source_shortest_path_negative_weights.py",
             "tags": [
               "new"
@@ -4988,7 +5004,7 @@
             "technique": "Kruskal",
             "startComfort": null,
             "difficulty": "Medium",
-            "url": "https://open.kattis.com/problems/minspantree",
+            "url": "https://progressiveoverflow.com/practice/9004",
             "file": "dsa/leetcode/graphs/9004_minimum_spanning_tree.py",
             "tags": [
               "new"
@@ -5022,7 +5038,7 @@
         "date": "2026-10-03",
         "weekday": "Saturday",
         "label": "Backtracking + Bellman-Ford + Kruskal conversions (90, 9001, 1489) + Dijkstra intake (3620) + Prefix-sum/Multi-source-BFS/Linked-list/Hash-set reviews",
-        "units": 12.7,
+        "units": 14.2,
         "items": [
           {
             "lcNumber": 90,
@@ -5034,27 +5050,27 @@
             "file": "dsa/leetcode/backtracking/90_subsets_ii.py",
             "tags": [],
             "kind": "rep",
-            "done": false,
+            "done": true,
             "deferredTo": null,
-            "endComfort": null,
+            "endComfort": "🟡",
             "endNote": null,
-            "nextReview": null
+            "nextReview": "2026-10-13"
           },
           {
             "lcNumber": 9001,
             "title": "Single Source Shortest Path, Negative Weights",
             "technique": "Bellman-Ford",
             "startComfort": "🔴",
-            "difficulty": "Easy",
-            "url": "https://open.kattis.com/problems/shortestpath3",
+            "difficulty": "Medium",
+            "url": "https://progressiveoverflow.com/practice/9001",
             "file": "dsa/leetcode/graphs/9001_single_source_shortest_path_negative_weights.py",
             "tags": [],
             "kind": "rep",
-            "done": false,
+            "done": true,
             "deferredTo": null,
-            "endComfort": null,
+            "endComfort": "🟡",
             "endNote": null,
-            "nextReview": null
+            "nextReview": "2026-10-13"
           },
           {
             "lcNumber": 1489,
@@ -5066,11 +5082,11 @@
             "file": "dsa/leetcode/graphs/1489_find_critical_and_pseudo_critical_edges_in_mst.py",
             "tags": [],
             "kind": "rep",
-            "done": false,
+            "done": true,
             "deferredTo": null,
-            "endComfort": null,
+            "endComfort": "🟡",
             "endNote": null,
-            "nextReview": null
+            "nextReview": "2026-10-13"
           },
           {
             "lcNumber": 3620,
@@ -5079,16 +5095,17 @@
             "startComfort": null,
             "difficulty": null,
             "url": "https://leetcode.com/problems/network-recovery-pathways/",
-            "file": null,
+            "file": "dsa/leetcode/graphs/3620_network_recovery_pathways.py",
             "tags": [
+              "moved",
               "new"
             ],
             "kind": "new",
             "done": false,
-            "deferredTo": null,
+            "deferredTo": "2026-10-04",
             "endComfort": null,
             "endNote": null,
-            "nextReview": null
+            "nextReview": "2026-10-04"
           },
           {
             "lcNumber": 53,
@@ -5103,10 +5120,10 @@
             ],
             "kind": "rep",
             "done": false,
-            "deferredTo": null,
+            "deferredTo": "2026-10-06",
             "endComfort": null,
             "endNote": null,
-            "nextReview": null
+            "nextReview": "2026-10-06"
           },
           {
             "lcNumber": 994,
@@ -5116,13 +5133,15 @@
             "difficulty": "Medium",
             "url": "https://leetcode.com/problems/rotting-oranges/",
             "file": "dsa/leetcode/graphs/994_rotting_oranges.py",
-            "tags": [],
+            "tags": [
+              "moved"
+            ],
             "kind": "rep",
             "done": false,
-            "deferredTo": null,
+            "deferredTo": "2026-10-07",
             "endComfort": null,
             "endNote": null,
-            "nextReview": null
+            "nextReview": "2026-10-07"
           },
           {
             "lcNumber": 2,
@@ -5132,13 +5151,15 @@
             "difficulty": "Medium",
             "url": "https://leetcode.com/problems/add-two-numbers/",
             "file": "dsa/leetcode/linked_list/2_add_two_numbers.py",
-            "tags": [],
+            "tags": [
+              "moved"
+            ],
             "kind": "rep",
             "done": false,
-            "deferredTo": null,
+            "deferredTo": "2026-10-07",
             "endComfort": null,
             "endNote": null,
-            "nextReview": null
+            "nextReview": "2026-10-07"
           },
           {
             "lcNumber": 219,
@@ -5153,10 +5174,10 @@
             ],
             "kind": "rep",
             "done": false,
-            "deferredTo": null,
+            "deferredTo": "2026-10-06",
             "endComfort": null,
             "endNote": null,
-            "nextReview": null
+            "nextReview": "2026-10-06"
           }
         ]
       },
@@ -5164,7 +5185,7 @@
         "date": "2026-10-04",
         "weekday": "Sunday",
         "label": null,
-        "units": 11.1,
+        "units": 14.7,
         "items": [
           {
             "lcNumber": 131,
@@ -5188,9 +5209,28 @@
             "technique": "Prim's",
             "startComfort": null,
             "difficulty": null,
-            "url": "https://open.kattis.com/problems/lostmap",
+            "url": "https://progressiveoverflow.com/practice/9003",
             "file": null,
             "tags": [
+              "new"
+            ],
+            "kind": "new",
+            "done": false,
+            "deferredTo": null,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
+          },
+          {
+            "lcNumber": 3620,
+            "title": "Network Recovery Pathways",
+            "technique": "Dijkstra",
+            "startComfort": null,
+            "difficulty": null,
+            "url": "https://leetcode.com/problems/network-recovery-pathways/",
+            "file": "dsa/leetcode/graphs/3620_network_recovery_pathways.py",
+            "tags": [
+              "moved",
               "new"
             ],
             "kind": "new",
@@ -5242,106 +5282,6 @@
             "difficulty": "Medium",
             "url": "https://leetcode.com/problems/course-schedule-iv/",
             "file": "dsa/leetcode/graphs/1462_course_schedule_iv.py",
-            "tags": [],
-            "kind": "rep",
-            "done": false,
-            "deferredTo": null,
-            "endComfort": null,
-            "endNote": null,
-            "nextReview": null
-          },
-          {
-            "lcNumber": 323,
-            "title": "Number of Connected Components in an Undirected Graph (BFS)",
-            "technique": "BFS",
-            "startComfort": "🟢",
-            "difficulty": "Medium",
-            "url": "https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/",
-            "file": "dsa/leetcode/graphs/323_number_of_connected_components_in_an_undirected_graph.py",
-            "tags": [],
-            "kind": "rep",
-            "done": false,
-            "deferredTo": null,
-            "endComfort": null,
-            "endNote": null,
-            "nextReview": null
-          },
-          {
-            "lcNumber": 189,
-            "title": "Rotate Array",
-            "technique": "Array-rotation",
-            "startComfort": "🟢",
-            "difficulty": "Medium",
-            "url": "https://leetcode.com/problems/rotate-array/",
-            "file": "dsa/leetcode/arrays_and_hash/189_rotate_array.py",
-            "tags": [
-              "moved"
-            ],
-            "kind": "rep",
-            "done": false,
-            "deferredTo": null,
-            "endComfort": null,
-            "endNote": null,
-            "nextReview": null
-          },
-          {
-            "lcNumber": 1046,
-            "title": "Last Stone Weight",
-            "technique": "Heap",
-            "startComfort": "🟢",
-            "difficulty": "Easy",
-            "url": "https://leetcode.com/problems/last-stone-weight/",
-            "file": "dsa/leetcode/heap/1046_last_stone_weight.py",
-            "tags": [
-              "moved"
-            ],
-            "kind": "rep",
-            "done": false,
-            "deferredTo": null,
-            "endComfort": null,
-            "endNote": null,
-            "nextReview": null
-          },
-          {
-            "lcNumber": 1929,
-            "title": "Concatenation of Array",
-            "technique": "Array-fundamentals",
-            "startComfort": "🟢",
-            "difficulty": "Easy",
-            "url": "https://leetcode.com/problems/concatenation-of-array/",
-            "file": "dsa/leetcode/arrays_and_hash/1929_concatenation_of_array.py",
-            "tags": [],
-            "kind": "rep",
-            "done": false,
-            "deferredTo": null,
-            "endComfort": null,
-            "endNote": null,
-            "nextReview": null
-          },
-          {
-            "lcNumber": 217,
-            "title": "Contains Duplicate",
-            "technique": "Hash-set",
-            "startComfort": "🟢",
-            "difficulty": "Easy",
-            "url": "https://leetcode.com/problems/contains-duplicate/",
-            "file": "dsa/leetcode/arrays_and_hash/217_contains_duplicate.py",
-            "tags": [],
-            "kind": "rep",
-            "done": false,
-            "deferredTo": null,
-            "endComfort": null,
-            "endNote": null,
-            "nextReview": null
-          },
-          {
-            "lcNumber": 26,
-            "title": "Remove Duplicates from Sorted Array",
-            "technique": "Two-pointer",
-            "startComfort": "🟢",
-            "difficulty": "Easy",
-            "url": "https://leetcode.com/problems/remove-duplicates-from-sorted-array/",
-            "file": "dsa/leetcode/two_pointers/26_remove_dup_from_sorted_array.py",
             "tags": [],
             "kind": "rep",
             "done": false,
@@ -5794,8 +5734,8 @@
     {
       "date": "2026-10-01",
       "planned": 7.8,
-      "done": 7.8,
-      "built": 7.8,
+      "done": 9.3,
+      "built": 9.3,
       "partial": false
     },
     {
@@ -5807,16 +5747,16 @@
     },
     {
       "date": "2026-10-03",
-      "planned": 12.7,
-      "done": 0.0,
-      "built": 12.7,
+      "planned": 14.2,
+      "done": 8.6,
+      "built": 14.2,
       "partial": false
     },
     {
       "date": "2026-10-04",
-      "planned": 11.1,
+      "planned": 14.7,
       "done": 0.0,
-      "built": 11.1,
+      "built": 14.7,
       "partial": false
     }
   ],
@@ -5946,7 +5886,7 @@
       "description": "Practice on 7 study-days without letting the streak lapse.",
       "earned": true,
       "progress": {
-        "current": 128,
+        "current": 129,
         "target": 7
       }
     },
@@ -5957,7 +5897,7 @@
       "description": "Practice on 30 study-days without letting the streak lapse.",
       "earned": true,
       "progress": {
-        "current": 128,
+        "current": 129,
         "target": 30
       }
     },
@@ -5968,7 +5908,7 @@
       "description": "Practice on 100 study-days without letting the streak lapse.",
       "earned": true,
       "progress": {
-        "current": 128,
+        "current": 129,
         "target": 100
       }
     },
@@ -6019,9 +5959,99 @@
   ],
   "problems": [
     {
+      "lcNumber": 90,
+      "title": "Subsets II",
+      "url": "https://leetcode.com/problems/subsets-ii/",
+      "file": "dsa/leetcode/backtracking/90_subsets_ii.py",
+      "difficulty": "Medium",
+      "category": "backtracking",
+      "comfort": "🟡",
+      "level": 1,
+      "streak": 0,
+      "nextReview": "2026-10-13",
+      "repDates": [
+        "2026-10-01",
+        "2026-10-03"
+      ],
+      "timeline": [
+        {
+          "date": "2026-10-01",
+          "comfort": "🔴",
+          "level": 0
+        },
+        {
+          "date": "2026-10-03",
+          "comfort": "🟡",
+          "level": 1
+        }
+      ]
+    },
+    {
+      "lcNumber": 9001,
+      "title": "Single Source Shortest Path, Negative Weights (Bellman-Ford)",
+      "url": "https://progressiveoverflow.com/practice/9001",
+      "file": "dsa/leetcode/graphs/9001_single_source_shortest_path_negative_weights.py",
+      "difficulty": "Medium",
+      "category": "graphs",
+      "comfort": "🟡",
+      "level": 1,
+      "streak": 0,
+      "nextReview": "2026-10-13",
+      "repDates": [
+        "2026-10-01",
+        "2026-10-03"
+      ],
+      "timeline": [
+        {
+          "date": "2026-10-01",
+          "comfort": "🔴",
+          "level": 0
+        },
+        {
+          "date": "2026-10-03",
+          "comfort": "🟡",
+          "level": 1
+        }
+      ]
+    },
+    {
+      "lcNumber": 1489,
+      "title": "Find Critical and Pseudo-Critical Edges in MST (Kruskal)",
+      "url": "https://leetcode.com/problems/find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree/",
+      "file": "dsa/leetcode/graphs/1489_find_critical_and_pseudo_critical_edges_in_mst.py",
+      "difficulty": "Hard",
+      "category": "graphs",
+      "comfort": "🟡",
+      "level": 1,
+      "streak": 0,
+      "nextReview": "2026-10-13",
+      "repDates": [
+        "2026-09-13",
+        "2026-09-23",
+        "2026-10-03"
+      ],
+      "timeline": [
+        {
+          "date": "2026-09-13",
+          "comfort": "🟡",
+          "level": 1
+        },
+        {
+          "date": "2026-09-23",
+          "comfort": "🟡",
+          "level": 1
+        },
+        {
+          "date": "2026-10-03",
+          "comfort": "🟡",
+          "level": 1
+        }
+      ]
+    },
+    {
       "lcNumber": 9004,
       "title": "Minimum Spanning Tree (Kruskal)",
-      "url": "https://open.kattis.com/problems/minspantree",
+      "url": "https://progressiveoverflow.com/practice/9004",
       "file": "dsa/leetcode/graphs/9004_minimum_spanning_tree.py",
       "difficulty": "Medium",
       "category": "graphs",
@@ -6243,50 +6273,6 @@
           "date": "2026-10-02",
           "comfort": "🟢",
           "level": 2
-        }
-      ]
-    },
-    {
-      "lcNumber": 90,
-      "title": "Subsets II",
-      "url": "https://leetcode.com/problems/subsets-ii/",
-      "file": "dsa/leetcode/backtracking/90_subsets_ii.py",
-      "difficulty": "Medium",
-      "category": "backtracking",
-      "comfort": "🔴",
-      "level": 0,
-      "streak": 0,
-      "nextReview": "2026-10-03",
-      "repDates": [
-        "2026-10-01"
-      ],
-      "timeline": [
-        {
-          "date": "2026-10-01",
-          "comfort": "🔴",
-          "level": 0
-        }
-      ]
-    },
-    {
-      "lcNumber": 9001,
-      "title": "Single Source Shortest Path, Negative Weights (Bellman-Ford)",
-      "url": "https://open.kattis.com/problems/shortestpath3",
-      "file": "dsa/leetcode/graphs/9001_single_source_shortest_path_negative_weights.py",
-      "difficulty": "Easy",
-      "category": "graphs",
-      "comfort": "🔴",
-      "level": 0,
-      "streak": 0,
-      "nextReview": "2026-10-03",
-      "repDates": [
-        "2026-10-01"
-      ],
-      "timeline": [
-        {
-          "date": "2026-10-01",
-          "comfort": "🔴",
-          "level": 0
         }
       ]
     },
@@ -7621,34 +7607,6 @@
           "date": "2026-09-25",
           "comfort": "🎓",
           "level": 3
-        }
-      ]
-    },
-    {
-      "lcNumber": 1489,
-      "title": "Find Critical and Pseudo-Critical Edges in MST (Kruskal)",
-      "url": "https://leetcode.com/problems/find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree/",
-      "file": "dsa/leetcode/graphs/1489_find_critical_and_pseudo_critical_edges_in_mst.py",
-      "difficulty": "Hard",
-      "category": "graphs",
-      "comfort": "🟡",
-      "level": 1,
-      "streak": 0,
-      "nextReview": "2026-10-03",
-      "repDates": [
-        "2026-09-13",
-        "2026-09-23"
-      ],
-      "timeline": [
-        {
-          "date": "2026-09-13",
-          "comfort": "🟡",
-          "level": 1
-        },
-        {
-          "date": "2026-09-23",
-          "comfort": "🟡",
-          "level": 1
         }
       ]
     },

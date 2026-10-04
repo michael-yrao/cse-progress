@@ -22,6 +22,15 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🟡 1489. Find Critical and Pseudo-Critical Edges in MST — 2026-10-03 *(re-rep of the Sep 23 🟡 — Kruskal)*
+**Sticking point**: no connectivity check in the MST helpers. Excluding a bridge left the graph disconnected, so the build returned a *smaller* weight and the bridge was never flagged critical; found by a failed LeetCode submission and fixed unaided (`numComponents` decremented in `union`, `math.inf` unless it reaches 1). Learner rated 🟡 for the miss. The exclude/include plan, index-carrying sort and Union-Find were unaided; 3,000/3,000 against a brute-force MST enumeration after the fix.
+
+## 🟡 9001. Single Source Shortest Path, Negative Weights — 2026-10-03 *(re-rep of the Oct 1 🔴 — Bellman-Ford)*
+**Sticking point**: why the marking loop needs `n` passes. The code was right unaided (32/32 spec, 20,000/20,000 against a reference), but its comment gave "go around all n nodes"; once told the mark spreads one edge per pass, the loop was changed to `n - 1`, which drops the detection pass and failed 12% of random graphs (`n=2, edges=[[0,1,0],[1,1,-3],[1,0,3]]` → `[0,-inf]`); reverted to `n` after the trace. Count = 1 detection pass + up to n − 1 spreading edges. The first loop's `n - 1` and its reason were unaided.
+
+## 🟡 90. Subsets II — 2026-10-03 *(re-rep of the Oct 1 🔴 — Backtracking)*
+**Sticking point**: the skip loop's test was reversed (`!=`, advancing while the next value *differs*, so skipping `1` in `[1,2,2]` jumped the first `2` and lost `[2,2]`), and the sort named in the top comment was never written; both coach-located after "whats the issue here". The sort-then-take/skip plan, the shared `path` with append/pop and the base case were unaided. 3,000/3,000 against an itertools reference after the fix.
+
 ## 🟡 9004. Minimum Spanning Tree — 2026-10-02 *(NEW — Kruskal's intake, Kattis `minspantree`)*
 **Sticking point**: wrote `edges.sort()` on `[u, v, w]` lists, which orders by the first node, not the weight, so Example 1's weight-0 edge came last and was refused (cost 6, not 3); the sort key was coach-located after "whats the issue with my code here". Kruskal's call, the Union-Find and the disconnected-graph check were all unaided.
 

@@ -1,6 +1,7 @@
 """
-9004. Minimum Spanning Tree   ·   https://open.kattis.com/problems/minspantree
+9004. Minimum Spanning Tree   ·   https://progressiveoverflow.com/practice/9004
 Pattern: graphs
+Difficulty: Medium
 
 You are given an undirected graph with `n` nodes numbered 0 to n-1. `edges[i] = [u, v, w]`
 is an edge between `u` and `v` with weight `w`. Weights may be negative.
@@ -34,36 +35,7 @@ Constraints:
     0 <= edges.length <= 30000
     -20000 <= w <= 20000
 
-Every stored case here has distinct edge weights, so its answer is unique. (Kattis itself
-accepts any minimum spanning tree when several exist.)
-
-────────────────────────────────────────────────────────────────────────────
-
-Submitting on Kattis (only needed once the method works)
-
-The judge sends several test cases on stdin, one after another.
-
-    One test case:
-        line 1          n m          (m = number of edges)
-        next m lines    u v w
-    End of input:       a line "0 0", which is not a test case
-
-    Per test case print "Impossible" on its own line when
-    there is no spanning tree. Otherwise print the cost on
-    one line, then one tree edge per line as "x y".
-
-    Sample input        Sample output
-        4 4                 3
-        0 1 1               0 1
-        1 2 2               1 2
-        1 3 3               2 3
-        2 3 0               100
-        2 1                 0 1
-        0 1 100             Impossible
-        3 0
-        0 0
-
-    Limits: CPU time 2 seconds, memory 1024 MB.
+Every stored case here has distinct edge weights, so its answer is unique.
 """
 # Write everything yourself from here — including any ListNode/TreeNode classes a
 # problem needs. No shared data-model imports (whiteboard fidelity).

@@ -125,6 +125,21 @@ class ContractShapeValidationTests(unittest.TestCase):
                 ep.build_payload([(filename, spec)], TODAY)
 
 
+class NumberInfCodecTests(unittest.TestCase):
+    def test_number_inf_is_a_result_codec_only(self):
+        rows = [
+            ("as the result codec", _spec(types={"args": [None], "result": "number-inf"}), True),
+            ("as an arg codec", _spec(types={"args": ["number-inf"]}), False),
+        ]
+        for label, spec, is_accepted in rows:
+            with self.subTest(label):
+                if is_accepted:
+                    ep.build_payload([(FILENAME, spec)], TODAY)
+                else:
+                    with self.assertRaises(ep.PracticeError):
+                        ep.build_payload([(FILENAME, spec)], TODAY)
+
+
 class ValidationTests(unittest.TestCase):
     def test_every_validation_error_raises_and_a_valid_spec_passes(self):
         rows = [

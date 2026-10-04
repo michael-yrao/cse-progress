@@ -1,5 +1,6 @@
 """Tests for new_problem.py's premium-problem link resolver (decision
-`problem-link-order-sep27`: LeetCode -> NeetCode -> HelloInterview -> LeetCode paywalled).
+`problem-link-order-sep27`, extended by `problem-link-order-oct04`: LeetCode -> NeetCode ->
+HelloInterview -> progressiveoverflow practice page).
 
 Stdlib unittest, same fixture style as test_links.py: mock.patch.object over the module's
 own path constants, with a tempfile-backed neetcode.yml/hellointerview.yml — never the
@@ -121,44 +122,44 @@ class LoadNeetcodeSlugsTests(unittest.TestCase):
 
 
 class ResolvePremiumLinkTests(unittest.TestCase):
-    """resolve_premium_link(): the four-step order (NeetCode -> HelloInterview ->
-    LeetCode), and the None-vs-empty NeetCode-list distinction."""
+    """resolve_premium_link(): the order (NeetCode -> HelloInterview -> progressiveoverflow
+    practice page), and the None-vs-empty NeetCode-list distinction."""
 
     HI_MAP = {"meeting-rooms": "/learn/code/intervals/can-attend-meetings"}
 
     def test_neetcode_wins_even_when_also_in_hellointerview_map(self):
         # The order test: meeting-rooms sits in BOTH maps; NeetCode must win.
         link = new_problem.resolve_premium_link(
-            "meeting-rooms", frozenset({"meeting-rooms"}), self.HI_MAP)
+            "252", "meeting-rooms", frozenset({"meeting-rooms"}), self.HI_MAP)
         self.assertEqual(link.url, "https://neetcode.io/problems/meeting-rooms")
         self.assertEqual(link.judge, "NeetCode")
 
     def test_neetcode_url_honors_neetcode_renames(self):
         # alien-dictionary -> foreign-dictionary is a real NEETCODE_RENAMES entry.
         link = new_problem.resolve_premium_link(
-            "alien-dictionary", frozenset({"alien-dictionary"}), {})
+            "269", "alien-dictionary", frozenset({"alien-dictionary"}), {})
         self.assertEqual(link.url, "https://neetcode.io/problems/foreign-dictionary")
         self.assertEqual(link.judge, "NeetCode")
 
     def test_hellointerview_wins_when_only_there(self):
-        link = new_problem.resolve_premium_link("meeting-rooms", frozenset(), self.HI_MAP)
+        link = new_problem.resolve_premium_link("252", "meeting-rooms", frozenset(), self.HI_MAP)
         self.assertEqual(
             link.url,
             "https://www.hellointerview.com/learn/code/intervals/can-attend-meetings",
         )
         self.assertEqual(link.judge, "HelloInterview")
 
-    def test_leetcode_fallback_when_in_neither(self):
-        link = new_problem.resolve_premium_link("some-other-problem", frozenset(), {})
-        self.assertEqual(link.url, "https://leetcode.com/problems/some-other-problem/")
-        self.assertEqual(link.judge, "LeetCode")
+    def test_progressiveoverflow_fallback_when_in_neither(self):
+        link = new_problem.resolve_premium_link("77", "some-other-problem", frozenset(), {})
+        self.assertEqual(link.url, "https://progressiveoverflow.com/practice/77")
+        self.assertEqual(link.judge, "progressiveoverflow")
         self.assertIn("neither NeetCode nor HelloInterview", link.reason)
 
     def test_unreadable_neetcode_list_falls_back_to_neetcode_mirror_unverified(self):
         # None (unreadable/unknown), not an empty set, must NOT fall through to
         # HelloInterview even though it has the slug — an unknown list is not an
         # absent one.
-        link = new_problem.resolve_premium_link("meeting-rooms", None, self.HI_MAP)
+        link = new_problem.resolve_premium_link("252", "meeting-rooms", None, self.HI_MAP)
         self.assertEqual(link.url, "https://neetcode.io/problems/meeting-rooms")
         self.assertEqual(link.judge, "NeetCode")
         self.assertIn("unverified", link.reason)
@@ -166,15 +167,16 @@ class ResolvePremiumLinkTests(unittest.TestCase):
     def test_readable_empty_neetcode_list_falls_through_to_hellointerview(self):
         # An empty-but-READABLE list is a real "NeetCode does not list it" answer, so
         # it falls through normally (unlike the None/unreadable case above).
-        link = new_problem.resolve_premium_link("meeting-rooms", frozenset(), self.HI_MAP)
+        link = new_problem.resolve_premium_link("252", "meeting-rooms", frozenset(), self.HI_MAP)
         self.assertEqual(link.judge, "HelloInterview")
 
     def test_reason_names_the_same_judge_as_the_url_host(self):
         cases = [
-            new_problem.resolve_premium_link("meeting-rooms", frozenset({"meeting-rooms"}), {}),
-            new_problem.resolve_premium_link("meeting-rooms", frozenset(), self.HI_MAP),
-            new_problem.resolve_premium_link("some-other-problem", frozenset(), {}),
-            new_problem.resolve_premium_link("meeting-rooms", None, {}),
+            new_problem.resolve_premium_link(
+                "252", "meeting-rooms", frozenset({"meeting-rooms"}), {}),
+            new_problem.resolve_premium_link("252", "meeting-rooms", frozenset(), self.HI_MAP),
+            new_problem.resolve_premium_link("77", "some-other-problem", frozenset(), {}),
+            new_problem.resolve_premium_link("252", "meeting-rooms", None, {}),
         ]
         for link in cases:
             with self.subTest(url=link.url):
@@ -196,9 +198,62 @@ class EndToEndPremiumResolutionTests(unittest.TestCase):
         missing = self.tmp_path / "absent.yml"
         with mock.patch.object(new_problem, "NEETCODE_MAP_PATH", missing):
             neetcode_slugs = new_problem.load_neetcode_slugs()  # must not raise -> None
-            link = new_problem.resolve_premium_link("two-sum", neetcode_slugs, {})
+            link = new_problem.resolve_premium_link("1", "two-sum", neetcode_slugs, {})
         self.assertEqual(link.url, "https://neetcode.io/problems/two-sum")
         self.assertEqual(link.judge, "NeetCode")
+
+
+class ChooseHeaderUrlTests(unittest.TestCase):
+    """choose_header_url(): --url wins, then premium, then the synthetic-id default, then
+    the LeetCode default."""
+
+    def test_the_four_branches(self):
+        no_neetcode = lambda: frozenset()  # noqa: E731
+        no_hi = lambda: {}  # noqa: E731
+        cases = [
+            ("explicit url wins over premium and synthetic",
+             ("9001", "x", "https://example.com/x", True), "https://example.com/x", False),
+            ("premium resolves through the link order",
+             ("77", "some-problem", None, True),
+             "https://progressiveoverflow.com/practice/77", True),
+            ("synthetic id defaults to the site page",
+             ("9001", "sssp", None, False),
+             "https://progressiveoverflow.com/practice/9001", False),
+            ("ordinary id defaults to LeetCode",
+             ("49", "group-anagrams", None, False),
+             "https://leetcode.com/problems/group-anagrams/", False),
+        ]
+        for label, (number, slug, explicit, premium), want_url, want_link in cases:
+            with self.subTest(label):
+                url, link = new_problem.choose_header_url(
+                    number, slug, explicit, premium, no_neetcode, no_hi)
+                self.assertEqual(url, want_url)
+                self.assertEqual(link is not None, want_link)
+
+
+class NoteMissingPracticeSpecTests(unittest.TestCase):
+    """verify_links() prints one NOTE when it returns a site practice url with no spec."""
+
+    SITE_URL = "https://progressiveoverflow.com/practice/9001"
+
+    def setUp(self):
+        self._tmpdir = tempfile.TemporaryDirectory()
+        self.spec_dir = Path(self._tmpdir.name)
+
+    def tearDown(self):
+        self._tmpdir.cleanup()
+
+    def _verify_output(self) -> str:
+        buffer = io.StringIO()
+        with mock.patch.object(new_problem, "SPEC_DIR", self.spec_dir), \
+                contextlib.redirect_stdout(buffer):
+            new_problem.verify_links("9001", "9001", self.SITE_URL, False, check=False)
+        return buffer.getvalue()
+
+    def test_note_only_when_the_spec_is_absent(self):
+        self.assertIn("NOTE:", self._verify_output())
+        (self.spec_dir / "9001_sssp.yml").write_text("entry: {}\n", encoding="utf-8")
+        self.assertEqual(self._verify_output(), "")
 
 
 class SpecScaffoldTests(unittest.TestCase):

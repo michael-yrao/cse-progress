@@ -1,4 +1,4 @@
-<!-- reconciled: 2026-10-02 -->
+<!-- reconciled: 2026-10-04 -->
 # Scaffolding a problem
 
 **Open this** before you create or set up any problem file for the learner.
@@ -141,9 +141,9 @@ blocks a scaffold and is silent when offline.
   call forever, so silence would leave the check looking installed while never running. It
   prints one line naming the fix (`Install Certificates.command` / `pip install certifi`).
 
-## Where a problem links (learner's order, Sep 27–28, 2026)
+## Where a problem links (learner's order, Oct 4, 2026)
 
-LeetCode if it is free there → NeetCode if its own list has it → HelloInterview if its catalog has it → another judge that carries the same problem (Kattis, CSES, LintCode), confirmed free. If none of these has it, skip the problem for now and find a free problem of the same shape with a pull. Confirm each step against that site's own list before linking it. full rule: [`reference_hellointerview_premium.md`](.claude/memory/reference_hellointerview_premium.md); `decisions.yml` `problem-link-order-sep27`.
+LeetCode if it is free there → NeetCode if its own list has it → HelloInterview if its catalog has it → progressiveoverflow (`https://progressiveoverflow.com/practice/<n>`, label `progressiveoverflow`). A problem none of the first three carries is never skipped: write its practice spec (the `practice-problem` skill) so the practice page exists, then link it. The spec's own `url:` keeps the problem's source page, which the practice page's title links to. Confirm each of the first three against that site's own list before linking it. full rule: [`reference_hellointerview_premium.md`](.claude/memory/reference_hellointerview_premium.md); `decisions.yml` `problem-link-order-oct04`.
 
 ## Presenting the kickoff / lineup board — name + links, NOTHING else
 
