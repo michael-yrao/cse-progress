@@ -1678,3 +1678,41 @@ decisions:
       files no longer need the learner's review before a commit
       (`~/.claude/rules/execution-workflow.md`). No `cse.config.yml` value changed.
     affects: [scaffolding, retry, hooks, review-workflow]
+
+  - id: tech-lead-owns-optimization-oct4
+    date: 2026-10-04
+    summary: >-
+      WIDENS the tech lead's role in the execution workflow (execution-workflow-pyramid-sep21): it is
+      now accountable for four costs, each checked at a named step: token spend (planning, briefing),
+      wall-clock (spawning), shipped-code efficiency (diff review) and the workflow itself (after
+      integrating). On Fable the session's own context is named the first cost. To carry that, the
+      tech lead keeps only the design, the plan, the exchange with the user, the consolidated review,
+      commit/push and the cost decisions; sweeps, state collection, supervision, the first diff
+      review (now including an efficiency pass by the team lead) and checker runs go down, with extra
+      leads and engineers spawned for them. AMENDS the spawn rule: one engineer may get a lead when
+      supervising it would fill the tech lead's context, and support agents do not count toward n.
+      The team lead is responsible for code optimization inside its slice: it decides the fix and has
+      its engineer make it, behaviour and scope unchanged, and still writes no code itself (learner,
+      same day).
+      How many agents to spawn is the tech lead's discretion for now; no formula was set.
+      Learner's request, Oct 4. Normative home: ~/.claude/rules/execution-workflow.md "The tech lead
+      owns optimization, and keeps only what needs it"; why: feedback_execution_workflow.md. No
+      `cse.config.yml` value changed.
+    affects: [execution_workflow]
+
+  - id: advisor-removed-oct4
+    date: 2026-10-04
+    summary: >-
+      REMOVES the last of the `advisor` review step. It was retired on 2026-09-22 (dotfiles commit
+      52c73d7), when no tool stood behind it; the `advisor-retired-sep22` entry that commit names
+      was never written, so this entry records both. Oct 4: the Fable session had
+      `"advisorModel": "opus"` in ~/.claude/settings.json and was still offered no advisor tool, and
+      the learner said to drop it if it does not work as expected. Removed: the `advisorModel`
+      setting, the "no separate advisor" wording in ~/.claude/rules/execution-workflow.md and the
+      reminder hook, the "run `advisor`" step in weekly-build.md's Review row, and the mentions in
+      feedback_execution_workflow.md. The review gate is the lead's own review: the tech lead reviews
+      the consolidated diff, a team lead reviews its engineers' diffs. Strands any wording that names
+      an advisor step; the dated entries above (eow-close-out-process-sep20,
+      execution-workflow-global-sep21, execution-workflow-pyramid-sep21) keep theirs as history. No
+      `cse.config.yml` value changed.
+    affects: [execution_workflow, weekly_build]

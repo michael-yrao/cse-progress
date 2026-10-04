@@ -1,6 +1,6 @@
 ---
 name: feedback-execution-workflow
-description: Tech lead plans, Opus team leads supervise Sonnet engineers who implement, tech lead reviews + runs advisor before any commit/push — GLOBAL, three-tier pyramid at a 2:1 spawn ratio, for all non-trivial work (evidence/why for the always-on gate in ~/.claude/rules/execution-workflow.md)
+description: Tech lead plans, owns optimization and hands the rest down; Opus team leads supervise Sonnet engineers who implement; tech lead reviews the consolidated diff before any commit/push — GLOBAL, three-tier pyramid at a 2:1 spawn ratio, for all non-trivial work (evidence/why for the always-on gate in ~/.claude/rules/execution-workflow.md)
 metadata:
   type: feedback
 reconciled: 2026-09-21
@@ -36,8 +36,8 @@ integrates only; all edits go to Sonnet engineer subagents (spawn as many as nee
 
 | Tier | Model | What |
 |---|---|---|
-| Tech lead | the session (Fable on Max, Opus otherwise) | explore, design, write the plan, get approval, review every diff, run `advisor`, integrate |
-| Team lead | Opus (`team-lead` agent) | own one plan slice, brief/supervise ≤ 2 engineers, review their diffs, report up |
+| Tech lead | the session (Fable on Max, Opus otherwise) | design, write the plan, get approval, review the consolidated diff, integrate, optimize (spend, wall-clock, shipped code, the workflow); hands down what does not need it |
+| Team lead | Opus (`team-lead` agent) | own one plan slice, brief/supervise ≤ 2 engineers, review their diffs (correctness, scope, wasted work), optimize the slice's code through its engineers, report up |
 | Engineer | Sonnet (`engineer` agent) | execute a brief — edits, tests, build; report the diff |
 
 **Why:** the learner wants planning/judgement on the stronger model and mechanical execution on the
@@ -45,14 +45,14 @@ faster/cheaper one, with an Opus review gate so nothing lands unreviewed. Mirror
 deliberative-vs-mechanical register split.
 
 **How to apply:** Opus spawns a Sonnet 5 subagent (`model: "sonnet"`) with the approved plan as its
-brief; the subagent does NOT commit/push; Opus reviews, runs `advisor`, then commits/pushes per the
+brief; the subagent does NOT commit/push; Opus reviews, then commits/pushes per the
 standing no-PR instruction.
 
 **Extended 2026-09-20 to the weekly EOW schedule build** (learner's call). The Sunday close-out runs the
 same split: **Opus** prices/designs the build (capacity, pulls, day placement — the judgement), a
 **Sonnet 5 subagent** does the mechanical writeback only (`git mv` the archive, write the next-week
 schedule file from the approved plan, run the checker scripts — no commit/push), **Opus** reviews the
-diff + runs `advisor`, then commits/pushes. ⭐ Only the mechanical writeback goes to the subagent — never
+diff, then commits/pushes. ⭐ Only the mechanical writeback goes to the subagent — never
 the planning, and never a teach or a rep. Operational home for the build steps:
 `.claude/skills/cse-coach/references/weekly-build.md`. See `decisions.yml` `eow-close-out-process-sep20`.
 
@@ -89,3 +89,47 @@ still running. Both engineer reports then came back to the lead as designed, the
 one rejection round per engineer, and the tech lead received a single consolidated hand-back — no interim
 hand-backs, no `SendMessage` resume. Cost: engineers flag the marker request as unusual (harmless, the
 files sit outside the repo). Prefer this over the resume dance when a lead supervises two engineers.
+
+**Decided 2026-10-04 — only user-facing text waits on the user.** Asked to approve a skill-file paragraph
+inside a link-order plan, the learner said: *"update the rule such that non-user facing wording does not need
+my approval."* The review rule in `~/.claude/rules/execution-workflow.md` now names user-facing text (site
+labels and copy, README, docs written for a reader) as the only text held for the user's yes; rule, skill and
+memory files, `decisions.yml`, code comments, commit messages, fixtures, ledger and tracker entries land on the
+tech lead's review. The paragraph-quote rule narrowed the same way: for non-user-facing text the tech lead
+checks old against new itself for a dropped sentence or citation (the 2026-09-29 failure it guards).
+
+**Widened 2026-10-04 (later the same day) — the tech lead owns optimization and keeps only what needs it.**
+The learner, in four messages: *"update the workflow such that the tech lead is also responsible for
+optimization, especially for fable"*; asked what optimization covers (token spend, wall-clock, shipped-code
+efficiency, the workflow itself), *"all of the above, tech lead is responsible for them all"*; then *"this
+gives the tech lead a lot more responsibilities so if more team leads and engineers are required to
+alleviate tasks that are not required to be done by tech lead, this should be done as well"*; and *"how that
+capacity is determined is up to your discretion for now"*. The rule in `~/.claude/rules/execution-workflow.md`
+("The tech lead owns optimization, and keeps only what needs it") now names the four costs with the step
+each is checked at, lists what stays with the tech lead (the design, the plan, the exchange with the user,
+the consolidated review, commit/push, the cost decisions) and what goes down (sweeps, state collection for
+briefs, supervision and the first diff review, checker runs), and lets one engineer have a lead when
+supervising it would fill the tech lead's context. The team lead's review gained an efficiency pass.
+**Why:** the rule had no owner for cost; on Fable the session's own context is the most expensive in the
+tree, so moving legwork to an Opus lead or a Sonnet engineer is itself the saving; and a wider role only
+holds if the legwork moves down. How many agents to spawn is the tech lead's call for now: no formula was
+set. See `decisions.yml` `tech-lead-owns-optimization-oct4`.
+
+**Removed 2026-10-04 — the last of `advisor`.** The advisor review step was retired on 2026-09-22 (learner's
+call; dotfiles commit `52c73d7`). It had no tool behind it then: the site-refresh note of that week reads
+"`advisor` in the workflow rule has no tool behind it here; the tech lead's own diff review plus the
+`code-review` skill (Sep 21) served as the review gate." On 2026-10-04 the learner said *"let's get rid of
+advisor if it does not work as expected"*. It still did not: the Fable session had `"advisorModel": "opus"`
+in `~/.claude/settings.json` and was offered no advisor tool. Removed that day: the `advisorModel` setting,
+the "no separate advisor" wording in the rule and the reminder hook, the "run `advisor`" step in
+`weekly-build.md`'s Review row, and the two older mentions in this file. The lead's own review is the gate.
+See `decisions.yml` `advisor-removed-oct4`.
+
+**Widened 2026-10-04 (third change that day) — the team lead is responsible for code optimization inside its
+slice.** The learner: *"let's also give team lead the ability to optimize code"*, then corrected the word:
+*"responsibility*"*. Before this the lead flagged waste and the decision sat with the tech lead. Now the lead
+decides the optimization and has its engineer make it without asking up, as long as the slice's behaviour
+and scope stay the same; anything that would change either goes up. The lead still writes no code: its
+Write/Edit tools stay removed and the role gate is unchanged. With no lead, the responsibility is the tech
+lead's. **Why:** the lead is closest to the diff, and a round trip to the tech lead for each fix spends the
+Fable context the same day's change set out to save.

@@ -42,5 +42,6 @@ cse-coach** (cse-coach's port copies cse-progress's final scripts).
 ## Process notes worth keeping
 - Sep 21: all three team leads were harness-forced to hand back while their engineers ran (logged in
   `self_eval_log.md`, fam: lead-forced-handback); Sep 22's two leads both completed normally.
-- `advisor` in the workflow rule has no tool behind it here; the tech lead's own diff review plus the
-  `code-review` skill (Sep 21) served as the review gate.
+- `advisor` in the workflow rule had no tool behind it; the tech lead's own diff review plus the
+  `code-review` skill (Sep 21) served as the review gate. Retired Sep 22, removed Oct 4 (`decisions.yml`
+  `advisor-removed-oct4`).
