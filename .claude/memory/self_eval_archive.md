@@ -594,3 +594,57 @@ Moved at the 2026-09-24 meta-review (original log order preserved):
 **Why:** `~/.claude/rules/execution-workflow.md` "Written text gets a second review" listed rule files, skill files and memory files as covered. I followed the rule as written; the rule was wider than the learner wants, and it cost them a decision in the middle of a rep.
 **Fix/ladder:** Source fix (rung 1 for a rule) the same turn: that section now exempts rule, skill and memory files, since agents read them and the learner does not. Site copy, README and docs stay covered. consolidated→`~/.claude/rules/execution-workflow.md` "Written text gets a second review"
 **Status (META-REVIEW 2026-10-02):** consolidated→`~/.claude/rules/execution-workflow.md` "Written text gets a second review" exempts rule, skill and memory files
+
+---
+
+Moved at the 2026-10-04 meta-review (original log order preserved):
+
+
+## 2026-10-04 [P2] fam: external-judge problems copied the judge's own difficulty label — 9001 Bellman-Ford tagged Easy, priced at half a Medium
+**What:** Commit `e0857eb` (Sep 26) seated 9001 (Kattis `shortestpath3`, 1.9 "Easy") and 9003 (`lostmap`, 1.5 "Easy") with Kattis's label copied into the Difficulty cell; `79eb09c` carried 9001's Easy into the review row. Both priced 1.5 instead of 3.0 (`--schedule-day`), and the site showed them as Easy. The schedule prose noticed the gap ("price ≈ 2.0 each — above that label") and kept the label anyway. The learner flagged it Oct 4: "9001 is bellman ford, that alone is medium."
+**Why:** The `external-judge-problems-sep26` convention said how to give an outside problem an id and a URL, but never said how to tier it, so the judge's own number filled the gap. Kattis's 1–10 scale is set for competitive programmers and puts textbook-algorithm problems in its Easy band.
+**Fix/ladder:** Rung 3: a normative sentence in the `dsa_progress.md` legend and `technique-coverage.md` (tier against the same-technique LeetCode comparator, never the judge's label), plus decision `external-judge-difficulty-oct4`. Rung 1 data fix: 9001/9003 → Medium, and `Difficulty: Medium` added to the scaffolded headers. `closed` — edits landed 2026-10-04 (uncommitted at time of writing).
+**Status (META-REVIEW 2026-10-04):** consolidated→`decisions.yml` `external-judge-difficulty-oct4`; tiering sentence in the `dsa_progress.md` legend and `technique-coverage.md`
+
+## 2026-10-04 [P2] fam: external-judge variants kept the judge's output conventions — 9002 and 9003 were queued with Kattis-shaped forms
+**What:** On 2026-10-04 the learner said Kattis's output conventions (strings such as `impossible` for `math.inf`) should be cleaned out of our progressiveoverflow variants, and that the queued Kattis problems are rebuilt on progressiveoverflow. The Waiting Room rows for 9002 (two-int rates) and 9003 (tuple edges, a `--signature` on the scaffold command) still carried the judge's shape, and no rule said an external-judge problem returns plain values.
+**Why:** `external-judge-problems-sep26` said how to give an outside problem an id and a URL, and nothing about its contract, so the judge's form filled the gap (same cause as the Oct 4 difficulty entry above).
+**Fix/ladder:** Rung 3: a normative sentence in `spec.md` (Fields, External-judge problems) and the `dsa_progress.md` legend, plus decision `external-judge-plain-values-oct4`. Rung 1 data fix: the 9002 and 9003 specs written with plain returns (bool with a float rate; edges in any order), the two Waiting Room rows reworded. `closed` — edits landed 2026-10-04 (uncommitted at time of writing).
+**Status (META-REVIEW 2026-10-04):** consolidated→`decisions.yml` `external-judge-plain-values-oct4`; `spec.md` External-judge problems
+
+## 2026-10-04 [P2] fam: the co-host plan kept "a saved doc wins" from the single-host design, where it was safe, into a design with takeover, where it loses code
+**What:** `interview-cohosts.md` ordered the authority source saved → takeover → hello. With one host that was safe (the candidate is read-only while the host is away). With takeover, a returning host's saved copy can be older than the candidate's text, and its init would overwrite the newer code. Found in my own diff review, not by a test; the lead's 956-test suite passed with it.
+**Why:** An invariant from the earlier plan ("the host's saved doc can never be behind the candidate's") was carried forward without re-checking the premise the new feature removed.
+**Fix/ladder:** Source fix in flight: a session-wide revision number, the highest revision wins, and a host re-adopts when a hello carries a newer one; one failing-first scenario test. `closed` — reviewed 2026-10-04, uncommitted at time of writing.
+**Status (META-REVIEW 2026-10-04):** consolidated→source fix (session-wide revision number, highest revision wins)
+
+## 2026-10-04 [P3] — hook-caught: a plan table put "input shape" and "picture" columns beside problem links
+**What:** The figure plan listed 9003, 133, 332 and 9002 in a table with their links in the first column and two descriptive columns beside them. `problem_link_reminder.py` blocked the turn as a spoiler column. The message was re-sent with the problems as a links-only list and the drawing modes described by input shape in a separate table.
+**Why:** The table was written as a design artifact, and the lineup rule was read as covering boards only. Any table whose rows are linked problems is a lineup to the learner, whatever the turn is about.
+**Fix/ladder:** The hook (rung 2) already enforces it and did. When a plan names problems, they go in a links-only list, and the design detail is keyed by something other than the problem. `closed`
+**Status (META-REVIEW 2026-10-04):** consolidated→`scaffolding.md` "Any table whose rows are linked problems is a lineup" (rung 3) on top of the hook
+
+## 2026-10-04 [P2] — self-caught: the pre-commit hook's output was piped through `tail -40`, so its ERROR lines could not be read before the push
+**What:** The `8bb66a8` commit command ended in `| tail -40`. The 40 lines were all `reconcile.py` report rows; whatever the showcase and Big-O steps printed was cut off. Gate 8 says to read the hook's output between commit and push. I re-ran the five report-only checks by hand: `export_showcase.py --check` and `export_bigo.py --check` each printed one ERROR on 124, caused by the working tree's unattempted retry stub (prior attempts stashed at kickoff), not by the commit. Both passed with 0 ERROR lines on a `git archive HEAD` export, the site deploy had completed, and the push went out after that.
+**Why:** The tail was added to keep a long hook output out of context, and the report that fills it (`reconcile.py`, 100+ pending rows) is the one with nothing to act on. The same brief also carried an unrun command: `python -m unittest scripts/test_export_practice.py` errors; the file's own form is `python scripts/test_export_practice.py`.
+**Fix/ladder:** For a commit, filter the hook output for `ERROR` and print the count plus those lines, never a bare tail. A working-tree ERROR is checked against a `git archive HEAD` export before it is called not-the-commit's. Rung 2 candidate: the hook prints a final one-line summary of ERROR counts per check, after `reconcile.py`. `open`
+**Status (META-REVIEW 2026-10-04):** consolidated→CLAUDE.md gate 8: never truncate the commit's output, filter it for `ERROR`. The hook-side ERROR summary stays a rung-2 candidate, trigger its next occurrence
+
+## 2026-10-04 [P3] fam: a work report table put status, size and source columns beside problem links (2nd today, same family as the plan-table entry above)
+**What:** The report on the dense-Dijkstra set (743 · 1976 · 2662 · 2699) listed the problems in a table with columns for tracked/queued, size constraints (`n ≤ 200, roads ≤ n(n−1)/2`) and source. `problem_link_reminder.py` blocked the turn as a spoiler column. The size column is a real spoiler: the constraint is the density cue the recognition call on those three problems will be measured on in December.
+**Why:** Same cause as the earlier entry: the table was written as a work report and the lineup rule was read as covering boards and plans only. The earlier fix lived only in this log, which is not read when composing a report.
+**Fix/ladder:** 2× in one day → rung 3: `scaffolding.md` "Presenting the kickoff / lineup board" now says any table whose rows are linked problems is a lineup, in a work report or a plan as much as a board, and that constraints are spoilers. The hook (rung 2) already enforces it. `closed` — edit landed 2026-10-04, uncommitted at time of writing.
+**Status (META-REVIEW 2026-10-04):** consolidated→`scaffolding.md` "Any table whose rows are linked problems is a lineup" (rung 3) on top of the hook
+
+## 2026-10-04 [P3] fam: banned opener — "So:" led the closing question of the 3620 bug report
+**What:** The bug report on 3620 (returns 0 instead of −1) put the hint question in a paragraph opening "So: what one call…". `problem_link_reminder.py::banned_opener` blocked the turn; re-sent with the paragraph starting at the question.
+**Why:** The colon-dangle came from setting up a question after an explanation. The rule is already in SKILL.md §1 and the hook.
+**Fix/ladder:** Rung 2 (the hook) is in place and fired as designed; no new rung. `closed`
+**Status (META-REVIEW 2026-10-04):** consolidated→hook `problem_link_reminder.py::banned_opener` fired as designed; no new rung
+
+## 2026-10-04 [P2] fam: a stalled team lead ran 13.5 hours unnoticed — "still in progress" was reported from a file listing, not from file times
+**What:** The co-interviewer team lead's last file write was 02:24; at the learner's status request I listed the tree, saw new files and a 797-line service, and reported "in progress". The learner then pointed out the lead had been going 800+ minutes. `ls -lt` showed nothing written since 02:24; the service spec did not compile. I stopped the lead and started a fresh one, which finished in about 21 minutes.
+**Why:** A background agent's "no notification yet" was read as "working". The earlier lead took 24-27 minutes per round; a run past an hour was already evidence of a hang, and the status check never compared the newest mtime with the clock.
+**Fix/ladder:** Rung 3 candidate for `execution-workflow.md`: a status answer about a running agent pastes the newest mtime in its slice next to the current time, and a lead quiet for more than twice its previous round is stopped and re-briefed from the tree. The replacement brief carried a stall guard (bounded tasks, `--watch=false`, report up rather than wait). `open` — rule sentence not yet written.
+**Status (META-REVIEW 2026-10-04):** consolidated→`~/.claude/rules/execution-workflow.md` "A running agent's status is read from file times, not from silence" (dotfiles repo, its own commit)
+

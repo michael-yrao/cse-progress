@@ -5163,10 +5163,10 @@
             ],
             "kind": "rep",
             "done": false,
-            "deferredTo": "2026-10-06",
+            "deferredTo": "2026-10-08",
             "endComfort": null,
             "endNote": null,
-            "nextReview": "2026-10-06"
+            "nextReview": "2026-10-08"
           },
           {
             "lcNumber": 994,
@@ -5255,14 +5255,15 @@
             "url": "https://progressiveoverflow.com/practice/9003",
             "file": "dsa/leetcode/graphs/9003_lost_map.py",
             "tags": [
+              "moved",
               "new"
             ],
             "kind": "new",
             "done": false,
-            "deferredTo": null,
+            "deferredTo": "2026-10-08",
             "endComfort": null,
             "endNote": null,
-            "nextReview": null
+            "nextReview": "2026-10-08"
           },
           {
             "lcNumber": 3620,
@@ -5292,14 +5293,15 @@
             "url": null,
             "file": null,
             "tags": [
+              "moved",
               "probe"
             ],
             "kind": "probe",
             "done": false,
-            "deferredTo": null,
+            "deferredTo": "2026-10-06",
             "endComfort": null,
             "endNote": null,
-            "nextReview": null
+            "nextReview": "2026-10-06"
           },
           {
             "lcNumber": 124,
@@ -5309,13 +5311,15 @@
             "difficulty": "Hard",
             "url": "https://leetcode.com/problems/binary-tree-maximum-path-sum/",
             "file": "dsa/leetcode/trees/124_binary_tree_maximum_path_sum.py",
-            "tags": [],
+            "tags": [
+              "moved"
+            ],
             "kind": "rep",
             "done": false,
-            "deferredTo": null,
+            "deferredTo": "2026-10-09",
             "endComfort": null,
             "endNote": null,
-            "nextReview": null
+            "nextReview": "2026-10-09"
           },
           {
             "lcNumber": 1462,
@@ -5325,13 +5329,15 @@
             "difficulty": "Medium",
             "url": "https://leetcode.com/problems/course-schedule-iv/",
             "file": "dsa/leetcode/graphs/1462_course_schedule_iv.py",
-            "tags": [],
+            "tags": [
+              "moved"
+            ],
             "kind": "rep",
             "done": false,
-            "deferredTo": null,
+            "deferredTo": "2026-10-07",
             "endComfort": null,
             "endNote": null,
-            "nextReview": null
+            "nextReview": "2026-10-07"
           },
           {
             "lcNumber": 211,
@@ -5342,14 +5348,15 @@
             "url": "https://leetcode.com/problems/design-add-and-search-words-data-structure/",
             "file": "dsa/leetcode/trie/211_design_add_and_search_words_data_structure.py",
             "tags": [
+              "moved",
               "probe"
             ],
             "kind": "complexity",
             "done": false,
-            "deferredTo": null,
+            "deferredTo": "2026-10-11",
             "endComfort": null,
             "endNote": null,
-            "nextReview": null
+            "nextReview": "2026-10-11"
           },
           {
             "lcNumber": 648,
@@ -5360,14 +5367,15 @@
             "url": "https://leetcode.com/problems/replace-words/",
             "file": "dsa/leetcode/trie/648_replace_words.py",
             "tags": [
+              "moved",
               "probe"
             ],
             "kind": "complexity",
             "done": false,
-            "deferredTo": null,
+            "deferredTo": "2026-10-11",
             "endComfort": null,
             "endNote": null,
-            "nextReview": null
+            "nextReview": "2026-10-11"
           },
           {
             "lcNumber": 743,
@@ -5378,14 +5386,15 @@
             "url": "https://leetcode.com/problems/network-delay-time/",
             "file": "dsa/leetcode/graphs/743_network_delay_time.py",
             "tags": [
+              "moved",
               "probe"
             ],
             "kind": "complexity",
             "done": false,
-            "deferredTo": null,
+            "deferredTo": "2026-10-11",
             "endComfort": null,
             "endNote": null,
-            "nextReview": null
+            "nextReview": "2026-10-11"
           },
           {
             "lcNumber": null,
@@ -5396,14 +5405,15 @@
             "url": null,
             "file": null,
             "tags": [
+              "moved",
               "probe"
             ],
             "kind": "complexity",
             "done": false,
-            "deferredTo": null,
+            "deferredTo": "2026-10-11",
             "endComfort": null,
             "endNote": null,
-            "nextReview": null
+            "nextReview": "2026-10-11"
           }
         ]
       }
@@ -5800,6 +5810,55 @@
       "planned": 14.7,
       "done": 6.9,
       "built": 14.7,
+      "partial": false
+    },
+    {
+      "date": "2026-10-05",
+      "planned": 7.8,
+      "done": 0.0,
+      "built": 7.8,
+      "partial": false
+    },
+    {
+      "date": "2026-10-06",
+      "planned": 8.2,
+      "done": 0.0,
+      "built": 8.2,
+      "partial": false
+    },
+    {
+      "date": "2026-10-07",
+      "planned": 7.8,
+      "done": 0.0,
+      "built": 7.8,
+      "partial": false
+    },
+    {
+      "date": "2026-10-08",
+      "planned": 7.8,
+      "done": 0.0,
+      "built": 7.8,
+      "partial": false
+    },
+    {
+      "date": "2026-10-09",
+      "planned": 8.1,
+      "done": 0.0,
+      "built": 8.1,
+      "partial": false
+    },
+    {
+      "date": "2026-10-10",
+      "planned": 7.9,
+      "done": 0.0,
+      "built": 7.9,
+      "partial": false
+    },
+    {
+      "date": "2026-10-11",
+      "planned": 4.0,
+      "done": 0.0,
+      "built": 4.0,
       "partial": false
     }
   ],

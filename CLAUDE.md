@@ -58,7 +58,9 @@ them. The *how* is in the named skill reference.
    confirmation — do the pre-commit sweep (`git status` · `restore_history.py` ·
    `update_review_dates`), then **report what landed**. **Commit and push are TWO commands — read the hook's
    output between them; any `ERROR:` line from a report-only check holds the push** (2026-09-24: a chained
-   commit+push shipped a stale `showcase.json`; a chained command is now denied by `commit_push_gate.py`). Stage each file by name, and read `git diff
+   commit+push shipped a stale `showcase.json`; a chained command is now denied by `commit_push_gate.py`). Never truncate the
+   commit's output (no `| tail`, no `| head`): filter it for `ERROR` and print the count plus those lines (2026-10-04: a
+   `tail -40` hid two). Stage each file by name, and read `git diff
    --cached --stat` as its own call before the commit. The trigger is the learner's explicit
    phrase, never your own read of a "good breakpoint" (that judgement is what caused the
    31-commit run). Still **hold and ask** if anything is pending: an unrated/uncertain rep, an

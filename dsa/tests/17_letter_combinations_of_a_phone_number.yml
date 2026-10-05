@@ -1,0 +1,67 @@
+# Any order is accepted, so compare is unordered. Each digit maps to the letters on a phone keypad:
+# 2 abc, 3 def, 4 ghi, 5 jkl, 6 mno, 7 pqrs, 8 tuv, 9 wxyz. No digit maps to 1.
+number: 17
+title: Letter Combinations of a Phone Number
+url: https://leetcode.com/problems/letter-combinations-of-a-phone-number/
+statement: |
+  Given a string containing digits from 2-9 inclusive, return all possible
+  letter combinations that the number could represent. Return the answer in
+  any order.
+
+  A mapping of digits to letters (just like on the telephone buttons) is
+  given below. Note that 1 does not map to any letters.
+
+      2: abc    3: def    4: ghi    5: jkl
+      6: mno    7: pqrs   8: tuv    9: wxyz
+
+  Example 1:
+      Input:  digits = "23"
+      Output: ["ad","ae","af","bd","be","bf","cd","ce","cf"]
+
+  Example 2:
+      Input:  digits = ""
+      Output: []
+
+  Example 3:
+      Input:  digits = "2"
+      Output: ["a","b","c"]
+
+  Constraints:
+      0 <= digits.length <= 4
+      digits[i] is a digit in the range ['2', '9'].
+entry:
+  class: Solution
+  method: letterCombinations
+signature: "digits: str -> List[str]"
+compare: unordered
+cases:
+  - {args: ["23"], expected: ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"], example: true}
+  - {args: [""], expected: [], example: true}
+  - {args: ["2"], expected: ["a", "b", "c"], example: true}
+  - {args: ["3"], expected: ["d", "e", "f"]}
+  - {args: ["4"], expected: ["g", "h", "i"]}
+  - {args: ["5"], expected: ["j", "k", "l"]}
+  - {args: ["6"], expected: ["m", "n", "o"]}
+  - {args: ["7"], expected: ["p", "q", "r", "s"]}
+  - {args: ["8"], expected: ["t", "u", "v"]}
+  - {args: ["9"], expected: ["w", "x", "y", "z"]}
+  - {args: ["79"], expected: ["pw", "px", "py", "pz", "qw", "qx", "qy", "qz", "rw", "rx", "ry", "rz", "sw", "sx", "sy", "sz"]}
+  - {args: ["27"], expected: ["ap", "aq", "ar", "as", "bp", "bq", "br", "bs", "cp", "cq", "cr", "cs"]}
+  - {args: ["56"], expected: ["jm", "jn", "jo", "km", "kn", "ko", "lm", "ln", "lo"]}
+  - {args: ["89"], expected: ["tw", "tx", "ty", "tz", "uw", "ux", "uy", "uz", "vw", "vx", "vy", "vz"]}
+  - {args: ["234"], expected: ["adg", "adh", "adi", "aeg", "aeh", "aei", "afg", "afh", "afi", "bdg", "bdh", "bdi", "beg", "beh", "bei", "bfg", "bfh", "bfi", "cdg", "cdh", "cdi", "ceg", "ceh", "cei", "cfg", "cfh", "cfi"]}
+  - {args: ["789"], expected: ["ptw", "ptx", "pty", "ptz", "puw", "pux", "puy", "puz", "pvw", "pvx", "pvy", "pvz", "qtw", "qtx", "qty", "qtz", "quw", "qux", "quy", "quz", "qvw", "qvx", "qvy", "qvz", "rtw", "rtx", "rty", "rtz", "ruw", "rux", "ruy", "ruz", "rvw", "rvx", "rvy", "rvz", "stw", "stx", "sty", "stz", "suw", "sux", "suy", "suz", "svw", "svx", "svy", "svz"]}
+  - {args: ["777"], expected: ["ppp", "ppq", "ppr", "pps", "pqp", "pqq", "pqr", "pqs", "prp", "prq", "prr", "prs", "psp", "psq", "psr", "pss", "qpp", "qpq", "qpr", "qps", "qqp", "qqq", "qqr", "qqs", "qrp", "qrq", "qrr", "qrs", "qsp", "qsq", "qsr", "qss", "rpp", "rpq", "rpr", "rps", "rqp", "rqq", "rqr", "rqs", "rrp", "rrq", "rrr", "rrs", "rsp", "rsq", "rsr", "rss", "spp", "spq", "spr", "sps", "sqp", "sqq", "sqr", "sqs", "srp", "srq", "srr", "srs", "ssp", "ssq", "ssr", "sss"]}
+  - {args: ["999"], expected: ["www", "wwx", "wwy", "wwz", "wxw", "wxx", "wxy", "wxz", "wyw", "wyx", "wyy", "wyz", "wzw", "wzx", "wzy", "wzz", "xww", "xwx", "xwy", "xwz", "xxw", "xxx", "xxy", "xxz", "xyw", "xyx", "xyy", "xyz", "xzw", "xzx", "xzy", "xzz", "yww", "ywx", "ywy", "ywz", "yxw", "yxx", "yxy", "yxz", "yyw", "yyx", "yyy", "yyz", "yzw", "yzx", "yzy", "yzz", "zww", "zwx", "zwy", "zwz", "zxw", "zxx", "zxy", "zxz", "zyw", "zyx", "zyy", "zyz", "zzw", "zzx", "zzy", "zzz"]}
+  - {args: ["6764"], expected: ["mpmg", "mpmh", "mpmi", "mpng", "mpnh", "mpni", "mpog", "mpoh", "mpoi", "mqmg", "mqmh", "mqmi", "mqng", "mqnh", "mqni", "mqog", "mqoh", "mqoi", "mrmg", "mrmh", "mrmi", "mrng", "mrnh", "mrni", "mrog", "mroh", "mroi", "msmg", "msmh", "msmi", "msng", "msnh", "msni", "msog", "msoh", "msoi", "npmg", "npmh", "npmi", "npng", "npnh", "npni", "npog", "npoh", "npoi", "nqmg", "nqmh", "nqmi", "nqng", "nqnh", "nqni", "nqog", "nqoh", "nqoi", "nrmg", "nrmh", "nrmi", "nrng", "nrnh", "nrni", "nrog", "nroh", "nroi", "nsmg", "nsmh", "nsmi", "nsng", "nsnh", "nsni", "nsog", "nsoh", "nsoi", "opmg", "opmh", "opmi", "opng", "opnh", "opni", "opog", "opoh", "opoi", "oqmg", "oqmh", "oqmi", "oqng", "oqnh", "oqni", "oqog", "oqoh", "oqoi", "ormg", "ormh", "ormi", "orng", "ornh", "orni", "orog", "oroh", "oroi", "osmg", "osmh", "osmi", "osng", "osnh", "osni", "osog", "osoh", "osoi"]}
+  - {args: ["325"], expected: ["daj", "dak", "dal", "dbj", "dbk", "dbl", "dcj", "dck", "dcl", "eaj", "eak", "eal", "ebj", "ebk", "ebl", "ecj", "eck", "ecl", "faj", "fak", "fal", "fbj", "fbk", "fbl", "fcj", "fck", "fcl"]}
+  - {args: ["8678"], expected: ["tmpt", "tmpu", "tmpv", "tmqt", "tmqu", "tmqv", "tmrt", "tmru", "tmrv", "tmst", "tmsu", "tmsv", "tnpt", "tnpu", "tnpv", "tnqt", "tnqu", "tnqv", "tnrt", "tnru", "tnrv", "tnst", "tnsu", "tnsv", "topt", "topu", "topv", "toqt", "toqu", "toqv", "tort", "toru", "torv", "tost", "tosu", "tosv", "umpt", "umpu", "umpv", "umqt", "umqu", "umqv", "umrt", "umru", "umrv", "umst", "umsu", "umsv", "unpt", "unpu", "unpv", "unqt", "unqu", "unqv", "unrt", "unru", "unrv", "unst", "unsu", "unsv", "uopt", "uopu", "uopv", "uoqt", "uoqu", "uoqv", "uort", "uoru", "uorv", "uost", "uosu", "uosv", "vmpt", "vmpu", "vmpv", "vmqt", "vmqu", "vmqv", "vmrt", "vmru", "vmrv", "vmst", "vmsu", "vmsv", "vnpt", "vnpu", "vnpv", "vnqt", "vnqu", "vnqv", "vnrt", "vnru", "vnrv", "vnst", "vnsu", "vnsv", "vopt", "vopu", "vopv", "voqt", "voqu", "voqv", "vort", "voru", "vorv", "vost", "vosu", "vosv"]}
+  - {args: ["245"], expected: ["agj", "agk", "agl", "ahj", "ahk", "ahl", "aij", "aik", "ail", "bgj", "bgk", "bgl", "bhj", "bhk", "bhl", "bij", "bik", "bil", "cgj", "cgk", "cgl", "chj", "chk", "chl", "cij", "cik", "cil"]}
+  - {args: ["573"], expected: ["jpd", "jpe", "jpf", "jqd", "jqe", "jqf", "jrd", "jre", "jrf", "jsd", "jse", "jsf", "kpd", "kpe", "kpf", "kqd", "kqe", "kqf", "krd", "kre", "krf", "ksd", "kse", "ksf", "lpd", "lpe", "lpf", "lqd", "lqe", "lqf", "lrd", "lre", "lrf", "lsd", "lse", "lsf"]}
+  - {args: ["68"], expected: ["mt", "mu", "mv", "nt", "nu", "nv", "ot", "ou", "ov"]}
+  - {args: ["94"], expected: ["wg", "wh", "wi", "xg", "xh", "xi", "yg", "yh", "yi", "zg", "zh", "zi"]}
+  - {args: ["7287"], expected: ["patp", "patq", "patr", "pats", "paup", "pauq", "paur", "paus", "pavp", "pavq", "pavr", "pavs", "pbtp", "pbtq", "pbtr", "pbts", "pbup", "pbuq", "pbur", "pbus", "pbvp", "pbvq", "pbvr", "pbvs", "pctp", "pctq", "pctr", "pcts", "pcup", "pcuq", "pcur", "pcus", "pcvp", "pcvq", "pcvr", "pcvs", "qatp", "qatq", "qatr", "qats", "qaup", "qauq", "qaur", "qaus", "qavp", "qavq", "qavr", "qavs", "qbtp", "qbtq", "qbtr", "qbts", "qbup", "qbuq", "qbur", "qbus", "qbvp", "qbvq", "qbvr", "qbvs", "qctp", "qctq", "qctr", "qcts", "qcup", "qcuq", "qcur", "qcus", "qcvp", "qcvq", "qcvr", "qcvs", "ratp", "ratq", "ratr", "rats", "raup", "rauq", "raur", "raus", "ravp", "ravq", "ravr", "ravs", "rbtp", "rbtq", "rbtr", "rbts", "rbup", "rbuq", "rbur", "rbus", "rbvp", "rbvq", "rbvr", "rbvs", "rctp", "rctq", "rctr", "rcts", "rcup", "rcuq", "rcur", "rcus", "rcvp", "rcvq", "rcvr", "rcvs", "satp", "satq", "satr", "sats", "saup", "sauq", "saur", "saus", "savp", "savq", "savr", "savs", "sbtp", "sbtq", "sbtr", "sbts", "sbup", "sbuq", "sbur", "sbus", "sbvp", "sbvq", "sbvr", "sbvs", "sctp", "sctq", "sctr", "scts", "scup", "scuq", "scur", "scus", "scvp", "scvq", "scvr", "scvs"]}
+  - {args: ["72"], expected: ["pa", "pb", "pc", "qa", "qb", "qc", "ra", "rb", "rc", "sa", "sb", "sc"]}
+  - {args: ["7285"], expected: ["patj", "patk", "patl", "pauj", "pauk", "paul", "pavj", "pavk", "pavl", "pbtj", "pbtk", "pbtl", "pbuj", "pbuk", "pbul", "pbvj", "pbvk", "pbvl", "pctj", "pctk", "pctl", "pcuj", "pcuk", "pcul", "pcvj", "pcvk", "pcvl", "qatj", "qatk", "qatl", "qauj", "qauk", "qaul", "qavj", "qavk", "qavl", "qbtj", "qbtk", "qbtl", "qbuj", "qbuk", "qbul", "qbvj", "qbvk", "qbvl", "qctj", "qctk", "qctl", "qcuj", "qcuk", "qcul", "qcvj", "qcvk", "qcvl", "ratj", "ratk", "ratl", "rauj", "rauk", "raul", "ravj", "ravk", "ravl", "rbtj", "rbtk", "rbtl", "rbuj", "rbuk", "rbul", "rbvj", "rbvk", "rbvl", "rctj", "rctk", "rctl", "rcuj", "rcuk", "rcul", "rcvj", "rcvk", "rcvl", "satj", "satk", "satl", "sauj", "sauk", "saul", "savj", "savk", "savl", "sbtj", "sbtk", "sbtl", "sbuj", "sbuk", "sbul", "sbvj", "sbvk", "sbvl", "sctj", "sctk", "sctl", "scuj", "scuk", "scul", "scvj", "scvk", "scvl"]}
+  - {args: ["55"], expected: ["jj", "jk", "jl", "kj", "kk", "kl", "lj", "lk", "ll"]}
+  - {args: ["263"], expected: ["amd", "ame", "amf", "and", "ane", "anf", "aod", "aoe", "aof", "bmd", "bme", "bmf", "bnd", "bne", "bnf", "bod", "boe", "bof", "cmd", "cme", "cmf", "cnd", "cne", "cnf", "cod", "coe", "cof"]}
