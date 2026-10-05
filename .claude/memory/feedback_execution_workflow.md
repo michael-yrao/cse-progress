@@ -133,3 +133,13 @@ and scope stay the same; anything that would change either goes up. The lead sti
 Write/Edit tools stay removed and the role gate is unchanged. With no lead, the responsibility is the tech
 lead's. **Why:** the lead is closest to the diff, and a round trip to the tech lead for each fix spends the
 Fable context the same day's change set out to save.
+
+**Observed 2026-10-05 — leads could not run git, node or tests, and PowerShell was ungated.** On this Windows
+machine the Bash tool's PATH has no `git`, `node` or `python`, and a `team-lead` had only Bash, so three lead
+rounds reviewed by reading files and relaying their engineers' pasted output. The role gate matched only
+`Bash`, so a state-changing git command run through PowerShell by an engineer was not gated. One lead, after a
+`SendMessage` fix round resumed its engineer in the background, held its turn open with a 120 s Bash busy-loop;
+two leads that spawned a fresh foreground engineer with a self-contained brief had no such problem. **Fix:**
+`PowerShell` added to the lead's tools, the gate extended to PowerShell in the same change (matcher, write
+cmdlets and aliases, `-OutFile`, .NET file writes, `$null` redirect exception), and fix rounds re-spawned in the
+foreground.
