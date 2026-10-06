@@ -1,3 +1,21 @@
+- **2026-10-05 · 261 Graph Valid Tree (DFS)** (🟢 s1 review; retry, half-spoiled: tracker row names DFS, learner chose the
+  variant) — ✅ **hit.** Top comment, unaided: a tree is n − 1 edges with no cycle; check the count, then DFS. Code right
+  (5,000/5,000 against a Union-Find reference). The recursive call's `False` is discarded, so the cycle check is dead code;
+  correctness rests on n − 1 edges + every node reached. → 🟡 (learner's call: not clean, recursive DFS rusty).
+- **2026-10-05 · 39 Combination Sum** (🟢 s0 lock-down; retry, half-spoiled: backtracking folder) — ✅ **hit.** Top
+  comment, unaided: sort, take/skip with the take staying on the index, the remaining target carried as state. Code
+  right first run (3,000/3,000 against a reference). → 🟢 s1.
+- **2026-10-05 · 2812 Find the Safest Path in a Grid** (🟡 re-rep; retry, half-spoiled: graphs folder, pulled in as
+  a Dijkstra seat) — ✅ **hit.** Top comment, unaided: a closest-thief grid by multi-source BFS, then Dijkstra on a
+  max-heap maximizing the path's minimum. First version right first run (5,000/5,000 against a reference). → 🟢 s1.
+- **2026-10-05 · 55 Jump Game** (🟡 re-rep; retry, half-spoiled: greedy folder) — ✅ **hit.** Top comment, unaided:
+  "we are just trying to see if we can reach len - 1, so we can just move the goalpost" (backward scan, pull the goal
+  to any index that reaches it). Code right first run (20,000/20,000 against a forward-reach reference). → 🟢 s1.
+- **2026-10-05 · 46 Permutations** (🟡 re-rep; retry, half-spoiled: backtracking folder) — ⚠️ **partial.** Top
+  comment, unaided: backtracking with the five slots, "each permutation is of len(nums)", and the used-index check as
+  validity. The choice slot was "choose or not choose the value at current index" with an index that only moves
+  forward, the subsets tree, so the feature that picks the permutation form (order matters ⟹ every spot may take any
+  unused number) was not stated before code. Derived after a trace by drawing the tree. → 🟡.
 - **2026-10-04 · 3620 Network Recovery Pathways** (🆕 new; half-spoiled: graphs folder, learner knew it was seated as
   Dijkstra) — ❌ **miss.** Top comment, unaided: "just dijkstra's where we are finding a path from 0 to n - 1 under k",
   with a dense "Prim's-esque" Dijkstra over n × n distance/visited matrices. Two objectives were collapsed into one:

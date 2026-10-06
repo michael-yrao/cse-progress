@@ -16,6 +16,32 @@ from typing import List, Optional
 
 
 class Solution:
+
+    # ── Attempt · 2026-10-05 ──────────────
+    def permute_20261005(self, nums: List[int]) -> List[List[int]]:
+        # all possible permutations mean each permutation is of len(nums)
+        # path: current permutation path
+        # state: set of indices we have so far in this path (don't really need to use a set)
+        # choice: next element to put in the permutation
+        # validity: if choosing: have we already used this index. 
+        # base case: if len(path) == len(nums), add to result
+
+        result = []
+
+        def backtrack(path):
+            if len(path) == len(nums):
+                result.append(path.copy())
+                return
+
+            for num in nums:
+                if num not in path:
+                    path.append(num)
+                    backtrack(path)
+                    path.pop()
+
+        backtrack([])
+        return result
+
     # ── Attempt 1 · 2026-09-25 ────────────────────────────────────────────
     def permute(self, nums: List[int]) -> List[List[int]]:
         # all possible permutations, backtracking

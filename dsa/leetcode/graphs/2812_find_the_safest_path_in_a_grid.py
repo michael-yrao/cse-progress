@@ -40,6 +40,88 @@ from typing import List, Optional
 
 
 class Solution:
+
+    # ── Attempt · 2026-10-05 ──────────────
+    def maximumSafenessFactor_20261005(self, grid: List[List[int]]) -> int:
+        # shallow dijkstra with rows/cols being 400 max each side and 4 neighbors each node
+        # what we do here is to maximize distance from thieves at each point
+        # so what we can do is initialize a 2D grid stating closest each node to a thief
+        # then use this as our validation to go or not go to this node via minHeap
+        # for dijkstra's, since we are already in a 2D grid, we can do 2D distance and visited grid as well to help with the minHeap
+
+        rows, cols = len(grid), len(grid[0])
+
+        closest_thief = []
+
+        distance = []
+
+        visited = []
+
+        for i in range(rows):
+            distance_row = [-1] * cols
+            visited_row = [False] * cols
+            thief_row = [math.inf] * cols 
+            distance.append(distance_row)
+            visited.append(visited_row)
+            closest_thief.append(thief_row)
+
+        # now let's populate the closest thief for all nodes
+        # we can actually do this with multi-source BFS
+        thief_visited = set()
+        thief_queue = collections.deque()
+        
+        for row in range(rows):
+            for col in range(cols):
+                if grid[row][col] == 1:
+                    thief_queue.append((row,col))
+                    closest_thief[row][col] = 0
+                    thief_visited.add((row,col))
+        
+        # now we do BFS, set row,col's value to its source + 1
+
+        neighbors = [[1,0],[-1,0],[0,1],[0,-1]]
+
+        while thief_queue:
+            lenQueue = len(thief_queue)
+            for _ in range(lenQueue):
+                cr, cc = thief_queue.popleft()
+                for ir, ic in neighbors:
+                    nr, nc = cr + ir, cc + ic
+                    if nr >= 0 and nr < rows and nc >= 0 and nc < cols and (nr,nc) not in thief_visited:
+                        closest_thief[nr][nc] = 1 + closest_thief[cr][cc]
+                        thief_queue.append((nr,nc))
+                        thief_visited.add((nr,nc))
+        
+        # now with the thief distance set, let's start our dijkstra
+        # we are trying to maximize our distance from thieves, so we should be doing a max heap
+        max_heap = []
+
+        heapq.heappush(max_heap, (-closest_thief[0][0], 0, 0))
+
+        # update distance of [0][0], this will never change
+        distance[0][0] = closest_thief[0][0]
+
+        while max_heap:
+            current_max_distance, current_row, current_col = heapq.heappop(max_heap)
+            # if already visited, continue
+            if visited[current_row][current_col]:
+                continue
+            # otherwise, changed to visited
+            visited[current_row][current_col] = True
+            # now check neighbors
+            for ir, ic in neighbors:
+                nr, nc = current_row + ir, current_col + ic
+                # if this grid is valid and we have not visited
+                if nr >= 0 and nr < rows and nc >= 0 and nc < cols and not visited[nr][nc]:
+                    new_min = min(-current_max_distance, closest_thief[nr][nc])
+                    # if new min does not help, skip it
+                    if new_min <= distance[nr][nc]:
+                        continue
+                    distance[nr][nc] = new_min
+                    heapq.heappush(max_heap, (-distance[nr][nc], nr, nc))
+        
+        return distance[rows-1][cols-1]
+
     # ── Attempt 1 · 2026-09-27 ────────────────────────────────────────────
     def maximumSafenessFactor(self, grid: List[List[int]]) -> int:
         # so we want to find a path from 0,0 to rows-1,cols-1 and maximize the distance to a cell with 1

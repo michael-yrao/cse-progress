@@ -40,6 +40,42 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-10-05 ──────────────
+    def combinationSum_20261005(self, candidates: List[int], target: int) -> List[List[int]]:
+        # first thing to note is to sort
+        # path: current values on way to sum to target
+        # state: index of current candidate, current target (to not have to do sum each call)
+        # decision: pick or not pick the number
+        # validity: 
+        #   if pick: sum including it must be <= current target
+        #   if not pick: go until the index is no longer pointing to same number
+        # base case: if current target == 0, add to result. if index >= len, return
+
+        candidates.sort()
+
+        result = []
+
+        def backtrack(path, current_index, current_target):
+            if current_target == 0:
+                result.append(path.copy())
+                return
+            
+            if current_index >= len(candidates):
+                return
+            
+            if candidates[current_index] <= current_target:
+                path.append(candidates[current_index])
+                backtrack(path, current_index, current_target - candidates[current_index])
+                path.pop()
+            
+            while current_index + 1 < len(candidates) and candidates[current_index] == candidates[current_index + 1]:
+                current_index+=1
+            
+            backtrack(path, current_index + 1, current_target)
+        
+        backtrack([], 0, target)
+        return result
+
     # ── Attempt · 2026-09-25 ──────────────
     def combinationSum_20260925(self, candidates: List[int], target: int) -> List[List[int]]:
         # all combination sum, backtracking

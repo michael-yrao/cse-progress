@@ -1385,3 +1385,15 @@ Cadence reset.
 **What:** The learner said they would be busy with wedding preparation until Nov 30. I saved a memory telling future builds to ask for available days, shrink weeks and let 🟢 s2 reviews slide, and offered to re-plan the Oct 5 week. Learner: "i don't want to drop problems because of this but i do want to make you aware so that you can adjust my learning if needed since backtracking, 1DP and 2DP are tough learns."
 **Why:** "Do note" asked for a fact to be recorded. I attached a scheduling policy the learner had not asked for, built from last week's overruns. The note was about how the hard phases are taught, not about volume.
 **Fix/ladder:** Rung 4: `project_wedding_season.md` rewritten the same turn (no load cut; adapt the teaching on a signal, learner decides). A stated fact is saved as the fact, in the learner's words; a policy drawn from it is proposed, not written into memory. `closed`
+
+
+## 2026-10-05 [P2] spoil: remaining.py printed "261 Graph Valid Tree (Union-Find)" on the kickoff board
+**What:** `remaining.py` read 261's title from the tracker, and the tracker has two 261 rows: the Union-Find one (🎓) and the DFS one (due today). The board line carried "(Union-Find)", a technique parenthetical, and it named the wrong variant. Caught before sending. The presented board drops the parenthetical.
+**Why:** The scaffolding reference says the script reads the title from the file header. For a multi-variant problem it takes the tracker row title instead, which carries the variant in parentheses.
+**Fix/ladder:** Rung 1 candidate (source fix): `remaining.py`/`links.py` should strip a trailing `(…)` variant from the title, or read it from the file. Not fixed this turn. `open`
+
+
+## 2026-10-05 [P2] ground: "progressiveoverflow.com/practice/261 should draw both examples as graphs" — stated from the spec, never from the page
+**What:** I checked the 261 spec's `figure` and the pushed `practice.json`, then told the learner the page should draw the graph. The learner pasted the page: no drawing. Root cause (Explore sweep): the practice page draws a figure only on its `statement` branch (`practice-description.component.html:1`), and 261's spec has no `statement`, so the page falls back to the site's `.steps.ts` description, which has no figure code. 21 problems with a figure are affected.
+**Why:** I read the data contract and inferred what the page renders. The rendering condition sits in the site component, which I never read.
+**Fix/ladder:** Rung 4 note: a claim about what a page shows names the component that renders it, or is phrased as expected, unverified. The site fix is pending the learner's choice. `open`

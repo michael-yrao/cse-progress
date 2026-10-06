@@ -22,6 +22,12 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🟡 261. Graph Valid Tree (DFS) — 2026-10-05 *(🟢 s1 review, last rep Aug 16 — Cycle-detection)*
+**Sticking point**: recursive DFS on an undirected graph felt unfamiliar after seven weeks away, with Union-Find the natural pull for this problem. The finished code is right, but the recursive call's return is dropped (`dfs(neighbor, node)` without checking for `False`), so the cycle check never reaches the top; the answer comes from the edge-count guard plus `len(visited) == n`.
+
+## 🟡 46. Permutations — 2026-10-05 *(re-rep of the Sep 25 🟡 — Backtracking)*
+**Sticking point**: the choice, again: the top comment and the first version were take/skip with a forward-only index (the subsets tree), so `[1,2,3]` returned only `[[1,2,3]]` and the used-index set never blocked anything. The Sep 25 watch item ("one call per remaining candidate") did not hold cold. Coach ran the file and asked which numbers could follow `[2]`; the learner answered "1 and 3" and saw the forward index could never reach the 1, then derived the loop by drawing the tree. On request the coach filled in the five-slot comments for the permutation form, plus the test "does `[b, a]` count apart from `[a, b]`?". The rewrite (`for num in nums`, `num not in path`, one shared `path`) passed the examples and an itertools check on n = 4 and n = 6.
+
 ## 🔴 3620. Network Recovery Pathways — 2026-10-04 *(NEW — Dijkstra as the check inside a max-boundary binary search on the answer)*
 **Topic**: Two objectives on one path: maximize the score (the smallest edge) under a separate budget (total cost ≤ k). Fix the score, check the budget, binary search the score.
 

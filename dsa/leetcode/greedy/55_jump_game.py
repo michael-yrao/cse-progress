@@ -21,6 +21,21 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-10-05 ──────────────
+    def jumpGame_20261005(self, nums: List[int]) -> bool:
+        # we are just trying to see if we can reach len - 1
+        # so we can just move the goalpost
+
+        goal = len(nums) - 1
+
+        for i in range(len(nums)-1, -1, -1):
+            # check if we can reach goal from here
+            reach = i + nums[i]
+            if reach >= goal:
+                goal = i
+        
+        return goal == 0
+
     # ── Attempt · 2026-09-25 ──────────────
     def jumpGame_20260925(self, nums: List[int]) -> bool:
         # we only need to know if we can reach the end node

@@ -33,6 +33,44 @@ from typing import List
 
 class Solution:
 
+    # ── Attempt · 2026-10-05 ──────────────
+    def validTree_20261005(self, n: int, edges: List[List[int]]) -> bool:
+        # we are doing DFS today
+        # an undirected graph is a tree if there are n - 1 edges where none of them make a cycle
+        # so we can check the n - 1 edges first, then we DFS to check if there is a cycle
+        
+        if len(edges) != n - 1:
+            return False
+
+        visited = set()
+
+        adj_map = collections.defaultdict(list)
+
+        for n1, n2 in edges:
+            adj_map[n1].append(n2)
+            adj_map[n2].append(n1)
+
+        # dfs to see if we have visited before
+        # if we have, we exit
+        def dfs(node, prev_node):
+            # if in visited, cycle
+            if node in visited:
+                return False
+
+            # add to visited
+            visited.add(node)
+            # go through neighbors
+            for neighbor in adj_map[node]:
+                if neighbor != prev_node:
+                    dfs(neighbor, node)
+
+            # if we went through everyone without issues, return True
+            return True
+
+        dfs(0,-1)
+        # if we can visit everyone, we are good to go
+        return len(visited) == n
+
     # ── Attempt · 2026-09-15 ──────────────
     def validTree_20260915(self, n: int, edges: List[List[int]]) -> bool:
         # union find method today

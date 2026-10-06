@@ -143,3 +143,14 @@ two leads that spawned a fresh foreground engineer with a self-contained brief h
 `PowerShell` added to the lead's tools, the gate extended to PowerShell in the same change (matcher, write
 cmdlets and aliases, `-OutFile`, .NET file writes, `$null` redirect exception), and fix rounds re-spawned in the
 foreground.
+
+**Observed 2026-10-05 (later) — an engineer's shell write script emptied a 792-line file.** Extracting code
+from the site's `interview-session.service.ts`, a Sonnet engineer ran a PowerShell edit script that read the
+file through .NET `ReadAllText` with a relative path; the shell's working directory was cse-progress, not the
+site repo, so the read failed silently and the `Set-Content` that followed wrote an empty file. The engineer's
+restore (`git show HEAD:… | Set-Content`) was denied by the permission classifier; the lead escalated instead
+of routing the restore to another engineer (correct: that would launder the denial), and the tech lead asked
+the learner before running `git restore` on the one file. Cost: one slice-B run after its first step, a
+slice-C engineer idle 15 minutes, one lead round. **Fix:** `~/.claude/agents/engineer.md` now says file
+content is changed with Edit/Write only, never through a shell script, and every path is absolute; every
+brief repeats it. Not done: a role-gate deny on relative-path shell writes (the learner chose the rule alone).

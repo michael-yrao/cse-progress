@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-04",
+  "generatedAt": "2026-10-05",
   "entries": [
     {
       "key": "733:bfs",
@@ -2724,7 +2724,7 @@
       "lcNumber": 261,
       "variant": "dfs",
       "title": "Graph Valid Tree",
-      "url": "https://neetcode.io/problems/valid-tree/question/",
+      "url": "https://neetcode.io/problems/valid-tree/",
       "file": "dsa/leetcode/graphs/261_graph_valid_tree.py",
       "symbol": "validTree_20260617",
       "attemptDate": "2026-06-17",
@@ -2741,8 +2741,8 @@
         {
           "kind": "attempt",
           "symbol": "validTree_20260617",
-          "startLine": 340,
-          "endLine": 379,
+          "startLine": 378,
+          "endLine": 417,
           "lines": [
             "    def validTree_20260617(self, n: int, edges: List[List[int]]) -> bool:",
             "        # a graph is a tree if there is no cycle back to any of the nodes excluding the node it came from",
@@ -2793,7 +2793,7 @@
       "lcNumber": 261,
       "variant": "union-find",
       "title": "Graph Valid Tree",
-      "url": "https://neetcode.io/problems/valid-tree/question/",
+      "url": "https://neetcode.io/problems/valid-tree/",
       "file": "dsa/leetcode/graphs/261_graph_valid_tree.py",
       "symbol": "validTree_20260619_UnionFind",
       "attemptDate": null,
@@ -2810,8 +2810,8 @@
         {
           "kind": "attempt",
           "symbol": "validTree_20260619_UnionFind",
-          "startLine": 381,
-          "endLine": 437,
+          "startLine": 419,
+          "endLine": 475,
           "lines": [
             "    def validTree_20260619_UnionFind(self, n: int, edges: List[List[int]]) -> bool:",
             "        # a tree is non-cyclic and is connected to every node",
@@ -7102,8 +7102,8 @@
         {
           "kind": "attempt",
           "symbol": "jumpGame",
-          "startLine": 85,
-          "endLine": 105,
+          "startLine": 100,
+          "endLine": 120,
           "lines": [
             "    # ── Attempt 1 · 2026-09-05 ────────────────────────────────────────────",
             "    def jumpGame(self, nums: List[int]) -> bool:",

@@ -6,22 +6,24 @@
 
 > The tracker is keyed by **problem**; this is keyed by **technique**. Use it at the weekly build to decide what to pull, and at phase exit to check the per-algorithm bar (recognition + execution, ≥1 🟢 each).
 
-> **61/106** techniques started &nbsp;·&nbsp; **2** with no 🟢 &nbsp;·&nbsp; **6** thin &nbsp;·&nbsp; **0** unqueued variant gaps
+> **61/106** techniques started &nbsp;·&nbsp; **3** with no 🟢 &nbsp;·&nbsp; **7** thin &nbsp;·&nbsp; **0** unqueued variant gaps
 
 ## ⚠️ Action list
 
 **No 🟢 — blocks per-algorithm phase exit.** Execution is unproven.
 
 - **Dense Dijkstra** (advanced_graphs) — best 🟡 across 743
+- **Graph Cycle Detection (DFS)** (graphs) — best 🟡 across 261
 - **Kruskal's MST** (advanced_graphs) — best 🟡 across 1489, 9004
 
 **Thin — below its computed coverage bar** (`cse.config.yml`'s `coverage_threshold`). One instance trains recall of that problem, not the skill.
 
 - **BFS on Implicit Graph** (graphs) — 1/2: 127
 - **Dense Dijkstra** (advanced_graphs) — 1/3: 743
+- **Graph Cycle Detection (DFS)** (graphs) — 1/2: 261
 - **Bellman-Ford** (advanced_graphs) — 2/3: 787, 9001
 - **Kruskal's MST** (advanced_graphs) — 2/4: 1489, 9004
-- **Dijkstra** (advanced_graphs) — 5/7: 743, 778, 1631, 2812, 3620
+- **Dijkstra** (advanced_graphs) — 5/6: 743, 778, 1631, 2812, 3620
 - **Backtracking** (backtracking) — 8/9 (11 rows): 22, 39, 40, 46, 78, 79, 90, 131
 
 **Queued — declared, and already sitting in the Waiting Room / Expansion Queue.** A known gap with a fill already picked, not a new finding.
@@ -60,7 +62,7 @@ Every declared technique gets a row, started or not — a not-started row's Gaps
 |---|---|---|---:|---:|:---:|:---:|---|---|
 | Bellman-Ford | advanced_graphs | core | 3 (2+1) | 2 (787, 9001) | 🟢 | ✅ | Standard ×1 · ~~Contrast rep on 743~~ *(queued: `graduates:743`)* · Negative edges (SSSP, -Infinity propagation) ×1 · ~~Negative-cycle detection (arbitrage / log-transform)~~ *(queued: `surplus>=1`)* | thin (2/3) · queued: 9002 `surplus>=1` |
 | Dense Dijkstra | advanced_graphs | core | 3 (2+1) | 1 (743) | 🟡 | ❌ | — | **no-green** · thin (1/3) · queued: 1976 `phase:Bit-Math`, 2662 `phase:Bit-Math`, 2699 `phase:Bit-Math` |
-| Dijkstra | advanced_graphs | core | 7 (5+2) | 5 (743, 778, 1631, 2812, 3620) | 🟢 | ✅ | Min-over-max (minimize the maximum edge) ×1 · Max-min bottleneck (maximize the minimum edge) ×1 · ~~0/1 edge weights (0-1 BFS vs Dijkstra)~~ *(queued: `surplus>=1`)* · ~~Multiplicative relaxation (maximize the product)~~ *(queued: `surplus>=1`)* | thin (5/7) · queued: 1102 `surplus>=1`, 1368 `surplus>=1`, 1514 `surplus>=1`, 3650 `surplus>=1` |
+| Dijkstra | advanced_graphs | core | 6 (5+1) | 5 (743, 778, 1631, 2812, 3620) | 🟢 | ✅ | Min-over-max (minimize the maximum edge) ×1 · Max-min bottleneck (maximize the minimum edge) ×1 · ~~0/1 edge weights (0-1 BFS vs Dijkstra)~~ *(queued: `surplus>=1`)* · ~~Multiplicative relaxation (maximize the product)~~ *(queued: `surplus>=1`)* | thin (5/6) · queued: 1102 `surplus>=1`, 1368 `surplus>=1`, 1514 `surplus>=1`, 3650 `surplus>=1` |
 | Floyd-Warshall (all-pairs shortest path) | advanced_graphs | core | 2 (2+0) | 2 (1334, 1462) | 🟢 | ✅ | — | queued: 399 `rated:1334` |
 | Hierholzer (Eulerian path) | advanced_graphs | core | 2 (2+0) | 2 *+1v* (332, 2097) | 🟢 | ✅ | pre-sorted adjacency ×1 · min-heap ordering ×1 | queued: 753 `surplus>=1` |
 | Kruskal's MST | advanced_graphs | core | 4 (2+2) | 2 (1489, 9004) | 🟡 | ❌ | — | **no-green** · thin (2/4) · queued: 1135 `surplus>=1` |
@@ -123,7 +125,7 @@ Every declared technique gets a row, started or not — a not-started row's Gaps
 | Connected Components | graphs | core | 1 (1+0) | 1 *+2v* (323) | 🟢 | ✅ | DFS ×1 · BFS ×1 · Union-Find ×1 | — |
 | Cycle Detection in an Iterated Sequence | graphs | core | 1 (1+0) | 1 (202) | 🟢 | ✅ | Seen-Set ×1 · ~~Floyd Fast/Slow~~ *(queued: `🟡:202 — ready; rides 202's next rep`)* | queued: 287 `surplus>=1` |
 | Graph Clone (DFS + Hash Map) | graphs | core | 1 (1+0) | 1 (133) | 🟢 | ✅ | — | — |
-| Graph Cycle Detection (DFS) | graphs | core | 1 (1+0) | 1 (261) | 🟢 | ✅ | — | — |
+| Graph Cycle Detection (DFS) | graphs | core | 2 (1+1) | 1 (261) | 🟡 | ❌ | — | **no-green** · thin (1/2) |
 | Grid BFS | graphs | core | 2 (2+0) | 4 (130, 200, 417, 733) | 🎓 | ✅ | — | — |
 | Grid DFS | graphs | core | 1 (1+0) | 2 (200, 695) | 🎓 | ✅ | — | — |
 | Multi-source BFS | graphs | core | 1 (1+0) | 1 (994) | 🟢 | ✅ | — | — |
@@ -144,7 +146,7 @@ Every declared technique gets a row, started or not — a not-started row's Gaps
 | Kadane | prefix_sum | core | 1 (1+0) | 1 (53) | 🎓 | ✅ | — | — |
 | Prefix Sum | prefix_sum | core | 1 (1+0) | 2 (53, 560) | 🟢 | ✅ | — | — |
 | Recursion | recursion | core | 2 (2+0) | 3 (19, 21, 206) | 🎓 | ✅ | — | — |
-| Greedy (single pass) | sliding_window | core | 5 (4+1) | 6 (45, 55, 122, 134, 763, 846) | 🟢 | ✅ | — | queued: 678 `surplus>=1`, 1899 `surplus>=1` |
+| Greedy (single pass) | sliding_window | core | 4 (4+0) | 6 (45, 55, 122, 134, 763, 846) | 🟢 | ✅ | — | queued: 678 `surplus>=1`, 1899 `surplus>=1` |
 | Sliding Window | sliding_window | core | 3 (3+0) | 4 (3, 121, 424, 567) | 🟢 | ✅ | — | queued: 76 `surplus>=1` |
 | Divide & Conquer / Sorting | sorting | core | 1 (1+0) | 1 (912) | 🟢 | ✅ | Merge Sort ×1 · ~~Quick Sort~~ *(queued: `expansion — sorting deep-dive`)* · ~~Radix Sort~~ *(queued: `expansion — sorting deep-dive`)* · ~~Counting Sort~~ *(queued: `expansion — sorting deep-dive`)* · ~~Timsort~~ *(queued: `expansion — sorting deep-dive`)* · ~~D&C on 53~~ *(queued: `rated:912 + surplus>=1`)* | — |
 | Monotonic Deque | stack | core | 1 (1+0) | 1 (239) | 🟢 | ✅ | — | — |

@@ -1,19 +1,19 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-04",
+  "generatedAt": "2026-10-05",
   "totals": {
     "problems": 134,
     "solutions": 145,
-    "reps": 649
+    "reps": 654
   },
   "pipeline": {
     "blank": 1,
-    "shaky": 11,
+    "shaky": 10,
     "clean": {
-      "s0": 3,
-      "s1": 33,
+      "s0": 2,
+      "s1": 35,
       "s2plus": 72,
-      "total": 108
+      "total": 109
     },
     "graduated": 25,
     "retired": 0
@@ -24,23 +24,23 @@
     "Hard": 12
   },
   "streak": {
-    "current": 130,
-    "longest": 130,
-    "lastStudyDay": "2026-10-04",
-    "studyDays": 188,
+    "current": 131,
+    "longest": 131,
+    "lastStudyDay": "2026-10-05",
+    "studyDays": 189,
     "restDayAllowance": 1
   },
   "coverage": {
     "total": 106,
     "started": 61,
-    "noGreen": 2,
-    "thin": 6,
+    "noGreen": 3,
+    "thin": 7,
     "variantGaps": 0
   },
   "onSchedule": {
     "totalActive": 145,
-    "dueToday": 5,
-    "overdue": 8
+    "dueToday": 6,
+    "overdue": 12
   },
   "trophyCase": {
     "graduated": [
@@ -571,7 +571,7 @@
       {
         "lcNumber": 261,
         "title": "Graph Valid Tree (Union-Find)",
-        "url": "https://neetcode.io/problems/valid-tree",
+        "url": "https://neetcode.io/problems/valid-tree/question",
         "file": "dsa/leetcode/graphs/261_graph_valid_tree.py",
         "difficulty": "Medium",
         "category": "graphs",
@@ -1264,9 +1264,9 @@
       "family": "advanced_graphs",
       "tier": "core",
       "started": true,
-      "minProblems": 7,
+      "minProblems": 6,
       "coverageFloor": 5,
-      "uncleanCount": 2,
+      "uncleanCount": 1,
       "problemCount": 5,
       "problems": [
         743,
@@ -3093,16 +3093,16 @@
       "family": "graphs",
       "tier": "core",
       "started": true,
-      "minProblems": 1,
+      "minProblems": 2,
       "coverageFloor": 1,
-      "uncleanCount": 0,
+      "uncleanCount": 1,
       "problemCount": 1,
       "problems": [
         261
       ],
-      "bestComfort": "🟢",
-      "hasGreen": true,
-      "thin": false,
+      "bestComfort": "🟡",
+      "hasGreen": false,
+      "thin": true,
       "hasVariantGap": false,
       "buildsOn": [
         "Grid DFS"
@@ -3743,9 +3743,9 @@
       "family": "sliding_window",
       "tier": "core",
       "started": true,
-      "minProblems": 5,
+      "minProblems": 4,
       "coverageFloor": 4,
-      "uncleanCount": 1,
+      "uncleanCount": 0,
       "problemCount": 6,
       "problems": [
         45,
@@ -4526,763 +4526,141 @@
     "2026-10-01",
     "2026-10-02",
     "2026-10-03",
-    "2026-10-04"
+    "2026-10-04",
+    "2026-10-05"
   ],
   "schedule": {
-    "weekOf": "2026-09-28",
+    "weekOf": "2026-10-05",
     "days": [
       {
-        "date": "2026-09-28",
+        "date": "2026-10-05",
         "weekday": "Monday",
-        "label": "Backtracking intake (40) + Greedy/Stack/Heap reviews",
-        "units": 8.0,
+        "label": "Backtracking/Greedy/Dijkstra conversions + Backtracking/Cycle-detection reviews",
+        "units": 9.8,
         "items": [
           {
-            "lcNumber": 45,
-            "title": "Jump Game II",
-            "technique": "Greedy",
+            "lcNumber": 46,
+            "title": "Permutations",
+            "technique": "Backtracking",
             "startComfort": "🟡",
             "difficulty": "Medium",
-            "url": "https://leetcode.com/problems/jump-game-ii/",
-            "file": "dsa/leetcode/greedy/45_jump_game_ii.py",
-            "tags": [],
-            "kind": "rep",
-            "done": true,
-            "deferredTo": null,
-            "endComfort": "🟢",
-            "endNote": null,
-            "nextReview": "2026-10-28"
-          },
-          {
-            "lcNumber": 40,
-            "title": "Combination Sum II",
-            "technique": "Backtracking",
-            "startComfort": null,
-            "difficulty": "Medium",
-            "url": "https://leetcode.com/problems/combination-sum-ii/",
-            "file": "dsa/leetcode/backtracking/40_combination_sum_ii.py",
-            "tags": [
-              "new"
-            ],
-            "kind": "new",
-            "done": true,
-            "deferredTo": null,
-            "endComfort": "🔴",
-            "endNote": null,
-            "nextReview": "2026-09-30"
-          },
-          {
-            "lcNumber": 572,
-            "title": "Subtree Of Another Tree",
-            "technique": "Tree-DFS",
-            "startComfort": "🟢",
-            "difficulty": "Medium",
-            "url": "https://leetcode.com/problems/subtree-of-another-tree/",
-            "file": "dsa/leetcode/trees/572_subtree_of_another_tree.py",
-            "tags": [],
-            "kind": "rep",
-            "done": true,
-            "deferredTo": null,
-            "endComfort": "🟢",
-            "endNote": null,
-            "nextReview": "2026-11-27"
-          },
-          {
-            "lcNumber": 155,
-            "title": "Min Stack",
-            "technique": "Stack",
-            "startComfort": "🟢",
-            "difficulty": "Medium",
-            "url": "https://leetcode.com/problems/min-stack/",
-            "file": "dsa/leetcode/stack/155_min_stack.py",
-            "tags": [],
-            "kind": "rep",
-            "done": true,
-            "deferredTo": null,
-            "endComfort": "🟢",
-            "endNote": null,
-            "nextReview": "2026-11-27"
-          },
-          {
-            "lcNumber": 853,
-            "title": "Car Fleet",
-            "technique": "Monotonic-stack",
-            "startComfort": "🟢",
-            "difficulty": "Medium",
-            "url": "https://leetcode.com/problems/car-fleet/",
-            "file": "dsa/leetcode/stack/853_car_fleet.py",
+            "url": "https://leetcode.com/problems/permutations/",
+            "file": "dsa/leetcode/backtracking/46_permutations.py",
             "tags": [],
             "kind": "rep",
             "done": true,
             "deferredTo": null,
             "endComfort": "🟡",
             "endNote": null,
-            "nextReview": "2026-10-08"
+            "nextReview": "2026-10-15"
           },
           {
-            "lcNumber": 189,
-            "title": "Rotate Array",
-            "technique": "Array-rotation",
+            "lcNumber": 55,
+            "title": "Jump Game",
+            "technique": "Greedy",
+            "startComfort": "🟡",
+            "difficulty": "Medium",
+            "url": "https://leetcode.com/problems/jump-game/",
+            "file": "dsa/leetcode/greedy/55_jump_game.py",
+            "tags": [],
+            "kind": "rep",
+            "done": true,
+            "deferredTo": null,
+            "endComfort": "🟢",
+            "endNote": null,
+            "nextReview": "2026-11-04"
+          },
+          {
+            "lcNumber": 743,
+            "title": "Network Delay Time (Dijkstra — array-scan)",
+            "technique": "Dense-Dijkstra",
+            "startComfort": "🟡",
+            "difficulty": "Medium",
+            "url": "https://leetcode.com/problems/network-delay-time/",
+            "file": "dsa/leetcode/graphs/743_network_delay_time.py",
+            "tags": [
+              "moved"
+            ],
+            "kind": "rep",
+            "done": false,
+            "deferredTo": null,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
+          },
+          {
+            "lcNumber": 2812,
+            "title": "Find the Safest Path in a Grid",
+            "technique": "Dijkstra",
+            "startComfort": "🟡",
+            "difficulty": "Medium",
+            "url": "https://leetcode.com/problems/find-the-safest-path-in-a-grid/",
+            "file": "dsa/leetcode/graphs/2812_find_the_safest_path_in_a_grid.py",
+            "tags": [
+              "moved"
+            ],
+            "kind": "rep",
+            "done": true,
+            "deferredTo": null,
+            "endComfort": "🟢",
+            "endNote": null,
+            "nextReview": "2026-11-04"
+          },
+          {
+            "lcNumber": 39,
+            "title": "Combination Sum",
+            "technique": "Backtracking",
             "startComfort": "🟢",
             "difficulty": "Medium",
-            "url": "https://leetcode.com/problems/rotate-array/",
-            "file": "dsa/leetcode/arrays_and_hash/189_rotate_array.py",
-            "tags": [
-              "moved"
-            ],
+            "url": "https://leetcode.com/problems/combination-sum/",
+            "file": "dsa/leetcode/backtracking/39_combination_sum.py",
+            "tags": [],
             "kind": "rep",
-            "done": false,
-            "deferredTo": "2026-10-08",
-            "endComfort": null,
+            "done": true,
+            "deferredTo": null,
+            "endComfort": "🟢",
             "endNote": null,
-            "nextReview": "2026-10-08"
+            "nextReview": "2026-11-04"
           },
           {
-            "lcNumber": 1046,
-            "title": "Last Stone Weight",
-            "technique": "Heap",
+            "lcNumber": 261,
+            "title": "Graph Valid Tree (DFS)",
+            "technique": "Cycle-detection",
             "startComfort": "🟢",
-            "difficulty": "Easy",
-            "url": "https://leetcode.com/problems/last-stone-weight/",
-            "file": "dsa/leetcode/heap/1046_last_stone_weight.py",
-            "tags": [
-              "moved"
-            ],
+            "difficulty": "Medium",
+            "url": "https://neetcode.io/problems/valid-tree/question",
+            "file": "dsa/leetcode/graphs/261_graph_valid_tree.py",
+            "tags": [],
             "kind": "rep",
-            "done": false,
-            "deferredTo": "2026-10-08",
-            "endComfort": null,
+            "done": true,
+            "deferredTo": null,
+            "endComfort": "🟡",
             "endNote": null,
-            "nextReview": "2026-10-08"
+            "nextReview": "2026-10-15"
           }
         ]
       },
       {
-        "date": "2026-09-29",
+        "date": "2026-10-06",
         "weekday": "Tuesday",
-        "label": "Greedy conversions (763, 846 pulled forward) + Backtracking intake (79) + Kadane/Cycle-detection reviews",
-        "units": 7.7,
+        "label": "Dijkstra conversions + recognition probe (452) + Trie/Hash-set reviews",
+        "units": 8.2,
         "items": [
-          {
-            "lcNumber": 763,
-            "title": "Partition Labels",
-            "technique": "Greedy",
-            "startComfort": "🟡",
-            "difficulty": "Medium",
-            "url": "https://leetcode.com/problems/partition-labels/",
-            "file": "dsa/leetcode/greedy/763_partition_labels.py",
-            "tags": [],
-            "kind": "rep",
-            "done": true,
-            "deferredTo": null,
-            "endComfort": "🟢",
-            "endNote": null,
-            "nextReview": "2026-10-29"
-          },
-          {
-            "lcNumber": 846,
-            "title": "Hand of Straights",
-            "technique": "Greedy",
-            "startComfort": "🟡",
-            "difficulty": "Medium",
-            "url": "https://leetcode.com/problems/hand-of-straights/",
-            "file": "dsa/leetcode/greedy/846_hand_of_straights.py",
-            "tags": [
-              "moved"
-            ],
-            "kind": "rep",
-            "done": true,
-            "deferredTo": null,
-            "endComfort": "🟢",
-            "endNote": null,
-            "nextReview": "2026-10-29"
-          },
-          {
-            "lcNumber": 79,
-            "title": "Word Search",
-            "technique": "Backtracking",
-            "startComfort": null,
-            "difficulty": "Medium",
-            "url": "https://leetcode.com/problems/word-search/",
-            "file": "dsa/leetcode/backtracking/79_word_search.py",
-            "tags": [
-              "new"
-            ],
-            "kind": "new",
-            "done": true,
-            "deferredTo": null,
-            "endComfort": "🟡",
-            "endNote": null,
-            "nextReview": "2026-10-09"
-          },
-          {
-            "lcNumber": 53,
-            "title": "Maximum Subarray (Kadane)",
-            "technique": "Kadane",
-            "startComfort": "🟢",
-            "difficulty": "Medium",
-            "url": "https://leetcode.com/problems/maximum-subarray/",
-            "file": "dsa/leetcode/greedy/53_maximum_subarray.py",
-            "tags": [],
-            "kind": "rep",
-            "done": true,
-            "deferredTo": null,
-            "endComfort": "🎓",
-            "endNote": null,
-            "nextReview": "2027-03-28"
-          },
-          {
-            "lcNumber": 202,
-            "title": "Happy Number",
-            "technique": "Cycle-detection",
-            "startComfort": "🟢",
-            "difficulty": "Easy",
-            "url": "https://leetcode.com/problems/happy-number/",
-            "file": "dsa/leetcode/graphs/202_happy_number.py",
-            "tags": [
-              "moved"
-            ],
-            "kind": "rep",
-            "done": false,
-            "deferredTo": "2026-10-01",
-            "endComfort": null,
-            "endNote": null,
-            "nextReview": "2026-10-01"
-          }
-        ]
-      },
-      {
-        "date": "2026-09-30",
-        "weekday": "Wednesday",
-        "label": "Monotonic-stack + Backtracking conversions + Backtracking intake (131) + Hash-set review",
-        "units": 10.9,
-        "items": [
-          {
-            "lcNumber": 40,
-            "title": "Combination Sum II",
-            "technique": "Backtracking",
-            "startComfort": "🔴",
-            "difficulty": "Medium",
-            "url": "https://leetcode.com/problems/combination-sum-ii/",
-            "file": "dsa/leetcode/backtracking/40_combination_sum_ii.py",
-            "tags": [],
-            "kind": "rep",
-            "done": true,
-            "deferredTo": null,
-            "endComfort": "🔴",
-            "endNote": null,
-            "nextReview": "2026-10-02"
-          },
-          {
-            "lcNumber": 84,
-            "title": "Largest Rectangle in Histogram",
-            "technique": "Monotonic-stack",
-            "startComfort": "🟡",
-            "difficulty": "Hard",
-            "url": "https://leetcode.com/problems/largest-rectangle-in-histogram/",
-            "file": "dsa/leetcode/stack/84_largest_rectangle_in_histogram.py",
-            "tags": [],
-            "kind": "rep",
-            "done": true,
-            "deferredTo": null,
-            "endComfort": "🟢",
-            "endNote": null,
-            "nextReview": "2026-10-30"
-          },
-          {
-            "lcNumber": 78,
-            "title": "Subsets",
-            "technique": "Backtracking",
-            "startComfort": "🟡",
-            "difficulty": "Medium",
-            "url": "https://leetcode.com/problems/subsets/",
-            "file": "dsa/leetcode/backtracking/78_subsets.py",
-            "tags": [],
-            "kind": "rep",
-            "done": true,
-            "deferredTo": null,
-            "endComfort": "🟢",
-            "endNote": null,
-            "nextReview": "2026-10-30"
-          },
-          {
-            "lcNumber": 131,
-            "title": "Palindrome Partitioning",
-            "technique": "Backtracking",
-            "startComfort": null,
-            "difficulty": "Medium",
-            "url": "https://leetcode.com/problems/palindrome-partitioning/",
-            "file": "dsa/leetcode/backtracking/131_palindrome_partitioning.py",
-            "tags": [
-              "new"
-            ],
-            "kind": "new",
-            "done": true,
-            "deferredTo": null,
-            "endComfort": "🔴",
-            "endNote": null,
-            "nextReview": "2026-10-02"
-          },
-          {
-            "lcNumber": 219,
-            "title": "Contains Duplicate II",
-            "technique": "Hash-set",
-            "startComfort": "🟢",
-            "difficulty": "Easy",
-            "url": "https://leetcode.com/problems/contains-duplicate-ii/",
-            "file": "dsa/leetcode/sliding_window/219_contains_duplicate_ii.py",
-            "tags": [
-              "moved"
-            ],
-            "kind": "rep",
-            "done": false,
-            "deferredTo": "2026-10-03",
-            "endComfort": null,
-            "endNote": null,
-            "nextReview": "2026-10-03"
-          }
-        ]
-      },
-      {
-        "date": "2026-10-01",
-        "weekday": "Thursday",
-        "label": "Backtracking intake (90) + Bellman-Ford intake (9001) + Backtracking/Stack/Hash-set/Cycle-detection reviews",
-        "units": 7.8,
-        "items": [
-          {
-            "lcNumber": 90,
-            "title": "Subsets II",
-            "technique": "Backtracking",
-            "startComfort": null,
-            "difficulty": "Medium",
-            "url": "https://leetcode.com/problems/subsets-ii/",
-            "file": "dsa/leetcode/backtracking/90_subsets_ii.py",
-            "tags": [
-              "new"
-            ],
-            "kind": "new",
-            "done": true,
-            "deferredTo": null,
-            "endComfort": "🔴",
-            "endNote": null,
-            "nextReview": "2026-10-03"
-          },
-          {
-            "lcNumber": 9001,
-            "title": "Single Source Shortest Path, Negative Weights",
-            "technique": "Bellman-Ford",
-            "startComfort": null,
-            "difficulty": "Medium",
-            "url": "https://progressiveoverflow.com/practice/9001",
-            "file": "dsa/leetcode/graphs/9001_single_source_shortest_path_negative_weights.py",
-            "tags": [
-              "new"
-            ],
-            "kind": "new",
-            "done": true,
-            "deferredTo": null,
-            "endComfort": "🔴",
-            "endNote": null,
-            "nextReview": "2026-10-03"
-          },
-          {
-            "lcNumber": 22,
-            "title": "Generate Parentheses",
-            "technique": "Backtracking",
-            "startComfort": "🟢",
-            "difficulty": "Medium",
-            "url": "https://leetcode.com/problems/generate-parentheses/",
-            "file": "dsa/leetcode/backtracking/22_generate_parentheses.py",
-            "tags": [],
-            "kind": "rep",
-            "done": true,
-            "deferredTo": null,
-            "endComfort": "🟢",
-            "endNote": null,
-            "nextReview": "2026-10-31"
-          },
-          {
-            "lcNumber": 150,
-            "title": "Evaluate Reverse Polish Notation",
-            "technique": "Stack",
-            "startComfort": "🟢",
-            "difficulty": "Medium",
-            "url": "https://leetcode.com/problems/evaluate-reverse-polish-notation/",
-            "file": "dsa/leetcode/stack/150_evaluate_reverse_polish_notation.py",
-            "tags": [],
-            "kind": "rep",
-            "done": true,
-            "deferredTo": null,
-            "endComfort": "🟢",
-            "endNote": null,
-            "nextReview": "2026-11-30"
-          },
-          {
-            "lcNumber": 271,
-            "title": "Encode and Decode Strings",
-            "technique": "Length-prefix",
-            "startComfort": "🟢",
-            "difficulty": "Medium",
-            "url": "https://leetcode.com/problems/encode-and-decode-strings/",
-            "file": "dsa/leetcode/arrays_and_hash/271_encode_and_decode_string.py",
-            "tags": [],
-            "kind": "rep",
-            "done": true,
-            "deferredTo": null,
-            "endComfort": "🟢",
-            "endNote": null,
-            "nextReview": "2026-11-30"
-          },
-          {
-            "lcNumber": 128,
-            "title": "Longest Consecutive Sequence",
-            "technique": "Hash-set",
-            "startComfort": "🟢",
-            "difficulty": "Medium",
-            "url": "https://leetcode.com/problems/longest-consecutive-sequence/",
-            "file": "dsa/leetcode/arrays_and_hash/128_longest_consecutive_sequence.py",
-            "tags": [
-              "moved"
-            ],
-            "kind": "rep",
-            "done": true,
-            "deferredTo": null,
-            "endComfort": "🎓",
-            "endNote": null,
-            "nextReview": "2027-03-30"
-          },
-          {
-            "lcNumber": 202,
-            "title": "Happy Number",
-            "technique": "Cycle-detection",
-            "startComfort": "🟢",
-            "difficulty": "Easy",
-            "url": "https://leetcode.com/problems/happy-number/",
-            "file": "dsa/leetcode/graphs/202_happy_number.py",
-            "tags": [
-              "moved"
-            ],
-            "kind": "rep",
-            "done": true,
-            "deferredTo": null,
-            "endComfort": "🟢",
-            "endNote": null,
-            "nextReview": "2026-11-30"
-          }
-        ]
-      },
-      {
-        "date": "2026-10-02",
-        "weekday": "Friday",
-        "label": "Backtracking/Binary-search/Monotonic-stack conversions + Kruskal intake (9004) + BFS review",
-        "units": 13.9,
-        "items": [
-          {
-            "lcNumber": 40,
-            "title": "Combination Sum II",
-            "technique": "Backtracking",
-            "startComfort": "🔴",
-            "difficulty": "Medium",
-            "url": "https://leetcode.com/problems/combination-sum-ii/",
-            "file": "dsa/leetcode/backtracking/40_combination_sum_ii.py",
-            "tags": [],
-            "kind": "rep",
-            "done": true,
-            "deferredTo": null,
-            "endComfort": "🟢",
-            "endNote": "prov",
-            "nextReview": "2026-10-12"
-          },
-          {
-            "lcNumber": 131,
-            "title": "Palindrome Partitioning",
-            "technique": "Backtracking",
-            "startComfort": "🔴",
-            "difficulty": "Medium",
-            "url": "https://leetcode.com/problems/palindrome-partitioning/",
-            "file": "dsa/leetcode/backtracking/131_palindrome_partitioning.py",
-            "tags": [],
-            "kind": "rep",
-            "done": true,
-            "deferredTo": null,
-            "endComfort": "🔴",
-            "endNote": null,
-            "nextReview": "2026-10-04"
-          },
-          {
-            "lcNumber": 1552,
-            "title": "Magnetic Force Between Two Balls",
-            "technique": "Binary-search",
-            "startComfort": "🟡",
-            "difficulty": "Medium",
-            "url": "https://leetcode.com/problems/magnetic-force-between-two-balls/",
-            "file": "dsa/leetcode/binary_search/1552_magnetic_force_between_two_balls.py",
-            "tags": [],
-            "kind": "rep",
-            "done": true,
-            "deferredTo": null,
-            "endComfort": "🟢",
-            "endNote": null,
-            "nextReview": "2026-11-01"
-          },
-          {
-            "lcNumber": 901,
-            "title": "Online Stock Span",
-            "technique": "Monotonic-stack",
-            "startComfort": "🟡",
-            "difficulty": "Medium",
-            "url": "https://leetcode.com/problems/online-stock-span/",
-            "file": "dsa/leetcode/stack/901_online_stock_span.py",
-            "tags": [],
-            "kind": "rep",
-            "done": true,
-            "deferredTo": null,
-            "endComfort": "🟢",
-            "endNote": null,
-            "nextReview": "2026-11-01"
-          },
-          {
-            "lcNumber": 9004,
-            "title": "Minimum Spanning Tree",
-            "technique": "Kruskal",
-            "startComfort": null,
-            "difficulty": "Medium",
-            "url": "https://progressiveoverflow.com/practice/9004",
-            "file": "dsa/leetcode/graphs/9004_minimum_spanning_tree.py",
-            "tags": [
-              "new"
-            ],
-            "kind": "new",
-            "done": true,
-            "deferredTo": null,
-            "endComfort": "🟡",
-            "endNote": null,
-            "nextReview": "2026-10-12"
-          },
-          {
-            "lcNumber": 127,
-            "title": "Word Ladder",
-            "technique": "BFS",
-            "startComfort": "🟢",
-            "difficulty": "Hard",
-            "url": "https://leetcode.com/problems/word-ladder/",
-            "file": "dsa/leetcode/graphs/127_word_ladder.py",
-            "tags": [],
-            "kind": "rep",
-            "done": true,
-            "deferredTo": null,
-            "endComfort": "🟢",
-            "endNote": null,
-            "nextReview": "2026-12-01"
-          }
-        ]
-      },
-      {
-        "date": "2026-10-03",
-        "weekday": "Saturday",
-        "label": "Backtracking + Bellman-Ford + Kruskal conversions (90, 9001, 1489) + Dijkstra intake (3620) + Prefix-sum/Multi-source-BFS/Linked-list/Hash-set reviews",
-        "units": 14.2,
-        "items": [
-          {
-            "lcNumber": 90,
-            "title": "Subsets II",
-            "technique": "Backtracking",
-            "startComfort": "🔴",
-            "difficulty": "Medium",
-            "url": "https://leetcode.com/problems/subsets-ii/",
-            "file": "dsa/leetcode/backtracking/90_subsets_ii.py",
-            "tags": [],
-            "kind": "rep",
-            "done": true,
-            "deferredTo": null,
-            "endComfort": "🟡",
-            "endNote": null,
-            "nextReview": "2026-10-13"
-          },
-          {
-            "lcNumber": 9001,
-            "title": "Single Source Shortest Path, Negative Weights",
-            "technique": "Bellman-Ford",
-            "startComfort": "🔴",
-            "difficulty": "Medium",
-            "url": "https://progressiveoverflow.com/practice/9001",
-            "file": "dsa/leetcode/graphs/9001_single_source_shortest_path_negative_weights.py",
-            "tags": [],
-            "kind": "rep",
-            "done": true,
-            "deferredTo": null,
-            "endComfort": "🟡",
-            "endNote": null,
-            "nextReview": "2026-10-13"
-          },
-          {
-            "lcNumber": 1489,
-            "title": "Find Critical and Pseudo-Critical Edges in MST",
-            "technique": "Kruskal",
-            "startComfort": "🟡",
-            "difficulty": "Hard",
-            "url": "https://leetcode.com/problems/find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree/",
-            "file": "dsa/leetcode/graphs/1489_find_critical_and_pseudo_critical_edges_in_mst.py",
-            "tags": [],
-            "kind": "rep",
-            "done": true,
-            "deferredTo": null,
-            "endComfort": "🟡",
-            "endNote": null,
-            "nextReview": "2026-10-13"
-          },
           {
             "lcNumber": 3620,
             "title": "Network Recovery Pathways",
             "technique": "Dijkstra",
-            "startComfort": null,
+            "startComfort": "🔴",
             "difficulty": "Hard",
             "url": "https://leetcode.com/problems/network-recovery-pathways/",
             "file": "dsa/leetcode/graphs/3620_network_recovery_pathways.py",
-            "tags": [
-              "moved",
-              "new"
-            ],
-            "kind": "new",
-            "done": false,
-            "deferredTo": "2026-10-04",
-            "endComfort": null,
-            "endNote": null,
-            "nextReview": "2026-10-04"
-          },
-          {
-            "lcNumber": 53,
-            "title": "Maximum Subarray (Prefix Sum)",
-            "technique": "Prefix-sum",
-            "startComfort": "🟢",
-            "difficulty": "Medium",
-            "url": "https://leetcode.com/problems/maximum-subarray/",
-            "file": "dsa/leetcode/greedy/53_maximum_subarray.py",
-            "tags": [
-              "moved"
-            ],
-            "kind": "rep",
-            "done": false,
-            "deferredTo": "2026-10-08",
-            "endComfort": null,
-            "endNote": null,
-            "nextReview": "2026-10-08"
-          },
-          {
-            "lcNumber": 994,
-            "title": "Rotting Oranges",
-            "technique": "Multi-source-BFS",
-            "startComfort": "🟢",
-            "difficulty": "Medium",
-            "url": "https://leetcode.com/problems/rotting-oranges/",
-            "file": "dsa/leetcode/graphs/994_rotting_oranges.py",
-            "tags": [
-              "moved"
-            ],
-            "kind": "rep",
-            "done": false,
-            "deferredTo": "2026-10-07",
-            "endComfort": null,
-            "endNote": null,
-            "nextReview": "2026-10-07"
-          },
-          {
-            "lcNumber": 2,
-            "title": "Add Two Numbers",
-            "technique": "Linked-list",
-            "startComfort": "🟢",
-            "difficulty": "Medium",
-            "url": "https://leetcode.com/problems/add-two-numbers/",
-            "file": "dsa/leetcode/linked_list/2_add_two_numbers.py",
-            "tags": [
-              "moved"
-            ],
-            "kind": "rep",
-            "done": false,
-            "deferredTo": "2026-10-07",
-            "endComfort": null,
-            "endNote": null,
-            "nextReview": "2026-10-07"
-          },
-          {
-            "lcNumber": 219,
-            "title": "Contains Duplicate II",
-            "technique": "Hash-set",
-            "startComfort": "🟢",
-            "difficulty": "Easy",
-            "url": "https://leetcode.com/problems/contains-duplicate-ii/",
-            "file": "dsa/leetcode/sliding_window/219_contains_duplicate_ii.py",
-            "tags": [
-              "moved"
-            ],
-            "kind": "rep",
-            "done": false,
-            "deferredTo": "2026-10-06",
-            "endComfort": null,
-            "endNote": null,
-            "nextReview": "2026-10-06"
-          }
-        ]
-      },
-      {
-        "date": "2026-10-04",
-        "weekday": "Sunday",
-        "label": null,
-        "units": 14.7,
-        "items": [
-          {
-            "lcNumber": 131,
-            "title": "Palindrome Partitioning",
-            "technique": "Backtracking",
-            "startComfort": "🔴",
-            "difficulty": "Medium",
-            "url": "https://leetcode.com/problems/palindrome-partitioning/",
-            "file": "dsa/leetcode/backtracking/131_palindrome_partitioning.py",
             "tags": [],
             "kind": "rep",
-            "done": true,
-            "deferredTo": null,
-            "endComfort": "🟡",
-            "endNote": null,
-            "nextReview": "2026-10-14"
-          },
-          {
-            "lcNumber": 9003,
-            "title": "Lost Map",
-            "technique": "Prim's",
-            "startComfort": null,
-            "difficulty": null,
-            "url": "https://progressiveoverflow.com/practice/9003",
-            "file": "dsa/leetcode/graphs/9003_lost_map.py",
-            "tags": [
-              "moved",
-              "new"
-            ],
-            "kind": "new",
             "done": false,
-            "deferredTo": "2026-10-08",
+            "deferredTo": null,
             "endComfort": null,
             "endNote": null,
-            "nextReview": "2026-10-08"
-          },
-          {
-            "lcNumber": 3620,
-            "title": "Network Recovery Pathways",
-            "technique": "Dijkstra",
-            "startComfort": null,
-            "difficulty": "Hard",
-            "url": "https://leetcode.com/problems/network-recovery-pathways/",
-            "file": "dsa/leetcode/graphs/3620_network_recovery_pathways.py",
-            "tags": [
-              "moved",
-              "new"
-            ],
-            "kind": "new",
-            "done": true,
-            "deferredTo": null,
-            "endComfort": "🔴",
-            "endNote": null,
-            "nextReview": "2026-10-06"
+            "nextReview": null
           },
           {
             "lcNumber": 452,
@@ -5298,28 +4676,86 @@
             ],
             "kind": "probe",
             "done": false,
-            "deferredTo": "2026-10-06",
+            "deferredTo": null,
             "endComfort": null,
             "endNote": null,
-            "nextReview": "2026-10-06"
+            "nextReview": null
           },
           {
-            "lcNumber": 124,
-            "title": "Binary Tree Maximum Path Sum",
-            "technique": "Tree-DFS",
+            "lcNumber": 648,
+            "title": "Replace Words",
+            "technique": "Trie",
             "startComfort": "🟢",
-            "difficulty": "Hard",
-            "url": "https://leetcode.com/problems/binary-tree-maximum-path-sum/",
-            "file": "dsa/leetcode/trees/124_binary_tree_maximum_path_sum.py",
+            "difficulty": "Medium",
+            "url": "https://leetcode.com/problems/replace-words/",
+            "file": "dsa/leetcode/trie/648_replace_words.py",
+            "tags": [],
+            "kind": "rep",
+            "done": false,
+            "deferredTo": null,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
+          },
+          {
+            "lcNumber": 219,
+            "title": "Contains Duplicate II",
+            "technique": "Hash-set",
+            "startComfort": "🟢",
+            "difficulty": "Easy",
+            "url": "https://leetcode.com/problems/contains-duplicate-ii/",
+            "file": "dsa/leetcode/sliding_window/219_contains_duplicate_ii.py",
             "tags": [
               "moved"
             ],
             "kind": "rep",
             "done": false,
-            "deferredTo": "2026-10-09",
+            "deferredTo": null,
             "endComfort": null,
             "endNote": null,
-            "nextReview": "2026-10-09"
+            "nextReview": null
+          }
+        ]
+      },
+      {
+        "date": "2026-10-07",
+        "weekday": "Wednesday",
+        "label": "Backtracking intake (17) + Intervals/Floyd-Warshall/Stack/Multi-source-BFS/Linked-list/BFS reviews",
+        "units": 5.8,
+        "items": [
+          {
+            "lcNumber": 17,
+            "title": "Letter Combinations of a Phone Number",
+            "technique": "Backtracking",
+            "startComfort": null,
+            "difficulty": null,
+            "url": "https://leetcode.com/problems/letter-combinations-of-a-phone-number/",
+            "file": null,
+            "tags": [
+              "new"
+            ],
+            "kind": "new",
+            "done": false,
+            "deferredTo": null,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
+          },
+          {
+            "lcNumber": 57,
+            "title": "Insert Interval",
+            "technique": "Intervals",
+            "startComfort": "🟢",
+            "difficulty": "Medium",
+            "url": "https://leetcode.com/problems/insert-interval/",
+            "file": "dsa/leetcode/greedy/57_insert_interval.py",
+            "tags": [],
+            "kind": "rep",
+            "done": false,
+            "deferredTo": null,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
           },
           {
             "lcNumber": 1462,
@@ -5334,10 +4770,677 @@
             ],
             "kind": "rep",
             "done": false,
-            "deferredTo": "2026-10-07",
+            "deferredTo": null,
             "endComfort": null,
             "endNote": null,
-            "nextReview": "2026-10-07"
+            "nextReview": null
+          },
+          {
+            "lcNumber": 994,
+            "title": "Rotting Oranges",
+            "technique": "Multi-source-BFS",
+            "startComfort": "🟢",
+            "difficulty": "Medium",
+            "url": "https://leetcode.com/problems/rotting-oranges/",
+            "file": "dsa/leetcode/graphs/994_rotting_oranges.py",
+            "tags": [
+              "moved"
+            ],
+            "kind": "rep",
+            "done": false,
+            "deferredTo": null,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
+          },
+          {
+            "lcNumber": 2,
+            "title": "Add Two Numbers",
+            "technique": "Linked-list",
+            "startComfort": "🟢",
+            "difficulty": "Medium",
+            "url": "https://leetcode.com/problems/add-two-numbers/",
+            "file": "dsa/leetcode/linked_list/2_add_two_numbers.py",
+            "tags": [
+              "moved"
+            ],
+            "kind": "rep",
+            "done": false,
+            "deferredTo": null,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
+          },
+          {
+            "lcNumber": 323,
+            "title": "Number of Connected Components in an Undirected Graph (BFS)",
+            "technique": "BFS",
+            "startComfort": "🟢",
+            "difficulty": "Medium",
+            "url": "https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/",
+            "file": "dsa/leetcode/graphs/323_number_of_connected_components_in_an_undirected_graph.py",
+            "tags": [
+              "moved"
+            ],
+            "kind": "rep",
+            "done": false,
+            "deferredTo": null,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
+          },
+          {
+            "lcNumber": 20,
+            "title": "Valid Parentheses",
+            "technique": "Stack",
+            "startComfort": "🟢",
+            "difficulty": "Easy",
+            "url": "https://leetcode.com/problems/valid-parentheses/",
+            "file": "dsa/leetcode/stack/20_valid_parentheses.py",
+            "tags": [],
+            "kind": "rep",
+            "done": false,
+            "deferredTo": null,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
+          }
+        ]
+      },
+      {
+        "date": "2026-10-08",
+        "weekday": "Thursday",
+        "label": "Monotonic-stack conversions + Prim's intake (9003) + Graph-clone/Prefix-sum/Cycle-detection/Array-rotation/Heap/Array-basics reviews",
+        "units": 7.8,
+        "items": [
+          {
+            "lcNumber": 853,
+            "title": "Car Fleet",
+            "technique": "Monotonic-stack",
+            "startComfort": "🟡",
+            "difficulty": "Medium",
+            "url": "https://leetcode.com/problems/car-fleet/",
+            "file": "dsa/leetcode/stack/853_car_fleet.py",
+            "tags": [],
+            "kind": "rep",
+            "done": false,
+            "deferredTo": null,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
+          },
+          {
+            "lcNumber": 9003,
+            "title": "Lost Map",
+            "technique": "Prim's",
+            "startComfort": null,
+            "difficulty": null,
+            "url": "https://progressiveoverflow.com/practice/9003",
+            "file": "dsa/leetcode/graphs/9003_lost_map.py",
+            "tags": [
+              "moved",
+              "new"
+            ],
+            "kind": "new",
+            "done": false,
+            "deferredTo": null,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
+          },
+          {
+            "lcNumber": 133,
+            "title": "Clone Graph",
+            "technique": "Graph-clone",
+            "startComfort": "🟢",
+            "difficulty": "Medium",
+            "url": "https://leetcode.com/problems/clone-graph/",
+            "file": "dsa/leetcode/graphs/133_clone_graph.py",
+            "tags": [],
+            "kind": "rep",
+            "done": false,
+            "deferredTo": null,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
+          },
+          {
+            "lcNumber": 53,
+            "title": "Maximum Subarray (Prefix Sum)",
+            "technique": "Prefix-sum",
+            "startComfort": "🟢",
+            "difficulty": "Medium",
+            "url": "https://leetcode.com/problems/maximum-subarray/",
+            "file": "dsa/leetcode/greedy/53_maximum_subarray.py",
+            "tags": [
+              "moved"
+            ],
+            "kind": "rep",
+            "done": false,
+            "deferredTo": null,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
+          },
+          {
+            "lcNumber": 189,
+            "title": "Rotate Array",
+            "technique": "Array-rotation",
+            "startComfort": "🟢",
+            "difficulty": "Medium",
+            "url": "https://leetcode.com/problems/rotate-array/",
+            "file": "dsa/leetcode/arrays_and_hash/189_rotate_array.py",
+            "tags": [
+              "moved"
+            ],
+            "kind": "rep",
+            "done": false,
+            "deferredTo": null,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
+          },
+          {
+            "lcNumber": 141,
+            "title": "Linked List Cycle",
+            "technique": "Cycle-detection",
+            "startComfort": "🟢",
+            "difficulty": "Easy",
+            "url": "https://leetcode.com/problems/linked-list-cycle/",
+            "file": "dsa/leetcode/linked_list/141_linked_list_cycle.py",
+            "tags": [],
+            "kind": "rep",
+            "done": false,
+            "deferredTo": null,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
+          },
+          {
+            "lcNumber": 1046,
+            "title": "Last Stone Weight",
+            "technique": "Heap",
+            "startComfort": "🟢",
+            "difficulty": "Easy",
+            "url": "https://leetcode.com/problems/last-stone-weight/",
+            "file": "dsa/leetcode/heap/1046_last_stone_weight.py",
+            "tags": [
+              "moved"
+            ],
+            "kind": "rep",
+            "done": false,
+            "deferredTo": null,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
+          },
+          {
+            "lcNumber": 1929,
+            "title": "Concatenation of Array",
+            "technique": "Array-basics",
+            "startComfort": "🟢",
+            "difficulty": "Easy",
+            "url": "https://leetcode.com/problems/concatenation-of-array/",
+            "file": "dsa/leetcode/arrays_and_hash/1929_concatenation_of_array.py",
+            "tags": [
+              "moved"
+            ],
+            "kind": "rep",
+            "done": false,
+            "deferredTo": null,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
+          }
+        ]
+      },
+      {
+        "date": "2026-10-09",
+        "weekday": "Friday",
+        "label": "Backtracking conversions + Backtracking intake (51) + Tree-DFS/Array-basics/Heap/Hash-set/Fast-slow reviews",
+        "units": 8.1,
+        "items": [
+          {
+            "lcNumber": 79,
+            "title": "Word Search",
+            "technique": "Backtracking",
+            "startComfort": "🟡",
+            "difficulty": "Medium",
+            "url": "https://leetcode.com/problems/word-search/",
+            "file": "dsa/leetcode/backtracking/79_word_search.py",
+            "tags": [],
+            "kind": "rep",
+            "done": false,
+            "deferredTo": null,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
+          },
+          {
+            "lcNumber": 51,
+            "title": "N-Queens",
+            "technique": "Backtracking",
+            "startComfort": null,
+            "difficulty": null,
+            "url": "https://leetcode.com/problems/n-queens/",
+            "file": null,
+            "tags": [
+              "new"
+            ],
+            "kind": "new",
+            "done": false,
+            "deferredTo": null,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
+          },
+          {
+            "lcNumber": 124,
+            "title": "Binary Tree Maximum Path Sum",
+            "technique": "Tree-DFS",
+            "startComfort": "🟢",
+            "difficulty": "Hard",
+            "url": "https://leetcode.com/problems/binary-tree-maximum-path-sum/",
+            "file": "dsa/leetcode/trees/124_binary_tree_maximum_path_sum.py",
+            "tags": [
+              "moved"
+            ],
+            "kind": "rep",
+            "done": false,
+            "deferredTo": null,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
+          },
+          {
+            "lcNumber": 66,
+            "title": "Plus One",
+            "technique": "Array-basics",
+            "startComfort": "🟢",
+            "difficulty": "Easy",
+            "url": "https://leetcode.com/problems/plus-one/",
+            "file": "dsa/leetcode/arrays_and_hash/66_plus_one.py",
+            "tags": [],
+            "kind": "rep",
+            "done": false,
+            "deferredTo": null,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
+          },
+          {
+            "lcNumber": 703,
+            "title": "Kth Largest Element in a Stream",
+            "technique": "Heap",
+            "startComfort": "🟢",
+            "difficulty": "Easy",
+            "url": "https://leetcode.com/problems/kth-largest-element-in-a-stream/",
+            "file": "dsa/leetcode/heap/703_kth_largest_element_in_stream.py",
+            "tags": [],
+            "kind": "rep",
+            "done": false,
+            "deferredTo": null,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
+          },
+          {
+            "lcNumber": 217,
+            "title": "Contains Duplicate",
+            "technique": "Hash-set",
+            "startComfort": "🟢",
+            "difficulty": "Easy",
+            "url": "https://leetcode.com/problems/contains-duplicate/",
+            "file": "dsa/leetcode/arrays_and_hash/217_contains_duplicate.py",
+            "tags": [
+              "moved"
+            ],
+            "kind": "rep",
+            "done": false,
+            "deferredTo": null,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
+          },
+          {
+            "lcNumber": 26,
+            "title": "Remove Duplicates from Sorted Array",
+            "technique": "Fast-slow",
+            "startComfort": "🟢",
+            "difficulty": "Easy",
+            "url": "https://leetcode.com/problems/remove-duplicates-from-sorted-array/",
+            "file": "dsa/leetcode/two_pointers/26_remove_dup_from_sorted_array.py",
+            "tags": [
+              "moved"
+            ],
+            "kind": "rep",
+            "done": false,
+            "deferredTo": null,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
+          }
+        ]
+      },
+      {
+        "date": "2026-10-10",
+        "weekday": "Saturday",
+        "label": "Hierholzer/Topological-sort/Monotonic-stack/Hash-set/Prefix-max/DFS/Heap/Tree-construction/Binary-search/Greedy/Two-pointers/Fast-slow/Union-Find reviews",
+        "units": 7.9,
+        "items": [
+          {
+            "lcNumber": 332,
+            "title": "Reconstruct Itinerary (min-heap ordering)",
+            "technique": "Hierholzer",
+            "startComfort": "🟢",
+            "difficulty": "Hard",
+            "url": "https://leetcode.com/problems/reconstruct-itinerary/",
+            "file": "dsa/leetcode/graphs/332_reconstruct_itinerary.py",
+            "tags": [],
+            "kind": "rep",
+            "done": false,
+            "deferredTo": null,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
+          },
+          {
+            "lcNumber": 269,
+            "title": "Alien Dictionary",
+            "technique": "Topological-sort",
+            "startComfort": "🟢",
+            "difficulty": "Hard",
+            "url": "https://leetcode.com/problems/alien-dictionary/",
+            "file": "dsa/leetcode/graphs/269_alien_dictionary.py",
+            "tags": [],
+            "kind": "rep",
+            "done": false,
+            "deferredTo": null,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
+          },
+          {
+            "lcNumber": 739,
+            "title": "Daily Temperatures",
+            "technique": "Monotonic-stack",
+            "startComfort": "🟢",
+            "difficulty": "Medium",
+            "url": "https://leetcode.com/problems/daily-temperatures/",
+            "file": "dsa/leetcode/stack/739_daily_temperatures.py",
+            "tags": [],
+            "kind": "rep",
+            "done": false,
+            "deferredTo": null,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
+          },
+          {
+            "lcNumber": 36,
+            "title": "Valid Sudoku",
+            "technique": "Hash-set",
+            "startComfort": "🟢",
+            "difficulty": "Medium",
+            "url": "https://leetcode.com/problems/valid-sudoku/",
+            "file": "dsa/leetcode/arrays_and_hash/36_valid_sudoku.py",
+            "tags": [],
+            "kind": "rep",
+            "done": false,
+            "deferredTo": null,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
+          },
+          {
+            "lcNumber": 42,
+            "title": "Trapping Rain Water (Array)",
+            "technique": "Prefix-max",
+            "startComfort": "🟢",
+            "difficulty": "Hard",
+            "url": "https://leetcode.com/problems/trapping-rain-water/",
+            "file": "dsa/leetcode/two_pointers/42_trapping_rain_water.py",
+            "tags": [],
+            "kind": "rep",
+            "done": false,
+            "deferredTo": null,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
+          },
+          {
+            "lcNumber": 323,
+            "title": "Number of Connected Components in an Undirected Graph (DFS)",
+            "technique": "DFS",
+            "startComfort": "🟢",
+            "difficulty": "Medium",
+            "url": "https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/",
+            "file": "dsa/leetcode/graphs/323_number_of_connected_components_in_an_undirected_graph.py",
+            "tags": [],
+            "kind": "rep",
+            "done": false,
+            "deferredTo": null,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
+          },
+          {
+            "lcNumber": 621,
+            "title": "Task Scheduler",
+            "technique": "Heap",
+            "startComfort": "🟢",
+            "difficulty": "Medium",
+            "url": "https://leetcode.com/problems/task-scheduler/",
+            "file": "dsa/leetcode/greedy/621_task_scheduler.py",
+            "tags": [],
+            "kind": "rep",
+            "done": false,
+            "deferredTo": null,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
+          },
+          {
+            "lcNumber": 105,
+            "title": "Construct Binary Tree from Preorder and Inorder Traversal",
+            "technique": "Tree-construction",
+            "startComfort": "🟢",
+            "difficulty": "Medium",
+            "url": "https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/",
+            "file": "dsa/leetcode/trees/105_construct_binary_tree_from_preorder_and_inorder_traversal.py",
+            "tags": [],
+            "kind": "rep",
+            "done": false,
+            "deferredTo": null,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
+          },
+          {
+            "lcNumber": 1011,
+            "title": "Capacity To Ship Packages Within D Days",
+            "technique": "Binary-search",
+            "startComfort": "🟢",
+            "difficulty": "Medium",
+            "url": "https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/",
+            "file": "dsa/leetcode/binary_search/1011_capacity_to_ship_packages_within_d_days.py",
+            "tags": [],
+            "kind": "rep",
+            "done": false,
+            "deferredTo": null,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
+          },
+          {
+            "lcNumber": 122,
+            "title": "Best Time to Buy and Sell Stock II",
+            "technique": "Greedy",
+            "startComfort": "🟢",
+            "difficulty": "Medium",
+            "url": "https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/",
+            "file": "dsa/leetcode/arrays_and_hash/122_best_time_to_buy_and_sell_stock_2.py",
+            "tags": [],
+            "kind": "rep",
+            "done": false,
+            "deferredTo": null,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
+          },
+          {
+            "lcNumber": 11,
+            "title": "Container With Most Water",
+            "technique": "Two-pointers",
+            "startComfort": "🟢",
+            "difficulty": "Medium",
+            "url": "https://leetcode.com/problems/container-with-most-water/",
+            "file": "dsa/leetcode/arrays_and_hash/11_container_with_most_water.py",
+            "tags": [],
+            "kind": "rep",
+            "done": false,
+            "deferredTo": null,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
+          },
+          {
+            "lcNumber": 973,
+            "title": "K Closest Points to Origin",
+            "technique": "Heap",
+            "startComfort": "🟢",
+            "difficulty": "Medium",
+            "url": "https://leetcode.com/problems/k-closest-points-to-origin/",
+            "file": "dsa/leetcode/heap/973_k_closest_points_to_origin.py",
+            "tags": [],
+            "kind": "rep",
+            "done": false,
+            "deferredTo": null,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
+          },
+          {
+            "lcNumber": 130,
+            "title": "Surrounded Regions (Union-Find)",
+            "technique": "Union-Find",
+            "startComfort": "🟢",
+            "difficulty": "Medium",
+            "url": "https://leetcode.com/problems/surrounded-regions/",
+            "file": "dsa/leetcode/graphs/130_surrounded_regions.py",
+            "tags": [],
+            "kind": "rep",
+            "done": false,
+            "deferredTo": null,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
+          },
+          {
+            "lcNumber": 27,
+            "title": "Remove Element",
+            "technique": "Fast-slow",
+            "startComfort": "🟢",
+            "difficulty": "Easy",
+            "url": "https://leetcode.com/problems/remove-element/",
+            "file": "dsa/leetcode/two_pointers/27_remove_element.py",
+            "tags": [],
+            "kind": "rep",
+            "done": false,
+            "deferredTo": null,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
+          },
+          {
+            "lcNumber": 1768,
+            "title": "Merge Strings Alternately",
+            "technique": "Two-pointers",
+            "startComfort": "🟢",
+            "difficulty": "Easy",
+            "url": "https://leetcode.com/problems/merge-strings-alternately/",
+            "file": "dsa/leetcode/two_pointers/1768_merge_strings_alternatively.py",
+            "tags": [],
+            "kind": "rep",
+            "done": false,
+            "deferredTo": null,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
+          },
+          {
+            "lcNumber": 125,
+            "title": "Valid Palindrome",
+            "technique": "Two-pointers",
+            "startComfort": "🟢",
+            "difficulty": "Easy",
+            "url": "https://leetcode.com/problems/valid-palindrome/",
+            "file": "dsa/leetcode/two_pointers/125_valid_palindrome.py",
+            "tags": [],
+            "kind": "rep",
+            "done": false,
+            "deferredTo": null,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
+          },
+          {
+            "lcNumber": 344,
+            "title": "Reverse String",
+            "technique": "Two-pointers",
+            "startComfort": "🟢",
+            "difficulty": "Easy",
+            "url": "https://leetcode.com/problems/reverse-string/",
+            "file": "dsa/leetcode/two_pointers/344_reverse_string.py",
+            "tags": [],
+            "kind": "rep",
+            "done": false,
+            "deferredTo": null,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
+          }
+        ]
+      },
+      {
+        "date": "2026-10-11",
+        "weekday": "Sunday",
+        "label": null,
+        "units": 4.0,
+        "items": [
+          {
+            "lcNumber": null,
+            "title": "Mock interview (Medium)",
+            "technique": "Mock",
+            "startComfort": null,
+            "difficulty": null,
+            "url": null,
+            "file": null,
+            "tags": [
+              "mock"
+            ],
+            "kind": "mock",
+            "done": false,
+            "deferredTo": null,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
+          },
+          {
+            "lcNumber": 239,
+            "title": "Sliding Window Maximum",
+            "technique": "Monotonic-deque",
+            "startComfort": "🟢",
+            "difficulty": "Hard",
+            "url": "https://leetcode.com/problems/sliding-window-maximum/",
+            "file": "dsa/leetcode/stack/239_sliding_window_maximum.py",
+            "tags": [],
+            "kind": "rep",
+            "done": false,
+            "deferredTo": null,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
           },
           {
             "lcNumber": 211,
@@ -5353,10 +5456,10 @@
             ],
             "kind": "complexity",
             "done": false,
-            "deferredTo": "2026-10-11",
+            "deferredTo": null,
             "endComfort": null,
             "endNote": null,
-            "nextReview": "2026-10-11"
+            "nextReview": null
           },
           {
             "lcNumber": 648,
@@ -5372,10 +5475,10 @@
             ],
             "kind": "complexity",
             "done": false,
-            "deferredTo": "2026-10-11",
+            "deferredTo": null,
             "endComfort": null,
             "endNote": null,
-            "nextReview": "2026-10-11"
+            "nextReview": null
           },
           {
             "lcNumber": 743,
@@ -5391,10 +5494,10 @@
             ],
             "kind": "complexity",
             "done": false,
-            "deferredTo": "2026-10-11",
+            "deferredTo": null,
             "endComfort": null,
             "endNote": null,
-            "nextReview": "2026-10-11"
+            "nextReview": null
           },
           {
             "lcNumber": null,
@@ -5410,10 +5513,10 @@
             ],
             "kind": "complexity",
             "done": false,
-            "deferredTo": "2026-10-11",
+            "deferredTo": null,
             "endComfort": null,
             "endNote": null,
-            "nextReview": "2026-10-11"
+            "nextReview": null
           }
         ]
       }
@@ -5814,9 +5917,9 @@
     },
     {
       "date": "2026-10-05",
-      "planned": 7.8,
-      "done": 0.0,
-      "built": 7.8,
+      "planned": 9.8,
+      "done": 7.8,
+      "built": 9.8,
       "partial": false
     },
     {
@@ -5828,9 +5931,9 @@
     },
     {
       "date": "2026-10-07",
-      "planned": 7.8,
+      "planned": 5.8,
       "done": 0.0,
-      "built": 7.8,
+      "built": 5.8,
       "partial": false
     },
     {
@@ -5977,7 +6080,7 @@
       "description": "Have at least one clean solve in every technique on the roadmap.",
       "earned": false,
       "progress": {
-        "current": 59,
+        "current": 58,
         "target": 106
       }
     },
@@ -5988,7 +6091,7 @@
       "description": "Practice on 7 study-days without letting the streak lapse.",
       "earned": true,
       "progress": {
-        "current": 130,
+        "current": 131,
         "target": 7
       }
     },
@@ -5999,7 +6102,7 @@
       "description": "Practice on 30 study-days without letting the streak lapse.",
       "earned": true,
       "progress": {
-        "current": 130,
+        "current": 131,
         "target": 30
       }
     },
@@ -6010,7 +6113,7 @@
       "description": "Practice on 100 study-days without letting the streak lapse.",
       "earned": true,
       "progress": {
-        "current": 130,
+        "current": 131,
         "target": 100
       }
     },
@@ -6060,6 +6163,194 @@
     }
   ],
   "problems": [
+    {
+      "lcNumber": 46,
+      "title": "Permutations",
+      "url": "https://leetcode.com/problems/permutations/",
+      "file": "dsa/leetcode/backtracking/46_permutations.py",
+      "difficulty": "Medium",
+      "category": "backtracking",
+      "comfort": "🟡",
+      "level": 1,
+      "streak": 0,
+      "nextReview": "2026-10-15",
+      "repDates": [
+        "2026-09-25",
+        "2026-10-05"
+      ],
+      "timeline": [
+        {
+          "date": "2026-09-25",
+          "comfort": "🟡",
+          "level": 1
+        },
+        {
+          "date": "2026-10-05",
+          "comfort": "🟡",
+          "level": 1
+        }
+      ]
+    },
+    {
+      "lcNumber": 55,
+      "title": "Jump Game",
+      "url": "https://leetcode.com/problems/jump-game/",
+      "file": "dsa/leetcode/greedy/55_jump_game.py",
+      "difficulty": "Medium",
+      "category": "greedy",
+      "comfort": "🟢",
+      "level": 2,
+      "streak": 1,
+      "nextReview": "2026-11-04",
+      "repDates": [
+        "2026-09-05",
+        "2026-09-15",
+        "2026-09-25",
+        "2026-10-05"
+      ],
+      "timeline": [
+        {
+          "date": "2026-09-05",
+          "comfort": "🟡",
+          "level": 1
+        },
+        {
+          "date": "2026-09-15",
+          "comfort": "🟡",
+          "level": 1
+        },
+        {
+          "date": "2026-09-25",
+          "comfort": "🟡",
+          "level": 1
+        },
+        {
+          "date": "2026-10-05",
+          "comfort": "🟢",
+          "level": 2
+        }
+      ]
+    },
+    {
+      "lcNumber": 2812,
+      "title": "Find the Safest Path in a Grid (Dijkstra)",
+      "url": "https://leetcode.com/problems/find-the-safest-path-in-a-grid/",
+      "file": "dsa/leetcode/graphs/2812_find_the_safest_path_in_a_grid.py",
+      "difficulty": "Medium",
+      "category": "graphs",
+      "comfort": "🟢",
+      "level": 2,
+      "streak": 1,
+      "nextReview": "2026-11-04",
+      "repDates": [
+        "2026-09-27",
+        "2026-10-05"
+      ],
+      "timeline": [
+        {
+          "date": "2026-09-27",
+          "comfort": "🟡",
+          "level": 1
+        },
+        {
+          "date": "2026-10-05",
+          "comfort": "🟢",
+          "level": 2
+        }
+      ]
+    },
+    {
+      "lcNumber": 39,
+      "title": "Combination Sum",
+      "url": "https://leetcode.com/problems/combination-sum/",
+      "file": "dsa/leetcode/backtracking/39_combination_sum.py",
+      "difficulty": "Medium",
+      "category": "backtracking",
+      "comfort": "🟢",
+      "level": 2,
+      "streak": 1,
+      "nextReview": "2026-11-04",
+      "repDates": [
+        "2026-09-23",
+        "2026-09-25",
+        "2026-10-05"
+      ],
+      "timeline": [
+        {
+          "date": "2026-09-23",
+          "comfort": "🔴",
+          "level": 0
+        },
+        {
+          "date": "2026-09-25",
+          "comfort": "🟢",
+          "level": 2
+        },
+        {
+          "date": "2026-10-05",
+          "comfort": "🟢",
+          "level": 2
+        }
+      ]
+    },
+    {
+      "lcNumber": 261,
+      "title": "Graph Valid Tree (DFS)",
+      "url": "https://neetcode.io/problems/valid-tree/question",
+      "file": "dsa/leetcode/graphs/261_graph_valid_tree.py",
+      "difficulty": "Medium",
+      "category": "graphs",
+      "comfort": "🟡",
+      "level": 1,
+      "streak": 0,
+      "nextReview": "2026-10-15",
+      "repDates": [
+        "2026-06-15",
+        "2026-06-17",
+        "2026-06-21",
+        "2026-06-23",
+        "2026-08-06",
+        "2026-08-16",
+        "2026-10-05"
+      ],
+      "timeline": [
+        {
+          "date": "2026-06-15",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-06-17",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-06-21",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-06-23",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-08-06",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-08-16",
+          "comfort": null,
+          "level": null
+        },
+        {
+          "date": "2026-10-05",
+          "comfort": "🟡",
+          "level": 1
+        }
+      ]
+    },
     {
       "lcNumber": 3620,
       "title": "Network Recovery Pathways (Dijkstra)",
@@ -7013,28 +7304,6 @@
       ]
     },
     {
-      "lcNumber": 2812,
-      "title": "Find the Safest Path in a Grid (Dijkstra)",
-      "url": "https://leetcode.com/problems/find-the-safest-path-in-a-grid/",
-      "file": "dsa/leetcode/graphs/2812_find_the_safest_path_in_a_grid.py",
-      "difficulty": "Medium",
-      "category": "graphs",
-      "comfort": "🟡",
-      "level": 1,
-      "streak": 0,
-      "nextReview": "2026-10-07",
-      "repDates": [
-        "2026-09-27"
-      ],
-      "timeline": [
-        {
-          "date": "2026-09-27",
-          "comfort": "🟡",
-          "level": 1
-        }
-      ]
-    },
-    {
       "lcNumber": 721,
       "title": "Accounts Merge (Union-Find)",
       "url": "https://leetcode.com/problems/accounts-merge/",
@@ -7417,90 +7686,6 @@
           "date": "2026-09-26",
           "comfort": "🎓",
           "level": 3
-        }
-      ]
-    },
-    {
-      "lcNumber": 39,
-      "title": "Combination Sum",
-      "url": "https://leetcode.com/problems/combination-sum/",
-      "file": "dsa/leetcode/backtracking/39_combination_sum.py",
-      "difficulty": "Medium",
-      "category": "backtracking",
-      "comfort": "🟢",
-      "level": 2,
-      "streak": 0,
-      "nextReview": "2026-10-05",
-      "repDates": [
-        "2026-09-23",
-        "2026-09-25"
-      ],
-      "timeline": [
-        {
-          "date": "2026-09-23",
-          "comfort": "🔴",
-          "level": 0
-        },
-        {
-          "date": "2026-09-25",
-          "comfort": "🟢",
-          "level": 2
-        }
-      ]
-    },
-    {
-      "lcNumber": 46,
-      "title": "Permutations",
-      "url": "https://leetcode.com/problems/permutations/",
-      "file": "dsa/leetcode/backtracking/46_permutations.py",
-      "difficulty": "Medium",
-      "category": "backtracking",
-      "comfort": "🟡",
-      "level": 1,
-      "streak": 0,
-      "nextReview": "2026-10-05",
-      "repDates": [
-        "2026-09-25"
-      ],
-      "timeline": [
-        {
-          "date": "2026-09-25",
-          "comfort": "🟡",
-          "level": 1
-        }
-      ]
-    },
-    {
-      "lcNumber": 55,
-      "title": "Jump Game",
-      "url": "https://leetcode.com/problems/jump-game/",
-      "file": "dsa/leetcode/greedy/55_jump_game.py",
-      "difficulty": "Medium",
-      "category": "greedy",
-      "comfort": "🟡",
-      "level": 1,
-      "streak": 0,
-      "nextReview": "2026-10-05",
-      "repDates": [
-        "2026-09-05",
-        "2026-09-15",
-        "2026-09-25"
-      ],
-      "timeline": [
-        {
-          "date": "2026-09-05",
-          "comfort": "🟡",
-          "level": 1
-        },
-        {
-          "date": "2026-09-15",
-          "comfort": "🟡",
-          "level": 1
-        },
-        {
-          "date": "2026-09-25",
-          "comfort": "🟡",
-          "level": 1
         }
       ]
     },
@@ -8741,7 +8926,7 @@
     {
       "lcNumber": 261,
       "title": "Graph Valid Tree (Union-Find)",
-      "url": "https://neetcode.io/problems/valid-tree",
+      "url": "https://neetcode.io/problems/valid-tree/question",
       "file": "dsa/leetcode/graphs/261_graph_valid_tree.py",
       "difficulty": "Medium",
       "category": "graphs",
@@ -10537,58 +10722,6 @@
         },
         {
           "date": "2026-08-17",
-          "comfort": "🟢",
-          "level": 2
-        }
-      ]
-    },
-    {
-      "lcNumber": 261,
-      "title": "Graph Valid Tree (DFS)",
-      "url": "https://neetcode.io/problems/valid-tree",
-      "file": "dsa/leetcode/graphs/261_graph_valid_tree.py",
-      "difficulty": "Medium",
-      "category": "graphs",
-      "comfort": "🟢",
-      "level": 2,
-      "streak": 1,
-      "nextReview": "2026-09-15",
-      "repDates": [
-        "2026-06-15",
-        "2026-06-17",
-        "2026-06-21",
-        "2026-06-23",
-        "2026-08-06",
-        "2026-08-16"
-      ],
-      "timeline": [
-        {
-          "date": "2026-06-15",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-06-17",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-06-21",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-06-23",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-08-06",
-          "comfort": null,
-          "level": null
-        },
-        {
-          "date": "2026-08-16",
           "comfort": "🟢",
           "level": 2
         }

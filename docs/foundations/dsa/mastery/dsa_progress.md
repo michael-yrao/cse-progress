@@ -75,14 +75,19 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/dsa/mastery/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **134+6** problems &nbsp;·&nbsp; **145+6** solutions &nbsp;·&nbsp; **649+6** reps
+> **134+6** problems &nbsp;·&nbsp; **145+6** solutions &nbsp;·&nbsp; **654+6** reps
 
 | | 🏆 Retired | 🎓 Graduated | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|:---:|
-| **Solutions** | 0 | 25 | 108 | 11 | 1 |
+| **Solutions** | 0 | 25 | 109 | 10 | 1 |
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Rep Date | Rep Dates |
 |---|---|---|---|---|---|---|
+| Medium | [46. Permutations](https://leetcode.com/problems/permutations/) | 🟡 | 0 | 2026-10-15 | 2026-10-05 | 2026-09-25, 2026-10-05 |
+| Medium | [55. Jump Game](https://leetcode.com/problems/jump-game/) | 🟢 | 1 | 2026-11-04 | 2026-10-05 | 2026-09-05, 2026-09-15, 2026-09-25, 2026-10-05 |
+| Medium | [2812. Find the Safest Path in a Grid (Dijkstra)](https://leetcode.com/problems/find-the-safest-path-in-a-grid/) | 🟢 | 1 | 2026-11-04 | 2026-10-05 | 2026-09-27, 2026-10-05 |
+| Medium | [39. Combination Sum](https://leetcode.com/problems/combination-sum/) | 🟢 | 1 | 2026-11-04 | 2026-10-05 | 2026-09-23, 2026-09-25, 2026-10-05 |
+| Medium | [261. Graph Valid Tree (DFS)](https://neetcode.io/problems/valid-tree) | 🟡 | 0 | 2026-10-15 | 2026-10-05 | 2026-06-15, 2026-06-17, 2026-06-21, 2026-06-23, 2026-08-06, 2026-08-16, 2026-10-05 |
 | Hard | [3620. Network Recovery Pathways (Dijkstra)](https://leetcode.com/problems/network-recovery-pathways/) | 🔴 | 0 | 2026-10-06 | 2026-10-04 | 2026-10-04 |
 | Medium | [131. Palindrome Partitioning](https://leetcode.com/problems/palindrome-partitioning/) | 🟡 | 0 | 2026-10-14 | 2026-10-04 | 2026-09-30, 2026-10-02, 2026-10-04 |
 | Medium | [90. Subsets II](https://leetcode.com/problems/subsets-ii/) | 🟡 | 0 | 2026-10-13 | 2026-10-03 | 2026-10-01, 2026-10-03 |
@@ -108,7 +113,6 @@ Notes for future agents:
 | Medium | [572. Subtree Of Another Tree](https://leetcode.com/problems/subtree-of-another-tree/) | 🟢 | 2 | 2026-11-27 | 2026-09-28 | 2026-05-02, 2026-06-12, 2026-08-15, 2026-08-25, 2026-09-28 |
 | Medium | [155. Min Stack (Pair with Min-So-Far)](https://leetcode.com/problems/min-stack/) | 🟢 | 2 | 2026-11-27 | 2026-09-28 | 2026-08-12, 2026-08-14, 2026-08-29, 2026-09-28 |
 | Medium | [853. Car Fleet](https://leetcode.com/problems/car-fleet/) | 🟡 | 0 | 2026-10-08 | 2026-09-28 | 2026-08-15, 2026-08-17, 2026-08-29, 2026-09-28 |
-| Medium | [2812. Find the Safest Path in a Grid (Dijkstra)](https://leetcode.com/problems/find-the-safest-path-in-a-grid/) | 🟡 | 0 | 2026-10-07 | 2026-09-27 | 2026-09-27 |
 | Medium | [721. Accounts Merge (Union-Find)](https://leetcode.com/problems/accounts-merge/) | 🟢 | 1 | 2026-10-27 | 2026-09-27 | 2026-07-30, 2026-08-09, 2026-09-08, 2026-09-17, 2026-09-27 |
 | Medium | [560. Subarray Sum Equals K](https://leetcode.com/problems/subarray-sum-equals-k/) | 🟢 | 1 | 2026-10-27 | 2026-09-27 | 2026-04-05, 2026-06-26, 2026-06-28, 2026-07-29, 2026-08-08, 2026-08-18, 2026-09-17, 2026-09-27 |
 | Medium | [540. Single Element in a Sorted Array](https://leetcode.com/problems/single-element-in-a-sorted-array/) | 🟢 | 1 | 2026-10-27 | 2026-09-27 | 2026-05-02, 2026-06-12, 2026-06-13, 2026-07-17, 2026-07-27, 2026-08-06, 2026-09-06, 2026-09-16, 2026-09-27 |
@@ -117,9 +121,6 @@ Notes for future agents:
 | Medium | [34. Find First And Last Position Of Element In Sorted Array](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/) | 🟢 | 1 | 2026-10-26 | 2026-09-26 | 2026-09-06, 2026-09-16, 2026-09-26 |
 | Medium | [787. Cheapest Flights Within K Stops (Bellman-Ford)](https://leetcode.com/problems/cheapest-flights-within-k-stops/) | 🟢 | 1 | 2026-10-26 | 2026-09-26 | 2026-07-14, 2026-07-16, 2026-07-26, 2026-08-05, 2026-08-15, 2026-09-14, 2026-09-16, 2026-09-26 |
 | Easy | [169. Majority Element](https://leetcode.com/problems/majority-element/) | 🎓 | 3 | 2027-03-25 | 2026-09-26 | 2026-01-05, 2026-04-01, 2026-05-28, 2026-06-27, 2026-07-28, 2026-09-26 |
-| Medium | [39. Combination Sum](https://leetcode.com/problems/combination-sum/) | 🟢 | 0 | 2026-10-05 | 2026-09-25 | 2026-09-23, 2026-09-25 |
-| Medium | [46. Permutations](https://leetcode.com/problems/permutations/) | 🟡 | 0 | 2026-10-05 | 2026-09-25 | 2026-09-25 |
-| Medium | [55. Jump Game](https://leetcode.com/problems/jump-game/) | 🟡 | 0 | 2026-10-05 | 2026-09-25 | 2026-09-05, 2026-09-15, 2026-09-25 |
 | Medium | [743. Network Delay Time (Dijkstra — array-scan)](https://leetcode.com/problems/network-delay-time/) | 🟡 | 0 | 2026-10-05 | 2026-09-25 | 2026-09-12, 2026-09-14, 2026-09-25 |
 | Medium | [1334. Find the City With the Smallest Number of Neighbors at a Threshold Distance (Floyd-Warshall)](https://leetcode.com/problems/find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance/) | 🟢 | 2 | 2026-11-24 | 2026-09-25 | 2026-07-31, 2026-08-05, 2026-08-15, 2026-08-25, 2026-09-25 |
 | Medium | [875. Koko Eating Bananas](https://leetcode.com/problems/koko-eating-bananas/) | 🟢 | 2 | 2026-11-24 | 2026-09-25 | 2026-04-22, 2026-07-03, 2026-07-13, 2026-07-23, 2026-08-02, 2026-08-11, 2026-09-25 |
@@ -185,7 +186,6 @@ Notes for future agents:
 | Medium | [238. Product of Array Except Self](https://leetcode.com/problems/product-of-array-except-self/) | 🟢 | 2 | 2026-10-18 | 2026-08-19 | 2026-01-24, 2026-04-13, 2026-07-24, 2026-08-19 |
 | Medium | [2300. Successful Pairs of Spells and Potions](https://leetcode.com/problems/successful-pairs-of-spells-and-potions/) | 🟢 | 2 | 2026-10-17 | 2026-08-18 | 2026-05-03, 2026-06-12, 2026-06-19, 2026-08-18 |
 | Medium | [19. Remove Nth Node From End of List (Iterative)](https://leetcode.com/problems/remove-nth-node-from-end-of-list/) | 🟢 | 2 | 2026-10-16 | 2026-08-17 | 2026-04-29, 2026-05-18, 2026-06-30, 2026-07-09, 2026-08-17 |
-| Medium | [261. Graph Valid Tree (DFS)](https://neetcode.io/problems/valid-tree) | 🟢 | 1 | 2026-09-15 | 2026-08-16 | 2026-06-15, 2026-06-17, 2026-06-21, 2026-06-23, 2026-08-06, 2026-08-16 |
 | Medium | [208. Implement Trie (Prefix Tree)](https://leetcode.com/problems/implement-trie-prefix-tree/) | 🟢 | 2 | 2026-10-15 | 2026-08-16 | 2026-07-06, 2026-07-08, 2026-07-17, 2026-08-16 |
 | Medium | [75. Sort Colors (Dutch Flag)](https://leetcode.com/problems/sort-colors/) | 🟢 | 2 | 2026-10-15 | 2026-08-16 | 2026-01-08, 2026-04-01, 2026-05-26, 2026-05-28, 2026-06-28, 2026-07-08, 2026-07-17, 2026-08-16 |
 | Medium | [98. Validate Binary Search Tree](https://leetcode.com/problems/validate-binary-search-tree/) | 🟢 | 2 | 2026-10-15 | 2026-08-16 | 2026-05-16, 2026-05-20, 2026-06-30, 2026-07-02, 2026-07-11, 2026-08-16 |
