@@ -4583,10 +4583,10 @@
             ],
             "kind": "rep",
             "done": false,
-            "deferredTo": null,
+            "deferredTo": "2026-12-07",
             "endComfort": null,
             "endNote": null,
-            "nextReview": null
+            "nextReview": "2026-12-07"
           },
           {
             "lcNumber": 2812,
@@ -4720,8 +4720,8 @@
       {
         "date": "2026-10-07",
         "weekday": "Wednesday",
-        "label": "Backtracking intake (17) + Intervals/Floyd-Warshall/Stack/Multi-source-BFS/Linked-list/BFS reviews",
-        "units": 5.8,
+        "label": "Backtracking intake (17) + Dijkstra variant card (1631) + Intervals/Floyd-Warshall/Stack/Multi-source-BFS/Linked-list/BFS reviews",
+        "units": 6.6,
         "items": [
           {
             "lcNumber": 17,
@@ -4767,6 +4767,25 @@
             "file": "dsa/leetcode/graphs/1462_course_schedule_iv.py",
             "tags": [
               "moved"
+            ],
+            "kind": "rep",
+            "done": false,
+            "deferredTo": null,
+            "endComfort": null,
+            "endNote": null,
+            "nextReview": null
+          },
+          {
+            "lcNumber": 1631,
+            "title": "Path With Minimum Effort (Dijkstra)",
+            "technique": "Dijkstra",
+            "startComfort": "🟢",
+            "difficulty": "Medium",
+            "url": "https://leetcode.com/problems/path-with-minimum-effort/",
+            "file": "dsa/leetcode/graphs/1631_path_with_minimum_effort.py",
+            "tags": [
+              "moved",
+              "variant"
             ],
             "kind": "rep",
             "done": false,
@@ -5931,9 +5950,9 @@
     },
     {
       "date": "2026-10-07",
-      "planned": 5.8,
+      "planned": 6.6,
       "done": 0.0,
-      "built": 5.8,
+      "built": 6.6,
       "partial": false
     },
     {
