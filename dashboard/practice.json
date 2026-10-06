@@ -7021,7 +7021,7 @@
       "number": 36,
       "title": "Valid Sudoku",
       "url": "https://leetcode.com/problems/valid-sudoku/",
-      "statement": null,
+      "statement": "Determine if a 9 x 9 Sudoku board is valid. Only the filled cells need to be validated according to the following rules:\n\n    Each row must contain the digits 1-9 without repetition.\n    Each column must contain the digits 1-9 without repetition.\n    Each of the nine 3 x 3 sub-boxes of the grid must contain\n    the digits 1-9 without repetition.\n\nNote:\n\n    A Sudoku board (partially filled) could be valid but is not\n    necessarily solvable.\n    Only the filled cells need to be validated according to the\n    mentioned rules.\nInput: board =\n[[\"5\",\"3\",\".\",\".\",\"7\",\".\",\".\",\".\",\".\"]\n,[\"6\",\".\",\".\",\"1\",\"9\",\"5\",\".\",\".\",\".\"]\n,[\".\",\"9\",\"8\",\".\",\".\",\".\",\".\",\"6\",\".\"]\n,[\"8\",\".\",\".\",\".\",\"6\",\".\",\".\",\".\",\"3\"]\n,[\"4\",\".\",\".\",\"8\",\".\",\"3\",\".\",\".\",\"1\"]\n,[\"7\",\".\",\".\",\".\",\"2\",\".\",\".\",\".\",\"6\"]\n,[\".\",\"6\",\".\",\".\",\".\",\".\",\"2\",\"8\",\".\"]\n,[\".\",\".\",\".\",\"4\",\"1\",\"9\",\".\",\".\",\"5\"]\n,[\".\",\".\",\".\",\".\",\"8\",\".\",\".\",\"7\",\"9\"]]\nOutput: true\n\nExample 2:\n\nInput: board =\n[[\"8\",\"3\",\".\",\".\",\"7\",\".\",\".\",\".\",\".\"]\n,[\"6\",\".\",\".\",\"1\",\"9\",\"5\",\".\",\".\",\".\"]\n,[\".\",\"9\",\"8\",\".\",\".\",\".\",\".\",\"6\",\".\"]\n,[\"8\",\".\",\".\",\".\",\"6\",\".\",\".\",\".\",\"3\"]\n,[\"4\",\".\",\".\",\"8\",\".\",\"3\",\".\",\".\",\"1\"]\n,[\"7\",\".\",\".\",\".\",\"2\",\".\",\".\",\".\",\"6\"]\n,[\".\",\"6\",\".\",\".\",\".\",\".\",\"2\",\"8\",\".\"]\n,[\".\",\".\",\".\",\"4\",\"1\",\"9\",\".\",\".\",\"5\"]\n,[\".\",\".\",\".\",\".\",\"8\",\".\",\".\",\"7\",\"9\"]]\nOutput: false\nExplanation: Same as Example 1, except with the 5 in the top left corner being modified to 8. Since there are two 8's in the top left 3x3 sub-box, it is invalid.",
       "stub": "from typing import List, Optional\n\n\nclass Solution:\n    def isValidSudoku(self, board: List[List[str]]) -> bool:\n        pass\n",
       "entry": {
         "className": "Solution",
@@ -14160,7 +14160,7 @@
       "number": 74,
       "title": "Search a 2D Matrix",
       "url": "https://leetcode.com/problems/search-a-2d-matrix/",
-      "statement": null,
+      "statement": "You are given an m x n integer matrix matrix with the following two properties:\n\n    Each row is sorted in non-decreasing order.\n    The first integer of each row is greater than the last\n    integer of the previous row.\n\nGiven an integer target, return true if target is in matrix or false otherwise.\n\nYou must write a solution in O(log(m * n)) time complexity.\n\nExample 1:\n\nInput: matrix = [[1,3,5,7],[10,11,16,20],[23,30,34,60]], target = 3\nOutput: true\n\nExample 2:\n\nInput: matrix = [[1,3,5,7],[10,11,16,20],[23,30,34,60]], target = 13\nOutput: false\n\nConstraints:\n\n    m == matrix.length\n    n == matrix[i].length\n    1 <= m, n <= 100\n    -10^4 <= matrix[i][j], target <= 10^4",
       "stub": "from typing import List, Optional\n\n\nclass Solution:\n    def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:\n        pass\n",
       "entry": {
         "className": "Solution",
@@ -24184,7 +24184,7 @@
       "number": 130,
       "title": "Surrounded Regions",
       "url": "https://leetcode.com/problems/surrounded-regions/",
-      "statement": null,
+      "statement": "You are given an m x n matrix board containing letters 'X' and 'O', capture regions that are surrounded:\n\n    Connect: A cell is connected to adjacent cells horizontally\n    or vertically.\n    Region: To form a region connect every 'O' cell.\n    Surround: A region is surrounded if none of the 'O' cells in\n    that region are on the edge of the board. Such regions are\n    completely enclosed by 'X' cells.\n\nTo capture a surrounded region, replace all 'O's with 'X's in-place within the original board. You do not need to return anything.\n\nExample 1:\n\nInput: board = [[\"X\",\"X\",\"X\",\"X\"],[\"X\",\"O\",\"O\",\"X\"],[\"X\",\"X\",\"O\",\"X\"],[\"X\",\"O\",\"X\",\"X\"]]\n\nOutput: [[\"X\",\"X\",\"X\",\"X\"],[\"X\",\"X\",\"X\",\"X\"],[\"X\",\"X\",\"X\",\"X\"],[\"X\",\"O\",\"X\",\"X\"]]\n\nExplanation:\n\nIn the above diagram, the bottom region is not captured because it is on the edge of the board and cannot be surrounded.\n\nExample 2:\n\nInput: board = [[\"X\"]]\n\nOutput: [[\"X\"]]\n\nConstraints:\n\n    m == board.length\n    n == board[i].length\n    1 <= m, n <= 200\n    board[i][j] is 'X' or 'O'.",
       "stub": "from typing import List, Optional\n\n\nclass Solution:\n    def solve(self, board: List[List[str]]) -> None:\n        pass\n",
       "entry": {
         "className": "Solution",
@@ -24955,7 +24955,7 @@
       "number": 133,
       "title": "Clone Graph",
       "url": "https://leetcode.com/problems/clone-graph/",
-      "statement": null,
+      "statement": "Given a reference of a node in a connected undirected graph.\n\nReturn a deep copy (clone) of the graph.\n\nEach node in the graph contains a value (int) and a list (List[Node]) of its neighbors.\n\nclass Node {\n    public int val;\n    public List<Node> neighbors;\n}\n\nTest case format:\n\nFor simplicity, each node's value is the same as the node's index (1-indexed). For example, the first node with val == 1, the second node with val == 2, and so on. The graph is represented in the test case using an adjacency list.\n\nAn adjacency list is a collection of unordered lists used to represent a finite graph. Each list describes the set of neighbors of a node in the graph.\n\nThe given node will always be the first node with val = 1. You must return the copy of the given node as a reference to the cloned graph.\n\nExample 1:\n\nInput: adjList = [[2,4],[1,3],[2,4],[1,3]]\nOutput: [[2,4],[1,3],[2,4],[1,3]]\nExplanation: There are 4 nodes in the graph.\n1st node (val = 1)'s neighbors are 2nd node (val = 2) and 4th node (val = 4).\n2nd node (val = 2)'s neighbors are 1st node (val = 1) and 3rd node (val = 3).\n3rd node (val = 3)'s neighbors are 2nd node (val = 2) and 4th node (val = 4).\n4th node (val = 4)'s neighbors are 1st node (val = 1) and 3rd node (val = 3).\n\nExample 2:\n\nInput: adjList = [[]]\nOutput: [[]]\nExplanation: Note that the input contains one empty list. The graph consists of only one node with val = 1 and it does not have any neighbors.\n\nExample 3:\n\nInput: adjList = []\nOutput: []\nExplanation: This an empty graph, it does not have any nodes.\n\nConstraints:\n\n    The number of nodes in the graph is in the range [0, 100].\n    1 <= Node.val <= 100\n    Node.val is unique for each node.\n    There are no repeated edges and no self-loops in the graph.\n    The Graph is connected and all nodes can be visited\n    starting from the given node.",
       "stub": "from typing import List, Optional\n\n\nclass Node:\n    def __init__(self, val=0, neighbors=None):\n        self.val = val\n        self.neighbors = neighbors if neighbors is not None else []\n\n\nclass Solution:\n    def cloneGraph(self, node: Optional[Node]) -> Optional[Node]:\n        pass\n",
       "entry": {
         "className": "Solution",
@@ -34783,7 +34783,7 @@
       "number": 200,
       "title": "Number of Islands",
       "url": "https://leetcode.com/problems/number-of-islands/",
-      "statement": null,
+      "statement": "Given an m x n 2D binary grid grid which represents a map of '1's (land) and '0's (water), return the number of islands.\n\nAn island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. You may assume all four edges of the grid are all surrounded by water.\n\nExample 1:\n\nInput: grid = [\n  [\"1\",\"1\",\"1\",\"1\",\"0\"],\n  [\"1\",\"1\",\"0\",\"1\",\"0\"],\n  [\"1\",\"1\",\"0\",\"0\",\"0\"],\n  [\"0\",\"0\",\"0\",\"0\",\"0\"]\n]\nOutput: 1\n\nExample 2:\n\nInput: grid = [\n  [\"1\",\"1\",\"0\",\"0\",\"0\"],\n  [\"1\",\"1\",\"0\",\"0\",\"0\"],\n  [\"0\",\"0\",\"1\",\"0\",\"0\"],\n  [\"0\",\"0\",\"0\",\"1\",\"1\"]\n]\nOutput: 3\n\nConstraints:\n\n    m == grid.length\n    n == grid[i].length\n    1 <= m, n <= 300\n    grid[i][j] is '0' or '1'.",
       "stub": "from typing import List, Optional\n\n\nclass Solution:\n    def numIslands(self, grid: List[List[str]]) -> int:\n        pass\n",
       "entry": {
         "className": "Solution",
@@ -34795,6 +34795,78 @@
         "gridArg": 0
       },
       "cases": [
+        {
+          "args": [
+            [
+              [
+                "1",
+                "1",
+                "1",
+                "1",
+                "0"
+              ],
+              [
+                "1",
+                "1",
+                "0",
+                "1",
+                "0"
+              ],
+              [
+                "1",
+                "1",
+                "0",
+                "0",
+                "0"
+              ],
+              [
+                "0",
+                "0",
+                "0",
+                "0",
+                "0"
+              ]
+            ]
+          ],
+          "expected": 1,
+          "example": true
+        },
+        {
+          "args": [
+            [
+              [
+                "1",
+                "1",
+                "0",
+                "0",
+                "0"
+              ],
+              [
+                "1",
+                "1",
+                "0",
+                "0",
+                "0"
+              ],
+              [
+                "0",
+                "0",
+                "1",
+                "0",
+                "0"
+              ],
+              [
+                "0",
+                "0",
+                "0",
+                "1",
+                "1"
+              ]
+            ]
+          ],
+          "expected": 3,
+          "example": true
+        },
         {
           "args": [
             [
@@ -34816,7 +34888,7 @@
             ]
           ],
           "expected": 2,
-          "example": true
+          "example": false
         },
         {
           "args": [
@@ -34839,7 +34911,7 @@
             ]
           ],
           "expected": 1,
-          "example": true
+          "example": false
         },
         {
           "args": [
@@ -35848,7 +35920,7 @@
       "number": 207,
       "title": "Course Schedule",
       "url": "https://leetcode.com/problems/course-schedule/",
-      "statement": null,
+      "statement": "There are a total of numCourses courses you have to take, labeled from 0 to numCourses - 1. You are given an array prerequisites where prerequisites[i] = [ai, bi] indicates that you must take course bi first if you want to take course ai.\n\n    For example, the pair [0, 1], indicates that to take\n    course 0 you have to first take course 1.\n\nReturn true if you can finish all courses. Otherwise, return false.\n\nExample 1:\n\nInput: numCourses = 2, prerequisites = [[1,0]]\nOutput: true\nExplanation: There are a total of 2 courses to take.\nTo take course 1 you should have finished course 0. So it is possible.\n\nExample 2:\n\nInput: numCourses = 2, prerequisites = [[1,0],[0,1]]\nOutput: false\nExplanation: There are a total of 2 courses to take.\nTo take course 1 you should have finished course 0, and to take course 0 you should also have finished course 1. So it is impossible.\n\nConstraints:\n\n    1 <= numCourses <= 2000\n    0 <= prerequisites.length <= 5000\n    prerequisites[i].length == 2\n    0 <= ai, bi < numCourses\n    All the pairs prerequisites[i] are unique.",
       "stub": "from typing import List, Optional\n\n\nclass Solution:\n    def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:\n        pass\n",
       "entry": {
         "className": "Solution",
@@ -38069,7 +38141,7 @@
       "number": 210,
       "title": "Course Schedule II",
       "url": "https://leetcode.com/problems/course-schedule-ii/",
-      "statement": null,
+      "statement": "There are a total of numCourses courses you have to take, labeled from 0 to numCourses - 1. You are given an array prerequisites where prerequisites[i] = [ai, bi] indicates that you must take course bi first if you want to take course ai.\n\n    For example, the pair [0, 1], indicates that to take\n    course 0 you have to first take course 1.\n\nReturn the ordering of courses you should take to finish all courses. If there are many valid answers, return any of them. If it is impossible to finish all courses, return an empty array.\n\nExample 1:\n\nInput: numCourses = 2, prerequisites = [[1,0]]\nOutput: [0,1]\nExplanation: There are a total of 2 courses to take. To take course 1 you should have finished course 0. So the correct course order is [0,1].\n\nExample 2:\n\nInput: numCourses = 1, prerequisites = []\nOutput: [0]\n\nExample 3:\n\nInput: numCourses = 4, prerequisites = [[1,0],[2,0],[3,1],[3,2]]\nOutput: [0,2,1,3]\nExplanation: There are a total of 4 courses to take. To take course 3 you should have finished both courses 1 and 2. Both courses 1 and 2 should be taken after you finished course 0.\nSo one correct course order is [0,1,2,3]. Another correct ordering is [0,2,1,3].\n\nConstraints:\n\n    1 <= numCourses <= 2000\n    0 <= prerequisites.length <= numCourses * (numCourses - 1)\n    prerequisites[i].length == 2\n    0 <= ai, bi < numCourses\n    ai != bi\n    All the pairs [ai, bi] are distinct.",
       "stub": "from typing import List, Optional\n\n\nclass Solution:\n    def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:\n        pass\n",
       "entry": {
         "className": "Solution",
@@ -44028,7 +44100,7 @@
       "number": 261,
       "title": "Graph Valid Tree",
       "url": "https://leetcode.com/problems/graph-valid-tree/",
-      "statement": null,
+      "statement": "Given n nodes labeled from 0 to n - 1 and a list of undirected edges (each edge is a pair of nodes), write a function to check whether these edges make up a valid tree.\n\nExample 1:\n\nInput:\nn = 5\nedges = [[0, 1], [0, 2], [0, 3], [1, 4]]\n\nOutput:\ntrue\n\nExample 2:\n\nInput:\nn = 5\nedges = [[0, 1], [1, 2], [2, 3], [1, 3], [1, 4]]\n\nOutput:\nfalse\n\nNote:\n\n    You can assume that no duplicate edges will appear in edges.\n    Since all edges are undirected, [0, 1] is the same as [1, 0]\n    and thus will not appear together in edges.\n\nConstraints:\n\n    1 <= n <= 100\n    0 <= edges.length <= n * (n - 1) / 2",
       "stub": "from typing import List, Optional\n\n\nclass Solution:\n    def validTree(self, n: int, edges: List[List[int]]) -> bool:\n        pass\n",
       "entry": {
         "className": "Solution",
@@ -45967,7 +46039,7 @@
       "number": 323,
       "title": "Number of Connected Components in an Undirected Graph",
       "url": "https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/",
-      "statement": null,
+      "statement": "You have a graph of n nodes. You are given an integer n and an array edges where edges[i] = [aᵢ, bᵢ] indicates that there is an edge between aᵢ and bᵢ in the graph.\n\nReturn the number of connected components in the graph.\n\nExample 1:\n\nInput:\nn = 5, edges = [[0,1],[1,2],[3,4]]\n\nOutput: 2\n\nExample 2:\n\nInput:\nn = 5, edges = [[0,1],[1,2],[2,3],[3,4]]\n\nOutput: 1\n\nConstraints:\n\n    1 <= n <= 2000\n    1 <= edges.length <= 5000\n    edges[i].length == 2\n    0 <= aᵢ <= bᵢ < n\n    aᵢ != bᵢ\n    There are no repeated edges.",
       "stub": "from typing import List, Optional\n\n\nclass Solution:\n    def countComponents(self, n: int, edges: List[List[int]]) -> int:\n        pass\n",
       "entry": {
         "className": "Solution",
@@ -46493,7 +46565,7 @@
       "number": 332,
       "title": "Reconstruct Itinerary",
       "url": "https://leetcode.com/problems/reconstruct-itinerary/",
-      "statement": null,
+      "statement": "tickets[i] = [from_i, to_i] = one flight. Reconstruct the itinerary in order,\nusing ALL tickets exactly once, starting from \"JFK\".\nIf multiple valid itineraries → return the lexicographically smallest one\n(compare the whole itinerary as a list of strings).\nA valid itinerary is guaranteed to exist (may reuse an airport, not a ticket).\n\n  Input:\n  [[\"MUC\",\"LHR\"],[\"JFK\",\"MUC\"],[\"SFO\",\"SJC\"],[\"LHR\",\"SFO\"]]\n  Output: [\"JFK\",\"MUC\",\"LHR\",\"SFO\",\"SJC\"]\n\nConstraints: 1 <= tickets.length <= 300; airport codes are 3 uppercase letters.",
       "stub": "from typing import List, Optional\n\n\nclass Solution:\n    def findItinerary(self, tickets: List[List[str]]) -> List[str]:\n        pass\n",
       "entry": {
         "className": "Solution",
@@ -50851,7 +50923,7 @@
       "number": 417,
       "title": "Pacific Atlantic Water Flow",
       "url": "https://leetcode.com/problems/pacific-atlantic-water-flow/",
-      "statement": null,
+      "statement": "There is an m x n rectangular island that borders both the Pacific Ocean and Atlantic Ocean. The Pacific Ocean touches the island's left and top edges, and the Atlantic Ocean touches the island's right and bottom edges.\n\nThe island is partitioned into a grid of square cells. You are given an m x n integer matrix heights where heights[r][c] represents the height above sea level of the cell at coordinate (r, c).\n\nThe island receives a lot of rain, and the rain water can flow to neighboring cells directly north, south, east, and west if the neighboring cell's height is less than or equal to the current cell's height. Water can flow from any cell adjacent to an ocean into the ocean.\n\nReturn a 2D list of grid coordinates result where result[i] = [ri, ci] denotes that rain water can flow from cell (ri, ci) to both the Pacific and Atlantic oceans.\n\nExample 1:\n\nInput: heights = [[1,2,2,3,5],[3,2,3,4,4],[2,4,5,3,1],[6,7,1,4,5],[5,1,1,2,4]]\nOutput: [[0,4],[1,3],[1,4],[2,2],[3,0],[3,1],[4,0]]\nExplanation: The following cells can flow to the Pacific and Atlantic oceans, as shown below:\n[0,4]: [0,4] -> Pacific Ocean\n       [0,4] -> Atlantic Ocean\n[1,3]: [1,3] -> [0,3] -> Pacific Ocean\n       [1,3] -> [1,4] -> Atlantic Ocean\n[1,4]: [1,4] -> [1,3] -> [0,3] -> Pacific Ocean\n       [1,4] -> Atlantic Ocean\n[2,2]: [2,2] -> [1,2] -> [0,2] -> Pacific Ocean\n       [2,2] -> [2,3] -> [2,4] -> Atlantic Ocean\n[3,0]: [3,0] -> Pacific Ocean\n       [3,0] -> [4,0] -> Atlantic Ocean\n[3,1]: [3,1] -> [3,0] -> Pacific Ocean\n       [3,1] -> [4,1] -> Atlantic Ocean\n[4,0]: [4,0] -> Pacific Ocean\n       [4,0] -> Atlantic Ocean\nNote that there are other possible paths for these cells to flow to the Pacific and Atlantic oceans.\n\nExample 2:\n\nInput: heights = [[1]]\nOutput: [[0,0]]\nExplanation: The water can flow from the only cell to the Pacific and Atlantic oceans.\n\nConstraints:\n\n    m == heights.length\n    n == heights[r].length\n    1 <= m, n <= 200\n    0 <= heights[r][c] <= 10^5",
       "stub": "from typing import List, Optional\n\n\nclass Solution:\n    def pacificAtlantic(self, heights: List[List[int]]) -> List[List[int]]:\n        pass\n",
       "entry": {
         "className": "Solution",
@@ -50863,6 +50935,94 @@
         "gridArg": 0
       },
       "cases": [
+        {
+          "args": [
+            [
+              [
+                1,
+                2,
+                2,
+                3,
+                5
+              ],
+              [
+                3,
+                2,
+                3,
+                4,
+                4
+              ],
+              [
+                2,
+                4,
+                5,
+                3,
+                1
+              ],
+              [
+                6,
+                7,
+                1,
+                4,
+                5
+              ],
+              [
+                5,
+                1,
+                1,
+                2,
+                4
+              ]
+            ]
+          ],
+          "expected": [
+            [
+              0,
+              4
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              1,
+              4
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              3,
+              0
+            ],
+            [
+              3,
+              1
+            ],
+            [
+              4,
+              0
+            ]
+          ],
+          "example": true
+        },
+        {
+          "args": [
+            [
+              [
+                1
+              ]
+            ]
+          ],
+          "expected": [
+            [
+              0,
+              0
+            ]
+          ],
+          "example": true
+        },
         {
           "args": [
             [
@@ -50914,23 +51074,7 @@
               1
             ]
           ],
-          "example": true
-        },
-        {
-          "args": [
-            [
-              [
-                1
-              ]
-            ]
-          ],
-          "expected": [
-            [
-              0,
-              0
-            ]
-          ],
-          "example": true
+          "example": false
         },
         {
           "args": [
@@ -56397,7 +56541,7 @@
       "number": 684,
       "title": "Redundant Connection",
       "url": "https://leetcode.com/problems/redundant-connection/",
-      "statement": null,
+      "statement": "In this problem, a tree is an undirected graph that is connected and has no cycles.\n\nYou are given a graph that started as a tree with n nodes labeled from 1 to n, with one additional edge added. The added edge has two different vertices chosen from 1 to n, and was not an edge that already existed. The graph is represented as an array edges of length n where edges[i] = [ai, bi] indicates that there is an edge between nodes ai and bi in the graph.\n\nReturn an edge that can be removed so that the resulting graph is a tree of n nodes. If there are multiple answers, return the answer that occurs last in the input.\n\nExample 1:\n\nInput: edges = [[1,2],[1,3],[2,3]]\nOutput: [2,3]\n\nExample 2:\n\nInput: edges = [[1,2],[2,3],[3,4],[1,4],[1,5]]\nOutput: [1,4]\n\nConstraints:\n\n    n == edges.length\n    3 <= n <= 1000\n    edges[i].length == 2\n    1 <= ai < bi <= edges.length\n    ai != bi\n    There are no repeated edges.\n    The given graph is connected.",
       "stub": "from typing import List, Optional\n\n\nclass Solution:\n    def findRedundantConnection(self, edges: List[List[int]]) -> List[int]:\n        pass\n",
       "entry": {
         "className": "Solution",
@@ -57143,7 +57287,7 @@
       "number": 695,
       "title": "Max Area of Island",
       "url": "https://leetcode.com/problems/max-area-of-island/",
-      "statement": null,
+      "statement": "You are given an m x n binary matrix grid. An island is a group of 1's (representing land) connected 4-directionally (horizontal or vertical.) You may assume all four edges of the grid are surrounded by water.\n\nThe area of an island is the number of cells with a value 1 in the island.\n\nReturn the maximum area of an island in grid. If there is no island, return 0.\n\nExample 1:\n\nInput: grid = [[0,0,1,0,0,0,0,1,0,0,0,0,0],[0,0,0,0,0,0,0,1,1,1,0,0,0],[0,1,1,0,1,0,0,0,0,0,0,0,0],[0,1,0,0,1,1,0,0,1,0,1,0,0],[0,1,0,0,1,1,0,0,1,1,1,0,0],[0,0,0,0,0,0,0,0,0,0,1,0,0],[0,0,0,0,0,0,0,1,1,1,0,0,0],[0,0,0,0,0,0,0,1,1,0,0,0,0]]\nOutput: 6\nExplanation: The answer is not 11, because the island must be connected 4-directionally.\n\nExample 2:\n\nInput: grid = [[0,0,0,0,0,0,0,0]]\nOutput: 0\n\nConstraints:\n\n    m == grid.length\n    n == grid[i].length\n    1 <= m, n <= 50\n    grid[i][j] is either 0 or 1.",
       "stub": "from typing import List, Optional\n\n\nclass Solution:\n    def maxAreaOfIsland(self, grid: List[List[int]]) -> int:\n        pass\n",
       "entry": {
         "className": "Solution",
@@ -57155,6 +57299,152 @@
         "gridArg": 0
       },
       "cases": [
+        {
+          "args": [
+            [
+              [
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                1,
+                1,
+                1,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                1,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0,
+                0,
+                1,
+                1,
+                0,
+                0,
+                1,
+                0,
+                1,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0,
+                0,
+                1,
+                1,
+                0,
+                0,
+                1,
+                1,
+                1,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                1,
+                1,
+                1,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0
+              ]
+            ]
+          ],
+          "expected": 6,
+          "example": true
+        },
+        {
+          "args": [
+            [
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            ]
+          ],
+          "expected": 0,
+          "example": true
+        },
         {
           "args": [
             [
@@ -57189,25 +57479,7 @@
             ]
           ],
           "expected": 4,
-          "example": true
-        },
-        {
-          "args": [
-            [
-              [
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
-              ]
-            ]
-          ],
-          "expected": 0,
-          "example": true
+          "example": false
         },
         {
           "args": [
@@ -60348,7 +60620,7 @@
       "number": 733,
       "title": "Flood Fill",
       "url": "https://leetcode.com/problems/flood-fill/",
-      "statement": null,
+      "statement": "You are given an image represented by an m x n grid of integers image, where image[i][j] represents the pixel value of the image. You are also given three integers sr, sc, and color. Your task is to perform a flood fill on the image starting from the pixel image[sr][sc].\n\nTo perform a flood fill:\n\n    Begin with the starting pixel and change its color to color.\n    Perform the same process for each pixel that is directly\n    adjacent (pixels that share a side with the original pixel,\n    either horizontally or vertically) and shares the same color\n    as the starting pixel.\n    Keep repeating this process by checking neighboring pixels\n    of the updated pixels and modifying their color if it\n    matches the original color of the starting pixel.\n    The process stops when there are no more adjacent pixels\n    of the original color to update.\n\nReturn the modified image after performing the flood fill.\n\nExample 1:\n\nInput: image = [[1,1,1],[1,1,0],[1,0,1]], sr = 1, sc = 1, color = 2\n\nOutput: [[2,2,2],[2,2,0],[2,0,1]]\n\nExplanation:\n\nFrom the center of the image with position (sr, sc) = (1, 1) (i.e., the red pixel), all pixels connected by a path of the same color as the starting pixel (i.e., the blue pixels) are colored with the new color.\n\nNote the bottom corner is not colored 2, because it is not horizontally or vertically connected to the starting pixel.\n\nExample 2:\n\nInput: image = [[0,0,0],[0,0,0]], sr = 0, sc = 0, color = 0\n\nOutput: [[0,0,0],[0,0,0]]\n\nExplanation:\n\nThe starting pixel is already colored with 0, which is the same as the target color. Therefore, no changes are made to the image.\n\nConstraints:\n\n    m == image.length\n    n == image[i].length\n    1 <= m, n <= 50\n    0 <= image[i][j], color < 2^16\n    0 <= sr < m\n    0 <= sc < n",
       "stub": "from typing import List, Optional\n\n\nclass Solution:\n    def floodFill(self, image: List[List[int]], sr: int, sc: int, color: int) -> List[List[int]]:\n        pass\n",
       "entry": {
         "className": "Solution",
@@ -61509,7 +61781,7 @@
       "number": 743,
       "title": "Network Delay Time",
       "url": "https://leetcode.com/problems/network-delay-time/",
-      "statement": null,
+      "statement": "You are given a network of n nodes, labeled from 1 to n. You are also given\ntimes, a list of travel times as directed edges times[i] = (ui, vi, wi), where\nui is the source node, vi is the target node, and wi is the time it takes for a\nsignal to travel from source to target.\n\nWe will send a signal from a given node k. Return the minimum time it takes for\nall the n nodes to receive the signal. If it is impossible for all the n nodes\nto receive the signal, return -1.\n\nExample 1:\n    Input:  times = [[2,1,1],[2,3,1],[3,4,1]], n = 4, k = 2\n    Output: 2\n\nExample 2:\n    Input:  times = [[1,2,1]], n = 2, k = 1\n    Output: 1\n\nExample 3:\n    Input:  times = [[1,2,1]], n = 2, k = 2\n    Output: -1\n\nConstraints:\n    1 <= k <= n <= 100\n    1 <= times.length <= 6000\n    times[i].length == 3\n    1 <= ui, vi <= n\n    ui != vi\n    0 <= wi <= 100\n    All the pairs (ui, vi) are unique.\n    (i.e., no multiple edges.)",
       "stub": "from typing import List, Optional\n\n\nclass Solution:\n    def networkDelayTime(self, times: List[List[int]], n: int, k: int) -> int:\n        pass\n",
       "entry": {
         "className": "Solution",
@@ -61558,9 +61830,9 @@
               ]
             ],
             2,
-            2
+            1
           ],
-          "expected": -1,
+          "expected": 1,
           "example": true
         },
         {
@@ -61573,10 +61845,10 @@
               ]
             ],
             2,
-            1
+            2
           ],
-          "expected": 1,
-          "example": false
+          "expected": -1,
+          "example": true
         },
         {
           "args": [
@@ -62574,7 +62846,7 @@
       "number": 778,
       "title": "Swim in Rising Water",
       "url": "https://leetcode.com/problems/swim-in-rising-water/",
-      "statement": null,
+      "statement": "You are given an n x n integer matrix grid where each grid[i][j] represents the\nelevation at that point (i, j).\n\nIt starts raining. At time t, the depth of the water everywhere is t. You can swim\nfrom a square to another 4-directionally adjacent square if and only if the elevation\nof both squares individually are at most t. You can swim infinite distances in zero\ntime. Of course, you must stay within the boundaries of the grid during your swim.\n\nReturn the least time until you can reach the bottom right square (n - 1, n - 1) if\nyou start at the top left square (0, 0).\n\nExample 1:\n  Input:  grid = [[0,2],[1,3]]\n  Output: 3\n  Explanation: At time 0 you are at (0,0). You cannot move since\n  the four adjacent cells all have higher elevation than t=0.\n  You cannot reach (1,1) until t=3, when the path\n  (0,0)->(0,1)->(1,1) (elevations 0,2,3) all have elevation\n  <= 3.\n\nExample 2:\n  Input:  grid =\n[[0,1,2,3,4],[24,23,22,21,5],[12,13,14,15,16],[11,17,18,19,20],[10,9,8,7,6]]\n  Output: 16\n\nConstraints:\n  n == grid.length == grid[i].length\n  1 <= n <= 50\n  0 <= grid[i][j] < n^2\n  Each value grid[i][j] is unique.",
       "stub": "from typing import List, Optional\n\n\nclass Solution:\n    def swimInWater(self, grid: List[List[int]]) -> int:\n        pass\n",
       "entry": {
         "className": "Solution",
@@ -63014,7 +63286,7 @@
       "number": 787,
       "title": "Cheapest Flights Within K Stops",
       "url": "https://leetcode.com/problems/cheapest-flights-within-k-stops/",
-      "statement": null,
+      "statement": "There are n cities connected by some number of flights. You are given an array\n`flights` where flights[i] = [from_i, to_i, price_i] indicates that there is a\nflight from city from_i to city to_i with cost price_i.\n\nYou are also given three integers src, dst, and k. Return the cheapest price\nfrom src to dst with at most k stops. If there is no such route, return -1.\n\nExample:\n  n = 4, flights =\n  [[0,1,100],[1,2,100],[2,0,100],[1,3,600],[2,3,200]]\n  src = 0, dst = 3, k = 1  ->  700\n  (0 -> 1 -> 3 costs 700; 0 -> 1 -> 2 -> 3 costs 400\n  but uses 2 stops)\n\nConstraints:\n  1 <= n <= 100\n  0 <= flights.length <= (n * (n - 1) / 2)\n  flights[i].length == 3\n  0 <= from_i, to_i < n,  from_i != to_i\n  1 <= price_i <= 10^4\n  There will not be any multiple flights between two cities.\n  0 <= src, dst, k < n\n  src != dst",
       "stub": "from typing import List, Optional\n\n\nclass Solution:\n    def findCheapestPrice(self, n: int, flights: List[List[int]], src: int, dst: int, k: int) -> int:\n        pass\n",
       "entry": {
         "className": "Solution",
@@ -67801,7 +68073,7 @@
       "number": 994,
       "title": "Rotting Oranges",
       "url": "https://leetcode.com/problems/rotting-oranges/",
-      "statement": null,
+      "statement": "You are given an m x n grid where each cell can have one of three values:\n\n    0 representing an empty cell,\n    1 representing a fresh orange, or\n    2 representing a rotten orange.\n\nEvery minute, any fresh orange that is 4-directionally adjacent to a rotten orange becomes rotten.\n\nReturn the minimum number of minutes that must elapse until no cell has a fresh orange. If this is impossible, return -1.\n\nExample 1:\n\nInput: grid = [[2,1,1],[1,1,0],[0,1,1]]\nOutput: 4\n\nExample 2:\n\nInput: grid = [[2,1,1],[0,1,1],[1,0,1]]\nOutput: -1\nExplanation: The orange in the bottom left corner (row 2, column 0) is never rotten, because rotting only happens 4-directionally.\n\nExample 3:\n\nInput: grid = [[0,2]]\nOutput: 0\nExplanation: Since there are already no fresh oranges at minute 0, the answer is just 0.\n\nConstraints:\n\n    m == grid.length\n    n == grid[i].length\n    1 <= m, n <= 10\n    grid[i][j] is 0, 1, or 2.",
       "stub": "from typing import List, Optional\n\n\nclass Solution:\n    def orangesRotting(self, grid: List[List[int]]) -> int:\n        pass\n",
       "entry": {
         "className": "Solution",
@@ -69216,7 +69488,7 @@
       "number": 1334,
       "title": "Find the City With the Smallest Number of Neighbors at a Threshold Distance",
       "url": "https://leetcode.com/problems/find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance/",
-      "statement": null,
+      "statement": "There are `n` cities numbered from `0` to `n - 1`. You are given an array `edges` where\n`edges[i] = [from_i, to_i, weight_i]` represents a **bidirectional and weighted** edge between\ncities `from_i` and `to_i`, and given the integer `distanceThreshold`.\n\nReturn the city with the **smallest number** of cities that are reachable through some path and\nwhose distance is **at most** `distanceThreshold`. If there are multiple such cities, return the\ncity with the **greatest** number.\n\nNotice that the distance of a path connecting cities `i` and `j` is equal to the sum of the edges'\nweights along that path.\n\nExample 1:\n    Input:  n = 4, edges = [[0,1,3],[1,2,1],[1,3,4],[2,3,1]],\n    distanceThreshold = 4\n    Output: 3\n    Explanation: The neighboring cities at a\n    distanceThreshold = 4 for each city are:\n        City 0 -> [City 1, City 2]\n        City 1 -> [City 0, City 2, City 3]\n        City 2 -> [City 0, City 1, City 3]\n        City 3 -> [City 1, City 2]\n    Cities 0 and 3 have 2 neighboring cities at a\n    distanceThreshold = 4, but we have to return city 3 since it\n    has the greatest number.\n\nExample 2:\n    Input:  n = 5, edges =\n    [[0,1,2],[0,4,8],[1,2,3],[1,4,2],[2,3,1],[3,4,1]],\n    distanceThreshold = 2\n    Output: 0\n    Explanation: The neighboring cities at a\n    distanceThreshold = 2 for each city are:\n        City 0 -> [City 1]\n        City 1 -> [City 0, City 4]\n        City 2 -> [City 3, City 4]\n        City 3 -> [City 2, City 4]\n        City 4 -> [City 1, City 2, City 3]\n\nConstraints:\n    2 <= n <= 100\n    1 <= edges.length <= n * (n - 1) / 2\n    edges[i].length == 3\n    0 <= from_i < to_i < n\n    1 <= weight_i, distanceThreshold <= 10^4\n    All pairs (from_i, to_i) are distinct.",
       "stub": "from typing import List, Optional\n\n\nclass Solution:\n    def findTheCity(self, n: int, edges: List[List[int]], distanceThreshold: int) -> int:\n        pass\n",
       "entry": {
         "className": "Solution",
@@ -70187,7 +70459,7 @@
       "number": 1462,
       "title": "Course Schedule IV",
       "url": "https://leetcode.com/problems/course-schedule-iv/",
-      "statement": null,
+      "statement": "There are a total of numCourses courses you have to take, labeled from 0 to numCourses - 1. You are given an array prerequisites where prerequisites[i] = [ai, bi] indicates that you must take course ai first if you want to take course bi.\n\n    For example, the pair [0, 1] indicates that you have to take\n    course 0 before you can take course 1.\n\nPrerequisites can also be indirect. If course a is a prerequisite of course b, and course b is a prerequisite of course c, then course a is a prerequisite of course c.\n\nYou are also given an array queries where queries[j] = [uj, vj]. For the j^th query, you should answer whether course uj is a prerequisite of course vj or not.\n\nReturn a boolean array answer, where answer[j] is the answer to the j^th query.\n\nExample 1:\n\nInput: numCourses = 2, prerequisites = [[1,0]], queries = [[0,1],[1,0]]\nOutput: [false,true]\nExplanation: The pair [1, 0] indicates that you have to take course 1 before you can take course 0.\nCourse 0 is not a prerequisite of course 1, but the opposite is true.\n\nExample 2:\n\nInput: numCourses = 2, prerequisites = [], queries = [[1,0],[0,1]]\nOutput: [false,false]\nExplanation: There are no prerequisites, and each course is independent.\n\nExample 3:\n\nInput: numCourses = 3, prerequisites = [[1,2],[1,0],[2,0]], queries = [[1,0],[1,2]]\nOutput: [true,true]\n\nConstraints:\n\n    2 <= numCourses <= 100\n    0 <= prerequisites.length <=\n    (numCourses * (numCourses - 1) / 2)\n    prerequisites[i].length == 2\n    0 <= ai, bi <= numCourses - 1\n    ai != bi\n    All the pairs [ai, bi] are unique.\n    The prerequisites graph has no cycles.\n    1 <= queries.length <= 10^4\n    0 <= ui, vi <= numCourses - 1\n    ui != vi",
       "stub": "from typing import List, Optional\n\n\nclass Solution:\n    def checkIfPrerequisite(self, numCourses: int, prerequisites: List[List[int]], queries: List[List[int]]) -> List[bool]:\n        pass\n",
       "entry": {
         "className": "Solution",
@@ -72581,7 +72853,7 @@
       "number": 2097,
       "title": "Valid Arrangement of Pairs",
       "url": "https://leetcode.com/problems/valid-arrangement-of-pairs/",
-      "statement": null,
+      "statement": "You are given a 0-indexed 2D array pairs where pairs[i] = [start_i, end_i].\nAn arrangement of pairs is VALID if for every i (1-indexed, i >= 1) the end of\nthe previous pair equals the start of the current pair:\n    end_of(arrangement[i-1]) == start_of(arrangement[i]).\n\nReturn ANY valid arrangement of pairs. A valid arrangement is guaranteed to exist.\n(You may reorder the pairs; you must use every pair exactly once.)\n\nExample:  pairs = [[5,1],[4,5],[11,9],[9,4]]\n          -> [[11,9],[9,4],[4,5],[5,1]]   (9==9, 4==4, 5==5)\n\nConstraints: 1 <= pairs.length <= 10^5 ; a valid arrangement exists ; no duplicate pairs.",
       "stub": "from typing import List, Optional\n\n\nclass Solution:\n    def validArrangement(self, pairs: List[List[int]]) -> List[List[int]]:\n        pass\n",
       "entry": {
         "className": "Solution",

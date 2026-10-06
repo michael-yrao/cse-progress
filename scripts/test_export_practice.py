@@ -182,6 +182,8 @@ class ValidationTests(unittest.TestCase):
              _spec(figure={"kind": "graph", "edgesArg": 0, "highlight": "input"})),
             ("figure matrixArg beyond an example case's args", FILENAME,
              _spec(figure={"kind": "graph", "matrixArg": 1})),
+            ("figure with no statement", FILENAME,
+             _spec(statement=..., figure={"kind": "grid", "gridArg": 0})),
             ("indented statement line of 65 characters", FILENAME,
              _spec(statement="Return it.\n" + " " * 4 + "x" * 61 + "\n")),
         ]

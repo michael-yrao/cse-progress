@@ -1834,3 +1834,15 @@ decisions:
       phase table does not spoil the call (learner approved the wording). No
       `cse.config.yml` value changed.
     affects: [techniques_vocabulary, technique_coverage, roadmap]
+  - id: practice-figure-needs-statement-oct05
+    date: 2026-10-05
+    summary: >-
+      A practice spec with a `figure` must carry a `statement`. The practice page draws a
+      figure only on its statement branch; without one it falls back to the site
+      walkthrough's description, which draws nothing and shows each example's "Why" line and
+      a hint. 21 specs had a figure and no statement; each gains its statement, copied from
+      the local solution file's docstring. `export_practice.py` now rejects a figure with no
+      statement. Narrows `practice-contract-shapes` ("`statement` becomes optional") for
+      figure specs only. Learner's call, Oct 5, 2026. Additive: `schemaVersion` stays 1. No
+      `cse.config.yml` value changed.
+    affects: [practice]

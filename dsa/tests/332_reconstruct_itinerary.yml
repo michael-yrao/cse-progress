@@ -1,6 +1,18 @@
 number: 332
 title: Reconstruct Itinerary
 url: https://leetcode.com/problems/reconstruct-itinerary/
+statement: |
+  tickets[i] = [from_i, to_i] = one flight. Reconstruct the itinerary in order,
+  using ALL tickets exactly once, starting from "JFK".
+  If multiple valid itineraries → return the lexicographically smallest one
+  (compare the whole itinerary as a list of strings).
+  A valid itinerary is guaranteed to exist (may reuse an airport, not a ticket).
+
+    Input:
+    [["MUC","LHR"],["JFK","MUC"],["SFO","SJC"],["LHR","SFO"]]
+    Output: ["JFK","MUC","LHR","SFO","SJC"]
+
+  Constraints: 1 <= tickets.length <= 300; airport codes are 3 uppercase letters.
 entry:
   class: Solution
   method: findItinerary

@@ -338,6 +338,10 @@ def _validate_figure(spec: dict, filename: str) -> None:
     """Validate the optional `figure`; absent is valid. Needs `cases` already validated."""
     if "figure" not in spec:
         return
+    if not spec.get("statement"):
+        raise PracticeError(
+            f"{filename}: a figure needs a statement — the practice page draws a figure "
+            f"only on its statement branch")
     figure = spec["figure"]
     if not isinstance(figure, dict):
         raise PracticeError(f"{filename}: 'figure' must be a mapping")

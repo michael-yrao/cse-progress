@@ -2,6 +2,19 @@
 number: 2097
 title: Valid Arrangement of Pairs
 url: https://leetcode.com/problems/valid-arrangement-of-pairs/
+statement: |
+  You are given a 0-indexed 2D array pairs where pairs[i] = [start_i, end_i].
+  An arrangement of pairs is VALID if for every i (1-indexed, i >= 1) the end of
+  the previous pair equals the start of the current pair:
+      end_of(arrangement[i-1]) == start_of(arrangement[i]).
+
+  Return ANY valid arrangement of pairs. A valid arrangement is guaranteed to exist.
+  (You may reorder the pairs; you must use every pair exactly once.)
+
+  Example:  pairs = [[5,1],[4,5],[11,9],[9,4]]
+            -> [[11,9],[9,4],[4,5],[5,1]]   (9==9, 4==4, 5==5)
+
+  Constraints: 1 <= pairs.length <= 10^5 ; a valid arrangement exists ; no duplicate pairs.
 entry:
   class: Solution
   method: validArrangement
