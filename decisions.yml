@@ -1846,3 +1846,12 @@ decisions:
       figure specs only. Learner's call, Oct 5, 2026. Additive: `schemaVersion` stays 1. No
       `cse.config.yml` value changed.
     affects: [practice]
+  - id: deferred-rows-unbilled-oct6
+    date: 2026-10-06
+    summary: >-
+      CHANGES the header clause of deferred-rows-stay-on-planned-day-sep29. A row deferred off a
+      day that has started still stays on it, unstruck and prefixed `→`, but it is billed in neither
+      that day's built nor its remaining, so the header drops by its price. Origin: Mon Oct 5, an
+      even swap (743 out, 2812 in, both 🟡 M) read built 9.8 against 7.8 of work. The week's Capacity
+      line keeps the as-built plan. Learner's decision, Oct 6.
+    affects: [effort-budget, scheduling, dashboard]

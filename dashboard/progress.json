@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-05",
+  "generatedAt": "2026-10-06",
   "totals": {
     "problems": 134,
     "solutions": 145,
@@ -39,8 +39,8 @@
   },
   "onSchedule": {
     "totalActive": 145,
-    "dueToday": 6,
-    "overdue": 12
+    "dueToday": 9,
+    "overdue": 18
   },
   "trophyCase": {
     "graduated": [
@@ -4536,7 +4536,7 @@
         "date": "2026-10-05",
         "weekday": "Monday",
         "label": "Backtracking/Greedy/Dijkstra conversions + Backtracking/Cycle-detection reviews",
-        "units": 9.8,
+        "units": 7.8,
         "items": [
           {
             "lcNumber": 46,
@@ -5861,7 +5861,7 @@
       "date": "2026-09-24",
       "planned": 6.5,
       "done": 2.0,
-      "built": 6.5,
+      "built": 2.0,
       "partial": false
     },
     {
@@ -5882,28 +5882,28 @@
       "date": "2026-09-27",
       "planned": 8.9,
       "done": 11.3,
-      "built": 11.9,
+      "built": 11.6,
       "partial": false
     },
     {
       "date": "2026-09-28",
       "planned": 8.0,
       "done": 7.4,
-      "built": 8.0,
+      "built": 7.4,
       "partial": false
     },
     {
       "date": "2026-09-29",
       "planned": 7.7,
       "done": 7.3,
-      "built": 7.7,
+      "built": 7.3,
       "partial": false
     },
     {
       "date": "2026-09-30",
       "planned": 10.9,
       "done": 10.6,
-      "built": 10.9,
+      "built": 10.6,
       "partial": false
     },
     {
@@ -5924,21 +5924,21 @@
       "date": "2026-10-03",
       "planned": 14.2,
       "done": 8.6,
-      "built": 14.2,
+      "built": 8.6,
       "partial": false
     },
     {
       "date": "2026-10-04",
       "planned": 14.7,
       "done": 6.9,
-      "built": 14.7,
+      "built": 6.9,
       "partial": false
     },
     {
       "date": "2026-10-05",
-      "planned": 9.8,
+      "planned": 7.8,
       "done": 7.8,
-      "built": 9.8,
+      "built": 7.8,
       "partial": false
     },
     {

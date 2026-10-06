@@ -623,6 +623,7 @@ def price_day_items(day: dt.date, items: list[dict], rows: list[dict], cfg: dict
     streakless = 0
     done_lines: list[str] = []
     rest_lines: list[str] = []
+    moved_lines: list[str] = []
     unpriced: list[str] = []
 
     for it in items:
@@ -698,7 +699,12 @@ def price_day_items(day: dt.date, items: list[dict], rows: list[dict], cfg: dict
                     guessed += 1
         num_label = it["num"] or "—"
         line = f"  {num_label:>5}  {cost:4.1f}  {note}  {it['text'][:44]}"
-        if it["done"]:
+        if it.get("deferred_to"):
+            # deferred-rows-unbilled-oct6: a row deferred off a started day stays visible
+            # but bills in neither built nor remaining; it prices on its new day.
+            moved_lines.append(f"  {num_label:>5}  {cost:4.1f}  {note}  "
+                               f"→ {it['deferred_to']}  {it['text'].lstrip('→ ')[:44]}")
+        elif it["done"]:
             done_total += cost
             done_lines.append(line)
         else:
@@ -714,6 +720,7 @@ def price_day_items(day: dt.date, items: list[dict], rows: list[dict], cfg: dict
         "unpriced": unpriced,
         "done_lines": done_lines,
         "rest_lines": rest_lines,
+        "moved_lines": moved_lines,
     }
 
 
@@ -749,6 +756,9 @@ def price_schedule_day(day: dt.date, rows: list[dict], cfg: dict) -> None:
     if rest_lines:
         print("\n  REMAINING")
         print("\n".join(rest_lines))
+    if p["moved_lines"]:
+        print("\n  MOVED (deferred off this day -- not billed here; prices on the new day)")
+        print("\n".join(p["moved_lines"]))
     if unpriced:
         print("\n  UNPRICED (no problem number -- primer, probe, or free-text row)")
         for u in unpriced:

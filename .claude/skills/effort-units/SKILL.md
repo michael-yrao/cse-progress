@@ -8,7 +8,7 @@ description: >-
   checking the dashboard's workload numbers. Every number comes from
   scripts/effort_budget.py in one named mode — never hand-computed.
 ---
-<!-- reconciled: 2026-09-29 -->
+<!-- reconciled: 2026-10-06 -->
 # effort-units — every effort number from one script, on one basis
 
 The unit model, the weights and the policy live elsewhere: the policy (the ceiling is the
@@ -24,7 +24,7 @@ producing a number. It never restates a weight.
    `built`. There are no estimates.
 2. **One mode per answer.** Name the mode next to every number ("7.4, `--schedule-day`").
    Never compare, add or subtract numbers from two modes.
-3. **A row bills the comfort it carried going in.** A day's cost is fixed at the build. A rep
+3. **A row bills the comfort it carried going in.** A row's price is fixed at the build. A rep
    that converts 🟡 → 🟢 cuts future demand, never today's bill.
 
 ## Which command answers which question
@@ -43,15 +43,15 @@ moving between days.
 
 ## Moving, adding or removing a row
 
-**A day that has started keeps its plan.** A row not done on it stays there, unstruck,
-prefixed `→`, with the new date in Next, and its header does not change. The copy on the new
-day is prefixed `→` and prices there. **A day that has not started is re-planned:** the row
-moves outright.
+**A day that has started keeps its rows.** A row not done on it stays there, unstruck,
+prefixed `→`, with the new date in Next, but it is no longer billed there: the day's header
+drops by its price, and `--schedule-day` lists it under MOVED. The copy on the new day is
+prefixed `→` and prices there. A swap is therefore even: the row out leaves the bill, the row
+in joins it. **A day that has not started is re-planned:** the row moves outright.
 
 1. **Start cell.** Moving: carry the Start cell verbatim. Adding: write it from the tracker —
    the comfort going in, with the streak on a 🟢 (`🟢 s2`), or `🆕` for an unseen problem.
-2. **Make the edit.** The new day's header always changes in the same edit; the old day's
-   header changes only if that day has not started.
+2. **Make the edit.** Both days' headers change in the same edit.
 3. **Price each touched day** with `--schedule-day` and set the header to `built`.
 4. **Re-run and read the check.** It must read `matches`. `CANNOT VERIFY` means a row is
    unpriced or guessed: fix the row (its number, its difficulty, its Start cell), not the

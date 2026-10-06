@@ -1418,6 +1418,35 @@ class BuildWorkloadTests(unittest.TestCase):
                 self.assertAlmostEqual(priced["built"], expected_cost)
                 self.assertEqual(priced["streakless"], expected_streakless)
 
+    def test_price_day_items_bills_deferred_row_in_neither_total(self):
+        """A row deferred off a started day (`deferred_to` set) stays listed in
+        `moved_lines` but bills in neither built nor remaining
+        (deferred-rows-unbilled-oct6); built == done + remaining throughout."""
+        cfg = {"comfort_units": {"🔴": 3.0, "🟡": 2.0}, "difficulty": {"Medium": 1.0}}
+        tracked = [_row(n, "🟡", 0, diff="Medium") for n in (701, 702, 703)]
+        day = dt.date(2026, 8, 10)
+        base = {"is_complexity": False, "is_new": False, "start": "🟡",
+                "start_streak": None, "deferred_to": None}
+        items = [
+            {**base, "num": "701", "done": False, "text": "701 deferred",
+             "deferred_to": "2026-12-07"},
+            {**base, "num": "702", "done": True, "text": "702 struck"},
+            {**base, "num": "703", "done": False, "text": "703 open"},
+        ]
+        cases = [
+            ("deferred only", items[:1], 0.0, 0.0, 1),
+            ("done only", items[1:2], 2.0, 0.0, 0),
+            ("open only", items[2:], 0.0, 2.0, 0),
+            ("all three", items, 2.0, 2.0, 1),
+        ]
+        for name, rows, done, remaining, moved in cases:
+            with self.subTest(name):
+                priced = eb.price_day_items(day, rows, tracked, cfg)
+                self.assertAlmostEqual(priced["done"], done)
+                self.assertAlmostEqual(priced["remaining"], remaining)
+                self.assertAlmostEqual(priced["built"], done + remaining)
+                self.assertEqual(len(priced["moved_lines"]), moved)
+
     def test_parse_schedule_day_start_streak(self):
         """parse_schedule_day() reads a 🟢 Start cell's `sN` into start_streak, and
         returns None (not a silent 0) for a bare 🟢 with no streak written -- the
