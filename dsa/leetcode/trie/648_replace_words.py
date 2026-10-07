@@ -39,12 +39,59 @@ over the nearest alternative.
 # problem needs. No shared data-model imports (whiteboard fidelity).
 from typing import List
 
+    # ── Attempt · 2026-10-06 ──────────────
+class TrieNode_20261006:
+    def __init__(self):
+        self.children = {}
+        self.isWord = False
+
+
 class TrieNode:
     def __init__(self):
         self.children = {}
         self.isWord = False
 
+
 class Solution:
+    def replaceWords_20261006(self, dictionary: list[str], sentence: str) -> str:
+        # this is a Trie problem, we basically put dictionary into a Trie
+        # go through each word in the sentence, when we get a first hit, we use it
+
+        result = []
+
+        root = TrieNode_20261006()
+
+        for word in dictionary:
+            traversal = root
+            for char in word:
+                if char not in traversal.children:
+                    traversal.children[char] = TrieNode_20261006()
+                traversal = traversal.children[char]
+            traversal.isWord = True
+        
+        # now that the dictionaries are setup, let's go through each word in sentence
+
+        words = sentence.split()
+
+        for word in words:
+            traversal = root
+            for i in range(len(word)):
+                # if char doesn't exist in it, just use the word itself
+                if word[i] not in traversal.children:
+                    result.append(word)
+                    break
+                # if exists, increment traversal
+                traversal = traversal.children[word[i]]
+                # if it does exist and is a word, add to result and go next
+                if traversal.isWord:
+                    result.append(word[:i+1])
+                    break
+            else:
+                result.append(word)
+        
+        new_sentence = " ".join(result)
+
+        return new_sentence
 
     # ── Attempt · 2026-09-26 ──────────────
     def replaceWords_20260926(self, dictionary: List[str], sentence: str) -> str:

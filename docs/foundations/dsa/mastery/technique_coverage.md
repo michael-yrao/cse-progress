@@ -6,7 +6,7 @@
 
 > The tracker is keyed by **problem**; this is keyed by **technique**. Use it at the weekly build to decide what to pull, and at phase exit to check the per-algorithm bar (recognition + execution, ≥1 🟢 each).
 
-> **61/106** techniques started &nbsp;·&nbsp; **3** with no 🟢 &nbsp;·&nbsp; **7** thin &nbsp;·&nbsp; **0** unqueued variant gaps
+> **62/109** techniques started &nbsp;·&nbsp; **3** with no 🟢 &nbsp;·&nbsp; **8** thin &nbsp;·&nbsp; **0** unqueued variant gaps
 
 ## ⚠️ Action list
 
@@ -23,6 +23,7 @@
 - **Graph Cycle Detection (DFS)** (graphs) — 1/2: 261
 - **Bellman-Ford** (advanced_graphs) — 2/3: 787, 9001
 - **Kruskal's MST** (advanced_graphs) — 2/4: 1489, 9004
+- **Trie** (tries) — 3/4: 208, 211, 648
 - **Dijkstra** (advanced_graphs) — 5/6: 743, 778, 1631, 2812, 3620
 - **Backtracking** (backtracking) — 8/9 (11 rows): 22, 39, 40, 46, 78, 79, 90, 131
 
@@ -41,7 +42,7 @@
 - **HashMap + Doubly Linked List (LRU)** (linked_list) — queued: 1472 (`rated:146`)
 - **Heap / Priority Queue** (heap) — queued: 23 (`surplus>=1`), 295 (`surplus>=1`)
 - **Hierholzer (Eulerian path)** (advanced_graphs) — queued: 753 (`surplus>=1`)
-- **Intervals (sort + sweep)** (intervals) — queued: 252 (`surplus>=1`), 253 (`surplus>=1`), 1851 (`surplus>=1`)
+- **Intervals: Merge & Insert (sort by start)** (intervals) — queued: 252 (`surplus>=1`)
 - **Kruskal's MST** (advanced_graphs) — queued: 1135 (`surplus>=1`)
 - **Linked List Merge** (linked_list) — queued: 23 (`surplus>=1`)
 - **Linked List Reversal** (linked_list) — queued: 25 (`surplus>=1`)
@@ -132,7 +133,10 @@ Every declared technique gets a row, started or not — a not-started row's Gaps
 | Topological Sort | graphs | core | 3 (3+0) | 3 (207, 210, 269) | 🎓 | ✅ | Kahn's (BFS) ×3 · ~~DFS postorder~~ *(queued: `graduates:210`)* | queued: 802 `surplus>=1`, 2115 `surplus>=1` |
 | Union-Find | graphs | core | 3 (3+0) | 4 (130, 261, 684, 721) | 🎓 | ✅ | — | queued: 1202 `surplus>=1` |
 | Heap / Priority Queue | heap | core | 4 (4+0) | 6 (347, 355, 621, 703, 973, 1046) | 🟢 | ✅ | — | queued: 23 `surplus>=1`, 295 `surplus>=1` |
-| Intervals (sort + sweep) | intervals | core | 3 (3+0) | 3 (56, 57, 435) | 🟢 | ✅ | Merge overlapping (sort by start) ×1 · Insert into sorted (3-phase sweep) ×1 · Interval scheduling (sort by end) ×1 · ~~Max concurrent (sweep line / min-heap of ends)~~ *(queued: `green:435`)* · ~~Two-list intersection (two pointers)~~ *(queued: `green:56`)* | queued: 252 `surplus>=1`, 253 `surplus>=1`, 1851 `surplus>=1` |
+| Interval List Intersection (two pointers) | intervals | core | 1 (1+0) | 0 (—) | — | ❌ | **Two sorted lists, advance the earlier end ×0** | *not started* |
+| Interval Scheduling (sort by end) | intervals | core | 1 (1+0) | 1 (435) | 🟢 | ✅ | Keep max non-overlapping / min removals ×1 | — |
+| Intervals: Merge & Insert (sort by start) | intervals | core | 3 (2+1) | 3 (56, 57, 452) | 🟢 | ✅ | Merge overlapping (sort by start) ×1 · Insert into sorted (3-phase sweep) ×1 · Stab / shrink-the-overlap (min end) ×1 | queued: 252 `surplus>=1` |
+| Sweep Line / Max Concurrent | intervals | core | 1 (1+0) | 0 (—) | — | ❌ | **Min-heap of ends ×0** · **Event sweep (+1/-1) ×0** | *not started* |
 | Deep Copy via Hash Map | linked_list | core | 1 (1+0) | 1 (138) | 🟢 | ✅ | — | — |
 | Dummy Node | linked_list | core | 2 (2+0) | 3 *+2v* (2, 19, 21) | 🎓 | ✅ | — | — |
 | Floyd's Cycle / Midpoint | linked_list | core | 1 (1+0) | 2 (141, 143) | 🟢 | ✅ | — | — |
@@ -161,7 +165,7 @@ Every declared technique gets a row, started or not — a not-started row's Gaps
 | Tree Construction (Divide & Conquer) | trees | core | 1 (1+0) | 1 (105) | 🟢 | ✅ | — | — |
 | Tree DFS (recursive) | trees | core | 4 (4+0) | 6 (100, 104, 110, 226, 572, 1448) | 🎓 | ✅ | — | queued: 297 `surplus>=1` |
 | Tree DFS with Postorder Return | trees | core | 1 (1+0) | 2 (124, 543) | 🟢 | ✅ | — | — |
-| Trie | tries | core | 3 (3+0) | 3 (208, 211, 648) | 🟢 | ✅ | — | queued: 212 `surplus>=1`, 472 `rated:139` |
+| Trie | tries | core | 4 (3+1) | 3 (208, 211, 648) | 🟢 | ✅ | — | thin (3/4) · queued: 212 `surplus>=1`, 472 `rated:139` |
 | Dutch National Flag | two_pointers | core | 1 (1+0) | 1 (75) | 🟢 | ✅ | — | — |
 | Fast/Slow In-Place Write | two_pointers | core | 2 (2+0) | 4 (26, 27, 80, 283) | 🎓 | ✅ | — | — |
 | Prefix/Suffix Max | two_pointers | core | 1 (1+0) | 1 (42) | 🟢 | ✅ | Array ×1 · ~~Two Pointer~~ *(queued: `graduates:42`)* | — |
@@ -169,7 +173,7 @@ Every declared technique gets a row, started or not — a not-started row's Gaps
 
 ## Vocabulary maintenance
 
-**Queued (78)** — listed in the Action list above; a known gap with a fill already picked, not counted below.
+**Queued (79)** — listed in the Action list above; a known gap with a fill already picked, not counted below.
 
 **Declared, not queued (1)** — declared in the vocabulary, no tracker row, and not yet in any queue. This is the normal state for curriculum ahead of the learner; it is a roadmap, not a finding: 547
 

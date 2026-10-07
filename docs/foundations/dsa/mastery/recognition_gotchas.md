@@ -1,3 +1,21 @@
+- **2026-10-06 · 648 Replace Words** (🟢 prov lock-down; retry, half-spoiled: trie folder) — ⚠️ **partial.** Trie
+  named unaided in the top comment ("when we get a first hit, we use it" — the first-word-end-wins operation held from
+  Sep 26), but the picking feature vs a hash set of roots was not stated when asked (learner had never seen the set-of-roots
+  prefix scan; taught after: consecutive prefixes share work in a trie, re-hash from scratch in a set), and the build was clean while the
+  inlined walk shipped three bugs (wrong list joined, flag read before the step, no exit for a word that runs out). → 🟡.
+- **2026-10-06 · 219 Contains Duplicate II** (🟢 s2 review; retry, half-spoiled: sliding_window folder) — ✅ **hit.** Top
+  comment, unaided: "sliding window with a set to tell us what is in the window". Code right first run (20,000/20,000
+  against a brute-force reference). → 🟢 s3 = 🎓.
+- **2026-10-06 · 452 Minimum Number of Arrows to Burst Balloons** (🎯 probe, measured; label stripped, carried from
+  Oct 4) — ⚠️ **partial.** Unaided: "my first thought is intervals", and sorting. The mechanism that picks this over a
+  plain merge (one arrow = the overlap shared by every balloon in the group, so it shrinks to the min end; a start past
+  that edge opens a new arrow) was coach-supplied as a traced procedure after two hints. Sort-by-start vs sort-by-end
+  asked as a reminder. Code from the procedure: one bug, a `[-1,-1]` sentinel that negative starts fold into. → 🔴 (earned a tracker row).
+- **2026-10-06 · 3620 Network Recovery Pathways** (🔴 re-rep; retry, half-spoiled: graphs folder, tracker row names
+  Dijkstra, Oct 4 stuck_log) — ⚠️ **partial.** Top comment, unaided: max-boundary binary search on the answer, bounds
+  0..k, Dijkstra as the check. The check's predicate read "achieve with total edge weight of m", which put the score
+  guess in the total-cost column (learner: "misread the problem"). Resolved after a coach table of the two numbers per
+  path: drop edges under m, and the cheapest remaining path must cost ≤ k. → 🟡.
 - **2026-10-05 · 261 Graph Valid Tree (DFS)** (🟢 s1 review; retry, half-spoiled: tracker row names DFS, learner chose the
   variant) — ✅ **hit.** Top comment, unaided: a tree is n − 1 edges with no cycle; check the count, then DFS. Code right
   (5,000/5,000 against a Union-Find reference). The recursive call's `False` is discarded, so the cycle check is dead code;

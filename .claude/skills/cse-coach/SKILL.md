@@ -42,7 +42,7 @@ resources it may also cite (a `*_gotchas.md` ledger, `cse.config.yml`, a generat
 | Any problem discussion (solve/review/mention) | `references/review-workflow.md` |
 | Proposing a comfort rating / next interval | `references/spaced-repetition.md` |
 | Effort policy: the ceiling, what is unpriced, accepting an overflow pull | `references/effort-budget.md` — any unit NUMBER goes through the `effort-units` skill |
-| Last session of the week — the close-out | `references/weekly-build.md` |
+| Last session of the week — the close-out | the `scheduling` skill (the ordered build) + `references/weekly-build.md` (the why) |
 | "Do I actually know technique X?" / phase exit | `references/technique-coverage.md` |
 | Running or scheduling a System Design mock | `references/system-design.md` |
 | Seating or running the recurring DSA mock interview (🎤 row) | `references/dsa-mock.md` |

@@ -22,6 +22,36 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🟡 648. Replace Words — 2026-10-06
+**Sticking point**: the walk's exits, inlined without the helper. Trie named and built unaided, but the submitted loop had three bugs the coach had to point out: it joined the input `words` instead of `result`, checked `isWord` on the node before stepping (so the root's flag was never read and the slice would land one char long), and had no append for a word that ran off the end of the loop with no break. Fixed with `for/else` (new construct, taught on request). Complexity, not rated: space O(D + S) right; time given O(S + W·L), the build's O(D) dropped — the scan bound itself was a valid one this time (≤ min(S, W·L)). Already queued for the Sun Oct 11 re-ask.
+
+## 🔴 452. Minimum Number of Arrows to Burst Balloons — 2026-10-06 *(🎯 recognition probe #9 — Intervals, interval scheduling)*
+**Topic**: Fewest points that stab every interval. Sort, then grow one arrow's group while every balloon in it still shares a spot.
+
+### Where did I get stuck?
+- **Recognition.** "my first thought is intervals but i don't know how to get that up and running", plus sorting. Family right, unaided; the mechanism was not there.
+- **Approach.** "i'm not sure how to determine how to shoot the arrow." Coach showed the arrow's range as the overlap of its balloons ([1,6] alone → 1..6; with [2,8] → 2..6). Adding [7,12], the learner answered "we can shoot 2 -> 6 and 7 -> 12" and then read the range as an "or". Coach supplied the procedure as a traced table: one arrow's range is the shared overlap (it only shrinks); sorted by start, only the right edge (the min end) decides; a start past it closes the arrow and opens a new one. Asked when to sort by start vs by end: start for merge-style grouping, end for the pick-the-earliest-finisher greedy; this problem works either way. The learner chose start ("a style of merge"); coach noted the overlap shrinks (min end) where a merge grows (max end).
+- **Code.** Written from the procedure, examples right first run. One bug, coach-located by running the file: the `[-1,-1]` "no arrow yet" sentinel. Starts go down to −2³¹, so `[[-5,-3]]` folded into the fake range and returned 0 (expected 1). Learner: "didnt read the constraints properly". Fixed with `-math.inf`; 20,000/20,000 against a sort-by-end reference.
+- Complexity: right, unaided. Time O(n log n) sort + O(n) pass; space O(n) sort buffer, O(1) loop.
+
+### Core Realization
+An arrow is not a point you pick up front; it is a range that shrinks as balloons join it. Sorted by start, a balloon fits the current arrow iff its start ≤ the smallest end seen in the group. When it doesn't, the arrow is spent: count it, and the new balloon opens the next range. A sentinel standing for "no arrow yet" must be impossible for a real coordinate to reach.
+
+### Code Snippet
+```python
+points.sort()
+arrows, edge = 0, -math.inf
+for start, end in points:
+    if start <= edge:
+        edge = min(edge, end)   # shared overlap shrinks
+    else:
+        arrows += 1             # no shared spot: new arrow
+        edge = end
+```
+
+## 🟡 3620. Network Recovery Pathways — 2026-10-06 *(re-rep of the Oct 4 🔴 — Dijkstra inside a max-boundary binary search on the answer)*
+**Sticking point**: score and total cost blurred together twice. The check was first written as "achieve with total edge weight of m", then coded as `if current_weight < min_weight: continue` on the popped running total, which skipped the start node for every m > 0. The edge filter in the neighbor loop was already right. Two more bugs, both coach-located by running the file: `distance[neighbor]` overwritten with a worse total (Example 1, m = 2: 7 replaced by 15), and no −1 guard (fixed with a check at −∞). Final code 5,000/5,000 against a brute-force reference. Approach built unaided this time; Oct 4 needed coach pseudocode.
+
 ## 🟡 261. Graph Valid Tree (DFS) — 2026-10-05 *(🟢 s1 review, last rep Aug 16 — Cycle-detection)*
 **Sticking point**: recursive DFS on an undirected graph felt unfamiliar after seven weeks away, with Union-Find the natural pull for this problem. The finished code is right, but the recursive call's return is dropped (`dfs(neighbor, node)` without checking for `False`), so the cycle check never reaches the top; the answer comes from the edge-count guard plus `len(visited) == n`.
 

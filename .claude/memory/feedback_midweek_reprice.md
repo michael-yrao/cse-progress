@@ -58,3 +58,5 @@ headroom on deferrable work (🟢 backlog, an unseen problem) — never on perma
 
 Pairs with [[feedback_intake_and_surplus]] (surplus is a rate, measured at the build) and
 [[feedback_schedule_integrity]]. Related: [[feedback_phase_progression]].
+
+2026-10-06: a mid-week reseat also needs a spare row under `effort_budget.max_rows_per_day`; the `scheduling` skill's Mid-week section is the procedure.

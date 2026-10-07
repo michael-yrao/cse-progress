@@ -31,6 +31,24 @@ from typing import List
 
 class Solution:
 
+    # ── Attempt · 2026-10-06 ──────────────
+    def containsNearbyDuplicate_20261006(self, nums: List[int], k: int) -> bool:
+        # sliding window with a set to tell us what is in the window
+        l = r = 0
+        window_set = set()
+
+        while r < len(nums):
+            # get us in position first
+            while r - l > k:
+                window_set.remove(nums[l])
+                l+=1
+            if nums[r] in window_set:
+                return True
+            window_set.add(nums[r])
+            r+=1
+            
+        return False
+
     # ── Attempt · 2026-08-03 ──────────────
     def containsNearbyDuplicate_20260803(self, nums: List[int], k: int) -> bool:
         # so k is the window size

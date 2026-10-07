@@ -73,3 +73,5 @@ a week into a three-week phase, invisible because the board looked full of legit
 **Nothing in the repo flags an active phase with no reps.** This rule is the structural fix: a day that
 cannot be filled with an unseen problem forces the question *"why is there nothing new to pull?"* at
 build time, instead of a month later.
+
+2026-10-06: superseded by `effort_budget.intake_per_week` (decision `intake-rate-and-backstop-oct6`); the per-day unseen rule no longer binds.

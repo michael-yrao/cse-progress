@@ -51,7 +51,7 @@ them. The *how* is in the named skill reference.
 6. **Deferring/dropping a problem?** Assign a new specific slot in the same edit — a deferred
    problem with no new date is a missed problem. (`review-workflow.md` schedule integrity.)
 7. **Last session of the week?** Archive this week's schedule AND generate next week's, before
-   the commit — both, or neither counts. (`weekly-build.md`.)
+   the commit — both, or neither counts. Build it with the `scheduling` skill. (`weekly-build.md`.)
 8. **Asked to commit or push?** ⚠️ **Ask first, every time — EXCEPT on an explicit
    close-out-and-publish instruction** (*"close out the day/session/week"*, *"wrap up and
    commit/push"*): that phrase IS standing authorization to commit AND push with no further

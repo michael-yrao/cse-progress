@@ -361,6 +361,84 @@ class DoneRowFindingsTests(unittest.TestCase):
                 self.assertEqual(len(findings), expected_findings)
 
 
+_CFG = {"carry_forward_min_streak": 2, "intake_per_week": 2,
+        "intake_pause_overdue_unproven": 2}
+_MONDAY = dt.date(2026, 10, 5)
+_TODAY = dt.date(2026, 10, 6)
+
+
+def _day(*items: dict) -> dict[dt.date, list[dict]]:
+    return {_MONDAY: list(items)}
+
+
+class RowCapFindingsTests(unittest.TestCase):
+    """Check 5: a day block over the cap, Complexity rows excluded."""
+
+    def test_over_cap_only_when_more_than_cap_non_complexity_rows(self):
+        plain = {"is_complexity": False}
+        complexity = {"is_complexity": True}
+        cap = 3
+        cases = [
+            ("at cap", [plain] * cap, 0),
+            ("one over", [plain] * (cap + 1), 1),
+            ("complexity excluded", [plain] * cap + [complexity], 0),
+        ]
+        for name, items, expected in cases:
+            with self.subTest(name):
+                self.assertEqual(len(csi.row_cap_findings(_day(*items), cap)), expected)
+
+
+class DueRowCarriedSectionTests(unittest.TestCase):
+    """Check 3 with the carried section: only a proven row may be carried."""
+
+    SUNDAY = dt.date(2026, 10, 11)
+    CARRIED_SECTION = ("## ⏭️ Carried to next week (row cap)\n\n"
+                       "- [5 Title](x.py) · 🟢 s2 · due 2026-10-05 · carried from Sat\n")
+
+    def _findings(self, streak: int, section: str) -> list[str]:
+        row = {"num": "5", "title": "Title", "due": "2026-10-05",
+               "comfort": "🟢", "streak": streak}
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "20261005_schedule.md"
+            path.write_text("## Daily Schedule\n\n" + section, encoding="utf-8")
+            carried = csi.carried_numbers(path)
+        return csi.due_row_findings([row], {}, carried, self.SUNDAY, "20261005_schedule.md", _CFG)
+
+    def test_carried_row_accepted_only_when_proven(self):
+        cases = [
+            ("s2 carried accepted", 2, self.CARRIED_SECTION, None),
+            ("s1 carried flagged", 1, self.CARRIED_SECTION, "cannot be carried (unproven)"),
+            ("absent flagged", 2, "", "seated on no day"),
+        ]
+        for name, streak, section, expected in cases:
+            with self.subTest(name):
+                findings = self._findings(streak, section)
+                if expected is None:
+                    self.assertEqual(findings, [])
+                else:
+                    self.assertEqual(len(findings), 1)
+                    self.assertIn(expected, findings[0])
+
+
+class IntakeFindingsTests(unittest.TestCase):
+    """Check 6: the week's 🆕 count vs intake_per_week, or 0 when the backstop triggers."""
+
+    def test_new_row_count_against_expected(self):
+        new = {"is_new": True, "deferred_to": None}
+        overdue = {"comfort": "🔴", "streak": 0, "due": "2026-10-01"}
+        triggering = [overdue] * _CFG["intake_pause_overdue_unproven"]
+        per_week = _CFG["intake_per_week"]
+        cases = [
+            ("at the rate", [new] * per_week, [], 0),
+            ("one over", [new] * (per_week + 1), [], 1),
+            ("zero when triggered", [], triggering, 0),
+        ]
+        for name, items, tracker_rows, expected in cases:
+            with self.subTest(name):
+                findings = csi.intake_findings(_day(*items), tracker_rows, _CFG, _TODAY)
+                self.assertEqual(len(findings), expected)
+
+
 class LiveCurrentWeekTests(unittest.TestCase):
     """A soft check against the repo's real current-week schedule, not a fixture. Skips
     rather than fails when the schedule tree isn't present (e.g. a checkout of just this

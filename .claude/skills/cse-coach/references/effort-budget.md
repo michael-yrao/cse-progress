@@ -1,4 +1,4 @@
-<!-- reconciled: 2026-09-29 -->
+<!-- reconciled: 2026-10-06 -->
 # Daily load is an effort budget, not a problem count
 
 **Open this** at the weekly build, before accepting any overflow pull, and when re-pricing
@@ -41,6 +41,26 @@ A row where the learner writes code is priced by the script. That covers a revie
 ## The ceiling is the daily goal (Sep 28, 2026)
 
 Build each day as close to the ceiling (`effort_budget.ceiling`) as possible. It is the daily goal, and a small overshoot is fine. Raising the ceiling itself to catch up is still off the table. `decisions.yml` `daily-goal-is-the-ceiling-sep28`.
+
+## A day also has a row cap (Oct 6, 2026)
+
+A day holds at most `effort_budget.max_rows_per_day` rows, struck rows included and Complexity-technique
+rows excluded. On Oct 10 a day sat at 7.9 units across 17 rows while the largest fully completed day in
+the archive was 8. Units bind the week, not rows: the cap fixes a day's shape only. A day over the cap
+sheds its lowest-priority **proven** rows into the schedule's carried section, never by editing a
+tracker date. Proven means 🎓, or 🟢 at a streak of `effort_budget.carry_forward_min_streak` or above;
+🔴, 🟡, 🟢 s0 and 🟢 s1 are never carried, they displace a proven row. Procedure: the
+[`scheduling`](../../scheduling/SKILL.md) skill. `decisions.yml` `row-cap-oct6`,
+`carry-forward-proven-only-oct6`.
+
+## Intake is the lever, with a backstop (Oct 6, 2026)
+
+Each new problem costs about three unproven reps before it settles, so the weekly count of new problems
+(`effort_budget.intake_per_week`) sets whether the backlog piles. The 🎤 mock and a 🎯 probe are not
+intake. When the overdue unproven tracker rows reach `effort_budget.intake_pause_overdue_unproven`, the
+next build seats no new problem. This replaces the old "overdue above 5 suspends intake" rule, which
+fired on noise. `scripts/backlog_forecast.py --check` models the configured rate. `decisions.yml`
+`intake-rate-and-backstop-oct6`.
 
 ## ⚠️ Never raise the ceiling to catch up on a backlog
 

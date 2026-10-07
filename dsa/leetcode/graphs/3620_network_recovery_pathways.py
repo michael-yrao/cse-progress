@@ -52,6 +52,68 @@ from typing import List, Optional
 
 
 class Solution:
+
+    # ── Attempt · 2026-10-06 ──────────────
+    def findMaxPathScore_20261006(self, edges: List[List[int]], online: List[bool], k: int) -> int:
+        # we need maximum possible edge on the path from 0 -> n - 1 under k
+        # strangely worded question but essentially we need to find a path that finishes in k
+        # keep track of the smallest edge on it and return the maximum of all the runs
+        # what this means is we need to do max boundary binary search on the answer
+        # lower bound for cost is 0, so our lower bound for answer is also zero
+        # we want edge cost to not exceed k, so k is our upper bound
+        # then we see if we can achieve with minimum edge weight of m
+        # we will do lazy dijkstra with a min heap here
+        # so that is min heap, adj map and visited
+        
+        # we need to do adj_map based on the online first for Dijkstra
+        adj_map = collections.defaultdict(list)
+
+        for n1,n2,weight in edges:
+            if online[n1] and online[n2]:
+                adj_map[n1].append((n2, weight))
+
+        # so we must not use edges smaller than min weight here
+        def can_finish_with_edge_weight(min_weight):
+            min_heap = []
+            distance = [math.inf] * len(online)
+            visited = set()
+            heapq.heappush(min_heap, (0, 0))
+            distance[0] = 0
+
+            # now we go through min_heap and see if we can achieve <= k with min_weight
+            while min_heap:
+                current_weight, current_node = heapq.heappop(min_heap)
+                # if we already populated 
+                if current_node in visited:
+                    continue
+                # we mark as visited
+                visited.add(current_node)
+                # let's go through the neighbors and update distances as we go
+                for neighbor, neighbor_weight in adj_map[current_node]:
+                    new_weight = current_weight + neighbor_weight
+                    if neighbor in visited or neighbor_weight < min_weight:
+                        continue
+                    distance[neighbor] = min(distance[neighbor], new_weight)
+                    heapq.heappush(min_heap, (new_weight, neighbor))
+            
+            return distance[len(online) - 1] <= k
+
+        # check if we can even reach with no constraints
+        if not can_finish_with_edge_weight(-math.inf):
+            return -1
+
+        l, r = 0, k
+
+        while l < r:
+            # m is the smallest edge we will allow on this
+            m = (l + r + 1) // 2
+            if can_finish_with_edge_weight(m):
+                l = m
+            else:
+                r = m - 1
+        
+        return l
+
     # ── Attempt 1 · 2026-10-04 ────────────────────────────────────────────
     def findMaxPathScore(self, edges: List[List[int]], online: List[bool], k: int) -> int:
         # this is just dijkstra's where we find are finding a path from 0 to n - 1 under k

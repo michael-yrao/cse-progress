@@ -1,6 +1,6 @@
 """
 57. Insert Interval   ·   https://leetcode.com/problems/insert-interval/
-Pattern: greedy
+Pattern: intervals
 
 Given `intervals`, a list of non-overlapping intervals sorted by start, and a
 new interval `newInterval`, insert it into the list so the result is still sorted

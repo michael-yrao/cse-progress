@@ -66,3 +66,5 @@ ceiling, but what to backfill (or whether to bank the lighter day) is the learne
 
 Related: [[feedback_consolidation_reps]], [[feedback_phase_progression]], [[feedback_recognition_probes]]
 (the probe is the release valve when intake caps bind — it costs no permanent demand).
+
+2026-10-06: intake is now `effort_budget.intake_per_week` with an unproven-overdue backstop; the `scheduling` skill and `decisions.yml` `intake-rate-and-backstop-oct6` supersede the per-tier counts.

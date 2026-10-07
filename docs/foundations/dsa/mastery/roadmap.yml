@@ -106,6 +106,7 @@ problems:
   - {number: 678, title: "Valid Parenthesis String", url: "https://leetcode.com/problems/valid-parenthesis-string/", difficulty: Medium, phase: backlog}
   - {number: 746, title: "Min Cost Climbing Stairs", url: "https://leetcode.com/problems/min-cost-climbing-stairs/", difficulty: Easy, phase: 1D-DP}
   - {number: 815, title: "Bus Routes", url: "https://leetcode.com/problems/bus-routes/", difficulty: Hard, phase: backlog}
+  - {number: 986, title: "Interval List Intersections", url: "https://leetcode.com/problems/interval-list-intersections/", difficulty: Medium, phase: backlog}
   - {number: 1102, title: "Path With Maximum Minimum Value", url: "https://progressiveoverflow.com/practice/1102", difficulty: Medium, phase: backlog}
   - {number: 1143, title: "Longest Common Subsequence", url: "https://leetcode.com/problems/longest-common-subsequence/", difficulty: Medium, phase: 2D-DP}
   - {number: 1197, title: "Minimum Knight Moves", url: "https://www.hellointerview.com/learn/code/breadth-first-search/minimum-knight-moves", difficulty: Medium, phase: backlog}

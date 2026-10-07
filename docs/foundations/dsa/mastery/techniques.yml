@@ -228,24 +228,52 @@ techniques:
   # when the answer is a COUNT OF SIMULTANEOUS things. Declared Aug 28, 2026 — before
   # that this technique carried no `variants:` at all, so the report read `3 (56,57,435)`
   # with the bar met and could not surface a breadth gap even in principle.
-  - name: Intervals (sort + sweep)
+  #
+  # Split into four techniques on Oct 6, 2026 (decision `intervals-split-four-ways-oct6`):
+  # sort key + answer shape is the recognition discriminator, so each flavour gets its own
+  # bar ("there are flavors of intervals"). Only the first entry carries `doc: intervals`
+  # (one entry per technique doc; build_cheatsheets.py joins on it).
+  - name: "Intervals: Merge & Insert (sort by start)"
     family: intervals
     builds_on: ["Divide & Conquer / Sorting"]
     doc: intervals
     variants:
       - {name: "Merge overlapping (sort by start)"}
       - {name: "Insert into sorted (3-phase sweep)"}
-      - {name: "Interval scheduling (sort by end)"}
-      - {name: "Max concurrent (sweep line / min-heap of ends)", queued: "green:435"}
-      - {name: "Two-list intersection (two pointers)", queued: "green:56"}
+      - {name: "Stab / shrink-the-overlap (min end)"}
     problems:
       - {number: 56, variant: "Merge overlapping (sort by start)"}
       - {number: 57, variant: "Insert into sorted (3-phase sweep)"}
-      - {number: 435, variant: "Interval scheduling (sort by end)"}
+      - {number: 452, variant: "Stab / shrink-the-overlap (min end)"}
       # Declared Sep 26, 2026 (decision `mastery-ratio-done-over-planned-sep26`) — roadmap.yml.
-      - {number: 1851, queued: "surplus>=1"}
       - {number: 252, queued: "surplus>=1"}
+
+  - name: "Interval Scheduling (sort by end)"
+    family: intervals
+    builds_on: ["Divide & Conquer / Sorting"]
+    variants:
+      - {name: "Keep max non-overlapping / min removals"}
+    problems:
+      - {number: 435, variant: "Keep max non-overlapping / min removals"}
+
+  - name: "Sweep Line / Max Concurrent"
+    family: intervals
+    builds_on: ["Divide & Conquer / Sorting"]
+    variants:
+      - {name: "Min-heap of ends"}
+      - {name: "Event sweep (+1/-1)"}
+    problems:
+      # Declared Sep 26, 2026 (decision `mastery-ratio-done-over-planned-sep26`) — roadmap.yml.
       - {number: 253, queued: "surplus>=1"}
+      - {number: 1851, queued: "surplus>=1"}
+
+  - name: "Interval List Intersection (two pointers)"
+    family: intervals
+    builds_on: ["Divide & Conquer / Sorting"]
+    variants:
+      - {name: "Two sorted lists, advance the earlier end"}
+    problems:
+      - {number: 986, queued: "green:56"}
 
   # ── Prefix sum ──────────────────────────────────────────────────────────────
   # Bar raised to the file default of 3 on Aug 16, 2026 (tier A/B of the
@@ -1204,7 +1232,7 @@ techniques:
   # Aho-Corasick, persistent structures."
   - name: Sweep Line
     family: expansion
-    builds_on: ["Intervals (sort + sweep)", "Heap / Priority Queue"]
+    builds_on: ["Sweep Line / Max Concurrent", "Heap / Priority Queue"]
     tier: tier2
 
   - name: Max-Flow

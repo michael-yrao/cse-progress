@@ -159,6 +159,11 @@ def load_config() -> dict:
         # against the wrong ceiling and calls over-full days "ok". Was 9.0 until Aug 16, 2026.
         "ceiling": 8.0,
         "floor_min": 3.0,
+        # Oct 6, 2026 scheduling keys — must mirror cse.config.yml (same reason as ceiling).
+        "max_rows_per_day": 8,
+        "intake_per_week": 2,
+        "intake_pause_overdue_unproven": 8,
+        "carry_forward_min_streak": 2,
     }
     try:
         import yaml  # noqa: PLC0415
@@ -217,12 +222,30 @@ def _green_base(streak: int, cfg: dict) -> float:
     return gsu[max(gsu)]          # streak past the top key prices at the top key
 
 
-def _is_proven(comfort: str, streak: int, cfg: dict) -> bool:
-    """Has this row earned the difficulty demotion (layer B)? 🎓, or 🟢 at min_streak."""
+def _is_proven(comfort: str, streak: int, cfg: dict, min_streak: int | None = None) -> bool:
+    """Has this row earned the difficulty demotion (layer B)? 🎓, or 🟢 at min_streak.
+
+    `min_streak` overrides the demotion trigger's streak -- is_unproven() passes the
+    carry-forward threshold so "proven" is decided in this one function.
+    """
     if comfort == "🎓":
         return True
     trig = (cfg.get("difficulty_demotion") or {}).get("trigger") or {}
-    return comfort == trig.get("comfort", "🟢") and streak >= trig.get("min_streak", 2)
+    threshold = min_streak if min_streak is not None else trig.get("min_streak", 2)
+    return comfort == trig.get("comfort", "🟢") and streak >= threshold
+
+
+UNPROVEN_CANDIDATES = ("🔴", "🟡", "🟢")
+
+
+def is_unproven(comfort: str, streak: int, cfg: dict) -> bool:
+    """The ONE definition of unproven: 🔴, 🟡, or a 🟢 below carry_forward_min_streak.
+
+    Unproven rows are never carried past their week and are what the intake backstop
+    counts. 🎓 is proven by definition.
+    """
+    return comfort in UNPROVEN_CANDIDATES and not _is_proven(
+        comfort, streak, cfg, min_streak=cfg["carry_forward_min_streak"])
 
 
 def _attempt_factor(comfort: str, attempts: int, cfg: dict) -> float:
@@ -263,6 +286,34 @@ def label(row: dict) -> str:
     return f"{row['comfort']}{streak} {row['diff'][0]}"
 
 
+def unproven_overdue(rows: list[dict], cfg: dict, today: dt.date) -> tuple[int, bool]:
+    """(count of overdue unproven tracker rows, is the intake backstop triggered).
+
+    Overdue means due strictly before `today`. Triggered at intake_pause_overdue_unproven
+    or more; the next weekly build then seats no 🆕.
+    """
+    count = sum(1 for r in rows
+                if dt.date.fromisoformat(r["due"]) < today
+                and is_unproven(r["comfort"], r["streak"], cfg))
+    return count, count >= cfg["intake_pause_overdue_unproven"]
+
+
+def unproven_label(cfg: dict) -> str:
+    """`🔴/🟡/🟢 s0/🟢 s1` -- the unproven set, spelled from carry_forward_min_streak."""
+    greens = "/".join(f"🟢 s{s}" for s in range(cfg["carry_forward_min_streak"]))
+    return "/".join(["🔴", "🟡", greens])
+
+
+def row_cap_lines(row_count: int, cfg: dict) -> list[str]:
+    """`rows N / cap M`, plus the carry warning when N is over the cap."""
+    cap = cfg["max_rows_per_day"]
+    lines = [f"  rows {row_count} / cap {cap}"]
+    if row_count > cap:
+        lines.append(f"  !! {row_count} ROWS, cap is {cap} — "
+                     f"carry the lowest-priority proven rows forward")
+    return lines
+
+
 def report_demand(rows: list[dict], cfg: dict, today: dt.date) -> None:
     reps = sum(1 / interval(r) for r in rows)
     cost = sum(units(r, cfg) / interval(r) for r in rows)
@@ -280,6 +331,11 @@ def report_demand(rows: list[dict], cfg: dict, today: dt.date) -> None:
               f"backlog grows no matter how the days are arranged.")
     print(f"overdue: {len(overdue)} rows, "
           f"{sum(units(r, cfg) for r in overdue):.1f} units to clear")
+    unproven_count, triggered = unproven_overdue(rows, cfg, today)
+    verdict = "TRIGGERED" if triggered else "not triggered"
+    print(f"overdue unproven: {unproven_count} ({unproven_label(cfg)}) · intake pauses at "
+          f"{cfg['intake_pause_overdue_unproven']} — {verdict}")
+    print(f"intake: {cfg['intake_per_week']}/week")
 
 
 def price_day(nums: list[str], rows: list[dict], cfg: dict, sd: bool,
@@ -361,6 +417,7 @@ def price_day(nums: list[str], rows: list[dict], cfg: dict, sd: bool,
     if total > ceiling:
         print("  Trim the CHEAPEST items last: dropping a 🟢 Easy saves 0.5, dropping a "
               "🟡 saves 2.0. Never trim the active block.")
+    print("\n".join(row_cap_lines(len(nums), cfg)))
 
 
 def repped_on(row: dict, day: dt.date) -> bool:
@@ -490,6 +547,21 @@ def parse_schedule_day(path: Path, day: dt.date) -> tuple[list[dict], float | No
     therefore always understates the day.
     """
     week_start = dt.date(int(path.name[:4]), int(path.name[4:6]), int(path.name[6:8]))
+    return parse_day_block(path.read_text(encoding="utf-8").splitlines(), week_start, day)
+
+
+def count_rows(items: list[dict]) -> int:
+    """Rows a day block carries against max_rows_per_day: every parsed row except the
+    Complexity-technique ones and rows moved off the day (`deferred_to` set, not done
+    there). Struck rows count (their `deferred_to` is None); separators never reach
+    `items`."""
+    return sum(1 for it in items if not it.get("is_complexity") and not it.get("deferred_to"))
+
+
+def parse_day_block(lines: list[str], week_start: dt.date,
+                    day: dt.date) -> tuple[list[dict], float | None]:
+    """parse_schedule_day()'s body over already-read lines, so a caller walking all seven
+    days of a week reads the file once instead of seven times."""
     wanted = None
     for offset in range(7):
         d = week_start + dt.timedelta(days=offset)
@@ -502,7 +574,7 @@ def parse_schedule_day(path: Path, day: dt.date) -> tuple[list[dict], float | No
     items: list[dict] = []
     stated: float | None = None
     inside = False
-    for line in path.read_text(encoding="utf-8").splitlines():
+    for line in lines:
         header = DAY_HEADER.search(line)
         if header:
             hit = (header["wd"], header["mon"], int(header["day"])) == wanted
@@ -771,6 +843,7 @@ def price_schedule_day(day: dt.date, rows: list[dict], cfg: dict) -> None:
     floor_note = "  (FLOOR -- see below)" if partial else ""
     print(f"\n  built {built:.1f}{floor_note} / done {done_total:.1f} "
           f"/ remaining {rest_total:.1f} / ceiling {ceiling:.0f}")
+    print("\n".join(row_cap_lines(count_rows(items), cfg)))
     if partial:
         bits = []
         if unpriced:

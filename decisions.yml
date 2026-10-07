@@ -1891,3 +1891,84 @@ decisions:
       up to the consumer guard; it is not a contract change, and schemaVersion stays 1. No
       `cse.config.yml` value changed.
     affects: [dashboard, hooks]
+  - id: intervals-split-four-ways-oct6
+    date: 2026-10-06
+    summary: >-
+      The single technique "Intervals (sort + sweep)" became four, keyed by sort key + answer
+      shape: "Intervals: Merge & Insert (sort by start)" (56, 57, 452 as the new "Stab /
+      shrink-the-overlap (min end)" variant, 252 queued surplus>=1), "Interval Scheduling (sort
+      by end)" (435), "Sweep Line / Max Concurrent" (253 and 1851, both queued surplus>=1, no
+      variant yet) and "Interval List Intersection (two pointers)" (986, queued green:56). The
+      986 row is new and replaces the problem-less "Two-list intersection" variant; the
+      problem-less "Max concurrent" variant became the two Sweep Line variants. The coverage
+      table now shows each flavour below its own bar: that is the breadth gap the single entry
+      hid, not a regression. `doc: intervals` stays on the first entry only (one entry per
+      technique doc). The tier-2 "Sweep Line" entry now builds on "Sweep Line / Max Concurrent".
+      No `cse.config.yml` value changed.
+    affects: [technique_coverage, techniques_vocabulary, intervals]
+  - id: row-cap-oct6
+    date: 2026-10-06
+    summary: >-
+      A day now has a row cap beside the unit ceiling: `effort_budget.max_rows_per_day`, counting
+      every row in a day block except Complexity-technique rows (struck rows count). Sat Oct 10 was
+      7.9 units across 17 rows while the archive's largest fully completed day was 8 rows. Units
+      bind the week, not rows: a 26-week simulation gave identical backlog curves for caps of 6, 8,
+      10 and none (55.6 units/week each), so the cap fixes a day's shape only. The learner chose 8.
+      Overflow spreads forward; tracker dates are untouched. Enforced by `effort_budget.py` (row
+      line and warning) and `check_schedule_integrity.py` (check 5, report-only).
+    affects: [effort_budget, schedule_integrity, scheduling]
+  - id: intake-rate-and-backstop-oct6
+    date: 2026-10-06
+    summary: >-
+      Intake is `effort_budget.intake_per_week` new problems a week (the learner chose 2), and the
+      next build seats none when overdue unproven tracker rows reach
+      `effort_budget.intake_pause_overdue_unproven` (chosen 8). Unproven means 🔴, 🟡, 🟢 s0, 🟢 s1.
+      The old "overdue above 5 suspends intake" rule is gone: a pause trigger of 3 fires on noise
+      (week 2 even at zero intake, 32 of 40 runs); the sustainable band is 0-6 unproven-overdue and
+      the piling band 14+. Each new problem costs about 3 unproven reps (3.0, then a 🟡 loop at 2.0
+      every `intervals.shaky` days). Evidence, a 26-week simulation run 2026-10-06 from the live
+      tracker, the config ladder and `effort_budget.price`, outcome rates tallied from the Sep 7 -
+      Oct 5 schedules (new problem to 🔴/🟡 on first attempt 18/18, 🟡 to 🟡 46%, 🟢 s1 to 🟡 33%;
+      no s2/🎓 data, bracketed as s1-like vs 90% 🟢). single-source-ok:
+      new/week 5 (then current) -> backlog wk 8 to 26 105 to 215, 🎓 at wk 26 47-64 (97 then), piles and
+      starves 🎓 checks;
+      new/week 3 -> 38 to 85 (17 to 24 bracket), 🎓 85-133, edge;
+      new/week 2 -> 13 to 22 (0.5 to 1), 🎓 96-137, steady;
+      new/week 1 -> 1.5 to 0.5, 🎓 95-133, clears.
+      Best case (every rep 🟢) clears the backlog in 2-4 weeks at any cap and frees about 25
+      units/week, so the rate can rise as the 🟡 rate falls. On 2026-10-06 the unproven-overdue
+      count was 5 (743 🟡 deferred to Dec by choice, plus four 🟢 s1 rows seated that week).
+      This supersedes the per-day rule that every day with no SD slot carries an unseen problem.
+    affects: [effort_budget, scheduling, study_guide]
+  - id: carry-forward-proven-only-oct6
+    date: 2026-10-06
+    summary: >-
+      A row over the row cap is carried in a schedule section `## ⏭️ Carried to next week (row cap)`,
+      never by editing its tracker date. Only proven rows may be carried: 🎓, or 🟢 at a streak of
+      `effort_budget.carry_forward_min_streak` or above. Unproven rows (🔴, 🟡, 🟢 s0, 🟢 s1) are
+      never carried and displace a proven row; the backstop counts them. Easy 🟢 rows carry first,
+      from the bottom of the priority order. `check_schedule_integrity.py` check 3 accepts a due
+      row named in the section only when its tracker row meets that rule.
+    affects: [schedule_integrity, scheduling, effort_budget]
+  - id: scheduling-skill-oct6
+    date: 2026-10-06
+    summary: >-
+      A new `scheduling` skill (`.claude/skills/scheduling/SKILL.md`) owns the ordered weekly build
+      procedure, the row cap, the carry rule, the intake rate and the backstop, and the mid-week
+      reseat. `weekly-build.md` keeps the trigger, the why and the close-out-commit sentence;
+      `effort-budget.md` gains the policy paragraphs; `study_guide.md`'s stale "5 problems"
+      backlog rule now names `effort_budget.intake_pause_overdue_unproven`; CLAUDE.md gate 7 cites
+      the skill. Every unit number still goes through `effort-units`.
+    affects: [scheduling, weekly_build, effort_budget, study_guide, claude_md]
+  - id: backlog-forecast-oct6
+    date: 2026-10-06
+    summary: >-
+      `scripts/backlog_forecast.py` ships as a report-only model of the weekly build: it tallies
+      start-to-end outcomes from the archived schedules, simulates the configured rows-per-day cap,
+      ceiling and intake across 26 weeks, and reads steady, edge or piling for the configured
+      `effort_budget.intake_per_week`. `--check` exits 1 on piling. It is a model of about ten
+      seconds, so it is not wired into pre-commit; the weekly build runs it as a step. Its
+      verdict thresholds (the steady and piling backlog slopes, the optimistic bracket's 🟢 share
+      for classes with no tally data) are tuned numbers and live in `cse.config.yml`
+      `backlog_forecast:`, read by the script with no fallback.
+    affects: [scheduling, effort_budget, scripts, backlog_forecast]

@@ -1609,7 +1609,12 @@ class PriceScheduleDayHeaderCheckTests(unittest.TestCase):
     is unpriced or guessed, even when the totals happen to agree numerically (Sep 29,
     2026: a day with a guessed row still read 'header says X -- matches')."""
 
-    CFG = {"comfort_units": {"🔴": 3.0, "🟡": 2.0}, "difficulty": {"Medium": 1.0}, "ceiling": 8.0}
+    CFG = {
+        "comfort_units": {"🔴": 3.0, "🟡": 2.0},
+        "difficulty": {"Medium": 1.0},
+        "ceiling": 8.0,
+        "max_rows_per_day": eb.load_config()["max_rows_per_day"],
+    }
 
     def setUp(self):
         self._tmpdir = tempfile.TemporaryDirectory()

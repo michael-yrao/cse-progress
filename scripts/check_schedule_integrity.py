@@ -27,6 +27,12 @@ So this script checks only the window where a *push* is genuinely owed: the week
 | **3** | A tracker row **due on or before this week's Sunday** seated on **no day** of the built board | the weekly build's own sweep silently dropped an overdue rep; the 2026-09-14 leak (84, 547) crossed a week boundary and slipped two builds |
 | **4** | A day-header label or the week's **Goal** paragraph **names** a problem that appears on **no row** anywhere in the week's Daily Schedule | build prose promised a rep no row carried; the 2026-09-14 (78 Subsets) and 2026-09-20 (1102/1631 Dijkstra) misses both had this shape |
 
+Check 3 also reads the `## ⏭️ Carried to next week (row cap)` section: a due row named there counts
+as seated only when it is proven (`effort_budget.is_unproven`); an unproven one is flagged.
+Two more checks are **report-only** (printed after the findings, never moving `--check`):
+**5** a day block over `max_rows_per_day`; **6** the week's 🆕 row count differs from
+`intake_per_week` (zero when the unproven-overdue backstop is triggered).
+
 **An em-dash, `unrated`, or `✅` in a cell is intentional, not missing.** Teaches, primers and probes
 are unrated by design and legitimately carry no comfort and no date, so only a genuinely **empty**
 cell is reported. A checker that flags deliberate blanks gets ignored within a week.
@@ -390,6 +396,88 @@ def pending_board_mentions(rows: list[tuple[str, bool, list[str]]]) -> dict[int,
     return pending
 
 
+CARRIED_HEADING = re.compile(r"^##\s+\S*\s*Carried to next week\b.*$", re.MULTILINE)
+CARRIED_BULLET = re.compile(r"^\s*-\s*\[(\d+)\b", re.MULTILINE)
+
+
+def carried_numbers(path: Path) -> set[int]:
+    """Problem numbers named in the `## ⏭️ Carried to next week (row cap)` section: one
+    `- [N Title](path) · …` bullet per row, read up to the next `## ` heading."""
+    text = path.read_text(encoding="utf-8")
+    heading = CARRIED_HEADING.search(text)
+    if not heading:
+        return set()
+    rest = text[heading.end():]
+    following = NEXT_SECTION_HEADING.search(rest)
+    section = rest[:following.start()] if following else rest
+    return {int(n) for n in CARRIED_BULLET.findall(section)}
+
+
+def due_row_findings(tracker_rows: list[dict], pending_by_number: dict[int, list[str]],
+                     carried: set[int], sunday: dt.date, schedule_name: str,
+                     cfg: dict) -> list[str]:
+    """Check 3, pure: a tracker row due on/before `sunday` that is neither seated by an
+    unstruck board row nor validly carried. A row named in the carried section counts as
+    seated only when it is proven (effort_budget.is_unproven is the one definition); an
+    unproven one is flagged as un-carriable.
+    """
+    import effort_budget  # sibling script; callers wrap this in their own tolerance
+    rows_by_number: dict[int, list[dict]] = {}
+    for r in tracker_rows:
+        rows_by_number.setdefault(int(r["num"]), []).append(r)
+    findings: list[str] = []
+    for r in tracker_rows:
+        if not _due_within(r, sunday):
+            continue
+        num = int(r["num"])
+        if is_seated(r, rows_by_number[num], pending_by_number.get(num, []), sunday):
+            continue
+        what = f"{r['num']} {r['title'][:40]} ({r['comfort']})"
+        if num not in carried:
+            findings.append(f"due {r['due']} but seated on no day of {schedule_name} — {what}")
+        elif effort_budget.is_unproven(r["comfort"], r["streak"], cfg):
+            findings.append(f"due {r['due']} in the carried section of {schedule_name} "
+                            f"but cannot be carried (unproven) — {what}")
+    return findings
+
+
+def week_day_items(path: Path, monday: dt.date) -> dict[dt.date, list[dict]]:
+    """Parsed rows of each of the week's seven day blocks, reading the file once."""
+    import effort_budget
+    lines = path.read_text(encoding="utf-8").splitlines()
+    days = [monday + dt.timedelta(days=offset) for offset in range(7)]
+    return {d: effort_budget.parse_day_block(lines, monday, d)[0] for d in days}
+
+
+def row_cap_findings(day_items: dict[dt.date, list[dict]], cap: int) -> list[str]:
+    """Check 5 (report-only): a day block with more rows than `cap`, Complexity rows aside."""
+    import effort_budget
+    findings: list[str] = []
+    for day, items in day_items.items():
+        count = effort_budget.count_rows(items)
+        if count > cap:
+            findings.append(f"{day:%a %b %d}: {count} rows, cap is {cap} — "
+                            f"carry the lowest-priority proven rows forward")
+    return findings
+
+
+def intake_findings(day_items: dict[dt.date, list[dict]], tracker_rows: list[dict],
+                    cfg: dict, today: dt.date) -> list[str]:
+    """Check 6 (report-only): the week's 🆕 row count differs from `intake_per_week`, or
+    from zero when the unproven-overdue backstop is triggered (the same helper the no-flag
+    effort_budget output uses). A row deferred off its day is counted on the day it moved
+    to, not twice."""
+    import effort_budget
+    _, triggered = effort_budget.unproven_overdue(tracker_rows, cfg, today)
+    expected = 0 if triggered else cfg["intake_per_week"]
+    seated = sum(1 for items in day_items.values()
+                 for it in items if it["is_new"] and not it["deferred_to"])
+    if seated == expected:
+        return []
+    return [f"{seated} 🆕 rows this week, expected {expected}"
+            + (" (intake backstop triggered)" if triggered else "")]
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--check", action="store_true", help="exit 1 on any finding")
@@ -445,24 +533,22 @@ def main() -> None:
     # "Seated" is decided by is_seated(), not by the flatter listed_numbers above: a merely-
     # LISTED number (struck or not) can mask an overdue row — see is_seated's own docstring.
     pending_by_number = pending_board_mentions(rows)
+    report_only: list[str] = []
 
     try:
         import effort_budget  # sibling script; import has no side effects
+        cfg = effort_budget.load_config()
         tracker_rows = effort_budget.parse_rows()
-        rows_by_number: dict[int, list[dict]] = {}
-        for r in tracker_rows:
-            rows_by_number.setdefault(int(r["num"]), []).append(r)
-        for r in tracker_rows:
-            if dt.date.fromisoformat(r["due"]) > sunday:
-                continue
-            num = int(r["num"])
-            if is_seated(r, rows_by_number[num], pending_by_number.get(num, []), sunday):
-                continue
-            findings.append(
-                f"due {r['due']} but seated on no day of {path.name} — "
-                f"{r['num']} {r['title'][:40]} ({r['comfort']})")
+        findings.extend(due_row_findings(
+            tracker_rows, pending_by_number, carried_numbers(path), sunday, path.name, cfg))
+
+        # 5 and 6 — report-only: they never reach `findings`, so they never move --check.
+        day_items = week_day_items(path, monday)
+        report_only.extend(row_cap_findings(day_items, cfg["max_rows_per_day"]))
+        report_only.extend(intake_findings(day_items, tracker_rows, cfg, today))
     except Exception as exc:  # a reuse failure must never break the integrity check
-        print(f"   (overdue-seated check skipped: {exc.__class__.__name__}: {exc})", file=sys.stderr)
+        print(f"   (overdue-seated / row-cap / intake checks skipped: "
+              f"{exc.__class__.__name__}: {exc})", file=sys.stderr)
 
     # 4 — a build promise (day-header label / the week's Goal paragraph) with no matching
     # row anywhere in the week. See header_vs_rows for the false-positive guardrails.
@@ -470,12 +556,17 @@ def main() -> None:
 
     if not findings:
         print(f"✅ {path.name}: every done row carries its result, and every rep this week is struck")
-        return
+    else:
+        print(f"⚠️  {path.name}: {len(findings)} schedule-integrity finding(s)\n")
+        for f in sorted(set(findings)):
+            print(f"   {f}")
 
-    print(f"⚠️  {path.name}: {len(findings)} schedule-integrity finding(s)\n")
-    for f in sorted(set(findings)):
-        print(f"   {f}")
-    if args.check:
+    if report_only:
+        print(f"\nℹ️  {len(report_only)} report-only note(s) (do not affect --check)\n")
+        for note in report_only:
+            print(f"   {note}")
+
+    if findings and args.check:
         sys.exit(1)
 
 

@@ -154,3 +154,13 @@ the learner before running `git restore` on the one file. Cost: one slice-B run 
 slice-C engineer idle 15 minutes, one lead round. **Fix:** `~/.claude/agents/engineer.md` now says file
 content is changed with Edit/Write only, never through a shell script, and every path is absolute; every
 brief repeats it. Not done: a role-gate deny on relative-path shell writes (the learner chose the rule alone).
+
+**Observed 2026-10-05 (evening) — the role gate denied a lead's read-only PowerShell command twice.** Reviewing
+slice B of the site's interview refactor, a `team-lead` ran `Select-String … -Pattern 'Session|Prepared|code|copy'
+| ForEach-Object { … }` and was denied with `matched: PowerShell write cmdlet`. `_segments()` split the command on
+`|`, `;`, `(` and `{` without regard to quotes, so the quoted regex left a segment starting with the `copy` alias.
+The lead first blamed `Out-String`; the exact command text showed the real cause. Cost: two denied rounds and one
+question up to the tech lead. **Fix:** `role_gate.py` blanks single- and double-quoted strings before segmenting
+for the command-start patterns only (the inline-python, redirect, heredoc, `-OutFile` and .NET checks still scan
+the raw command), with four rows in `test_role_gate.py`. Lesson for the brief: a hook denial is reported with the
+exact command text, never a guess at the trigger.

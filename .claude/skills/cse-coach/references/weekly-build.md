@@ -1,7 +1,8 @@
-<!-- reconciled: 2026-09-30 -->
+<!-- reconciled: 2026-10-06 -->
 # End-of-week close-out & schedule build
 
-**Open this** when today is the last session of the week. **Not for** a mid-week rep (that's
+**The ordered procedure is the [`scheduling`](../../scheduling/SKILL.md) skill; this file is the
+trigger and the why.** **Open this** when today is the last session of the week. **Not for** a mid-week rep (that's
 `review-workflow.md`). **Not for** pricing a single day in progress (that's `effort-budget.md`
 `--schedule-day`). The check is *"is today the last session of the week"* — **not** "does it feel
 like a milestone". This was missed Aug 2, 2026, when a long session closed out on everything
@@ -35,12 +36,9 @@ week's assumptions.
   repeated same-category miss escalates to a teach. **ALL complexity checks** now live in one
   focused block on Sunday. That block covers both these probes AND the cleanup queue above. The weekday
   boards carry none, so the daily tables stay lean and the learner meets complexity work in a single sitting.
-- **⚠️ Refresh the technique comfort audit — `python scripts/technique_comfort_audit.py`.** Comfort
-  + coverage auto-roll from the tracker. The **why-lines are hand-authored and preserved** (the
-  script names any technique missing one). The **FUTURE section** (roadmap algorithms not yet
-  started) is hand-authored between its markers. Run it, fill any why-line it flags, update the
-  future block as phases approach.
-  - **Read the "⚠️ Needs work" callout** at the top FIRST — it is the pull-order source. Priority:
+- **Why the pull order is the technique comfort audit's** (`scripts/technique_comfort_audit.py`;
+  the why-lines and the FUTURE block are hand-authored, the script names any gap).
+  - **The "⚠️ Needs work" callout** at the top is the pull-order source. Priority:
     **🔴/🟡 conversions (zero-green list, weakest first) > overdue 🟢 cleans > thin-green fills +
     probes.** A zero-green technique outranks *discretionary* work and *fresh* cleans — but **not** a
     clean aged far past its interval (a retention risk that manufactures new demand). A 🔴 bills ~12×
@@ -57,39 +55,24 @@ week's assumptions.
   **The first attempt lands at least a day later.** A primer measured in the same sitting
   measures nothing. What measures it is whether the recognition call fires. 332 cost five sessions
   because its first attempt WAS the introduction to Eulerian paths.
-- **⚠️ Every day with NO SD slot carries at least one UNSEEN problem** — new intake from the active
-  phase, or a recognition probe, or the Sunday 🎤 mock in a mock week. Place these **before** any 🟢 backlog: a problem seen 3+ times
-  measures retention of that problem's solution, not the technique; unseen problems are the only
-  test of recognition and transfer.
+- **Unseen problems.** A problem seen 3+ times measures retention of that problem's solution, not
+  the technique; unseen problems are the only test of recognition and transfer. New intake is
+  `effort_budget.intake_per_week` problems, seated on the earliest days with room; a recognition
+  probe and the mock are the week's other unseen rows; a day with no unseen row is fine
+  (`scheduling`).
 - **⚠️ Recompute any NUMERIC reason before renewing a deferral.** An item held because "surplus is
   −9.6" or "the board is full" expires silently the moment the number moves. Re-derive it, or
   restate the hold as a **state** condition (`green:Dijkstra`, `graduates:210`).
 - **⚠️ Check every active phase has reps on the board.** (Found Aug 9, 2026: `Sliding Window +
   Stack` opened Aug 3 and sat a week with zero of its 8 problems in the tracker. It was invisible
   because the board was full of legitimate review work.)
-- **⚠️ A variant parenthetical** on the board is READ FROM the due tracker row, never hand-typed. A
-  multi-variant problem has a SEPARATE tracker row per variant with its own due date. Same LC
-  number, e.g. 21 Iterative vs Recursion, 130 Union-Find vs BFS. Seat the variant whose row is actually coming
-  due this week, and copy its label from that row — do not free-type "(Iterative)" from habit. Found
-  Sep 18, 2026: one build tagged 21/206/130 with the *other* variant in each case (already 🎓
-  or due weeks later). This would have re-repped a graduated or not-yet-due variant. Its sibling in the
-  method NAME is source-fixed. `new_problem.py` strips an accreted `_<date>[_variant]` from the
-  stub name (self_eval 2026-09-15). The board LABEL is hand-authored, so verify it against the row.
-- **⚠️ Run `python scripts/check_schedule_integrity.py` on the built week.** Beyond the result-writeback
-  checks, it now flags any tracker row DUE within the week that is seated on NO day of the board. This
-  is the 2026-09-14 leak. Two overdue 🔴s crossed a week boundary and slipped consecutive builds.
-  Every flagged row must be seated OR have its due date pushed (a deferral gets a new date). A
-  due row on no board is exactly the "nothing dropped without a date" violation.
-- **⚠️ Run `python scripts/check_phantom_scaffolds.py` before the pre-commit discovery.** It flags two
-  things. (a) PHANTOM ROWS: a scaffolded-but-never-attempted file discovery minted a row for (empty Rep
-  Dates / `Unknown` difficulty). Record the rep, or delete the file AND the row (deleting the file alone
-  leaves the row, self_eval 2026-08-31). (b) STRANDED PROBES: an earned probe still under `dsa/probes/`,
-  outside `solutions.roots`, where the tooling can't maintain it (self_eval 2026-09-16). `git mv` it to
-  its canonical `dsa/leetcode/<category>/` path. The upfront kickoff scaffold makes phantoms systematic,
-  so this reconcile runs every close-out.
-- **Write a practice spec for every seated problem that has none**, then run
-  `python scripts/export_practice.py`. A spec creates no solution file, so it plants no tracker row.
-- **Is a DSA mock due in the week being built?** The SessionStart banner says so (`dsa_mock.every_days` since the last row of `docs/foundations/dsa/mocks/README.md`). Due → seat the exact row `| 🎤 Mock interview (<Diff>) | 🎤 |  |  | Mock |` on Sunday (the 🎤 in the S cell is what every parser keys off), priced by `--schedule-day`; that Sunday carries no 🎯 probe. Not due → say nothing.
+- **Why a variant label is read from the tracker row.** Found Sep 18, 2026: one build tagged
+  21/206/130 with the *other* variant in each case, which would have re-repped a graduated or
+  not-yet-due variant. The board label is hand-authored, so verify it against the row (`scheduling`).
+- **Why the integrity and phantom checks run on every build.** 2026-09-14: two overdue 🔴s crossed a
+  week boundary and slipped consecutive builds, so a due row on no board is the "nothing dropped without
+  a date" violation. A phantom row is one that discovery minted for a scaffolded, never-attempted
+  file (self_eval 2026-08-31); a stranded probe sits outside `solutions.roots` (self_eval 2026-09-16). Steps: `scheduling`.
 - **If the AI pillar is still PARKED, test its activation trigger** (see
   [`project_ai_pillar`](.claude/memory/project_ai_pillar.md)): DP/Backtracking phases closed AND
   `effort_budget.py` shows ≥2 days/week well under the ceiling for 2 weeks. Met → raise starting it
@@ -157,11 +140,13 @@ table · protected reps · backlog/slip list (nothing dropped without a date or 
 exists") · SD slots (placed, never priced — see `effort-budget.md`) · end-of-week targets ·
 next-week preview · concept primers.
 
-## Pricing the build
+## The build procedure
 
-Price hypothetical days at build time only with `python scripts/effort_budget.py --day <nums>`;
-never price a day already underway that way (use `--schedule-day`). Full budget rules:
-`effort-budget.md`. Coverage / which technique to pull: `technique-coverage.md`.
+The ordered steps (sweep, demand, forecast, pull order, content rules, pricing each day with its row
+line, headers, the checkers, practice specs, the preview and the carried section), the row cap, the
+carry rule and the intake backstop are the [`scheduling`](../../scheduling/SKILL.md) skill. Pricing
+is the `effort-units` skill; budget policy is `effort-budget.md`. Coverage / which technique to pull:
+`technique-coverage.md`.
 
 full rule: [`complexity_gotchas.md`](docs/foundations/dsa/mastery/complexity_gotchas.md);
 `decisions.yml` `complexity-cleanup-formalized`, `rating-ignores-complexity`,

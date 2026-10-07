@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-05",
+  "generatedAt": "2026-10-06",
   "entries": [
     {
       "key": "733:bfs",
@@ -4914,8 +4914,8 @@
         {
           "kind": "attempt",
           "symbol": "containsNearbyDuplicate_20260704",
-          "startLine": 90,
-          "endLine": 110,
+          "startLine": 108,
+          "endLine": 128,
           "lines": [
             "    def containsNearbyDuplicate_20260704(self, nums: List[int], k: int) -> bool:",
             "        # sliding window, use a set",
@@ -7136,7 +7136,7 @@
       "variant": "sort-merge",
       "title": "Merge Intervals",
       "url": "https://leetcode.com/problems/merge-intervals/",
-      "file": "dsa/leetcode/greedy/56_merge_intervals.py",
+      "file": "dsa/leetcode/intervals/56_merge_intervals.py",
       "symbol": "merge_20260903",
       "attemptDate": "2026-09-03",
       "segments": [
@@ -7194,7 +7194,7 @@
       "variant": "three-pass",
       "title": "Insert Interval",
       "url": "https://leetcode.com/problems/insert-interval/",
-      "file": "dsa/leetcode/greedy/57_insert_interval.py",
+      "file": "dsa/leetcode/intervals/57_insert_interval.py",
       "symbol": "insertInterval_20260828",
       "attemptDate": "2026-08-28",
       "segments": [
@@ -7993,8 +7993,8 @@
         {
           "kind": "helper",
           "symbol": "TrieNode",
-          "startLine": 42,
-          "endLine": 45,
+          "startLine": 49,
+          "endLine": 52,
           "lines": [
             "class TrieNode:",
             "    def __init__(self):",
@@ -8005,8 +8005,8 @@
         {
           "kind": "container",
           "symbol": "Solution",
-          "startLine": 47,
-          "endLine": 47,
+          "startLine": 55,
+          "endLine": 55,
           "lines": [
             "class Solution:"
           ]
@@ -8014,8 +8014,8 @@
         {
           "kind": "attempt",
           "symbol": "replaceWords",
-          "startLine": 123,
-          "endLine": 160,
+          "startLine": 170,
+          "endLine": 207,
           "lines": [
             "    def replaceWords(self, dictionary: List[str], sentence: str) -> str:",
             "        # create a Trie for the dictionary",

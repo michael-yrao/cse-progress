@@ -31,3 +31,5 @@ but the schedule should reflect the day it was actually done).
 **The governing invariant** (normative in review-workflow.md): a problem dropped or deferred gets a new
 specific slot in the **same edit** — a deferred problem with no new date is a missed problem. Related:
 [[feedback_lineup_links_only]] (a re-slotted board is still name+links-only), [[feedback_operating_principles]] P1.
+
+2026-10-06: a due row may now also be seated by the schedule's carried section (proven rows only); the `scheduling` skill holds the carry rule.

@@ -74,9 +74,10 @@ without this table it vanishes from every "problems solved" figure. Two jobs:
 | 6 | 2026-08-28 | 637 Average of Levels in Binary Tree | Tree BFS (level order) | 🟢 | — |
 | 7 | 2026-09-11 | 547 Number of Provinces | Union-Find (connected components) | 🔴 → 🟡 (re-rep Sep 16) | earned Sep 11 → **dropped Sep 16** (recognition converted) |
 | 8 | 2026-09-14 | 648 Replace Words | Trie (prefix search) | 🟡 | ✅ earned |
+| 9 | 2026-10-06 | 452 Minimum Number of Arrows to Burst Balloons | Intervals (interval scheduling) | 🔴 | ✅ earned |
 
-**Tally (8 run):** 4 clean 🟢 · 3 earned a row at the time (202, 547, 648) · 1 🟡 overridden (643). **Row-creation
-rate 3/8 = 38%** (a *historical* measure — a probe that earned a row taught something, even if the row is later
+**Tally (9 run):** 4 clean 🟢 · 4 earned a row at the time (202, 547, 648, 452) · 1 🟡 overridden (643). **Row-creation
+rate 4/9 = 44%** (a *historical* measure — a probe that earned a row taught something, even if the row is later
 retired) — still under the 85% "pool has stopped teaching" line, so the pool still teaches. **Maintained rows now
 2 (202, 648):** 547's row was **dropped Sep 16** after its +2 re-rep converted the recognition (🔴 Floyd-Warshall/grid
 → 🟡 Union-Find cold-correct); the row existed only to close that recognition gap, and UF is broadly 🟢/🎓, so the
@@ -98,7 +99,7 @@ a candidate named while its technique is 🟡 must not silently become due just 
 
 | Candidate | Technique | Trigger | Why it is a good probe |
 |---|---|---|---|
-| **452 Minimum Number of Arrows to Burst Balloons** (Medium) | Intervals — *Interval scheduling (sort by end)* | **`green:435`** | Learner's pick, Aug 28, 2026. ⭐ It is **435's exact procedure wearing different words** — balloons and arrows rather than intervals to remove — so it tests whether the *sort-by-end greedy* transfers, not whether 435 is remembered. That surface-change-only property is what makes a probe measure recognition instead of recall. ⚠️ **Not eligible yet:** Intervals is **zero-green** (56 · 57 · 435 all 🟡), and the standing rule is never to probe a 🟡 or no-🟢 technique — that manufactures a review row on ground the learner has not yet held, at ~73 units/year for a Medium. Convert 435 first; the probe is the *reward* for that, not a substitute |
+| *(none queued — 452 ran as probe #9 on 2026-10-06)* | | | |
 
 ## ⚠️ Easy-only cannot reach most of the pool
 
