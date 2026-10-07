@@ -52,6 +52,7 @@ class DeferralWarningTests(unittest.TestCase):
             ("ISO Next is silent", "| → [743 A](x.py) · [LC](y) | 🟡 | | 2026-12-07 | Graph |",
              "2026-12-07", False),
             ("struck row is silent", "| ~~→ [743 A](x.py)~~ · [LC](y) | 🟡 | 🟢 | Dec 7 | Graph |", None, False),
+            ("legacy → cell is silent", "| → [743 A](x.py) · [LC](y) | 🟡 | | → Aug 31 wk | Graph |", None, False),
         ]
         for name, line, expected_to, expects_warning in cases:
             with self.subTest(name):

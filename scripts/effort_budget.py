@@ -513,11 +513,16 @@ DEFERRAL_MARKER = "→"
 
 
 def _is_unreadable_deferral(done: bool, row_text: str, next_cell: str) -> bool:
-    """An unstruck `→` row whose Next cell is filled but is not a full ISO date."""
+    """An unstruck `→` row whose Next cell is filled but is not a full ISO date.
+
+    A Next cell that itself starts with `→` is the pre-Sep-29 shape (`→ Aug 31 wk`) that
+    archived schedules still carry; it is history, not a mistake, so it stays silent."""
     if done or not row_text.startswith(DEFERRAL_MARKER):
         return False
     stripped = next_cell.strip()
-    return bool(stripped) and not _FULL_ISO_DATE.fullmatch(stripped)
+    if not stripped or stripped.startswith(DEFERRAL_MARKER):
+        return False
+    return not _FULL_ISO_DATE.fullmatch(stripped)
 
 
 def parse_sched_line(line: str) -> dict | None:
