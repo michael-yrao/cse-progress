@@ -68,7 +68,7 @@ The systems-flavored entries (Bloom filter, B-tree, LSM-tree) pay off on the **S
 
 ## Weekly Review Priority
 
-Every Sunday, open `docs/foundations/dsa/mastery/dsa_progress.md` and sweep for all problems whose `Next Review Date ≤ end of the coming week`. Slot them into the upcoming schedule before filling active blocks or new content. Use this priority order for warmup slots:
+Every Sunday the weekly build sweeps the tracker for due rows and seats them before any new content; the ordered procedure is the `scheduling` skill (`.claude/skills/scheduling/SKILL.md`). Use this priority order for warmup slots:
 
 1. **Priority 1 (High Risk)**: 🔴 Blank — oldest Latest Attempt Date first.
 2. **Priority 2 (Medium Risk)**: 🟡 Shaky — oldest Latest Attempt Date first.
@@ -85,11 +85,11 @@ Every Sunday, open `docs/foundations/dsa/mastery/dsa_progress.md` and sweep for 
 
 ### Emergency Double Session Rule
 
-When triggered, both morning and evening warmup slots are filled with overdue problems until the list is cleared. Do not start any new active block problems until the overdue count drops below 5.
+When triggered, both morning and evening warmup slots are filled with overdue problems until the list is cleared. Seat no new problem while the backstop below is triggered.
 
 ### Permanent Backlog Rule
 
-If the overdue count ever exceeds **5 problems**, suspend new problem intake entirely. Run double warmup sessions daily until it drops below 5, then resume at half pace (1–2 new per week) until fully cleared.
+When the overdue unproven rows (🔴, 🟡, 🟢 s0, 🟢 s1) reach `effort_budget.intake_pause_overdue_unproven` in `cse.config.yml`, the next weekly build seats no new problem. Run double warmup sessions daily until the count is back under that key, then resume at `effort_budget.intake_per_week`.
 
 ## ⏱️ The 15-Minute "No-Code" Warmup Execution
 Because 15 minutes passes incredibly fast, **never write code during a backlog warmup**. Code writing is reserved for your 45-minute active block. Optimize your 15 minutes like this:
@@ -479,7 +479,7 @@ editing. A category earns a harder tier when its new problems consistently log �
 **Hardest** = new-algorithm-per-problem *and* DP-level blank rate / slowest to settle → **3/week**
 (**Advanced Graphs**, 1D DP, 2D DP).
 
-- **New problems per week (difficulty-tiered, not just phase-dependent)** — per the table above:
+- **New problems per week (difficulty-tiered, not just phase-dependent)** — per the table above. ⚠️ Superseded Oct 6, 2026: the weekly build seats `effort_budget.intake_per_week` new problems in every phase; the per-tier counts below are the history of why the rate is low.
   - **Moderate categories** (Standard Graphs / Heap / Tries / Sliding Window / Stack / Intervals+Greedy / Bit-Math): **4–5 per week.** Front-load these easier phases to bank a lead. Fits the 5/day cap (steady-state reviews ~3.5/day + 5 new ≈ 4.1/day).
   - **Hard, algorithm-dense categories** (**Backtracking**): **4 per week — not 5.** A *new decision-tree pattern per problem*, so the first attempt often logs 🔴, and every 🔴 spawns a near-immediate retry that eats a warmup slot. Hold intake at 4 so the blank cascade has room to settle before the next new problem lands.
   - **Hardest categories** (**Advanced Graphs**, **1D DP** Oct, **2D DP** Nov): **3 per week.** Hardest and slowest, highest blank rate. Advanced Graphs was re-paced Hard→Hardest on Jul 18, 2026: it's a *new algorithm per problem* (Dijkstra, Bellman-Ford, MST/Prim, Eulerian…) **and** proving as blank-heavy as DP — 1584 Prim was still 🔴 after two exposures, and the Blank-interval retry cascade collided with review-saturated weeks (Jul 20–26 was at 27/28 warmup slots on reviews alone). Keep intake at 3 so the blanks settle and it doesn't trip the overdue-backlog rule.
@@ -515,7 +515,7 @@ they're closer to a review of a technique than an intake of one. Put them in an 
 problem is Hard, a generous warmup when it isn't.
 
 - **Active-block guard**: only ~6 active-block slots exist per week (Sunday = system design). At 5 new/week, 5 slots are consumed by new problems — reserve at least 1 for re-coding Blanks. If Blank re-solves are stacking up, cut new intake that week.
-- **Max overdue backlog before pausing new intake**: 5 problems.
+- **Max overdue backlog before pausing new intake**: `effort_budget.intake_pause_overdue_unproven` in `cse.config.yml`.
 
 ### Review capacity math — and why intake becomes surplus-triggered (added Jul 26, 2026)
 
