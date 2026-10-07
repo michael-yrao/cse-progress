@@ -28,14 +28,15 @@ SCHED_START = re.compile(r"🆕|🎯|🎤|🔴|🟡|🟢(?: s\d)?|🎓")
 SCHED_END = re.compile(r"🟢|🟡|🔴")
 BARE_GREEN, GREEN_S1, NEW_CLASS = "🟢", "🟢 s1", "🆕"
 NO_DATA_CLASSES = ("🟢 s2", "🎓")
-MOCK_UNITS, SUNDAY, DAYS_PER_WEEK = 3.0, 6, 7
+SUNDAY, DAYS_PER_WEEK = 6, 7
+TALLY_FROM_STAMP = "20260901"   # the decision tallies Sep 7 onward; earlier archives stay out
 BACKLOG_WEEKS, UNPROVEN_WEEKS = (4, 8, 13, 26), (8, 26)
 SLOPE_FROM_WEEK, SLOPE_TO_WEEK = 8, 26
 DEFAULT_WEEKS, DEFAULT_SEEDS, MAX_REPORTED_INTAKE = 26, 40, 5
 BRACKETS, OUTCOMES = ("pessimistic", "optimistic"), ("🟢", "🟡", "🔴")
 
 def schedule_files() -> list[Path]:
-    archive = sorted(eb.SCHEDULES.glob("archive/202609*.md")) + sorted(eb.SCHEDULES.glob("archive/20261*.md"))
+    archive = sorted(p for p in eb.SCHEDULES.glob("archive/*_schedule.md") if p.name[:8] >= TALLY_FROM_STAMP)
     return archive + sorted(eb.SCHEDULES.glob("*_schedule.md"))
 
 def tally_text(text: str) -> Counter:
@@ -117,6 +118,7 @@ def simulate(rows: list[dict], eb_cfg: dict, ladder: dict, start: dt.date, intak
 
     pool = [keyed(r) for r in rows]
     new_cost = eb.price("🔴", 0, "Medium", 0, eb_cfg)
+    mock_cost = eb.price("🔴", 0, eb.DEFAULT_MOCK_DIFFICULTY, 0, eb_cfg)
     seat_days = [(k * DAYS_PER_WEEK) // intake for k in range(intake)]
     total_units, out = 0.0, {"backlog": {}, "unproven": {}}
     for offset in range(weeks * DAYS_PER_WEEK):
@@ -127,7 +129,7 @@ def simulate(rows: list[dict], eb_cfg: dict, ladder: dict, start: dt.date, intak
             pool.append(rep(blank, sampler(NEW_CLASS, rng), day))
             n_rows, units = n_rows + 1, units + new_cost
         if today.weekday() == SUNDAY:
-            n_rows, units = n_rows + 1, units + MOCK_UNITS
+            n_rows, units = n_rows + 1, units + mock_cost
         seated = {}
         for r in sorted((r for r in pool if r["due"] <= day), key=lambda r: r["key"]):
             if n_rows >= cap:
@@ -139,6 +141,7 @@ def simulate(rows: list[dict], eb_cfg: dict, ladder: dict, start: dt.date, intak
             n_rows, units = n_rows + 1, units + r["cost"]
         pool, total_units = [seated.get(id(r), r) for r in pool], total_units + units
         if (offset + 1) % DAYS_PER_WEEK == 0:
+            # End-of-day `due <= day` is the next morning's `due < today`, effort_budget's overdue.
             overdue, week = [r for r in pool if r["due"] <= day], (offset + 1) // DAYS_PER_WEEK
             out["backlog"][week], out["unproven"][week] = len(overdue), count_unproven(overdue, eb_cfg)
     out["graduated"] = sum(1 for r in pool if r["comfort"] == "🎓")

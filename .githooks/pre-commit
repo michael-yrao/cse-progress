@@ -104,7 +104,7 @@ fi
 # run_py <args>: run a Python script with whichever interpreter exists (py, python, python3);
 # returns 0 when none is installed, as the per-block fallbacks below did. Used by the four
 # dashboard-contract blocks below, whose `--check` runs stop the commit on exit 2 (the payload
-# violates its schema) and stay report-only on exit 1 (drift).
+# violates its schema, or jsonschema is not installed) and stay report-only on exit 1 (drift).
 run_py() {
   if command -v py >/dev/null 2>&1; then
     py "$@"
@@ -136,12 +136,16 @@ if [ -n "$GAMIFY_TRIGGER" ] || [ -n "$COVERAGE_TRIGGER" ]; then
   GAMIFY_RC=0
   run_py scripts/gamify.py || GAMIFY_RC=$?
   if [ "$GAMIFY_RC" -eq 2 ]; then
-    echo "ERROR: dashboard/progress.json violates its schema" >&2
+    echo "ERROR: dashboard/progress.json violates its schema, or jsonschema is not installed" >&2
     exit 1
   fi
-  [ -f "dashboard/progress.json" ] && git add "dashboard/progress.json"
-  [ -f "dashboard/progress-summary.json" ] && git add "dashboard/progress-summary.json"
-  [ -f "dashboard/schedule-history.json" ] && git add "dashboard/schedule-history.json"
+  if [ "$GAMIFY_RC" -eq 0 ]; then
+    [ -f "dashboard/progress.json" ] && git add "dashboard/progress.json"
+    [ -f "dashboard/progress-summary.json" ] && git add "dashboard/progress-summary.json"
+    [ -f "dashboard/schedule-history.json" ] && git add "dashboard/schedule-history.json"
+  else
+    echo "WARNING: gamify.py exited $GAMIFY_RC; dashboard outputs were not staged" >&2
+  fi
   if [ -f "README.md" ]; then
     README_HASH_AFTER=$(git hash-object README.md)
     [ "$README_HASH_BEFORE" != "$README_HASH_AFTER" ] && git add "README.md"

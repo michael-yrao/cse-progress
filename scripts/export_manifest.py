@@ -113,10 +113,6 @@ def schema_errors(manifest: dict) -> list[str]:
     return contract_schema.validate(manifest, DASHBOARD / SCHEMA_NAME)
 
 
-def render(manifest: dict) -> str:
-    return json.dumps(manifest, ensure_ascii=False, separators=(",", ":")) + "\n"
-
-
 def read_existing(path: Path) -> dict | None:
     """The parsed manifest on disk, or None when it is missing or unreadable."""
     try:
@@ -176,7 +172,7 @@ def main() -> None:
         return
 
     if args.stdout:
-        print(render(manifest), end="")
+        print(dashboard_indexes.render_compact(manifest), end="")
         return
 
     if not reasons:
@@ -184,7 +180,7 @@ def main() -> None:
         return
     contract_schema.exit_on_errors("dashboard/manifest.json violates its schema:",
                                    schema_errors(manifest))
-    target.write_text(render(manifest), encoding="utf-8")
+    target.write_text(dashboard_indexes.render_compact(manifest), encoding="utf-8")
     print(f"wrote {target.relative_to(REPO)} ({len(manifest['files'])} files)")
 
 

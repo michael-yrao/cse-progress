@@ -24,7 +24,7 @@ from __future__ import annotations
 import argparse
 import re
 import sys
-from datetime import datetime
+from datetime import date, datetime
 from pathlib import Path
 
 import _console
@@ -36,7 +36,6 @@ import schedule_priority
 import session_date
 from links import link_line, REPO_ROOT
 
-SCHEDULES = REPO_ROOT / "docs" / "foundations" / "schedules"
 
 # A day-block header: `| ▸ **Thu Sep 17** · 7.7 units — ...`. We match on the date fragment.
 DAY_HEADER = re.compile(r"▸\s*\*\*[^*]*\*\*")
@@ -56,17 +55,6 @@ MOCK_LINE = "🎤 DSA mock interview — unseen; named when the mock starts (dsa
 ROW_NUMBER = re.compile(
     rf"^\|\s*(?:(?:[^\[\]|]*?\s)?\[(\d{{1,4}})\s|(?:[{ROW_TAG_GLYPHS}]\s*)+(\d{{1,4}})\s)"
 )
-
-
-def current_schedule(session: str) -> Path | None:
-    """The week file governing `session` (YYYY-MM-DD): the largest YYYYMMDD_schedule.md whose
-    date is <= the session date. Falls back to the newest file if none is <=."""
-    stamp = session.replace("-", "")
-    files = sorted(SCHEDULES.glob("*_schedule.md"))
-    if not files:
-        return None
-    eligible = [f for f in files if f.name[:8] <= stamp]
-    return (eligible or files)[-1]
 
 
 def day_label(session: str) -> str:
@@ -148,7 +136,8 @@ def main() -> None:
     args = ap.parse_args()
 
     session = args.date or session_date.resolve()
-    schedule = Path(args.schedule) if args.schedule else current_schedule(session)
+    schedule = (Path(args.schedule) if args.schedule
+                else eb.current_schedule(date.fromisoformat(session)))
     if schedule is None or not schedule.exists():
         print("No schedule file found.", file=sys.stderr)
         sys.exit(1)

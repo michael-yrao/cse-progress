@@ -180,14 +180,60 @@ def tracker_title_url(number: str) -> tuple[str | None, str | None]:
     return None, None
 
 
+_TRACKER_VARIANT_SUFFIX = re.compile(r" \(([^()]*)\)$")
+"""Matches one trailing ` (…)` parenthetical, capturing its inner text — a candidate to
+strip from a TRACKER-sourced title only (e.g. tracker row "200. Number of Islands (DFS)",
+because the tracker author hand-appends the variant to tell same-numbered rows apart).
+Whether the candidate is actually stripped is decided by `_is_real_title_parenthetical`
+(some LeetCode titles, e.g. 208 "Implement Trie (Prefix Tree)", genuinely end in a
+parenthetical baked into the tracker's own title). A HEADER-sourced title is never
+touched; `resolve_title_url` applies the strip to a tracker-sourced title."""
+
+_SLUG_NON_ALNUM = re.compile(r"[^a-z0-9]+")
+
+
+def _slugify(text: str) -> str:
+    """lowercase `text` with every run of non-alphanumeric characters collapsed to a
+    single `-`, matching how LeetCode/NeetCode builds a problem's URL slug from its
+    title — used by `_is_real_title_parenthetical` to compare a title fragment against
+    the URL's own slug."""
+    return _SLUG_NON_ALNUM.sub("-", text.lower()).strip("-")
+
+
+def _is_real_title_parenthetical(inner: str, url: str | None) -> bool:
+    """True when `inner` (the text inside a title's trailing `(…)`) is genuinely part of
+    the problem's real name rather than a tracker-only variant tag like "DFS"/"BFS" —
+    e.g. LC 208's real title is "Implement Trie (Prefix Tree)", and its URL slug
+    `implement-trie-prefix-tree` ends in `-prefix-tree`, while a variant tag like "(DFS)"
+    on LC 200's tracker row never appears in `number-of-islands`. With no `url` to check
+    against there is nothing to confirm, so the candidate is treated as NOT real (the
+    existing strip-by-default behaviour)."""
+    if not url:
+        return False
+    slug = url.rstrip("/").rsplit("/", 1)[-1]
+    return slug.endswith("-" + _slugify(inner))
+
+
 def resolve_title_url(number: str, path: Path | None) -> tuple[str | None, str | None]:
     """(title, url) for `number`: the file's own docstring header first, the tracker
     second — the one implementation of that precedence. `link_line()` below calls this
     too, and `export_showcase.py` reuses it rather than re-deriving the same order.
+
+    A tracker-sourced title (no truthy header title) loses a trailing ` (variant)` tag
+    — a technique spoiler like "Graph Valid Tree (Union-Find)" — unless
+    `_is_real_title_parenthetical` says it is part of the problem's real name. A header
+    title is never touched.
     """
     file_title, file_url = header_title_url(path) if path else (None, None)
     track_title, track_url = tracker_title_url(number)
-    return file_title or track_title, file_url or track_url
+    url = file_url or track_url
+    if file_title:
+        return file_title, url
+    if track_title:
+        match = _TRACKER_VARIANT_SUFFIX.search(track_title)
+        if match and not _is_real_title_parenthetical(match.group(1), url):
+            track_title = track_title[:match.start()]
+    return track_title, url
 
 
 def link_line(number: str) -> str | None:

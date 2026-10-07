@@ -230,7 +230,7 @@ The 15-minute daily maintenance flashcard keeps mastered patterns warm. But not 
 |------------------------------------|----------------------|
 | Majority Clean (solved cold) | 15-min flashcard only — no new problems needed |
 | Majority Shaky/Blank | Continue 1 new problem per week in that category during the weekday active block, alongside design work |
-| Backlog spikes above 5 overdue | Pause design block entirely. Run emergency double warmup until cleared. Same rule as Phase 1 |
+| Overdue unproven rows reach `effort_budget.intake_pause_overdue_unproven` | Intake pauses (the `scheduling` skill's backstop); the design block is untouched. |
 
 The Saturday randomized DSA sprint covers the pattern recognition gap regardless of category status — it's always on.
 

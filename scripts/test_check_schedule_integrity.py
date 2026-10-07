@@ -446,11 +446,28 @@ class LiveCurrentWeekTests(unittest.TestCase):
     """
 
     def test_live_current_week_is_silent(self):
-        path = csi.current_schedule(dt.date.today())
+        path = eb.current_schedule(dt.date.today())
         if path is None or not path.exists():
             self.skipTest("no live schedule tree in this checkout")
         findings = csi.header_vs_rows(path)
         self.assertEqual(findings, [], f"live week {path.name} has header-vs-rows drift: {findings}")
+
+
+class IntakeFindingsTests(unittest.TestCase):
+    def test_under_rate_reports_and_on_rate_is_silent(self):
+        cfg = eb.load_config()
+        rate = cfg["intake_per_week"]
+        today = dt.date(2026, 10, 6)
+
+        def week_with(new_rows: int) -> dict:
+            items = [{"is_new": True, "deferred_to": None} for _ in range(new_rows)]
+            return {today: items}
+
+        cases = [("one below the rate", rate - 1, 1), ("on the rate", rate, 0)]
+        for name, seated, expected_findings in cases:
+            with self.subTest(name):
+                self.assertEqual(len(csi.intake_findings(week_with(seated), [], cfg, today)),
+                                 expected_findings)
 
 
 class CurrentScheduleTests(unittest.TestCase):
@@ -462,21 +479,15 @@ class CurrentScheduleTests(unittest.TestCase):
     def setUp(self):
         self._tmpdir = tempfile.TemporaryDirectory()
         tmp_dir = Path(self._tmpdir.name)
-        # Both the primary lookup (eb.find_schedule, which reads effort_budget's OWN
-        # SCHEDULES constant) and the fallback glob (this module's SCHEDULE_DIR) must
-        # point at the same fixture directory.
         self._orig_eb_schedules = eb.SCHEDULES
-        self._orig_schedule_dir = csi.SCHEDULE_DIR
         eb.SCHEDULES = tmp_dir
-        csi.SCHEDULE_DIR = tmp_dir
 
     def tearDown(self):
         eb.SCHEDULES = self._orig_eb_schedules
-        csi.SCHEDULE_DIR = self._orig_schedule_dir
         self._tmpdir.cleanup()
 
     def _write_week(self, monday: str) -> Path:
-        path = csi.SCHEDULE_DIR / f"{monday}_schedule.md"
+        path = eb.SCHEDULES / f"{monday}_schedule.md"
         path.write_text(
             f"# Week of {monday}\n\n## Daily Schedule\n\n"
             "| Problem | S | E | Next | Technique |\n|---|:-:|:-:|:-:|---|\n",
@@ -487,13 +498,13 @@ class CurrentScheduleTests(unittest.TestCase):
         this_week = self._write_week("20260921")  # Mon Sep 21
         self._write_week("20260928")  # Mon Sep 28, built ahead by the Sunday close-out
         today = dt.date(2026, 9, 24)  # Thu Sep 24 — inside this week, not next week
-        self.assertEqual(csi.current_schedule(today), this_week)
+        self.assertEqual(eb.current_schedule(today), this_week)
 
     def test_falls_back_to_newest_when_no_file_spans_today(self):
         self._write_week("20260907")
         newest = self._write_week("20260914")
         today = dt.date(2026, 10, 1)  # past both weeks' spans
-        self.assertEqual(csi.current_schedule(today), newest)
+        self.assertEqual(eb.current_schedule(today), newest)
 
 
 if __name__ == "__main__":

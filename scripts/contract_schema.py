@@ -7,7 +7,7 @@ from pathlib import Path
 
 SCHEMA_EXIT_CODE = 2
 MAX_SCHEMA_ERRORS_SHOWN = 20
-INSTALL_HINT = "jsonschema not installed: py -m pip install -r requirements.txt"
+INSTALL_HINT = "jsonschema not installed: python -m pip install -r requirements.txt"
 ROOT_PATH = "$"
 DASHBOARD = Path(__file__).resolve().parent.parent / "dashboard"
 SCHEMA_GLOB = "*.schema.json"
@@ -43,7 +43,8 @@ def validate(payload: dict, schema_path: Path) -> list[str]:
         from jsonschema.validators import validator_for
         from referencing.exceptions import Unresolvable
     except ImportError:
-        raise SystemExit(INSTALL_HINT) from None
+        print(f"ERROR: {INSTALL_HINT}", file=sys.stderr)
+        sys.exit(SCHEMA_EXIT_CODE)
     schema = json.loads(Path(schema_path).read_text(encoding="utf-8"))
     validator = validator_for(schema)(schema, registry=_registry())
     try:

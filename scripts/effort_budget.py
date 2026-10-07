@@ -169,7 +169,9 @@ def load_config() -> dict:
         import yaml  # noqa: PLC0415
         loaded = (yaml.safe_load(CONFIG.read_text(encoding="utf-8")) or {})
         cfg = loaded.get("effort_budget") or {}
-    except Exception:  # noqa: BLE001 — no config is a normal state, not an error
+    except Exception as exc:  # noqa: BLE001 — no config is a normal state, not an error
+        print(f"effort_budget: config unreadable ({exc.__class__.__name__}: {exc}); "
+              "using built-in defaults", file=sys.stderr)
         return defaults
     for key, val in defaults.items():
         if key not in cfg:
@@ -465,6 +467,24 @@ def find_schedule(day: dt.date) -> Path | None:
     return best[1] if best else None
 
 
+def current_schedule(day: dt.date) -> Path | None:
+    """The schedule file whose 7-day span actually contains `day`.
+
+    Prefers find_schedule(day) (live schedules/, then archive/): after a Sunday close-out
+    has already built NEXT week's file, `day` still falls inside THIS week's span, so that
+    lookup keeps returning the week actually being worked rather than the newest file on
+    disk. Falls back to the newest live file only when no file's span contains `day` (a
+    stale or missing schedule tree).
+    """
+    spanning = find_schedule(day)
+    if spanning is not None:
+        return spanning
+    if not SCHEDULES.exists():
+        return None
+    files = sorted(SCHEDULES.glob("[0-9]" * 8 + "_schedule.md"))
+    return files[-1] if files else None
+
+
 _FULL_ISO_DATE = re.compile(r"\d{4}-\d{2}-\d{2}")
 
 
@@ -487,6 +507,17 @@ def deferred_to(done: bool, next_cell: str) -> str | None:
         return None
     stripped = next_cell.strip()
     return stripped if _FULL_ISO_DATE.fullmatch(stripped) else None
+
+
+DEFERRAL_MARKER = "→"
+
+
+def _is_unreadable_deferral(done: bool, row_text: str, next_cell: str) -> bool:
+    """An unstruck `→` row whose Next cell is filled but is not a full ISO date."""
+    if done or not row_text.startswith(DEFERRAL_MARKER):
+        return False
+    stripped = next_cell.strip()
+    return bool(stripped) and not _FULL_ISO_DATE.fullmatch(stripped)
 
 
 def parse_sched_line(line: str) -> dict | None:
@@ -515,6 +546,12 @@ def parse_sched_line(line: str) -> dict | None:
     # can read off this same tag-stripped, link-unwrapped string.
     num = sched_row_number(cell, text)
     start_glyph = glyph.group(0) if glyph else None
+    done = "~~" in cell
+    next_cell = m["c4"]
+    row_text = re.sub(r"\s+", " ", text).strip(" ·*")
+    if _is_unreadable_deferral(done, row_text, next_cell):
+        print(f"WARNING: schedule row {num}: → row's Next cell '{next_cell.strip()}' is not "
+              "YYYY-MM-DD; read as not deferred", file=sys.stderr)
     return {
         "num": num,
         "start": start_glyph,
@@ -527,9 +564,9 @@ def parse_sched_line(line: str) -> dict | None:
         "is_probe": PROBE_GLYPH in (m["c2"] or ""),
         "is_mock": MOCK_GLYPH in (m["c2"] or ""),
         "is_complexity": is_complexity_technique(m["c5"]),
-        "done": "~~" in cell,
-        "deferred_to": deferred_to("~~" in cell, m["c4"]),
-        "text": re.sub(r"\s+", " ", text).strip(" ·*"),
+        "done": done,
+        "deferred_to": deferred_to(done, next_cell),
+        "text": row_text,
     }
 
 

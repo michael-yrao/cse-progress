@@ -1,4 +1,4 @@
-<!-- reconciled: 2026-10-06 -->
+<!-- reconciled: 2026-10-07 -->
 # Daily load is an effort budget, not a problem count
 
 **Open this** at the weekly build, before accepting any overflow pull, and when re-pricing
@@ -46,7 +46,7 @@ Build each day as close to the ceiling (`effort_budget.ceiling`) as possible. It
 
 A day holds at most `effort_budget.max_rows_per_day` rows, struck rows included and Complexity-technique
 rows excluded. On Oct 10 a day sat at 7.9 units across 17 rows while the largest fully completed day in
-the archive was 8. Units bind the week, not rows: the cap fixes a day's shape only. A day over the cap
+the archive was 8 rows. Units bind the week, not rows: the cap fixes a day's shape only. A day over the cap
 sheds its lowest-priority **proven** rows into the schedule's carried section, never by editing a
 tracker date. Proven means 🎓, or 🟢 at a streak of `effort_budget.carry_forward_min_streak` or above;
 🔴, 🟡, 🟢 s0 and 🟢 s1 are never carried, they displace a proven row. Procedure: the

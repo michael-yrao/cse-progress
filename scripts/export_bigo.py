@@ -51,6 +51,7 @@ import _console
 import contract_schema
 import effort_budget as eb
 import export_showcase as es
+import links
 
 _console.force_utf8()
 
@@ -483,7 +484,7 @@ def _build_manifest_entry(raw: dict, key: str, difficulty_map: dict[int, str],
     lc = raw["lc"]
     path, lines, tree, table = _resolve_entry_file(raw, key, file_cache)
 
-    title, url = es._display_title(path, str(lc))
+    title, url = links.resolve_title_url(str(lc), path)
     if url is None:
         warnings.append(f"{key}: no LeetCode/NeetCode URL found (header or tracker)")
     if lc not in difficulty_map:

@@ -1972,3 +1972,39 @@ decisions:
       for classes with no tally data) are tuned numbers and live in `cse.config.yml`
       `backlog_forecast:`, read by the script with no fallback.
     affects: [scheduling, effort_budget, scripts, backlog_forecast]
+  - id: self-eval-meta-review-oct7
+    date: 2026-10-07
+    summary: >-
+      The 2026-10-07 self-eval meta-review closed eight entries in five clusters. (A) brief-described-state
+      (3 entries: a paraphrased guard, a stale `git status`, a brief naming three test files) is promoted
+      to a DENYING hook: `~/.claude/hooks/execution_workflow_reminder.py` refuses a team-lead or engineer
+      brief with no pasted `git status --short` (user decision 2026-10-07), with a warn-only note to paste
+      guard bodies and to name the full suite. (B) parser-accepts-unexpected-shape (2) got source fixes in
+      `links.py` and `effort_budget.py`. (C) the swap billing entry closed on `deferred-rows-unbilled-oct6`
+      and the `engineer.md` full-suite step. (D) advance-prompt-tail (3 misses in a day, hook existed)
+      got a widened `ADVANCE_PHRASE`. (E) page-claim-from-spec got a site fix.
+    affects: [self_eval, execution_workflow, links, effort_budget, problem_link_reminder]
+  - id: contract-schema-gate-exit2-oct7
+    date: 2026-10-07
+    summary: >-
+      `contract_schema.py` now exits 2 (blocking) when jsonschema or referencing cannot be imported,
+      instead of a string SystemExit (exit 1) that every pre-commit block read as report-only drift, so
+      the schema gate had never fired on a Mac without jsonschema. `requirements.txt` pins
+      `jsonschema>=4.18` (needed for `referencing`). The pre-commit gamify block stages progress.json,
+      progress-summary.json and schedule-history.json only when gamify exits 0.
+      `dashboard/practice.schema.json` now declares `types`, `result`, `signature` and `decodeSignature`,
+      matching the site's `practice-validation.ts` guard.
+    affects: [scripts/contract_schema.py, .githooks/pre-commit, requirements.txt, dashboard/practice.schema.json, docs/SETUP.md]
+  - id: backlog-forecast-rerun-oct7
+    date: 2026-10-07
+    summary: >-
+      A history note beside `intake-rate-and-backstop-oct6`, rerun of `backlog_forecast.py` on 2026-10-07
+      (single-source-ok). Today's run printed `intake 2 pessimistic backlog wk4/8/13/26 34/28/32/52 · unproven wk8/26 14/33`
+      and `configured intake_per_week: 2 → edge`, beside the Oct 6 verdict `steady`. Model changes this
+      session: the Sunday mock is now priced through `eb.price` (Blank at the default mock difficulty)
+      instead of a hardcoded constant, the same value under the current config, so it does not by itself
+      move the verdict; the overdue boundary was reviewed and left unchanged (the simulation's end-of-day
+      `due <= day` snapshot equals the next morning's `due < today`); the archive tally window is now a
+      named start stamp that also covers 2027 archives, the same file set today. The next run is
+      comparable to today's; the Oct 6 to Oct 7 move came from tracker and schedule state, not code.
+    affects: [backlog_forecast, scheduling, effort_budget]

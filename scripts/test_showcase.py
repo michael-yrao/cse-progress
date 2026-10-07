@@ -348,7 +348,7 @@ class ResolveTitleUrlTests(unittest.TestCase):
         self._orig_tracker = links.TRACKER
         tracker_path = self.dir / "dsa_progress.md"
         _write(tracker_path,
-               "| Medium | [733. Flood Fill (tracker title)](https://tracker.example/733/) "
+               "| Medium | [733. Flood Fill Tracker](https://tracker.example/733/) "
                "| 🟢 | 1 | 2026-12-01 |\n")
         links.TRACKER = tracker_path
 
@@ -367,12 +367,12 @@ class ResolveTitleUrlTests(unittest.TestCase):
         path = self.dir / "733_flood_fill.py"
         _write(path, '"""\nno header line here\n"""\n')
         title, url = links.resolve_title_url("733", path)
-        self.assertEqual(title, "Flood Fill (tracker title)")  # tracker strips the "733. " prefix
+        self.assertEqual(title, "Flood Fill Tracker")  # tracker strips the "733. " prefix
         self.assertEqual(url, "https://tracker.example/733/")
 
     def test_no_file_falls_back_to_tracker_only(self):
         title, url = links.resolve_title_url("733", None)
-        self.assertEqual(title, "Flood Fill (tracker title)")
+        self.assertEqual(title, "Flood Fill Tracker")
 
 
 # ── build_payload + --check staleness, end to end against a synthetic repo ──────────
@@ -424,58 +424,6 @@ class SyntheticRepoTestCase(unittest.TestCase):
 
     def _manifest_entry(self) -> dict:
         return {"lc": 1, "variant": "v", "symbol": "target_20260101"}
-
-
-# ── _is_real_title_parenthetical: slug guard for the tracker-only suffix strip ──────
-
-class IsRealTitleParentheticalTests(unittest.TestCase):
-    def test_variant_tag_not_in_slug_is_not_real(self):
-        self.assertFalse(
-            es._is_real_title_parenthetical("DFS", "https://leetcode.com/problems/number-of-islands/"))
-
-    def test_title_fragment_baked_into_slug_is_real(self):
-        self.assertTrue(
-            es._is_real_title_parenthetical(
-                "Prefix Tree", "https://leetcode.com/problems/implement-trie-prefix-tree/"))
-
-    def test_no_url_is_never_real(self):
-        self.assertFalse(es._is_real_title_parenthetical("DFS", None))
-
-
-# ── _display_title: tracker-only variant-suffix strip ───────────────────────────────
-
-class DisplayTitleTests(SyntheticRepoTestCase):
-    def test_tracker_sourced_title_strips_trailing_parenthetical(self):
-        # Fake tracker row shaped like the 200:bfs case in the brief: the tracker's
-        # picked row for this lc happens to carry the method variant in parens.
-        _write(self.repo / "docs" / "foundations" / "dsa" / "mastery" / "dsa_progress.md",
-               "| Easy | [1. Target (DFS)](https://leetcode.com/problems/target/) "
-               "| 🟢 | 1 | 2026-12-01 |\n")
-        manifest = {"schemaVersion": 1, "entries": [self._manifest_entry()]}
-        payload, _ = es.build_payload(manifest, dt.date(2026, 9, 22))
-        self.assertEqual(payload["entries"][0]["title"], "Target")
-
-    def test_header_sourced_title_with_parenthetical_is_unchanged(self):
-        # The source file's own docstring header wins over the tracker (links.py's
-        # precedence) — a header title is never suffix-stripped, even when it happens to
-        # end in a real parenthetical (e.g. "Pow(x, n)").
-        _write(self.source_path,
-               '"""\n1. Target (DFS) \xb7 https://leetcode.com/problems/target/\n"""\n'
-               + self.SOURCE)
-        manifest = {"schemaVersion": 1, "entries": [self._manifest_entry()]}
-        payload, _ = es.build_payload(manifest, dt.date(2026, 9, 22))
-        self.assertEqual(payload["entries"][0]["title"], "Target (DFS)")
-
-    def test_tracker_title_ending_in_a_real_parenthetical_is_kept(self):
-        # Pins the LC 208 shape: "Implement Trie (Prefix Tree)" is the problem's actual
-        # name, not a tracker-added variant tag — its URL slug ends in "-prefix-tree", so
-        # the trailing parenthetical must survive the strip.
-        _write(self.repo / "docs" / "foundations" / "dsa" / "mastery" / "dsa_progress.md",
-               "| Easy | [1. Target (Prefix Tree)]"
-               "(https://leetcode.com/problems/target-prefix-tree/) | 🟢 | 1 | 2026-12-01 |\n")
-        manifest = {"schemaVersion": 1, "entries": [self._manifest_entry()]}
-        payload, _ = es.build_payload(manifest, dt.date(2026, 9, 22))
-        self.assertEqual(payload["entries"][0]["title"], "Target (Prefix Tree)")
 
 
 # ── _existing_shape_error / _stale_reasons: corrupted showcase.json shapes ──────────

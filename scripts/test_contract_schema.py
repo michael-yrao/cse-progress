@@ -6,10 +6,14 @@ Stdlib unittest, same style as test_showcase.py. Run it with:
 """
 from __future__ import annotations
 
+import contextlib
+import io
 import json
+import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 import contract_schema as cs
 
@@ -36,6 +40,15 @@ class ValidateTest(unittest.TestCase):
             schema_path.write_text(json.dumps(DANGLING_SCHEMA), encoding="utf-8")
             with self.assertRaisesRegex(ValueError, "unresolvable"):
                 cs.validate({}, schema_path)
+
+    def test_missing_jsonschema_blocks_with_the_install_hint(self) -> None:
+        unimportable = {"jsonschema": None, "jsonschema.validators": None}
+        stderr = io.StringIO()
+        with mock.patch.dict(sys.modules, unimportable), contextlib.redirect_stderr(stderr):
+            with self.assertRaises(SystemExit) as raised:
+                cs.validate({}, PROBLEM_SCHEMA)
+        self.assertEqual(raised.exception.code, cs.SCHEMA_EXIT_CODE)
+        self.assertIn(cs.INSTALL_HINT, stderr.getvalue())
 
 
 if __name__ == "__main__":

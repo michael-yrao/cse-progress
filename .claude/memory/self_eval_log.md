@@ -48,43 +48,8 @@ without getting hit with LITM." The digest is now the standing instrument for th
 reviews. The digest already makes them cost-free (it filters to opens-after-last-review), so this is optional
 cleanup, and re-statusing an open entry as "reviewed/dormant" is a judgement call, not a partition. Cadence reset.
 
-## 2026-09-19 [P2] — RECURRENCE: banned-opener prefixes ("Careful —", "Fair —", "Right —") used repeatedly despite the Aug 15 explicit ban
-Mid-22 backtracking teach, opened multiple turns with `Careful —`, `Fair —`, `Right —` — the exact interjections `feedback_explanation_register.md` → "BANNED OPENERS" (Aug 15, 2026) lists verbatim. Learner corrected: *"not useful to add 'Careful —' in front… remove the prefixing statements that don't add any value like how we removed the ending statements that rushes the users"* (explicitly pairs it with the no-rushing-tail rule, [[feedback_let_learner_pace]]). This is a **prose rule that has now lapsed ≥2×** (established Aug 15 after a same-session 2nd correction; recurred today) → the ladder says **escalate to a hook**, not more prose. **📌 PINNED FIX:** add a Stop hook that scans the final assistant message for a leading interjection prefix (`Careful/Fair/Right/No/Good/Ah/So/Well —` at the start of the message or a paragraph) and blocks with a "strip the opener, start with the fact" reminder — mirror of the existing `problem_link_reminder.py` / rating-gate Stop hooks. Not built mid-teach at learner's request to pin it; build next non-teaching moment. Recurrence family: every teaching/correction turn. **consolidated→** `problem_link_reminder.py::banned_opener` (Stop hook, em-dash-dangle + `Right, so` + fixed throat-clears, message- AND paragraph-start; 15 self-tests) + SKILL.md §1 Register clause + `feedback_explanation_register.md` (why) + `decisions.yml` `banned-openers-to-hook` (2026-09-19).
-
-## 2026-09-19 [P1] — self-caught: the archive classifier mis-sliced 3 OPEN entries out of the live log
-Building the `self_eval_archive.md` migration this session, the CLOSED classifier used a bare `consolidated|resolved` keyword match. Three genuinely-OPEN entries (2026-09-01 advance-tail, 2026-07-20 retry-menu, 2026-08-18 verification-stash) contain the word "resolved" in *prose* ("stop once the conversation has resolved…") and were wrongly moved to the archive. Caught by a post-write integrity sweep (explicit-open-status check), not by the migration's own assertion — the byte-completeness assertion only proved no content was *lost*, not that each block was on the *right side*. **Fix (same turn):** status is now read from the STATUS MARKER, not prose — an explicit `open`/`(status: open)` marker beats a prose "resolved" (`is_closed()` in `scripts/meta_review_digest.py`, shared by the reinsertion pass); the 3 blocks were moved back to the live log, block-set invariant verified against git HEAD (142→142 dated blocks, nothing lost). This is exactly the "mis-slicing an append-only file" risk the 2026-09-10 review deferred the archive over — it was real. fam: append-only-file mis-slice. (status: consolidated→ `is_closed()` status-marker check + explicit-open-status integrity sweep as a migration guardrail.)
-
-## 2026-09-19 [P3] — rating_gate Stop hook false-fired on the meta-review / completion summary
-While reporting this session's work, `rating_gate.py` blocked a turn as "proposes a comfort rating": my summary QUOTED self_eval_log lines full of 🟢/🟡/🔴 next to record-words ("912 recorded 🟡→🟢 override pending", "proposed"), and the hook read `COMFORT + PROPOSE_CUE` as a live rating proposal. It is not — a RECORD/summary of past ratings is not a live proposal, the same class as the hook's existing recap and 'rate'-as-frequency exemptions (Aug 23/28). Learner asked for the exemption. **Fix (same turn):** added `SUMMARY_CONTEXT` to `rating_gate.py` (`meta-review`/`self-eval`/`self_eval_log`/`consolidated→`/`decisions.yml`/…) — `proposes_rating` returns False when the turn is a log/meta summary; these markers don't occur in a rep turn, so the hole is narrow and documented. 3 new self-tests (21/21). fam: hook false-positive on comfort vocabulary. (status: consolidated→ `rating_gate.py::SUMMARY_CONTEXT`.)
-
 ## 2026-09-16 [P3] — logged the coach-caught bugs as the sticking point instead of the learner's own recurring failure mode (540)
 Closing 540 🟡, the stuck_log sticking point I wrote headlined the three bugs *I* surfaced (midpoint formula, snap-ordering, `r=m`). The learner corrected: their actual recurring error is narrower and different — using a **value comparison** (`nums[m]` vs `nums[m±1]`) to snap to the pair-start, when that is a pure **index/modular** step; the `l=m+2` movement I'd bundled in was never their issue. The coach's caught-bug list ≠ the learner's repeated failure mode; a stuck_log entry is most valuable when it names the *latter*, which the learner often knows better than the coach. **How to apply:** when logging a non-Clean rep, ask/confirm "what's the part that keeps getting you?" before writing the sticking point, rather than defaulting to the bugs found this rep. Recurrence family: any 🟡/🔴 close-out. Fixed the 540 entry same turn. If it recurs, climb to a review-workflow step ("confirm the learner's own sticking point before writing the stuck_log line"). open.
-
-## 2026-09-16 [P3] — probe 547 left stranded in dsa/probes/ after earning its tracker row (Sep 11)
-547 came back 🔴 as probe #7 on Sep 11 and earned a tracker row that day (dsa_progress.md line 94), but its
-file stayed in `dsa/probes/547_number_of_provinces.py` — **outside `solutions.roots`**, where
-`update_review_dates.py` can neither maintain its review dates nor let `restore_history.py` handle its stash.
-So for five days there was a tracked row with no discoverable file. Caught at the Wed Sep 16 kickoff while
-scaffolding the +2 re-rep; `new_problem.py --probe` correctly refused (file exists → "retry via its normal
-path"), which surfaced the gap. Migrated to `dsa/leetcode/graphs/` (git mv), normalized the probe-banner
-header, scaffolded as a normal retry. The Wed schedule note "earns its permanent row here" was stale (it
-earned it Sep 11, not today). Recurrence family: **any probe that earns a row** — the earn-a-row path has no
-step that migrates the file out of `dsa/probes/`, so every 🟡/🔴 probe strands the same way (202, 648 may be
-stranded too — check). If it recurs, climb to source: `new_problem.py --probe` on a 🟡/🔴 outcome, or a
-close-out sweep, should move the earned file to its canonical path. **consolidated→** (2026-09-19) `scripts/check_phantom_scaffolds.py` flags any earned probe still under `dsa/probes/` (outside `solutions.roots`) — it confirmed 648 stranded, exactly as this entry predicted — plus phantom rows; wired report-only into pre-commit and the close-out checklist. fam: scaffold-lifecycle phantoms.
-
-## 2026-09-15 [P3] — retry scaffold carried a stale variant tag into the new method name
-Scaffolding the 332 retry produced `findItinerary_20260829_minheap_20260915`: `new_problem.py` reads the
-*existing* method name to build the dated stub, and when that prior name already carries a date+variant
-suffix (`findItinerary_20260829_minheap`) it appends today's date to the whole thing rather than to the base
-`findItinerary`. Result is a misleading name — it said `minheap` on a day whose scheduled variant was the
-stack / pre-sorted-adjacency Hierholzer. Learner caught it ("the name of the method is wrong, it says
-minheap"). Fixed the name in-file by hand → `findItinerary_stack_20260915`. Root: the retry stub-namer has no
-notion of a stable base method name vs. a variant/date suffix, so suffixes accumulate across variant reps.
-Recurrence family: only bites problems practiced across *different* named variants (332 minheap→stack; watch
-743 array-scan vs min-heap, any `⚙️` variant row). Not yet climbed to a source fix — one occurrence; if it
-recurs, `new_problem.py` should strip a trailing `_<8-digit-date>`(+optional variant) before appending, or
-take an explicit `--method`/`--variant` on a retry. **consolidated→** (2026-09-19) source fix in `new_problem.py::existing_method_name`: the strip regex is now `_\d{8}(?:_[a-z0-9]+)*$`, so a date PLUS any variant tokens trailing it are stripped to recover the stable base (snake_case names with no date are untouched); the coach names a variant on a retry via the existing `--method <base>_<variant>`. Clustered with 09-18 (variant board mislabel) at the meta-review. fam: variant labels.
 
 ## 2026-09-14 [P3] — bare problem numbers in end-of-turn tallies tripped the link hook 3× in one session
 Three closing recaps ("today's tally: 207 🎓, 743 🟡, 787 🔴", "162 and the probe still open", etc.) named
@@ -97,31 +62,6 @@ durable): **in a recap of already-completed work, refer to problems by title or 
 — if a number must appear, link it. No rung-1/2 change needed (the hook is the safety net); this entry exists
 so the habit is visible to meta-review rather than dying with the context window. Recurrence family: the
 links-only rule ([[feedback_lineup_links_only]]) has lapsed 10+× historically. open.
-
-## 2026-09-14 [P2] — two overdue 🔴s slipped consecutive weekly builds, caught only at session-start reconcile
-At the Sep 14 session start I ran `effort_budget.py --due` and found **two overdue 🔴s absent from the
-Sep 14 board**: **84 Largest Rectangle** (🔴, due Sep 6 — its +2 fell on the last day of the Aug 31 week,
-so it slipped the Sep 7 build *and* the Sep 13 build) and **547 Number of Provinces** (🔴, Probe #7 re-rep,
-due Sep 13 — missed by the Sep 13 build that generated this week). Both are exactly the leak the weekly
-build's "nothing dropped without a date" integrity check exists to prevent. Root cause: the close-out reads
-the *coverage audit* pull-order (conversions/cleans/thin-green) but there is **no mechanical check that every
-overdue row on `effort_budget.py --due <today>` appears on the built board** — an overdue row invisible to
-the audit's technique framing (a 🔴 whose due date crossed a week boundary) can fall through. A build note
-in prose ("nothing dropped without a date") is the same too-cold-tier failure the architecture warns about.
-Fix (this turn, rung-3 stopgap): seated 84 (Fri) + 547 (Wed), moved 721 Fri→Thu, re-priced the week
-42.5→50.0, noted it on the board. **Candidate rung-1/2 fix to raise:** a `check_overdue_seated.py` (or a
-close-out step in `weekly-build.md`) that diffs `--due <today>` against the built schedule's problem
-numbers and fails on any overdue row not present. Recurrence of the Aug-2 "schedule integrity" family. **consolidated→** (2026-09-19) check 3 in `scripts/check_schedule_integrity.py`: flags any tracker row due ≤ the week's Sunday seated on no day of the board (reuses `effort_budget.parse_rows`); already wired report-only in pre-commit; a `weekly-build.md` checklist item makes it a close-out step. First run surfaced two real overdue 🟢s (875, 1584). fam: schedule integrity.
-
-## 2026-09-12 [P2] — "start saturday session" not treated as a kickoff; presented the board, didn't scaffold
-On "start saturday session" I invoked the skill, presented the day's board, and stopped — I did **not**
-batch-scaffold. Asked "did you scaffold any?", I confirmed I hadn't. Learner: *"when I say start session,
-it means the agent should scaffold."* Root cause: `scaffolding.md`'s kickoff-trigger list
-(§"batch only on a kickoff") enumerated "start today" / "what's up today" / `/start-day` but **not**
-"start session" / "start `<day>` session", so I read the phrase as an ambient session-start greeting
-rather than a day kickoff. Fix (rung-3, skill reference): added "start (this/the) session" / "start
-`<day>` session" to the kickoff triggers in `scaffolding.md`, with an explicit note that "start session"
-is a kickoff, not a greeting. First occurrence → reference-prose is the right rung; no hook. **consolidated→** superseded next day by the 09-13 [P1] escalation (rungs 2+3: `kickoff_scaffold_reminder.py` hook + CLAUDE.md gate 9 + ALWAYS_ON), which covers this greeting case too; and the 2026-09-19 meta-review added the scope-limiter disambiguation to `scaffolding.md`. [re-statused at the 2026-09-19 meta-review.]
 
 ## 🔬 META-REVIEW 2026-09-10 — first review in 40 days; the two live recurring roots were fixed structurally this session
 
@@ -1086,58 +1026,6 @@ missing rule — the rule was there and correct. Reopen if I cite a stale rating
 
 ---
 
-## 2026-09-17 — Dropped a live board item (721) from a "what's left" restate
-
-**What happened:** After 235 the learner asked "what else do we got." Today's board is 435/721/912/235/560/102;
-done so far were 435, 912, 235. The three still open were **721, 560, 102** — but I ran `links.py 560 102`,
-silently omitting 721, and presented only two. The learner caught it ("I don't think I did 721… how come the
-agent didn't pull it in").
-
-**The miss:** a restate/hand-over lineup is **mechanical** — the open set is fully determined by (board minus
-struck-through), so a second competent agent would produce the same list. I built the `links.py` argument list
-from memory instead of deriving it from the schedule's un-struck rows, and dropped one. No judgement was
-involved; this is exactly the "silently wrong artifact" the two-register table warns about — a lineup missing a
-due rep understates the day's remaining work and, left unnoticed, could have walked 721 off the board entirely.
-
-**Fix / where it landed:** corrected the list to 721/560/102 in-turn. **Behavioral rule for myself: derive a
-"what's left" lineup from the schedule file's un-struck rows (grep the day's block for rows without `~~`), never
-from memory of what was done** — then pass exactly those numbers to `links.py`. Candidate escalation if it
-recurs: a tiny `remaining.py` that reads the current week's schedule and prints the un-struck board for the day,
-so the open set is never hand-assembled. Not building it yet (first occurrence); reopen and climb to that script
-if I drop a board item again.
-
-**RECURRED same session (2026-09-17) → climbed the ladder to a source fix.** After 721 I again
-hand-assembled the "what's left" lineup and dropped 560 (said "one left: 102"; the learner caught it,
-"I thought we had 2 more"). Second drop of the same kind in one session ⟹ discipline isn't enough.
-Built [`scripts/remaining.py`](scripts/remaining.py): reads the current week's schedule, finds the
-session-date day-block, prints the UN-STRUCK rows (rows without `~~`) as clean `[file]·[LC]` pairs via
-`links.py`'s `link_line`. Verified: emits exactly the open board (560, 102), says "Nothing left ✅" on a
-fully-struck day, and catches tag-prefixed rows (🔥/🎯/⚙️/🆕/→). **New rule for myself: answer every
-"what's left / what else / what's next" by RUNNING `python scripts/remaining.py`, never by memory.**
-Candidate next rung if it still slips: a Stop-hook check that flags a lineup not sourced from the script.
-**consolidated→** `scripts/remaining.py` + `decisions.yml` `remaining-board-source-fix` (2026-09-18). [re-statused at the 2026-09-19 meta-review — the fix shipped in-body.]
-
-## 2026-09-18 [P2] — Under-read a kickoff as a single-problem request
-**What:** Learner opened with "let's start our friday session, graduate merge sorted list." I treated the named problem ("graduate merge sorted list") as the specific-problem caveat and scaffolded ONLY 21, offering the rest as opt-in. Learner corrected twice ("are the other ones not scaffolded?" → "i said start friday session, everything should be scaffolded").
-**Why it's wrong:** The kickoff phrase "start our friday session" governs; the named problem was an *additional* intent (which rep to prioritize), not a scope-limiter. The caveat is for when a problem name is the WHOLE request ("let's do 235"), not when it rides alongside an explicit session-start. The UserPromptSubmit hook even flagged it as a kickoff — I overrode the hook with my own read.
-**Fix/ladder:** Behavioral, low recurrence so far → memory-file tier. If it recurs: the caveat wording in references/scaffolding.md scope § should be sharpened to "a problem name is a scope-limiter ONLY when no session-start phrase is present in the same message." Watch for a 2nd occurrence before promoting. **consolidated→** the 2026-09-19 meta-review clustered this with the 09-12/09-13 kickoff misses (3rd of the kickoff-scope family) and promoted the exact sharpened caveat into `references/scaffolding.md` scope § ("a problem name narrows scope ONLY when NO session-start phrase shares the message; do not override the `kickoff_scaffold_reminder.py` flag with your own read").
-
-## 2026-09-18 [P3] — Weekly build mislabeled which VARIANT was due (3 rows, same build)
-**What:** The Sep 14 build's Friday board tagged 21 as "(Iterative)", 206 as "(Recursion)", and 130 as
-"(Union-Find)" — but per the tracker the s2 rep actually due 2026-09-18 was the *other* variant in each case
-(21 Recursion, 206 Iterative, 130 BFS; the tagged variants were either already 🎓 or due weeks later). Caught
-at Friday close-out; corrected the board labels and re-seated the correct variants to Sat.
-**Why it's wrong:** A multi-variant problem (same LC number, e.g. iterative vs recursive) has separate tracker
-rows with separate due dates. The build wrote the variant parenthetical from memory/habit, not from the row
-that was actually coming due — so the board would have sent the learner to re-rep an already-graduated or
-not-yet-due variant. Same failure fired on 3 rows in one build ⟹ systematic, not a one-off slip.
-**Fix/ladder (2 occurrences → climb past memory-file):** the weekly-build step should derive the variant
-parenthetical FROM the due tracker row, never hand-type it. Candidate source fix: have the build pull each
-row's variant label from `dsa_progress.md` by number+due-date rather than free-typing it. Flagged for the
-Sep 21 build — add a "variant label must match the due tracker row" check to weekly-build.md (and consider a
-hook that cross-checks schedule variant tags against the tracker's due row).
-**consolidated→** (2026-09-19, clustered with 09-15 as the variant-label family): `weekly-build.md` now requires the board variant parenthetical to be READ FROM the due tracker row (never hand-typed), and the method-NAME sibling is source-fixed in `new_problem.py` (see the 09-15 entry). A cross-check hook stays a candidate if the hand-typed board label slips again. fam: variant labels.
-
 ## 2026-09-21 — mispredicted `git status --short` output; reminder hook false-positive
 - **What:** Told the learner to expect "exactly eight lines" from `git status --short`; it shows 5 because untracked directories collapse to one line. Learner paused to ask. Contents were correct, the format claim was not.
 - **Also observed:** the global `execution_workflow_reminder.py` fired on "before i move forward, is this expected" — the `move` cue matched and no suppressor word was present. Second data point for the leaky-regex finding.
@@ -1307,11 +1195,6 @@ the tech lead, trigger its second occurrence. Known limit of the new hook: it do
 quoted string that puts both git subcommands at segment starts would still be denied.
 Cadence reset.
 
-## 2026-10-02 [P3] fam: deny hook matched anywhere in the command string — the commit-and-push gate blocked two ordinary commands minutes after going live
-**What:** The first version of `.claude/hooks/commit_push_gate.py` searched the whole command string for a git commit and a git push. It denied an `echo` of a test payload piped into the hook itself, then a heredoc appending prose to `decisions.yml` that named both subcommands in backticks. Neither command ran git.
-**Why:** The brief told the engineer to reuse `role_gate.py`'s regex shape. That shape uses `search` over the whole string, which is tolerable for a gate that only fires inside subagents and wrong for a gate that runs on every command of the main session. The engineer flagged the quoted-text match as a risk and I accepted it without estimating how often the session writes those two phrases as text.
-**Fix/ladder:** Source fix (rung 1) the same session: the match is anchored to the start of a shell segment (split on `;`, `&&`, `||`, `|`, `(`, `{`, newline), with two new table rows for the two commands that were blocked. Live probes afterwards: the piped test passes through, and a dry-run chain is denied in Bash and in PowerShell. Habit: a deny hook on the main session's commands matches the command word of a segment, never a substring. consolidated→segment-anchored match in `commit_push_gate.py`
-
 ## 2026-10-02 [P2] fam: diff review passed on fixtures alone — the helper-stash fix was approved before it had run on any real file it was written for
 **What:** I reviewed the engineer's diff for the retry-stash-leak fix, read `top_level_blocks`, ran its tests and called the review passed. A round-trip on a temp copy of the real 1489 file then broke: `class UF` has column-0 comment lines inside its body, the block rule ended the class at the first one, the header line went to the stash and the body stayed in the file, which no longer parsed. 1489 is on the Saturday Oct 3 board, so the next kickoff would have run this on the learner's file. Caught before any commit, by the round-trip, which I ran only after a second-opinion check asked for it.
 **Why:** The engineer's fixtures were written from the brief's description of a helper class, and so were my review's expectations. The brief itself named the four real files with helpers (271, 1489, 648, 472) and I never asked for, or ran, the new code on a copy of one. The engineer had even listed column-0 boundaries as a risk in its report.
@@ -1386,49 +1269,32 @@ Cadence reset.
 **Why:** "Do note" asked for a fact to be recorded. I attached a scheduling policy the learner had not asked for, built from last week's overruns. The note was about how the hard phases are taught, not about volume.
 **Fix/ladder:** Rung 4: `project_wedding_season.md` rewritten the same turn (no load cut; adapt the teaching on a signal, learner decides). A stated fact is saved as the fact, in the learner's words; a policy drawn from it is proposed, not written into memory. `closed`
 
+## 🔬 META-REVIEW 2026-10-07 — 8 entries closed; the brief-fidelity cluster promoted to a hook that denies a brief with no pasted git status
 
-## 2026-10-05 [P2] spoil: remaining.py printed "261 Graph Valid Tree (Union-Find)" on the kickoff board
-**What:** `remaining.py` read 261's title from the tracker, and the tracker has two 261 rows: the Union-Find one (🎓) and the DFS one (due today). The board line carried "(Union-Find)", a technique parenthetical, and it named the wrong variant. Caught before sending. The presented board drops the parenthetical.
-**Why:** The scaffolding reference says the script reads the title from the file header. For a multi-variant problem it takes the tracker row title instead, which carries the variant in parentheses.
-**Fix/ladder:** Rung 1 candidate (source fix): `remaining.py`/`links.py` should strip a trailing `(…)` variant from the title, or read it from the file. Not fixed this turn. `open`
+Run at the session close. Clustered from `python3 scripts/meta_review_digest.py` (8 open since the
+2026-10-04 review, 7 of 8 with no fam tag).
 
+**Promoted:**
+1. **brief-described-state** (3 entries: a paraphrased guard, a stale `git status`, a brief naming three
+   test files) → rung 2 hook: `~/.claude/hooks/execution_workflow_reminder.py` denies a team-lead or
+   engineer brief with no `git status --short` paste (user decision 2026-10-07), plus a warn-only note to
+   paste guard bodies and to name the full suite.
+2. **parser-accepts-unexpected-shape** (2: the 261 variant parenthetical, the non-ISO Next cell) → rung 1
+   source fixes in `links.py` and `effort_budget.py`.
+3. **advance-prompt-tail** (1 entry, 3 misses in one day, hook existed) → rung 2 pattern widening.
+4. **page-claim-from-spec** (1) → site fix.
 
-## 2026-10-05 [P2] ground: "progressiveoverflow.com/practice/261 should draw both examples as graphs" — stated from the spec, never from the page
-**What:** I checked the 261 spec's `figure` and the pushed `practice.json`, then told the learner the page should draw the graph. The learner pasted the page: no drawing. Root cause (Explore sweep): the practice page draws a figure only on its `statement` branch (`practice-description.component.html:1`), and 261's spec has no `statement`, so the page falls back to the site's `.steps.ts` description, which has no figure code. 21 problems with a figure are affected.
-**Why:** I read the data contract and inferred what the page renders. The rendering condition sits in the site component, which I never read.
-**Fix/ladder:** Rung 4 note: a claim about what a page shows names the component that renders it, or is phrased as expected, unverified. The site fix is pending the learner's choice. `open`
+**Closed with the fix already in place:** the swap billing decision (`deferred-rows-unbilled-oct6`; the
+full-suite step in `~/.claude/agents/engineer.md`).
 
+**Bookkeeping:** the 8 entries, each with an appended status line, plus 11 older closed entries moved to
+`self_eval_archive.md`.
 
-## 2026-10-06 [P2] schedule: 743's move off Mon Oct 5 written as "Dec 7" in the Next cell, so no tool saw it
-**What:** On Oct 5, 743 (array-scan) was moved to Mon Dec 7 at the learner's call. The row stayed on Monday, unstruck and prefixed `→`, as the rule says, but its Next cell read `Dec 7`. `deferred_to()` (`effort_budget.py`) accepts only a full ISO date, so the dashboard export and `remaining.py` read the row as unfinished Monday work. The learner caught it ("monday the 5th schedule is not reflecting that we are moving 743"). The cell now reads `2026-12-07`, and `remaining.py` reports the Oct 5 block clear. Same file: the Capacity block's `built` line still read the pre-move build (Mon 7.8, Wed 7.8) after 2812 moved Wed → Mon. `--schedule-day` gives Mon built 9.8 (7.8 done, 743's 2.0 deferred) and Wed 5.8.
-**Why:** The deferral convention lives in a docstring and a decision. The silent failure has no check: a non-ISO Next cell on an unstruck `→` row is read as "not deferred" without a warning.
-**Fix/ladder:** Rung 1 candidate: `parse_sched_line()` should warn when an unstruck `→` row has a non-empty Next cell that is not ISO. Not built this turn. `open`
-
-
-## 2026-10-06 [P2] effort: Mon Oct 5 header set to 9.8 after an even swap (743 out, 2812 in), billing 743's 2.0 twice
-**What:** The day was built at 7.8. 743 (🟡 M, 2.0) was deferred to 2026-12-07 and 2812 (🟡 M, 2.0) was pulled in to replace it. Under deferred-rows-stay-on-planned-day-sep29, 743 stayed priced on Monday while 2812 was added, so `--schedule-day` read built 9.8, over the ceiling by 1.8, and 743's 2.0 also showed as `remaining`. I set the header to 9.8 and, in the entry above, reported it as correct. The learner caught it ("added 2.0 because of swapping but didnt remove the 2.0 from the swap?"). Actual work: 7.8, which equals the plan.
-**Why:** The Sep 29 rule froze a started day's header against deferral, but nothing addressed a swap, which is a deferral plus an addition. The script prices a deferred-out row in `built` and in `remaining` alike. I quoted the script's number without asking whether the model behind it matched what happened.
-**Fix/ladder:** Rung 1 (source fix in `effort_budget.py`) plus a skill/decision update. Learner chose: a deferred-out row bills in neither built nor remaining (decisions.yml `deferred-rows-unbilled-oct6`). `price_day_items()` lists it under MOVED; Mon Oct 5 header 9.8 → 7.8; effort-units SKILL.md and review-workflow.md updated; test added in test_gamify.py. `fixed`
-
-
-## 2026-10-06 [P3] workflow: a lead's brief carried my paraphrase of a guard, not its lines, and cost one engineer re-spawn
-**What:** During the progressiveoverflow architecture review (Phase 1, producer side), I told the cse-progress team lead what `practice-validation.ts` accepts for a graph `figure` from a grep that showed lines 59 and 82-88 only. The paraphrase omitted `nodesArg` and the required `directed` boolean (lines 64-80). The engineer's schema rejected the committed problem 9002 and the stop-gate tripped a second time; the lead read the guard itself, re-briefed, and one engineer spawn was spent on the gap. The lead named the cause in its report.
-**Why:** The execution-workflow rule already says a claim that a file says X quotes the matched line. I treated a grep hit list as the file's content; a grep for field names is a substring hit, not the branch logic.
-**Fix/ladder:** Rung 4 (memory): logged here; the normative sentence already exists in `~/.claude/rules/execution-workflow.md` ("A claim that a file says X quotes the matched line"). Candidate rung 3 if it recurs: the brief template gets a line "for any validation/guard logic a brief describes, paste the function body, not grep output". `open`
+**Left open:** none of the eight.
+Cadence reset.
 
 
-## 2026-10-06 [P3] fam: advance-prompt-tail — "Go ahead and code it" closed a confirmed trace on the 452 probe
-**What:** The learner pasted a correct trace for 452; my reply confirmed it, gave one note on the overlap test, then ended "Go ahead and code it." The `advance_prompt_tail` Stop hook caught it. The same session's 3620 turn ("Go ahead and code it") and the 452 procedure table ("Try coding it.") carried the same tail and were not caught, so three today.
-**Why:** After a recognition call resolves, I treated "now code" as the natural next step and said it, instead of ending at the answer. The learner already knows the next step; naming it sets the pace for them.
-**Fix/ladder:** Re-emitted without the tail. The hook (rung 2) exists and fired; it misses "Try coding it." — candidate hook-pattern widening to catch `(try|go ahead and) cod(e|ing) it` if this recurs. `open`
-
-
-## 2026-10-06 [P3] workflow: a brief carried a cse-progress `git status` from hours earlier as current state
-**What:** The Phase 4 multi-tenant brief to a team lead pasted cse-progress's status as the six learner entries captured at the start of the day. The lead's own fresh status showed about 22 entries (README, dashboard JSON, docs, schedules) and four files changing mid-run: another session was working in the repo. The lead flagged the discrepancy; no file was touched, so nothing broke.
-**Why:** The execution-workflow rule says every repo a brief names gets its `git status --short` output pasted; I reused an earlier capture instead of re-running the one-second command. A status is a snapshot, and a sibling repo the user keeps a second session in moves between my turns.
-**Fix/ladder:** Rung 4 (memory): logged here; rule text already covers it. Operational change for the rest of the session: re-run status immediately before each brief, and treat a repo with a second active session as read-only for this session. `open`
-
-## 2026-10-06 [P3] workflow: an engineer's brief named three test files, not the full suite, and the regression it caused in `test_gamify.py` cost one extra spawn
-**What:** Slice 1 (effort_budget.py row cap + intake lines) added a config key read inside `price_schedule_day`. `test_gamify.py` builds a config fixture by hand without that key, so it raised `KeyError`. The engineer ran only the three files its brief named; the team lead caught it on the full suite and spawned a fixture-fix engineer.
-**Why:** `~/.claude/rules/testing.md` already says "Run the full suite once, before reporting", but the engineer agent definition only said "run the tests/build named in the brief", and the brief's test list read as the gate.
-**Fix/ladder:** Rung 3, same session: `~/.claude/agents/engineer.md` now says to run the named tests, then the full suite once before reporting, with this occurrence as the why. The lead also reported a misstated line count (183 vs 206) from one engineer — a report claim with no command behind it; the execution-workflow rule already covers it ("a count comes from a command that was run, pasted"), so logged here only. `open`
+## 2026-10-07 [P3] plan: the approved plan told links.py to strip every trailing "(…)" from a tracker title; an existing test forbade it
+**What:** The plan's Slice 1 said "strip a trailing ` (…)` from a tracker title". The engineer did that; `test_tracker_title_ending_in_a_real_parenthetical_is_kept` failed (LC 208 "Implement Trie (Prefix Tree)" is the real title). `export_showcase.py` already held a slug-guarded helper for exactly this; the lead moved it into `links.resolve_title_url` on a third spawn. One extra engineer spawn.
+**Why:** I wrote the fix from the self-eval entry's proposal and the hook's `TITLE_PARENTHETICAL` shape, without grepping the test files or the other exporters for the same problem. A proposed source fix in the log is a direction, not a checked design.
+**Fix/ladder:** Rung 4 (memory): before a plan names a source fix, grep `scripts/test_*.py` and the sibling scripts for the function or shape it touches, and paste the hits. fam: plan-unchecked-against-tests. `open`

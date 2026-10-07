@@ -578,7 +578,7 @@ ADVANCE_EXACT = {
 # Nudges recognizable wherever they sit inside a short final sentence.
 ADVANCE_PHRASE = re.compile(
     r"(?:"
-    r"(?:now\s+)?code\s+(?:it|this|that)(?:\s+up)?"   # "code it", "now code it up", "code that up"
+    r"\bcod(?:e|ing)\s+(?:it|this|that)(?:\s+up)?"   # "code it up", "try coding it"; \b keeps "decode it" out
     r"|ready\s+for\s+(?:the\s+|another\b|a\s+)?(?:next|one)"
     r"|ready\s+to\s+move\s+on"
     r"|(?:shall|should)\s+we\s+move\s+on"

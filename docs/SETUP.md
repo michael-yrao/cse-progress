@@ -41,7 +41,7 @@ git config core.hooksPath .githooks
 This replaces the old per-machine `.git/hooks/pre-commit` (which was never synced). After this, the
 hook stays in sync via git across all machines.
 
-Also run `py -m pip install -r requirements.txt` once to install the Python packages the scripts import.
+Also run `python -m pip install -r requirements.txt` once (`py` on Windows). Without it the dashboard schema gate in the pre-commit hook exits 2 and blocks every commit.
 
 ## 2. The scaffold-links agent hook
 

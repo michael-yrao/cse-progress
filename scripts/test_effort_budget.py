@@ -4,7 +4,9 @@
 """
 from __future__ import annotations
 
+import contextlib
 import datetime as dt
+import io
 import unittest
 
 import effort_budget as eb
@@ -41,6 +43,35 @@ class CountRowsTests(unittest.TestCase):
             with self.subTest(name):
                 items = [it for it in map(eb.parse_sched_line, block) if it is not None]
                 self.assertEqual(eb.count_rows(items), expected)
+
+
+class DeferralWarningTests(unittest.TestCase):
+    def test_unreadable_deferral_warns_and_reads_as_not_deferred(self):
+        cases = [
+            ("non-ISO Next warns", "| → [743 A](x.py) · [LC](y) | 🟡 | | Dec 7 | Graph |", None, True),
+            ("ISO Next is silent", "| → [743 A](x.py) · [LC](y) | 🟡 | | 2026-12-07 | Graph |",
+             "2026-12-07", False),
+            ("struck row is silent", "| ~~→ [743 A](x.py)~~ · [LC](y) | 🟡 | 🟢 | Dec 7 | Graph |", None, False),
+        ]
+        for name, line, expected_to, expects_warning in cases:
+            with self.subTest(name):
+                stderr = io.StringIO()
+                with contextlib.redirect_stderr(stderr):
+                    item = eb.parse_sched_line(line)
+                self.assertEqual(item["deferred_to"], expected_to)
+                self.assertEqual("'Dec 7'" in stderr.getvalue() and "743" in stderr.getvalue(),
+                                 expects_warning)
+                if not expects_warning:
+                    self.assertEqual(stderr.getvalue(), "")
+
+
+class RowCapLinesTests(unittest.TestCase):
+    def test_warning_line_only_over_the_cap(self):
+        cap = _CFG["max_rows_per_day"]
+        cases = [("at cap", cap, 1), ("over cap", cap + 1, 2)]
+        for name, count, expected_lines in cases:
+            with self.subTest(name):
+                self.assertEqual(len(eb.row_cap_lines(count, _CFG)), expected_lines)
 
 
 class IsUnprovenTests(unittest.TestCase):

@@ -19,9 +19,8 @@ Design constraints this file honours (see CLAUDE.md and project_gamification.md)
     that is provably identical to what's on disk, with real source line numbers.
 
   * SINGLE SOURCE OF TRUTH for the link precedence: `links.resolve_title_url()` (header
-    over tracker) is reused rather than re-derived here. This export additionally strips
-    a tracker-only trailing `(variant)` suffix from the title (`_display_title`) — a
-    JSON-only cosmetic, never fed back into `links`.
+    over tracker, plus the tracker-only trailing `(variant)` strip) is reused rather than
+    re-derived here.
 
 Usage:
     python scripts/export_showcase.py             # write dashboard/showcase.json
@@ -130,40 +129,6 @@ def leading_comment_block(lines: list[str], lineno: int) -> tuple[int, int] | No
         return None
     return top_idx + 1, bottom_idx + 1
 
-
-_TRACKER_VARIANT_SUFFIX = re.compile(r" \(([^()]*)\)$")
-"""Matches one trailing ` (…)` parenthetical, capturing its inner text — a candidate to
-strip from a TRACKER-sourced title only (e.g. tracker row "200. Number of Islands (DFS)",
-because the tracker author hand-appends the variant to tell same-numbered rows apart).
-Whether the candidate is actually stripped is decided by `_is_real_title_parenthetical`
-(some LeetCode titles, e.g. 208 "Implement Trie (Prefix Tree)", genuinely end in a
-parenthetical baked into the tracker's own title). A HEADER-sourced title is never
-touched, and `links.link_line()` / `links.resolve_title_url()` are unchanged — see
-`_display_title`."""
-
-_SLUG_NON_ALNUM = re.compile(r"[^a-z0-9]+")
-
-
-def _slugify(text: str) -> str:
-    """lowercase `text` with every run of non-alphanumeric characters collapsed to a
-    single `-`, matching how LeetCode/NeetCode builds a problem's URL slug from its
-    title — used by `_is_real_title_parenthetical` to compare a title fragment against
-    the URL's own slug."""
-    return _SLUG_NON_ALNUM.sub("-", text.lower()).strip("-")
-
-
-def _is_real_title_parenthetical(inner: str, url: str | None) -> bool:
-    """True when `inner` (the text inside a title's trailing `(…)`) is genuinely part of
-    the problem's real name rather than a tracker-only variant tag like "DFS"/"BFS" —
-    e.g. LC 208's real title is "Implement Trie (Prefix Tree)", and its URL slug
-    `implement-trie-prefix-tree` ends in `-prefix-tree`, while a variant tag like "(DFS)"
-    on LC 200's tracker row never appears in `number-of-islands`. With no `url` to check
-    against there is nothing to confirm, so the candidate is treated as NOT real (the
-    existing strip-by-default behaviour)."""
-    if not url:
-        return False
-    slug = url.rstrip("/").rsplit("/", 1)[-1]
-    return slug.endswith("-" + _slugify(inner))
 
 _SYMBOL_DATE = re.compile(r"_(\d{8})$")
 _BANNER_DATE = re.compile(r"Attempt[^·]*·\s*(\d{4}-\d{2}-\d{2})")
@@ -376,25 +341,6 @@ def resolve_source_file(raw: dict) -> Path:
     return links.find_file(str(lc)) or hits[0]
 
 
-def _display_title(path: Path, lc: str) -> tuple[str | None, str | None]:
-    """(title, url) for one showcase entry: reuses `links.resolve_title_url()` for the
-    header-over-tracker precedence (the single source of truth for that order — never
-    re-derived here) and additionally strips a tracker-only variant suffix from the
-    title, in this export ONLY. Mirrors `resolve_title_url`'s own `file_title or
-    track_title` exactly: an empty-string header title also counts as "no header title",
-    so it falls through to the tracker-sourced strip, same as the title itself does.
-
-    The strip only fires when `_is_real_title_parenthetical` says the trailing `(…)`
-    is NOT part of the problem's real name (see LC 208 in that function's docstring) —
-    a plain blanket strip would corrupt titles like "Implement Trie (Prefix Tree)"."""
-    file_title, _ = links.header_title_url(path)
-    title, url = links.resolve_title_url(lc, path)
-    if title and not file_title:
-        match = _TRACKER_VARIANT_SUFFIX.search(title)
-        if match and not _is_real_title_parenthetical(match.group(1), url):
-            title = title[:match.start()]
-    return title, url
-
 
 def build_payload(manifest: dict, today: dt.date) -> tuple[dict, list[str]]:
     """Return (payload, warnings). Raises ShowcaseError on any fatal manifest/contract
@@ -422,7 +368,7 @@ def build_payload(manifest: dict, today: dt.date) -> tuple[dict, list[str]]:
         lines, tree = file_cache[path]
 
         entry = normalize_entry(raw, path.relative_to(REPO).as_posix())
-        title, url = _display_title(path, str(lc))
+        title, url = links.resolve_title_url(str(lc), path)
         if url is None:
             warnings.append(f"{key}: no LeetCode/NeetCode URL found (header or tracker)")
 

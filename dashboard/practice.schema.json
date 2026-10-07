@@ -43,6 +43,22 @@
           "description": "Optional. Names which `args` of a case hold a graph's edge list or a grid, so the site can draw each example's input. null when the problem has none.",
           "oneOf": [{ "type": "null" }, { "$ref": "#/definitions/figure" }]
         },
+        "types": {
+          "description": "Optional. Names the codec that builds each argument and decodes the result, for a problem whose values are not plain JSON (a linked list, a tree, a graph). null when the problem is plain JSON.",
+          "oneOf": [{ "type": "null" }, { "$ref": "#/definitions/types" }]
+        },
+        "result": {
+          "description": "Optional. Where the value to check lives: the return value, or an argument the function mutates. null compares the return value.",
+          "oneOf": [{ "type": "null" }, { "$ref": "#/definitions/result" }]
+        },
+        "signature": {
+          "type": "string",
+          "description": "Optional. The method's typed signature, e.g. `strs: List[str] -> str`. The site's guard does not read it."
+        },
+        "decodeSignature": {
+          "type": "string",
+          "description": "Optional. The signature of a round-trip spec's decode half. The site's guard does not read it."
+        },
         "cases": {
           "type": "array",
           "minItems": 1,
@@ -50,6 +66,41 @@
           "items": { "$ref": "#/definitions/case" }
         }
       }
+    },
+    "types": {
+      "type": "object",
+      "description": "Per-argument codecs and the result codec.",
+      "required": ["args"],
+      "properties": {
+        "args": {
+          "type": "array",
+          "description": "One entry per argument: the codec that builds it, or null for plain JSON. `number-inf` only decodes a result, so it is not allowed here.",
+          "items": { "oneOf": [{ "type": "null" }, { "enum": ["list-node", "list-node-cycle", "random-list", "tree-node", "tree-value", "graph-node"] }] }
+        },
+        "result": {
+          "description": "The codec that decodes the returned value, or null for plain JSON.",
+          "oneOf": [{ "type": "null" }, { "enum": ["list-node", "list-node-cycle", "random-list", "tree-node", "tree-value", "graph-node", "number-inf"] }]
+        }
+      }
+    },
+    "result": {
+      "oneOf": [
+        {
+          "type": "object",
+          "description": "Check the return value.",
+          "required": ["kind"],
+          "properties": { "kind": { "const": "return" } }
+        },
+        {
+          "type": "object",
+          "description": "Check an argument the function mutates (arg), or a prefix of it (arg-prefix).",
+          "required": ["kind", "index"],
+          "properties": {
+            "kind": { "enum": ["arg", "arg-prefix"] },
+            "index": { "type": "integer", "minimum": 0, "description": "Index into a case's args." }
+          }
+        }
+      ]
     },
     "figure": {
       "oneOf": [

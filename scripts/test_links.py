@@ -102,5 +102,56 @@ class LinkLineJudgeLabelTests(unittest.TestCase):
         )
 
 
+class IsRealTitleParentheticalTests(unittest.TestCase):
+    def test_variant_tag_not_in_slug_is_not_real(self):
+        self.assertFalse(
+            links._is_real_title_parenthetical("DFS", "https://leetcode.com/problems/number-of-islands/"))
+
+    def test_title_fragment_baked_into_slug_is_real(self):
+        self.assertTrue(
+            links._is_real_title_parenthetical(
+                "Prefix Tree", "https://leetcode.com/problems/implement-trie-prefix-tree/"))
+
+    def test_no_url_is_never_real(self):
+        self.assertFalse(links._is_real_title_parenthetical("DFS", None))
+
+
+class ResolveTitleUrlVariantStripTests(unittest.TestCase):
+    """The trailing ` (variant)` strip applies to a tracker-sourced title only."""
+
+    def setUp(self):
+        self._tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self._tmp.cleanup)
+        self.tmp = Path(self._tmp.name)
+
+    def _resolve(self, tracker_cell: str, header: str | None) -> tuple[str | None, str | None]:
+        tracker = self.tmp / "dsa_progress.md"
+        tracker.write_bytes(f"| Easy | {tracker_cell} | 🟢 | 1 | 2026-12-01 |\n".encode("utf-8"))
+        path = None
+        if header is not None:
+            path = self.tmp / "1_target.py"
+            path.write_bytes(f'"""\n{header}\n"""\n'.encode("utf-8"))
+        with mock.patch.object(links, "TRACKER", tracker):
+            return links.resolve_title_url("1", path)
+
+    def test_title_resolution_table(self):
+        cases = [
+            ("tracker variant stripped",
+             "[1. Target (DFS)](https://leetcode.com/problems/target/)", None, "Target"),
+            ("technique spoiler stripped",
+             "[1. Graph Valid Tree (Union-Find)](https://leetcode.com/problems/graph-valid-tree/)",
+             None, "Graph Valid Tree"),
+            ("real parenthetical kept",
+             "[1. Target (Prefix Tree)](https://leetcode.com/problems/target-prefix-tree/)",
+             None, "Target (Prefix Tree)"),
+            ("header title untouched",
+             "[1. Target](https://leetcode.com/problems/target/)",
+             "1. Target (DFS) \u00b7 https://leetcode.com/problems/target/", "Target (DFS)"),
+        ]
+        for name, cell, header, expected in cases:
+            with self.subTest(name):
+                self.assertEqual(self._resolve(cell, header)[0], expected)
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

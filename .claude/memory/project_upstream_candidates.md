@@ -3,7 +3,7 @@ name: project-upstream-candidates
 description: Findings from cse-progress that belong in canonical cse-coach, split into shipped-behaviour defects (send now) and new instruments (soak first)
 metadata:
   type: project
-reconciled: 2026-09-30
+reconciled: 2026-10-07
 ---
 
 **Started Aug 9, 2026.** Upstream flow is a **deliberate human PR**, never automatic — one learner's
@@ -15,6 +15,10 @@ adopter today. A **new instrument** does, because "it seemed good on the day we 
 evidence.
 
 ---
+
+## ✅ SHIPPED Oct 6, 2026 (`cse-coach` v0.8.0)
+
+The dashboard exporters, their schemas and the hashed manifest with its indexes (this repo's `c4fb59ed`).
 
 ## ✅ SHIPPED Sep 23, 2026 (`cse-coach` v0.6.0)
 

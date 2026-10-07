@@ -18,7 +18,7 @@ duplicate bookkeeping that rots.
 
 So this script checks only the window where a *push* is genuinely owed: the week being worked.
 
-## The four checks
+## The six checks (four move `--check`, two are report-only)
 
 | | Miss | Why it is invisible without this |
 |---|---|---|
@@ -73,7 +73,6 @@ TRACKERS = [
     Path("docs/foundations/dsa/mastery/dsa_progress.md"),
     Path("docs/foundations/system_design/mastery/design_progress.md"),
 ]
-SCHEDULE_DIR = Path("docs/foundations/schedules")
 
 DATE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 # A link's text or a bold mention — NOT a bare \b\d+\b, which collides with dates
@@ -235,31 +234,6 @@ def header_vs_rows(path: Path) -> list[str]:
         f"{num} named in a day header or the Goal paragraph but seated on no row of {path.name}"
         for num in sorted(missing)
     ]
-
-
-def current_schedule(today: dt.date) -> Path | None:
-    """The schedule file whose 7-day span actually contains `today`.
-
-    Prefers eb.find_schedule(today) (live schedules/, then archive/): after a Sunday
-    close-out has already built NEXT week's file, `today` still falls inside THIS week's
-    span, so that lookup keeps returning the week actually being worked rather than the
-    newest file on disk. Falls back to the newest live file only when no file's span
-    contains `today` (a stale or missing schedule tree) — the prior, pre-eb behaviour.
-    """
-    try:
-        import effort_budget as eb  # sibling script; a reuse failure must never break this
-    except Exception as exc:  # noqa: BLE001 — mirrors header_vs_rows's own tolerance
-        print(f"   (schedule-selection reuse skipped: {exc.__class__.__name__}: {exc})",
-              file=sys.stderr)
-    else:
-        spanning = eb.find_schedule(today)
-        if spanning is not None:
-            return spanning
-
-    if not SCHEDULE_DIR.exists():
-        return None
-    files = sorted(SCHEDULE_DIR.glob("[0-9]" * 8 + "_schedule.md"))
-    return files[-1] if files else None
 
 
 def week_of(path: Path) -> tuple[dt.date, dt.date]:
@@ -494,7 +468,8 @@ def main() -> None:
     with contextlib.redirect_stdout(sys.stderr):
         today = session_date.resolve_datetime(args.date).date()
 
-    path = Path(args.file) if args.file else current_schedule(today)
+    import effort_budget as eb  # sibling script
+    path = Path(args.file) if args.file else eb.current_schedule(today)
     if path is None or not path.exists():
         print("No schedule file to check.")
         return

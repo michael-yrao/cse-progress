@@ -3,7 +3,7 @@ name: project-grounded-solutions
 description: Sep 22-23, 2026 — the site's 95 visualizers now render the learner's code verbatim from cse-progress via dashboard/showcase.json (the "groundedness meter", held at 100% by CI), plus 28 code-only entries added Sep 23 for problems with no visualizer yet (148 entries, 123 problems total); how the pick was made, the judgement calls, and what is still open
 metadata:
   type: project
-reconciled: 2026-09-24
+reconciled: 2026-10-07
 ---
 
 **Plan:** `~/.claude/plans/vectorized-growing-abelson.md` (approved Sep 22). Workflow: tech lead
@@ -76,6 +76,7 @@ so the learner didn't hand-write 130 entries — but every seeded bound is tagge
 `decisions.yml` `bigo-contract`.
 
 ## Follow-ups left open
+- Showcase shards + index: producer only, no site consumer yet (user, 2026-10-07).
 - (closed Sep 23) 18 Four Sum had no LeetCode URL anywhere — it is retired, so no tracker row;
   the learner supplied the URL and it now lives in the file's docstring header line.
 - The hub/list meters call every variant's `generateSteps()` on load (cheap today; watch it).

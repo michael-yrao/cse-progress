@@ -8,7 +8,7 @@ description: >-
   deciding how many new problems the build seats. Unit numbers still come from the
   effort-units skill.
 ---
-<!-- reconciled: 2026-10-06 -->
+<!-- reconciled: 2026-10-07 -->
 # scheduling — one ordered procedure for the weekly build
 
 The policy lives elsewhere: the unit model and the ceiling in the cse-coach reference
@@ -40,8 +40,8 @@ number: it names the key.
 
 ## The weekly build, in order
 
-1. **Trigger.** Last session of the week (`weekly-build.md`). Archive this week's file and
-   write next week's, both, before the commit.
+1. **Trigger.** Last session of the week (`weekly-build.md`). Both the archive and next week's
+   file land before the commit.
 2. **Sweep.** `effort_budget.py --due <Sunday>` lists every row due in the week, priced.
 3. **Demand.** `effort_budget.py` with no flag: read demand, overdue, the unproven-overdue line
    and the intake line.
