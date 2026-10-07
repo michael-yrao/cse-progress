@@ -41,6 +41,8 @@ git config core.hooksPath .githooks
 This replaces the old per-machine `.git/hooks/pre-commit` (which was never synced). After this, the
 hook stays in sync via git across all machines.
 
+Also run `py -m pip install -r requirements.txt` once to install the Python packages the scripts import.
+
 ## 2. The scaffold-links agent hook
 
 `.claude/hooks/scaffold_links_reminder.py` is version-controlled, and — as of Aug 19, 2026 — so is

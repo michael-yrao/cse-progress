@@ -23,7 +23,7 @@
         "number": { "type": "integer", "minimum": 1, "description": "The problem number, unique across the file and equal to the spec filename's leading number." },
         "title": { "type": "string" },
         "url": { "type": "string", "description": "The judge's problem page." },
-        "statement": { "type": "string", "description": "Plain-text statement, examples and constraints included." },
+        "statement": { "type": ["string", "null"], "description": "Plain-text statement, examples and constraints included. null when the spec has none." },
         "stub": { "type": "string", "description": "The blank starting code. Begins with the typing import and runs unmodified." },
         "entry": {
           "type": "object",
@@ -31,7 +31,7 @@
           "required": ["className", "method"],
           "properties": {
             "className": { "type": "string", "minLength": 1 },
-            "method": { "type": "string", "minLength": 1 }
+            "method": { "type": "string" }
           }
         },
         "compare": {
@@ -55,12 +55,41 @@
       "oneOf": [
         {
           "type": "object",
-          "required": ["kind", "directed", "edgesArg", "nodeCountArg"],
+          "description": "Graph from an edge list; nodeCountArg adds isolated nodes.",
+          "required": ["kind", "directed", "edgesArg"],
+          "additionalProperties": false,
           "properties": {
             "kind": { "const": "graph" },
             "directed": { "type": "boolean" },
+            "highlight": { "const": "expected" },
             "edgesArg": { "type": "integer", "minimum": 0, "description": "Index into a case's args: the edge list, [u, v] or [u, v, w]." },
-            "nodeCountArg": { "type": ["integer", "null"], "minimum": 0, "description": "Index into a case's args: the node count, so isolated nodes are drawn." }
+            "nodeCountArg": { "type": ["integer", "null"], "minimum": 0, "description": "Index into a case's args: the node count, so isolated nodes are drawn." },
+            "nodesArg": { "type": "integer", "minimum": 0, "description": "Index into a case's args: the node list." }
+          }
+        },
+        {
+          "type": "object",
+          "description": "Graph from an adjacency matrix.",
+          "required": ["kind", "directed", "matrixArg"],
+          "additionalProperties": false,
+          "properties": {
+            "kind": { "const": "graph" },
+            "directed": { "const": false },
+            "highlight": { "const": "expected" },
+            "matrixArg": { "type": "integer", "minimum": 0, "description": "Index into a case's args: the adjacency matrix." }
+          }
+        },
+        {
+          "type": "object",
+          "description": "Graph from an adjacency list; oneBased when node labels start at 1.",
+          "required": ["kind", "directed", "adjArg"],
+          "additionalProperties": false,
+          "properties": {
+            "kind": { "const": "graph" },
+            "directed": { "type": "boolean" },
+            "highlight": { "const": "expected" },
+            "adjArg": { "type": "integer", "minimum": 0, "description": "Index into a case's args: the adjacency list." },
+            "oneBased": { "type": "boolean" }
           }
         },
         {

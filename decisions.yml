@@ -1855,3 +1855,39 @@ decisions:
       even swap (743 out, 2812 in, both 🟡 M) read built 9.8 against 7.8 of work. The week's Capacity
       line keeps the as-built plan. Learner's decision, Oct 6.
     affects: [effort-budget, scheduling, dashboard]
+  - id: dashboard-manifest-and-indexes-oct6
+    date: 2026-10-06
+    summary: >-
+      Four new dashboard artifacts, all compact JSON, so the site fetches only what changed:
+      dashboard/manifest.json (sha256 and byte size of every dashboard/*.json and
+      dashboard/showcase/*.json except itself and *.schema.json; written by
+      scripts/export_manifest.py, checked on its files map alone), dashboard/practice-index.json
+      (every practice problem number), dashboard/showcase-index.json (each lcNumber with its
+      variants and file) and dashboard/showcase/<lcNumber>.json (that problem's showcase entries,
+      unchanged). The two indexes and the per-problem files carry the schemaVersion and generatedAt
+      of the source file they derive from (scripts/dashboard_indexes.py). showcase.json stays
+      written in full, so the change is additive. progress.json is now written compact
+      (separators), like progress-summary.json; `gamify.py --stdout` stays indented. No
+      `cse.config.yml` value changed.
+    affects: [dashboard, practice, showcase]
+  - id: contract-schema-validation-oct6
+    date: 2026-10-06
+    summary: >-
+      export_practice.py, export_showcase.py, export_bigo.py and gamify.py now validate their
+      payload against the matching dashboard/*.schema.json (practice, showcase, big-o, progress)
+      in --check / --validate and before writing anything: exit 2 is a schema violation, exit 1
+      is drift or any other failure. The pre-commit hook stops a commit only on exit 2;
+      regeneration and drift stay report-only. requirements.txt declares jsonschema and pyyaml.
+      .github/workflows/notify-site.yml sends a repository_dispatch event `cse-progress-updated`
+      to the site repo when dashboard/** changes on main (it needs the SITE_DISPATCH_TOKEN
+      secret and skips with a notice without it). scripts/contract_schema.py resolves `$ref`s
+      through a local registry of the dashboard/*.schema.json files keyed by `$id`, with no
+      network. New dashboard/manifest.schema.json; the manifest, the two indexes and a sampled
+      dashboard/showcase/<n>.json are schema-checked too, and the hook hashes the manifest from
+      staged blobs (`export_manifest.py --staged`). practice.schema.json was corrected to match
+      the site's runtime guard: statement is string or null, method has no minLength, and a
+      graph figure is a oneOf over edgesArg / matrixArg / adjArg with directed required,
+      nodeCountArg and nodesArg only with edgesArg, oneBased only with adjArg. The schema caught
+      up to the consumer guard; it is not a contract change, and schemaVersion stays 1. No
+      `cse.config.yml` value changed.
+    affects: [dashboard, hooks]

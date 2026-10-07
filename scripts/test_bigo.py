@@ -18,6 +18,7 @@ from __future__ import annotations
 
 import ast
 import contextlib
+import copy
 import datetime as dt
 import io
 import json
@@ -28,6 +29,7 @@ from collections import Counter
 from pathlib import Path
 from unittest import mock
 
+import contract_schema
 import effort_budget
 import export_bigo as bo
 import export_showcase as es
@@ -578,6 +580,20 @@ class RealBigOJsonVerbatimTests(unittest.TestCase):
                         f"{axis} answers sit at index {index} in {count}/{total} entries "
                         f"({share:.0%}) — exceeds MAX_POSITION_SHARE "
                         f"({self.MAX_POSITION_SHARE:.0%})")
+
+
+class SchemaValidationTests(unittest.TestCase):
+    def test_committed_payload_against_schema(self):
+        committed = json.loads(bo.OUT.read_text(encoding="utf-8"))
+        missing_field = {k: v for k, v in copy.deepcopy(committed).items() if k != "entries"}
+        wrong_type = {**copy.deepcopy(committed), "schemaVersion": "1"}
+        rows = [("required field removed", missing_field, True),
+                ("field of the wrong type", wrong_type, True),
+                ("unchanged", committed, False)]
+        for name, payload, should_fail in rows:
+            with self.subTest(name):
+                errors = contract_schema.validate(payload, bo.SCHEMA)
+                self.assertEqual(bool(errors), should_fail, errors[:3])
 
 
 if __name__ == "__main__":

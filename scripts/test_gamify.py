@@ -12,6 +12,7 @@ and the badge triggers, which are the parts most likely to drift silently.
 from __future__ import annotations
 
 import contextlib
+import copy
 import datetime as dt
 import io
 import json
@@ -21,6 +22,7 @@ import unittest
 from pathlib import Path
 from unittest import mock
 
+import contract_schema
 import effort_budget as eb
 import gamify
 import links
@@ -2194,6 +2196,20 @@ class MainDateFlagTests(unittest.TestCase):
     def test_today_alias_resolves_to_the_same_value_as_date(self):
         explicit = self._captured_explicit(["gamify.py", "--stdout", "--today", "2026-09-20"])
         self.assertEqual(explicit, "2026-09-20")
+
+
+class SchemaValidationTests(unittest.TestCase):
+    def test_committed_payload_against_schema(self):
+        committed = json.loads(gamify.OUT.read_text(encoding="utf-8"))
+        missing_field = {k: v for k, v in copy.deepcopy(committed).items() if k != "totals"}
+        wrong_type = {**copy.deepcopy(committed), "schemaVersion": "1"}
+        rows = [("required field removed", missing_field, True),
+                ("field of the wrong type", wrong_type, True),
+                ("unchanged", committed, False)]
+        for name, payload, should_fail in rows:
+            with self.subTest(name):
+                errors = contract_schema.validate(payload, gamify.SCHEMA)
+                self.assertEqual(bool(errors), should_fail, errors[:3])
 
 
 if __name__ == "__main__":

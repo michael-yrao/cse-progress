@@ -46,6 +46,8 @@ import sys
 from pathlib import Path
 
 import _console
+import contract_schema
+import dashboard_indexes
 import links
 
 _console.force_utf8()
@@ -54,6 +56,7 @@ REPO = Path(__file__).resolve().parent.parent
 DASHBOARD = REPO / "dashboard"
 MANIFEST = DASHBOARD / "showcase.yml"
 OUT = DASHBOARD / "showcase.json"
+SCHEMA = REPO / "dashboard" / "showcase.schema.json"
 
 SCHEMA_VERSION = 1
 
@@ -563,6 +566,7 @@ def main() -> None:
         print(f"  !! {w}", file=sys.stderr)
 
     if args.check:
+        contract_schema.check(payload, SCHEMA)
         if OUT.exists():
             reasons = _stale_reasons(payload, OUT)
             if reasons:
@@ -570,6 +574,17 @@ def main() -> None:
                 for reason in reasons:
                     print(f"  - {reason}", file=sys.stderr)
                 sys.exit(1)
+        # Like showcase.json itself: nothing on disk to drift from when there is no source.
+        split = dashboard_indexes.build_showcase_split(payload)
+        dashboard_indexes.exit_on_schema_errors(split)
+        split_reasons = [] if not OUT.exists() else dashboard_indexes.stale_reasons(
+            DASHBOARD, split, check_extra_showcase=True)
+        if split_reasons:
+            print("ERROR: dashboard/showcase-index.json or dashboard/showcase/ is stale:",
+                  file=sys.stderr)
+            for reason in split_reasons:
+                print(f"  - {reason}", file=sys.stderr)
+            sys.exit(1)
         print(f"ok: {len(payload['entries'])} showcase entries verified", file=sys.stderr)
         return
 
@@ -578,8 +593,12 @@ def main() -> None:
         print(rendered)
         return
 
+    contract_schema.check(payload, SCHEMA)
+    split = dashboard_indexes.build_showcase_split(payload)
+    dashboard_indexes.exit_on_schema_errors(split)
     DASHBOARD.mkdir(parents=True, exist_ok=True)
     OUT.write_text(rendered + "\n", encoding="utf-8")
+    dashboard_indexes.write_files(DASHBOARD, split, prune_showcase=True)
     print(f"wrote {OUT.relative_to(REPO)} ({len(payload['entries'])} entries)")
 
 

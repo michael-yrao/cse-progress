@@ -53,6 +53,7 @@ from pathlib import Path
 from typing import Iterator
 
 import _console
+import contract_schema
 
 # effort_budget already solves tracker parsing and schedule discovery; reuse it rather
 # than re-deriving the same regexes (DRY, and it keeps the two in lockstep).
@@ -83,6 +84,7 @@ LEETCODE = REPO / "dsa/leetcode"
 # old root path as a fallback, so this relocation is backward-compatible.
 DASHBOARD = REPO / "dashboard"
 OUT = DASHBOARD / "progress.json"
+SCHEMA = DASHBOARD / "progress.schema.json"
 OUT_SUMMARY = DASHBOARD / "progress-summary.json"
 # Every archived + live week, for the Overview board's past-week navigation (decisions.yml
 # `schedule-history`) — a SEPARATE file, not folded into progress.json/-summary.json, so
@@ -1662,20 +1664,22 @@ def main() -> None:
         print(render_banner(stats))
         return
 
-    payload = json.dumps(stats, ensure_ascii=False, indent=2)
-
     if args.stdout:
-        print(payload)
+        print(json.dumps(stats, ensure_ascii=False, indent=2))
     elif args.validate:
+        contract_schema.check(stats, SCHEMA)
         print(f"valid: {stats['totals']['reps']} reps · "
               f"{len(stats['problems'])} problems · {len(stats['badges'])} badges · "
               f"{stats['streak']['current']}-day streak", file=sys.stderr)
     else:
+        contract_schema.check(stats, SCHEMA)
         DASHBOARD.mkdir(parents=True, exist_ok=True)
-        OUT.write_text(payload + "\n", encoding="utf-8")
-        # Compact (no indent), unlike progress.json: nobody reads progress-summary.json as a
-        # human artifact, and it's fetched on every landing view — indentation alone was ~40%
-        # of its bytes once techniques[]/studyDays[] joined the summary (Sep 2026).
+        # Compact (no indent), like the two files below: nobody reads the written
+        # progress*.json as a human artifact (`--stdout` stays indented for that), and the
+        # site fetches them — indentation alone was ~40% of progress-summary.json's bytes
+        # once techniques[]/studyDays[] joined the summary (Sep 2026).
+        full_payload = json.dumps(stats, ensure_ascii=False, separators=(",", ":"))
+        OUT.write_text(full_payload + "\n", encoding="utf-8")
         summary_payload = json.dumps(summary_of(stats), ensure_ascii=False, separators=(",", ":"))
         OUT_SUMMARY.write_text(summary_payload + "\n", encoding="utf-8")
         # Compact, same as progress-summary.json — see OUT_HISTORY.

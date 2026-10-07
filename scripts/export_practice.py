@@ -42,6 +42,8 @@ import sys
 from pathlib import Path
 
 import _console
+import contract_schema
+import dashboard_indexes
 import new_problem
 
 _console.force_utf8()
@@ -50,6 +52,7 @@ REPO = Path(__file__).resolve().parent.parent
 SPEC_DIR = REPO / "dsa" / "tests"
 DASHBOARD = REPO / "dashboard"
 OUT = DASHBOARD / "practice.json"
+SCHEMA = REPO / "dashboard" / "practice.schema.json"
 
 SCHEMA_VERSION = 1
 
@@ -606,6 +609,7 @@ def main() -> None:
 
     count = len(payload["problems"])
     if args.check:
+        contract_schema.check(payload, SCHEMA)
         if OUT.exists():
             existing = read_existing(OUT)
             reasons = ([existing] if isinstance(existing, str)
@@ -615,6 +619,16 @@ def main() -> None:
                 for reason in reasons:
                     print(f"  - {reason}", file=sys.stderr)
                 sys.exit(1)
+        # Like practice.json itself: nothing on disk to drift from when there is no source.
+        derived = dashboard_indexes.build_practice_files(payload)
+        dashboard_indexes.exit_on_schema_errors(derived)
+        index_reasons = [] if not OUT.exists() else dashboard_indexes.stale_reasons(
+            DASHBOARD, derived)
+        if index_reasons:
+            print("ERROR: dashboard/practice-index.json is stale:", file=sys.stderr)
+            for reason in index_reasons:
+                print(f"  - {reason}", file=sys.stderr)
+            sys.exit(1)
         print(f"ok: {count} practice problems verified", file=sys.stderr)
         return
 
@@ -623,8 +637,12 @@ def main() -> None:
         print(rendered)
         return
 
+    contract_schema.check(payload, SCHEMA)
+    derived = dashboard_indexes.build_practice_files(payload)
+    dashboard_indexes.exit_on_schema_errors(derived)
     DASHBOARD.mkdir(parents=True, exist_ok=True)
     OUT.write_text(rendered + "\n", encoding="utf-8")
+    dashboard_indexes.write_files(DASHBOARD, derived)
     print(f"wrote {OUT.relative_to(REPO)} ({count} problems)")
 
 

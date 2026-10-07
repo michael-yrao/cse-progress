@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import ast
 import contextlib
+import copy
 import datetime as dt
 import io
 import json
@@ -23,6 +24,7 @@ import unittest
 from pathlib import Path
 from unittest import mock
 
+import contract_schema
 import export_showcase as es
 import links
 
@@ -724,6 +726,20 @@ class RealShowcaseJsonVerbatimTests(unittest.TestCase):
         unique_comment = "don't need a visited since we are changing the value of each node"
         rendered = json.dumps(self.data)
         self.assertNotIn(unique_comment, rendered)
+
+
+class SchemaValidationTests(unittest.TestCase):
+    def test_committed_payload_against_schema(self):
+        committed = json.loads(es.OUT.read_text(encoding="utf-8"))
+        missing_field = {k: v for k, v in copy.deepcopy(committed).items() if k != "entries"}
+        wrong_type = {**copy.deepcopy(committed), "schemaVersion": "1"}
+        rows = [("required field removed", missing_field, True),
+                ("field of the wrong type", wrong_type, True),
+                ("unchanged", committed, False)]
+        for name, payload, should_fail in rows:
+            with self.subTest(name):
+                errors = contract_schema.validate(payload, es.SCHEMA)
+                self.assertEqual(bool(errors), should_fail, errors[:3])
 
 
 if __name__ == "__main__":

@@ -101,6 +101,20 @@ if [ -n "$SCHEDULE_FILES" ]; then
   done
 fi
 
+# run_py <args>: run a Python script with whichever interpreter exists (py, python, python3);
+# returns 0 when none is installed, as the per-block fallbacks below did. Used by the four
+# dashboard-contract blocks below, whose `--check` runs stop the commit on exit 2 (the payload
+# violates its schema) and stay report-only on exit 1 (drift).
+run_py() {
+  if command -v py >/dev/null 2>&1; then
+    py "$@"
+  elif command -v python >/dev/null 2>&1; then
+    python "$@"
+  elif command -v python3 >/dev/null 2>&1; then
+    python3 "$@"
+  fi
+}
+
 # Honest-progress contract. Regenerates progress.json (the data the progressiveoverflow.com
 # dashboard renders) from the tracker + schedules + coverage. Must run AFTER the two blocks
 # above, which rewrite dsa_progress.md and technique_coverage.md; this reads both. Fires when
@@ -119,12 +133,11 @@ if [ -n "$GAMIFY_TRIGGER" ] || [ -n "$COVERAGE_TRIGGER" ]; then
   # edit the author was mid-way through. Stage it only if gamify.py actually changed it.
   README_HASH_BEFORE=""
   [ -f "README.md" ] && README_HASH_BEFORE=$(git hash-object README.md)
-  if command -v py >/dev/null 2>&1; then
-    py scripts/gamify.py || true
-  elif command -v python >/dev/null 2>&1; then
-    python scripts/gamify.py || true
-  elif command -v python3 >/dev/null 2>&1; then
-    python3 scripts/gamify.py || true
+  GAMIFY_RC=0
+  run_py scripts/gamify.py || GAMIFY_RC=$?
+  if [ "$GAMIFY_RC" -eq 2 ]; then
+    echo "ERROR: dashboard/progress.json violates its schema" >&2
+    exit 1
   fi
   [ -f "dashboard/progress.json" ] && git add "dashboard/progress.json"
   [ -f "dashboard/progress-summary.json" ] && git add "dashboard/progress-summary.json"
@@ -145,15 +158,12 @@ fi
 SHOWCASE_TRIGGER=$(echo "$STAGED" | grep -E "^dsa/leetcode/.*\.py$|dashboard/showcase\.yml$|scripts/export_showcase\.py$")
 if [ -n "$SHOWCASE_TRIGGER" ]; then
   echo "Regenerating showcase.json..."
-  if command -v py >/dev/null 2>&1; then
-    py scripts/export_showcase.py || true
-    py scripts/export_showcase.py --check || true
-  elif command -v python >/dev/null 2>&1; then
-    python scripts/export_showcase.py || true
-    python scripts/export_showcase.py --check || true
-  elif command -v python3 >/dev/null 2>&1; then
-    python3 scripts/export_showcase.py || true
-    python3 scripts/export_showcase.py --check || true
+  run_py scripts/export_showcase.py || true
+  SHOWCASE_RC=0
+  run_py scripts/export_showcase.py --check || SHOWCASE_RC=$?
+  if [ "$SHOWCASE_RC" -eq 2 ]; then
+    echo "ERROR: dashboard/showcase.json violates its schema" >&2
+    exit 1
   fi
   [ -f "dashboard/showcase.json" ] && git add "dashboard/showcase.json"
 fi
@@ -169,15 +179,12 @@ fi
 BIGO_TRIGGER=$(echo "$STAGED" | grep -E "^dsa/leetcode/.*\.py$|dashboard/bigo\.yml$|scripts/export_bigo\.py$|scripts/export_showcase\.py$|complexity_gotchas\.md$|dsa_progress\.md$")
 if [ -n "$BIGO_TRIGGER" ]; then
   echo "Regenerating big-o.json..."
-  if command -v py >/dev/null 2>&1; then
-    py scripts/export_bigo.py || true
-    py scripts/export_bigo.py --check || true
-  elif command -v python >/dev/null 2>&1; then
-    python scripts/export_bigo.py || true
-    python scripts/export_bigo.py --check || true
-  elif command -v python3 >/dev/null 2>&1; then
-    python3 scripts/export_bigo.py || true
-    python3 scripts/export_bigo.py --check || true
+  run_py scripts/export_bigo.py || true
+  BIGO_RC=0
+  run_py scripts/export_bigo.py --check || BIGO_RC=$?
+  if [ "$BIGO_RC" -eq 2 ]; then
+    echo "ERROR: dashboard/big-o.json violates its schema" >&2
+    exit 1
   fi
   [ -f "dashboard/big-o.json" ] && git add "dashboard/big-o.json"
 fi
@@ -191,17 +198,41 @@ fi
 PRACTICE_TRIGGER=$(echo "$STAGED" | grep -E "^dsa/tests/.*\.yml$|scripts/export_practice\.py$|scripts/new_problem\.py$")
 if [ -n "$PRACTICE_TRIGGER" ]; then
   echo "Regenerating practice.json..."
-  if command -v py >/dev/null 2>&1; then
-    py scripts/export_practice.py || true
-    py scripts/export_practice.py --check || true
-  elif command -v python >/dev/null 2>&1; then
-    python scripts/export_practice.py || true
-    python scripts/export_practice.py --check || true
-  elif command -v python3 >/dev/null 2>&1; then
-    python3 scripts/export_practice.py || true
-    python3 scripts/export_practice.py --check || true
+  run_py scripts/export_practice.py || true
+  PRACTICE_RC=0
+  run_py scripts/export_practice.py --check || PRACTICE_RC=$?
+  if [ "$PRACTICE_RC" -eq 2 ]; then
+    echo "ERROR: dashboard/practice.json violates its schema" >&2
+    exit 1
   fi
   [ -f "dashboard/practice.json" ] && git add "dashboard/practice.json"
+fi
+
+# Dashboard manifest (dashboard/manifest.json: sha256 + size of every dashboard JSON, so the site
+# re-fetches only what changed). Fires when ANY dashboard/*.json or dashboard/showcase/*.json is
+# staged. The trigger is read fresh (not from $STAGED, which predates the blocks above, and with
+# deletions included) after staging the derived files they write, so hashes are of what lands.
+# Derived files are staged only alongside their source (practice.json / showcase.json).
+# --staged hashes the index's bytes (what the commit holds), not the working tree's. Report-only
+# except exit 2 (the manifest violates its schema), which stops the commit.
+FRESH_STAGED=$(git diff --cached --name-only)
+if echo "$FRESH_STAGED" | grep -qx "dashboard/practice.json"; then
+  [ -f "dashboard/practice-index.json" ] && git add "dashboard/practice-index.json"
+fi
+if echo "$FRESH_STAGED" | grep -qx "dashboard/showcase.json"; then
+  [ -f "dashboard/showcase-index.json" ] && git add "dashboard/showcase-index.json"
+  [ -d "dashboard/showcase" ] && git add "dashboard/showcase/"
+fi
+MANIFEST_TRIGGER=$(git diff --cached --name-only | grep -E "^dashboard/(showcase/)?[^/]+\.json$")
+if [ -n "$MANIFEST_TRIGGER" ]; then
+  echo "Regenerating manifest.json..."
+  MANIFEST_RC=0
+  run_py scripts/export_manifest.py --staged || MANIFEST_RC=$?
+  if [ "$MANIFEST_RC" -eq 2 ]; then
+    echo "ERROR: dashboard/manifest.json violates its schema" >&2
+    exit 1
+  fi
+  [ -f "dashboard/manifest.json" ] && git add "dashboard/manifest.json"
 fi
 
 # Single source of truth for tuned values (see CLAUDE.md). Fires when the config, a script

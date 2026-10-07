@@ -8,8 +8,10 @@ from __future__ import annotations
 
 import copy
 import datetime as dt
+import json
 import unittest
 
+import contract_schema
 import export_practice as ep
 
 TODAY = dt.date(2026, 10, 1)
@@ -329,6 +331,49 @@ class StaleReasonsTests(unittest.TestCase):
 
         self.assertTrue(ep.stale_reasons(self.payload, changed_expected))
         self.assertEqual(ep.stale_reasons(self.payload, changed_date), [])
+
+
+class SchemaValidationTests(unittest.TestCase):
+    def test_committed_payload_against_schema(self):
+        committed = json.loads(ep.OUT.read_text(encoding="utf-8"))
+        missing_field = {k: v for k, v in copy.deepcopy(committed).items() if k != "problems"}
+        wrong_type = {**copy.deepcopy(committed), "schemaVersion": "1"}
+        rows = [("required field removed", missing_field, True),
+                ("field of the wrong type", wrong_type, True),
+                ("unchanged", committed, False)]
+        for name, payload, should_fail in rows:
+            with self.subTest(name):
+                errors = contract_schema.validate(payload, ep.SCHEMA)
+                self.assertEqual(bool(errors), should_fail, errors[:3])
+
+
+class FigureSchemaTests(unittest.TestCase):
+    """The figure oneOf mirrors the site guard: one edge source, `directed` required."""
+
+    def _validate_figure(self, figure: dict) -> list[str]:
+        problem = {"number": 1, "title": "T", "url": "u", "statement": None, "stub": "s",
+                   "entry": {"className": "Solution", "method": "m"}, "compare": "exact",
+                   "figure": figure,
+                   "cases": [{"args": [], "expected": 0, "example": True}]}
+        payload = {"schemaVersion": 1, "generatedAt": "2026-10-06", "problems": [problem]}
+        return contract_schema.validate(payload, ep.SCHEMA)
+
+    def test_graph_figure_shapes(self):
+        graph = {"kind": "graph", "directed": True}
+        rows = [
+            ("edgesArg + nodeCountArg null + nodesArg",
+             {**graph, "edgesArg": 1, "nodeCountArg": None, "nodesArg": 0}, True),
+            ("adjArg + oneBased", {**graph, "adjArg": 0, "oneBased": True}, True),
+            ("matrixArg undirected", {"kind": "graph", "directed": False, "matrixArg": 0}, True),
+            ("matrixArg directed", {**graph, "matrixArg": 0}, False),
+            ("edgesArg and matrixArg", {"kind": "graph", "directed": False,
+                                        "edgesArg": 0, "matrixArg": 1}, False),
+            ("nodeCountArg with adjArg", {**graph, "adjArg": 0, "nodeCountArg": 1}, False),
+            ("no directed", {"kind": "graph", "edgesArg": 0}, False),
+        ]
+        for name, figure, is_valid in rows:
+            with self.subTest(name):
+                self.assertEqual(self._validate_figure(figure) == [], is_valid)
 
 
 if __name__ == "__main__":

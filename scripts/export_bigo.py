@@ -48,6 +48,7 @@ from pathlib import Path
 from typing import NamedTuple
 
 import _console
+import contract_schema
 import effort_budget as eb
 import export_showcase as es
 
@@ -57,6 +58,7 @@ REPO = Path(__file__).resolve().parent.parent
 DASHBOARD = REPO / "dashboard"
 MANIFEST = DASHBOARD / "bigo.yml"
 OUT = DASHBOARD / "big-o.json"
+SCHEMA = REPO / "dashboard" / "big-o.schema.json"
 MISS_FILE = REPO / "docs" / "foundations" / "dsa" / "mastery" / "complexity_gotchas.md"
 
 SCHEMA_VERSION = 1
@@ -568,6 +570,7 @@ def main() -> None:
         print(f"  !! {w}", file=sys.stderr)
 
     if args.check:
+        contract_schema.check(payload, SCHEMA)
         if OUT.exists():
             reasons = es._stale_reasons(payload, OUT, label="big-o.json")
             if reasons:
@@ -584,6 +587,7 @@ def main() -> None:
         print(rendered)
         return
 
+    contract_schema.check(payload, SCHEMA)
     DASHBOARD.mkdir(parents=True, exist_ok=True)
     OUT.write_text(rendered + "\n", encoding="utf-8")
     print(f"wrote {OUT.relative_to(REPO)} ({len(payload['entries'])} entries)")
