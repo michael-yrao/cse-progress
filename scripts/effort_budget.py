@@ -68,7 +68,10 @@ SCHEDULES = REPO / "docs/foundations/schedules"
 # A day header in a weekly schedule: "| ▸ **Tue Aug 18** · 8.0 units |  |  |  |  |"
 DAY_HEADER = re.compile(
     r"\|\s*▸\s*\*\*(?P<wd>\w{3})\s+(?P<mon>\w{3})\s+(?P<day>\d{1,2})\*\*"
-    r"(?:[^|]*?·\s*~?\s*(?P<units>[\d.]+)\s*units)?"  # `~` = an approximate price, still a price
+    # `~` = an approximate price, still a price. A day that moved rows off after it started
+    # pins its original total: "· ~3.8 units · planned 6.6 units — label" (units=3.8, planned=6.6).
+    r"(?:[^|]*?·\s*~?\s*(?P<units>[\d.]+)\s*units"
+    r"(?:\s*·\s*planned\s+~?\s*(?P<planned>[\d.]+)\s*units)?)?"
 )
 # Any 5-column row of the daily table.
 SCHED_ROW = re.compile(r"^\|(?P<c1>[^|]*)\|(?P<c2>[^|]*)\|(?P<c3>[^|]*)\|(?P<c4>[^|]*)\|(?P<c5>.*)\|\s*$")
@@ -641,6 +644,19 @@ def parse_day_block(lines: list[str], week_start: dt.date,
     return items, stated
 
 
+def day_header_figures(lines: list[str], day: dt.date) -> tuple[float | None, float | None]:
+    """(units, planned) from `day`'s header line: the stated total and the pinned
+    `· planned N units` figure, each None when the header omits it (or has no header)."""
+    wanted = (day.strftime("%a"), day.strftime("%b"), day.day)
+    for line in lines:
+        header = DAY_HEADER.search(line)
+        if header and (header["wd"], header["mon"], int(header["day"])) == wanted:
+            units = float(header["units"]) if header["units"] else None
+            planned = float(header["planned"]) if header["planned"] else None
+            return units, planned
+    return None, None
+
+
 # Any OTHER table row in the tracker file shaped `| Easy|Medium|Hard | [N. Title](url) |
 # ...` -- the Waiting Room and Knowledge Expansion Queue tables, e.g. The tracker's OWN
 # review rows (ROW) share this same leading shape, so this also matches those -- harmless,
@@ -857,6 +873,7 @@ def price_schedule_day(day: dt.date, rows: list[dict], cfg: dict) -> None:
         print(f"{day} has no block in {path.name} -- nothing scheduled, or the day "
               f"header is not in the form this parser expects.")
         return
+    _, planned = day_header_figures(path.read_text(encoding="utf-8").splitlines(), day)
 
     p = price_day_items(day, items, rows, cfg)
     done_total, rest_total, built = p["done"], p["remaining"], p["built"]
@@ -927,6 +944,9 @@ def price_schedule_day(day: dt.date, rows: list[dict], cfg: dict) -> None:
     else:
         print(f"  !! HEADER SAYS {stated:.1f}, rows sum to {built:.1f} -- every row "
               f"priced exactly, so one of them is wrong")
+    if planned is not None:
+        print(f"  planned {planned:.1f} -- pinned when the day started; "
+              f"{len(p['moved_lines'])} row(s) moved off")
 
 
 

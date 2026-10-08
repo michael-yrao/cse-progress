@@ -7,8 +7,8 @@ description: >-
   changes); reseating a deferred rep; the weekly build's day totals; a mid-week re-price; or
   checking the dashboard's workload numbers. Every number comes from
   scripts/effort_budget.py in one named mode — never hand-computed.
+reconciled: 2026-10-08
 ---
-<!-- reconciled: 2026-10-06 -->
 # effort-units — every effort number from one script, on one basis
 
 The unit model, the weights and the policy live elsewhere: the policy (the ceiling is the
@@ -20,7 +20,7 @@ producing a number. It never restates a weight.
 ## Three rules
 
 1. **The script prices.** Every unit figure you state comes from a
-   `python scripts/effort_budget.py` run in this turn. A day header equals the script's
+   `python scripts/effort_budget.py` run in this turn. A day header's first figure equals the script's
    `built`. There are no estimates.
 2. **One mode per answer.** Name the mode next to every number ("7.4, `--schedule-day`").
    Never compare, add or subtract numbers from two modes.
@@ -43,16 +43,16 @@ moving between days.
 
 ## Moving, adding or removing a row
 
-**A day that has started keeps its rows.** A row not done on it stays there, unstruck,
+**A day that has started keeps its rows.** A day has started once the session date reaches it. A row not done on it stays there, unstruck,
 prefixed `→`, with the new date in Next, but it is no longer billed there: the day's header
-drops by its price, and `--schedule-day` lists it under MOVED. The copy on the new day is
+drops by its price, and `--schedule-day` lists it under MOVED. **Before the first such edit, pin the plan once:** right after the header's `~N units`, add ` · planned X units`, where X is the header as it stands (`~3.8 units · planned 6.6 units — …`). It is never changed or removed afterwards. The copy on the new day is
 prefixed `→` and prices there. A swap is therefore even: the row out leaves the bill, the row
 in joins it. **A day that has not started is re-planned:** the row moves outright.
 
 1. **Start cell.** Moving: carry the Start cell verbatim. Adding: write it from the tracker —
    the comfort going in, with the streak on a 🟢 (`🟢 s2`), or `🆕` for an unseen problem.
 2. **Make the edit.** Both days' headers change in the same edit.
-3. **Price each touched day** with `--schedule-day` and set the header to `built`.
+3. **Price each touched day** with `--schedule-day` and set the header's first figure to `built`; never touch a planned figure.
 4. **Re-run and read the check.** It must read `matches`. `CANNOT VERIFY` means a row is
    unpriced or guessed: fix the row (its number, its difficulty, its Start cell), not the
    header.
@@ -63,6 +63,7 @@ in joins it. **A day that has not started is re-planned:** the row moves outrigh
 |---|---|---|
 | `header says X -- matches` | every row priced; the header agrees | nothing |
 | `!! HEADER SAYS X, rows sum to Y` | every row priced; the header is wrong | set the header to Y |
+| `planned X -- pinned when the day started` | the day's frozen plan | nothing |
 | `CANNOT VERIFY` | some rows unpriced, guessed, or missing a streak | fix the row |
 | `LOWER BOUND` / `FLOOR` | unpriced rows are missing from the total | fix the row |
 | `no streak in the Start cell` | a 🟢 row priced at streak 0, the highest 🟢 price | write the streak into the Start cell (`🟢 sN`) |

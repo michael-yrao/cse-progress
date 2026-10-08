@@ -7,8 +7,8 @@ description: >-
   session of the week, seating or moving a row, deciding what to carry to next week, or
   deciding how many new problems the build seats. Unit numbers still come from the
   effort-units skill.
+reconciled: 2026-10-08
 ---
-<!-- reconciled: 2026-10-07 -->
 # scheduling — one ordered procedure for the weekly build
 
 The policy lives elsewhere: the unit model and the ceiling in the cse-coach reference
@@ -19,8 +19,7 @@ number: it names the key.
 
 ## Three rules
 
-1. **Every unit number goes through [`effort-units`](../effort-units/SKILL.md).** A day header
-   equals the script's `built`. No estimates.
+1. **Every unit number goes through [`effort-units`](../effort-units/SKILL.md).** A day header's first figure equals the script's `built`; a started day may also carry a pinned planned figure (effort-units). No estimates.
 2. **A day has two caps.** Units (`effort_budget.ceiling`) and rows
    (`effort_budget.max_rows_per_day`). Check both, with the script, on every touched day.
 3. **A tracker date is never edited to make a day fit.** A row that does not fit is carried in
@@ -61,7 +60,7 @@ number: it names the key.
    - A variant label is read from the due tracker row, never typed.
 9. **Price each hypothetical day** with `--day N N …` and read the row line beside `TOTAL`.
 10. **Write the file.** Lean table, rows ordered highest priority first, DSA before SD.
-11. **Headers.** `--schedule-day` per day; set each header to `built`.
+11. **Headers.** `--schedule-day` per day; set each header's first figure to `built`. A build writes no planned figure.
 12. **Order.** `schedule_priority.py`.
 13. **Integrity.** `check_schedule_integrity.py`. Every due row is seated, validly carried, or
     given a new tracker date (a deferral gets a date in the same edit).

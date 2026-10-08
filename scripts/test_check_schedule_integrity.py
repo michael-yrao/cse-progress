@@ -439,6 +439,74 @@ class IntakeFindingsTests(unittest.TestCase):
                 self.assertEqual(len(findings), expected)
 
 
+def _week_lines(mon_rows: list[str], wed_header: str = "7.8 units", mon_header: str = "5.0 units",
+                wed_rows: list[str] | None = None) -> list[str]:
+    """A two-day week (Mon Oct 5 started, Wed Oct 7 future) as schedule lines."""
+    return ([f"| ▸ **Mon Oct 5** · {mon_header} — label |  |  |  |  |"] + mon_rows
+            + ["|  |  |  |  |  |", f"| ▸ **Wed Oct 7** · {wed_header} — label |  |  |  |  |"]
+            + (wed_rows or []))
+
+
+def _row(num: int, method: str | None = None, struck: bool = False, moved: bool = False) -> str:
+    title = f"{num} Title" + (f" ({method})" if method else "")
+    cell = f"~~[{title}](x.py)~~ · [LC](y)" if struck else f"[{title}](x.py) · [LC](y)"
+    return f"| {'→ ' if moved else ''}{cell} | 🟢 s2 | | {'2026-10-09' if moved else ''} | Graphs |"
+
+
+class DroppedRowFindingsTests(unittest.TestCase):
+    """Check 7: a numbered row on a started day at HEAD must survive in the working file."""
+
+    def test_started_day_rows_must_survive(self):
+        mock = "| 🎤 Mock interview | 🎤 | | | Mock |"
+        cases = [
+            ("kept and struck", [_row(1462)], [_row(1462, struck=True)], 0, None),
+            ("kept as moved", [_row(1462)], [_row(1462, moved=True)], 0, None),
+            ("deleted on started day", [_row(1462)], [], 1, "1462"),
+            ("two variants, one deleted", [_row(1631, "Dijkstra"), _row(1631, "Prim")],
+             [_row(1631, "Prim")], 1, "(Dijkstra)"),
+            ("numberless mock becomes numbered", [mock], [_row(7, struck=True)], 0, None),
+        ]
+        for name, head_rows, work_rows, expected, naming in cases:
+            with self.subTest(name):
+                findings = csi.dropped_row_findings(
+                    _week_lines(head_rows), _week_lines(work_rows), _MONDAY, _TODAY)
+                self.assertEqual(len(findings), expected)
+                if naming:
+                    self.assertIn(naming, findings[0])
+        with self.subTest("deleted on future day"):
+            head = _week_lines([], wed_rows=[_row(1462)])
+            self.assertEqual(csi.dropped_row_findings(head, _week_lines([]), _MONDAY, _TODAY), [])
+
+
+class PlannedFigureFindingsTests(unittest.TestCase):
+    """Check 8: a planned figure is never lowered or removed, and is pinned when built drops."""
+
+    def test_planned_never_lowered_and_pinned_when_built_drops(self):
+        def mon(units: str) -> list[str]:
+            return _week_lines([], mon_header=units)
+
+        def wed(units: str) -> list[str]:
+            return _week_lines([], wed_header=units)
+
+        cases = [
+            ("drop with pin", mon("6.6 units"), mon("3.8 units · planned 6.6 units"), 0, None),
+            ("drop, no pin, started", mon("6.6 units"), mon("3.8 units"), 1,
+             "add '· planned 6.6 units'"),
+            ("drop on a future day", wed("6.6 units"), wed("3.8 units"), 0, None),
+            ("lowered", mon("3.8 units · planned 6.6 units"),
+             mon("3.8 units · planned 5.0 units"), 1, "lowered 6.6 → 5.0"),
+            ("removed", mon("3.8 units · planned 6.6 units"), mon("3.8 units"), 1,
+             "removed (was 6.6)"),
+            ("even swap", mon("7.8 units"), mon("7.8 units"), 0, None),
+        ]
+        for name, head, work, expected, naming in cases:
+            with self.subTest(name):
+                findings = csi.planned_figure_findings(head, work, _MONDAY, _TODAY)
+                self.assertEqual(len(findings), expected)
+                if naming:
+                    self.assertIn(naming, findings[0])
+
+
 class LiveCurrentWeekTests(unittest.TestCase):
     """A soft check against the repo's real current-week schedule, not a fixture. Skips
     rather than fails when the schedule tree isn't present (e.g. a checkout of just this
@@ -451,23 +519,6 @@ class LiveCurrentWeekTests(unittest.TestCase):
             self.skipTest("no live schedule tree in this checkout")
         findings = csi.header_vs_rows(path)
         self.assertEqual(findings, [], f"live week {path.name} has header-vs-rows drift: {findings}")
-
-
-class IntakeFindingsTests(unittest.TestCase):
-    def test_under_rate_reports_and_on_rate_is_silent(self):
-        cfg = eb.load_config()
-        rate = cfg["intake_per_week"]
-        today = dt.date(2026, 10, 6)
-
-        def week_with(new_rows: int) -> dict:
-            items = [{"is_new": True, "deferred_to": None} for _ in range(new_rows)]
-            return {today: items}
-
-        cases = [("one below the rate", rate - 1, 1), ("on the rate", rate, 0)]
-        for name, seated, expected_findings in cases:
-            with self.subTest(name):
-                self.assertEqual(len(csi.intake_findings(week_with(seated), [], cfg, today)),
-                                 expected_findings)
 
 
 class CurrentScheduleTests(unittest.TestCase):

@@ -18,7 +18,7 @@ duplicate bookkeeping that rots.
 
 So this script checks only the window where a *push* is genuinely owed: the week being worked.
 
-## The six checks (four move `--check`, two are report-only)
+## The eight checks (four move `--check`, four are report-only)
 
 | | Miss | Why it is invisible without this |
 |---|---|---|
@@ -29,9 +29,13 @@ So this script checks only the window where a *push* is genuinely owed: the week
 
 Check 3 also reads the `## ⏭️ Carried to next week (row cap)` section: a due row named there counts
 as seated only when it is proven (`effort_budget.is_unproven`); an unproven one is flagged.
-Two more checks are **report-only** (printed after the findings, never moving `--check`):
+Four more checks are **report-only** (printed after the findings, never moving `--check`):
 **5** a day block over `max_rows_per_day`; **6** the week's 🆕 row count differs from
-`intake_per_week` (zero when the unproven-overdue backstop is triggered).
+`intake_per_week` (zero when the unproven-overdue backstop is triggered); **7** a numbered row
+that was on a started day (on or before today) at HEAD is gone from the working file — it
+must stay there as a `→` row; **8** a day header's `· planned N units` figure was removed or
+lowered since HEAD, or a started day's units dropped with no planned figure pinning the original.
+Checks 7 and 8 compare against `git show HEAD:<file>` and skip a file new in the commit.
 
 **An em-dash, `unrated`, or `✅` in a cell is intentional, not missing.** Teaches, primers and probes
 are unrated by design and legitimately carry no comfort and no date, so only a genuinely **empty**
@@ -55,6 +59,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import collections
 import contextlib
 import datetime as dt
 import re
@@ -452,6 +457,86 @@ def intake_findings(day_items: dict[dt.date, list[dict]], tracker_rows: list[dic
             + (" (intake backstop triggered)" if triggered else "")]
 
 
+# ── Checks 7 and 8 compare the working file with the committed one (HEAD): a started day's
+# rows and its planned total must survive an edit.
+
+UNITS_TOLERANCE = 0.05  # header totals are one-decimal figures; anything under is rounding
+DAYS_PER_WEEK = 7
+
+
+def head_text(path: Path) -> str | None:
+    """`path` as committed at HEAD, or None when git cannot show it (a file new in this
+    commit, a path outside the repo, git missing)."""
+    import subprocess
+    import effort_budget as eb
+    try:
+        rel = path.resolve().relative_to(eb.REPO).as_posix()
+        done = subprocess.run(["git", "show", f"HEAD:{rel}"], cwd=eb.REPO,
+                              capture_output=True, encoding="utf-8")
+    except (OSError, ValueError):
+        return None
+    return done.stdout if done.returncode == 0 else None
+
+
+def _row_key(item: dict) -> tuple[int, str | None]:
+    return item["num"], row_method(item["text"])
+
+
+def _day_row_keys(lines: list[str], monday: dt.date, day: dt.date) -> collections.Counter:
+    import effort_budget
+    items = effort_budget.parse_day_block(lines, monday, day)[0]
+    return collections.Counter(_row_key(it) for it in items if it["num"] is not None)
+
+
+def _week_days(monday: dt.date) -> list[dt.date]:
+    return [monday + dt.timedelta(days=offset) for offset in range(DAYS_PER_WEEK)]
+
+
+def dropped_row_findings(head_lines: list[str], work_lines: list[str],
+                         monday: dt.date, today: dt.date) -> list[str]:
+    """Check 7 (report-only): a numbered row present on a started day (`day <= today`) at HEAD
+    that is gone from the working file. A row leaves a started day only as a struck or `→`
+    row, which still counts as present."""
+    findings: list[str] = []
+    for day in _week_days(monday):
+        if day > today:
+            continue
+        gone = _day_row_keys(head_lines, monday, day) - _day_row_keys(work_lines, monday, day)
+        for num, method in sorted(gone, key=lambda k: (k[0], k[1] or "")):
+            name = f"{num} ({method})" if method else f"{num}"
+            findings.append(f"{day:%a %b %d}: {name} was on this started day at HEAD and is "
+                            f"gone — keep it there as a → row with its new date in Next")
+    return findings
+
+
+def _day_findings(day: dt.date, started: bool, head: tuple, work: tuple) -> list[str]:
+    (hu, hp), (wu, wp) = head, work
+    findings: list[str] = []
+    if hp is not None and wp is None:
+        findings.append(f"{day:%a %b %d}: planned figure removed (was {hp:.1f})")
+    elif hp is not None and wp < hp - UNITS_TOLERANCE:
+        findings.append(f"{day:%a %b %d}: planned figure lowered {hp:.1f} → {wp:.1f}")
+    if started and wp is None and hu is not None and wu is not None \
+            and wu < hu - UNITS_TOLERANCE:
+        pin = hp if hp is not None else hu
+        findings.append(f"{day:%a %b %d}: header dropped {hu:.1f} → {wu:.1f} on a started day "
+                        f"with no planned figure — add '· planned {pin:.1f} units' after the units")
+    return findings
+
+
+def planned_figure_findings(head_lines: list[str], work_lines: list[str],
+                            monday: dt.date, today: dt.date) -> list[str]:
+    """Check 8 (report-only): a day header's `· planned N units` figure was removed or lowered
+    since HEAD, or a started day's units dropped with no planned figure to hold its original."""
+    import effort_budget
+    findings: list[str] = []
+    for day in _week_days(monday):
+        head = effort_budget.day_header_figures(head_lines, day)
+        work = effort_budget.day_header_figures(work_lines, day)
+        findings.extend(_day_findings(day, day <= today, head, work))
+    return findings
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--check", action="store_true", help="exit 1 on any finding")
@@ -524,6 +609,18 @@ def main() -> None:
     except Exception as exc:  # a reuse failure must never break the integrity check
         print(f"   (overdue-seated / row-cap / intake checks skipped: "
               f"{exc.__class__.__name__}: {exc})", file=sys.stderr)
+
+    # 7 and 8 — report-only, against the committed file: a separate try so a git failure
+    # skips only these two.
+    try:
+        head = head_text(path)
+        if head is not None:  # None = the file is new in this commit
+            head_lines, work_lines = head.splitlines(), path.read_text(encoding="utf-8").splitlines()
+            report_only.extend(dropped_row_findings(head_lines, work_lines, monday, today))
+            report_only.extend(planned_figure_findings(head_lines, work_lines, monday, today))
+    except Exception as exc:  # a reuse failure must never break the integrity check
+        print(f"   (HEAD-comparison checks skipped: {exc.__class__.__name__}: {exc})",
+              file=sys.stderr)
 
     # 4 — a build promise (day-header label / the week's Goal paragraph) with no matching
     # row anywhere in the week. See header_vs_rows for the false-positive guardrails.

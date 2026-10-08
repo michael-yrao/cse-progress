@@ -45,6 +45,22 @@ class CountRowsTests(unittest.TestCase):
                 self.assertEqual(eb.count_rows(items), expected)
 
 
+class DayHeaderFiguresTests(unittest.TestCase):
+    def test_units_and_planned(self):
+        cases = [
+            ("pinned", "| ▸ **Wed Oct 7** · ~3.8 units · planned 6.6 units — label |  |  |  |  |",
+             dt.date(2026, 10, 7), (3.8, 6.6)),
+            ("unpinned", "| ▸ **Wed Oct 7** · ~3.8 units — label |  |  |  |  |",
+             dt.date(2026, 10, 7), (3.8, None)),
+            ("sunday with a trailing block",
+             "| ▸ **Sun Oct 11** · ~6.8 units · planned 7.0 units + complexity block — x |  |  |  |  |",
+             dt.date(2026, 10, 11), (6.8, 7.0)),
+        ]
+        for name, line, day, expected in cases:
+            with self.subTest(name):
+                self.assertEqual(eb.day_header_figures([line], day), expected)
+
+
 class DeferralWarningTests(unittest.TestCase):
     def test_unreadable_deferral_warns_and_reads_as_not_deferred(self):
         cases = [

@@ -2008,3 +2008,20 @@ decisions:
       named start stamp that also covers 2027 archives, the same file set today. The next run is
       comparable to today's; the Oct 6 to Oct 7 move came from tracker and schedule state, not code.
     affects: [backlog_forecast, scheduling, effort_budget]
+  - id: deferred-day-planned-frozen-oct8
+    date: 2026-10-08
+    summary: >-
+      NARROWS the header clause of `deferred-rows-unbilled-oct6`. The header keeps `built` as its
+      first figure, and a started day (`day <= session date`) gains a pinned planned figure:
+      `| ▸ **Wed Oct 7** · ~3.8 units · planned 6.6 units — label |` (single-source-ok, historical
+      figures). The pin is written once, before the first row is deferred off the day, as the header
+      stood then; it is never changed or removed. Header parsers read the first `~N units` as the day's
+      units, and the label still matches after `planned X units —`. Absent pin: planned = built.
+      Export: `workload[].planned` = the pin when present, else the header units; `built`, `done` and
+      `days[].units` unchanged; no new field; `schemaVersion` stays 1. `check_schedule_integrity.py`
+      gains two report-only checks: (7) a row vanished from a started day since HEAD; (8) a planned
+      figure removed or lowered, or a started day's header dropped with no planned figure. Wed Oct 7 is
+      pinned at 6.6 (single-source-ok, from the pre-reseat line at `960db9b^`: 3.8 built plus 2.8
+      MOVED). Origin: self_eval 2026-10-08 `deferral-not-recorded`. Learner's decision, Oct 8: the day
+      reads "3.8 of 6.6 units done". No `cse.config.yml` value changed.
+    affects: [effort-budget, scheduling, dashboard]

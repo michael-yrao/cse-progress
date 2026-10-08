@@ -1060,6 +1060,25 @@ class ParseCurrentWeekScheduleTests(unittest.TestCase):
         wed = result["days"][2]
         self.assertEqual(wed["items"], [])
 
+    def test_pinned_header_keeps_units_and_label(self):
+        # The `· planned N units` pin sits between the units and the label; DAY_HEADER must
+        # stop at the first `· ~N units` and DAY_LABEL must still read the label after the pin.
+        pinned_fixture = (
+            "## Daily Schedule\n\n"
+            "| Problem | S | E | Next | Technique |\n"
+            "|---|:-:|:-:|:-:|---|\n"
+            "| ▸ **Wed Oct 7** · ~3.8 units · planned 6.6 units — pinned label |  |  |  |  |\n"
+            "| → [202 Happy Number](../../../dsa/leetcode/graphs/202_happy_number.py) · [LC]"
+            "(https://leetcode.com/problems/happy-number/) | 🟢 s1 |  | 2026-10-09 | "
+            "Cycle-detection |\n"
+        )
+        (Path(self._tmpdir.name) / "20261005_schedule.md").write_text(
+            pinned_fixture, encoding="utf-8")
+        result = gamify.parse_current_week_schedule(dt.date(2026, 10, 5), self.URLS)
+        wed = result["days"][2]
+        self.assertEqual(wed["units"], 3.8)
+        self.assertEqual(wed["label"], "pinned label")
+
     def test_deferred_row_emits_date_and_its_new_day_copy_emits_null(self):
         # A `→` row (decision `schedule-item-deferred-to-sep29`): stays on its ORIGINAL
         # day, not struck, with the day it moved TO in its Next cell; the copy seated on
@@ -1322,6 +1341,22 @@ class BuildWorkloadTests(unittest.TestCase):
         workload = gamify.build_workload(self.ROWS, self.CFG)
         by_date = {w["date"]: w for w in workload}
         self.assertEqual(by_date["2026-09-14"]["planned"], 4.0)
+
+    def test_planned_reads_the_pinned_figure_when_present(self):
+        pinned = (
+            "## Daily Schedule\n\n"
+            "| Problem | S | E | Next | Technique |\n"
+            "|---|:-:|:-:|:-:|---|\n"
+            "| ▸ **Mon Oct 5** · ~3.0 units · planned 5.0 units — Pinned day |  |  |  |  |\n"
+            "| ~~[501 Widget One](../../../dsa/leetcode/arrays/501_widget_one.py)~~"
+            " · [LC](https://leetcode.com/problems/widget-one/) | 🔴 | | | Arrays |\n"
+            "| → [504 Widget Four](../../../dsa/leetcode/arrays/504_widget_four.py)"
+            " · [LC](https://leetcode.com/problems/widget-four/) | 🟡 | | 2026-10-08 | Arrays |\n"
+        )
+        (Path(eb.SCHEDULES) / "20261005_schedule.md").write_text(pinned, encoding="utf-8")
+        by_date = {w["date"]: w for w in gamify.build_workload(self.ROWS, self.CFG)}
+        self.assertEqual(by_date["2026-10-05"]["planned"], 5.0)
+        self.assertAlmostEqual(by_date["2026-10-05"]["built"], 3.0)
 
     def test_done_is_the_struck_rows_priced_sum_and_built_covers_all_rows(self):
         workload = gamify.build_workload(self.ROWS, self.CFG)

@@ -291,18 +291,24 @@ def build_workload(rows: list[dict], cfg: dict) -> list[dict]:
     decisions.yml `workload-series`). A day with no header AND no rows (the
     pre-2026-08-10 one-row-per-day era, or a week not yet built) contributes no
     entry rather than a fabricated zero.
+
+    `planned` is the header's pinned `· planned N units` figure when a started day carries
+    one (rows moved off it leave `built` below the day's original total), else the header's
+    stated units.
     """
     workload: list[dict] = []
     for week_start, path in _schedule_weeks():
+        lines = path.read_text(encoding="utf-8").splitlines()
         for offset in range(7):
             day = week_start + dt.timedelta(days=offset)
             items, stated = eb.parse_schedule_day(path, day)
             if stated is None and not items:
                 continue
+            _, pinned = eb.day_header_figures(lines, day)
             p = eb.price_day_items(day, items, rows, cfg)
             workload.append({
                 "date": day.isoformat(),
-                "planned": stated,
+                "planned": pinned if pinned is not None else stated,
                 "done": round(p["done"], 1),
                 "built": round(p["built"], 1),
                 "partial": bool(p["unpriced"] or p["guessed"]),

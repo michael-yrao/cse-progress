@@ -273,9 +273,9 @@
       "required": ["date", "planned", "done", "built", "partial"],
       "properties": {
         "date": { "type": "string", "format": "date" },
-        "planned": { "type": ["number", "null"], "description": "The day header's stated unit total; null when the header carried none." },
+        "planned": { "type": ["number", "null"], "description": "The day's planned units: the header's pinned `· planned X units` figure (frozen when a row was first deferred off the started day) when present, else the header's stated total; null when the header carried none." },
         "done": { "type": "number", "description": "Sum of the struck-through rows' price, 1 decimal place." },
-        "built": { "type": "number", "description": "Sum of ALL the day's rows' price (done + remaining), 1 decimal place." },
+        "built": { "type": "number", "description": "Sum of the day's rows' price excluding rows deferred off it (done + remaining; deferred-rows-unbilled-oct6), 1 decimal place." },
         "partial": { "type": "boolean", "description": "True when at least one row could not be priced exactly (no problem number, or untracked and guessed) — done/built are then a lower bound." }
       }
     },
@@ -296,7 +296,7 @@
         "date": { "type": "string", "format": "date" },
         "weekday": { "type": "string", "description": "Full weekday name, e.g. 'Monday'." },
         "label": { "type": ["string", "null"], "description": "The day header's trailing note (after the units), e.g. '22 🔴 re-rep + Greedy/Trie/Dijkstra reviews'. null if the header carried none." },
-        "units": { "type": ["number", "null"], "description": "Stated effort-budget units for the day, if the header carried one." },
+        "units": { "type": ["number", "null"], "description": "The header's first figure, the day's built units; the planned figure is workload[].planned." },
         "items": { "type": "array", "items": { "$ref": "#/definitions/scheduleItem" } }
       }
     },

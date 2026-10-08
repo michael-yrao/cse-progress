@@ -1,4 +1,4 @@
-<!-- reconciled: 2026-10-06 -->
+<!-- reconciled: 2026-10-08 -->
 # LeetCode review workflow — gate detail
 
 **Open this** for any problem discussion. That means solving, reviewing, or the learner mentioning a
@@ -116,7 +116,7 @@ When a problem is dropped or deferred, **a new specific slot is assigned in the 
 Never remove a problem without immediately adding it to another day. A deferred problem with no
 new date is a missed problem. A row deferred off a day that has started stays on that day,
 unstruck, prefixed `→`, with its new date in Next. The day's plan is a record of what was
-planned, never rewritten after the fact. The moved row is not billed on that day (effort-units skill). After logging any result, add its computed next-review date to the
+planned, never rewritten after the fact. The moved row is not billed on that day (effort-units skill). Its header pins the as-started total once (` · planned X units`). `check_schedule_integrity.py` reports a row that vanished from a started day since HEAD, and a started day whose header dropped with no planned figure. After logging any result, add its computed next-review date to the
 appropriate week's schedule (this week or further out). Don't leave it only in the tracker. The
 spaced-repetition dates are the source of truth; the schedules must reflect them. When the
 target week's file doesn't exist yet, note the problem in the nearest schedule's preview section.
