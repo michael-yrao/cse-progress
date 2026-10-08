@@ -25,13 +25,13 @@
 - **Kruskal's MST** (advanced_graphs) — 2/4: 1489, 9004
 - **Trie** (tries) — 3/4: 208, 211, 648
 - **Dijkstra** (advanced_graphs) — 5/6: 743, 778, 1631, 2812, 3620
-- **Backtracking** (backtracking) — 8/9 (11 rows): 22, 39, 40, 46, 78, 79, 90, 131
+- **Backtracking** (backtracking) — 9/10 (13 rows): 17, 22, 39, 40, 46, 78, 79, 90, 131
 
 **Queued — declared, and already sitting in the Waiting Room / Expansion Queue.** A known gap with a fill already picked, not a new finding.
 
 - **BFS on Implicit Graph** (graphs) — queued: 815 (`solved:127`), 1197 (`solved:127`)
 - **BST Descent** (trees) — queued: 230 (`surplus>=1`)
-- **Backtracking** (backtracking) — queued: 17 (`phase:Backtracking`), 51 (`phase:Backtracking`), 212 (`phase:Backtracking`)
+- **Backtracking** (backtracking) — queued: 51 (`phase:Backtracking`), 212 (`phase:Backtracking`)
 - **Bellman-Ford** (advanced_graphs) — queued: 9002 (`surplus>=1`)
 - **Binary Search (min boundary)** (binary_search) — queued: 4 (`surplus>=1`)
 - **Cycle Detection in an Iterated Sequence** (graphs) — queued: 287 (`surplus>=1`)
@@ -76,7 +76,7 @@ Every declared technique gets a row, started or not — a not-started row's Gaps
 | In-Place Array Rotation | arrays_and_hash | core | 1 (1+0) | 1 (189) | 🟢 | ✅ | — | — |
 | Length-Prefix Encoding | arrays_and_hash | core | 1 (1+0) | 1 (271) | 🟢 | ✅ | — | — |
 | Prefix/Suffix Products | arrays_and_hash | core | 1 (1+0) | 1 (238) | 🟢 | ✅ | — | — |
-| Backtracking | backtracking | core | 9 (5+4) | 8 *+3v* (22, 39, 40, 46, 78, 79, 90, 131) | 🟢 | ✅ | — | thin (8/9) · queued: 17 `phase:Backtracking`, 51 `phase:Backtracking`, 212 `phase:Backtracking` |
+| Backtracking | backtracking | core | 10 (5+5) | 9 *+4v* (17, 22, 39, 40, 46, 78, 79, 90, 131) | 🟢 | ✅ | — | thin (9/10) · queued: 51 `phase:Backtracking`, 212 `phase:Backtracking` |
 | Binary Search (exact match) | binary_search | core | 1 (1+0) | 2 (33, 704) | 🎓 | ✅ | — | — |
 | Binary Search (max boundary) | binary_search | core | 3 (2+1) | 4 (34, 74, 1552, 3620) | 🟢 | ✅ | — | — |
 | Binary Search (min boundary) | binary_search | core | 4 (4+0) | 7 (34, 153, 162, 540, 875, 1011, 2300) | 🎓 | ✅ | — | queued: 4 `surplus>=1` |
@@ -173,7 +173,7 @@ Every declared technique gets a row, started or not — a not-started row's Gaps
 
 ## Vocabulary maintenance
 
-**Queued (79)** — listed in the Action list above; a known gap with a fill already picked, not counted below.
+**Queued (78)** — listed in the Action list above; a known gap with a fill already picked, not counted below.
 
 **Declared, not queued (1)** — declared in the vocabulary, no tracker row, and not yet in any queue. This is the normal state for curriculum ahead of the learner; it is a roadmap, not a finding: 547
 

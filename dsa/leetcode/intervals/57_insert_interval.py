@@ -19,6 +19,46 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-10-07 ──────────────
+    def insertInterval_20261007(self, intervals: List[List[int]], newInterval: List[int]) -> List[List[int]]:
+        # this is a variant of merging, so we want to sort by start time
+        # now let's say we are on [1,3], how do know [2,5] is overlapping, current_end > new_start
+        # in example 2, how do we know [1,2] is before [4,8], same thing, current_end < new_start
+        # for intervals greater, current_end > new_start is also true, so we need to do current_start > new_end
+        # multi-stepper
+        # 1. go through intervals beforehand that do not overlap
+        # 2. create the overlap interval
+        # 3. insert said overlap interval
+        # 4. go through interval after that do not overlap
+
+        result = []
+
+        intervals.sort()
+
+        incr = 0
+
+        # step 1: intervals before merges
+        while incr < len(intervals) and intervals[incr][1] < newInterval[0]:
+            result.append(intervals[incr])
+            incr+=1
+
+        # step 2: merge intervals. end >= newStart is a given now, need to stop when current_start > new_end so while current_start <= new_end
+
+        while incr < len(intervals) and intervals[incr][0] <= newInterval[1]:
+            newInterval[0] = min(intervals[incr][0], newInterval[0])
+            newInterval[1] = max(intervals[incr][1], newInterval[1])
+            incr+=1
+        
+        # step 3: insert newInterval to result
+        result.append(newInterval)
+
+        # step 4: insert intervals after the merge. shouldn't need anymore checks
+        while incr < len(intervals):
+            result.append(intervals[incr])
+            incr+=1
+        
+        return result
+
     # ── Attempt · 2026-09-07 ──────────────
     def insertInterval_20260907(self, intervals: List[List[int]], newInterval: List[int]) -> List[List[int]]:
         # so sharing any point is considered for merging

@@ -22,6 +22,30 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🔴 17. Letter Combinations of a Phone Number — 2026-10-07
+**Topic**: Every string made by taking one letter from each digit's keypad letters, in digit order. Loop-style backtracking, one level per digit.
+
+### Where did I get stuck?
+- **Recognition: unaided.** "we want to pick any of these letters and not 'choose or not choose' … for loop style backtracking." The digit→letters map, `path` as the slots, and the base case `len(path) == len(digits)` were all the learner's own.
+- **Code.** The first version looped `for digit in digits:` inside every call, with the letter loop nested under it. So every level offered every digit's letters: for `"23"` it built 16 strings, including `"aa"`, `"da"` and `"dd"`, where 9 were expected. Coach found it. A question about which digit level k should use did not land ("i don't understand the question"). It was re-asked as a two-row table (`[]` → picks the 1st letter, from `'2'`; `['a']` → picks the 2nd, from `'3'`), then the fix was supplied on request: drop the outer loop and index `digits[len(path)]`.
+- **Edge case.** `digits = ""` returned `[""]`: the base case fires at 0 == 0. Coach flagged it, and the learner fixed it with an early `return []`. Passed 30/30 spec cases after both fixes.
+- Complexity: space O(n) right. Time given as O(n · k), with the levels' widths added instead of multiplied. The actual bound is O(4ⁿ · n). Queued for the Sun Oct 11 re-ask (see `complexity_gotchas.md`).
+
+### Core Realization
+In loop-style backtracking the depth *is* the position being filled. `len(path)` says which slot this call fills, so it also says which choice list to loop over: `digits[len(path)]`. An outer loop over all positions inside every call turns "one letter per digit, in order" into "any letter from any digit, at every slot".
+
+### Code Snippet
+```python
+def backtrack(path):
+    if len(path) == len(digits):
+        result.append("".join(path))
+        return
+    for char in num_char_map[digits[len(path)]]:   # this level's digit only
+        path.append(char)
+        backtrack(path)
+        path.pop()
+```
+
 ## 🟡 648. Replace Words — 2026-10-06
 **Sticking point**: the walk's exits, inlined without the helper. Trie named and built unaided, but the submitted loop had three bugs the coach had to point out: it joined the input `words` instead of `result`, checked `isWord` on the node before stepping (so the root's flag was never read and the slice would land one char long), and had no append for a word that ran off the end of the loop with no break. Fixed with `for/else` (new construct, taught on request). Complexity, not rated: space O(D + S) right; time given O(S + W·L), the build's O(D) dropped — the scan bound itself was a valid one this time (≤ min(S, W·L)). Already queued for the Sun Oct 11 re-ask.
 

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-07",
+  "generatedAt": "2026-10-08",
   "entries": [
     {
       "key": "733:bfs",
@@ -7210,8 +7210,8 @@
         {
           "kind": "attempt",
           "symbol": "insertInterval_20260828",
-          "startLine": 66,
-          "endLine": 113,
+          "startLine": 106,
+          "endLine": 153,
           "lines": [
             "    # ── Attempt · 2026-08-28 ──────────────",
             "    def insertInterval_20260828(self, intervals: List[List[int]], newInterval: List[int]) -> List[List[int]]:",

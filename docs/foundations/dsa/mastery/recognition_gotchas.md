@@ -1,3 +1,12 @@
+- **2026-10-07 · 57 Insert Interval** (🟢 s1 review; retry, half-spoiled: intervals folder and the stub's `Pattern:`
+  line) — ✅ **hit.** Top comment: "a variant of merging, so we want to sort by start time", then the overlap tests
+  (`end < new_start` before, `start > new_end` after) and a four-step plan: before, merge, insert, after. The given-sorted
+  constraint was not used (redundant sort; complexity only). Blank page, no hints, 28/28. → 🟢 s2.
+- **2026-10-07 · 17 Letter Combinations of a Phone Number** (🆕 new; the stub's `Pattern: backtracking` line spoils
+  the technique, so only the form is measured) — ✅ **hit.** Top comment, unaided: a digit→letters map, "we want to pick
+  any of these letters and not 'choose or not choose' … for loop style backtracking". The picking feature vs take/skip
+  (each digit must contribute exactly one letter, so a node branches over which letter, not whether) is stated.
+  The rating follows execution: the per-level digit (`digits[len(path)]`) was coach-supplied. → 🔴.
 - **2026-10-06 · 648 Replace Words** (🟢 prov lock-down; retry, half-spoiled: trie folder) — ⚠️ **partial.** Trie
   named unaided in the top comment ("when we get a first hit, we use it" — the first-word-end-wins operation held from
   Sep 26), but the picking feature vs a hash set of roots was not stated when asked (learner had never seen the set-of-roots

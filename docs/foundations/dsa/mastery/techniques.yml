@@ -931,6 +931,7 @@ techniques:
       - {number: 79}   # grid path search: visited is per-path, add before the 4 calls, remove after (Sep 29, 2026)
       - {number: 131}  # partition a string: path = list of pieces, the loop picks where the next piece ends, palindrome check per piece (Sep 30, 2026)
       - {number: 90}   # subsets with duplicate values: take/skip, sort, the exclude branch jumps past every copy; one shared path with append/pop (Oct 1, 2026)
+      - {number: 17}   # one letter per digit: the loop runs over digits[len(path)]'s letters, so depth picks the digit; empty input returns [] (Oct 7, 2026)
       # Declared Sep 26, 2026 (decision `mastery-ratio-done-over-planned-sep26`) —
       # roadmap.yml. 212 is ALSO declared under Trie above (dual credit).
       - {number: 90, queued: "phase:Backtracking"}
