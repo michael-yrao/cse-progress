@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-06",
+  "generatedAt": "2026-10-09",
   "problems": [
     {
       "number": 1,
@@ -77454,7 +77454,7 @@
       "number": 9003,
       "title": "Lost Map",
       "url": "https://open.kattis.com/problems/lostmap",
-      "statement": "There are `n` villages numbered 0 to n-1, joined by exactly n-1 roads, so there is\nexactly one route between any two villages. Every road has a positive length.\n\nYou are given `distances`, an n x n matrix. `distances[i][j]` is the length of the\nroute between village `i` and village `j`.\n\nReturn the roads. Write each road as `[u, v]`, the two villages it joins. The roads\nmay be in any order, and a road may list its two villages in either order.\n\nExample 1:\n    Input:  distances = [[0,1,1,2],[1,0,2,3],\n                        [1,2,0,3],[2,3,3,0]]\n    Output: [[0,1],[0,2],[0,3]]\n\nExample 2:\n    Input:  distances = [[0,4,9],[4,0,5],[9,5,0]]\n    Output: [[0,1],[1,2]]\n\nExample 3:\n    Input:  distances = [[0,7],[7,0]]\n    Output: [[0,1]]\n\nConstraints:\n    2 <= n <= 2500\n    distances[i][i] == 0\n    distances[i][j] == distances[j][i]\n    1 <= distances[i][j] < 10^7 for i != j",
+      "statement": "There are `n` villages, numbered 0 to n-1. Some pairs of villages are joined by a direct\nroad, and every road has a positive length. There are exactly n-1 roads, and they connect\nevery village, so there is exactly one way to travel between any two villages.\n\nThe map of the roads is lost. All you have is `distances`, an n x n matrix.\n`distances[i][j]` is the total length of the roads you travel along to get from village `i`\nto village `j`. Most pairs of villages have no direct road, so most entries are a sum of\nseveral road lengths.\n\nReturn the n-1 roads. Write each road as `[u, v]`, the two villages it joins. The roads\nmay be in any order, and a road may list its two villages in either order.\n\nExample 1:\n    Input:  distances = [[0,1,1,2],[1,0,2,3],\n                        [1,2,0,3],[2,3,3,0]]\n    Output: [[0,1],[0,2],[0,3]]\n    Explanation: the roads are 0-1 with length 1, 0-2 with\n    length 1, and 0-3 with length 2. distances[1][2] is 2\n    because the trip from 1 to 2 goes 1 -> 0 -> 2, using two\n    roads.\n\nExample 2:\n    Input:  distances = [[0,4,9],[4,0,5],[9,5,0]]\n    Output: [[0,1],[1,2]]\n\nExample 3:\n    Input:  distances = [[0,7],[7,0]]\n    Output: [[0,1]]\n\nConstraints:\n    2 <= n <= 2500\n    distances[i][i] == 0\n    distances[i][j] == distances[j][i]\n    1 <= distances[i][j] < 10^7 for i != j",
       "stub": "from typing import List, Optional\n\n\nclass Solution:\n    def lostMap(self, distances: List[List[int]]) -> List[List[int]]:\n        pass\n",
       "entry": {
         "className": "Solution",
@@ -77465,7 +77465,7 @@
         "kind": "graph",
         "directed": false,
         "matrixArg": 0,
-        "highlight": "expected"
+        "edges": "expected"
       },
       "cases": [
         {

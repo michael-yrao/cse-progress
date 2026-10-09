@@ -135,7 +135,7 @@ Every declared technique gets a row, started or not — a not-started row's Gaps
 | Heap / Priority Queue | heap | core | 4 (4+0) | 6 (347, 355, 621, 703, 973, 1046) | 🟢 | ✅ | — | queued: 23 `surplus>=1`, 295 `surplus>=1` |
 | Interval List Intersection (two pointers) | intervals | core | 1 (1+0) | 0 (—) | — | ❌ | **Two sorted lists, advance the earlier end ×0** | *not started* |
 | Interval Scheduling (sort by end) | intervals | core | 1 (1+0) | 1 (435) | 🟢 | ✅ | Keep max non-overlapping / min removals ×1 | — |
-| Intervals: Merge & Insert (sort by start) | intervals | core | 3 (2+1) | 3 (56, 57, 452) | 🟢 | ✅ | Merge overlapping (sort by start) ×1 · Insert into sorted (3-phase sweep) ×1 · Stab / shrink-the-overlap (min end) ×1 | queued: 252 `surplus>=1` |
+| Intervals: Merge & Insert (sort by start) | intervals | core | 2 (2+0) | 3 (56, 57, 452) | 🟢 | ✅ | Merge overlapping (sort by start) ×1 · Insert into sorted (3-phase sweep) ×1 · Stab / shrink-the-overlap (min end) ×1 | queued: 252 `surplus>=1` |
 | Sweep Line / Max Concurrent | intervals | core | 1 (1+0) | 0 (—) | — | ❌ | **Min-heap of ends ×0** · **Event sweep (+1/-1) ×0** | *not started* |
 | Deep Copy via Hash Map | linked_list | core | 1 (1+0) | 1 (138) | 🟢 | ✅ | — | — |
 | Dummy Node | linked_list | core | 2 (2+0) | 3 *+2v* (2, 19, 21) | 🎓 | ✅ | — | — |

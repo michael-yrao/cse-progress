@@ -112,6 +112,7 @@ COMPARE_MODES = frozenset({"exact", "unordered", "unordered-nested"})
 FIGURE_KINDS = frozenset({"graph", "grid"})
 EDGE_SOURCE_KEYS = ("edgesArg", "matrixArg", "adjArg")  # exactly one per graph figure
 FIGURE_HIGHLIGHT = "expected"
+FIGURE_EDGES_EXPECTED = "expected"
 REQUIRED_SPEC_KEYS = ("number", "title", "url", "entry", "compare", "cases")
 
 _FILENAME_NUMBER = re.compile(r"^(\d+)_")
@@ -384,9 +385,24 @@ def _validate_graph_figure(figure: dict, spec: dict, filename: str) -> None:
     if "highlight" in figure and figure["highlight"] != FIGURE_HIGHLIGHT:
         raise PracticeError(
             f"{filename}: figure.highlight must be {FIGURE_HIGHLIGHT!r}")
+    _validate_figure_edges(figure, source, filename)
     for key in (source, "nodesArg", "nodeCountArg"):
         if key in figure:
             _validate_figure_index(figure, key, spec, filename)
+
+
+def _validate_figure_edges(figure: dict, source: str, filename: str) -> None:
+    """Rules for `figure.edges`: only 'expected', only on a matrix figure, never with highlight."""
+    if "edges" not in figure:
+        return
+    if figure["edges"] != FIGURE_EDGES_EXPECTED:
+        raise PracticeError(
+            f"{filename}: figure.edges must be {FIGURE_EDGES_EXPECTED!r}")
+    if source != "matrixArg":
+        raise PracticeError(f"{filename}: figure.edges needs matrixArg")
+    if "highlight" in figure:
+        raise PracticeError(
+            f"{filename}: figure.edges and figure.highlight are exclusive")
 
 
 def _validate_statement_lines(statement: object, filename: str) -> None:
@@ -435,7 +451,10 @@ def build_figure(figure: dict | None) -> dict | None:
 def _build_graph_figure(figure: dict) -> dict:
     """The graph figure's shape-specific keys, in the order existing figures use."""
     if "matrixArg" in figure:
-        return {"kind": "graph", "directed": False, "matrixArg": figure["matrixArg"]}
+        emitted = {"kind": "graph", "directed": False, "matrixArg": figure["matrixArg"]}
+        if "edges" in figure:
+            return {**emitted, "edges": figure["edges"]}
+        return emitted
     directed = figure.get("directed", False)
     if "adjArg" in figure:
         return {"kind": "graph", "directed": directed, "adjArg": figure["adjArg"],

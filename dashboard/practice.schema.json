@@ -120,14 +120,16 @@
         },
         {
           "type": "object",
-          "description": "Graph from an adjacency matrix.",
+          "description": "Graph from a square matrix.",
           "required": ["kind", "directed", "matrixArg"],
           "additionalProperties": false,
+          "not": { "required": ["edges", "highlight"] },
           "properties": {
             "kind": { "const": "graph" },
             "directed": { "const": false },
             "highlight": { "const": "expected" },
-            "matrixArg": { "type": "integer", "minimum": 0, "description": "Index into a case's args: the adjacency matrix." }
+            "edges": { "const": "expected", "description": "Draw only the pairs in a case's expected answer, labeled from the matrix; absent draws lines from the input. Not together with highlight." },
+            "matrixArg": { "type": "integer", "minimum": 0, "description": "Index into a case's args: a square matrix." }
           }
         },
         {

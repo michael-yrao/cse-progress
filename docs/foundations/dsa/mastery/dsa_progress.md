@@ -75,18 +75,19 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/dsa/mastery/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **136+6** problems &nbsp;·&nbsp; **147+6** solutions &nbsp;·&nbsp; **660+6** reps
+> **136+6** problems &nbsp;·&nbsp; **147+6** solutions &nbsp;·&nbsp; **662+6** reps
 
 | | 🏆 Retired | 🎓 Graduated | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|:---:|
-| **Solutions** | 0 | 26 | 107 | 12 | 2 |
+| **Solutions** | 0 | 26 | 108 | 12 | 1 |
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Rep Date | Rep Dates |
 |---|---|---|---|---|---|---|
+| Medium | [452. Minimum Number of Arrows to Burst Balloons](https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/) | 🟢 | 0 | 2026-10-18 | 2026-10-08 | 2026-10-06, 2026-10-08 |
+| Medium | [853. Car Fleet](https://leetcode.com/problems/car-fleet/) | 🟡 | 0 | 2026-10-18 | 2026-10-08 | 2026-08-15, 2026-08-17, 2026-08-29, 2026-09-28, 2026-10-08 |
 | Medium | [17. Letter Combinations of a Phone Number](https://leetcode.com/problems/letter-combinations-of-a-phone-number/) | 🔴 | 0 | 2026-10-09 | 2026-10-07 | 2026-10-07 |
 | Medium | [57. Insert Interval](https://leetcode.com/problems/insert-interval/) | 🟢 | 2 | 2026-12-06 | 2026-10-07 | 2026-08-26, 2026-08-28, 2026-09-07, 2026-10-07 |
 | Hard | [3620. Network Recovery Pathways (Dijkstra)](https://leetcode.com/problems/network-recovery-pathways/) | 🟡 | 0 | 2026-10-16 | 2026-10-06 | 2026-10-04, 2026-10-06 |
-| Medium | [452. Minimum Number of Arrows to Burst Balloons](https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/) | 🔴 | 0 | 2026-10-08 | 2026-10-06 | 2026-10-06 |
 | Medium | [648. Replace Words](https://leetcode.com/problems/replace-words/) | 🟡 | 0 | 2026-10-16 | 2026-10-06 | 2026-09-14, 2026-09-24, 2026-09-26, 2026-10-06 |
 | Easy | [219. Contains Duplicate II](https://leetcode.com/problems/contains-duplicate-ii/) | 🎓 | 3 | 2027-04-04 | 2026-10-06 | 2026-03-22, 2026-04-14, 2026-06-25, 2026-07-04, 2026-08-03, 2026-10-06 |
 | Medium | [46. Permutations](https://leetcode.com/problems/permutations/) | 🟡 | 0 | 2026-10-15 | 2026-10-05 | 2026-09-25, 2026-10-05 |
@@ -117,7 +118,6 @@ Notes for future agents:
 | Medium | [45. Jump Game II](https://leetcode.com/problems/jump-game-ii/) | 🟢 | 1 | 2026-10-28 | 2026-09-28 | 2026-09-08, 2026-09-18, 2026-09-28 |
 | Medium | [572. Subtree Of Another Tree](https://leetcode.com/problems/subtree-of-another-tree/) | 🟢 | 2 | 2026-11-27 | 2026-09-28 | 2026-05-02, 2026-06-12, 2026-08-15, 2026-08-25, 2026-09-28 |
 | Medium | [155. Min Stack (Pair with Min-So-Far)](https://leetcode.com/problems/min-stack/) | 🟢 | 2 | 2026-11-27 | 2026-09-28 | 2026-08-12, 2026-08-14, 2026-08-29, 2026-09-28 |
-| Medium | [853. Car Fleet](https://leetcode.com/problems/car-fleet/) | 🟡 | 0 | 2026-10-08 | 2026-09-28 | 2026-08-15, 2026-08-17, 2026-08-29, 2026-09-28 |
 | Medium | [721. Accounts Merge (Union-Find)](https://leetcode.com/problems/accounts-merge/) | 🟢 | 1 | 2026-10-27 | 2026-09-27 | 2026-07-30, 2026-08-09, 2026-09-08, 2026-09-17, 2026-09-27 |
 | Medium | [560. Subarray Sum Equals K](https://leetcode.com/problems/subarray-sum-equals-k/) | 🟢 | 1 | 2026-10-27 | 2026-09-27 | 2026-04-05, 2026-06-26, 2026-06-28, 2026-07-29, 2026-08-08, 2026-08-18, 2026-09-17, 2026-09-27 |
 | Medium | [540. Single Element in a Sorted Array](https://leetcode.com/problems/single-element-in-a-sorted-array/) | 🟢 | 1 | 2026-10-27 | 2026-09-27 | 2026-05-02, 2026-06-12, 2026-06-13, 2026-07-17, 2026-07-27, 2026-08-06, 2026-09-06, 2026-09-16, 2026-09-27 |

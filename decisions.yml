@@ -1676,6 +1676,16 @@ decisions:
       byte-identically and `schemaVersion` stays 1. No `cse.config.yml` value changed.
     affects: [scaffolding, practice]
 
+  - id: figure-edges-from-expected-oct08
+    date: 2026-10-08
+    summary: >-
+      ADDS an optional `edges: expected` to a matrix figure (`matrixArg`). It draws only the
+      pairs named in the example case's expected answer, each labeled with the matrix entry
+      and in the default colour. Allowed only on a matrix figure and not together with
+      `highlight`. Absent, lines are drawn from the input as before. Additive:
+      `schemaVersion` stays 1. No `cse.config.yml` value changed.
+    affects: [practice]
+
   - id: retry-helpers-and-discovery-oct2
     date: 2026-10-02
     summary: >-
