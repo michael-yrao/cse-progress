@@ -22,6 +22,9 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🟡 853. Car Fleet — 2026-10-08
+**Sticking point**: pushed every car's arrival time onto the stack, so a car that joined a fleet left its own faster time on top instead of the fleet's slower one; coach found it with a failing input (`[10,9,0]`, speeds `[1,3,8]`, target 12 → 2, expected 1).
+
 ## 🔴 17. Letter Combinations of a Phone Number — 2026-10-07
 **Topic**: Every string made by taking one letter from each digit's keypad letters, in digit order. Loop-style backtracking, one level per digit.
 

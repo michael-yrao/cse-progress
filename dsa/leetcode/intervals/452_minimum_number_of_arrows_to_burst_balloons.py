@@ -30,6 +30,34 @@ from typing import List
 
 
 class Solution:
+
+    # ── Attempt · 2026-10-08 ──────────────
+    def findMinArrowShots_20261008(self, points: List[List[int]]) -> int:
+        # this is an interval problem
+        # drawing it out makes us notice that it is a merge interval problem
+        # the arrow count is essentially a custom merge counter based on the criterias of the problem
+        # so we sort by start, keep track of current overlap
+        # so when we are at [1,6], overlap is just [1,6], then comes [2,8] which means overlap is [2,6] so max of start, min of end
+        # then when [7,12] comes and does not intersect, we increment arrow count and update current overlap to [7,12]
+        # points' length is given to be >= 1 and number ranges from -max int to max int
+        # so we use -math.inf as our starting overlap
+
+        points.sort()
+        current_overlap = [-math.inf, -math.inf]
+        arrow_counter = 0
+        for start, end in points:
+            overlap_start = current_overlap[0]
+            overlap_end = current_overlap[1]
+
+            if start > overlap_end:
+                arrow_counter+=1
+                current_overlap = [start, end]
+            else:
+                current_overlap[0] = max(current_overlap[0], start) # type: ignore
+                current_overlap[1] = min(current_overlap[1], end) # type: ignore
+        
+        return arrow_counter
+
     def findMinArrowShots(self, points: List[List[int]]) -> int:
         # this is an interval question
         # we are seeing how many overlaps happen

@@ -1,3 +1,19 @@
+- **2026-10-08 · 9003 Lost Map** (🆕 new; the stub's `Pattern: graphs` line names the family, not the technique) — ❌
+  **miss.** Unaided: "working backwards to find the original n − 1 edges", Floyd-Warshall ruled out by n = 2500, then
+  a row-minimum rule (given a path matrix 0–1–2–3 with roads 1, 10, 1, on which it returns two of three roads), then
+  Dijkstra-backwards: traced each village's predecessor from source 0, and proposed min of `d[0][u] + d[u][v]` (every
+  on-path u ties). MST over the complete graph was not named. Technique, the array-Prim's loop and pseudocode handed
+  over on request; Kruskal's vs array Prim's on a dense graph discussed after. Not coded. → Fri Oct 9; the rep caps at 🔴.
+- **2026-10-08 · 853 Car Fleet** (🟡 re-rep; retry, half-spoiled: stack folder, stub's `Pattern: stack` line) —
+  ⚠️ **partial.** Top comment, unaided: "nothing can pass the positions in front", sort by position descending, check
+  whether each car catches the one ahead. The picking feature (a joined fleet keeps its slowest car's arrival time, so
+  only a slower time is pushed) was not stated, and the code pushed every time. Coach found it with a failing input and a
+  traced table; the learner fixed it from "what should the top stand for?". → 🟡.
+- **2026-10-08 · 452 Minimum Number of Arrows to Burst Balloons** (🔴 re-rep; retry, half-spoiled: intervals folder,
+  Oct 6 probe) — ✅ **hit.** Top comment, unaided: "a merge interval problem … a custom merge counter", sort by start,
+  and the picking feature the Oct 6 probe needed supplied: the running overlap shrinks to max start / min end, and a
+  start past its end opens a new arrow. The `[-1,-1]` sentinel bug is fixed with `-math.inf`, reason stated. Blank page,
+  no hints; passes the examples plus touching-endpoint and nested cases. → 🟢 provisional.
 - **2026-10-07 · 57 Insert Interval** (🟢 s1 review; retry, half-spoiled: intervals folder and the stub's `Pattern:`
   line) — ✅ **hit.** Top comment: "a variant of merging, so we want to sort by start time", then the overlap tests
   (`end < new_start` before, `start > new_end` after) and a four-step plan: before, merge, insert, after. The given-sorted

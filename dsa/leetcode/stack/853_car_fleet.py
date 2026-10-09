@@ -49,6 +49,32 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-10-08 ──────────────
+    def carFleet_20261008(self, target: int, position: List[int], speed: List[int]) -> int:
+        # position matters, nothing can pass the positions in front
+        # so we order by largest to smallest and see if anyone can catch up to the one in front
+        # need to combine position and speed since they are together
+
+        positions = []
+
+        for i in range(len(position)):
+            positions.append((position[i], speed[i]))
+        
+        positions.sort(reverse=True)
+
+        fleet_times = []
+
+        for pos, speed in positions:
+            # need to get time it needs to get to target
+            time_to_target = (target - pos) / speed
+            # if this car's time to target is less or equal to prior
+            # we can combine the fleet and do nothing
+            # but if it is greater, then we add a new fleet
+            if len(fleet_times) == 0 or time_to_target > fleet_times[-1]:
+                fleet_times.append(time_to_target)
+            
+        return len(fleet_times)
+
     # ── Attempt · 2026-09-28 ──────────────
     def carFleet_20260928(self, target: int, position: List[int], speed: List[int]) -> int:
         # need to notice that position matters

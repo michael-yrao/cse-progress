@@ -61,7 +61,7 @@ them. The *how* is in the named skill reference.
    commit+push shipped a stale `showcase.json`; a chained command is now denied by `commit_push_gate.py`). Never truncate the
    commit's output (no `| tail`, no `| head`): filter it for `ERROR` and print the count plus those lines (2026-10-04: a
    `tail -40` hid two). Stage each file by name, and read `git diff
-   --cached --stat` as its own call before the commit. The trigger is the learner's explicit
+   --cached --stat` as its own call before the commit. After the commit, read `git show --stat HEAD` before the push and report what landed from it: the hook stages the tracker and generated files too (2026-10-09). The trigger is the learner's explicit
    phrase, never your own read of a "good breakpoint" (that judgement is what caused the
    31-commit run). Still **hold and ask** if anything is pending: an unrated/uncertain rep, an
    unsettled schedule/structural decision, a weekly close-out whose build isn't done (gate 7
