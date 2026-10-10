@@ -621,6 +621,8 @@ techniques:
       # (this file's normal dual-credit model, same as 200 crediting both Grid DFS/BFS).
       - {number: 295, queued: "surplus>=1"}
       - {number: 23, queued: "surplus>=1"}
+      # NC150 audit Oct 10, 2026 (decision coverage-recalibration-oct10): Kth Largest Element in an Array was in no phase row and no queue.
+      - {number: 215, queued: "surplus>=1"}
 
   # ── Graphs ──────────────────────────────────────────────────────────────────
   - name: Grid DFS
@@ -669,6 +671,10 @@ techniques:
     builds_on: ["Grid BFS"]
     problems:
       - {number: 994}
+      # NC150 audit Oct 10, 2026 (decision coverage-recalibration-oct10): Walls and Gates (LC-premium) was in no phase row and no queue.
+      - {number: 286, queued: "surplus>=1"}
+      # Already a Grind 75 Fill row in dsa_progress.md; declared here so the technique's planned count is honest.
+      - {number: 542, queued: "surplus>=1"}
 
   - name: Graph Clone (DFS + Hash Map)
     family: graphs
@@ -681,6 +687,10 @@ techniques:
     builds_on: ["Grid DFS"]
     problems:
       - {number: 261, method: DFS}
+      # Dual credit with Topological Sort (802 stays declared there with no method). method: DFS, so it
+      # credits this technique only if the tracker row's parenthetical reads DFS (3-colour cycle detection
+      # is 802's natural solution; a Kahn's solve credits Topo only). Decision coverage-recalibration-oct10.
+      - {number: 802, method: DFS, queued: "surplus>=1"}
 
   # Distinct from the graph flavour above: there is no adjacency list and no
   # explicit graph. A function maps each value to exactly one successor, so the
@@ -837,11 +847,8 @@ techniques:
 
   # Learner self-reported 50:50 on execution (Aug 15) while recognition is the
   # strongest call in the ledger. LeetCode has only three Eulerian problems total;
-  # all three are wanted. ⚠️ Sep 27, 2026: the explicit `min_problems: 3` this note
-  # explained was removed with the coverage-threshold formula's rollout (decision
-  # `coverage-threshold-formula-sep27`) — the computed floor for this technique's 3
-  # declared problems is lower (2). Flagged for the learner's review; re-add
-  # `min_problems: 3` here if the full set is still wanted as the floor.
+  # all three are wanted. Oct 10, 2026: min_problems: 3 re-added (decision
+  # `coverage-recalibration-oct10`) — the learner wants all three, and 332 took 6 reps to its first 🟢.
   #   queued: 2097 Valid Arrangement of Pairs (Hard) — purest Hierholzer, start node
   #           must be derived from out-in degree; 332 hands the start over for free.
   #   queued: 753 Cracking the Safe (Hard) — de Bruijn via Eulerian circuit.
@@ -870,6 +877,7 @@ techniques:
   # belongs to the min-heap row and the pre-sorted row starts fresh at Aug 18.
   - name: Hierholzer (Eulerian path)
     family: advanced_graphs
+    min_problems: 3
     builds_on: ["Graph Cycle Detection (DFS)"]
     variants:
       - {name: pre-sorted adjacency}
@@ -900,6 +908,8 @@ techniques:
     problems:
       - {number: 1584, method: Prim's MST}
       - {number: 9003, method: Prim's MST, queued: "surplus>=1"}
+      # 9005 = Kattis islandhopping (coordinates, real-valued distances — 1584's near-twin), hand-picked per external-judge-problems-sep26; Difficulty Medium tiered against 1584. Added Oct 10, 2026 after 9003 came back 🔴 on Oct 9 (decision coverage-recalibration-oct10). Gate solved:9003 — the base is 🔴, so convert first.
+      - {number: 9005, method: Prim's MST, queued: "solved:9003"}
 
   - name: Kruskal's MST
     family: advanced_graphs
@@ -1038,10 +1048,8 @@ techniques:
   # 7/100 big-tech (12/40 data-platform, 13/100 supplementary). 146 LRU Cache stays
   # credited under linked_list (HashMap + Doubly Linked List) — this family is for
   # hit counter / time-based KV / LFU-style composition, not the LRU rep itself.
-  # ⚠️ Sep 27, 2026: this entry carried an explicit `min_problems: 3`, removed with the
-  # coverage-threshold formula's rollout (decision `coverage-threshold-formula-sep27`) —
-  # the computed floor for its 2 declared problems is lower (1). Flagged for the
-  # learner's review; re-add `min_problems: 3` here if 3 is still wanted as the floor.
+  # Oct 10, 2026: resolved by declaring a third problem (380) instead of an override — the
+  # computed floor for 3 declared is 2 (decision `coverage-recalibration-oct10`).
   - name: Design (composed data structures)
     family: design
     tier: core
@@ -1050,6 +1058,8 @@ techniques:
       - {number: 981, queued: "surplus>=1"}
       # Declared Sep 26, 2026 (decision `mastery-ratio-done-over-planned-sep26`) — roadmap.yml.
       - {number: 2013, queued: "phase:Bit-Math"}
+      # Already a KEQ Core-Fill row; declared here for the honest planned count (bigtech top-100 #12, freq 81.7 in company_demand.md).
+      - {number: 380, queued: "surplus>=1"}
 
   # ── Bit Manipulation (tier: core) ──
   # Company-demand pull, Sep 26, 2026 (decision `company-demand-families-sep26`): Bit

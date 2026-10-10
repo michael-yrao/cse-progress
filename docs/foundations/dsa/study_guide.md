@@ -277,6 +277,8 @@ Every design session must be narrated out loud — not written silently. Intervi
 
 > [`roadmap.yml`](mastery/roadmap.yml) is the numbered, machine-readable form of this same phase table (decision `mastery-ratio-done-over-planned-sep26`) — one `{number, title, url, difficulty, phase}` entry per problem above that has no tracker row and no Waiting Room row yet.
 
+> **NC150 audit, Oct 10, 2026.** Two NeetCode 150 problems were in no phase row and no queue: [215 Kth Largest Element in an Array](https://leetcode.com/problems/kth-largest-element-in-an-array/) (Heap) and [286 Walls and Gates](https://neetcode.io/problems/islands-and-treasure) (Graphs, LC-premium). Both now sit in `roadmap.yml` as backlog with a technique in `techniques.yml`, so the 150 are fully declared.
+
 > **📌 22 Generate Parentheses moved Stack → Backtracking, Aug 15, 2026.** Raised by the learner mid-session,
 > *before* attempting it: *"isn't 22 a backtracking problem… should this not be reserved for the backtracking
 > section. Is there a stack method that I should be focused on right now?"* Both halves were right. There is

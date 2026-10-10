@@ -65,6 +65,9 @@ NEETCODE_RENAMES = {
     # 261 Graph Valid Tree: LC title derives "graph-valid-tree"; NeetCode drops the
     # "graph-" prefix. Found broken 2026-09-15 (learner supplied the real slug).
     "graph-valid-tree": "valid-tree",
+    # 286 Walls and Gates (LC-premium): NeetCode renamed it. Confirmed against NeetCode's
+    # list 2026-10-10 when the NC150 audit declared it (decision coverage-recalibration-oct10).
+    "walls-and-gates": "islands-and-treasure",
 }
 
 LEETCODE_GRAPHQL = "https://leetcode.com/graphql"

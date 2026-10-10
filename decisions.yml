@@ -2050,3 +2050,25 @@ decisions:
       MOVED). Origin: self_eval 2026-10-08 `deferral-not-recorded`. Learner's decision, Oct 8: the day
       reads "3.8 of 6.6 units done". No `cse.config.yml` value changed.
     affects: [effort-budget, scheduling, dashboard]
+  - id: coverage-recalibration-oct10
+    date: 2026-10-10
+    summary: >-
+      Per-technique coverage recalibrated against the learner's real learning rate. NC150 audit: the
+      150 numbers in cse-coach `milestone.yml` were checked against the tracker, `techniques.yml`,
+      `roadmap.yml` and the study-guide phase table: 99 solved, 49 planned, 2 uncovered (215, 286),
+      now declared. SIX INCREASES: 215 -> Heap / Priority Queue; 286 and 542 -> Multi-source BFS
+      (542 was already a Grind 75 row); 802 dual-credited to Graph Cycle Detection (DFS) with
+      `method: DFS` (it stays declared under Topological Sort with no method); Hierholzer
+      `min_problems: 3` re-added; 9005 (Kattis islandhopping) -> Prim's MST, gated `solved:9003`;
+      380 -> Design (already a KEQ Core-Fill row), which lifts the computed floor for that family.
+      DECREASE CANDIDATES THE LEARNER DECLINED on Oct 10, 2026, recorded so the next coverage review
+      does not re-find them: 1102 (its max-min flavour is already credited by 2812), 1504, 2115,
+      1202, 354. Learner's call: "keep every queued problem planned"; coverage only goes up.
+      Learning-rate evidence (single-source-ok): rep glyphs exist only from 2026-08-10, so only
+      techniques started after that are clean; clean techniques take a median of 21 days and 3 reps
+      to their first green; later siblings in a learned technique take ~2 reps; slow first problems
+      743: 6 reps, 787: 5, 332: 6, 1584: 5, 912: 7; 9003 came back red on Oct 9; ~91 unseen problems
+      are planned at `intake_per_week` 2, about 45 weeks. No `cse.config.yml` value changed:
+      `coverage_threshold` is deliberately unchanged, the recalibration is in what is declared, not
+      in the share.
+    affects: [techniques_vocabulary, technique_coverage, roadmap, waiting_room, dsa_progress, study_guide]

@@ -5,21 +5,22 @@
      The FUTURE section is hand-authored and preserved verbatim between its markers.
      Run at the weekly build: python scripts/technique_comfort_audit.py -->
 
-> **61** techniques started &nbsp;·&nbsp; **59** with a 🟢 &nbsp;·&nbsp; **2** still zero-green. Comfort = demonstrated ceiling (best across the technique's problems); coverage tempers it.
+> **62** techniques started &nbsp;·&nbsp; **59** with a 🟢 &nbsp;·&nbsp; **3** still zero-green. Comfort = demonstrated ceiling (best across the technique's problems); coverage tempers it.
 
 ## ⚠️ Needs work — pull order for the weekly build
 
 > Priority: **🔴/🟡 conversions below > overdue 🟢 cleans > thin-green fills**. A zero-green
 > technique outranks discretionary work and fresh cleans — not a clean aged far past its interval.
 
-**Zero-green (2) — execution unproven, weakest first:**
+**Zero-green (3) — execution unproven, weakest first:**
 
 - 🟡 **Dense Dijkstra** (advanced_graphs) — 1p · 0🟢 · 🟡
+- 🟡 **Graph Cycle Detection (DFS)** (graphs) — 1p · 0🟢 · 🟡
 - 🟡 **Kruskal's MST** (advanced_graphs) — 2p · 0🟢 · 🟡
 
-**Thin-green (4) — proven but narrow, discretionary:**
+**Thin-green (7) — proven but narrow, discretionary:**
 
-- **BFS on Implicit Graph** (1/2) · **Bellman-Ford** (2/3) · **Dijkstra** (5/7) · **Backtracking** (8/9)
+- **BFS on Implicit Graph** (1/2) · **Multi-source BFS** (1/2) · **Prim's MST** (1/2) · **Bellman-Ford** (2/3) · **Hierholzer (Eulerian path)** (2/3) · **Trie** (3/4) · **Dijkstra** (5/6)
 
 ## Started techniques
 
@@ -30,7 +31,7 @@
 | Array/String Fundamentals | 🟢 | 3p · 3🟢 · 🟢 | Clean and foundational; no open gaps. |
 | Boyer-Moore Voting | 🎓 | 2p · 2🟢 · 🟢→🎓 | Majority-element voting solid; thin but the technique is problem-specific. |
 | Frequency Counting | 🎓 | 2p · 2🟢 · 🟢→🎓 | Hashmap counts, clean; a building block more than a standalone skill. |
-| Hash Map Lookup | 🎓 | 2p · 2🟢 · 🟢→🎓 | Complement/two-sum lookup, clean. |
+| Hash Map Lookup | 🎓 | 2p · 2🟢 · 🎓 | Complement/two-sum lookup, clean. |
 | Hash Set Membership | 🎓 | 3p · 3🟢 · 🟢→🎓 | Mostly clean; **36 Valid Sudoku slipped 🟡 Aug 21** on the `%3` vs `//3` box-key bug. |
 | In-Place Array Rotation | 🟢 | 1p · 1🟢 · 🟢 | Single canonical problem, clean; thin by nature. |
 | Length-Prefix Encoding | 🟢 | 1p · 1🟢 · 🟢 | **271 only, no green.** Code is right but the encode-time complexity (O(n)→O(N)) missed Aug 22. |
@@ -49,7 +50,7 @@
 
 | Technique | Comfort | Coverage | Why |
 |---|---|---|---|
-| Greedy (single pass) | 🟢 | 6p · 5🟢 · 🟡→🟢 | Clean; thin, and mostly subsumed by the coming Greedy phase. |
+| Greedy (single pass) | 🟢 | 6p · 6🟢 · 🟢 | Clean; thin, and mostly subsumed by the coming Greedy phase. |
 | Sliding Window | 🟢 | 4p · 4🟢 · 🟢 | Clean; amortized-O(n) (l monotonic) sharpened on 3, Aug 22. |
 
 ### stack
@@ -67,9 +68,9 @@
 | Technique | Comfort | Coverage | Why |
 |---|---|---|---|
 | Binary Search (exact match) | 🎓 | 2p · 2🟢 · 🟢→🎓 | 704 + 33, both clean; 33's rotated two-pass held cold Aug 24. **Graduated** — the settled base rung of the family. |
-| Binary Search (max boundary) | 🟢 | 4p · 3🟢 · 🔴→🟢 | **Thin — credited to 74 alone** (69 was a green probe, no row). 34 + 1552 intake queued to fix. |
+| Binary Search (max boundary) | 🟢 | 4p · 3🟢 · 🟡→🟢 | **Thin — credited to 74 alone** (69 was a green probe, no row). 34 + 1552 intake queued to fix. |
 | Binary Search (min boundary) | 🎓 | 7p · 7🟢 · 🟢→🎓 | The bias the learner reaches for by default — answer at `r`, plain midpoint. Six problems, all green (153 Graduated Aug 30). Named Aug 30 so an unnamed default becomes measurable. |
-| Binary Search on Answer | 🟢 | 4p · 3🟢 · 🔴→🟢 | Koko/capacity clean; bounds derived not recalled. |
+| Binary Search on Answer | 🟢 | 4p · 3🟢 · 🟡→🟢 | Koko/capacity clean; bounds derived not recalled. |
 
 ### linked_list
 
@@ -104,7 +105,7 @@
 
 | Technique | Comfort | Coverage | Why |
 |---|---|---|---|
-| Backtracking | 🟢 | 8p · 4🟢 · 🟡→🟢 | Eight problems in three weeks, four 🟢. 46, 79, 90 and 131 are still 🟡; 17 and 51 close the phase. |
+| Backtracking | 🟢 | 9p · 5🟢 · 🟡→🟢 | Eight problems in three weeks, four 🟢. 46, 79, 90 and 131 are still 🟡; 17 and 51 close the phase. |
 
 ### graphs
 
@@ -114,7 +115,7 @@
 | Connected Components | 🟢 | 1p · 1🟢 · 🟢 | 323 (all three methods) clean. |
 | Cycle Detection in an Iterated Sequence | 🟢 | 1p · 1🟢 · 🟢 | **202 Happy Number, no green.** Same recognition miss twice (Aug 11 probe, Aug 21) — a blacklist plan, not the cycle-detection technique. |
 | Graph Clone (DFS + Hash Map) | 🟢 | 1p · 1🟢 · 🟢 | **133, no green.** O(V+E) complexity missed twice (Aug 9, Aug 19) — dropped the V term both times. |
-| Graph Cycle Detection (DFS) | 🟢 | 1p · 1🟢 · 🟢 | Clean; thin. |
+| Graph Cycle Detection (DFS) | 🟡 | 1p · 0🟢 · 🟡 | Clean; thin. |
 | Grid BFS | 🎓 | 4p · 4🟢 · 🟢→🎓 | Graduated; four clean. |
 | Grid DFS | 🎓 | 2p · 2🟢 · 🟢→🎓 | Clean. |
 | Multi-source BFS | 🟢 | 1p · 1🟢 · 🟢 | 994 clean; thin. |
@@ -127,7 +128,7 @@
 |---|---|---|---|
 | Bellman-Ford | 🟢 | 2p · 1🟢 · 🟡→🟢 | 787 clean; thin. |
 | Dense Dijkstra | 🟡 | 1p · 0🟢 · 🟡 | 743 array-scan only, 🟡 after three reps. The rest of the set is seated in the Bit-Math phase. |
-| Dijkstra | 🟢 | 5p · 3🟢 · 🔴→🟢 | **First green Aug 22 (778) after 0-for-2 in August** — shallow but no longer a blocker. 743 still 🟡. |
+| Dijkstra | 🟢 | 5p · 4🟢 · 🟡→🟢 | **First green Aug 22 (778) after 0-for-2 in August** — shallow but no longer a blocker. 743 still 🟡. |
 | Floyd-Warshall (all-pairs shortest path) | 🟢 | 2p · 2🟢 · 🟢 | **1334, no green.** 1462/399 fills queued behind `rated:1334`. |
 | Hierholzer (Eulerian path) | 🟢 | 2p · 2🟢 · 🟢 | **332, no green — cost 5 sessions** because its first attempt was the introduction. The primer rule exists because of this. |
 | Kruskal's MST | 🟡 | 2p · 0🟢 · 🟡 | 1489 🟡 after three reps, 9004 🟡 on its first. No 🟢 yet; both re-rep the week of Oct 12. |
@@ -137,7 +138,8 @@
 
 | Technique | Comfort | Coverage | Why |
 |---|---|---|---|
-| Intervals (sort + sweep) | 🟢 | 3p · 3🟢 · 🟢 | **Phase opened Aug 24; zero-green after 3.** 56 🟡; 57 and 435 both 🔴→🟡 on a 2-day re-rep — the sort criterion is the learner's now, execution still takes coach fixes. Needs a **conversion**, not a 4th surface form. |
+| Interval Scheduling (sort by end) | 🟢 | 1p · 1🟢 · 🟢 |  |
+| Intervals: Merge & Insert (sort by start) | 🟢 | 3p · 3🟢 · 🟢 |  |
 
 ### prefix_sum
 
@@ -162,7 +164,7 @@
 
 | Technique | Comfort | Coverage | Why |
 |---|---|---|---|
-| Trie | 🟢 | 3p · 3🟢 · 🟢 | 208 + 211 both green (211 converted 🟡→🟢 Aug 22); **472 now unblocked** as the third problem. |
+| Trie | 🟢 | 3p · 2🟢 · 🟡→🟢 | 208 + 211 both green (211 converted 🟡→🟢 Aug 22); **472 now unblocked** as the third problem. |
 
 <!-- FUTURE:START — hand-authored roadmap view; never auto-generated -->
 
@@ -180,3 +182,5 @@
 | 2D Dynamic Programming | ⚪ | Nov 9 | Not started. Grid / LCS / edit-distance / knapsack-table. Builds directly on 1D; the new difficulty is choosing the two state dimensions. |
 
 <!-- FUTURE:END -->
+
+<!-- 2 technique(s) need a why-line: Interval Scheduling (sort by end), Intervals: Merge & Insert (sort by start) -->
