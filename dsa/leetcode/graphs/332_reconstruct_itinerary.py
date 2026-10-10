@@ -22,6 +22,41 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-10-09 ──────────────
+    def findItinerary_20260829_minheap_20261009(self, tickets: List[List[str]]) -> List[str]:
+        # min heap hierholzer
+        # hierholzer is a graph technique specifically used for Euler's Circuit and path which means we visit every edge exactly once
+        # Euler's Path is when we do not guarantee that we will end up at the same node that we started at
+        # Euler's Circuit is when we are guaranteed to end where we started
+        # in this problem, we know we start at JFK but not sure where we end so this is an Euler's Path
+        # Hierholzer is a postorder dfs technique
+        # so what we want to do is add nodes in from the end, e.g. when there are no more neighbors, which means no outgoing degrees
+        # we are heavily reliant on degrees. 
+        # looking at example 1, we see that JFK has one degree leaving it and our end has one degree entering it
+        # we want to go to target in lexicographical order, so sort by target
+        # doesn't seem necessary with min heap though
+        # we need an adjMap, the adjMap is how we determine when to stop
+
+        result = []
+
+        # this list will be a minHeap, so we get sorted for free 
+        adj_map = collections.defaultdict(list)
+
+        for src,dst in tickets:
+            heapq.heappush(adj_map[src], dst)
+
+        def dfs(node):
+            while adj_map[node]:
+                closest_neighbor = heapq.heappop(adj_map[node])
+                dfs(closest_neighbor)
+            result.append(node)
+        
+        dfs("JFK")
+
+        result.reverse()
+
+        return result
+
     # ── Attempt · 2026-09-15 ──────────────
     def findItinerary_stack_20260915(self, tickets: List[List[str]]) -> List[str]:
         # practicing stack hierholzer today

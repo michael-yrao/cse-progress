@@ -24,10 +24,21 @@ and stays silent on a named problem ("let's do 235"), a non-kickoff question ("w
 the bug in my code"), or a CLOSE-OUT ("close monday session", "wrap up and commit") —
 a hook that cries wolf trains the agent to skim past it. The close-out guard was added
 Sep 14, 2026 after "close monday session" tripped the `<weekday> session` pattern.
+
+Second trigger, the SCOPED START (Oct 9/10, 2026): "doing 332 from tomorrow" took four
+messages to land as a pull + scaffold. The coach overrode the script's announced session
+date (Oct 9) with the wall-clock date (Oct 10, small hours), read the pull as a move to
+Sunday, and did not scaffold on "doing 332" / "I am doing 332 right now". A prompt that
+is neither a close-out nor a kickoff but names a problem number next to a do-verb now
+injects a short reminder carrying the session date from `scripts/session_date.py`.
 """
 import json
 import re
 import sys
+from datetime import datetime
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent / "scripts"))
 
 _DAY = r"(?:mon|tues?|wednes?|thurs?|fri|satur?|sun)(?:day)?"
 
@@ -77,6 +88,59 @@ REMINDER = (
 )
 
 
+# Scoped start: a do-verb within ~12 chars before a 1-4 digit number, or "<number> ... now|next".
+_VERB = (
+    r"(?:do|doing|start(?:ing)?|pull(?:ing)?|try(?:ing)?|attempt(?:ing)?|work(?:ing)? on|"
+    r"let'?s do|i'?ll do|on to|next up)"
+)
+SCOPED_START = re.compile(
+    rf"\b{_VERB}\b.{{0,12}}?\b(?P<after_verb>\d{{1,4}})\b"
+    rf"|\b(?P<before_now>\d{{1,4}})\b.{{0,12}}?\b(?:now|next)\b",
+    re.IGNORECASE | re.DOTALL,
+)
+
+SCOPED_REMINDER = (
+    "Learner is starting problem {number} now. {date_sentence}"
+    "In THIS turn: (1) if {number} is not on that day's board it is a PULL: reseat it onto "
+    "the session date (effort-units: pin the planned figure, the row prices here). A day "
+    "named with \"from\" (\"from tomorrow\", \"from Sat\") is the day it is pulled FROM, "
+    "never a target; a bare day with no \"from\" is a reseat, not a pull. (2) Scaffold "
+    "{number} with new_problem.py before replying, unless its file already carries a stub "
+    "dated today (a re-run would stash the attempt in progress). (3) One message. Rule: "
+    "references/scaffolding.md scope section."
+)
+
+
+def _date_sentence() -> str:
+    """'Session date is YYYY-MM-DD (Weekday) ...' or '' if the date cannot be resolved."""
+    try:
+        import session_date  # type: ignore
+
+        session, _reason = session_date.detect_session_date(datetime.now())
+        return (
+            f"Session date is {session.strftime('%Y-%m-%d (%A)')} per scripts/session_date.py "
+            "— the script's date, not the clock's. "
+        )
+    except Exception:  # noqa: BLE001 — a hook that dies silences itself; omit the sentence
+        return ""
+
+
+def _scoped_reminder(number: str) -> str:
+    return SCOPED_REMINDER.format(number=number, date_sentence=_date_sentence())
+
+
+def _emit(context: str) -> None:
+    json.dump(
+        {
+            "hookSpecificOutput": {
+                "hookEventName": "UserPromptSubmit",
+                "additionalContext": context,
+            }
+        },
+        sys.stdout,
+    )
+
+
 def main() -> None:
     try:
         payload = json.load(sys.stdin)
@@ -86,21 +150,14 @@ def main() -> None:
     prompt = payload.get("prompt", "") or ""
     if CLOSEOUT.search(prompt):
         return  # "close monday session", "wrap up and commit" — a close-out, never a kickoff
-    if not KICKOFF.search(prompt):
+    if KICKOFF.search(prompt):
+        # A kickoff phrase that also names a problem number is ambiguous; the reminder already
+        # carries the "named problem is not a batch" caveat, so still fire.
+        _emit(REMINDER)
         return
-    # A kickoff phrase that also names a problem number is ambiguous; the reminder already
-    # carries the "named problem is not a batch" caveat, so still fire — but this is where
-    # a future quiet-guard would go if it proves noisy on "start 235".
-
-    json.dump(
-        {
-            "hookSpecificOutput": {
-                "hookEventName": "UserPromptSubmit",
-                "additionalContext": REMINDER,
-            }
-        },
-        sys.stdout,
-    )
+    scoped = SCOPED_START.search(prompt)
+    if scoped:
+        _emit(_scoped_reminder(scoped.group("after_verb") or scoped.group("before_now")))
 
 
 if __name__ == "__main__":

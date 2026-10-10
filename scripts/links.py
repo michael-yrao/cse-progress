@@ -46,13 +46,12 @@ DEFAULT_ROOT = "dsa/leetcode"
 TRACKER = REPO_ROOT / "docs" / "foundations" / "dsa" / "mastery" / "dsa_progress.md"
 
 # The site's practice page for a number (it exists iff a spec `dsa/tests/<n>_*.yml` does).
-# One definition: new_problem.py imports these. `SITE_RUN_LABEL` matches the site's own
-# "Run code" link on that page.
+# One definition: new_problem.py imports these. `SITE_LABEL` is the site's short name,
+# like `LC`/`NC`.
 SPEC_DIR = Path("dsa") / "tests"
 SITE_PRACTICE_URL_TEMPLATE = "https://progressiveoverflow.com/practice/{number}"
 SITE_PRACTICE_URL_PREFIX = "https://progressiveoverflow.com/practice/"
-SITE_JUDGE = "progressiveoverflow"
-SITE_RUN_LABEL = "run"
+SITE_LABEL = "PO"
 
 # Header line: `853. Car Fleet   ·   https://leetcode.com/problems/car-fleet/`. The `·`
 # and the URL are optional — a legacy file may carry only `853. Car Fleet`.
@@ -79,7 +78,7 @@ JUDGE_LABELS = {
     "open.kattis.com": "Kattis",
     "cses.fi": "CSES",
     "hellointerview.com": "HelloInterview",
-    "progressiveoverflow.com": "progressiveoverflow",
+    "progressiveoverflow.com": "PO",
 }
 
 
@@ -287,14 +286,14 @@ def site_practice_url(number: str) -> str | None:
 
 
 def schedule_link_line(number: str) -> str | None:
-    """`link_line(number)` plus ` · [run](<site url>)` — the shape of a schedule row's link
+    """`link_line(number)` plus ` · [PO](<site url>)` — the shape of a schedule row's link
     cell. The site link is added only when the practice page exists and the row's own judge
     link is not already the site (an external-judge problem keeps its single link)."""
     line = link_line(number)
     site_url = site_practice_url(number)
     if line is None or site_url is None or f"]({SITE_PRACTICE_URL_PREFIX}" in line:
         return line
-    return f"{line} · [{SITE_RUN_LABEL}]({site_url})"
+    return f"{line} · [{SITE_LABEL}]({site_url})"
 
 
 def main() -> None:
@@ -303,7 +302,7 @@ def main() -> None:
                     "numbers (judge label: LC/NC/Kattis/CSES/HelloInterview/hostname).")
     ap.add_argument("numbers", nargs="+", help="problem number(s), e.g. 269 853 424")
     ap.add_argument("--schedule", action="store_true",
-                    help="print the schedule-row shape: the pair plus ` · [run](site url)` "
+                    help="print the schedule-row shape: the pair plus ` · [PO](site url)` "
                          "when the practice page exists")
     args = ap.parse_args()
     make_line = schedule_link_line if args.schedule else link_line

@@ -3039,3 +3039,7 @@ backtrack(path, indexState + 1)
 ### 2026-09-28 · 853 Car Fleet · 🟢 s1 → 🟡 (decay after a month)
 
 Sticking point: **comparing each car against the fleet ahead.** Sort by position (descending) and time-to-target were unaided; the stack step — compare `time_to_target` with `fleet[-1]` and push only when strictly slower (otherwise it catches up and joins) — needed an outside hint. Code correct after. Complexity: time O(n log n) (sort dominates) right; space O(n) right but attributed to the sort alone with "the rest is smaller" — the pairs array and the `fleet` stack are each O(n) too (not carded: bound right, a named contributor correct). Watch item: **say what the stack holds and when a car starts a new fleet, before coding.**
+
+### 2026-10-09 · 332 Reconstruct Itinerary (min-heap ordering) · 🟢 s1 → 🟡
+
+Sticking point: **the post-order append after the `while` loop.** Recognition (Euler path, start fixed at JFK, end unknown → Hierholzer, min-heap per airport) was unaided. The code recorded a node only in a base case (`if len(adj_map[node]) == 0: result.append(node)`), the backtracking template's "record the dead end on arrival", and needed outside help for `result.append(node)` after the loop: every node is recorded when its edges run out on the way back. The learner then deleted the dead base case and rewrote the top comment to call it post-order DFS. Complexity: totals right, heap build and `reverse` mispriced (carded). Watch item: **`result.reverse()` at the end ⟹ the append sits after the loop.**

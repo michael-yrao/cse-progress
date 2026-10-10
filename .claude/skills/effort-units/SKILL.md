@@ -7,7 +7,7 @@ description: >-
   changes); reseating a deferred rep; the weekly build's day totals; a mid-week re-price; or
   checking the dashboard's workload numbers. Every number comes from
   scripts/effort_budget.py in one named mode — never hand-computed.
-reconciled: 2026-10-08
+reconciled: 2026-10-10
 ---
 # effort-units — every effort number from one script, on one basis
 
@@ -43,7 +43,7 @@ moving between days.
 
 ## Moving, adding or removing a row
 
-**A day that has started keeps its rows.** A day has started once the session date reaches it. A row not done on it stays there, unstruck,
+**A day that has started keeps its rows.** A day has started once the SESSION date reaches it, the date `scripts/session_date.py` announces; never pass `--today`/`--date` with the wall-clock date to re-decide it (the script warns when an override contradicts its detection). A row not done on it stays there, unstruck,
 prefixed `→`, with the new date in Next, but it is no longer billed there: the day's header
 drops by its price, and `--schedule-day` lists it under MOVED. **Before the first such edit, pin the plan once:** right after the header's `~N units`, add ` · planned X units`, where X is the header as it stands (`~3.8 units · planned 6.6 units — …`). It is never changed or removed afterwards. The copy on the new day is
 prefixed `→` and prices there. A swap is therefore even: the row out leaves the bill, the row

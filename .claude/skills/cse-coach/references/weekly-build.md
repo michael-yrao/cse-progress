@@ -112,11 +112,11 @@ Two standing passes ride every Sunday close-out:
 - **⚠️ Lean daily table — THE FORMAT.** This was set Sep 20, 2026, learner-approved; worked example:
   `docs/foundations/schedules/20260921_schedule.md`. The board must read **at a glance.** Columns are
   **`| Problem | S | E | Next | Technique |`**:
-  - **Problem** — glyph prefix(es) + `[name](file) · [LC](url) · [run](site url)` (a variant parenthetical
-    stays, read from the tracker row per the variant rule above). The `[run]` link is
+  - **Problem** — glyph prefix(es) + `[name](file) · [LC](url) · [PO](site url)` (a variant parenthetical
+    stays, read from the tracker row per the variant rule above). The `[PO]` link is
     `https://progressiveoverflow.com/practice/<n>`, present only when a spec `dsa/tests/<n>_*.yml` exists
     AND the row's own judge link is not already the site (an external-judge row like 9003 keeps its single
-    `[progressiveoverflow]` link). Compose the cell with `python scripts/links.py --schedule N …`;
+    `[PO]` link). Compose the cell with `python scripts/links.py --schedule N …`;
     `check_schedule_integrity.py` flags a row that lacks it;
   - **S / E** — start / end comfort glyph; a 🟢 in **S** carries its streak going in (`🟢 s1`), which `effort_budget.py` prices from; **Next** — next-review glyph;
   - **Technique** — exactly **ONE word** (Backtracking · Dijkstra · Kruskal · Prefix-sum · …), nothing else.

@@ -1,4 +1,4 @@
-<!-- reconciled: 2026-10-04 -->
+<!-- reconciled: 2026-10-10 -->
 # Scaffolding a problem
 
 **Open this** before you create or set up any problem file for the learner.
@@ -12,7 +12,9 @@ Set the file up **before** they start — never make them create it or paste the
 ## Scaffold scope follows what the learner named — batch only on a kickoff
 
 - **A message naming specific problems scaffolds exactly those.** "I'll do 235", "let's
-  do 417 and 543", "235 next" → scaffold those, and nothing else.
+  do 417 and 543", "235 next", "doing 332", "I'm doing 332 right now", "doing 332 from
+  tomorrow" → scaffold those, and nothing else. A day named with "from" is the source of a
+  pull; the rep is in the live session, so reseat (effort-units) and scaffold in the same turn.
   - ⚠️ **A problem name narrows scope** ONLY when NO session-start phrase shares the message.
     "let's start our friday session, graduate merge sorted list" is a **kickoff**. The
     session-start phrase governs, and the named problem is a *priority* (which rep to lead
@@ -143,7 +145,7 @@ blocks a scaffold and is silent when offline.
 
 ## Where a problem links (learner's order, Oct 4, 2026)
 
-LeetCode if it is free there → NeetCode if its own list has it → HelloInterview if its catalog has it → progressiveoverflow (`https://progressiveoverflow.com/practice/<n>`, label `progressiveoverflow`). A problem none of the first three carries is never skipped: write its practice spec (the `practice-problem` skill) so the practice page exists, then link it. The spec's own `url:` keeps the problem's source page, which the practice page's title links to. Confirm each of the first three against that site's own list before linking it. full rule: [`reference_hellointerview_premium.md`](.claude/memory/reference_hellointerview_premium.md); `decisions.yml` `problem-link-order-oct04`.
+LeetCode if it is free there → NeetCode if its own list has it → HelloInterview if its catalog has it → progressiveoverflow (`https://progressiveoverflow.com/practice/<n>`, label `PO`). A problem none of the first three carries is never skipped: write its practice spec (the `practice-problem` skill) so the practice page exists, then link it. The spec's own `url:` keeps the problem's source page, which the practice page's title links to. Confirm each of the first three against that site's own list before linking it. full rule: [`reference_hellointerview_premium.md`](.claude/memory/reference_hellointerview_premium.md); `decisions.yml` `problem-link-order-oct04`.
 
 ## Presenting the kickoff / lineup board — name + links, NOTHING else
 

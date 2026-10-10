@@ -152,7 +152,7 @@ class ResolvePremiumLinkTests(unittest.TestCase):
     def test_progressiveoverflow_fallback_when_in_neither(self):
         link = new_problem.resolve_premium_link("77", "some-other-problem", frozenset(), {})
         self.assertEqual(link.url, "https://progressiveoverflow.com/practice/77")
-        self.assertEqual(link.judge, "progressiveoverflow")
+        self.assertEqual(link.judge, "PO")
         self.assertIn("neither NeetCode nor HelloInterview", link.reason)
 
     def test_unreadable_neetcode_list_falls_back_to_neetcode_mirror_unverified(self):
@@ -181,7 +181,8 @@ class ResolvePremiumLinkTests(unittest.TestCase):
         for link in cases:
             with self.subTest(url=link.url):
                 self.assertIn(link.judge, link.reason)
-                self.assertIn(link.judge.split(".")[0].lower(), link.url.lower())
+                host_word = "progressiveoverflow" if link.judge == "PO" else link.judge.split(".")[0]
+                self.assertIn(host_word.lower(), link.url.lower())
 
 
 class EndToEndPremiumResolutionTests(unittest.TestCase):

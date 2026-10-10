@@ -362,17 +362,17 @@ class DoneRowFindingsTests(unittest.TestCase):
 
 
 class SiteLinkFindingsTests(unittest.TestCase):
-    """Check 9: a row with a practice spec needs its `[run]` link, unless its judge is the site."""
+    """Check 9: a row with a practice spec needs its `[PO]` link, unless its judge is the site."""
 
     def test_site_link_findings_table(self):
         site = "https://progressiveoverflow.com/practice"
         cases = [
-            ("spec, no [run]", f"[743 X](f.py) · [LC](https://leetcode.com/p/x/)", {743}, 1),
-            ("spec, [run] present", f"[743 X](f.py) · [LC](https://leetcode.com/p/x/) · [run]({site}/743)",
+            ("spec, no [PO]", f"[743 X](f.py) · [LC](https://leetcode.com/p/x/)", {743}, 1),
+            ("spec, [PO] present", f"[743 X](f.py) · [LC](https://leetcode.com/p/x/) · [PO]({site}/743)",
              {743}, 0),
-            ("spec, [run] names another number",
-             f"[743 X](f.py) · [LC](https://leetcode.com/p/x/) · [run]({site}/744)", {743}, 1),
-            ("site is the judge", f"[9003 X](f.py) · [progressiveoverflow]({site}/9003)", {9003}, 0),
+            ("spec, [PO] names another number",
+             f"[743 X](f.py) · [LC](https://leetcode.com/p/x/) · [PO]({site}/744)", {743}, 1),
+            ("site is the judge", f"[9003 X](f.py) · [PO]({site}/9003)", {9003}, 0),
             ("no spec", f"[743 X](f.py) · [LC](https://leetcode.com/p/x/)", set(), 0),
         ]
         for name, cell, specs, expected in cases:

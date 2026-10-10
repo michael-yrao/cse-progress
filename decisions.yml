@@ -1744,6 +1744,7 @@ decisions:
       its 9001-9999 default become the site url, and `verify_links` notes a missing spec;
       the site's technique-list label map gains the same entry. No `cse.config.yml` value
       changed.
+      (superseded by practice-link-label-po-oct10)
     affects: [links, scaffolding, practice]
 
   - id: problem-link-order-oct09
@@ -1759,6 +1760,7 @@ decisions:
       `check_schedule_integrity.py` check 9 flags a current-schedule row that lacks it; the
       site constants moved from `new_problem.py` to `links.py`. No `cse.config.yml` value
       changed.
+      (superseded by practice-link-label-po-oct10)
     affects: [links, scheduling, weekly-build, practice]
 
   - id: tech-lead-owns-optimization-oct4
@@ -2072,3 +2074,32 @@ decisions:
       `coverage_threshold` is deliberately unchanged, the recalibration is in what is declared, not
       in the share.
     affects: [techniques_vocabulary, technique_coverage, roadmap, waiting_room, dsa_progress, study_guide]
+
+  - id: practice-link-label-po-oct10
+    date: 2026-10-10
+    summary: >-
+      SUPERSEDES the `run` and `progressiveoverflow` labels named in `problem-link-order-oct04`
+      and `problem-link-order-oct09`. One label, `PO`, for every progressiveoverflow.com link,
+      beside `[LC]`/`[NC]` or alone (a 9003-style row). Code: `scripts/links.py` collapses
+      `SITE_JUDGE` and `SITE_RUN_LABEL` into `SITE_LABEL = "PO"` and `JUDGE_LABELS` maps the
+      host to `PO`; `check_schedule_integrity.py` and `new_problem.py` import the new name. The
+      live schedule is relabelled; archived schedules stay as history. No `cse.config.yml`
+      value changed.
+    affects: [links, scheduling, weekly-build, scaffolding, practice]
+
+  - id: scoped-pull-scaffold-oct10
+    date: 2026-10-10
+    summary: >-
+      A learner naming one problem to do now ("doing 332", "I'm doing 332 right now", "doing 332
+      from tomorrow") is a scoped start, and when the number is not on the session day's board it
+      is a PULL into the live session. Fix for the 2026-10-09 misread (self_eval_log, fam:
+      misread-instruction). Hook: `kickoff_scaffold_reminder.py` gains a scoped-start trigger
+      that injects the session date from `scripts/session_date.py`, says a day named with "from"
+      is the source of the pull, and says to reseat per effort-units and scaffold the number with
+      `new_problem.py` in the same turn. Source: `session_date.py` `resolve_datetime` warns when
+      an explicit `--date` contradicts the detected session date during the small hours.
+      References: `scaffolding.md` scope section gains the three examples and the pull sentence;
+      `effort-units` SKILL.md Moving section says a day has started once the SESSION date reaches
+      it; `scheduling` SKILL.md Mid-week says a pull into the live session reseats and scaffolds
+      in the same turn. No `cse.config.yml` value changed.
+    affects: [scaffolding, scheduling, effort_budget, hooks]

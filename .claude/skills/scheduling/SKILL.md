@@ -7,7 +7,7 @@ description: >-
   session of the week, seating or moving a row, deciding what to carry to next week, or
   deciding how many new problems the build seats. Unit numbers still come from the
   effort-units skill.
-reconciled: 2026-10-08
+reconciled: 2026-10-10
 ---
 # scheduling — one ordered procedure for the weekly build
 
@@ -60,7 +60,7 @@ number: it names the key.
    - A variant label is read from the due tracker row, never typed.
 9. **Price each hypothetical day** with `--day N N …` and read the row line beside `TOTAL`.
 10. **Write the file.** Lean table, rows ordered highest priority first, DSA before SD. Each row's
-    link cell is pasted from `links.py --schedule N …`, never typed (it adds `· [run](site url)`).
+    link cell is pasted from `links.py --schedule N …`, never typed (it adds `· [PO](site url)`).
 11. **Headers.** `--schedule-day` per day; set each header's first figure to `built`. A build writes no planned figure.
 12. **Order.** `schedule_priority.py`.
 13. **Integrity.** `check_schedule_integrity.py`. Every due row is seated, validly carried, or
@@ -113,4 +113,4 @@ still bind the week. A day over the cap is fixed by carrying, not by editing a t
 
 After logging a day's results, run `--schedule-day` and the no-flag run. Reseat a row from the
 carried list only when the day shows spare rows AND spare units (policy: `effort-budget.md`
-"Re-price mid-week"). Moving a row between started days follows `effort-units`.
+"Re-price mid-week"). Moving a row between started days follows `effort-units`. A pull into the live session (the learner starts a later day's row now) moves the row to the session date per effort-units and scaffolds it in the same turn.

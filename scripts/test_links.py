@@ -53,7 +53,7 @@ class JudgeLabelTests(unittest.TestCase):
     def test_progressiveoverflow_practice_page(self):
         self.assertEqual(
             links.judge_label("https://progressiveoverflow.com/practice/9001"),
-            "progressiveoverflow")
+            "PO")
 
     def test_hellointerview_without_www(self):
         self.assertEqual(
@@ -103,19 +103,19 @@ class LinkLineJudgeLabelTests(unittest.TestCase):
 
 
 class ScheduleLinkLineTests(unittest.TestCase):
-    """schedule_link_line() adds `[run]` only when a spec exists and the judge isn't the site."""
+    """schedule_link_line() adds `[PO]` only when a spec exists and the judge isn't the site."""
 
     def test_schedule_link_line_table(self):
         site = "https://progressiveoverflow.com/practice"
         cases = [
             ("spec + LC", "1", "https://leetcode.com/problems/target/", True,
-             f"· [LC](https://leetcode.com/problems/target/) · [run]({site}/1)"),
+             f"· [LC](https://leetcode.com/problems/target/) · [PO]({site}/1)"),
             ("spec + NC", "2", "https://neetcode.io/problems/target/", True,
-             f"· [NC](https://neetcode.io/problems/target/) · [run]({site}/2)"),
+             f"· [NC](https://neetcode.io/problems/target/) · [PO]({site}/2)"),
             ("no spec", "3", "https://leetcode.com/problems/target/", False,
              "· [LC](https://leetcode.com/problems/target/)"),
             ("judge is the site", "4", f"{site}/4", True,
-             f"· [progressiveoverflow]({site}/4)"),
+             f"· [PO]({site}/4)"),
         ]
         for name, number, url, has_spec, expected_tail in cases:
             with self.subTest(name), tempfile.TemporaryDirectory() as tmp:

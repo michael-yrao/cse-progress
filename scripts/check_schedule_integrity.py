@@ -20,7 +20,7 @@ So this script checks only the window where a *push* is genuinely owed: the week
 
 A ninth check (**9**, moves `--check`): a row whose problem has a practice spec
 (`dsa/tests/<n>_*.yml`) and whose judge link is not the site must carry
-`· [run](https://progressiveoverflow.com/practice/<n>)` — compose the cell with
+`· [PO](https://progressiveoverflow.com/practice/<n>)` — compose the cell with
 `links.py --schedule`.
 
 ## The nine checks (five move `--check`, four are report-only)
@@ -80,10 +80,8 @@ _console.force_utf8()
 
 import links
 import session_date
-from links import SITE_JUDGE, SITE_PRACTICE_URL_TEMPLATE, SITE_RUN_LABEL
+from links import SITE_LABEL, SITE_PRACTICE_URL_TEMPLATE
 
-# A row whose own judge link is the site (external-judge problems like 9003) is exempt.
-SITE_JUDGE_LINK = f"[{SITE_JUDGE}]("
 
 TRACKERS = [
     Path("docs/foundations/dsa/mastery/dsa_progress.md"),
@@ -294,15 +292,15 @@ def done_row_findings(rows: list[tuple[str, bool, list[str]]]) -> list[str]:
 def site_link_findings(rows: list[tuple[str, bool, list[str]]],
                        has_spec: Callable[[int], bool]) -> list[str]:
     """Check 9 — a row whose number has a practice spec, and whose judge link is not already
-    the site, must carry `· [run](<site practice url>)` for that same number. Row links are
+    the site, must carry `· [PO](<site practice url>)` for that same number. Row links are
     composed by `links.py --schedule`; a row missing the link was hand-authored or predates it.
     """
     findings: list[str] = []
     for problem, _, _ in rows:
         num = _row_number(problem)
-        if num is None or not has_spec(num) or SITE_JUDGE_LINK in problem:
+        if num is None or not has_spec(num):
             continue
-        run_link = f"[{SITE_RUN_LABEL}]({SITE_PRACTICE_URL_TEMPLATE.format(number=num)})"
+        run_link = f"[{SITE_LABEL}]({SITE_PRACTICE_URL_TEMPLATE.format(number=num)})"
         if run_link not in problem:
             label = re.sub(r"[~*]", "", problem).split("]")[0].lstrip("[")[:60]
             findings.append(f"has a practice page but its row lacks {run_link} — {label}")
@@ -595,7 +593,7 @@ def main() -> None:
     # 1 — a done row that never got its result written back.
     findings.extend(done_row_findings(rows))
 
-    # 9 — a row with a practice spec but no `· [run](site url)` link.
+    # 9 — a row with a practice spec but no `· [PO](site url)` link.
     findings.extend(site_link_findings(rows, lambda n: links.site_practice_url(str(n)) is not None))
 
     # 2 — a rep the tracker says happened this week, still advertised as pending.

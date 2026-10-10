@@ -46029,6 +46029,593 @@
       }
     },
     {
+      "number": 286,
+      "title": "Walls and Gates",
+      "url": "https://leetcode.com/problems/walls-and-gates/",
+      "statement": "You are given an m x n grid `rooms`. Each cell holds one of three values:\n\n    -1           a wall or an obstacle\n     0           a gate\n     2147483647  an empty room (INF)\n\nFill each empty room with the number of steps to its nearest gate, moving up, down, left or\nright and never through a wall. If a room cannot reach any gate, leave it as INF.\n\nModify `rooms` in place. Do not return anything.\n\nExample 1:\n    Input:  rooms = [[INF,-1,0,INF],\n                     [INF,INF,INF,-1],\n                     [INF,-1,INF,-1],\n                     [0,-1,INF,INF]]\n    Output: [[3,-1,0,1],\n             [2,2,1,-1],\n             [1,-1,2,-1],\n             [0,-1,3,4]]\n\nExample 2:\n    Input:  rooms = [[-1]]\n    Output: [[-1]]\n\nConstraints:\n    m == rooms.length\n    n == rooms[i].length\n    1 <= m, n <= 250\n    rooms[i][j] is -1, 0, or 2147483647.",
+      "stub": "from typing import List, Optional\n\n\nclass Solution:\n    def wallsAndGates(self, rooms: List[List[int]]) -> None:\n        pass\n",
+      "entry": {
+        "className": "Solution",
+        "method": "wallsAndGates"
+      },
+      "compare": "exact",
+      "figure": {
+        "kind": "grid",
+        "gridArg": 0
+      },
+      "cases": [
+        {
+          "args": [
+            [
+              [
+                2147483647,
+                -1,
+                0,
+                2147483647
+              ],
+              [
+                2147483647,
+                2147483647,
+                2147483647,
+                -1
+              ],
+              [
+                2147483647,
+                -1,
+                2147483647,
+                -1
+              ],
+              [
+                0,
+                -1,
+                2147483647,
+                2147483647
+              ]
+            ]
+          ],
+          "expected": [
+            [
+              3,
+              -1,
+              0,
+              1
+            ],
+            [
+              2,
+              2,
+              1,
+              -1
+            ],
+            [
+              1,
+              -1,
+              2,
+              -1
+            ],
+            [
+              0,
+              -1,
+              3,
+              4
+            ]
+          ],
+          "example": true
+        },
+        {
+          "args": [
+            [
+              [
+                -1
+              ]
+            ]
+          ],
+          "expected": [
+            [
+              -1
+            ]
+          ],
+          "example": true
+        },
+        {
+          "args": [
+            [
+              [
+                0
+              ]
+            ]
+          ],
+          "expected": [
+            [
+              0
+            ]
+          ],
+          "example": false
+        },
+        {
+          "args": [
+            [
+              [
+                2147483647
+              ]
+            ]
+          ],
+          "expected": [
+            [
+              2147483647
+            ]
+          ],
+          "example": false
+        },
+        {
+          "args": [
+            [
+              [
+                2147483647,
+                2147483647
+              ],
+              [
+                2147483647,
+                2147483647
+              ]
+            ]
+          ],
+          "expected": [
+            [
+              2147483647,
+              2147483647
+            ],
+            [
+              2147483647,
+              2147483647
+            ]
+          ],
+          "example": false
+        },
+        {
+          "args": [
+            [
+              [
+                0,
+                2147483647,
+                2147483647,
+                2147483647,
+                2147483647
+              ]
+            ]
+          ],
+          "expected": [
+            [
+              0,
+              1,
+              2,
+              3,
+              4
+            ]
+          ],
+          "example": false
+        },
+        {
+          "args": [
+            [
+              [
+                2147483647
+              ],
+              [
+                2147483647
+              ],
+              [
+                0
+              ]
+            ]
+          ],
+          "expected": [
+            [
+              2
+            ],
+            [
+              1
+            ],
+            [
+              0
+            ]
+          ],
+          "example": false
+        },
+        {
+          "args": [
+            [
+              [
+                0,
+                -1
+              ],
+              [
+                -1,
+                2147483647
+              ]
+            ]
+          ],
+          "expected": [
+            [
+              0,
+              -1
+            ],
+            [
+              -1,
+              2147483647
+            ]
+          ],
+          "example": false
+        },
+        {
+          "args": [
+            [
+              [
+                0,
+                2147483647,
+                0
+              ],
+              [
+                2147483647,
+                2147483647,
+                2147483647
+              ],
+              [
+                0,
+                2147483647,
+                0
+              ]
+            ]
+          ],
+          "expected": [
+            [
+              0,
+              1,
+              0
+            ],
+            [
+              1,
+              2,
+              1
+            ],
+            [
+              0,
+              1,
+              0
+            ]
+          ],
+          "example": false
+        },
+        {
+          "args": [
+            [
+              [
+                2147483647,
+                -1,
+                2147483647
+              ],
+              [
+                -1,
+                0,
+                -1
+              ],
+              [
+                2147483647,
+                -1,
+                2147483647
+              ]
+            ]
+          ],
+          "expected": [
+            [
+              2147483647,
+              -1,
+              2147483647
+            ],
+            [
+              -1,
+              0,
+              -1
+            ],
+            [
+              2147483647,
+              -1,
+              2147483647
+            ]
+          ],
+          "example": false
+        },
+        {
+          "args": [
+            [
+              [
+                0,
+                0,
+                -1
+              ],
+              [
+                -1,
+                2147483647,
+                2147483647
+              ],
+              [
+                2147483647,
+                2147483647,
+                2147483647
+              ],
+              [
+                0,
+                0,
+                -1
+              ]
+            ]
+          ],
+          "expected": [
+            [
+              0,
+              0,
+              -1
+            ],
+            [
+              -1,
+              1,
+              2
+            ],
+            [
+              1,
+              1,
+              2
+            ],
+            [
+              0,
+              0,
+              -1
+            ]
+          ],
+          "example": false
+        },
+        {
+          "args": [
+            [
+              [
+                2147483647,
+                2147483647,
+                2147483647,
+                2147483647,
+                0
+              ],
+              [
+                2147483647,
+                2147483647,
+                2147483647,
+                2147483647,
+                2147483647
+              ],
+              [
+                0,
+                0,
+                2147483647,
+                2147483647,
+                2147483647
+              ],
+              [
+                0,
+                0,
+                -1,
+                -1,
+                2147483647
+              ]
+            ]
+          ],
+          "expected": [
+            [
+              2,
+              2,
+              2,
+              1,
+              0
+            ],
+            [
+              1,
+              1,
+              2,
+              2,
+              1
+            ],
+            [
+              0,
+              0,
+              1,
+              2,
+              2
+            ],
+            [
+              0,
+              0,
+              -1,
+              -1,
+              3
+            ]
+          ],
+          "example": false
+        },
+        {
+          "args": [
+            [
+              [
+                0,
+                2147483647,
+                0,
+                -1
+              ],
+              [
+                2147483647,
+                2147483647,
+                0,
+                2147483647
+              ],
+              [
+                2147483647,
+                0,
+                0,
+                2147483647
+              ],
+              [
+                2147483647,
+                2147483647,
+                2147483647,
+                2147483647
+              ],
+              [
+                2147483647,
+                2147483647,
+                2147483647,
+                2147483647
+              ],
+              [
+                -1,
+                2147483647,
+                0,
+                2147483647
+              ]
+            ]
+          ],
+          "expected": [
+            [
+              0,
+              1,
+              0,
+              -1
+            ],
+            [
+              1,
+              1,
+              0,
+              1
+            ],
+            [
+              1,
+              0,
+              0,
+              1
+            ],
+            [
+              2,
+              1,
+              1,
+              2
+            ],
+            [
+              3,
+              2,
+              1,
+              2
+            ],
+            [
+              -1,
+              1,
+              0,
+              1
+            ]
+          ],
+          "example": false
+        },
+        {
+          "args": [
+            [
+              [
+                0,
+                0
+              ],
+              [
+                2147483647,
+                2147483647
+              ],
+              [
+                2147483647,
+                2147483647
+              ],
+              [
+                2147483647,
+                2147483647
+              ]
+            ]
+          ],
+          "expected": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              3,
+              3
+            ]
+          ],
+          "example": false
+        },
+        {
+          "args": [
+            [
+              [
+                2147483647,
+                2147483647,
+                2147483647
+              ],
+              [
+                2147483647,
+                -1,
+                2147483647
+              ],
+              [
+                2147483647,
+                -1,
+                -1
+              ],
+              [
+                2147483647,
+                2147483647,
+                2147483647
+              ]
+            ]
+          ],
+          "expected": [
+            [
+              2147483647,
+              2147483647,
+              2147483647
+            ],
+            [
+              2147483647,
+              -1,
+              2147483647
+            ],
+            [
+              2147483647,
+              -1,
+              -1
+            ],
+            [
+              2147483647,
+              2147483647,
+              2147483647
+            ]
+          ],
+          "example": false
+        }
+      ],
+      "result": {
+        "kind": "arg",
+        "index": 0
+      }
+    },
+    {
       "number": 323,
       "title": "Number of Connected Components in an Undirected Graph",
       "url": "https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/",
@@ -69210,6 +69797,968 @@
             ]
           ],
           "expected": 0,
+          "example": false
+        }
+      ]
+    },
+    {
+      "number": 1102,
+      "title": "Path With Maximum Minimum Value",
+      "url": "https://leetcode.com/problems/path-with-maximum-minimum-value/",
+      "statement": "Given an m x n integer matrix `grid`, return the maximum score of a path that starts at\n(0, 0) and ends at (m - 1, n - 1), moving up, down, left or right between cells.\n\nThe score of a path is the minimum value among the cells it visits, including the start and\nthe end cells.\n\nExample 1:\n    Input:  grid = [[5,4,5],\n                    [1,2,6],\n                    [7,4,6]]\n    Output: 4\n\nExample 2:\n    Input:  grid = [[2,2,1,2,2,2],\n                    [1,2,2,2,1,2]]\n    Output: 2\n\nExample 3:\n    Input:  grid = [[3,4,6,3,4],\n                    [0,2,1,1,7],\n                    [8,8,3,2,7],\n                    [3,2,4,9,8],\n                    [4,1,2,0,0],\n                    [4,6,5,4,3]]\n    Output: 3\n\nConstraints:\n    m == grid.length\n    n == grid[i].length\n    1 <= m, n <= 100\n    0 <= grid[i][j] <= 10^9",
+      "stub": "from typing import List, Optional\n\n\nclass Solution:\n    def maximumMinimumPath(self, grid: List[List[int]]) -> int:\n        pass\n",
+      "entry": {
+        "className": "Solution",
+        "method": "maximumMinimumPath"
+      },
+      "compare": "exact",
+      "figure": {
+        "kind": "grid",
+        "gridArg": 0
+      },
+      "cases": [
+        {
+          "args": [
+            [
+              [
+                5,
+                4,
+                5
+              ],
+              [
+                1,
+                2,
+                6
+              ],
+              [
+                7,
+                4,
+                6
+              ]
+            ]
+          ],
+          "expected": 4,
+          "example": true
+        },
+        {
+          "args": [
+            [
+              [
+                2,
+                2,
+                1,
+                2,
+                2,
+                2
+              ],
+              [
+                1,
+                2,
+                2,
+                2,
+                1,
+                2
+              ]
+            ]
+          ],
+          "expected": 2,
+          "example": true
+        },
+        {
+          "args": [
+            [
+              [
+                3,
+                4,
+                6,
+                3,
+                4
+              ],
+              [
+                0,
+                2,
+                1,
+                1,
+                7
+              ],
+              [
+                8,
+                8,
+                3,
+                2,
+                7
+              ],
+              [
+                3,
+                2,
+                4,
+                9,
+                8
+              ],
+              [
+                4,
+                1,
+                2,
+                0,
+                0
+              ],
+              [
+                4,
+                6,
+                5,
+                4,
+                3
+              ]
+            ]
+          ],
+          "expected": 3,
+          "example": true
+        },
+        {
+          "args": [
+            [
+              [
+                7
+              ]
+            ]
+          ],
+          "expected": 7,
+          "example": false
+        },
+        {
+          "args": [
+            [
+              [
+                0
+              ]
+            ]
+          ],
+          "expected": 0,
+          "example": false
+        },
+        {
+          "args": [
+            [
+              [
+                3,
+                9
+              ]
+            ]
+          ],
+          "expected": 3,
+          "example": false
+        },
+        {
+          "args": [
+            [
+              [
+                3
+              ],
+              [
+                9
+              ],
+              [
+                1
+              ]
+            ]
+          ],
+          "expected": 1,
+          "example": false
+        },
+        {
+          "args": [
+            [
+              [
+                1,
+                1
+              ],
+              [
+                1,
+                1
+              ]
+            ]
+          ],
+          "expected": 1,
+          "example": false
+        },
+        {
+          "args": [
+            [
+              [
+                0,
+                0
+              ],
+              [
+                0,
+                0
+              ]
+            ]
+          ],
+          "expected": 0,
+          "example": false
+        },
+        {
+          "args": [
+            [
+              [
+                9,
+                0
+              ],
+              [
+                0,
+                9
+              ]
+            ]
+          ],
+          "expected": 0,
+          "example": false
+        },
+        {
+          "args": [
+            [
+              [
+                5,
+                1,
+                5
+              ],
+              [
+                5,
+                1,
+                5
+              ],
+              [
+                5,
+                5,
+                5
+              ]
+            ]
+          ],
+          "expected": 5,
+          "example": false
+        },
+        {
+          "args": [
+            [
+              [
+                1000000000,
+                1000000000
+              ],
+              [
+                1000000000,
+                0
+              ]
+            ]
+          ],
+          "expected": 0,
+          "example": false
+        },
+        {
+          "args": [
+            [
+              [
+                6,
+                5,
+                3,
+                7,
+                12
+              ]
+            ]
+          ],
+          "expected": 3,
+          "example": false
+        },
+        {
+          "args": [
+            [
+              [
+                6,
+                10,
+                2
+              ],
+              [
+                6,
+                8,
+                0
+              ],
+              [
+                7,
+                7,
+                7
+              ],
+              [
+                10,
+                1,
+                2
+              ]
+            ]
+          ],
+          "expected": 2,
+          "example": false
+        },
+        {
+          "args": [
+            [
+              [
+                2,
+                12,
+                1,
+                3,
+                9,
+                1
+              ],
+              [
+                9,
+                10,
+                5,
+                10,
+                7,
+                12
+              ],
+              [
+                12,
+                2,
+                0,
+                10,
+                9,
+                5
+              ],
+              [
+                11,
+                11,
+                2,
+                0,
+                3,
+                7
+              ],
+              [
+                12,
+                10,
+                0,
+                12,
+                12,
+                4
+              ]
+            ]
+          ],
+          "expected": 2,
+          "example": false
+        },
+        {
+          "args": [
+            [
+              [
+                7,
+                11,
+                5,
+                0
+              ]
+            ]
+          ],
+          "expected": 0,
+          "example": false
+        },
+        {
+          "args": [
+            [
+              [
+                0,
+                9
+              ],
+              [
+                5,
+                8
+              ],
+              [
+                8,
+                3
+              ],
+              [
+                4,
+                2
+              ],
+              [
+                9,
+                6
+              ],
+              [
+                4,
+                9
+              ]
+            ]
+          ],
+          "expected": 0,
+          "example": false
+        },
+        {
+          "args": [
+            [
+              [
+                7,
+                4,
+                7,
+                0,
+                6,
+                2
+              ],
+              [
+                8,
+                9,
+                8,
+                4,
+                6,
+                5
+              ],
+              [
+                4,
+                3,
+                3,
+                2,
+                3,
+                10
+              ]
+            ]
+          ],
+          "expected": 4,
+          "example": false
+        }
+      ]
+    },
+    {
+      "number": 1135,
+      "title": "Connecting Cities With Minimum Cost",
+      "url": "https://leetcode.com/problems/connecting-cities-with-minimum-cost/",
+      "statement": "There are `n` cities labelled 1 to n. `connections[i] = [x, y, cost]` says that connecting\ncity `x` and city `y` (in either direction) costs `cost`.\n\nReturn the minimum total cost to connect all `n` cities so that there is a path between\nevery pair of cities, using only the listed connections. If it is impossible, return -1.\n\nExample 1:\n    Input:  n = 3\n            connections = [[1,2,5],[1,3,6],[2,3,1]]\n    Output: 6\n\nExample 2:\n    Input:  n = 4\n            connections = [[1,2,3],[3,4,4]]\n    Output: -1\n\nConstraints:\n    1 <= n <= 10^4\n    0 <= connections.length <= 10^4\n    connections[i].length == 3\n    1 <= x, y <= n, x != y\n    0 <= cost <= 10^5",
+      "stub": "from typing import List, Optional\n\n\nclass Solution:\n    def minimumCost(self, n: int, connections: List[List[int]]) -> int:\n        pass\n",
+      "entry": {
+        "className": "Solution",
+        "method": "minimumCost"
+      },
+      "compare": "exact",
+      "figure": {
+        "kind": "graph",
+        "directed": false,
+        "edgesArg": 1,
+        "nodeCountArg": null
+      },
+      "cases": [
+        {
+          "args": [
+            3,
+            [
+              [
+                1,
+                2,
+                5
+              ],
+              [
+                1,
+                3,
+                6
+              ],
+              [
+                2,
+                3,
+                1
+              ]
+            ]
+          ],
+          "expected": 6,
+          "example": true
+        },
+        {
+          "args": [
+            4,
+            [
+              [
+                1,
+                2,
+                3
+              ],
+              [
+                3,
+                4,
+                4
+              ]
+            ]
+          ],
+          "expected": -1,
+          "example": true
+        },
+        {
+          "args": [
+            1,
+            []
+          ],
+          "expected": 0,
+          "example": false
+        },
+        {
+          "args": [
+            2,
+            []
+          ],
+          "expected": -1,
+          "example": false
+        },
+        {
+          "args": [
+            2,
+            [
+              [
+                1,
+                2,
+                7
+              ]
+            ]
+          ],
+          "expected": 7,
+          "example": false
+        },
+        {
+          "args": [
+            2,
+            [
+              [
+                2,
+                1,
+                3
+              ],
+              [
+                1,
+                2,
+                9
+              ],
+              [
+                2,
+                1,
+                1
+              ]
+            ]
+          ],
+          "expected": 1,
+          "example": false
+        },
+        {
+          "args": [
+            3,
+            [
+              [
+                1,
+                2,
+                4
+              ],
+              [
+                1,
+                2,
+                4
+              ],
+              [
+                2,
+                3,
+                4
+              ]
+            ]
+          ],
+          "expected": 8,
+          "example": false
+        },
+        {
+          "args": [
+            4,
+            [
+              [
+                1,
+                2,
+                1
+              ],
+              [
+                2,
+                3,
+                2
+              ],
+              [
+                3,
+                1,
+                3
+              ]
+            ]
+          ],
+          "expected": -1,
+          "example": false
+        },
+        {
+          "args": [
+            5,
+            [
+              [
+                1,
+                2,
+                1
+              ],
+              [
+                3,
+                4,
+                1
+              ]
+            ]
+          ],
+          "expected": -1,
+          "example": false
+        },
+        {
+          "args": [
+            3,
+            [
+              [
+                1,
+                3,
+                1
+              ],
+              [
+                3,
+                1,
+                2
+              ]
+            ]
+          ],
+          "expected": -1,
+          "example": false
+        },
+        {
+          "args": [
+            4,
+            [
+              [
+                1,
+                2,
+                5
+              ],
+              [
+                2,
+                3,
+                5
+              ],
+              [
+                3,
+                4,
+                5
+              ],
+              [
+                1,
+                4,
+                5
+              ]
+            ]
+          ],
+          "expected": 15,
+          "example": false
+        },
+        {
+          "args": [
+            3,
+            [
+              [
+                3,
+                2,
+                10
+              ],
+              [
+                1,
+                3,
+                16
+              ]
+            ]
+          ],
+          "expected": 26,
+          "example": false
+        },
+        {
+          "args": [
+            3,
+            [
+              [
+                2,
+                3,
+                11
+              ],
+              [
+                3,
+                2,
+                13
+              ],
+              [
+                1,
+                2,
+                13
+              ]
+            ]
+          ],
+          "expected": 24,
+          "example": false
+        },
+        {
+          "args": [
+            5,
+            [
+              [
+                1,
+                5,
+                8
+              ],
+              [
+                4,
+                5,
+                2
+              ],
+              [
+                5,
+                1,
+                20
+              ],
+              [
+                1,
+                4,
+                11
+              ]
+            ]
+          ],
+          "expected": -1,
+          "example": false
+        },
+        {
+          "args": [
+            7,
+            [
+              [
+                5,
+                3,
+                7
+              ],
+              [
+                5,
+                6,
+                18
+              ],
+              [
+                2,
+                1,
+                19
+              ],
+              [
+                2,
+                5,
+                7
+              ],
+              [
+                1,
+                3,
+                15
+              ],
+              [
+                6,
+                4,
+                6
+              ],
+              [
+                2,
+                1,
+                18
+              ],
+              [
+                3,
+                2,
+                5
+              ],
+              [
+                4,
+                2,
+                13
+              ]
+            ]
+          ],
+          "expected": -1,
+          "example": false
+        },
+        {
+          "args": [
+            8,
+            [
+              [
+                6,
+                3,
+                1
+              ],
+              [
+                3,
+                1,
+                1
+              ],
+              [
+                3,
+                8,
+                14
+              ],
+              [
+                3,
+                6,
+                11
+              ],
+              [
+                5,
+                8,
+                17
+              ],
+              [
+                7,
+                1,
+                9
+              ],
+              [
+                4,
+                2,
+                8
+              ],
+              [
+                3,
+                4,
+                10
+              ],
+              [
+                4,
+                6,
+                12
+              ]
+            ]
+          ],
+          "expected": 60,
+          "example": false
+        },
+        {
+          "args": [
+            8,
+            [
+              [
+                4,
+                5,
+                4
+              ],
+              [
+                7,
+                8,
+                6
+              ],
+              [
+                3,
+                5,
+                14
+              ],
+              [
+                1,
+                3,
+                3
+              ],
+              [
+                1,
+                3,
+                14
+              ],
+              [
+                1,
+                3,
+                1
+              ],
+              [
+                2,
+                1,
+                12
+              ]
+            ]
+          ],
+          "expected": -1,
+          "example": false
+        },
+        {
+          "args": [
+            8,
+            [
+              [
+                4,
+                2,
+                3
+              ],
+              [
+                6,
+                7,
+                11
+              ],
+              [
+                4,
+                7,
+                2
+              ],
+              [
+                2,
+                8,
+                15
+              ],
+              [
+                7,
+                5,
+                20
+              ],
+              [
+                8,
+                4,
+                6
+              ],
+              [
+                8,
+                3,
+                3
+              ],
+              [
+                6,
+                5,
+                6
+              ],
+              [
+                4,
+                2,
+                5
+              ],
+              [
+                6,
+                8,
+                18
+              ],
+              [
+                3,
+                5,
+                6
+              ],
+              [
+                7,
+                3,
+                19
+              ],
+              [
+                1,
+                2,
+                1
+              ],
+              [
+                4,
+                6,
+                2
+              ],
+              [
+                6,
+                5,
+                14
+              ]
+            ]
+          ],
+          "expected": 23,
           "example": false
         }
       ]

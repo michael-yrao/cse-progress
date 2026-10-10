@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-09",
+  "generatedAt": "2026-10-10",
   "entries": [
     {
       "key": "733:bfs",
@@ -7871,8 +7871,8 @@
         {
           "kind": "attempt",
           "symbol": "findItinerary_stack_20260915",
-          "startLine": 25,
-          "endLine": 65,
+          "startLine": 60,
+          "endLine": 100,
           "lines": [
             "    # ── Attempt · 2026-09-15 ──────────────",
             "    def findItinerary_stack_20260915(self, tickets: List[List[str]]) -> List[str]:",

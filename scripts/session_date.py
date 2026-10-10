@@ -119,15 +119,28 @@ def detect_session_date(now: datetime | None = None) -> tuple[datetime, str | No
     return now, None
 
 
+def _announce_override(explicit: datetime, now: datetime | None) -> None:
+    """Print one line when `--date` contradicts a detection that had a reason."""
+    detected, reason = detect_session_date(now)
+    if not reason or detected.date() == explicit.date():
+        return
+    print(f"--date {explicit.strftime('%Y-%m-%d')} overrides the detected session date "
+          f"{detected.strftime('%Y-%m-%d')} ({reason}); the override is for a wrong "
+          f"detection, not for re-deciding which day has started.")
+
+
 def resolve_datetime(explicit: str | None = None, *, now: datetime | None = None,
                      announce: bool = True) -> datetime:
     """Session date as a datetime. `explicit` (YYYY-MM-DD or YYYYMMDD) always wins."""
     if explicit:
         for candidate in ("%Y-%m-%d", "%Y%m%d"):
             try:
-                return datetime.strptime(explicit, candidate)
+                parsed = datetime.strptime(explicit, candidate)
             except ValueError:
                 continue
+            if announce:
+                _announce_override(parsed, now)
+            return parsed
         raise SystemExit(f"--date: expected YYYY-MM-DD or YYYYMMDD, got {explicit!r}")
 
     session, reason = detect_session_date(now)
