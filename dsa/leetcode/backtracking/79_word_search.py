@@ -30,6 +30,48 @@ from typing import List, Optional
 
 
 class Solution:
+
+    # ── Attempt · 2026-10-09 ──────────────
+    def exist_20261009(self, board: List[List[str]], word: str) -> bool:
+        # we hit the first letter and try to go down the grid
+        # backtrack if we don't see letters matching
+        # so this feels like either a backtracking or a DFS
+        # let's try backtracking here
+        # path: current letters matched so far. 
+        # state: row and col of the current grid. we can figure out which letter we are trying to match based on length of path
+        # decision: feels like it is always a pick, no valid reason to not pick
+        # validity: check if current row, col matches what we are looking for 
+        # base case: if len(path) == len(word), return True. # if either row, col are out of bounds, we are done, return False
+
+        rows, cols = len(board), len(board[0])
+
+        def backtrack(path, r, c, visited):
+            if len(path) == len(word):
+                return True
+            if r < 0 or r >= rows or c < 0 or c >= cols:
+                return False
+            if (r, c) in visited:
+                return False
+
+            if word[len(path)] == board[r][c]:
+                path.append(board[r][c])
+                visited.add((r,c))
+                status = (backtrack(path, r + 1, c, visited)
+                or backtrack(path, r - 1, c, visited)
+                or backtrack(path, r, c + 1, visited)
+                or backtrack(path, r, c - 1, visited))
+                visited.remove((r,c))
+                path.pop()
+                return status
+        
+        for row in range(rows):
+            for col in range(cols):
+                if board[row][col] == word[0]:
+                    if backtrack([], row, col, set()):
+                        return True
+        
+        return False
+
     # ── Attempt 1 · 2026-09-29 ────────────────────────────────────────────
     def exist(self, board: List[List[str]], word: str) -> bool:
         # first thought is DFS but we need to be able to backtrack if our current path is bad

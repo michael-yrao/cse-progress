@@ -6,7 +6,7 @@
 
 > The tracker is keyed by **problem**; this is keyed by **technique**. Use it at the weekly build to decide what to pull, and at phase exit to check the per-algorithm bar (recognition + execution, ≥1 🟢 each).
 
-> **62/109** techniques started &nbsp;·&nbsp; **3** with no 🟢 &nbsp;·&nbsp; **8** thin &nbsp;·&nbsp; **0** unqueued variant gaps
+> **62/109** techniques started &nbsp;·&nbsp; **3** with no 🟢 &nbsp;·&nbsp; **7** thin &nbsp;·&nbsp; **0** unqueued variant gaps
 
 ## ⚠️ Action list
 
@@ -25,7 +25,6 @@
 - **Kruskal's MST** (advanced_graphs) — 2/4: 1489, 9004
 - **Trie** (tries) — 3/4: 208, 211, 648
 - **Dijkstra** (advanced_graphs) — 5/6: 743, 778, 1631, 2812, 3620
-- **Backtracking** (backtracking) — 9/10 (13 rows): 17, 22, 39, 40, 46, 78, 79, 90, 131
 
 **Queued — declared, and already sitting in the Waiting Room / Expansion Queue.** A known gap with a fill already picked, not a new finding.
 
@@ -76,7 +75,7 @@ Every declared technique gets a row, started or not — a not-started row's Gaps
 | In-Place Array Rotation | arrays_and_hash | core | 1 (1+0) | 1 (189) | 🟢 | ✅ | — | — |
 | Length-Prefix Encoding | arrays_and_hash | core | 1 (1+0) | 1 (271) | 🟢 | ✅ | — | — |
 | Prefix/Suffix Products | arrays_and_hash | core | 1 (1+0) | 1 (238) | 🟢 | ✅ | — | — |
-| Backtracking | backtracking | core | 10 (5+5) | 9 *+4v* (17, 22, 39, 40, 46, 78, 79, 90, 131) | 🟢 | ✅ | — | thin (9/10) · queued: 51 `phase:Backtracking`, 212 `phase:Backtracking` |
+| Backtracking | backtracking | core | 9 (5+4) | 9 *+4v* (17, 22, 39, 40, 46, 78, 79, 90, 131) | 🟢 | ✅ | — | queued: 51 `phase:Backtracking`, 212 `phase:Backtracking` |
 | Binary Search (exact match) | binary_search | core | 1 (1+0) | 2 (33, 704) | 🎓 | ✅ | — | — |
 | Binary Search (max boundary) | binary_search | core | 3 (2+1) | 4 (34, 74, 1552, 3620) | 🟢 | ✅ | — | — |
 | Binary Search (min boundary) | binary_search | core | 4 (4+0) | 7 (34, 153, 162, 540, 875, 1011, 2300) | 🎓 | ✅ | — | queued: 4 `surplus>=1` |
@@ -172,6 +171,10 @@ Every declared technique gets a row, started or not — a not-started row's Gaps
 | Two Pointers (converging) | two_pointers | core | 4 (4+0) | 8 (11, 15, 88, 125, 167, 344, 680, 1768) | 🎓 | ✅ | — | — |
 
 ## Vocabulary maintenance
+
+**Unmapped tracker rows (1)** — solved but assigned to no technique. Add them to `techniques.yml`, or coverage silently drifts behind the tracker.
+
+- 9003 Lost Map
 
 **Queued (78)** — listed in the Action list above; a known gap with a fill already picked, not counted below.
 

@@ -102,6 +102,39 @@ class LinkLineJudgeLabelTests(unittest.TestCase):
         )
 
 
+class ScheduleLinkLineTests(unittest.TestCase):
+    """schedule_link_line() adds `[run]` only when a spec exists and the judge isn't the site."""
+
+    def test_schedule_link_line_table(self):
+        site = "https://progressiveoverflow.com/practice"
+        cases = [
+            ("spec + LC", "1", "https://leetcode.com/problems/target/", True,
+             f"· [LC](https://leetcode.com/problems/target/) · [run]({site}/1)"),
+            ("spec + NC", "2", "https://neetcode.io/problems/target/", True,
+             f"· [NC](https://neetcode.io/problems/target/) · [run]({site}/2)"),
+            ("no spec", "3", "https://leetcode.com/problems/target/", False,
+             "· [LC](https://leetcode.com/problems/target/)"),
+            ("judge is the site", "4", f"{site}/4", True,
+             f"· [progressiveoverflow]({site}/4)"),
+        ]
+        for name, number, url, has_spec, expected_tail in cases:
+            with self.subTest(name), tempfile.TemporaryDirectory() as tmp:
+                root = Path(tmp)
+                solutions = root / "dsa" / "leetcode" / "graphs"
+                solutions.mkdir(parents=True)
+                (solutions / f"{number}_x.py").write_text(
+                    f'"""\n{number}. Target   ·   {url}\n"""\n', encoding="utf-8")
+                (root / "dsa" / "tests").mkdir(parents=True)
+                if has_spec:
+                    (root / "dsa" / "tests" / f"{number}_x.yml").write_text("x: 1\n", encoding="utf-8")
+                with mock.patch.object(links, "REPO_ROOT", root), \
+                     mock.patch.object(links, "source_roots", return_value=[root / "dsa" / "leetcode"]), \
+                     mock.patch.object(links, "TRACKER", root / "no_such_tracker.md"):
+                    line = links.schedule_link_line(number)
+                self.assertTrue(line.endswith(expected_tail), line)
+                self.assertEqual(line.count(f"]({site}/"), 1 if has_spec else 0, line)
+
+
 class IsRealTitleParentheticalTests(unittest.TestCase):
     def test_variant_tag_not_in_slug_is_not_real(self):
         self.assertFalse(

@@ -361,6 +361,26 @@ class DoneRowFindingsTests(unittest.TestCase):
                 self.assertEqual(len(findings), expected_findings)
 
 
+class SiteLinkFindingsTests(unittest.TestCase):
+    """Check 9: a row with a practice spec needs its `[run]` link, unless its judge is the site."""
+
+    def test_site_link_findings_table(self):
+        site = "https://progressiveoverflow.com/practice"
+        cases = [
+            ("spec, no [run]", f"[743 X](f.py) · [LC](https://leetcode.com/p/x/)", {743}, 1),
+            ("spec, [run] present", f"[743 X](f.py) · [LC](https://leetcode.com/p/x/) · [run]({site}/743)",
+             {743}, 0),
+            ("spec, [run] names another number",
+             f"[743 X](f.py) · [LC](https://leetcode.com/p/x/) · [run]({site}/744)", {743}, 1),
+            ("site is the judge", f"[9003 X](f.py) · [progressiveoverflow]({site}/9003)", {9003}, 0),
+            ("no spec", f"[743 X](f.py) · [LC](https://leetcode.com/p/x/)", set(), 0),
+        ]
+        for name, cell, specs, expected in cases:
+            with self.subTest(name):
+                findings = csi.site_link_findings([(cell, False, ["", "", ""])], lambda n: n in specs)
+                self.assertEqual(len(findings), expected, findings)
+
+
 _CFG = {"carry_forward_min_streak": 2, "intake_per_week": 2,
         "intake_pause_overdue_unproven": 2}
 _MONDAY = dt.date(2026, 10, 5)

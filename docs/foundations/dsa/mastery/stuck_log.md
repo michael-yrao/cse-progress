@@ -22,6 +22,9 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🟡 79. Word Search — 2026-10-09
+**Sticking point**: put the every-cell start loop inside `backtrack` (twice: from (0,0), then from `(row, col)` onward), so a call matched any later cell instead of its own; then no per-path visited set, so `"ABCB"` reused (0,1); coach placed the loop and, on request, explained removing the mark on return.
+
 ## 🟡 853. Car Fleet — 2026-10-08
 **Sticking point**: pushed every car's arrival time onto the stack, so a car that joined a fleet left its own faster time on top instead of the fleet's slower one; coach found it with a failing input (`[10,9,0]`, speeds `[1,3,8]`, target 12 → 2, expected 1).
 

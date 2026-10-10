@@ -75,17 +75,19 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/dsa/mastery/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **136+6** problems &nbsp;·&nbsp; **147+6** solutions &nbsp;·&nbsp; **662+6** reps
+> **137+6** problems &nbsp;·&nbsp; **148+6** solutions &nbsp;·&nbsp; **665+6** reps
 
 | | 🏆 Retired | 🎓 Graduated | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|:---:|
-| **Solutions** | 0 | 26 | 108 | 12 | 1 |
+| **Solutions** | 0 | 26 | 109 | 12 | 1 |
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Rep Date | Rep Dates |
 |---|---|---|---|---|---|---|
+| Medium | [9003. Lost Map](https://progressiveoverflow.com/practice/9003) | 🔴 | 0 | 2026-10-11 | 2026-10-09 | 2026-10-09 |
+| Medium | [17. Letter Combinations of a Phone Number](https://leetcode.com/problems/letter-combinations-of-a-phone-number/) | 🟢 | 0 | 2026-10-19 | 2026-10-09 | 2026-10-07, 2026-10-09 |
+| Medium | [79. Word Search](https://leetcode.com/problems/word-search/) | 🟡 | 0 | 2026-10-19 | 2026-10-09 | 2026-09-29, 2026-10-09 |
 | Medium | [452. Minimum Number of Arrows to Burst Balloons](https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/) | 🟢 | 0 | 2026-10-18 | 2026-10-08 | 2026-10-06, 2026-10-08 |
 | Medium | [853. Car Fleet](https://leetcode.com/problems/car-fleet/) | 🟡 | 0 | 2026-10-18 | 2026-10-08 | 2026-08-15, 2026-08-17, 2026-08-29, 2026-09-28, 2026-10-08 |
-| Medium | [17. Letter Combinations of a Phone Number](https://leetcode.com/problems/letter-combinations-of-a-phone-number/) | 🔴 | 0 | 2026-10-09 | 2026-10-07 | 2026-10-07 |
 | Medium | [57. Insert Interval](https://leetcode.com/problems/insert-interval/) | 🟢 | 2 | 2026-12-06 | 2026-10-07 | 2026-08-26, 2026-08-28, 2026-09-07, 2026-10-07 |
 | Hard | [3620. Network Recovery Pathways (Dijkstra)](https://leetcode.com/problems/network-recovery-pathways/) | 🟡 | 0 | 2026-10-16 | 2026-10-06 | 2026-10-04, 2026-10-06 |
 | Medium | [648. Replace Words](https://leetcode.com/problems/replace-words/) | 🟡 | 0 | 2026-10-16 | 2026-10-06 | 2026-09-14, 2026-09-24, 2026-09-26, 2026-10-06 |
@@ -111,7 +113,6 @@ Notes for future agents:
 | Easy | [202. Happy Number (Seen-Set)](https://leetcode.com/problems/happy-number/) | 🟢 | 2 | 2026-11-30 | 2026-10-01 | 2026-08-11, 2026-08-21, 2026-09-02, 2026-10-01 |
 | Hard | [84. Largest Rectangle in Histogram](https://leetcode.com/problems/largest-rectangle-in-histogram/) | 🟢 | 1 | 2026-10-30 | 2026-09-30 | 2026-09-04, 2026-09-18, 2026-09-20, 2026-09-30 |
 | Medium | [78. Subsets](https://leetcode.com/problems/subsets/) | 🟢 | 1 | 2026-10-30 | 2026-09-30 | 2026-09-20, 2026-09-30 |
-| Medium | [79. Word Search](https://leetcode.com/problems/word-search/) | 🟡 | 0 | 2026-10-09 | 2026-09-29 | 2026-09-29 |
 | Medium | [763. Partition Labels](https://leetcode.com/problems/partition-labels/) | 🟢 | 1 | 2026-10-29 | 2026-09-29 | 2026-09-09, 2026-09-19, 2026-09-29 |
 | Medium | [846. Hand of Straights](https://leetcode.com/problems/hand-of-straights/) | 🟢 | 1 | 2026-10-29 | 2026-09-29 | 2026-09-11, 2026-09-23, 2026-09-29 |
 | Medium | [53. Maximum Subarray (Kadane)](https://leetcode.com/problems/maximum-subarray/) | 🎓 | 3 | 2027-03-28 | 2026-09-29 | 2026-01-08, 2026-04-02, 2026-06-23, 2026-06-24, 2026-07-26, 2026-09-29 |

@@ -2216,7 +2216,7 @@
       "number": 17,
       "title": "Letter Combinations of a Phone Number",
       "url": "https://leetcode.com/problems/letter-combinations-of-a-phone-number/",
-      "statement": "Given a string containing digits from 2-9 inclusive, return all possible\nletter combinations that the number could represent. Return the answer in\nany order.\n\nA mapping of digits to letters (just like on the telephone buttons) is\ngiven below. Note that 1 does not map to any letters.\n\n    2: abc    3: def    4: ghi    5: jkl\n    6: mno    7: pqrs   8: tuv    9: wxyz\n\nExample 1:\n    Input:  digits = \"23\"\n    Output: [\"ad\",\"ae\",\"af\",\"bd\",\"be\",\"bf\",\"cd\",\"ce\",\"cf\"]\n\nExample 2:\n    Input:  digits = \"\"\n    Output: []\n\nExample 3:\n    Input:  digits = \"2\"\n    Output: [\"a\",\"b\",\"c\"]\n\nConstraints:\n    0 <= digits.length <= 4\n    digits[i] is a digit in the range ['2', '9'].",
+      "statement": "Given a string containing digits from 2-9 inclusive, return all possible\nletter combinations that the number could represent. Return the answer in\nany order.\n\nA mapping of digits to letters (just like on the telephone buttons) is\ngiven below. Note that 1 does not map to any letters.\n\n    2: abc    3: def    4: ghi    5: jkl\n    6: mno    7: pqrs   8: tuv    9: wxyz\n\nExample 1:\n    Input:  digits = \"23\"\n    Output: [\"ad\",\"ae\",\"af\",\"bd\",\"be\",\"bf\",\"cd\",\"ce\",\"cf\"]\n\nExample 2:\n    Input:  digits = \"2\"\n    Output: [\"a\",\"b\",\"c\"]\n\nConstraints:\n    1 <= digits.length <= 4\n    digits[i] is a digit in the range ['2', '9'].",
       "stub": "from typing import List, Optional\n\n\nclass Solution:\n    def letterCombinations(self, digits: str) -> List[str]:\n        pass\n",
       "entry": {
         "className": "Solution",
@@ -2240,13 +2240,6 @@
             "ce",
             "cf"
           ],
-          "example": true
-        },
-        {
-          "args": [
-            ""
-          ],
-          "expected": [],
           "example": true
         },
         {

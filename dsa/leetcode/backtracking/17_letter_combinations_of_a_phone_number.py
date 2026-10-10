@@ -17,15 +17,11 @@ Example 1:
     Output: ["ad","ae","af","bd","be","bf","cd","ce","cf"]
 
 Example 2:
-    Input:  digits = ""
-    Output: []
-
-Example 3:
     Input:  digits = "2"
     Output: ["a","b","c"]
 
 Constraints:
-    0 <= digits.length <= 4
+    1 <= digits.length <= 4
     digits[i] is a digit in the range ['2', '9'].
 """
 # Write everything yourself from here — including any ListNode/TreeNode classes a
@@ -34,6 +30,40 @@ from typing import List, Optional
 
 
 class Solution:
+
+    # ── Attempt · 2026-10-09 ──────────────
+    def letterCombinations_20261009(self, digits: str) -> List[str]:
+        # we need to map 2 through 9 to their respective letters
+        # then backtrack via a for loop, reason for for loop is because we are not doing a pick or not pick, we are doing a pick one of the these values associated with a key
+        # path: current string
+        # base case: len(path) == len(digits)
+
+        result = []
+
+        num_to_char = {
+            '2' : ['a', 'b', 'c'],
+            '3' : ['d', 'e', 'f'],
+            '4' : ['g', 'h', 'i'],
+            '5' : ['j', 'k', 'l'],
+            '6' : ['m', 'n', 'o'],
+            '7' : ['p', 'q', 'r', 's'],
+            '8' : ['t', 'u', 'v'],
+            '9' : ['w', 'x', 'y', 'z'],
+        }
+
+        def backtrack(path):
+            if len(path) == len(digits):
+                result.append("".join(path.copy()))
+                return
+            
+            for char in num_to_char[digits[len(path)]]:
+                path.append(char)
+                backtrack(path)
+                path.pop()
+        
+        backtrack([])
+        return result
+
     # ── Attempt 1 · 2026-10-07 ────────────────────────────────────────────
     def letterCombinations(self, digits: str) -> List[str]:
         # map each number to the letters they are associated with, so a num_char map

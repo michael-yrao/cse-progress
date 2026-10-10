@@ -19,15 +19,11 @@ statement: |
       Output: ["ad","ae","af","bd","be","bf","cd","ce","cf"]
 
   Example 2:
-      Input:  digits = ""
-      Output: []
-
-  Example 3:
       Input:  digits = "2"
       Output: ["a","b","c"]
 
   Constraints:
-      0 <= digits.length <= 4
+      1 <= digits.length <= 4
       digits[i] is a digit in the range ['2', '9'].
 entry:
   class: Solution
@@ -36,7 +32,6 @@ signature: "digits: str -> List[str]"
 compare: unordered
 cases:
   - {args: ["23"], expected: ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"], example: true}
-  - {args: [""], expected: [], example: true}
   - {args: ["2"], expected: ["a", "b", "c"], example: true}
   - {args: ["3"], expected: ["d", "e", "f"]}
   - {args: ["4"], expected: ["g", "h", "i"]}

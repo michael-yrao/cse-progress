@@ -59,7 +59,8 @@ number: it names the key.
    - Mock due: seat the 🎤 row on Sunday per [`dsa-mock.md`](../cse-coach/references/dsa-mock.md).
    - A variant label is read from the due tracker row, never typed.
 9. **Price each hypothetical day** with `--day N N …` and read the row line beside `TOTAL`.
-10. **Write the file.** Lean table, rows ordered highest priority first, DSA before SD.
+10. **Write the file.** Lean table, rows ordered highest priority first, DSA before SD. Each row's
+    link cell is pasted from `links.py --schedule N …`, never typed (it adds `· [run](site url)`).
 11. **Headers.** `--schedule-day` per day; set each header's first figure to `built`. A build writes no planned figure.
 12. **Order.** `schedule_priority.py`.
 13. **Integrity.** `check_schedule_integrity.py`. Every due row is seated, validly carried, or

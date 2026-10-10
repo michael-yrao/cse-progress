@@ -19,7 +19,7 @@ Replaced the fourth step Oct 4, 2026: *"new priority for problem links: leetcode
 | 1. LeetCode | the problem is free there | LeetCode's GraphQL lookup: `isPaidOnly` is false |
 | 2. NeetCode | LeetCode paywalls it AND NeetCode lists it | NeetCode's public problem list (`neetcode-gh/leetcode`, `.problemSiteData.json`) |
 | 3. HelloInterview | neither of the above, AND its catalog has it | `hellointerview.yml`, built by crawling the catalog |
-| 4. progressiveoverflow | none of the three carries it | `https://progressiveoverflow.com/practice/<n>`, label `progressiveoverflow`; a practice spec is written so the page exists. The spec's own `url:` keeps the problem's source page. Nothing is skipped. |
+| 4. progressiveoverflow | none of the three carries it. (Oct 9 amendment, `problem-link-order-oct09`: in schedule rows and site lists the site link is ALSO a standing second link `[run]` beside the external one whenever a spec exists; this row is then the external link only.) | `https://progressiveoverflow.com/practice/<n>`, label `progressiveoverflow`; a practice spec is written so the page exists. The spec's own `url:` keeps the problem's source page. Nothing is skipped. |
 
 **The learner holds HelloInterview premium for coding**, not only system design (*"i have premium there so if a
 problem is available there on premium, i can do it there"*). It is still the LAST resort, after both free sites.

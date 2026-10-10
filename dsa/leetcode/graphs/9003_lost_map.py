@@ -40,10 +40,63 @@ Constraints:
 """
 # Write everything yourself from here — including any ListNode/TreeNode classes a
 # problem needs. No shared data-model imports (whiteboard fidelity).
+import math
 from typing import List, Optional
 
 
 class Solution:
-    # ── Attempt 1 · 2026-10-08 ────────────────────────────────────────────
+    # ── Attempt 1 · 2026-10-09 ────────────────────────────────────────────
     def lostMap(self, distances: List[List[int]]) -> List[List[int]]:
-        pass
+        # so we are given the distances array and we are working our way backwards to find the original n - 1 edges
+        # looking at n, 2500 is a bit too high for me to try anything with floyd warshall
+        # let's see where this distances gets used by dijkstra
+        # we typically relax until we get to this point
+        # so how do we work backwards. Actually looking at the result, the answer is literally just a MST, so we work out a MST from the distances
+        # so we are going to try to build a MST based on what we have
+        # distances is a Prim's thing, so we can try to work it out from there
+        
+        n = len(distances)
+
+        # tells us whether or not we visited this node to the MST yet
+        visited = [False] * n
+
+        # tells us the cheapest edge value to the node
+        # we also need to keep track of the node getting us to to it for the result
+        mst_distances = [[math.inf, None]] * n
+
+        mst_edges = []
+        # our own distances array
+        mst_distances[0][0] = 0
+
+        def get_cheapest_unvisited_node():
+            return_value = math.inf
+            return_index = math.inf
+            for i in range(n):
+                if not visited[i]:
+                    if mst_distances[i][0] < return_value:
+                        return_index = i
+                        return_value = mst_distances[i][0]
+            return return_index
+
+        def relax(node):
+            # for all nodes that we haven't visited, relax to node
+            for i in range(n):
+                if not visited[i]:
+                    # if smaller than what we currently have, modify who gave us this edge
+                    if distances[node][i] < mst_distances[i][0]:
+                    # if we haven't visited yet, update mst_distances if applicable
+                        mst_distances[i][0] = min(mst_distances[i][0], distances[node][i])
+                        mst_distances[i][1] = node
+
+        for _ in range(n):
+            # get the cheapest unvisited node
+            cheapest_unvisited_node = get_cheapest_unvisited_node()
+            # mark as visited
+            visited[cheapest_unvisited_node] = True # type: ignore
+            # if not None, we have an optimal edge, add to result
+            if mst_distances[cheapest_unvisited_node][1] != None: # type: ignore
+                mst_edges.append([cheapest_unvisited_node, mst_distances[cheapest_unvisited_node][1]]) # type: ignore
+            # relax everyone in cheapest to this
+            relax(cheapest_unvisited_node)
+
+        return mst_edges

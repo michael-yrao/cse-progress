@@ -45,6 +45,15 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_ROOT = "dsa/leetcode"
 TRACKER = REPO_ROOT / "docs" / "foundations" / "dsa" / "mastery" / "dsa_progress.md"
 
+# The site's practice page for a number (it exists iff a spec `dsa/tests/<n>_*.yml` does).
+# One definition: new_problem.py imports these. `SITE_RUN_LABEL` matches the site's own
+# "Run code" link on that page.
+SPEC_DIR = Path("dsa") / "tests"
+SITE_PRACTICE_URL_TEMPLATE = "https://progressiveoverflow.com/practice/{number}"
+SITE_PRACTICE_URL_PREFIX = "https://progressiveoverflow.com/practice/"
+SITE_JUDGE = "progressiveoverflow"
+SITE_RUN_LABEL = "run"
+
 # Header line: `853. Car Fleet   ·   https://leetcode.com/problems/car-fleet/`. The `·`
 # and the URL are optional — a legacy file may carry only `853. Car Fleet`.
 HEADER = re.compile(r"^\s*(\d{1,4})\.\s+(.+?)(?:\s+·\s+(https?://\S+))?\s*$")
@@ -268,12 +277,36 @@ def link_line(number: str) -> str | None:
     return f"[{name}]({rel}) · [{label}]({url})"
 
 
+def site_practice_url(number: str) -> str | None:
+    """The site's practice-page URL for `number`, or None when no spec
+    `dsa/tests/<number>_*.yml` exists (a page for a number with no spec is empty)."""
+    spec_dir = REPO_ROOT / SPEC_DIR
+    if not any(spec_dir.glob(f"{number}_*.yml")):
+        return None
+    return SITE_PRACTICE_URL_TEMPLATE.format(number=number)
+
+
+def schedule_link_line(number: str) -> str | None:
+    """`link_line(number)` plus ` · [run](<site url>)` — the shape of a schedule row's link
+    cell. The site link is added only when the practice page exists and the row's own judge
+    link is not already the site (an external-judge problem keeps its single link)."""
+    line = link_line(number)
+    site_url = site_practice_url(number)
+    if line is None or site_url is None or f"]({SITE_PRACTICE_URL_PREFIX}" in line:
+        return line
+    return f"{line} · [{SITE_RUN_LABEL}]({site_url})"
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(
         description="Print the [file] · [judge label] link pair for one or more problem "
                     "numbers (judge label: LC/NC/Kattis/CSES/HelloInterview/hostname).")
     ap.add_argument("numbers", nargs="+", help="problem number(s), e.g. 269 853 424")
+    ap.add_argument("--schedule", action="store_true",
+                    help="print the schedule-row shape: the pair plus ` · [run](site url)` "
+                         "when the practice page exists")
     args = ap.parse_args()
+    make_line = schedule_link_line if args.schedule else link_line
 
     missing = 0
     for number in args.numbers:
@@ -281,7 +314,7 @@ def main() -> None:
             print(f"WARNING: '{number}' is not a problem number; skipping.", file=sys.stderr)
             missing += 1
             continue
-        line = link_line(number)
+        line = make_line(number)
         if line is None:
             missing += 1
             continue

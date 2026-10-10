@@ -1,3 +1,12 @@
+- **2026-10-09 · 79 Word Search** (🟡 re-rep; retry, half-spoiled: backtracking folder, stub's `Pattern:` line) —
+  ✅ **hit.** Top comment, unaided: "we hit the first letter and try to go down the grid", backtracking with path,
+  state (row, col; the next letter read from `len(path)`), always-pick decision, match check and base cases. The call
+  was right; the code was not (start loop inside the recursion, no per-path visited set), both coach-nudged. → 🟡.
+- **2026-10-09 · 17 Letter Combinations of a Phone Number** (🔴 re-rep; retry, half-spoiled: backtracking folder,
+  stub's `Pattern:` line) — ✅ **hit.** Top comment, unaided: map digits to letters, then backtrack with a for loop
+  "because we are not doing a pick or not pick, we are doing a pick one of these values associated with a key"; path
+  = current string, base case `len(path) == len(digits)`. That is the picking feature the Oct 7 rep missed. Blank page,
+  no hints; passes LeetCode. → 🟢 provisional.
 - **2026-10-08 · 9003 Lost Map** (🆕 new; the stub's `Pattern: graphs` line names the family, not the technique) — ❌
   **miss.** Unaided: "working backwards to find the original n − 1 edges", Floyd-Warshall ruled out by n = 2500, then
   a row-minimum rule (given a path matrix 0–1–2–3 with roads 1, 10, 1, on which it returns two of three roads), then

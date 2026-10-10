@@ -1746,6 +1746,21 @@ decisions:
       changed.
     affects: [links, scaffolding, practice]
 
+  - id: problem-link-order-oct09
+    date: 2026-10-09
+    summary: >-
+      AMENDS `problem-link-order-oct04`: the site practice page is a standing second link in
+      schedule rows and in the site's problem lists, not only a fourth fallback. A schedule row
+      reads `[name](file) · [LC](url) · [run](https://progressiveoverflow.com/practice/<n>)`,
+      the `[run]` link present whenever a spec `dsa/tests/<n>_*.yml` exists and the row's own
+      judge link is not already the site (9003-style rows keep their single link). The external
+      link keeps the order LC > NC > HelloInterview. Chat lineups are unchanged: `links.py`
+      with no flag stays byte-identical. Code: `links.py --schedule` composes the cell;
+      `check_schedule_integrity.py` check 9 flags a current-schedule row that lacks it; the
+      site constants moved from `new_problem.py` to `links.py`. No `cse.config.yml` value
+      changed.
+    affects: [links, scheduling, weekly-build, practice]
+
   - id: tech-lead-owns-optimization-oct4
     date: 2026-10-04
     summary: >-
