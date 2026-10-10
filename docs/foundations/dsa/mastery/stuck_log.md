@@ -25,6 +25,30 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 ## 🟡 79. Word Search — 2026-10-09
 **Sticking point**: put the every-cell start loop inside `backtrack` (twice: from (0,0), then from `(row, col)` onward), so a call matched any later cell instead of its own; then no per-path visited set, so `"ABCB"` reused (0,1); coach placed the loop and, on request, explained removing the mark on return.
 
+## 🔴 9003. Lost Map — 2026-10-09
+**Topic**: Rebuild a tree's n−1 roads from its full n×n distance matrix. The tree is the MST of the complete graph the matrix describes; array-scan Prim's, recording which tree village brought each village in.
+
+### Where did I get stuck?
+- **Recognition: taught Oct 8, not measured.** The top comment names MST and Prim's ("the answer is literally just a MST"), but the technique, the array-Prim's loop and pseudocode were handed over on Oct 8. Floyd-Warshall ruled out by n = 2500 again, unaided.
+- **Parent: explained on request.** "i dont understand what the parent stands for", then "what if parent is not directly connected?". Taught with a trace on Example 2: `parent[2]` starts as 0 with 9 = 4 + 5, and village 1 is closer, so it joins first and resets 2 to (5, parent 1). Mapped to 1584 on request: `parent` is the `from` field a heap entry would carry. A mid-attempt switch to Kruskal's was weighed (correct here, O(n² log n) time and O(n²) edges); the learner stayed with array Prim's once 1584's own attempts showed it is the loop they already write.
+- **Code: four bugs, all coach-found.** (1) the pick's start candidate was index 0, which is visited with cheapest 0 from round 2, so it returned 0 every round; (2) `[math.inf, None] * n` built a flat 2n list, then `[[math.inf, None]] * n` shared one inner list across every village; (3) `parent` set on every relax, not only when the distance dropped; (4) `if parent:` skipped every road from village 0 (0 is falsy). Fixed: `math.inf` start candidate, one appended list per village, a `<` guard, `!= None`. Passed 30/30 spec cases and a random n = 2500 tree in 0.6 s.
+- Complexity: both right, unaided. Time O(V²) (n rounds × O(V) pick + O(V) relax); space O(V) (visited, the pairs, n−1 edges; the matrix is input).
+
+### Core Realization
+`parent[v]` is the tree village whose row set `v`'s current cheapest value, so it changes only when that value drops. A village between `parent[v]` and `v` is always closer, so it joins first and takes over; by the time `v` is the cheapest left, `[parent[v], v]` is a real road.
+
+### Code Snippet
+```python
+def relax(node):
+    for i in range(n):
+        if not visited[i] and distances[node][i] < mst_distances[i][0]:
+            mst_distances[i][0] = distances[node][i]
+            mst_distances[i][1] = node          # who brought i this close
+...
+if mst_distances[v][1] != None:                 # 0 is a real parent
+    mst_edges.append([v, mst_distances[v][1]])
+```
+
 ## 🟡 853. Car Fleet — 2026-10-08
 **Sticking point**: pushed every car's arrival time onto the stack, so a car that joined a fleet left its own faster time on top instead of the fleet's slower one; coach found it with a failing input (`[10,9,0]`, speeds `[1,3,8]`, target 12 → 2, expected 1).
 

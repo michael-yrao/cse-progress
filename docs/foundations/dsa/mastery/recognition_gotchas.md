@@ -1,3 +1,6 @@
+- **2026-10-09 · 9003 Lost Map** (🔴 re-rep of the Oct 8 teach; not a measured call) — ➖ **taught.** Top comment
+  names MST then Prim's ("the answer is literally just a MST … distances is a Prim's thing"), recalled from the Oct 8
+  hand-over. Does not count toward the cold hit rate. → 🔴.
 - **2026-10-09 · 79 Word Search** (🟡 re-rep; retry, half-spoiled: backtracking folder, stub's `Pattern:` line) —
   ✅ **hit.** Top comment, unaided: "we hit the first letter and try to go down the grid", backtracking with path,
   state (row, col; the next letter read from `len(path)`), always-pick decision, match check and base cases. The call

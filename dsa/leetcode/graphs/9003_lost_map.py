@@ -62,7 +62,10 @@ class Solution:
 
         # tells us the cheapest edge value to the node
         # we also need to keep track of the node getting us to to it for the result
-        mst_distances = [[math.inf, None]] * n
+        mst_distances = []
+
+        for _ in range(n):
+            mst_distances.append([math.inf, None])
 
         mst_edges = []
         # our own distances array
