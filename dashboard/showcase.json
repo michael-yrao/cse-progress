@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-10",
+  "generatedAt": "2026-10-11",
   "entries": [
     {
       "key": "733:bfs",
@@ -7769,8 +7769,8 @@
         {
           "kind": "attempt",
           "symbol": "alienOrder_20260906",
-          "startLine": 53,
-          "endLine": 125,
+          "startLine": 122,
+          "endLine": 194,
           "lines": [
             "    # ── Attempt · 2026-09-06 ──────────────",
             "    def alienOrder_20260906(self, words: List[str]) -> str:",
