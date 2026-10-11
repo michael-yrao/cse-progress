@@ -265,7 +265,8 @@
         "technique": { "type": "string" },
         "result": { "type": ["string", "null"], "enum": ["🔴", "🟡", "🟢", "🎓", "🏆", null], "description": "The FIRST comfort glyph in the Result cell — scored on the COLD call, not a later conversion (e.g. '🔴 → 🟡 (re-rep Sep 16)' reads 🔴)." },
         "url": { "type": ["string", "null"], "description": "Canonical LeetCode URL, joined by lcNumber from the tracker's markdown links (problem_urls()). null when the number has no tracker entry yet." },
-        "difficulty": { "type": ["string", "null"], "enum": ["Easy", "Medium", "Hard", null], "description": "Joined by lcNumber from the tracker (_difficulty_by_num()). null when the number has no tracker row — a clean 🟢 probe earns none." }
+        "difficulty": { "type": ["string", "null"], "enum": ["Easy", "Medium", "Hard", null], "description": "The Probe log's Difficulty cell, else joined by lcNumber from the tracker (_difficulty_by_num()). null when neither has it." },
+        "file": { "type": ["string", "null"], "description": "Repo-relative POSIX path of the solution file: the probe's own dsa/probes/<n>_*.py if it has one, else the tracker solution file (solution_path()), else null." }
       }
     },
     "workloadDay": {

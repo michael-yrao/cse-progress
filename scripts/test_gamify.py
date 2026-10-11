@@ -1974,6 +1974,25 @@ class ParseProbesTests(unittest.TestCase):
         self.assertEqual(
             [it["difficulty"] for it in probes["items"]], ["Medium", "Hard", None])
 
+    def test_file_probe_dir_wins_then_tracker_then_none(self):
+        # REPO -> a temp tree so both file kinds resolve repo-relative.
+        root = Path(tempfile.mkdtemp())
+        probes_dir = root / "dsa" / "probes"
+        probes_dir.mkdir(parents=True)
+        (probes_dir / "977_squares.py").write_text("", encoding="utf-8")
+        tracker_file = root / "dsa" / "leetcode" / "a" / "202_happy.py"
+        orig_repo, orig_readme = gamify.REPO, gamify.PROBES_README
+        gamify.REPO = root
+        gamify.PROBES_README = probes_dir / "README.md"
+        try:
+            gamify.PROBES_README.write_text(self.FIXTURE, encoding="utf-8")
+            probes = gamify.parse_probes(self.URLS, None, {977: [tracker_file], 202: [tracker_file]})
+        finally:
+            gamify.REPO, gamify.PROBES_README = orig_repo, orig_readme
+        self.assertEqual(
+            [it["file"] for it in probes["items"]],
+            ["dsa/probes/977_squares.py", "dsa/leetcode/a/202_happy.py", None])
+
     def test_total_and_clean_rate(self):
         probes = gamify.parse_probes(self.URLS)
         self.assertEqual(probes["total"], 3)

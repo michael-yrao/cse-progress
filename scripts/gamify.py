@@ -1202,8 +1202,20 @@ PROBE_SECTION = re.compile(r"##\s*📒\s*Probe log(.*?)(?:\n##\s|\Z)", re.S)
 PROBE_PROBLEM = re.compile(r"^(\d+)\s+(.+)$")
 
 
+def _probe_files() -> dict[int, str]:
+    """num -> repo-relative POSIX path of each probe's own `<n>_<snake>.py` beside the
+    Probe log README. One glob for the whole directory, read once by parse_probes."""
+    found: dict[int, str] = {}
+    for path in sorted(PROBES_README.parent.glob("*.py")):
+        m = re.match(r"(\d+)_", path.name)
+        if m and path.is_relative_to(REPO):
+            found.setdefault(int(m.group(1)), path.relative_to(REPO).as_posix())
+    return found
+
+
 def parse_probes(urls: dict[int, str],
-                 difficulty_by_num: dict[int, str] | None = None) -> dict | None:
+                 difficulty_by_num: dict[int, str] | None = None,
+                 files: dict[int, list[Path]] | None = None) -> dict | None:
     """The `dsa/probes/README.md` Probe log table -> {total, cleanRate, items:[...]}.
 
     Reuses TABLE_ROW/COMFORT_GLYPH (parse_techniques()'s style). Each probe is a cold,
@@ -1215,7 +1227,9 @@ def parse_probes(urls: dict[int, str],
     canonical LeetCode URL — see problem_urls()'s docstring for why the site can't derive
     this itself. `difficulty_by_num` (from _difficulty_by_num(), read once by the caller)
     fills any item whose README `Difficulty` cell is blank or absent (the cell wins); None
-    when neither has it — a clean 🟢 probe earns no tracker row.
+    when neither has it — a clean 🟢 probe earns no tracker row. `file` is the probe's own
+    file under dsa/probes/ if it has one, else the tracker solution file from `files`
+    (solution_path), else None.
 
     Fail-soft, but the TWO empty cases mean different things and must not collapse to the
     same result: a missing file or a missing `## 📒 Probe log` section is something wrong
@@ -1233,6 +1247,8 @@ def parse_probes(urls: dict[int, str],
         return None
 
     difficulties = difficulty_by_num or {}
+    probe_files = _probe_files()
+    tracker_files = files or {}
     difficulty_col: int | None = None  # found by header name, so older 6-column layouts parse
     items: list[dict] = []
     for line in TABLE_ROW.findall(section.group(1)):
@@ -1258,6 +1274,8 @@ def parse_probes(urls: dict[int, str],
             "result": glyph.group(0) if glyph else None,
             "url": urls.get(lc_number) if lc_number else None,
             "difficulty": logged or (difficulties.get(lc_number) if lc_number else None),
+            "file": (probe_files.get(lc_number) or solution_path(lc_number, tracker_files))
+                    if lc_number else None,
         })
 
     if not items:
@@ -1481,7 +1499,7 @@ def build_payload(today: dt.date | None = None) -> tuple[dict, list[str]]:
     schedule = parse_current_week_schedule(today, urls, files)
     if schedule is None:
         warnings.append("no current weekly schedule file found — schedule omitted.")
-    probes = parse_probes(urls, _difficulty_by_num())
+    probes = parse_probes(urls, _difficulty_by_num(), files)
     if probes is None:
         warnings.append("dsa/probes/README.md Probe log not readable — probes omitted.")
 
