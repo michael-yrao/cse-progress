@@ -244,6 +244,36 @@ class DeferredToTests(unittest.TestCase):
                 self.assertEqual(eb.deferred_to(done, next_cell), expected)
 
 
+class CreditPulledEarlierTests(unittest.TestCase):
+    """gamify._credit_pulled_earlier: a row pulled to an earlier day is done iff its copy
+    on that day is done; a row moved later is untouched."""
+
+    @staticmethod
+    def _days(origin_date: str, origin_target: str, other_date: str, other_done: bool) -> list[dict]:
+        origin = {"lcNumber": 332, "done": False, "deferredTo": origin_target}
+        other = {"lcNumber": 332, "done": other_done, "deferredTo": None}
+        return [
+            {"date": origin_date, "items": [origin]},
+            {"date": other_date, "items": [other]},
+        ]
+
+    CASES = [
+        ("pulled earlier, earlier copy done", ("2026-10-10", "2026-10-09", "2026-10-09", True), True),
+        ("pulled earlier, earlier copy not done", ("2026-10-10", "2026-10-09", "2026-10-09", False), False),
+        ("moved later", ("2026-10-09", "2026-10-10", "2026-10-10", True), False),
+    ]
+
+    def test_credit(self):
+        for label, args, expected_done in self.CASES:
+            with self.subTest(label):
+                days = self._days(*args)
+                result = gamify._credit_pulled_earlier(days)
+                origin = result[0]["items"][0]
+                self.assertEqual(origin["done"], expected_done)
+                self.assertEqual(origin["deferredTo"], args[1])
+                self.assertFalse(days[0]["items"][0]["done"])
+
+
 class ParseTechniquesTests(unittest.TestCase):
     """parse_techniques() against a small fixture table, not the live repo file — pins the
     Problems-cell parsing (count vs. the parenthetical LC list) against the tricky tokens

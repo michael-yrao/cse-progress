@@ -623,6 +623,28 @@ def _parse_schedule_day_full(
     return items, label, units
 
 
+def _credit_pulled_earlier(days: list[dict]) -> list[dict]:
+    """A row pulled to an EARLIER day stays on its origin day with `deferredTo` set and
+    `done: false`; when the same `lcNumber` is done on the `deferredTo` day, the origin row
+    counts as done too (the site paints it green, not red). Rows moved to a LATER date, or
+    whose earlier copy is not done (or is in another week), are unchanged. Returns new
+    day/item dicts; the input is not mutated."""
+    done_by_date: dict[str, set[int]] = {
+        day["date"]: {i["lcNumber"] for i in day["items"] if i["done"] and i["lcNumber"] is not None}
+        for day in days
+    }
+
+    def credited(item: dict, date: str) -> dict:
+        target = item["deferredTo"]
+        if item["done"] or not target or target >= date:
+            return item
+        if item["lcNumber"] in done_by_date.get(target, set()):
+            return {**item, "done": True}
+        return item
+
+    return [{**day, "items": [credited(i, day["date"]) for i in day["items"]]} for day in days]
+
+
 def _parse_week(path: Path, week_start: dt.date, difficulty_by_num: dict[int, str],
                 urls: dict[int, str],
                 files: dict[int, list[Path]] | None) -> dict:
@@ -643,7 +665,7 @@ def _parse_week(path: Path, week_start: dt.date, difficulty_by_num: dict[int, st
             "units": units,
             "items": items,
         })
-    return {"weekOf": week_start.isoformat(), "days": days}
+    return {"weekOf": week_start.isoformat(), "days": _credit_pulled_earlier(days)}
 
 
 def _difficulty_by_num() -> dict[int, str]:
