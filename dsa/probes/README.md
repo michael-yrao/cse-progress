@@ -38,7 +38,7 @@ discovered and no `discovery_skip` entry is ever needed. That is the preferred h
 
 - **Always** → the recognition call (hit or miss) to
   [`recognition_gotchas.md`](../../docs/foundations/dsa/mastery/recognition_gotchas.md), **and a row in
-  the [Probe log](#-probe-log--the-tally) below** (the only place a disposable 🟢 probe is counted).
+  the [Probe log](#-probe-log--the-tally) below** (the only place a disposable 🟢 probe is counted). The row's `Difficulty` cell (Easy/Medium/Hard) is filled at logging time.
 - **🟢 → no tracker row.** The probe was a test of whether the *technique* transfers, not an asset to
   maintain.
 - **🟡 / 🔴 → it earns a row**, because only a gap needs repetition.
@@ -64,17 +64,17 @@ without this table it vanishes from every "problems solved" figure. Two jobs:
 2. **Gives the free diagnostic its denominator.** The row-creation rate above is computed over this
    table — without it, "rate over ~15 probes" has no bottom.
 
-| # | Date | Problem | Technique | Result | Tracker row? |
-|---|---|---|---|---|---|
-| 1 | 2026-08-10 | 977 Squares of a Sorted Array | Two Pointers | 🟢 | — |
-| 2 | 2026-08-11 | 202 Happy Number | Cycle Detection (iterated seq) | 🟡 | ✅ earned |
-| 3 | 2026-08-16 | 69 Sqrt(x) | Binary Search on Answer | 🟢 | — |
-| 4 | 2026-08-19 | 643 Maximum Average Subarray I | Sliding Window | 🟡 | — *(learner overrode the row)* |
-| 5 | 2026-08-21 | 205 Isomorphic Strings | Hash-map bijection | 🟢 | — |
-| 6 | 2026-08-28 | 637 Average of Levels in Binary Tree | Tree BFS (level order) | 🟢 | — |
-| 7 | 2026-09-11 | 547 Number of Provinces | Union-Find (connected components) | 🔴 → 🟡 (re-rep Sep 16) | earned Sep 11 → **dropped Sep 16** (recognition converted) |
-| 8 | 2026-09-14 | 648 Replace Words | Trie (prefix search) | 🟡 | ✅ earned |
-| 9 | 2026-10-06 | 452 Minimum Number of Arrows to Burst Balloons | Intervals (interval scheduling) | 🔴 | ✅ earned |
+| # | Date | Problem | Technique | Result | Tracker row? | Difficulty |
+|---|---|---|---|---|---|---|
+| 1 | 2026-08-10 | 977 Squares of a Sorted Array | Two Pointers | 🟢 | — | Easy |
+| 2 | 2026-08-11 | 202 Happy Number | Cycle Detection (iterated seq) | 🟡 | ✅ earned | Easy |
+| 3 | 2026-08-16 | 69 Sqrt(x) | Binary Search on Answer | 🟢 | — | Easy |
+| 4 | 2026-08-19 | 643 Maximum Average Subarray I | Sliding Window | 🟡 | — *(learner overrode the row)* | Easy |
+| 5 | 2026-08-21 | 205 Isomorphic Strings | Hash-map bijection | 🟢 | — | Easy |
+| 6 | 2026-08-28 | 637 Average of Levels in Binary Tree | Tree BFS (level order) | 🟢 | — | Easy |
+| 7 | 2026-09-11 | 547 Number of Provinces | Union-Find (connected components) | 🔴 → 🟡 (re-rep Sep 16) | earned Sep 11 → **dropped Sep 16** (recognition converted) | Medium |
+| 8 | 2026-09-14 | 648 Replace Words | Trie (prefix search) | 🟡 | ✅ earned | Medium |
+| 9 | 2026-10-06 | 452 Minimum Number of Arrows to Burst Balloons | Intervals (interval scheduling) | 🔴 | ✅ earned | Medium |
 
 **Tally (9 run):** 4 clean 🟢 · 4 earned a row at the time (202, 547, 648, 452) · 1 🟡 overridden (643). **Row-creation
 rate 4/9 = 44%** (a *historical* measure — a probe that earned a row taught something, even if the row is later

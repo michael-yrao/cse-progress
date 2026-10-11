@@ -2141,3 +2141,13 @@ decisions:
       `review-workflow.md` Schedule integrity. The live 20261005 schedule is backfilled (332 and
       239 pulled earlier); archived weeks keep `→`. No `cse.config.yml` value changed.
     affects: [scheduling, effort_budget, gamify, remaining, schedule-integrity]
+
+  - id: probe-log-difficulty-oct11
+    date: 2026-10-11
+    summary: >-
+      The Probe log in `dsa/probes/README.md` carries a `Difficulty` column (Easy/Medium/Hard,
+      filled at logging time from LeetCode). `gamify.py` `parse_probes` reads that cell first,
+      found by header name so older layouts still parse, and falls back to the tracker's
+      difficulty when the cell is blank. The site's Recognition rows therefore show the same
+      difficulty tag as the other problem rows, including clean probes that earn no tracker row.
+    affects: [probes, gamify, recognition-panel]

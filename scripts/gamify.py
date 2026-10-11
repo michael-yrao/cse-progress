@@ -1202,7 +1202,8 @@ PROBE_SECTION = re.compile(r"##\s*📒\s*Probe log(.*?)(?:\n##\s|\Z)", re.S)
 PROBE_PROBLEM = re.compile(r"^(\d+)\s+(.+)$")
 
 
-def parse_probes(urls: dict[int, str]) -> dict | None:
+def parse_probes(urls: dict[int, str],
+                 difficulty_by_num: dict[int, str] | None = None) -> dict | None:
     """The `dsa/probes/README.md` Probe log table -> {total, cleanRate, items:[...]}.
 
     Reuses TABLE_ROW/COMFORT_GLYPH (parse_techniques()'s style). Each probe is a cold,
@@ -1212,7 +1213,9 @@ def parse_probes(urls: dict[int, str]) -> dict | None:
     that later converted (`🔴 → 🟡 (re-rep Sep 16)`) is scored on what the COLD call
     actually was, not its eventual outcome. `urls` (from problem_urls()) joins each item's
     canonical LeetCode URL — see problem_urls()'s docstring for why the site can't derive
-    this itself.
+    this itself. `difficulty_by_num` (from _difficulty_by_num(), read once by the caller)
+    fills any item whose README `Difficulty` cell is blank or absent (the cell wins); None
+    when neither has it — a clean 🟢 probe earns no tracker row.
 
     Fail-soft, but the TWO empty cases mean different things and must not collapse to the
     same result: a missing file or a missing `## 📒 Probe log` section is something wrong
@@ -1229,14 +1232,20 @@ def parse_probes(urls: dict[int, str]) -> dict | None:
     if not section:
         return None
 
+    difficulties = difficulty_by_num or {}
+    difficulty_col: int | None = None  # found by header name, so older 6-column layouts parse
     items: list[dict] = []
     for line in TABLE_ROW.findall(section.group(1)):
         cells = [c.strip() for c in line.split("|")]
-        if len(cells) != 6:
+        if len(cells) < 6:
             continue
-        num, date, problem_cell, technique, result_cell, _tracker_row = cells
-        if num in ("#", "") or set(num) <= {"-", ":"}:
-            continue  # header / markdown separator row, not data
+        num, date, problem_cell, technique, result_cell = cells[:5]
+        if num == "#":
+            difficulty_col = cells.index("Difficulty") if "Difficulty" in cells else None
+            continue
+        if num == "" or set(num) <= {"-", ":"}:
+            continue  # separator row, not data
+        logged = cells[difficulty_col] if difficulty_col is not None and difficulty_col < len(cells) else ""
 
         m = PROBE_PROBLEM.match(problem_cell)
         glyph = COMFORT_GLYPH.search(result_cell)
@@ -1248,6 +1257,7 @@ def parse_probes(urls: dict[int, str]) -> dict | None:
             "technique": technique,
             "result": glyph.group(0) if glyph else None,
             "url": urls.get(lc_number) if lc_number else None,
+            "difficulty": logged or (difficulties.get(lc_number) if lc_number else None),
         })
 
     if not items:
@@ -1471,7 +1481,7 @@ def build_payload(today: dt.date | None = None) -> tuple[dict, list[str]]:
     schedule = parse_current_week_schedule(today, urls, files)
     if schedule is None:
         warnings.append("no current weekly schedule file found — schedule omitted.")
-    probes = parse_probes(urls)
+    probes = parse_probes(urls, _difficulty_by_num())
     if probes is None:
         warnings.append("dsa/probes/README.md Probe log not readable — probes omitted.")
 

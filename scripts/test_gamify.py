@@ -1950,6 +1950,30 @@ class ParseProbesTests(unittest.TestCase):
         self.assertEqual(converted["result"], "🔴")  # NOT 🟡 — that's the later conversion
         self.assertIsNone(converted["url"])  # absent from URLS — honest null, not a guess
 
+    def test_difficulty_readme_cell_first_then_tracker_then_none(self):
+        # Old 6-column layout (self.FIXTURE): 977 in the map, 202 not in it, a row with no number.
+        gamify.PROBES_README.write_text(
+            self.FIXTURE.replace(
+                "| 2026-09-11 | 547 Number of Provinces",
+                "| 2026-09-11 | Number of Provinces"),
+            encoding="utf-8")
+        probes = gamify.parse_probes(self.URLS, {977: "Easy"})
+        self.assertEqual(
+            [it["difficulty"] for it in probes["items"]], ["Easy", None, None])
+
+        # Difficulty column found by header name: cell wins over tracker, blank falls back.
+        gamify.PROBES_README.write_text(
+            "## 📒 Probe log\n\n"
+            "| # | Date | Problem | Technique | Result | Tracker row? | Difficulty |\n"
+            "|---|---|---|---|---|---|---|\n"
+            "| 1 | 2026-08-10 | 977 A | T | 🟢 | — | Medium |\n"
+            "| 2 | 2026-08-11 | 202 B | T | 🟡 | — |  |\n"
+            "| 3 | 2026-08-12 | 69 C | T | 🟢 | — |  |\n",
+            encoding="utf-8")
+        probes = gamify.parse_probes(self.URLS, {977: "Easy", 202: "Hard"})
+        self.assertEqual(
+            [it["difficulty"] for it in probes["items"]], ["Medium", "Hard", None])
+
     def test_total_and_clean_rate(self):
         probes = gamify.parse_probes(self.URLS)
         self.assertEqual(probes["total"], 3)
