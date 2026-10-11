@@ -22,10 +22,10 @@
 - **Dense Dijkstra** (advanced_graphs) — 1/3: 743
 - **Graph Cycle Detection (DFS)** (graphs) — 1/2: 261
 - **Multi-source BFS** (graphs) — 1/2: 994
-- **Prim's MST** (advanced_graphs) — 1/2: 1584
 - **Bellman-Ford** (advanced_graphs) — 2/3: 787, 9001
 - **Hierholzer (Eulerian path)** (advanced_graphs) — 2/3 (3 rows): 332, 2097
 - **Kruskal's MST** (advanced_graphs) — 2/4: 1489, 9004
+- **Prim's MST** (advanced_graphs) — 2/3: 1584, 9003
 - **Trie** (tries) — 3/4: 208, 211, 648
 - **Dijkstra** (advanced_graphs) — 5/6: 743, 778, 1631, 2812, 3620
 
@@ -51,7 +51,7 @@
 - **Linked List Reversal** (linked_list) — queued: 25 (`surplus>=1`)
 - **Monotonic Stack** (stack) — queued: 85 (`solved:84`), 1504 (`solved:84`)
 - **Multi-source BFS** (graphs) — queued: 286 (`surplus>=1`), 542 (`surplus>=1`)
-- **Prim's MST** (advanced_graphs) — queued: 9003 (`surplus>=1`), 9005 (`solved:9003`)
+- **Prim's MST** (advanced_graphs) — queued: 9005 (`solved:9003`)
 - **Sliding Window** (sliding_window) — queued: 76 (`surplus>=1`)
 - **Stack (expression evaluation)** (stack) — queued: 394 (`surplus>=1`)
 - **Topological Sort** (graphs) — queued: 802 (`surplus>=1`), 2115 (`surplus>=1`)
@@ -71,7 +71,7 @@ Every declared technique gets a row, started or not — a not-started row's Gaps
 | Floyd-Warshall (all-pairs shortest path) | advanced_graphs | core | 2 (2+0) | 2 (1334, 1462) | 🟢 | ✅ | — | queued: 399 `rated:1334` |
 | Hierholzer (Eulerian path) | advanced_graphs | core | 3 (3+0) | 2 *+1v* (332, 2097) | 🟢 | ✅ | pre-sorted adjacency ×1 · min-heap ordering ×1 | thin (2/3) · queued: 753 `surplus>=1` |
 | Kruskal's MST | advanced_graphs | core | 4 (2+2) | 2 (1489, 9004) | 🟡 | ❌ | — | **no-green** · thin (2/4) · queued: 1135 `surplus>=1` |
-| Prim's MST | advanced_graphs | core | 2 (2+0) | 1 (1584) | 🟢 | ✅ | — | thin (1/2) · queued: 9003 `surplus>=1`, 9005 `solved:9003` |
+| Prim's MST | advanced_graphs | core | 3 (2+1) | 2 (1584, 9003) | 🟢 | ✅ | — | thin (2/3) · queued: 9005 `solved:9003` |
 | Array/String Fundamentals | arrays_and_hash | core | 2 (2+0) | 3 (14, 66, 1929) | 🟢 | ✅ | — | — |
 | Boyer-Moore Voting | arrays_and_hash | core | 1 (1+0) | 2 (169, 229) | 🎓 | ✅ | — | — |
 | Frequency Counting | arrays_and_hash | core | 1 (1+0) | 2 (49, 242) | 🎓 | ✅ | — | — |
@@ -80,7 +80,7 @@ Every declared technique gets a row, started or not — a not-started row's Gaps
 | In-Place Array Rotation | arrays_and_hash | core | 1 (1+0) | 1 (189) | 🟢 | ✅ | — | — |
 | Length-Prefix Encoding | arrays_and_hash | core | 1 (1+0) | 1 (271) | 🟢 | ✅ | — | — |
 | Prefix/Suffix Products | arrays_and_hash | core | 1 (1+0) | 1 (238) | 🟢 | ✅ | — | — |
-| Backtracking | backtracking | core | 9 (5+4) | 9 *+4v* (17, 22, 39, 40, 46, 78, 79, 90, 131) | 🟢 | ✅ | — | queued: 51 `phase:Backtracking`, 212 `phase:Backtracking` |
+| Backtracking | backtracking | core | 9 (5+4) | 9 (17, 22, 39, 40, 46, 78, 79, 90, 131) | 🟢 | ✅ | — | queued: 51 `phase:Backtracking`, 212 `phase:Backtracking` |
 | Binary Search (exact match) | binary_search | core | 1 (1+0) | 2 (33, 704) | 🎓 | ✅ | — | — |
 | Binary Search (max boundary) | binary_search | core | 3 (2+1) | 4 (34, 74, 1552, 3620) | 🟢 | ✅ | — | — |
 | Binary Search (min boundary) | binary_search | core | 4 (4+0) | 7 (34, 153, 162, 540, 875, 1011, 2300) | 🎓 | ✅ | — | queued: 4 `surplus>=1` |
@@ -177,11 +177,7 @@ Every declared technique gets a row, started or not — a not-started row's Gaps
 
 ## Vocabulary maintenance
 
-**Unmapped tracker rows (1)** — solved but assigned to no technique. Add them to `techniques.yml`, or coverage silently drifts behind the tracker.
-
-- 9003 Lost Map
-
-**Queued (83)** — listed in the Action list above; a known gap with a fill already picked, not counted below.
+**Queued (82)** — listed in the Action list above; a known gap with a fill already picked, not counted below.
 
 **Declared, not queued (1)** — declared in the vocabulary, no tracker row, and not yet in any queue. This is the normal state for curriculum ahead of the learner; it is a roadmap, not a finding: 547
 

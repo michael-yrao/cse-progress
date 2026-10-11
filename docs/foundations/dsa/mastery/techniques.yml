@@ -907,7 +907,7 @@ techniques:
     doc: prims_mst
     problems:
       - {number: 1584, method: Prim's MST}
-      - {number: 9003, method: Prim's MST, queued: "surplus>=1"}
+      - {number: 9003, method: Prim's MST}
       # 9005 = Kattis islandhopping (coordinates, real-valued distances — 1584's near-twin), hand-picked per external-judge-problems-sep26; Difficulty Medium tiered against 1584. Added Oct 10, 2026 after 9003 came back 🔴 on Oct 9 (decision coverage-recalibration-oct10). Gate solved:9003 — the base is 🔴, so convert first.
       - {number: 9005, method: Prim's MST, queued: "solved:9003"}
 
@@ -944,10 +944,6 @@ techniques:
       - {number: 17}   # one letter per digit: the loop runs over digits[len(path)]'s letters, so depth picks the digit; empty input returns [] (Oct 7, 2026)
       # Declared Sep 26, 2026 (decision `mastery-ratio-done-over-planned-sep26`) —
       # roadmap.yml. 212 is ALSO declared under Trie above (dual credit).
-      - {number: 90, queued: "phase:Backtracking"}
-      - {number: 79, queued: "phase:Backtracking"}
-      - {number: 131, queued: "phase:Backtracking"}
-      - {number: 17, queued: "phase:Backtracking"}
       - {number: 51, queued: "phase:Backtracking"}
       - {number: 212, queued: "phase:Backtracking"}
 
