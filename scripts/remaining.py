@@ -43,6 +43,8 @@ DAY_HEADER = re.compile(r"▸\s*\*\*[^*]*\*\*")
 # 🔥 backfill · 🎯 probe · 🎤 mock · ⚙️ variant · 🆕 new · ← → moved · ⚠️ protected · 🔤 primer.
 ROW_TAG_GLYPHS = f"🔥🎯🎤⚙️🆕{eb.MOVE_ARROWS}⚠️🔤"
 MOCK_LINE = "🎤 DSA mock interview — unseen; named when the mock starts (dsa-mock.md)"
+CODE_LABEL = "Code"
+COMPLEXITY_LABEL = "Complexity re-asks"
 # A problem row's number: `[N ` for a linked row, with ANY non-bracket prefix allowed in
 # front of it (the original, permissive shape — a tag glyph, a review marker like `🔁 `,
 # a probe label like `🎯 **PROBE #6** — `, ...): `| [560 Subarray Sum ...](...path...) ·
@@ -96,18 +98,42 @@ def is_open_row(line: str) -> bool:
     return not (cells and eb.deferred_to(False, cells["c4"]))
 
 
-def unstruck_numbers(schedule: Path, label: str) -> list[str] | None:
-    """Problem numbers of the un-struck rows in the day-block whose header contains `label`.
-    None if no block matches the label (a day with no schedule / a wrong date)."""
+def is_complexity_row(line: str) -> bool:
+    """True when the row's Technique cell (5th column) is a cold complexity re-ask."""
+    cells = eb.SCHED_ROW.match(line)
+    return bool(cells) and eb.is_complexity_technique(cells["c5"])
+
+
+def unstruck_rows(schedule: Path, label: str) -> list[tuple[str, bool]] | None:
+    """`(number, is_complexity)` of the un-struck rows in the day-block whose header
+    contains `label`, in file order. None if no block matches the label."""
     block = day_block_lines(schedule, label)
     if block is None:
         return None
-    numbers: list[str] = []
+    rows: list[tuple[str, bool]] = []
     for line in block:
         m = ROW_NUMBER.match(line)
         if m and is_open_row(line):
-            numbers.append(m.group(1) or m.group(2))
-    return numbers
+            rows.append((m.group(1) or m.group(2), is_complexity_row(line)))
+    return rows
+
+
+def unstruck_numbers(schedule: Path, label: str) -> list[str] | None:
+    """Problem numbers of the un-struck rows in the day-block whose header contains `label`.
+    None if no block matches the label (a day with no schedule / a wrong date)."""
+    rows = unstruck_rows(schedule, label)
+    return None if rows is None else [number for number, _ in rows]
+
+
+def split_open_numbers(schedule: Path, label: str) -> tuple[list[str], list[str]] | None:
+    """`(coding, complexity)` open numbers of the day-block, each in file order.
+    None if no block matches the label."""
+    rows = unstruck_rows(schedule, label)
+    if rows is None:
+        return None
+    coding = [number for number, is_complexity in rows if not is_complexity]
+    complexity = [number for number, is_complexity in rows if is_complexity]
+    return coding, complexity
 
 
 def open_mock(schedule: Path, label: str) -> bool:
@@ -129,6 +155,24 @@ def order_by_priority(numbers: list[str], priority: list[str]) -> list[str]:
     return sorted(numbers, key=lambda number: rank.get(number, len(priority)))
 
 
+def link_lines(numbers: list[str], priority: list[str]) -> list[str]:
+    """The printable `link_line`s for `numbers` in priority order; falsy ones dropped."""
+    lines = (link_line(number) for number in order_by_priority(numbers, priority))
+    return [line for line in lines if line]
+
+
+def print_group(label: str, lines: list[str], is_first: bool) -> bool:
+    """Print `label · N` and its lines (blank line before it unless first). Empty group
+    prints nothing. Returns whether the next group is still the first printed."""
+    if not lines:
+        return is_first
+    if not is_first:
+        print()
+    print(f"{label} · {len(lines)}")
+    print("\n".join(lines))
+    return False
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description="Print today's un-struck board (name + links only).")
     ap.add_argument("--date", help="session date YYYY-MM-DD (default: detected session date)")
@@ -143,24 +187,24 @@ def main() -> None:
         sys.exit(1)
 
     label = day_label(session)
-    numbers = unstruck_numbers(schedule, label)
-    if numbers is None:
+    split = split_open_numbers(schedule, label)
+    if split is None:
         print(f"No day-block for '{label}' in {schedule.relative_to(REPO_ROOT).as_posix()}.",
               file=sys.stderr)
         sys.exit(1)
     has_mock = open_mock(schedule, label)
     if has_mock:
         print(MOCK_LINE)
-    if not numbers and not has_mock:
+    coding, complexity = split
+    if not coding and not complexity and not has_mock:
         print(f"Nothing left — every row in the {label} block is struck through. ✅")
         return
 
     session_day = datetime.strptime(session, "%Y-%m-%d").date()
     priority = schedule_priority.day_order(schedule, session_day)
-    for number in order_by_priority(numbers, priority):
-        line = link_line(number)
-        if line:
-            print(line)
+    is_first = True
+    for group_label, numbers in ((CODE_LABEL, coding), (COMPLEXITY_LABEL, complexity)):
+        is_first = print_group(group_label, link_lines(numbers, priority), is_first)
 
 
 if __name__ == "__main__":

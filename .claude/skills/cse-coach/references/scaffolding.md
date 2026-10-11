@@ -193,7 +193,7 @@ $ python scripts/remaining.py --date 2026-09-14   # → "Nothing left … ✅" w
 
 **Division of labor:** `remaining.py` for any board of the day. That covers the kickoff board right after
 scaffolding (nothing is struck yet, so it prints the whole day) and *"what is open right now"* alike, both
-in priority order. `links.py <n> …` only for a single named hand-over ("let's do 102"). full rule: [`feedback_lineup_links_only.md`](.claude/memory/feedback_lineup_links_only.md).
+in priority order. `links.py <n> …` only for a single named hand-over ("let's do 102"). It prints coding rows under `Code · N` and the day's `Complexity`-technique rows under `Complexity re-asks · N`; paste both groups with their labels. full rule: [`feedback_lineup_links_only.md`](.claude/memory/feedback_lineup_links_only.md).
 
 ⭐ **Recommend by number, steer by description.** When you suggest what to do next, link **only the pick**
 (name + `[file]·[LC]`). Refer to problems you're steering *away from* by **description, not number**. A

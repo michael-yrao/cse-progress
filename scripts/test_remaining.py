@@ -102,6 +102,33 @@ A stray line of prose, not a table row at all — must not be read as one.
         self.assertEqual(self._numbers(), ["560", "846", "39", "57", "637"])
 
 
+class SplitOpenNumbersTests(unittest.TestCase):
+    """split_open_numbers() separates coding rows from `Complexity`-technique rows, both
+    in file order, and drops struck rows from either group."""
+
+    LABEL = "Sun Oct 11"
+    HEADER = "| ▸ **" + LABEL + "** · 3.0 units — sample |  |  |  |  |"
+    CODING = "| [9003 Lost Map](../a.py) · [PO](https://x) | 🟡 | | | Graphs |"
+    CODING_2 = "| [133 Clone Graph](../b.py) · [LC](https://x) | 🟡 | | | BFS |"
+    COMPLEXITY = "| [211 Design Add](../c.py) · [LC](https://x) | 🟢 | | | Complexity  |"
+    STRUCK_COMPLEXITY = "| ~~[648 Replace Words](../d.py) · [LC](https://x)~~ | 🟢 | 🟢 | | Complexity |"
+
+    def test_splits_by_technique_cell(self):
+        cases = [
+            ("mixed block", [self.CODING, self.COMPLEXITY, self.CODING_2], (["9003", "133"], ["211"])),
+            ("struck complexity row excluded", [self.CODING, self.STRUCK_COMPLEXITY], (["9003"], [])),
+            ("no complexity rows", [self.CODING, self.CODING_2], (["9003", "133"], [])),
+        ]
+        for name, rows, expected in cases:
+            with self.subTest(name=name):
+                text = "\n".join([self.HEADER, *rows]) + "\n"
+                with tempfile.TemporaryDirectory() as tmp:
+                    schedule = Path(tmp) / "20261005_schedule.md"
+                    schedule.write_text(text, encoding="utf-8")
+                    self.assertEqual(
+                        remaining.split_open_numbers(schedule, self.LABEL), expected)
+
+
 class OpenMockTests(unittest.TestCase):
     """open_mock() is true only for a 🎤 row that is neither struck (done) nor deferred
     (→, an ISO date in its Next cell) -- the same openness test unstruck_numbers() uses."""
