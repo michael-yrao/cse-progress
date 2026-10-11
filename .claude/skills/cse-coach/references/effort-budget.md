@@ -42,6 +42,10 @@ A row where the learner writes code is priced by the script. That covers a revie
 
 Build each day as close to the ceiling (`effort_budget.ceiling`) as possible. It is the daily goal, and a small overshoot is fine. Raising the ceiling itself to catch up is still off the table. `decisions.yml` `daily-goal-is-the-ceiling-sep28`.
 
+**Through Nov 29, 2026 (the wedding season): build up to the ceiling, never over it.** A built day sits at the
+ceiling or just under it; the small overshoot above is off until Nov 30. A pull the learner makes into a live
+session is still their call and may exceed it. `decisions.yml` `ceiling-from-below-wedding-oct10`.
+
 ## A day also has a row cap (Oct 6, 2026)
 
 A day holds at most `effort_budget.max_rows_per_day` rows, struck rows included and Complexity-technique

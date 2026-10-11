@@ -42,3 +42,11 @@ not the lever.
   a stretch the learner will be away.
 - Phase dates in `study_guide.md` are checkpoints, not deadlines ([[feedback_phase_progression]]).
 - From Nov 30, 2026 this file is history.
+- **The first DSA mock moved Sun Oct 11 → Sun Dec 6** (learner, Oct 10: agreed the mock measures rather
+  than retains, so it waits for normal capacity). `dsa_mock.first_due` moved with it; decision
+  `dsa-mock-first-due-dec6-oct10`. Learner, same day: *"it is well under normal, which is why this week
+  and last week have not had a lot of problems being finished."* Whether the weekly builds through Nov 29
+  stay at the ceiling is the learner's call; until they change it, the Oct 5 rule above holds.
+- **Builds aim at the ceiling from below through Nov 29** (learner, Oct 10: *"we can aim for 8 but hovering
+  right under if needed instead under/over"*). No built day over `effort_budget.ceiling`; the normal small
+  overshoot returns Nov 30. Normative copy: `effort-budget.md`; decision `ceiling-from-below-wedding-oct10`.

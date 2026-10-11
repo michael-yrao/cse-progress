@@ -2103,3 +2103,25 @@ decisions:
       it; `scheduling` SKILL.md Mid-week says a pull into the live session reseats and scaffolds
       in the same turn. No `cse.config.yml` value changed.
     affects: [scaffolding, scheduling, effort_budget, hooks]
+
+  - id: dsa-mock-first-due-dec6-oct10
+    date: 2026-10-10
+    summary: >-
+      The first DSA mock moves from Sun 2026-10-11 to Sun 2026-12-06, the first Sunday after the
+      wedding season (project_wedding_season). Learner's call: the mock measures, it does not
+      retain, and its findings cannot be acted on while capacity is well under normal. The 🎤 row
+      leaves Sun Oct 11 (a day not yet started, so re-planned outright); `dsa_mock.first_due`
+      moves with it. Cadence (`dsa_mock.every_days`) and the pick/ratchet rules are unchanged.
+      single-source-ok: the dates here are history.
+    affects: [dsa-mock, scheduling]
+
+  - id: ceiling-from-below-wedding-oct10
+    date: 2026-10-10
+    summary: >-
+      Through 2026-11-29 (project_wedding_season) the weekly build and every reseat build each day
+      up to `effort_budget.ceiling` and never over it; the small overshoot that
+      `daily-goal-is-the-ceiling-sep28` allows is suspended until Nov 30. The ceiling value is
+      unchanged and stays the goal. A pull the learner makes into a live session may still exceed
+      it. Learner, Oct 10: "we can aim for 8 but hovering right under if needed instead
+      under/over". Normative copy: effort-budget.md; pointer in the scheduling skill's two-caps rule.
+    affects: [effort-budget, scheduling, weekly-build]

@@ -244,7 +244,7 @@ self_eval:
 
 dsa_mock:
   every_days: 28          # cadence between DSA mock interviews (the Sunday 🎤 slot)
-  first_due: 2026-10-11   # anchor for the first mock; afterwards the clock reads docs/foundations/dsa/mocks/README.md's log
+  first_due: 2026-12-06   # anchor for the first mock; afterwards the clock reads docs/foundations/dsa/mocks/README.md's log
 
 # Gamification thresholds — read by scripts/gamify.py, which emits progress.json (the
 # honest-progress data contract the progressiveoverflow.com dashboard renders). Only

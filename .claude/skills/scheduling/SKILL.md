@@ -22,6 +22,8 @@ number: it names the key.
 1. **Every unit number goes through [`effort-units`](../effort-units/SKILL.md).** A day header's first figure equals the script's `built`; a started day may also carry a pinned planned figure (effort-units). No estimates.
 2. **A day has two caps.** Units (`effort_budget.ceiling`) and rows
    (`effort_budget.max_rows_per_day`). Check both, with the script, on every touched day.
+   Through Nov 29, 2026 a built day stays at or under the units ceiling, never over it
+   ([`effort-budget.md`](../cse-coach/references/effort-budget.md)).
 3. **A tracker date is never edited to make a day fit.** A row that does not fit is carried in
    the schedule file; its due date stays where the ladder put it.
 
