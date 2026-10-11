@@ -1107,6 +1107,25 @@ class ParseCurrentWeekScheduleTests(unittest.TestCase):
         self.assertEqual(mon["items"][0]["deferredTo"], "2026-10-01")
         self.assertIsNone(thu["items"][0]["deferredTo"])
 
+    def test_left_arrow_origin_row_exports_deferred_to(self):
+        # decision `moves-leave-a-row-oct10`: a `←` row (moved to an EARLIER day) stays on
+        # its origin day unstruck with the new date in Next, and exports it as deferredTo.
+        left_fixture = (
+            "## Daily Schedule\n\n"
+            "| Problem | S | E | Next | Technique |\n"
+            "|---|:-:|:-:|:-:|---|\n"
+            "| ▸ **Thu Oct 1** · 7.8 units — left-arrow test |  |  |  |  |\n"
+            "| ← [202 Happy Number](../../../dsa/leetcode/graphs/202_happy_number.py) · [LC]"
+            "(https://leetcode.com/problems/happy-number/) | 🟢 s1 |  | 2026-09-28 | "
+            "Cycle-detection |\n"
+        )
+        (Path(self._tmpdir.name) / "20260928_schedule.md").write_text(
+            left_fixture, encoding="utf-8")
+        result = gamify.parse_current_week_schedule(dt.date(2026, 9, 28), self.URLS)
+        item = result["days"][3]["items"][0]
+        self.assertEqual(item["deferredTo"], "2026-09-28")
+        self.assertEqual(item["title"], "Happy Number")
+
     def test_mock_rows_tags_kind_and_lcnumber_before_and_after_the_session(self):
         # The pre-session row names no problem (lcNumber null); the post-session row is
         # struck and linked, so it carries the base problem's number. Both are kind "mock"

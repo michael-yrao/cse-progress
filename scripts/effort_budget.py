@@ -107,7 +107,11 @@ TECHNIQUE_COMPLEXITY = "complexity"
 # tag-stripped title. This tag vocabulary mirrors gamify.py's own _SCHEDULE_TAGS -- kept as
 # a separate copy here rather than imported, because gamify.py imports effort_budget, not
 # the other way around.
-_SCHED_ROW_TAGS = "⚠️🔥🆕🎯🎤⚙️🔤→"
+# The move arrows: `←` = moved to an EARLIER day, `→` = moved to a LATER day. Defined ONCE here;
+# gamify.py, remaining.py and check_schedule_integrity.py import it, so every parser treats
+# the two arrows identically (decision `moves-leave-a-row-oct10`).
+MOVE_ARROWS = "←→"
+_SCHED_ROW_TAGS = f"⚠️🔥🆕🎯🎤⚙️🔤{MOVE_ARROWS}"
 _LEADING_SCHED_TAGS = re.compile(rf"^[{re.escape(_SCHED_ROW_TAGS)}\s]+")
 _LEADING_SCHED_DIGITS = re.compile(r"^\s*(\d+)\b")
 
@@ -512,18 +516,18 @@ def deferred_to(done: bool, next_cell: str) -> str | None:
     return stripped if _FULL_ISO_DATE.fullmatch(stripped) else None
 
 
-DEFERRAL_MARKER = "→"
+DEFERRAL_MARKERS = tuple(MOVE_ARROWS)
 
 
 def _is_unreadable_deferral(done: bool, row_text: str, next_cell: str) -> bool:
-    """An unstruck `→` row whose Next cell is filled but is not a full ISO date.
+    """An unstruck `→`/`←` row whose Next cell is filled but is not a full ISO date.
 
     A Next cell that itself starts with `→` is the pre-Sep-29 shape (`→ Aug 31 wk`) that
     archived schedules still carry; it is history, not a mistake, so it stays silent."""
-    if done or not row_text.startswith(DEFERRAL_MARKER):
+    if done or not row_text.startswith(DEFERRAL_MARKERS):
         return False
     stripped = next_cell.strip()
-    if not stripped or stripped.startswith(DEFERRAL_MARKER):
+    if not stripped or stripped.startswith(DEFERRAL_MARKERS):
         return False
     return not _FULL_ISO_DATE.fullmatch(stripped)
 
@@ -833,7 +837,7 @@ def price_day_items(day: dt.date, items: list[dict], rows: list[dict], cfg: dict
             # deferred-rows-unbilled-oct6: a row deferred off a started day stays visible
             # but bills in neither built nor remaining; it prices on its new day.
             moved_lines.append(f"  {num_label:>5}  {cost:4.1f}  {note}  "
-                               f"→ {it['deferred_to']}  {it['text'].lstrip('→ ')[:44]}")
+                               f"→ {it['deferred_to']}  {it['text'].lstrip(MOVE_ARROWS + ' ')[:44]}")
         elif it["done"]:
             done_total += cost
             done_lines.append(line)

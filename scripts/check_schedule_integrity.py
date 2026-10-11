@@ -78,6 +78,7 @@ import _console
 
 _console.force_utf8()
 
+import effort_budget
 import links
 import session_date
 from links import SITE_LABEL, SITE_PRACTICE_URL_TEMPLATE
@@ -140,7 +141,7 @@ PROSE_NUMBER = re.compile(
 # false positive, not the under-extraction this module tolerates elsewhere. Kept local:
 # gamify.py solves the identical problem with its own `_LEADING_EMPHASIS`, but importing it
 # here would couple two independently-owned scripts over an incidental shared string.
-ROW_TAG_PREFIX = re.compile(r"^(?:~~|\*\*|[⚠️🔥🆕🎯🎤⚙️🔤→\s])+")
+ROW_TAG_PREFIX = re.compile(rf"^(?:~~|\*\*|[⚠️🔥🆕🎯🎤⚙️🔤{effort_budget.MOVE_ARROWS}\s])+")
 ROW_BARE_NUMBER = re.compile(r"^(\d{1,4})\b")
 
 # The Daily Schedule section's own heading — week_row_numbers() scans ONLY between here

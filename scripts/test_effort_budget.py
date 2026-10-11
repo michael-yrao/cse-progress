@@ -82,6 +82,24 @@ class DeferralWarningTests(unittest.TestCase):
                     self.assertEqual(stderr.getvalue(), "")
 
 
+class MoveArrowRowTests(unittest.TestCase):
+    def test_left_arrow_row_is_deferred_when_unstruck_and_done_when_struck(self):
+        cases = [
+            ("unstruck ← with Next date is deferred, not done",
+             "| ← [332 A](x.py) · [LC](y) | 🟢 s1 | | 2026-10-09 | Hierholzer |",
+             "2026-10-09", False),
+            ("struck ← row is done, not deferred",
+             "| ← ~~[332 A](x.py)~~ · [LC](y) | 🟢 s1 | 🟡 | 2026-10-19 | Hierholzer |",
+             None, True),
+        ]
+        for name, line, expected_to, expected_done in cases:
+            with self.subTest(name):
+                item = eb.parse_sched_line(line)
+                self.assertEqual(item["deferred_to"], expected_to)
+                self.assertEqual(item["done"], expected_done)
+                self.assertEqual(item["num"], "332")
+
+
 class RowCapLinesTests(unittest.TestCase):
     def test_warning_line_only_over_the_cap(self):
         cap = _CFG["max_rows_per_day"]

@@ -260,3 +260,4 @@
   named, but direction (decreasing — keep the nearest *higher* left price) and the picking mechanic (carry the
   absorbed span with each entry) both needed coach input. → 🟡.
 - **2026-10-09 · 332 Reconstruct Itinerary (min-heap ordering)** (🟢 s1 review; retry, half-spoiled: graphs folder) — ✅ **hit.** Euler path named unaided (start fixed at JFK, end unknown, every ticket used once = edges, not nodes) → Hierholzer, min-heap per airport for lexical order. → 🟡 (execution: the post-order append).
+- **2026-10-10 · 269 Alien Dictionary** (🟢 s1 review; retry, half-spoiled: graphs folder) — ✅ **hit.** Top comment, unaided: the first differing char of adjacent words makes the first a prereq of the second → topological sort (Kahn's), letters with no constraint go anywhere. → 🟢 s2.

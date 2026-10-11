@@ -50,6 +50,75 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-10-10 ──────────────
+    def alienOrder_20261010(self, words: List[str]) -> str:
+        # we need to compare letter between each two words
+        # if different chars, we set first char as prereq for second
+        # this is topological sort
+        # one thing is that if we cannot find out the exact order, it has no prereq and thus can go anywhere
+        # important thing here is honestly setting up the adj_map and pre_req map
+
+        # char : int
+        prereq_counter = {}
+
+        # pre-load this
+        # we are doing this because we can't just do defaultdict
+        # defaultdict means we can't really use the size of the map
+        # to determine if we are able to generate a result
+        for word in words:
+            for char in word:
+                prereq_counter[char] = 0
+        
+        # now we generate the adj_map
+        adj_map = collections.defaultdict(set)
+
+        # do the comparison per problem
+        for i in range(1,len(words)):
+            word1 = words[i-1]
+            word2 = words[i]
+            # handle case of example 3 first
+            # if first word is longer and are the same up to word2's length, we just return
+            if len(word1) > len(word2) and word1[:len(word2)] == word2:
+                return ""
+            # if word1 and word2 char is diff, we mark it
+            min_len = min(len(word1), len(word2))
+            for char_index in range(min_len):
+                # we actually need to know if this match up have already been seen first
+                # cause if we already have, we can't add it, so we change adj_map to set
+                if word1[char_index] != word2[char_index]:
+                    if word2[char_index] not in adj_map[word1[char_index]]:
+                        prereq_counter[word2[char_index]]+=1
+                        adj_map[word1[char_index]].add(word2[char_index])
+                    # break out of this loop
+                    break
+        
+        # now that the prereq and adj map are already built, let's do topological sort
+        queue = collections.deque()
+
+        for char, prereqs in prereq_counter.items():
+            if prereqs == 0:
+                queue.append(char)
+        
+        visited = set()
+        result = []
+
+        while queue:
+            current_node = queue.popleft()
+            if current_node in visited:
+                continue
+            visited.add(current_node)
+            result.append(current_node)
+            # go through neighbors
+            for neighbor in adj_map[current_node]:
+                prereq_counter[neighbor]-=1
+                if prereq_counter[neighbor] == 0:
+                    queue.append(neighbor)
+        
+        # if we were able to generate, return it, otherwise ""
+        if len(visited) == len(prereq_counter):
+            return "".join(result)
+        return ""
+
     # ── Attempt · 2026-09-06 ──────────────
     def alienOrder_20260906(self, words: List[str]) -> str:
         # so the way we define adjacency is via the first diff between word1 and word2

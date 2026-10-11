@@ -43,11 +43,9 @@ moving between days.
 
 ## Moving, adding or removing a row
 
-**A day that has started keeps its rows.** A day has started once the SESSION date reaches it, the date `scripts/session_date.py` announces; never pass `--today`/`--date` with the wall-clock date to re-decide it (the script warns when an override contradicts its detection). A row not done on it stays there, unstruck,
-prefixed `→`, with the new date in Next, but it is no longer billed there: the day's header
-drops by its price, and `--schedule-day` lists it under MOVED. **Before the first such edit, pin the plan once:** right after the header's `~N units`, add ` · planned X units`, where X is the header as it stands (`~3.8 units · planned 6.6 units — …`). It is never changed or removed afterwards. The copy on the new day is
-prefixed `→` and prices there. A swap is therefore even: the row out leaves the bill, the row
-in joins it. **A day that has not started is re-planned:** the row moves outright.
+**Every move leaves the row on its origin day, started or not.** The row stays there, unstruck, with the new date in Next, but it is no longer billed there: the day's header
+drops by its price, and `--schedule-day` lists it under MOVED. The arrow prefix says which way: `←` = moved to an EARLIER day, `→` = moved to a LATER day, on the origin row and on the destination copy alike. **Before the first row leaves, pin the plan once:** right after the header's `~N units`, add ` · planned X units`, where X is the header figure just before that row left (`~3.8 units · planned 6.6 units — …`). It is never changed or removed afterwards. The copy on the destination day carries the same arrow and prices there. A swap is therefore even: the row out leaves the bill, the row
+in joins it. When the move is a pull into the live session, the destination is the session date, the date `scripts/session_date.py` announces; never pass `--today`/`--date` with the wall-clock date to re-decide it (the script warns when an override contradicts its detection). Archived weeks written before 2026-10-10 keep their `→` rows as they are.
 
 1. **Start cell.** Moving: carry the Start cell verbatim. Adding: write it from the tracker —
    the comfort going in, with the streak on a 🟢 (`🟢 s2`), or `🆕` for an unseen problem.

@@ -359,7 +359,7 @@ def _scan_week(path: Path, week_start: dt.date, index: dict[str, dict[int, str]]
 # The legend's tag glyphs (see any schedule file's "Tags:" line) — stripped from a title's
 # front so the dashboard shows the problem name, not the build-time tag. → is a real arrow,
 # not emoji, but it prefixes a moved row the same way, so it's in the same strip set.
-_SCHEDULE_TAGS = "⚠️🔥🆕🎯🎤⚙️🔤→"
+_SCHEDULE_TAGS = f"⚠️🔥🆕🎯🎤⚙️🔤{eb.MOVE_ARROWS}"
 _LEADING_TAGS = re.compile(rf"^[{re.escape(_SCHEDULE_TAGS)}\s]+")
 _LEADING_NUM = re.compile(r"^\d+\.?\s*")
 DAY_LABEL = re.compile(r"units\s*—\s*(?P<label>[^|]+)")
@@ -385,7 +385,7 @@ TAG_BY_GLYPH = {
     "🎤": TAG_MOCK,
     "⚙️": TAG_VARIANT,
     "🔤": TAG_PRIMER,
-    "→": TAG_MOVED,
+    **{arrow: TAG_MOVED for arrow in eb.MOVE_ARROWS},
 }
 # Longest-first so a two-codepoint glyph is never accidentally matched by its own leading
 # codepoint alone.

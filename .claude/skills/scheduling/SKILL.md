@@ -115,4 +115,4 @@ still bind the week. A day over the cap is fixed by carrying, not by editing a t
 
 After logging a day's results, run `--schedule-day` and the no-flag run. Reseat a row from the
 carried list only when the day shows spare rows AND spare units (policy: `effort-budget.md`
-"Re-price mid-week"). Moving a row between started days follows `effort-units`. A pull into the live session (the learner starts a later day's row now) moves the row to the session date per effort-units and scaffolds it in the same turn.
+"Re-price mid-week"). Moving a row between days, started or not, follows `effort-units`. A pull into the live session (the learner starts a later day's row now) leaves the row on its origin day as a `←` row per effort-units, adds its copy to the session date, and scaffolds it in the same turn.

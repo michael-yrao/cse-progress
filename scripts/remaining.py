@@ -40,8 +40,8 @@ from links import link_line, REPO_ROOT
 # A day-block header: `| ▸ **Thu Sep 17** · 7.7 units — ...`. We match on the date fragment.
 DAY_HEADER = re.compile(r"▸\s*\*\*[^*]*\*\*")
 # Tag glyphs a row can carry before its number — the schedule's own "Tags:" legend:
-# 🔥 backfill · 🎯 probe · 🎤 mock · ⚙️ variant · 🆕 new · → moved · ⚠️ protected · 🔤 primer.
-ROW_TAG_GLYPHS = "🔥🎯🎤⚙️🆕→⚠️🔤"
+# 🔥 backfill · 🎯 probe · 🎤 mock · ⚙️ variant · 🆕 new · ← → moved · ⚠️ protected · 🔤 primer.
+ROW_TAG_GLYPHS = f"🔥🎯🎤⚙️🆕{eb.MOVE_ARROWS}⚠️🔤"
 MOCK_LINE = "🎤 DSA mock interview — unseen; named when the mock starts (dsa-mock.md)"
 # A problem row's number: `[N ` for a linked row, with ANY non-bracket prefix allowed in
 # front of it (the original, permissive shape — a tag glyph, a review marker like `🔁 `,

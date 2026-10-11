@@ -2125,3 +2125,19 @@ decisions:
       it. Learner, Oct 10: "we can aim for 8 but hovering right under if needed instead
       under/over". Normative copy: effort-budget.md; pointer in the scheduling skill's two-caps rule.
     affects: [effort-budget, scheduling, weekly-build]
+
+  - id: moves-leave-a-row-oct10
+    date: 2026-10-10
+    summary: >-
+      GENERALISES `schedule-item-deferred-to-sep29` and the started-day rule in
+      `deferred-rows-unbilled-oct6`. Every move of a schedule row, whether or not its origin day
+      has started, leaves the row on the origin day, unstruck, with the new date in Next, unbilled
+      there. The origin day's header pins its plan once (` · planned X units` after `~N units`,
+      X = the header figure just before the first row left). The arrow encodes direction: `←` =
+      moved to an earlier day, `→` = moved to a later day, on the origin row and the destination
+      copy. Code: `effort_budget.py` defines `MOVE_ARROWS` once; `gamify.py`, `remaining.py`
+      and `check_schedule_integrity.py` read it, so `←` parses exactly like `→` (deferredTo, unbilled,
+      tag `moved`). Prose: `effort-units` SKILL.md Moving section, `scheduling` SKILL.md Mid-week,
+      `review-workflow.md` Schedule integrity. The live 20261005 schedule is backfilled (332 and
+      239 pulled earlier); archived weeks keep `→`. No `cse.config.yml` value changed.
+    affects: [scheduling, effort_budget, gamify, remaining, schedule-integrity]
