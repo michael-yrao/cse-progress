@@ -924,12 +924,6 @@ def module_level_insert_at(lines: list[str]) -> int:
     return last_import
 
 
-def helper_note(stamp: str) -> str:
-    """The banner NOTE both retry layouts write when a helper class is in play."""
-    return (f"# NOTE: suffix any helper class you write (Node, TrieNode, …) with "
-            f"_{stamp} too — an undated helper collides with the restored canonical one.")
-
-
 def trim_trailing_blanks(lines: list[str]) -> list[str]:
     end = len(lines)
     while end and not lines[end - 1].strip():
@@ -1325,8 +1319,6 @@ def main() -> None:
             lines, cls, helper_lines = lift_helpers(lines, cls, stub_lines[0])
             at = cls + 1
             block = ["", f"    # ── Attempt · {today} ──────────────"]
-            if helper_lines:
-                block.append("    " + helper_note(stamp))
             block += recognition_block("    ")
             block += stub_lines
             what = f"{method}_{stamp}()"
@@ -1355,19 +1347,7 @@ def main() -> None:
             if class_defines_init(lines) and "__init__" not in members:
                 members.insert(0, "__init__")
             scope = design_class_body(lines, base)  # read member sigs from the main class
-            # If the file already carries a helper data-structure class (Node, TrieNode, …),
-            # the learner will hand-write their own inside today's attempt — remind them to
-            # date it. An undated helper silently collides with the restored canonical one at
-            # session end (Python keeps the *last* definition, so today's class picks up the
-            # wrong helper). See the 208 TrieNode incident.
-            has_helper = any(
-                (hm := re.match(r"^class\s+([A-Za-z_]\w*?)(?:_\d{8})?\s*[:(]", ln))
-                and hm.group(1) not in (base, "Solution")
-                for ln in lines
-            )
             banner = [f"# ── Attempt · {today} ──────────────"]
-            if has_helper:
-                banner.append(helper_note(stamp))
             block = ["", ""] + banner + [f"class {base}_{stamp}:"]
             block += recognition_block("    ")
             for m in members:

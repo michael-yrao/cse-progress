@@ -1,4 +1,4 @@
-<!-- reconciled: 2026-10-02 -->
+<!-- reconciled: 2026-10-12 -->
 # Retries: hide prior attempts, restore at session end
 
 **Open this** when scaffolding a retry (a problem whose file already exists) or when
@@ -56,11 +56,14 @@ carrying an old `# region ⚠ PRIOR ATTEMPTS` fold has the markers stripped here
   to the next machine (where restore finishes the job). A cut-short-then-resumed retry
   re-extracts safely: an un-attempted stub is dropped and the existing stash is left untouched
   (never clobbered with an empty stub).
-- ⚠️ **Restore warns** on duplicate top-level names in the merged file — act on the warning.
-  An undated helper in today's attempt is **silently shadowed** by the same-named one from a
-  prior attempt (Python binds the *last* definition). So today's code runs the older class.
-  Give helpers a dated name (`TrieNode_20260802`). (Found on 211: two identical `TrieNode`s,
-  so nothing crashed — the bad case.)
+- **Restore dates today's colliding helper itself** (auto-dated since Oct 12, 2026). An undated
+  helper in today's code that a restored attempt also defines (`UF`) becomes `UF_<stamp>`:
+  definition and uses, today's code only, never the stash. It also strips the old
+  `# NOTE: suffix any helper class` banner. The learner writes or pastes helpers with plain
+  names; the oldest stays the undated canonical one. Without this, Python binds the *last*
+  definition and today's code runs the older class (found on 211, two identical `TrieNode`s —
+  nothing crashed). The duplicate-name warning remains as the net when restore can't rename
+  (no stamp, unparseable body).
 
 ### Worked example — a retry, start to finish
 

@@ -2203,3 +2203,26 @@ decisions:
       CRLF/LF style differs from HEAD's. Sources: self-eval 2026-10-07, 2026-10-09,
       2026-10-10, 2026-10-11.
     affects: [hooks, pre-commit, showcase, bigo]
+
+  - id: retire-53-prefix-sum-oct12
+    date: 2026-10-12
+    summary: >-
+      53 Maximum Subarray's Prefix Sum variant retired after a clean Oct 12 rep: on 53 the
+      smallest-prefix-so-far form is Kadane restated, Kadane (graduated) is the natural method,
+      and the learner does not want to drill prefix sums on this problem. Tracker row dropped,
+      not deferred; no discovery_skip, since 53 keeps its Kadane row. Prefix Sum stays on two
+      problems: 560 and 525 Contiguous Array (prefix sum + hash map of first index), queued
+      `phase:Bit-Math`, the phase after DP. Learner, Oct 12.
+    affects: [dsa_progress, techniques, roadmap, scheduling]
+
+  - id: restore-dates-colliding-helpers-oct12
+    date: 2026-10-12
+    summary: >-
+      `restore_history.py` dates today's colliding helper itself: an undated top-level
+      class/def in today's code that a restored attempt also defines (`UF`) is renamed
+      `UF_<stamp>`, definition and uses, by NAME token in today's body only; the stash is never
+      touched, so the oldest stays the undated canonical one. It also strips the old
+      `# NOTE: suffix any helper class` banner, which `new_problem.py` no longer writes. The
+      duplicate-name warning stays as the net when it cannot rename (no stamp, unparseable
+      body). Learner, Oct 12: renaming pasted helpers by hand was manual effort for nothing.
+    affects: [restore-history, new-problem, retry-and-restore]

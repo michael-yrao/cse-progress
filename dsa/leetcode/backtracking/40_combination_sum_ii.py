@@ -29,6 +29,44 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-10-12 ──────────────
+    def combinationSum2_20261012(self, candidates: List[int], target: int) -> List[List[int]]:
+        # numbers can only be used once and no duplicates
+        # so we need to sort first
+        # then it becomes a simple pick or not pick backtracking problem
+        # path: current set of numbers for the solution
+        # state: index used to pick the next number, since we are also doing sum, we should pass a goal sum to avoid having to do sum on path each time
+        # decision: use or not use the number at index state
+        # validity: 
+        #   a. if use, nums[i] <= goal
+        #   b. otherwise, pass i until we are not same as nums[i]
+        # base case: if goal is zero, add to result. if index > len, return
+
+        candidates.sort()
+        result = []
+
+        def backtrack(path, index, goal):
+            if goal == 0:
+                result.append(path.copy())
+                return
+            if index >= len(candidates):
+                return
+            
+            # decision #1: pick
+            if candidates[index] <= goal:
+                path.append(candidates[index])
+                backtrack(path, index + 1, goal - candidates[index])
+                path.pop()
+            
+            # decision #2: do not pick
+            while index + 1 < len(candidates) and candidates[index] == candidates[index+1]:
+                index+=1
+            
+            backtrack(path, index + 1, goal)
+        
+        backtrack([], 0, target)
+        return result
+
     # ── Attempt · 2026-10-02 ──────────────
     def combinationSum2_20261002(self, candidates: List[int], target: int) -> List[List[int]]:
         # example 1 output are all sorted, we sort first

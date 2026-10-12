@@ -1,3 +1,18 @@
+- **2026-10-12 · 1462 Course Schedule IV** (🟢 s1 review; retry, half-spoiled: graphs folder) — ✅ **hit, not
+  measured.** Top comment, unaided: Floyd-Warshall, because n ≤ 100 makes the V³ precompute cheap and many queries
+  then cost O(1) each. Blank page, no hints. Time missed the O(Q) query loop (carded). → 🟢 s2.
+- **2026-10-12 · 53 Maximum Subarray (Prefix Sum)** (🟢 s1 review; retry, fully spoiled: the board names the
+  method) — ➖ **told, not a hit.** Top comment: subarray sum = `pre[j] − pre[i]`, maximize by keeping the smallest
+  earlier prefix. Blank page, no hints; O(n)/O(n) right. Learner not comfortable with the method on this problem and
+  does not want to drill it here → variant retired (decision `retire-53-prefix-sum-oct12`), 525 queued in its place.
+- **2026-10-12 · 40 Combination Sum II** (🟢 s0 lock-down; retry, half-spoiled: backtracking folder) — ✅ **hit, not
+  measured.** Top comment, unaided: use-once + no duplicate combinations → sort, then take/skip backtracking, the skip
+  branch stepping past equal values. Blank page, no hints. Time O(n log n + 2ⁿ) right, the copy priced as paid once per
+  output (not per leaf, unlike 17 Oct 7); space O(n) right with one shared `path`. → 🟢 s1.
+- **2026-10-12 · 9004 Minimum Spanning Tree** (🟡 conversion; retry, fully spoiled: learner asked Prim's or Kruskal,
+  coach named Kruskal from the schedule row) — ➖ **told, not a hit.** Top comment after the answer: sort edges by
+  weight, union-find, track the component count for the no-spanning-tree case. Blank page, no hints; V priced in time
+  and space this time (the Oct 2 miss). → 🟢 s1.
 - **2026-10-11 · 239 Sliding Window Maximum** (🟢 s1 review; retry, half-spoiled: stack folder) — ✅ **hit, not
   measured.** Top comment, unaided: weighed a heap against a decreasing monotonic deque, picked the deque because the
   window also evicts from the left, indices stored. Blank page, no hints; spec 25/25. → 🟢 s2.

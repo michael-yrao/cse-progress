@@ -42,6 +42,38 @@ Every stored case here has distinct edge weights, so its answer is unique.
 
 from typing import List, Optional
 
+    # ── Attempt · 2026-10-12 ──────────────
+class UF_20261012:
+    def __init__(self, n):
+        self.numComponents = n
+        self.parentMap = {}
+        self.rankMap = {}
+
+        for i in range(self.numComponents):
+            self.rankMap[i] = 0
+            self.parentMap[i] = i
+
+    def find(self, node):
+        if self.parentMap[node] != node:
+            self.parentMap[node] = self.find(self.parentMap[node])
+        return self.parentMap[node]
+
+    def union(self, n1, n2):
+        n1r = self.find(n1)
+        n2r = self.find(n2)
+        if n1r == n2r:
+            return False
+        if self.rankMap[n1r] > self.rankMap[n2r]:
+            self.parentMap[n2r] = n1r
+        elif self.rankMap[n1r] < self.rankMap[n2r]:
+            self.parentMap[n1r] = n2r
+        else:
+            self.parentMap[n2r] = n1r
+            self.rankMap[n1r]+=1
+        self.numComponents-=1
+        return True
+
+
 # ── Attempt 1 · 2026-10-02 ────────────────────────────────────────────
 class UF:
     def __init__(self, n):
@@ -73,7 +105,38 @@ class UF:
         self.numComponents-=1
         return True
 
+
 class Solution:
+    def minimumSpanningTree_20261012(self, n: int, edges: List[List[int]]) -> Optional[List]:
+        # Kruskal's today
+        # so we sort the edges by the weight and then do UF
+        # we potentially cannot get a MST, so we want to actually have a UF helper class where we then keep track of number of components
+        edges.sort(key=lambda edge:edge[2])
+
+        uf = UF_20261012(n)
+
+        result = []
+
+        total_weight = 0
+        
+        mst_edges = []
+        
+        for n1,n2,weight in edges:
+            if uf.union(n1,n2):
+                total_weight+=weight
+                if n1 < n2:
+                    mst_edges.append([n1,n2])
+                else:
+                    mst_edges.append([n2,n1])    
+
+        if uf.numComponents == 1:
+            result.append(total_weight)
+            mst_edges.sort()
+            result.append(mst_edges)
+            return result
+
+        return None
+
     def minimumSpanningTree(self, n: int, edges: List[List[int]]) -> Optional[List]:
         # since we already have edges here, this is Kruskal's MST
         # so we sort and do UF

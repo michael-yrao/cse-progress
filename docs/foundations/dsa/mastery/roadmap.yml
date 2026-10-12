@@ -105,6 +105,7 @@ problems:
   - {number: 416, title: "Partition Equal Subset Sum", url: "https://leetcode.com/problems/partition-equal-subset-sum/", difficulty: Medium, phase: 1D-DP}
   - {number: 494, title: "Target Sum", url: "https://leetcode.com/problems/target-sum/", difficulty: Medium, phase: 2D-DP}
   - {number: 518, title: "Coin Change II", url: "https://leetcode.com/problems/coin-change-ii/", difficulty: Medium, phase: 2D-DP}
+  - {number: 525, title: "Contiguous Array", url: "https://leetcode.com/problems/contiguous-array/", difficulty: Medium, phase: Bit-Math}
   - {number: 542, title: "01 Matrix", url: "https://leetcode.com/problems/01-matrix/", difficulty: Medium, phase: backlog}
   - {number: 647, title: "Palindromic Substrings", url: "https://leetcode.com/problems/palindromic-substrings/", difficulty: Medium, phase: 1D-DP}
   - {number: 678, title: "Valid Parenthesis String", url: "https://leetcode.com/problems/valid-parenthesis-string/", difficulty: Medium, phase: backlog}

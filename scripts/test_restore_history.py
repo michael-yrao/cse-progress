@@ -45,9 +45,21 @@ class RestoreStashTests(unittest.TestCase):
         previous_cwd = Path.cwd()
         os.chdir(self.tmp_path)
         try:
-            return restore_history.restore_stash(self.stash, STAMP, False, [])
+            return restore_history.restore_stash(self.stash, STAMP, False, [], [])
         finally:
             os.chdir(previous_cwd)
+
+    def _restore_with_renames(self, source_text: str, stash_text: str) -> tuple[str, list[str]]:
+        self.source.write_text(source_text, encoding="utf-8")
+        self.stash.write_text(stash_text, encoding="utf-8")
+        renames: list[str] = []
+        previous_cwd = Path.cwd()
+        os.chdir(self.tmp_path)
+        try:
+            restore_history.restore_stash(self.stash, STAMP, False, [], renames)
+        finally:
+            os.chdir(previous_cwd)
+        return self.source.read_text(encoding="utf-8"), renames
 
     def test_restore_stash(self):
         attempted = "        return n + 1"
@@ -82,6 +94,47 @@ class RestoreStashTests(unittest.TestCase):
             self.assertIn("still empty", reason)
             self.assertEqual(self.source.read_text(encoding="utf-8"), empty_source)
             self.assertEqual(self.stash.read_text(encoding="utf-8"), new_format)
+
+    def test_date_colliding_helpers(self):
+        stash = f"{PRIOR}\n{new_problem.MODULE_SECTION_MARKER}\n{HELPER}"
+        no_helper_stash = f"{PRIOR}\n{new_problem.MODULE_SECTION_MARKER}\n"
+        uf = "class UF:\n    def __init__(self, n):\n        self.p = list(range(n))\n"
+        dated = f"UF_{STAMP}"
+        note = "    # NOTE: suffix any helper class you write (Node) with _x too\n"
+
+        def source(helper: str, use: str = "UF(n)", extra: str = "") -> str:
+            return (f"{HEADER}\n\n{helper}\n\nclass Solution:\n{extra}"
+                    f"    def find_{STAMP}(self, n: int) -> int:\n        return {use}\n\n{POINTER}\n")
+
+        cases = [
+            {"label": "colliding helper and its uses are dated; stash text unchanged",
+             "source": source(uf), "stash": stash,
+             "has": [f"class {dated}:", f"return {dated}(n)", HELPER], "lacks": [],
+             "renamed": 1, "unique": True},
+            {"label": "helper with no stash counterpart is unchanged",
+             "source": source(uf), "stash": no_helper_stash,
+             "has": ["class UF:", "return UF(n)"], "lacks": [dated], "renamed": 0},
+            {"label": "already-dated helper is unchanged",
+             "source": source(uf.replace("UF", dated), use=f"{dated}(n)"), "stash": stash,
+             "has": [f"class {dated}:"], "lacks": [f"{dated}_"], "renamed": 0},
+            {"label": "string and comment mentions of the name are unchanged",
+             "source": source(uf, use='len("UF") + UF(n)  # UF here'), "stash": stash,
+             "has": [f'len("UF") + {dated}(n)  # UF here'], "lacks": [], "renamed": 1},
+            {"label": "obsolete NOTE line is removed",
+             "source": source(uf, extra=note), "stash": no_helper_stash,
+             "has": [], "lacks": ["NOTE: suffix"], "renamed": 0},
+        ]
+        for case in cases:
+            with self.subTest(case["label"]):
+                self.setUp()
+                restored, renames = self._restore_with_renames(case["source"], case["stash"])
+                for piece in case["has"]:
+                    self.assertIn(piece, restored)
+                for piece in case["lacks"]:
+                    self.assertNotIn(piece, restored)
+                self.assertEqual(len(renames), case["renamed"])
+                if case.get("unique"):
+                    self.assertEqual(restore_history.duplicate_top_level_names(restored), [])
 
 
 if __name__ == "__main__":

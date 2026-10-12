@@ -75,14 +75,17 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/dsa/mastery/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **137+6** problems &nbsp;·&nbsp; **148+6** solutions &nbsp;·&nbsp; **671+6** reps
+> **137+6** problems &nbsp;·&nbsp; **147+6** solutions &nbsp;·&nbsp; **668+6** reps
 
 | | 🏆 Retired | 🎓 Graduated | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|:---:|
-| **Solutions** | 0 | 27 | 108 | 13 | 0 |
+| **Solutions** | 0 | 27 | 108 | 12 | 0 |
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Rep Date | Rep Dates |
 |---|---|---|---|---|---|---|
+| Medium | [9004. Minimum Spanning Tree (Kruskal)](https://progressiveoverflow.com/practice/9004) | 🟢 | 1 | 2026-11-11 | 2026-10-12 | 2026-10-02, 2026-10-12 |
+| Medium | [40. Combination Sum II](https://leetcode.com/problems/combination-sum-ii/) | 🟢 | 1 | 2026-11-11 | 2026-10-12 | 2026-09-28, 2026-09-30, 2026-10-02, 2026-10-12 |
+| Medium | [1462. Course Schedule IV (Floyd-Warshall / Transitive Closure)](https://leetcode.com/problems/course-schedule-iv/) | 🟢 | 2 | 2026-12-11 | 2026-10-12 | 2026-08-25, 2026-09-04, 2026-10-12 |
 | Medium | [9003. Lost Map (Prim's MST)](https://progressiveoverflow.com/practice/9003) | 🟢 | 0 | 2026-10-21 | 2026-10-11 | 2026-10-09, 2026-10-11 |
 | Medium | [133. Clone Graph](https://leetcode.com/problems/clone-graph/) | 🟢 | 2 | 2026-12-10 | 2026-10-11 | 2026-06-04, 2026-06-05, 2026-06-07, 2026-08-09, 2026-08-19, 2026-08-29, 2026-09-08, 2026-10-11 |
 | Medium | [189. Rotate Array](https://leetcode.com/problems/rotate-array/) | 🎓 | 3 | 2027-04-09 | 2026-10-11 | 2026-01-11, 2026-04-04, 2026-06-24, 2026-07-26, 2026-10-11 |
@@ -106,8 +109,6 @@ Notes for future agents:
 | Medium | [90. Subsets II](https://leetcode.com/problems/subsets-ii/) | 🟡 | 0 | 2026-10-13 | 2026-10-03 | 2026-10-01, 2026-10-03 |
 | Medium | [9001. Single Source Shortest Path, Negative Weights (Bellman-Ford)](https://progressiveoverflow.com/practice/9001) | 🟡 | 0 | 2026-10-13 | 2026-10-03 | 2026-10-01, 2026-10-03 |
 | Hard | [1489. Find Critical and Pseudo-Critical Edges in MST (Kruskal)](https://leetcode.com/problems/find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree/) | 🟡 | 0 | 2026-10-13 | 2026-10-03 | 2026-09-13, 2026-09-23, 2026-10-03 |
-| Medium | [9004. Minimum Spanning Tree (Kruskal)](https://progressiveoverflow.com/practice/9004) | 🟡 | 0 | 2026-10-12 | 2026-10-02 | 2026-10-02 |
-| Medium | [40. Combination Sum II](https://leetcode.com/problems/combination-sum-ii/) | 🟢 | 0 | 2026-10-12 | 2026-10-02 | 2026-09-28, 2026-09-30, 2026-10-02 |
 | Medium | [1552. Magnetic Force Between Two Balls](https://leetcode.com/problems/magnetic-force-between-two-balls/) | 🟢 | 1 | 2026-11-01 | 2026-10-02 | 2026-09-20, 2026-09-22, 2026-10-02 |
 | Medium | [901. Online Stock Span](https://leetcode.com/problems/online-stock-span/) | 🟢 | 1 | 2026-11-01 | 2026-10-02 | 2026-07-12, 2026-07-14, 2026-08-13, 2026-08-23, 2026-09-22, 2026-10-02 |
 | Hard | [127. Word Ladder (BFS)](https://leetcode.com/problems/word-ladder/) | 🟢 | 2 | 2026-12-01 | 2026-10-02 | 2026-07-18, 2026-07-21, 2026-08-03, 2026-08-13, 2026-08-23, 2026-09-02, 2026-10-02 |
@@ -167,11 +168,9 @@ Notes for future agents:
 | Medium | [417. Pacific Atlantic Water Flow (BFS)](https://leetcode.com/problems/pacific-atlantic-water-flow/) | 🟢 | 2 | 2026-11-05 | 2026-09-06 | 2026-06-11, 2026-07-19, 2026-07-31, 2026-09-06 |
 | Easy | [1. Two Sum](https://leetcode.com/problems/two-sum/) | 🎓 | 3 | 2027-03-05 | 2026-09-06 | 2026-01-02, 2026-03-25, 2026-07-14, 2026-09-06 |
 | Medium | [36. Valid Sudoku](https://leetcode.com/problems/valid-sudoku/) | 🟢 | 1 | 2026-10-05 | 2026-09-05 | 2026-01-25, 2026-05-22, 2026-06-30, 2026-07-09, 2026-08-21, 2026-09-05 |
-| Medium | [1462. Course Schedule IV (Floyd-Warshall / Transitive Closure)](https://leetcode.com/problems/course-schedule-iv/) | 🟢 | 1 | 2026-10-04 | 2026-09-04 | 2026-08-25, 2026-09-04 |
 | Hard | [124. Binary Tree Maximum Path Sum](https://leetcode.com/problems/binary-tree-maximum-path-sum/) | 🟢 | 1 | 2026-10-03 | 2026-09-03 | 2026-07-11, 2026-07-13, 2026-07-23, 2026-08-21, 2026-09-03 |
 | Medium | [143. Reorder List](https://leetcode.com/problems/reorder-list/) | 🟢 | 2 | 2026-11-02 | 2026-09-03 | 2026-04-26, 2026-07-06, 2026-07-15, 2026-07-25, 2026-08-04, 2026-09-03 |
 | Medium | [229. Majority Element II](https://leetcode.com/problems/majority-element-ii/) | 🟢 | 2 | 2026-11-01 | 2026-09-02 | 2026-01-30, 2026-04-14, 2026-06-27, 2026-06-29, 2026-07-12, 2026-07-24, 2026-08-03, 2026-09-02 |
-| Medium | [53. Maximum Subarray (Prefix Sum)](https://leetcode.com/problems/maximum-subarray/) | 🟢 | 1 | 2026-10-01 | 2026-09-01 | 2026-01-08, 2026-04-01, 2026-06-27, 2026-08-20, 2026-08-22, 2026-09-01 |
 | Medium | [355. Design Twitter](https://leetcode.com/problems/design-twitter/) | 🟢 | 2 | 2026-10-30 | 2026-08-31 | 2026-06-24, 2026-06-26, 2026-07-06, 2026-07-15, 2026-07-25, 2026-08-31 |
 | Medium | [153. Find Minimum in Rotated Sorted Array](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/) | 🟢 | 3 | 2027-02-26 | 2026-08-30 | 2026-04-21, 2026-07-01, 2026-08-30 |
 | Easy | [543. Diameter of Binary Tree](https://leetcode.com/problems/diameter-of-binary-tree/) | 🟢 | 2 | 2026-10-29 | 2026-08-30 | 2026-04-30, 2026-06-02, 2026-06-12, 2026-06-14, 2026-06-24, 2026-06-26, 2026-07-20, 2026-07-31, 2026-08-30 |

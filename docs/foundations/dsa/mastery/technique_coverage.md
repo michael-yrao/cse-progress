@@ -6,7 +6,7 @@
 
 > The tracker is keyed by **problem**; this is keyed by **technique**. Use it at the weekly build to decide what to pull, and at phase exit to check the per-algorithm bar (recognition + execution, ≥1 🟢 each).
 
-> **62/109** techniques started &nbsp;·&nbsp; **3** with no 🟢 &nbsp;·&nbsp; **9** thin &nbsp;·&nbsp; **0** unqueued variant gaps
+> **62/109** techniques started &nbsp;·&nbsp; **2** with no 🟢 &nbsp;·&nbsp; **9** thin &nbsp;·&nbsp; **0** unqueued variant gaps
 
 ## ⚠️ Action list
 
@@ -14,7 +14,6 @@
 
 - **Dense Dijkstra** (advanced_graphs) — best 🟡 across 743
 - **Graph Cycle Detection (DFS)** (graphs) — best 🟡 across 261
-- **Kruskal's MST** (advanced_graphs) — best 🟡 across 1489, 9004
 
 **Thin — below its computed coverage bar** (`cse.config.yml`'s `coverage_threshold`). One instance trains recall of that problem, not the skill.
 
@@ -24,7 +23,7 @@
 - **Multi-source BFS** (graphs) — 1/2: 994
 - **Bellman-Ford** (advanced_graphs) — 2/3: 787, 9001
 - **Hierholzer (Eulerian path)** (advanced_graphs) — 2/3 (3 rows): 332, 2097
-- **Kruskal's MST** (advanced_graphs) — 2/4: 1489, 9004
+- **Kruskal's MST** (advanced_graphs) — 2/3: 1489, 9004
 - **Trie** (tries) — 3/4: 208, 211, 648
 - **Dijkstra** (advanced_graphs) — 5/6: 743, 778, 1631, 2812, 3620
 
@@ -50,6 +49,7 @@
 - **Linked List Reversal** (linked_list) — queued: 25 (`surplus>=1`)
 - **Monotonic Stack** (stack) — queued: 85 (`solved:84`), 1504 (`solved:84`)
 - **Multi-source BFS** (graphs) — queued: 286 (`surplus>=1`), 542 (`surplus>=1`)
+- **Prefix Sum** (prefix_sum) — queued: 525 (`phase:Bit-Math`)
 - **Prim's MST** (advanced_graphs) — queued: 9005 (`solved:9003`)
 - **Sliding Window** (sliding_window) — queued: 76 (`surplus>=1`)
 - **Stack (expression evaluation)** (stack) — queued: 394 (`surplus>=1`)
@@ -69,7 +69,7 @@ Every declared technique gets a row, started or not — a not-started row's Gaps
 | Dijkstra | advanced_graphs | core | 6 (5+1) | 5 (743, 778, 1631, 2812, 3620) | 🟢 | ✅ | Min-over-max (minimize the maximum edge) ×1 · Max-min bottleneck (maximize the minimum edge) ×1 · ~~0/1 edge weights (0-1 BFS vs Dijkstra)~~ *(queued: `surplus>=1`)* · ~~Multiplicative relaxation (maximize the product)~~ *(queued: `surplus>=1`)* | thin (5/6) · queued: 1102 `surplus>=1`, 1368 `surplus>=1`, 1514 `surplus>=1`, 3650 `surplus>=1` |
 | Floyd-Warshall (all-pairs shortest path) | advanced_graphs | core | 2 (2+0) | 2 (1334, 1462) | 🟢 | ✅ | — | queued: 399 `rated:1334` |
 | Hierholzer (Eulerian path) | advanced_graphs | core | 3 (3+0) | 2 *+1v* (332, 2097) | 🟢 | ✅ | pre-sorted adjacency ×1 · min-heap ordering ×1 | thin (2/3) · queued: 753 `surplus>=1` |
-| Kruskal's MST | advanced_graphs | core | 4 (2+2) | 2 (1489, 9004) | 🟡 | ❌ | — | **no-green** · thin (2/4) · queued: 1135 `surplus>=1` |
+| Kruskal's MST | advanced_graphs | core | 3 (2+1) | 2 (1489, 9004) | 🟢 | ✅ | — | thin (2/3) · queued: 1135 `surplus>=1` |
 | Prim's MST | advanced_graphs | core | 2 (2+0) | 2 (1584, 9003) | 🟢 | ✅ | — | queued: 9005 `solved:9003` |
 | Array/String Fundamentals | arrays_and_hash | core | 2 (2+0) | 3 (14, 66, 1929) | 🟢 | ✅ | — | — |
 | Boyer-Moore Voting | arrays_and_hash | core | 1 (1+0) | 2 (169, 229) | 🎓 | ✅ | — | — |
@@ -151,7 +151,7 @@ Every declared technique gets a row, started or not — a not-started row's Gaps
 | Math / Number Manipulation | math_sim | core | 2 (2+0) | 0 (—) | — | ❌ | — | *not started* |
 | Simulation / Matrix Walk | math_sim | core | 2 (2+0) | 0 (—) | — | ❌ | — | *not started* |
 | Kadane | prefix_sum | core | 1 (1+0) | 1 (53) | 🎓 | ✅ | — | — |
-| Prefix Sum | prefix_sum | core | 1 (1+0) | 2 (53, 560) | 🟢 | ✅ | — | — |
+| Prefix Sum | prefix_sum | core | 1 (1+0) | 1 (560) | 🟢 | ✅ | — | queued: 525 `phase:Bit-Math` |
 | Recursion | recursion | core | 2 (2+0) | 3 (19, 21, 206) | 🎓 | ✅ | — | — |
 | Greedy (single pass) | sliding_window | core | 4 (4+0) | 6 (45, 55, 122, 134, 763, 846) | 🟢 | ✅ | — | queued: 678 `surplus>=1`, 1899 `surplus>=1` |
 | Sliding Window | sliding_window | core | 3 (3+0) | 4 (3, 121, 424, 567) | 🟢 | ✅ | — | queued: 76 `surplus>=1` |
@@ -176,7 +176,7 @@ Every declared technique gets a row, started or not — a not-started row's Gaps
 
 ## Vocabulary maintenance
 
-**Queued (82)** — listed in the Action list above; a known gap with a fill already picked, not counted below.
+**Queued (83)** — listed in the Action list above; a known gap with a fill already picked, not counted below.
 
 **Declared, not queued (1)** — declared in the vocabulary, no tracker row, and not yet in any queue. This is the normal state for curriculum ahead of the learner; it is a roadmap, not a finding: 547
 

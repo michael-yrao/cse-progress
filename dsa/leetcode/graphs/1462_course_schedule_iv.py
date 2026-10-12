@@ -18,6 +18,34 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-10-12 ──────────────
+    def courseScheduleIv_20261012(self, numCourses: int, prerequisites: List[List[int]], queries: List[List[int]]) -> List[bool]:
+        # this is floyd warshall, we have 100 max number of courses and using floyd warshall, we can do O(1) lookup for queries
+        # cost is just us setting up the 2D table for floyd warshall which is O(n^3)
+
+        pre_map = []
+
+        for i in range(numCourses):
+            new_row = [False] * numCourses
+            pre_map.append(new_row)
+            pre_map[i][i] = True
+        
+        for src,dst in prerequisites:
+            pre_map[src][dst] = True
+
+        for mid in range(numCourses):
+            for src in range(numCourses):
+                for dst in range(numCourses):
+                    if pre_map[src][mid] and pre_map[mid][dst]:
+                        pre_map[src][dst] = True
+        
+        result = []
+
+        for src,dst in queries:
+            result.append(pre_map[src][dst])
+        
+        return result
+
     # ── Attempt · 2026-09-04 ──────────────
     def courseScheduleIv_20260904(self, numCourses: int, prerequisites: List[List[int]], queries: List[List[int]]) -> List[bool]:
         # build a 2D array of prereqs so we always know answers to queries immediately

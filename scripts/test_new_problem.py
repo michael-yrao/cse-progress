@@ -376,13 +376,12 @@ class RetryHelperStashTests(unittest.TestCase):
         return self.source.read_text(encoding="utf-8"), self.stash.read_text(encoding="utf-8")
 
     def test_retry_extract_moves_only_helpers_the_signature_does_not_name(self):
-        note = "    # NOTE: suffix any helper class you write"
         cases = [
             {
                 "label": "helper class moves with a marker",
                 "source": self._source_text(self.UF, self.SOLVED),
                 "existing_stash": None,
-                "source_has": [new_problem.POINTER_PREFIX, note],
+                "source_has": [new_problem.POINTER_PREFIX],
                 "source_lacks": ["class UF"],
                 "stash": f"{self.SOLVED}\n{self.MARKER}\n{self.UF}",
             },
@@ -391,7 +390,6 @@ class RetryHelperStashTests(unittest.TestCase):
                 "source": self._source_text(self.TREE_NODE, self.SOLVED_TREE),
                 "existing_stash": None,
                 "source_has": [f"{self.TREE_NODE}\n\nclass Solution:"],
-                "source_lacks": [note],
                 "stash": self.SOLVED_TREE,
             },
             {
@@ -399,7 +397,6 @@ class RetryHelperStashTests(unittest.TestCase):
                 "source": self._source_text("# a note\nLIMIT = 10\n", self.SOLVED),
                 "existing_stash": None,
                 "source_has": ["# a note\nLIMIT = 10\n"],
-                "source_lacks": [note],
                 "stash": self.SOLVED,
             },
             {
@@ -444,7 +441,7 @@ class RetryHelperStashTests(unittest.TestCase):
                 source_after, stash_after = self._retry(case["source"], case["existing_stash"])
                 for piece in case["source_has"]:
                     self.assertIn(piece, source_after)
-                for piece in case["source_lacks"]:
+                for piece in case.get("source_lacks", []):
                     self.assertNotIn(piece, source_after)
                 self.assertEqual(stash_after, case["stash"])
                 if case.get("parses"):

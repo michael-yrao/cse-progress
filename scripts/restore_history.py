@@ -24,7 +24,9 @@ from __future__ import annotations
 
 import argparse
 import ast
+import io
 import re
+import tokenize
 from datetime import datetime
 from pathlib import Path
 
@@ -56,6 +58,10 @@ BANNER = re.compile(r"^\s*#\s*──.*Attempt")
 # Inside a dated *class* attempt these are scaffold new_problem.py wrote, not the learner's work.
 DEF_HEAD = re.compile(r"^\s*(?:async\s+)?def\s+\w+\s*\(")
 DECORATOR = re.compile(r"^\s*@\w")
+DEFINITION_NODES = (ast.ClassDef, ast.FunctionDef, ast.AsyncFunctionDef)
+DATED_NAME_SUFFIX = re.compile(r"_\d{8}$")
+# The helper banner older scaffolds wrote; restore dates the helper itself, so it is stripped.
+OBSOLETE_NOTE_PREFIX = "# NOTE: suffix any helper class"
 
 
 def indent_of(line: str) -> int:
@@ -143,10 +149,11 @@ def duplicate_top_level_names(text: str) -> list[tuple[str, list[int]]]:
     with the SAME name in one file, and Python silently binds the LAST one: today's
     attempt then runs a *previous attempt's* helper class.
 
-    The scaffold banner already asks the learner to date their helpers
-    (`TrieNode_20260802`), but a banner is prose, and on 2026-08-02 in problem 211 it was
-    skipped — today's undated `TrieNode` was shadowed by the Jul 21 one. The classes
-    happened to be identical, so nothing crashed, which is the bad case: silently wrong.
+    On 2026-08-02 in problem 211 today's undated `TrieNode` was shadowed by the Jul 21
+    one. The classes happened to be identical, so nothing crashed, which is the bad case:
+    silently wrong. Restore now dates today's colliding helper itself
+    (`date_colliding_helpers`); this check remains the net for anything it can't rename
+    (no session stamp, a body that does not parse).
 
     Checking the merged text is cheap, needs no knowledge of the slice's shape, and so
     doesn't weaken the invariant above — it reads the RESULT, not the parts.
@@ -167,9 +174,55 @@ def collision_warnings(path: Path, text: str) -> list[str]:
     return [
         f"{path}: '{name}' defined {len(lines)}× (lines {', '.join(map(str, lines))}) — "
         f"Python binds the LAST one, so the newest attempt may be running an older "
-        f"attempt's helper. Suffix the newest with its date."
+        f"attempt's helper. Restore could not date it automatically; suffix the newest "
+        f"with its date."
         for name, lines in duplicate_top_level_names(text)
     ]
+
+
+def top_level_names(source: str) -> set[str] | None:
+    """Names of the top-level classes/functions in `source`; None if it does not parse."""
+    try:
+        tree = ast.parse(source)
+    except SyntaxError:
+        return None
+    return {node.name for node in tree.body if isinstance(node, DEFINITION_NODES)}
+
+
+def rename_name_tokens(source: str, name: str, new_name: str) -> str:
+    """`source` with every NAME token equal to `name` renamed, spliced by (row, col) so
+    formatting is untouched and strings and comments are never rewritten."""
+    lines = source.split("\n")
+    hits = [tok.start for tok in tokenize.generate_tokens(io.StringIO(source).readline)
+            if tok.type == tokenize.NAME and tok.string == name]
+    for row, col in sorted(hits, reverse=True):
+        line = lines[row - 1]
+        lines[row - 1] = line[:col] + new_name + line[col + len(name):]
+    return "\n".join(lines)
+
+
+def date_colliding_helpers(body_lines: list[str], merged_text: str,
+                           stamp: str) -> tuple[list[str], list[str]]:
+    """Today's undated top-level helpers that `merged_text` defines twice, renamed
+    `<name>_<stamp>` in the body only. Returns (new body lines, renamed names).
+
+    The stash is never touched: the oldest definition stays the undated canonical one.
+    A body that does not parse is returned unchanged for `collision_warnings` to flag.
+    """
+    body_text = "\n".join(body_lines)
+    body_names = top_level_names(body_text)
+    if body_names is None:
+        return body_lines, []
+    colliding = [name for name, _ in duplicate_top_level_names(merged_text)
+                 if name in body_names and not DATED_NAME_SUFFIX.search(name)]
+    for name in colliding:
+        body_text = rename_name_tokens(body_text, name, f"{name}_{stamp}")
+    return body_text.split("\n"), colliding
+
+
+def strip_obsolete_note(lines: list[str]) -> list[str]:
+    """`lines` without the helper-suffix banner older scaffolds wrote."""
+    return [ln for ln in lines if not ln.strip().startswith(OBSOLETE_NOTE_PREFIX)]
 
 
 def insert_helpers(lines: list[str], helpers: list[str]) -> list[str]:
@@ -186,8 +239,16 @@ def insert_helpers(lines: list[str], helpers: list[str]) -> list[str]:
     return (head + BLOCK_SEPARATOR if head else []) + helpers + (BLOCK_SEPARATOR + tail if tail else [])
 
 
+def merge_stash(body: list[str], prior: list[str], helpers: list[str]) -> str:
+    """The restored file text: today's body, helpers above `class Solution`, prior at EOF."""
+    merged = body + [""] + prior if prior else body
+    if helpers:
+        merged = insert_helpers(merged, helpers)
+    return "\n".join(merged).rstrip() + "\n"
+
+
 def restore_stash(stash: Path, stamp: str | None, dry_run: bool,
-                  warnings: list[str]) -> str | None:
+                  warnings: list[str], renames: list[str]) -> str | None:
     """Paste `stash` back into its source file. Returns a skip reason, or None if restored."""
     m = re.match(r"(\d+)_", stash.name)
     if not m:
@@ -202,10 +263,16 @@ def restore_stash(stash: Path, stamp: str | None, dry_run: bool,
 
     body = strip_pointer(src_lines)                 # drop the breadcrumb
     prior, helpers = split_stash(stash.read_text(encoding="utf-8"))  # no marker → old format
-    merged = body + [""] + prior if prior else body
-    if helpers:
-        merged = insert_helpers(merged, helpers)
-    text = "\n".join(merged).rstrip() + "\n"
+    if stamp is not None:
+        body = strip_obsolete_note(body)
+    text = merge_stash(body, prior, helpers)
+    if stamp is not None:
+        body, renamed = date_colliding_helpers(body, text, stamp)
+        if renamed:
+            text = merge_stash(body, prior, helpers)
+        renames.extend(
+            f"{m.group(1)}: dated today's helper {name} → {name}_{stamp} "
+            f"(a restored attempt defines {name} too)" for name in renamed)
     # Checked on --dry-run too: the whole point is to see the collision BEFORE it lands.
     warnings.extend(collision_warnings(src, text))
 
@@ -251,13 +318,13 @@ def main() -> None:
               f"wall clock is {datetime.now().strftime('%Y%m%d')}).")
     stamp = None if args.all else session_date
     verb = "Would restore" if args.dry_run else "Restored"
-    done, kept, warnings = [], [], []
+    done, kept, warnings, renames = [], [], [], []
 
     # 1. Restore stashes written by the new extract path.
     hist = history_dir()
     if hist.exists():
         for stash in sorted(hist.glob("*.txt")):
-            reason = restore_stash(stash, stamp, args.dry_run, warnings)
+            reason = restore_stash(stash, stamp, args.dry_run, warnings, renames)
             (kept if reason else done).append((stash, reason))
 
     # 2. Migrate any legacy folded files (their code never left the file).
@@ -271,11 +338,13 @@ def main() -> None:
         print(f"{verb} {target}")
     for target, reason in kept:
         print(f"Kept {target} ({reason})")
+    for rename in renames:
+        print(rename)
     if not done:
         print("Nothing to restore.")
 
     # Surface loudly and last, so it survives a wall of "Restored ..." lines. Not fatal:
-    # the paste itself is correct and the rename is the learner's to make (their code).
+    # the paste itself is correct; these are the collisions auto-dating could not resolve.
     if warnings:
         print(f"\n⚠️  {len(warnings)} name collision(s) in the merged file(s):")
         for warning in warnings:

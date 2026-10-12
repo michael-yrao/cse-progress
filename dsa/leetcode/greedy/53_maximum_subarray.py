@@ -35,6 +35,29 @@ from typing import List
 
 class Solution:
 
+    # ── Attempt · 2026-10-12 ──────────────
+    def maxSubArray_20261012(self, nums: List[int]) -> int:
+        # prefix sum method today
+        # subarray sum using prefix sum is prefix[j] - prefix[i] = subarray sum
+        # we can maximize by maximizing prefix[j] and/or minimizing prefix[i]
+        # nums = [-2, 1,-3, 4,-1, 2,1,-5, 4]
+        # pre  = [0 ,-2,-1,-4, 0,-1,1, 2,-3,1]
+
+        max_sum = -math.inf
+
+        pre = [0] * (len(nums) + 1)
+        
+        for i in range(1,len(pre)):
+            pre[i] = pre[i-1] + nums[i-1]
+        
+        prefix_i = pre[0]
+        # now we want to maximize the runningSum and minimize prefix[i]
+        for j in range(1, len(pre)):
+            max_sum = max(max_sum, pre[j] - prefix_i)
+            prefix_i = min(prefix_i, pre[j])
+        
+        return max_sum # type: ignore
+
     # ── Attempt · 2026-10-11 ──────────────
     def maxSubArray_20261011(self, nums: List[int]) -> int:
         # Kadane's algorithm

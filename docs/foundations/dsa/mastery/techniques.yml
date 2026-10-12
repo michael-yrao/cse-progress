@@ -284,7 +284,7 @@ techniques:
     doc: prefix_sum
     problems:
       - {number: 560}
-      - {number: 53, method: Prefix Sum}
+      - {number: 525, queued: "phase:Bit-Math"}  # replaces 53's retired Prefix Sum variant (Oct 12, 2026)
 
   - name: Kadane
     family: prefix_sum
