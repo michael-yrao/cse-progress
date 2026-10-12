@@ -2151,3 +2151,15 @@ decisions:
       difficulty when the cell is blank. The site's Recognition rows therefore show the same
       difficulty tag as the other problem rows, including clean probes that earn no tracker row.
     affects: [probes, gamify, recognition-panel]
+
+  - id: build-at-last-week-done-oct11
+    date: 2026-10-11
+    summary: >-
+      The Oct 12 weekly build is sized to the completed units of the Oct 5 week, 39.9
+      (`effort_budget.py --schedule-day` done figures Mon-Sun Oct 5-11: 7.8, 8.2, 3.8, 5.0, 9.0,
+      1.0, 5.1), with every built day at or under 5.7 units, ONE WEEK ONLY. Learner, Oct 11: "just
+      this week. I expect it to be quite busy like this previous week". It does not change
+      `effort_budget.ceiling` or the standing ceiling-from-below rule
+      (`ceiling-from-below-wedding-oct10`); the Oct 19 build returns to that rule unless the
+      learner says otherwise. single-source-ok: the figures here are history.
+    affects: [scheduling, weekly-build, effort-budget]

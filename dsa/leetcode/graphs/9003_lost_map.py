@@ -45,6 +45,59 @@ from typing import List, Optional
 
 
 class Solution:
+
+    # ── Attempt · 2026-10-11 ──────────────
+    def lostMap_20261011(self, distances: List[List[int]]) -> List[List[int]]:
+        # distances is the full constructed distance map
+        # we need to essentially work backwards to get the original roads
+        # n nodes and n - 1 roads where every village is connected means the original roads form a MST
+        # prim's algorithm or kruskal's algorithm to find the MST
+        # we will do prim's today
+        # we will construct from nothing and use distance as a validator
+        # we need distances array, whether or not we've connected these nodes or not and also relaxing the un-visited nodes
+        n = len(distances)
+
+        # we actually need the node that gave us the mst
+        # so let's do [distance, from_edge]
+        mst_dist = []
+
+        for i in range(n):
+            mst_dist.append([math.inf, None])
+
+        mst_dist[0][0] = 0
+
+        visited = [False] * n
+
+        result = []
+
+        def get_smallest_unvisited_node():
+            smallest_value = math.inf
+            smallest_node = math.inf
+            for node in range(n):
+                if mst_dist[node][0] < smallest_value and not visited[node]:
+                    smallest_value = mst_dist[node][0]
+                    smallest_node = node
+
+            return smallest_node
+
+        def relax_relative_to(node):
+            # check what is the cheapest from this node to other un-visited and update their smallest so far
+            for neighbor in range(n):
+                if not visited[neighbor] and distances[node][neighbor] < mst_dist[neighbor][0]:
+                    mst_dist[neighbor][0] = distances[node][neighbor]
+                    mst_dist[neighbor][1] = node
+        
+        for _ in range(n):
+            next_node = get_smallest_unvisited_node()
+            # mark node as visited
+            visited[next_node] = True # type: ignore
+            # since we connected it, let's add it to MST as well
+            if mst_dist[next_node][1] != None: # type: ignore
+                result.append([next_node,mst_dist[next_node][1]]) # type: ignore
+            relax_relative_to(next_node)
+
+        return result
+
     # ── Attempt 1 · 2026-10-09 ────────────────────────────────────────────
     def lostMap(self, distances: List[List[int]]) -> List[List[int]]:
         # so we are given the distances array and we are working our way backwards to find the original n - 1 edges

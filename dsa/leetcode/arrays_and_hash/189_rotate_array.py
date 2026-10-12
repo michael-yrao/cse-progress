@@ -41,6 +41,21 @@ from typing import List
 
 class Solution:
 
+    # ── Attempt · 2026-10-11 ──────────────
+    def rotate_20261011(self, nums: List[int], k: int) -> None:
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+        # [1,2,3,4,5,6,7] ; k = 3
+        # [7,6,5,4,3,2,1]
+        # [5,6,7,1,2,3,4]
+        # reverse, reverse first k, reverse k to end
+
+        k = k%len(nums)
+        nums.reverse()
+        nums[:k] = reversed(nums[:k])
+        nums[k:] = reversed(nums[k:])
+
     # ── Attempt · 2026-07-26 ──────────────
     def rotate_20260726(self, nums: List[int], k: int) -> None:
         """

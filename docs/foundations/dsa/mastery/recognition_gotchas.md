@@ -1,3 +1,17 @@
+- **2026-10-11 · 239 Sliding Window Maximum** (🟢 s1 review; retry, half-spoiled: stack folder) — ✅ **hit, not
+  measured.** Top comment, unaided: weighed a heap against a decreasing monotonic deque, picked the deque because the
+  window also evicts from the left, indices stored. Blank page, no hints; spec 25/25. → 🟢 s2.
+- **2026-10-11 · 189 Rotate Array** (🟢 s2 review; retry, half-spoiled: arrays_and_hash folder) — ✅ **hit, not
+  measured.** Top comment, unaided: worked example, then reverse all / reverse first k / reverse the rest, with
+  `k % n`. Blank page, no hints; spec 25/25. Slice-based reversals cost O(n) space against the follow-up's O(1);
+  bound stated right, why-clause credited `reversed()` instead of the slice copies. → 🎓.
+- **2026-10-11 · 133 Clone Graph** (🟢 s1 review; retry, half-spoiled: graphs folder) — ✅ **hit, not measured.**
+  Top comment, unaided: old → new hash map, BFS/DFS to create every copy, a second pass to wire neighbors. Two-pass
+  BFS from a blank page, no hints; spec 24/24. → 🟢 s2.
+- **2026-10-11 · 9003 Lost Map** (🔴 re-rep; retry, half-spoiled: tracker names Prim's MST) — ✅ **hit, not
+  measured.** Top comment, unaided: n villages + n − 1 roads + all connected → the roads are a tree → MST; Prim's.
+  Asked after the call why the tree is the MST (cycle property: a non-road pair is the strict max of its cycle).
+  Array Prim's from a blank page; one `i`-for-`next_node` slip, coach-localized, recognized on sight. → 🟢 provisional.
 - **2026-10-09 · 9003 Lost Map** (🔴 re-rep of the Oct 8 teach; not a measured call) — ➖ **taught.** Top comment
   names MST then Prim's ("the answer is literally just a MST … distances is a Prim's thing"), recalled from the Oct 8
   hand-over. Does not count toward the cold hit rate. → 🔴.

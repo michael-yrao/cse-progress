@@ -75,16 +75,19 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/dsa/mastery/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **137+6** problems &nbsp;·&nbsp; **148+6** solutions &nbsp;·&nbsp; **667+6** reps
+> **137+6** problems &nbsp;·&nbsp; **148+6** solutions &nbsp;·&nbsp; **671+6** reps
 
 | | 🏆 Retired | 🎓 Graduated | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|:---:|
-| **Solutions** | 0 | 26 | 108 | 13 | 1 |
+| **Solutions** | 0 | 27 | 108 | 13 | 0 |
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Rep Date | Rep Dates |
 |---|---|---|---|---|---|---|
+| Medium | [9003. Lost Map (Prim's MST)](https://progressiveoverflow.com/practice/9003) | 🟢 | 0 | 2026-10-21 | 2026-10-11 | 2026-10-09, 2026-10-11 |
+| Medium | [133. Clone Graph](https://leetcode.com/problems/clone-graph/) | 🟢 | 2 | 2026-12-10 | 2026-10-11 | 2026-06-04, 2026-06-05, 2026-06-07, 2026-08-09, 2026-08-19, 2026-08-29, 2026-09-08, 2026-10-11 |
+| Medium | [189. Rotate Array](https://leetcode.com/problems/rotate-array/) | 🎓 | 3 | 2027-04-09 | 2026-10-11 | 2026-01-11, 2026-04-04, 2026-06-24, 2026-07-26, 2026-10-11 |
+| Hard | [239. Sliding Window Maximum](https://leetcode.com/problems/sliding-window-maximum/) | 🟢 | 2 | 2026-12-10 | 2026-10-11 | 2026-08-20, 2026-08-22, 2026-09-01, 2026-09-11, 2026-10-11 |
 | Hard | [269. Alien Dictionary](https://leetcode.com/problems/alien-dictionary/) | 🟢 | 2 | 2026-12-09 | 2026-10-10 | 2026-07-27, 2026-07-29, 2026-08-07, 2026-08-17, 2026-08-27, 2026-09-06, 2026-10-10 |
-| Medium | [9003. Lost Map (Prim's MST)](https://progressiveoverflow.com/practice/9003) | 🔴 | 0 | 2026-10-11 | 2026-10-09 | 2026-10-09 |
 | Medium | [17. Letter Combinations of a Phone Number](https://leetcode.com/problems/letter-combinations-of-a-phone-number/) | 🟢 | 0 | 2026-10-19 | 2026-10-09 | 2026-10-07, 2026-10-09 |
 | Medium | [79. Word Search](https://leetcode.com/problems/word-search/) | 🟡 | 0 | 2026-10-19 | 2026-10-09 | 2026-09-29, 2026-10-09 |
 | Hard | [332. Reconstruct Itinerary (min-heap ordering)](https://leetcode.com/problems/reconstruct-itinerary/) | 🟡 | 0 | 2026-10-19 | 2026-10-09 | 2026-07-22, 2026-07-28, 2026-08-04, 2026-08-29, 2026-08-31, 2026-09-10, 2026-10-09 |
@@ -160,8 +163,6 @@ Notes for future agents:
 | Medium | [207. Course Schedule I](https://leetcode.com/problems/course-schedule/) | 🎓 | 3 | 2027-03-13 | 2026-09-14 | 2026-06-08, 2026-06-12, 2026-06-13, 2026-07-16, 2026-09-14 |
 | Medium | [56. Merge Intervals](https://leetcode.com/problems/merge-intervals/) | 🟢 | 1 | 2026-10-13 | 2026-09-13 | 2026-08-24, 2026-09-03, 2026-09-13 |
 | Medium | [167. Two Sum II](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/) | 🎓 | 3 | 2027-03-11 | 2026-09-12 | 2026-01-19, 2026-07-14, 2026-09-12 |
-| Hard | [239. Sliding Window Maximum](https://leetcode.com/problems/sliding-window-maximum/) | 🟢 | 1 | 2026-10-11 | 2026-09-11 | 2026-08-20, 2026-08-22, 2026-09-01, 2026-09-11 |
-| Medium | [133. Clone Graph](https://leetcode.com/problems/clone-graph/) | 🟢 | 1 | 2026-10-08 | 2026-09-08 | 2026-06-04, 2026-06-05, 2026-06-07, 2026-08-09, 2026-08-19, 2026-08-29, 2026-09-08 |
 | Medium | [739. Daily Temperatures](https://leetcode.com/problems/daily-temperatures/) | 🟢 | 1 | 2026-10-06 | 2026-09-06 | 2026-08-14, 2026-08-27, 2026-09-06 |
 | Medium | [417. Pacific Atlantic Water Flow (BFS)](https://leetcode.com/problems/pacific-atlantic-water-flow/) | 🟢 | 2 | 2026-11-05 | 2026-09-06 | 2026-06-11, 2026-07-19, 2026-07-31, 2026-09-06 |
 | Easy | [1. Two Sum](https://leetcode.com/problems/two-sum/) | 🎓 | 3 | 2027-03-05 | 2026-09-06 | 2026-01-02, 2026-03-25, 2026-07-14, 2026-09-06 |
@@ -227,7 +228,6 @@ Notes for future agents:
 | Medium | [2. Add Two Numbers](https://leetcode.com/problems/add-two-numbers/) | 🟢 | 2 | 2026-10-03 | 2026-08-04 | 2026-07-05, 2026-08-04 |
 | Medium | [994. Rotting Oranges](https://leetcode.com/problems/rotting-oranges/) | 🟢 | 2 | 2026-10-02 | 2026-08-03 | 2026-06-06, 2026-06-15, 2026-06-25, 2026-07-04, 2026-08-03 |
 | Easy | [733. Flood Fill (BFS)](https://leetcode.com/problems/flood-fill/) | 🎓 | 3 | 2027-01-25 | 2026-07-29 | 2026-06-12, 2026-06-19, 2026-06-28, 2026-07-29 |
-| Medium | [189. Rotate Array](https://leetcode.com/problems/rotate-array/) | 🟢 | 2 | 2026-09-24 | 2026-07-26 | 2026-01-11, 2026-04-04, 2026-06-24, 2026-07-26 |
 | Easy | [1046. Last Stone Weight](https://leetcode.com/problems/last-stone-weight/) | 🟢 | 2 | 2026-09-24 | 2026-07-26 | 2026-06-23, 2026-07-26 |
 | Easy | [704. Binary Search](https://leetcode.com/problems/binary-search/) | 🎓 | 3 | 2027-01-22 | 2026-07-26 | 2026-03-09, 2026-04-13, 2026-05-27, 2026-06-27, 2026-07-26 |
 | Medium | [200. Number of Islands (BFS)](https://leetcode.com/problems/number-of-islands/) | 🎓 | 3 | 2027-01-14 | 2026-07-18 | 2026-05-30, 2026-06-01, 2026-06-07, 2026-07-18 |

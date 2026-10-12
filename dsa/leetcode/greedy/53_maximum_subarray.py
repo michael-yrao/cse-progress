@@ -35,6 +35,22 @@ from typing import List
 
 class Solution:
 
+    # ── Attempt · 2026-10-11 ──────────────
+    def maxSubArray_20261011(self, nums: List[int]) -> int:
+        # Kadane's algorithm
+
+        subarray_sum = -math.inf
+
+        running_sum = 0
+        for num in nums:
+            running_sum+=num
+            subarray_sum = max(subarray_sum, running_sum)
+            # if smaller than 0, greed and reset to 0
+            if running_sum < 0:
+                running_sum = 0
+        
+        return subarray_sum # type: ignore
+
     # ── Attempt · 2026-09-29 ──────────────
     def maxSubArrayKadane_20260929(self, nums: List[int]) -> int:
         # kadane's

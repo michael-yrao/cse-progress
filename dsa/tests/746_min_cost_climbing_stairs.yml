@@ -1,0 +1,65 @@
+number: 746
+title: Min Cost Climbing Stairs
+url: https://leetcode.com/problems/min-cost-climbing-stairs/
+statement: |
+  You are given an integer array cost where cost[i] is the cost of the ith
+  step on a staircase. Once you pay the cost, you can either climb one or
+  two steps.
+
+  You can either start from the step with index 0, or the step with
+  index 1.
+
+  Return the minimum cost to reach the top of the floor.
+
+  Example 1:
+      Input:  cost = [10,15,20]
+      Output: 15
+      Explanation: Start at index 1, pay 15 and climb two steps
+      to reach the top.
+
+  Example 2:
+      Input:  cost = [1,100,1,1,1,100,1,1,100,1]
+      Output: 6
+      Explanation: Start at index 0, then pay 1 for each of the
+      steps at indexes 0, 2, 4, 6, 7 and 9 to reach the top.
+
+  Constraints:
+      2 <= cost.length <= 1000
+      0 <= cost[i] <= 999
+entry:
+  class: Solution
+  method: minCostClimbingStairs
+signature: "cost: List[int] -> int"
+compare: exact
+cases:
+  - {args: [[10, 15, 20]], expected: 15, example: true}
+  - {args: [[1, 100, 1, 1, 1, 100, 1, 1, 100, 1]], expected: 6, example: true}
+  - {args: [[0, 0]], expected: 0}
+  - {args: [[999, 999]], expected: 999}
+  - {args: [[0, 1]], expected: 0}
+  - {args: [[1, 0]], expected: 0}
+  - {args: [[5, 0, 5]], expected: 0}
+  - {args: [[0, 0, 0, 0]], expected: 0}
+  - {args: [[999, 999, 999, 999, 999]], expected: 1998}
+  - {args: [[22, 15, 27, 22, 265, 724, 898, 12, 19, 852, 5]], expected: 797}
+  - {args: [[11, 16, 3, 3, 12, 0, 17, 52]], expected: 34}
+  - {args: [[559, 28, 19]], expected: 28}
+  - {args: [[915, 17, 946, 534]], expected: 551}
+  - {args: [[21, 12, 690, 13, 8, 11, 325, 28, 9, 961, 13, 16, 663, 10]], expected: 112}
+  - {args: [[25, 978, 10, 7, 9, 14, 27, 702, 339, 114, 83, 23, 288]], expected: 516}
+  - {args: [[268, 857, 884, 259]], expected: 1116}
+  - {args: [[807, 132]], expected: 132}
+  - {args: [[727, 127, 672, 511, 4, 235, 155, 612, 21, 912, 27, 7, 19, 8]], expected: 860}
+  - {args: [[450, 18, 20, 2, 27, 0, 15, 656, 121, 3, 10]], expected: 159}
+  - {args: [[28, 29, 2, 16, 1, 600, 5, 15, 21]], expected: 51}
+  - {args: [[606, 15, 27, 981, 993, 21, 26, 28, 19]], expected: 1045}
+  - {args: [[23, 218, 22, 942, 39, 3]], expected: 84}
+  - {args: [[793, 12, 1, 685, 11, 10, 794]], expected: 34}
+  - {args: [[647, 239, 5, 859, 27, 17, 4, 21, 445, 955, 79]], expected: 799}
+  - {args: [[1, 18, 30, 898, 1, 25]], expected: 32}
+  - {args: [[19, 28, 5, 19, 23, 547, 63, 769, 0]], expected: 110}
+  - {args: [[27, 645, 5, 5]], expected: 32}
+  - {args: [[11, 94, 817, 24]], expected: 118}
+  - {args: [[166, 970, 11, 3, 17, 30]], expected: 194}
+  - {args: [[11, 17, 25, 343, 4, 285, 162, 6, 27, 703, 25]], expected: 254}
+  - {args: [[335, 968, 957, 500, 420, 213, 241, 864, 605, 111, 723, 974, 174, 0, 767, 180, 550, 503, 668, 895, 527, 853, 711, 827, 394, 7, 358, 196, 941, 248, 385, 376, 360, 844, 259, 482, 169, 908, 213, 729, 213, 976, 806, 508, 482, 469, 639, 141, 467, 173, 559, 327, 954, 35, 649, 196, 454, 708, 507, 833]], expected: 12038}

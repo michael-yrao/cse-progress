@@ -18,9 +18,9 @@
 - 🟡 **Graph Cycle Detection (DFS)** (graphs) — 1p · 0🟢 · 🟡
 - 🟡 **Kruskal's MST** (advanced_graphs) — 2p · 0🟢 · 🟡
 
-**Thin-green (7) — proven but narrow, discretionary:**
+**Thin-green (6) — proven but narrow, discretionary:**
 
-- **BFS on Implicit Graph** (1/2) · **Multi-source BFS** (1/2) · **Prim's MST** (1/2) · **Bellman-Ford** (2/3) · **Hierholzer (Eulerian path)** (2/3) · **Trie** (3/4) · **Dijkstra** (5/6)
+- **BFS on Implicit Graph** (1/2) · **Multi-source BFS** (1/2) · **Bellman-Ford** (2/3) · **Hierholzer (Eulerian path)** (2/3) · **Trie** (3/4) · **Dijkstra** (5/6)
 
 ## Started techniques
 
@@ -33,7 +33,7 @@
 | Frequency Counting | 🎓 | 2p · 2🟢 · 🟢→🎓 | Hashmap counts, clean; a building block more than a standalone skill. |
 | Hash Map Lookup | 🎓 | 2p · 2🟢 · 🎓 | Complement/two-sum lookup, clean. |
 | Hash Set Membership | 🎓 | 3p · 3🟢 · 🟢→🎓 | Mostly clean; **36 Valid Sudoku slipped 🟡 Aug 21** on the `%3` vs `//3` box-key bug. |
-| In-Place Array Rotation | 🟢 | 1p · 1🟢 · 🟢 | Single canonical problem, clean; thin by nature. |
+| In-Place Array Rotation | 🎓 | 1p · 1🟢 · 🎓 | Single canonical problem, clean; thin by nature. |
 | Length-Prefix Encoding | 🟢 | 1p · 1🟢 · 🟢 | **271 only, no green.** Code is right but the encode-time complexity (O(n)→O(N)) missed Aug 22. |
 | Prefix/Suffix Products | 🟢 | 1p · 1🟢 · 🟢 | 238 clean; thin at one problem. |
 
@@ -130,9 +130,9 @@
 | Dense Dijkstra | 🟡 | 1p · 0🟢 · 🟡 | 743 array-scan only, 🟡 after three reps. The rest of the set is seated in the Bit-Math phase. |
 | Dijkstra | 🟢 | 5p · 4🟢 · 🟡→🟢 | **First green Aug 22 (778) after 0-for-2 in August** — shallow but no longer a blocker. 743 still 🟡. |
 | Floyd-Warshall (all-pairs shortest path) | 🟢 | 2p · 2🟢 · 🟢 | **1334, no green.** 1462/399 fills queued behind `rated:1334`. |
-| Hierholzer (Eulerian path) | 🟢 | 2p · 2🟢 · 🟢 | **332, no green — cost 5 sessions** because its first attempt was the introduction. The primer rule exists because of this. |
+| Hierholzer (Eulerian path) | 🟢 | 2p · 2🟢 · 🟡→🟢 | **332, no green — cost 5 sessions** because its first attempt was the introduction. The primer rule exists because of this. |
 | Kruskal's MST | 🟡 | 2p · 0🟢 · 🟡 | 1489 🟡 after three reps, 9004 🟡 on its first. No 🟢 yet; both re-rep the week of Oct 12. |
-| Prim's MST | 🟢 | 1p · 1🟢 · 🟢 | Written four times on 1584, clean; Kruskal (the sibling) still a pending teach. |
+| Prim's MST | 🟢 | 2p · 2🟢 · 🟢 | Written four times on 1584, clean; Kruskal (the sibling) still a pending teach. |
 
 ### intervals
 

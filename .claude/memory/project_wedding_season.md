@@ -50,3 +50,6 @@ not the lever.
 - **Builds aim at the ceiling from below through Nov 29** (learner, Oct 10: *"we can aim for 8 but hovering
   right under if needed instead under/over"*). No built day over `effort_budget.ceiling`; the normal small
   overshoot returns Nov 30. Normative copy: `effort-budget.md`; decision `ceiling-from-below-wedding-oct10`.
+- **The Oct 12 week alone was built to the prior week's done units** (learner, Oct 11: *"just this week. I
+  expect it to be quite busy like this previous week"*; decision `build-at-last-week-done-oct11`). The Oct 19
+  build returns to the standing rule above unless the learner says otherwise.

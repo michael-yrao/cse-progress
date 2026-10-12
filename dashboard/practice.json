@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-10",
+  "generatedAt": "2026-10-12",
   "problems": [
     {
       "number": 1,
@@ -14145,6 +14145,231 @@
             0,
             1
           ],
+          "example": false
+        }
+      ]
+    },
+    {
+      "number": 70,
+      "title": "Climbing Stairs",
+      "url": "https://leetcode.com/problems/climbing-stairs/",
+      "statement": "You are climbing a staircase. It takes n steps to reach the top.\n\nEach time you can either climb 1 or 2 steps. In how many distinct ways\ncan you climb to the top?\n\nExample 1:\n    Input:  n = 2\n    Output: 2\n    Explanation: There are two ways to climb to the top.\n    1. 1 step + 1 step\n    2. 2 steps\n\nExample 2:\n    Input:  n = 3\n    Output: 3\n    Explanation: There are three ways to climb to the top.\n    1. 1 step + 1 step + 1 step\n    2. 1 step + 2 steps\n    3. 2 steps + 1 step\n\nConstraints:\n    1 <= n <= 45",
+      "stub": "from typing import List, Optional\n\n\nclass Solution:\n    def climbStairs(self, n: int) -> int:\n        pass\n",
+      "entry": {
+        "className": "Solution",
+        "method": "climbStairs"
+      },
+      "compare": "exact",
+      "figure": null,
+      "cases": [
+        {
+          "args": [
+            2
+          ],
+          "expected": 2,
+          "example": true
+        },
+        {
+          "args": [
+            3
+          ],
+          "expected": 3,
+          "example": true
+        },
+        {
+          "args": [
+            1
+          ],
+          "expected": 1,
+          "example": false
+        },
+        {
+          "args": [
+            4
+          ],
+          "expected": 5,
+          "example": false
+        },
+        {
+          "args": [
+            5
+          ],
+          "expected": 8,
+          "example": false
+        },
+        {
+          "args": [
+            8
+          ],
+          "expected": 34,
+          "example": false
+        },
+        {
+          "args": [
+            9
+          ],
+          "expected": 55,
+          "example": false
+        },
+        {
+          "args": [
+            10
+          ],
+          "expected": 89,
+          "example": false
+        },
+        {
+          "args": [
+            11
+          ],
+          "expected": 144,
+          "example": false
+        },
+        {
+          "args": [
+            12
+          ],
+          "expected": 233,
+          "example": false
+        },
+        {
+          "args": [
+            13
+          ],
+          "expected": 377,
+          "example": false
+        },
+        {
+          "args": [
+            14
+          ],
+          "expected": 610,
+          "example": false
+        },
+        {
+          "args": [
+            17
+          ],
+          "expected": 2584,
+          "example": false
+        },
+        {
+          "args": [
+            20
+          ],
+          "expected": 10946,
+          "example": false
+        },
+        {
+          "args": [
+            21
+          ],
+          "expected": 17711,
+          "example": false
+        },
+        {
+          "args": [
+            22
+          ],
+          "expected": 28657,
+          "example": false
+        },
+        {
+          "args": [
+            24
+          ],
+          "expected": 75025,
+          "example": false
+        },
+        {
+          "args": [
+            25
+          ],
+          "expected": 121393,
+          "example": false
+        },
+        {
+          "args": [
+            29
+          ],
+          "expected": 832040,
+          "example": false
+        },
+        {
+          "args": [
+            31
+          ],
+          "expected": 2178309,
+          "example": false
+        },
+        {
+          "args": [
+            33
+          ],
+          "expected": 5702887,
+          "example": false
+        },
+        {
+          "args": [
+            34
+          ],
+          "expected": 9227465,
+          "example": false
+        },
+        {
+          "args": [
+            35
+          ],
+          "expected": 14930352,
+          "example": false
+        },
+        {
+          "args": [
+            36
+          ],
+          "expected": 24157817,
+          "example": false
+        },
+        {
+          "args": [
+            40
+          ],
+          "expected": 165580141,
+          "example": false
+        },
+        {
+          "args": [
+            41
+          ],
+          "expected": 267914296,
+          "example": false
+        },
+        {
+          "args": [
+            42
+          ],
+          "expected": 433494437,
+          "example": false
+        },
+        {
+          "args": [
+            43
+          ],
+          "expected": 701408733,
+          "example": false
+        },
+        {
+          "args": [
+            44
+          ],
+          "expected": 1134903170,
+          "example": false
+        },
+        {
+          "args": [
+            45
+          ],
+          "expected": 1836311903,
           "example": false
         }
       ]
@@ -63088,6 +63313,528 @@
             1
           ],
           "expected": 75,
+          "example": false
+        }
+      ]
+    },
+    {
+      "number": 746,
+      "title": "Min Cost Climbing Stairs",
+      "url": "https://leetcode.com/problems/min-cost-climbing-stairs/",
+      "statement": "You are given an integer array cost where cost[i] is the cost of the ith\nstep on a staircase. Once you pay the cost, you can either climb one or\ntwo steps.\n\nYou can either start from the step with index 0, or the step with\nindex 1.\n\nReturn the minimum cost to reach the top of the floor.\n\nExample 1:\n    Input:  cost = [10,15,20]\n    Output: 15\n    Explanation: Start at index 1, pay 15 and climb two steps\n    to reach the top.\n\nExample 2:\n    Input:  cost = [1,100,1,1,1,100,1,1,100,1]\n    Output: 6\n    Explanation: Start at index 0, then pay 1 for each of the\n    steps at indexes 0, 2, 4, 6, 7 and 9 to reach the top.\n\nConstraints:\n    2 <= cost.length <= 1000\n    0 <= cost[i] <= 999",
+      "stub": "from typing import List, Optional\n\n\nclass Solution:\n    def minCostClimbingStairs(self, cost: List[int]) -> int:\n        pass\n",
+      "entry": {
+        "className": "Solution",
+        "method": "minCostClimbingStairs"
+      },
+      "compare": "exact",
+      "figure": null,
+      "cases": [
+        {
+          "args": [
+            [
+              10,
+              15,
+              20
+            ]
+          ],
+          "expected": 15,
+          "example": true
+        },
+        {
+          "args": [
+            [
+              1,
+              100,
+              1,
+              1,
+              1,
+              100,
+              1,
+              1,
+              100,
+              1
+            ]
+          ],
+          "expected": 6,
+          "example": true
+        },
+        {
+          "args": [
+            [
+              0,
+              0
+            ]
+          ],
+          "expected": 0,
+          "example": false
+        },
+        {
+          "args": [
+            [
+              999,
+              999
+            ]
+          ],
+          "expected": 999,
+          "example": false
+        },
+        {
+          "args": [
+            [
+              0,
+              1
+            ]
+          ],
+          "expected": 0,
+          "example": false
+        },
+        {
+          "args": [
+            [
+              1,
+              0
+            ]
+          ],
+          "expected": 0,
+          "example": false
+        },
+        {
+          "args": [
+            [
+              5,
+              0,
+              5
+            ]
+          ],
+          "expected": 0,
+          "example": false
+        },
+        {
+          "args": [
+            [
+              0,
+              0,
+              0,
+              0
+            ]
+          ],
+          "expected": 0,
+          "example": false
+        },
+        {
+          "args": [
+            [
+              999,
+              999,
+              999,
+              999,
+              999
+            ]
+          ],
+          "expected": 1998,
+          "example": false
+        },
+        {
+          "args": [
+            [
+              22,
+              15,
+              27,
+              22,
+              265,
+              724,
+              898,
+              12,
+              19,
+              852,
+              5
+            ]
+          ],
+          "expected": 797,
+          "example": false
+        },
+        {
+          "args": [
+            [
+              11,
+              16,
+              3,
+              3,
+              12,
+              0,
+              17,
+              52
+            ]
+          ],
+          "expected": 34,
+          "example": false
+        },
+        {
+          "args": [
+            [
+              559,
+              28,
+              19
+            ]
+          ],
+          "expected": 28,
+          "example": false
+        },
+        {
+          "args": [
+            [
+              915,
+              17,
+              946,
+              534
+            ]
+          ],
+          "expected": 551,
+          "example": false
+        },
+        {
+          "args": [
+            [
+              21,
+              12,
+              690,
+              13,
+              8,
+              11,
+              325,
+              28,
+              9,
+              961,
+              13,
+              16,
+              663,
+              10
+            ]
+          ],
+          "expected": 112,
+          "example": false
+        },
+        {
+          "args": [
+            [
+              25,
+              978,
+              10,
+              7,
+              9,
+              14,
+              27,
+              702,
+              339,
+              114,
+              83,
+              23,
+              288
+            ]
+          ],
+          "expected": 516,
+          "example": false
+        },
+        {
+          "args": [
+            [
+              268,
+              857,
+              884,
+              259
+            ]
+          ],
+          "expected": 1116,
+          "example": false
+        },
+        {
+          "args": [
+            [
+              807,
+              132
+            ]
+          ],
+          "expected": 132,
+          "example": false
+        },
+        {
+          "args": [
+            [
+              727,
+              127,
+              672,
+              511,
+              4,
+              235,
+              155,
+              612,
+              21,
+              912,
+              27,
+              7,
+              19,
+              8
+            ]
+          ],
+          "expected": 860,
+          "example": false
+        },
+        {
+          "args": [
+            [
+              450,
+              18,
+              20,
+              2,
+              27,
+              0,
+              15,
+              656,
+              121,
+              3,
+              10
+            ]
+          ],
+          "expected": 159,
+          "example": false
+        },
+        {
+          "args": [
+            [
+              28,
+              29,
+              2,
+              16,
+              1,
+              600,
+              5,
+              15,
+              21
+            ]
+          ],
+          "expected": 51,
+          "example": false
+        },
+        {
+          "args": [
+            [
+              606,
+              15,
+              27,
+              981,
+              993,
+              21,
+              26,
+              28,
+              19
+            ]
+          ],
+          "expected": 1045,
+          "example": false
+        },
+        {
+          "args": [
+            [
+              23,
+              218,
+              22,
+              942,
+              39,
+              3
+            ]
+          ],
+          "expected": 84,
+          "example": false
+        },
+        {
+          "args": [
+            [
+              793,
+              12,
+              1,
+              685,
+              11,
+              10,
+              794
+            ]
+          ],
+          "expected": 34,
+          "example": false
+        },
+        {
+          "args": [
+            [
+              647,
+              239,
+              5,
+              859,
+              27,
+              17,
+              4,
+              21,
+              445,
+              955,
+              79
+            ]
+          ],
+          "expected": 799,
+          "example": false
+        },
+        {
+          "args": [
+            [
+              1,
+              18,
+              30,
+              898,
+              1,
+              25
+            ]
+          ],
+          "expected": 32,
+          "example": false
+        },
+        {
+          "args": [
+            [
+              19,
+              28,
+              5,
+              19,
+              23,
+              547,
+              63,
+              769,
+              0
+            ]
+          ],
+          "expected": 110,
+          "example": false
+        },
+        {
+          "args": [
+            [
+              27,
+              645,
+              5,
+              5
+            ]
+          ],
+          "expected": 32,
+          "example": false
+        },
+        {
+          "args": [
+            [
+              11,
+              94,
+              817,
+              24
+            ]
+          ],
+          "expected": 118,
+          "example": false
+        },
+        {
+          "args": [
+            [
+              166,
+              970,
+              11,
+              3,
+              17,
+              30
+            ]
+          ],
+          "expected": 194,
+          "example": false
+        },
+        {
+          "args": [
+            [
+              11,
+              17,
+              25,
+              343,
+              4,
+              285,
+              162,
+              6,
+              27,
+              703,
+              25
+            ]
+          ],
+          "expected": 254,
+          "example": false
+        },
+        {
+          "args": [
+            [
+              335,
+              968,
+              957,
+              500,
+              420,
+              213,
+              241,
+              864,
+              605,
+              111,
+              723,
+              974,
+              174,
+              0,
+              767,
+              180,
+              550,
+              503,
+              668,
+              895,
+              527,
+              853,
+              711,
+              827,
+              394,
+              7,
+              358,
+              196,
+              941,
+              248,
+              385,
+              376,
+              360,
+              844,
+              259,
+              482,
+              169,
+              908,
+              213,
+              729,
+              213,
+              976,
+              806,
+              508,
+              482,
+              469,
+              639,
+              141,
+              467,
+              173,
+              559,
+              327,
+              954,
+              35,
+              649,
+              196,
+              454,
+              708,
+              507,
+              833
+            ]
+          ],
+          "expected": 12038,
           "example": false
         }
       ]

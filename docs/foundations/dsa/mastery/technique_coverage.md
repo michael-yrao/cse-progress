@@ -6,7 +6,7 @@
 
 > The tracker is keyed by **problem**; this is keyed by **technique**. Use it at the weekly build to decide what to pull, and at phase exit to check the per-algorithm bar (recognition + execution, ≥1 🟢 each).
 
-> **62/109** techniques started &nbsp;·&nbsp; **3** with no 🟢 &nbsp;·&nbsp; **10** thin &nbsp;·&nbsp; **0** unqueued variant gaps
+> **62/109** techniques started &nbsp;·&nbsp; **3** with no 🟢 &nbsp;·&nbsp; **9** thin &nbsp;·&nbsp; **0** unqueued variant gaps
 
 ## ⚠️ Action list
 
@@ -25,7 +25,6 @@
 - **Bellman-Ford** (advanced_graphs) — 2/3: 787, 9001
 - **Hierholzer (Eulerian path)** (advanced_graphs) — 2/3 (3 rows): 332, 2097
 - **Kruskal's MST** (advanced_graphs) — 2/4: 1489, 9004
-- **Prim's MST** (advanced_graphs) — 2/3: 1584, 9003
 - **Trie** (tries) — 3/4: 208, 211, 648
 - **Dijkstra** (advanced_graphs) — 5/6: 743, 778, 1631, 2812, 3620
 
@@ -71,13 +70,13 @@ Every declared technique gets a row, started or not — a not-started row's Gaps
 | Floyd-Warshall (all-pairs shortest path) | advanced_graphs | core | 2 (2+0) | 2 (1334, 1462) | 🟢 | ✅ | — | queued: 399 `rated:1334` |
 | Hierholzer (Eulerian path) | advanced_graphs | core | 3 (3+0) | 2 *+1v* (332, 2097) | 🟢 | ✅ | pre-sorted adjacency ×1 · min-heap ordering ×1 | thin (2/3) · queued: 753 `surplus>=1` |
 | Kruskal's MST | advanced_graphs | core | 4 (2+2) | 2 (1489, 9004) | 🟡 | ❌ | — | **no-green** · thin (2/4) · queued: 1135 `surplus>=1` |
-| Prim's MST | advanced_graphs | core | 3 (2+1) | 2 (1584, 9003) | 🟢 | ✅ | — | thin (2/3) · queued: 9005 `solved:9003` |
+| Prim's MST | advanced_graphs | core | 2 (2+0) | 2 (1584, 9003) | 🟢 | ✅ | — | queued: 9005 `solved:9003` |
 | Array/String Fundamentals | arrays_and_hash | core | 2 (2+0) | 3 (14, 66, 1929) | 🟢 | ✅ | — | — |
 | Boyer-Moore Voting | arrays_and_hash | core | 1 (1+0) | 2 (169, 229) | 🎓 | ✅ | — | — |
 | Frequency Counting | arrays_and_hash | core | 1 (1+0) | 2 (49, 242) | 🎓 | ✅ | — | — |
 | Hash Map Lookup | arrays_and_hash | core | 1 (1+0) | 2 (1, 219) | 🎓 | ✅ | — | — |
 | Hash Set Membership | arrays_and_hash | core | 2 (2+0) | 3 (36, 128, 217) | 🎓 | ✅ | — | — |
-| In-Place Array Rotation | arrays_and_hash | core | 1 (1+0) | 1 (189) | 🟢 | ✅ | — | — |
+| In-Place Array Rotation | arrays_and_hash | core | 1 (1+0) | 1 (189) | 🎓 | ✅ | — | — |
 | Length-Prefix Encoding | arrays_and_hash | core | 1 (1+0) | 1 (271) | 🟢 | ✅ | — | — |
 | Prefix/Suffix Products | arrays_and_hash | core | 1 (1+0) | 1 (238) | 🟢 | ✅ | — | — |
 | Backtracking | backtracking | core | 9 (5+4) | 9 (17, 22, 39, 40, 46, 78, 79, 90, 131) | 🟢 | ✅ | — | queued: 51 `phase:Backtracking`, 212 `phase:Backtracking` |

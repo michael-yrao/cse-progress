@@ -20,6 +20,34 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-10-11 ──────────────
+    def maxSlidingWindow_20261011(self, nums: List[int], k: int) -> List[int]:
+        # option 1 is to use a sliding window + heap
+        # option 2 is to use a monostack decreasing
+        # we need to be able to remove the one from left for the window
+        # so we need a deque to be able to remove from front and back
+        # decreasing stack means leftmost is always our biggest value
+        # we keep indices as per typical mono stacks
+
+        decreasing_stack = collections.deque()
+
+        result = []
+
+        for i in range(len(nums)):
+            # while stack is violating rule of decreasing stack, remove from end
+            while decreasing_stack and nums[i] > nums[decreasing_stack[-1]]:
+                decreasing_stack.pop()
+            # add the value in
+            decreasing_stack.append(i)
+            # while our window size (i - stack[0] + 1) is outside of k, popleft
+            while decreasing_stack and i - decreasing_stack[0] + 1 > k:
+                decreasing_stack.popleft()
+            # now that we are finally good, check if we are good to add to result
+            if i + 1 >= k:
+                result.append(nums[decreasing_stack[0]])
+        
+        return result
+
     # ── Attempt · 2026-09-11 ──────────────
     def maxSlidingWindow_20260911(self, nums: List[int], k: int) -> List[int]:
         # one way to solve this is to use sliding window and minHeap
