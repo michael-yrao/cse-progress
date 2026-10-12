@@ -38,6 +38,7 @@ from __future__ import annotations
 
 import argparse
 import ast
+import contextlib
 import datetime as dt
 import difflib
 import json
@@ -556,8 +557,17 @@ def main() -> None:
                      help="build in memory, validate, never write; exit 1 on any failure")
     ap.add_argument("--date", metavar="YYYY-MM-DD",
                      help="override generatedAt (default: today)")
+    ap.add_argument("--from-index", action="store_true",
+                     help="read each solution file's staged (index) content, not the "
+                          "working tree — the pre-commit hook's mode")
     args = ap.parse_args()
 
+    reads = es.index_reads() if args.from_index else contextlib.nullcontext()
+    with reads:
+        _run(args)
+
+
+def _run(args: argparse.Namespace) -> None:
     today = dt.date.fromisoformat(args.date) if args.date else dt.date.today()
 
     try:

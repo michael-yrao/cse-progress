@@ -1304,27 +1304,7 @@ Cadence reset.
 **Why:** The edit helper assumed every repo file is LF. `techniques.yml` is the CRLF one (`file` says "with CRLF line terminators" at HEAD); the other five files edited the same way were LF and came out clean, so nothing flagged the difference until the stat.
 **Fix/ladder:** Rung 4 (memory) for now: a scripted edit opens the file with `newline=''` (or edits bytes), and the staged `--stat` is read against the size of the intended change. Rung 1 candidate: a pre-commit report line when a staged file's line-ending style differs from HEAD's. fam: scripted-edit-side-effect. `open`
 
-- 2026-10-09 — Flagged 17's attempt as failing `""` → `[]` from the local statement and practice spec; the learner said it passes LeetCode. LeetCode's GraphQL content now reads `1 <= digits.length <= 4` and has no empty example, so the local copy was stale, not the code. Fixed at source: the `.py` statement and `dsa/tests/17_*.yml` (example, constraint, the `""` case) and `practice.json` regenerated. Lesson: before calling an edge-case failure, check that the edge is still within LeetCode's current constraints. A local statement is a snapshot. fam: report-from-proxy.
-
-- 2026-10-09 — Told the learner 1584's 🟢 for Prim's MST came "using the heap version" and built a "Heap Prim's (1584) vs Array Prim's (9003)" table. 1584's file shows every dated attempt since Jul 18 (`_20260718` … `_20260925`) is array-scan Prim's (`find_min_unvisited_node` + `relax`); only the undated first attempt uses `heapq`. And `techniques.yml` already makes Prim's MST the dense/array section (split `mst-split-sep26`, the model Dense Dijkstra copied on Oct 4). Caught by me while checking the learner's request to give array Prim's its own section. Lesson: before naming which implementation earned a 🟢, read the problem file's dated attempts, not memory of the technique's usual form. fam: report-from-proxy.
-
-- 2026-10-09 — `rating_gate.py` blocked a non-coaching turn (the site-engineer spawn report for the dual-links feature: no rating, no problem under review) as a rating proposal. Re-sent unchanged per the hook's `blocks once` clause. Candidate: the gate's trigger should require a rating glyph or the word rating/comfort in the assistant turn; log the matched token in the block message so a false positive names its cause. fam: hook-false-positive.
-
-- 2026-10-09 — Told the learner 9003 "doesn't import `math`" after reading the file from line 44; the `import math` was on line 43. Learner corrected. Lesson: a claim that something is absent from a file needs a read or grep of the whole file, not a slice starting at the class. fam: report-from-proxy.
-
-- 2026-10-10 — `kickoff_scaffold_reminder.py`'s scoped-start trigger read "let's try to aim for 8" as the learner starting problem 8 and asked for a pull and a scaffold. Ignored; no file touched. Candidate: the trigger needs a start verb next to the number ("doing 8", "starting 8"), not any bare number in the message. fam: hook-false-positive.
-
-- 2026-10-10 — Editing `techniques.yml` with a Python text-mode read/write turned its CRLF line endings into LF; `git diff --stat` showed a 2694-line rewrite for a one-line change. Caught by me from the stat before staging; CRLF restored, diff back to 1 line. Lesson: a scripted edit reads and writes bytes (`'rb'`/`'wb'`) or uses the Edit tool, and `git diff --stat` is read after every scripted edit. fam: tool-side-effect.
-
-- 2026-10-10 — The close-out commit printed 4 `ERROR:` lines from the showcase/Big-O regeneration: the uncommitted, still-empty 36 retry scaffold (prior attempts stashed to `.history/`) made `export_showcase.py` abort, so the hook left `showcase.json` and `showcase/269.json` stale, carrying 269's pre-insert line range. The commit itself still exited 0. Caught by me before the push: I ran both `--check`s on a `git archive HEAD` copy, regenerated there, and committed the two files as fixes (7a13044, d1da639) before pushing. Defect: the pre-commit regeneration reads the working tree, not the index, so an unstaged scaffold for an unrelated problem blocks a regeneration the commit needed. Candidate source fix: regenerate from the index (or skip a problem whose working-tree file differs from the index). fam: tool-side-effect.
-
-- 2026-10-11 — `new_problem.py` named 53's retry stub `maxSubArrayKadane_20261011`, copying the newest attempt's technique-bearing method name. Two defects in one name: it hands over a technique (the recognition gate's call), and today's row is the Prefix Sum variant, so it names the wrong one. Caught by me after the scaffold; renamed to `maxSubArray_20261011`. Candidate source fix: the retry stub takes the LeetCode entry-point name (the spec's or the file's undecorated method), never a variant-suffixed one. fam: spoiler-leak.
-
-- 2026-10-11 — Handed 53 over from `remaining.py` as "53 Maximum Subarray" with no sign that the due row is its second method (🟢 s1), not the 🎓 Kadane row. The learner coded Kadane's, so the due variant went un-repped. Caught by me when reading the file against the tracker before the complexity reply. Cause: `links.py` strips the variant parenthetical (a spoiler guard, Oct 7), and the stub was renamed to the bare entry point, so nothing on the board or in the file says which method is due, and I did not say it at hand-over. Lesson: on a multi-variant problem, the hand-over says "the method that isn't <graduated one>" without naming the due technique. Candidate source fix: `remaining.py`/`links.py` append a neutral marker (e.g. "· 2nd method") to a row whose number has more than one tracker row. fam: handover-missing-state.
-
-- 2026-10-11 — Complexity re-ask on 743 (Sep 22 lazy-heap attempt): told the learner total space is O(V + E), "V isn't covered by E, because the constraints allow nodes that no edge reaches". Unreachable nodes never enter `visited`; it holds only k plus nodes reached by an edge, ≤ E + 1, so the learner's O(E) was right. Learner pushed back ("visited is O(V) though"); I re-read the code and corrected. Lesson: review-workflow §1 already says prove a bound before correcting the learner's: price what each structure can actually hold under this code, not the structure's type. fam: unproven-correction.
-
-## 🔬 META-REVIEW 2026-10-11 — 11 entries closed (5 fixed, 6 lessons); 10 left open
+## 🔬 META-REVIEW 2026-10-11 — 21 entries closed (11 fixed, 10 lessons or rung 3)
 
 Run at the Oct 12 build. Read from `python scripts/meta_review_digest.py` (21 open since the 2026-10-07
 review).
@@ -1340,8 +1320,10 @@ kickoff).
 
 **Bookkeeping:** the 11 entries, each with an appended status line, moved to `self_eval_archive.md`.
 
-**Left open:** the other 10, dated Oct 9 to Oct 11 (the `53` stub name, the 53 hand-over, the 743 space
-claim, the `kickoff_scaffold_reminder.py` and `rating_gate.py` false positives, the close-out showcase
-errors, one text-mode edit, three report-from-proxy claims). They are dated on or before this review, so
-the default digest hides them; read them with `meta_review_digest.py --all`.
+**Second pass, same night (learner: "do all the issues and check self-evals"):** the other 10, dated Oct 9
+to Oct 11, closed and archived. Fixed at source: the 53 stub name and the 53 hand-over
+(`variant-label-on-board-oct11`); the `kickoff_scaffold_reminder.py` and `rating_gate.py` false positives,
+the close-out showcase errors and the text-mode CRLF flip (`hook-trigger-precision-oct11`). Rung 3: the 743
+space claim and three report-from-proxy claims became one review-workflow.md §2 paragraph. Also landed: the
+743 array-scan tracker hold (`tracker-hold-oct11`).
 Cadence reset.

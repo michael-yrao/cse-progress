@@ -1,0 +1,10 @@
+# Learner-requested deferrals past the ladder date. Hand-authored.
+# scripts/update_review_dates.py sets a row's Next Review = max(ladder date, `until`);
+# once `until` has passed the hold changes nothing. `row` is the tracker row's problem
+# title exactly as dsa_progress.md shows it; `why` is a decisions.yml id.
+
+# 743 array-scan runs with its Dense Dijkstra siblings (dense-dijkstra-split-oct04).
+- row: "743. Network Delay Time (Dijkstra — array-scan)"
+  until: 2026-12-07
+  since: 2026-10-05
+  why: tracker-hold-oct11

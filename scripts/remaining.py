@@ -34,7 +34,7 @@ _console.force_utf8()
 import effort_budget as eb
 import schedule_priority
 import session_date
-from links import link_line, REPO_ROOT
+from links import link_line, tracker_row_counts, REPO_ROOT
 
 
 # A day-block header: `| ▸ **Thu Sep 17** · 7.7 units — ...`. We match on the date fragment.
@@ -57,6 +57,10 @@ COMPLEXITY_LABEL = "Complexity re-asks"
 ROW_NUMBER = re.compile(
     rf"^\|\s*(?:(?:[^\[\]|]*?\s)?\[(\d{{1,4}})\s|(?:[{ROW_TAG_GLYPHS}]\s*)+(\d{{1,4}})\s)"
 )
+# The trailing `(variant)` inside a linked row's text: `[53 Maximum Subarray (Prefix Sum)]`.
+ROW_VARIANT = re.compile(r"\[\d{1,4}\s[^\]]*\(([^()\]]+)\)\]")
+# A problem number with at least this many tracker rows has two solve methods to tell apart.
+MULTI_ROW_MIN = 2
 
 
 def day_label(session: str) -> str:
@@ -155,10 +159,42 @@ def order_by_priority(numbers: list[str], priority: list[str]) -> list[str]:
     return sorted(numbers, key=lambda number: rank.get(number, len(priority)))
 
 
-def link_lines(numbers: list[str], priority: list[str]) -> list[str]:
-    """The printable `link_line`s for `numbers` in priority order; falsy ones dropped."""
-    lines = (link_line(number) for number in order_by_priority(numbers, priority))
-    return [line for line in lines if line]
+def open_row_methods(schedule: Path, label: str) -> dict[str, str]:
+    """`{number: variant}` for the open rows of the day-block whose link text ends in a
+    `(variant)` parenthetical — `[53 Maximum Subarray (Prefix Sum)](…)` gives
+    `{"53": "Prefix Sum"}`. The schedule row is written from the tracker at the build, so
+    it is the source of which method is due; the first open row of a number wins."""
+    methods: dict[str, str] = {}
+    for line in day_block_lines(schedule, label) or []:
+        number = ROW_NUMBER.match(line)
+        variant = ROW_VARIANT.search(line)
+        if number and variant and is_open_row(line):
+            methods.setdefault(number.group(1) or number.group(2), variant.group(1).strip())
+    return methods
+
+
+def label_line(line: str, number: str, methods: dict[str, str],
+               row_counts: dict[str, int]) -> str:
+    """`line` with ` · method: <variant>` appended when `number` has 2+ tracker rows and
+    the day's schedule row names the due variant; otherwise `line` unchanged. A problem
+    with one tracker row never gets the label (its parenthetical may be part of the real
+    title, e.g. 208 Implement Trie (Prefix Tree))."""
+    if row_counts.get(number, 0) < MULTI_ROW_MIN or number not in methods:
+        return line
+    return f"{line} · method: {methods[number]}"
+
+
+def link_lines(numbers: list[str], priority: list[str],
+               methods: dict[str, str] | None = None,
+               row_counts: dict[str, int] | None = None) -> list[str]:
+    """The printable `link_line`s for `numbers` in priority order; falsy ones dropped.
+    A multi-row problem's line carries its due method (`label_line`)."""
+    lines = []
+    for number in order_by_priority(numbers, priority):
+        line = link_line(number)
+        if line:
+            lines.append(label_line(line, number, methods or {}, row_counts or {}))
+    return lines
 
 
 def print_group(label: str, lines: list[str], is_first: bool) -> bool:
@@ -202,9 +238,12 @@ def main() -> None:
 
     session_day = datetime.strptime(session, "%Y-%m-%d").date()
     priority = schedule_priority.day_order(schedule, session_day)
+    methods = open_row_methods(schedule, label)
+    row_counts = tracker_row_counts()
     is_first = True
     for group_label, numbers in ((CODE_LABEL, coding), (COMPLEXITY_LABEL, complexity)):
-        is_first = print_group(group_label, link_lines(numbers, priority), is_first)
+        is_first = print_group(
+            group_label, link_lines(numbers, priority, methods, row_counts), is_first)
 
 
 if __name__ == "__main__":

@@ -38,9 +38,11 @@ from __future__ import annotations
 
 import argparse
 import ast
+import contextlib
 import datetime as dt
 import json
 import re
+import subprocess
 import sys
 from pathlib import Path
 
@@ -79,11 +81,67 @@ class ShowcaseError(Exception):
 
 # ── pure extraction helpers (take `lines`/`tree`; no filesystem access) ─────────────
 
+class IndexBlobReader:
+    """Reads files' STAGED content (the git index) through ONE long-lived
+    `git cat-file --batch` process, whatever the number of files. Used by the pre-commit
+    hook so an unstaged edit to an unrelated problem cannot change or abort a
+    regeneration the commit needs."""
+
+    def __init__(self, repo: Path) -> None:
+        self._repo = repo.resolve()
+        self._proc = subprocess.Popen(
+            ["git", "-C", str(self._repo), "cat-file", "--batch"],
+            stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
+
+    def read(self, path: Path) -> bytes | None:
+        """The staged bytes of `path`, or None when it is outside the repo or not in the
+        index (the caller then falls back to the working tree)."""
+        try:
+            rel = path.resolve().relative_to(self._repo).as_posix()
+        except ValueError:
+            return None
+        self._proc.stdin.write(f":{rel}\n".encode("utf-8"))
+        self._proc.stdin.flush()
+        header = self._proc.stdout.readline().decode("utf-8").split()
+        if len(header) != 3 or header[1] != "blob":
+            return None
+        data = self._proc.stdout.read(int(header[2]))
+        self._proc.stdout.read(1)  # the LF git prints after each object
+        return data
+
+    def close(self) -> None:
+        self._proc.stdin.close()
+        self._proc.wait()
+
+
+# The active index reader, or None for the default working-tree reads. Set only through
+# `index_reads()`, which restores it on exit.
+_index_reader: IndexBlobReader | None = None
+
+
+@contextlib.contextmanager
+def index_reads(repo: Path = REPO):
+    """Within the block, `read_lines` returns each file's staged content (the pre-commit
+    hook's `--from-index`). Outside it, reads stay on the working tree."""
+    global _index_reader
+    previous = _index_reader
+    reader = IndexBlobReader(repo)
+    _index_reader = reader
+    try:
+        yield
+    finally:
+        _index_reader = previous
+        reader.close()
+
+
 def read_lines(path: Path) -> list[str]:
     """bytes -> utf-8 -> LF-normalized lines. The working tree mixes CRLF/LF; GitHub
     always serves LF, so every segment's `lines` must be EOL-agnostic to stay
-    byte-identical to what the site fetches from GitHub."""
-    text = path.read_bytes().decode("utf-8")
+    byte-identical to what the site fetches from GitHub. Under `index_reads()` the bytes
+    are the staged blob's (falling back to the working tree for an unstaged path)."""
+    staged = _index_reader.read(path) if _index_reader else None
+    raw = staged if staged is not None else path.read_bytes()
+    text = raw.decode("utf-8")
     return text.replace("\r\n", "\n").split("\n")
 
 
@@ -497,8 +555,17 @@ def main() -> None:
                      help="build in memory, validate, never write; exit 1 on any failure")
     ap.add_argument("--date", metavar="YYYY-MM-DD",
                      help="override generatedAt (default: today)")
+    ap.add_argument("--from-index", action="store_true",
+                     help="read each solution file's staged (index) content, not the "
+                          "working tree — the pre-commit hook's mode")
     args = ap.parse_args()
 
+    reads = index_reads() if args.from_index else contextlib.nullcontext()
+    with reads:
+        _run(args)
+
+
+def _run(args: argparse.Namespace) -> None:
     today = dt.date.fromisoformat(args.date) if args.date else dt.date.today()
 
     try:

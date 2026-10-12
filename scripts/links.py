@@ -188,6 +188,35 @@ def tracker_title_url(number: str) -> tuple[str | None, str | None]:
     return None, None
 
 
+TRACKER_LAST_ATTEMPT_COLUMN = 5
+_ISO_DATE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+
+
+def tracker_row_counts() -> dict[str, int]:
+    """`{problem number: how many tracker rows carry it}`, read in one pass.
+
+    A tracker ROW is a table line whose last-attempt cell is an ISO date — the same test
+    `check_schedule_integrity.tracker_attempts` uses — so the waiting-room / queue rows
+    (a trigger instead of a date) never count. Two rows for one number are two solve
+    methods of the same problem (53 Kadane vs 53 Prefix Sum)."""
+    try:
+        lines = TRACKER.read_text(encoding="utf-8").splitlines()
+    except OSError:
+        return {}
+    counts: dict[str, int] = {}
+    for line in lines:
+        if not line.startswith("|"):
+            continue
+        cells = [c.strip() for c in line.strip().strip("|").split("|")]
+        if len(cells) <= TRACKER_LAST_ATTEMPT_COLUMN or not _ISO_DATE.match(
+                cells[TRACKER_LAST_ATTEMPT_COLUMN]):
+            continue
+        cell = TRACKER_CELL.search(cells[1])
+        if cell:
+            counts[cell.group(1)] = counts.get(cell.group(1), 0) + 1
+    return counts
+
+
 _TRACKER_VARIANT_SUFFIX = re.compile(r" \(([^()]*)\)$")
 """Matches one trailing ` (…)` parenthetical, capturing its inner text — a candidate to
 strip from a TRACKER-sourced title only (e.g. tracker row "200. Number of Islands (DFS)",

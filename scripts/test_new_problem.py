@@ -311,6 +311,26 @@ class SpecScaffoldTests(unittest.TestCase):
         self.assertIn("def demoMethod(self, x: str) -> bool:", flagged)
 
 
+class RetryBaseNameTests(unittest.TestCase):
+    """A retry stub's base name is the problem's entry point, never a variant-suffixed one."""
+
+    def test_base_name_cases(self):
+        plain = ["class Solution:", "    def levelOrder_20260901(self, root):", "        pass",
+                 "    def levelOrder(self, root):", "        pass"]
+        variant = ["class Solution:", "    def maxSubArray_20261011(self, nums):", "        pass",
+                   "    def maxSubArrayKadane(self, nums):", "        pass"]
+        snake = ["class Solution:", "    def two_sum(self, nums):", "        pass"]
+        cases = [
+            ("plain existing name kept", plain, "", "levelOrder"),
+            ("variant-suffixed, no spec: bare entry point known in file", variant, "", "maxSubArray"),
+            ("variant-suffixed with a spec: the spec's entry point", variant, "maxSubArray", "maxSubArray"),
+            ("snake_case untouched", snake, "", "two_sum"),
+        ]
+        for name, lines, spec_method, expected in cases:
+            with self.subTest(name=name):
+                self.assertEqual(new_problem.retry_base_name(lines, 0, spec_method), expected)
+
+
 class RetryHelperStashTests(unittest.TestCase):
     """A single-method retry stashes the module-level helpers above `class Solution` (the
     learner's UF, TrieNode, …) with the prior attempts; a def/class the stub's signature

@@ -619,6 +619,9 @@ def existing_method_name(lines: list[str], cls: int) -> str | None:
     signature lookup miss, dropping the stub to a bare `(self)`. Prefer the unsuffixed
     original; fall back to a dated variant with its `_YYYYMMDD` (and any variant token
     trailing that date) stripped. Nested helpers (deeper indent) and `__init__` are skipped.
+    A CamelCase variant word glued onto an entry point the file also shows bare
+    (`maxSubArrayKadane` beside `maxSubArray`) is dropped (`undecorated_entry_point`); the
+    caller prefers the spec's entry point over all of this.
 
     The strip must reach PAST the date to any variant tokens after it: a prior variant rep
     is named `<base>_<date>_<variant>` (e.g. `findItinerary_20260829_minheap`), and stripping
@@ -628,7 +631,8 @@ def existing_method_name(lines: list[str], cls: int) -> str | None:
     date (`two_sum`) is untouched, and `two_sum_20260915` strips just the trailing date.
     """
     method_indent = None
-    dated = None
+    bases: list[str] = []
+    original = None
     for ln in lines[cls + 1:]:
         if re.match(r"^class\s", ln):  # next top-level class ends Solution's body
             break
@@ -641,10 +645,32 @@ def existing_method_name(lines: list[str], cls: int) -> str | None:
         if indent != method_indent or nm == "__init__":
             continue
         base = re.sub(r"_\d{8}(?:_[A-Za-z0-9]+)*$", "", nm)  # date + any variant tokens after it
-        if base == nm:      # unsuffixed original — the canonical name, take it
-            return base
-        dated = dated or base   # a dated variant only; remember as fallback
-    return dated
+        bases.append(base)
+        if base == nm and original is None:   # unsuffixed original — the canonical name
+            original = base
+    chosen = original or (bases[0] if bases else None)   # else a dated variant's base
+    return undecorated_entry_point(chosen, bases) if chosen else None
+
+
+def retry_base_name(lines: list[str], cls: int, spec_method: str) -> str | None:
+    """A retry stub's base method name: the spec's entry point when there is one, else the
+    name read from the file. Never a variant-suffixed name."""
+    return spec_method or existing_method_name(lines, cls)
+
+
+VARIANT_WORD = re.compile(r"^[A-Z][a-z0-9]*$")
+
+
+def undecorated_entry_point(name: str, known_bases: list[str]) -> str:
+    """`name` minus a CamelCase variant word glued onto the entry point, when that entry
+    point is itself a known method name in the file: `maxSubArrayKadane` with
+    `maxSubArray` known gives `maxSubArray`. snake_case names, and a name whose bare
+    entry point the file never shows, are returned untouched."""
+    if "_" in name:
+        return name
+    stems = [b for b in known_bases
+             if b != name and name.startswith(b) and VARIANT_WORD.match(name[len(b):])]
+    return min(stems, key=len) if stems else name
 
 
 def solution_class_start(lines: list[str]) -> int | None:
@@ -1276,7 +1302,11 @@ def main() -> None:
         # camel(title). The two usually differ (levelOrder vs binaryTreeLevelOrderTraversal),
         # and a wrong guess both mis-names the stub and misses the signature lookup.
         if not named_methods and cls is not None and len(methods) == 1:
-            discovered = existing_method_name(lines, cls)
+            # The spec's entry point is the problem's own name; it beats any file-derived
+            # name (a prior variant rep leaves `maxSubArrayKadane` as the "original").
+            spec_entry = load_spec(str(args.number))
+            spec_method = str(spec_entry[1]["entry"].get("method") or "").strip() if spec_entry else ""
+            discovered = retry_base_name(lines, cls, spec_method)
             if discovered:
                 method = methods[0] = discovered
 

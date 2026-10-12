@@ -3,7 +3,7 @@ from __future__ import annotations
 import argparse
 import re
 import subprocess
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 from pathlib import Path
 
 import session_date
@@ -268,6 +268,72 @@ def compute_next_review_date(comfort: str, latest_attempt_date: datetime | None,
     else:  # BLANK
         days = CONFIG["blank"]
     return latest_attempt_date + timedelta(days=days)
+
+
+# --- Holds -------------------------------------------------------------------
+# A learner-requested deferral past the ladder date lives in holds.yml, never as a typed
+# tracker date (the tracker recomputes Next from the ladder on every run). Next Review =
+# max(ladder date, hold `until`); a hold whose date has passed falls out of the max.
+HOLDS_PATH = MARKDOWN_PATH.parent / "holds.yml"
+HOLD_DATE_FIELDS = ("until", "since")
+
+
+class HoldsError(ValueError):
+    """holds.yml is malformed, or names a row the tracker does not have."""
+
+
+def _hold_date_text(label: str, field: str, value: object) -> str:
+    if isinstance(value, date):  # PyYAML turns an unquoted YYYY-MM-DD into a date
+        return value.isoformat()
+    if isinstance(value, str):
+        try:
+            return datetime.strptime(value.strip(), "%Y-%m-%d").strftime("%Y-%m-%d")
+        except ValueError:
+            pass
+    raise HoldsError(f"hold {label}: `{field}` must be a YYYY-MM-DD date, got {value!r}")
+
+
+def _parse_hold_entry(index: int, entry: object) -> tuple[str, str]:
+    if not isinstance(entry, dict):
+        raise HoldsError(f"hold #{index}: entry must be a mapping, got {type(entry).__name__}")
+    row = entry.get("row")
+    if not isinstance(row, str) or not row.strip():
+        raise HoldsError(f"hold #{index}: `row` must be the tracker row's problem title")
+    label = repr(row.strip())
+    why = entry.get("why")
+    if not isinstance(why, str) or not why.strip():
+        raise HoldsError(f"hold {label}: `why` must name a decision id")
+    dates = {field: _hold_date_text(label, field, entry.get(field)) for field in HOLD_DATE_FIELDS}
+    return row.strip(), dates["until"]
+
+
+def load_holds(path: Path = HOLDS_PATH) -> dict[str, str]:
+    """Row title -> `until` (YYYY-MM-DD). No file means no holds."""
+    if not path.exists():
+        return {}
+    import yaml  # noqa: PLC0415
+
+    doc = yaml.safe_load(path.read_text(encoding="utf-8")) or []
+    if not isinstance(doc, list):
+        raise HoldsError("top level must be a list of hold entries")
+    holds: dict[str, str] = {}
+    for index, entry in enumerate(doc, start=1):
+        row, until = _parse_hold_entry(index, entry)
+        if row in holds:
+            raise HoldsError(f"hold {row!r}: listed twice")
+        holds[row] = until
+    return holds
+
+
+def apply_holds(table_rows: list[dict], holds: dict[str, str]) -> list[dict]:
+    """New rows with Next Review = max(ladder date, hold `until`)."""
+    unmatched = sorted(set(holds) - {row["problem"].strip() for row in table_rows})
+    if unmatched:
+        raise HoldsError(f"hold {unmatched[0]!r}: matches no tracker row")
+    return [
+        {**row, "next_review": max(row["next_review"], holds.get(row["problem"].strip(), ""))}
+        for row in table_rows
+    ]
 
 
 def count_attempt_dates(attempts: str) -> int:
@@ -884,6 +950,11 @@ def main() -> None:
     if discovered:
         table_rows.extend(discovered)
         print(f"Discovered and added {len(discovered)} problem(s) from source files.")
+
+    try:
+        table_rows = apply_holds(table_rows, load_holds())
+    except HoldsError as error:
+        raise SystemExit(f"ERROR: {HOLDS_PATH}: {error}") from error
 
     sorted_rows = sorted(
         table_rows,

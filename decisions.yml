@@ -2163,3 +2163,43 @@ decisions:
       (`ceiling-from-below-wedding-oct10`); the Oct 19 build returns to that rule unless the
       learner says otherwise. single-source-ok: the figures here are history.
     affects: [scheduling, weekly-build, effort-budget]
+
+  - id: tracker-hold-oct11
+    date: 2026-10-11
+    summary: >-
+      A learner-requested deferral past the ladder date lives in
+      `docs/foundations/dsa/mastery/holds.yml` (row title, `until`, `since`, `why` = a decision
+      id), never as a typed tracker date. `update_review_dates.py` sets Next Review =
+      max(ladder date, hold `until`); a hold whose date has passed changes nothing, and a hold
+      naming no tracker row or with a malformed field fails the run. Learner, Oct 11: "yes, hold
+      it until then" (the 743 array-scan row until Mon Dec 7, per `dense-dijkstra-split-oct04`).
+      Before this the tracker read that row due Oct 5 forever, so every weekly build counted it
+      overdue and unproven and parked a `→` row for it.
+    affects: [scheduling, update-review-dates, effort-budget, schedule-integrity]
+
+  - id: variant-label-on-board-oct11
+    date: 2026-10-11
+    summary: >-
+      A board line for a problem number with 2+ tracker rows ends with ` · method: <due row's
+      parenthetical>` (`remaining.py`, read from the day's schedule row; `links.py <n>` for a
+      bare hand-over is unchanged). It narrows the Oct 7 variant strip in
+      `links.resolve_title_url`, which had let the learner code the graduated method on 53
+      (Kadane graduated, Prefix Sum due). A single-row problem prints as before. The same day,
+      a retry stub's base name became the problem's entry point (the spec's, else the file's
+      bare name), never a variant-suffixed one (`new_problem.py`). Learner, Oct 11.
+    affects: [remaining, links, new-problem, scaffolding]
+
+  - id: hook-trigger-precision-oct11
+    date: 2026-10-11
+    summary: >-
+      `kickoff_scaffold_reminder.py`'s scoped start requires the number right after a start
+      verb (only problem-ish filler between) and ending its clause (end, punctuation, line
+      break, dash, or a continuation word); a month-day ("Oct 12") or "<n> next <time noun>"
+      is not a start. `rating_gate.py` triggers only on a comfort glyph (🟢🟡🔴🎓) or the word
+      rating/comfort plus a proposal cue, and its block message names the matched tokens; a
+      proposal using only the bare words clean/shaky/blank no longer blocks (accepted
+      trade-off). The pre-commit showcase and Big-O regeneration reads staged content
+      (`--from-index`). A report-only `scripts/check_line_endings.py` flags a staged file whose
+      CRLF/LF style differs from HEAD's. Sources: self-eval 2026-10-07, 2026-10-09,
+      2026-10-10, 2026-10-11.
+    affects: [hooks, pre-commit, showcase, bigo]

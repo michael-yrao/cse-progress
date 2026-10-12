@@ -43,10 +43,12 @@ import re
 import sys
 
 # ── Rating-proposal detection ───────────────────────────────────────────────────
-# A comfort verdict: the emoji, the streak-tagged emoji, or the word.
-COMFORT = re.compile(
-    r"🟢|🟡|🔴|🎓|\b(?:clean|shaky|blank)\b|\bs[0-2]\b", re.IGNORECASE
-)
+# A comfort verdict: a comfort glyph, or the word rating / comfort.
+# 2026-10-12: the bare words clean/shaky/blank and s0-s2 no longer count. 2026-10-09 the gate
+# blocked a non-coaching turn (a site-engineer spawn report: "build clean", "the s1 fallback")
+# as a rating proposal, with no rating and no problem under review. Those words appear in
+# ordinary prose; a real proposal always carries a glyph or says rating/comfort.
+COMFORT = re.compile(r"🟢|🟡|🔴|🎓|\b(?:rating|comfort)\b", re.IGNORECASE)
 # A cue that the turn is PROPOSING a rating — i.e. asking the learner to DECIDE, which is the
 # defining feature of a proposal (workflow step 4: "propose it for confirmation"). A recap only
 # REPORTS already-logged ratings and asks for nothing.
@@ -177,13 +179,22 @@ def learner_text(entries: "list[dict]", turns: int = LOOKBACK_TURNS) -> str:
     return "\n".join(reversed(chunks))
 
 
-def proposes_rating(turn: str) -> bool:
+def rating_signals(turn: str) -> "tuple[str, str] | None":
+    """(comfort token, proposal cue) that make `turn` a rating proposal, or None."""
     if SUMMARY_CONTEXT.search(turn):
-        return False  # a log / meta-review summary records ratings, it does not propose one
+        return None  # a log / meta-review summary records ratings, it does not propose one
     paragraphs = re.split(r"\n\s*\n", turn)
     non_report = [p for p in paragraphs if not REPORT_CONTEXT.search(p)]
     remainder = "\n\n".join(non_report)  # dashboard/deploy paragraphs dropped, rest kept
-    return bool(COMFORT.search(remainder) and PROPOSE_CUE.search(remainder))
+    comfort = COMFORT.search(remainder)
+    cue = PROPOSE_CUE.search(remainder)
+    if comfort and cue:
+        return comfort.group(0), cue.group(0)
+    return None
+
+
+def proposes_rating(turn: str) -> bool:
+    return rating_signals(turn) is not None
 
 
 def missing_axes(learner: str) -> "list[str]":
@@ -220,6 +231,7 @@ MESSAGE = (
     "never changes the rating (2026-09-23); only then propose it, on recognition + code.\n"
     "If the learner genuinely already stated both axes above (just without the words "
     '"time"/"space"), re-send — this blocks once.\n'
+    "Matched: comfort token {comfort!r}, proposal cue {cue!r}.\n"
     "Rule: .claude/memory/feedback_ask_complexity.md"
 )
 
@@ -236,15 +248,20 @@ def main() -> None:
     if not entries:
         return
     turn = last_turn_text(entries)
-    if not turn or not proposes_rating(turn):
+    signals = rating_signals(turn) if turn else None
+    if not signals:
         return
 
     missing = missing_axes(learner_text(entries))
     if not missing:
         return
 
+    comfort, cue = signals
     json.dump(
-        {"decision": "block", "reason": MESSAGE.format(missing=" and ".join(missing))},
+        {
+            "decision": "block",
+            "reason": MESSAGE.format(missing=" and ".join(missing), comfort=comfort, cue=cue),
+        },
         sys.stdout,
     )
 
@@ -268,7 +285,10 @@ PROPOSE_CASES = [
     # as a FREQUENCY, proposing nothing. Must NOT trip.
     ("probe tally, 'rate' as a frequency",
      "Probes: 🟢 🟢 🟡 🟢 🟢 🟢 — row-creation rate 17%, the pool still teaches.", False),
-    ("rate as a decision request", "Coded from a blank page, no hints. Rate it?", True),
+    ("rate as a decision request", "Coded from a blank page, no hints — reads 🟡. Rate it?", True),
+    # 2026-10-09 false positive: a spawn report, no glyph and no rating/comfort word.
+    ("non-coaching report, bare clean/s1 words",
+     "Build clean, confirm the s1 fallback before the push.", False),
     # The 2026-09-19 meta-review / completion summary false positive: comfort glyphs quoted
     # from self_eval_log next to record-words ("override"/"proposed"), proposing nothing live.
     ("meta-review summary, quoted glyphs",

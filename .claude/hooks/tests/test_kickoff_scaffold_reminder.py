@@ -30,10 +30,6 @@ def run_hook(prompt: str) -> str:
 class KickoffScaffoldReminderTests(unittest.TestCase):
     def test_prompt_routes_to_kickoff_scoped_or_neither(self):
         cases = [
-            ("doing 332 from tomorrow", False, True, "332"),
-            ("im confused, I am doing 332 right now", False, True, "332"),
-            ("let's do 235", False, True, "235"),
-            ("332 next", False, True, "332"),
             ("in 2 minutes I'm doing 332", False, True, "332"),
             ("what's the bug in 332", False, False, None),
             ("close monday session", False, False, None),
@@ -46,6 +42,33 @@ class KickoffScaffoldReminderTests(unittest.TestCase):
                 out = run_hook(prompt)
                 self.assertEqual(KICKOFF_MARK in out, is_kickoff)
                 self.assertEqual(SCOPED_MARK in out, is_scoped)
+                if number:
+                    self.assertIn(f"starting problem {number} now", out)
+
+    def test_scoped_start_fires_only_on_a_start_verb_next_to_the_number(self):
+        cases = [
+            ("starting 4 now", "4"),
+            ("doing 332", "332"),
+            ("let's do 417 and 543", "417"),
+            ("I'm doing 332 right now", "332"),
+            ("doing 332 from tomorrow", "332"),
+            ("235 next", "235"),
+            ("let's try to aim for 8", None),
+            (
+                "we don't actually do 4 choices here, most of them don't make it past the "
+                "base cases, so maybe just O(V * V!) for time?",
+                None,
+            ),
+            ("build week of Oct 12", None),
+            ("Oct 12 next", None),
+            ("doing 332\nhere is my code", "332"),
+            ("doing 332 - quick one", "332"),
+            ("aim for 8 next week", None),
+        ]
+        for prompt, number in cases:
+            with self.subTest(prompt):
+                out = run_hook(prompt)
+                self.assertEqual(SCOPED_MARK in out, number is not None)
                 if number:
                     self.assertIn(f"starting problem {number} now", out)
 

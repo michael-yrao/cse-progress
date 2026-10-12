@@ -88,16 +88,38 @@ REMINDER = (
 )
 
 
-# Scoped start: a do-verb within ~12 chars before a 1-4 digit number, or "<number> ... now|next".
+# Scoped start: a do-verb directly before a 1-4 digit number, or "<number> now|next".
+# 2026-10-12: the old 12-char slack let any number near a verb count ("try to aim for 8",
+# "do 4 choices", "Oct 12 next"). Now the number sits right next to the verb (only a
+# problem-ish filler between), is followed by end/punctuation/a continuation word, and a
+# month name before it ("Oct 12") disqualifies the "<number> now|next" form. Also: a line
+# break or dash ends the clause, and "next" before a time noun ("8 next week") is not a start.
 _VERB = (
     r"(?:do|doing|start(?:ing)?|pull(?:ing)?|try(?:ing)?|attempt(?:ing)?|work(?:ing)? on|"
     r"let'?s do|i'?ll do|on to|next up)"
 )
-SCOPED_START = re.compile(
-    rf"\b{_VERB}\b.{{0,12}}?\b(?P<after_verb>\d{{1,4}})\b"
-    rf"|\b(?P<before_now>\d{{1,4}})\b.{{0,12}}?\b(?:now|next)\b",
-    re.IGNORECASE | re.DOTALL,
+_FILLER = r"(?:\s+(?:problem|prob|lc|leetcode|number|num|no\.?))?\s*#?\s*"
+_MONTH = (
+    r"(?:jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|june?|july?|aug(?:ust)?|"
+    r"sep(?:t(?:ember)?)?|oct(?:ober)?|nov(?:ember)?|dec(?:ember)?)\.?\s+"
 )
+_CONTINUATION = r"(?:now|next|and|&|from|right|today|tonight|first|then|again|please)"
+SCOPED_START = re.compile(
+    rf"\b{_VERB}\b{_FILLER}(?P<after_verb>\d{{1,4}})\b"
+    rf"(?=[ \t]*(?:[.,;:!?)\r\n\-–—]|$)|\s+{_CONTINUATION}\b)"
+    rf"|(?P<month>\b{_MONTH})?\b(?P<before_now>\d{{1,4}})\b\s+(?:right\s+)?(?:now|next"
+    rf"(?!\s+(?:week|month|year|time|session|day)\b))\b",
+    re.IGNORECASE,
+)
+
+
+def scoped_number(prompt: str) -> "str | None":
+    """The problem number of the first scoped start in `prompt`, or None."""
+    for match in SCOPED_START.finditer(prompt):
+        if match.group("month"):
+            continue  # a calendar date ("Oct 12 next"), not a problem number
+        return match.group("after_verb") or match.group("before_now")
+    return None
 
 SCOPED_REMINDER = (
     "Learner is starting problem {number} now. {date_sentence}"
@@ -155,9 +177,9 @@ def main() -> None:
         # carries the "named problem is not a batch" caveat, so still fire.
         _emit(REMINDER)
         return
-    scoped = SCOPED_START.search(prompt)
-    if scoped:
-        _emit(_scoped_reminder(scoped.group("after_verb") or scoped.group("before_now")))
+    number = scoped_number(prompt)
+    if number:
+        _emit(_scoped_reminder(number))
 
 
 if __name__ == "__main__":

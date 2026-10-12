@@ -25,7 +25,9 @@ number: it names the key.
    Through Nov 29, 2026 a built day stays at or under the units ceiling, never over it
    ([`effort-budget.md`](../cse-coach/references/effort-budget.md)).
 3. **A tracker date is never edited to make a day fit.** A row that does not fit is carried in
-   the schedule file; its due date stays where the ladder put it.
+   the schedule file; its due date stays where the ladder put it. A learner-requested deferral past
+   the ladder date goes in `docs/foundations/dsa/mastery/holds.yml` with a date and a decision id,
+   never a typed tracker date.
 
 ## Which command answers which question
 

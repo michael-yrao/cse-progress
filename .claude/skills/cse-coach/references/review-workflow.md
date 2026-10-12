@@ -82,6 +82,13 @@ the rep and is a spoiler. It then contaminated the *rating*: 🔴 was proposed o
 and the learner had to correct the person rating them. Ratings set intervals, so an unverified
 premise here outlives the session. 3+ occurrences (Jul 25/27/29).
 
+**A claim about what the learner's code does, lacks, or costs is read from that code, not from a
+proxy.** Read the whole file before saying something is absent from it, and the dated attempt under
+discussion before naming which implementation it uses. Check a local statement's edge case against
+LeetCode's current constraints before calling it a failure, and count a structure's size under the
+code as written before correcting a bound. (Oct 9–11, 2026, four times: an import "missing" from a
+slice read, 1584's 🟢 credited to the heap version, 17's stale `""` case, 743's `visited` priced at V.)
+
 **Struggling with a technique? The remedy is the next real rep.** Do not offer a no-code drill or a
 detached exercise in its place. The learner learns by doing the problem again and asking questions
 as they come up (learner's call, 2026-09-30). Answer those questions in full, then let the schedule

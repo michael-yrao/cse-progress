@@ -144,5 +144,43 @@ class DiscoverSourceProblemsUrlTests(unittest.TestCase):
                 self.assertEqual(len(rows), expected_rows)
 
 
+class HoldsTests(unittest.TestCase):
+    ROW = "743. Network Delay Time (Dijkstra — array-scan)"
+
+    def test_apply_holds_next_is_max_of_ladder_and_hold(self):
+        cases = [
+            ("hold later than ladder", {self.ROW: "2026-12-07"}, "2026-12-07"),
+            ("hold earlier than ladder", {self.ROW: "2026-09-01"}, "2026-10-05"),
+            ("no hold", {}, "2026-10-05"),
+        ]
+        rows = [{"problem": self.ROW, "next_review": "2026-10-05"}]
+        for label, holds, expected in cases:
+            with self.subTest(label):
+                self.assertEqual(uprd.apply_holds(rows, holds)[0]["next_review"], expected)
+        self.assertEqual(rows[0]["next_review"], "2026-10-05")  # input not mutated
+
+    def test_hold_naming_no_tracker_row_is_an_error(self):
+        rows = [{"problem": self.ROW, "next_review": "2026-10-05"}]
+        with self.assertRaisesRegex(uprd.HoldsError, "matches no tracker row"):
+            uprd.apply_holds(rows, {"999. Nope": "2026-12-07"})
+
+    def test_load_holds_rejects_malformed_entries(self):
+        good = f"- row: '{self.ROW}'\n  since: 2026-10-05\n  why: some-id\n"
+        cases = [
+            ("valid", good + "  until: 2026-12-07\n", None),
+            ("unparseable until", good + "  until: soon\n", "`until`"),
+            ("missing until", good, "`until`"),
+        ]
+        for label, text, error in cases:
+            with self.subTest(label), tempfile.TemporaryDirectory() as tmp:
+                path = Path(tmp) / "holds.yml"
+                path.write_text(text, encoding="utf-8")
+                if error is None:
+                    self.assertEqual(uprd.load_holds(path), {self.ROW: "2026-12-07"})
+                else:
+                    with self.assertRaisesRegex(uprd.HoldsError, error):
+                        uprd.load_holds(path)
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

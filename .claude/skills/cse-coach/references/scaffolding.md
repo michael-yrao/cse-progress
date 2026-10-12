@@ -154,6 +154,8 @@ A presented lineup carries **only the problem, as its links**: `[<n> <title>](re
 mid-session restate, and a "what's next" hand-over alike. **No Note/Focus/technique/comfort/
 units/difficulty column,** and no technique parenthetical in the title.
 
+The one exception to name + links only: a problem with 2+ tracker rows shows ` · method: <due method>` after its links (learner's call Oct 11, decision `variant-label-on-board-oct11`); `remaining.py` prints it from the day's schedule row.
+
 List the day's problems from highest priority to lowest: 🔴/🟡 conversions first, then new problems, then 🟢 reviews, with easy reviews last. `scripts/schedule_priority.py` sorts each day's rows into this order when a schedule is committed, and `remaining.py` prints them in this order.
 
 ⚠️ **Any column beyond the name spoils the recognition front-gate** — the one thing the gate

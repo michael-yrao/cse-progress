@@ -154,7 +154,7 @@ fi
 
 # Grounded-solutions showcase contract. Regenerates dashboard/showcase.json (the verbatim
 # code slices the progressiveoverflow.com visualizers fetch at runtime) from
-# dashboard/showcase.yml + the live solution files. Fires when a solution file, the
+# dashboard/showcase.yml + the staged solution files (--from-index). Fires when a solution file, the
 # manifest, or the generator itself is staged — the three places a pick can drift from
 # reality. Also runs `--check` report-only: unlike the other blocks above, a bad showcase
 # pick doesn't block the commit here (the commit still lands; CI/the site's own scheduled
@@ -162,9 +162,11 @@ fi
 SHOWCASE_TRIGGER=$(echo "$STAGED" | grep -E "^dsa/leetcode/.*\.py$|dashboard/showcase\.yml$|scripts/export_showcase\.py$")
 if [ -n "$SHOWCASE_TRIGGER" ]; then
   echo "Regenerating showcase.json..."
-  run_py scripts/export_showcase.py || true
+  # --from-index: read each solution file's STAGED content, so an unstaged scaffold for an
+  # unrelated problem cannot abort the regeneration (self-eval 2026-10-10).
+  run_py scripts/export_showcase.py --from-index || true
   SHOWCASE_RC=0
-  run_py scripts/export_showcase.py --check || SHOWCASE_RC=$?
+  run_py scripts/export_showcase.py --check --from-index || SHOWCASE_RC=$?
   if [ "$SHOWCASE_RC" -eq 2 ]; then
     echo "ERROR: dashboard/showcase.json violates its schema" >&2
     exit 1
@@ -173,8 +175,8 @@ if [ -n "$SHOWCASE_TRIGGER" ]; then
 fi
 
 # Big-O trainer contract. Regenerates dashboard/big-o.json (the site's Big-O Trainer deck —
-# real code slices + seeded canonical-label answers) from dashboard/bigo.yml + the live solution
-# files, mirroring the showcase block above. Fires when a solution file, the manifest, either
+# real code slices + seeded canonical-label answers) from dashboard/bigo.yml + the staged solution
+# files (--from-index), mirroring the showcase block above. Fires when a solution file, the manifest, either
 # generator (export_bigo.py reads es.read_lines/symbol_table; export_showcase.py changes can
 # change what those return), the complexity-miss ledger (isMiss), or the tracker (difficulty) is
 # staged — the places a pick or a derived field can drift from reality. Report-only, same as
@@ -183,9 +185,9 @@ fi
 BIGO_TRIGGER=$(echo "$STAGED" | grep -E "^dsa/leetcode/.*\.py$|dashboard/bigo\.yml$|scripts/export_bigo\.py$|scripts/export_showcase\.py$|complexity_gotchas\.md$|dsa_progress\.md$")
 if [ -n "$BIGO_TRIGGER" ]; then
   echo "Regenerating big-o.json..."
-  run_py scripts/export_bigo.py || true
+  run_py scripts/export_bigo.py --from-index || true
   BIGO_RC=0
-  run_py scripts/export_bigo.py --check || BIGO_RC=$?
+  run_py scripts/export_bigo.py --check --from-index || BIGO_RC=$?
   if [ "$BIGO_RC" -eq 2 ]; then
     echo "ERROR: dashboard/big-o.json violates its schema" >&2
     exit 1
@@ -328,5 +330,17 @@ if echo "$STAGED" | grep -qE "^decisions\.yml$"; then
   elif command -v python3 >/dev/null 2>&1; then
     python3 scripts/reconcile.py || true
   fi
+fi
+
+# Line-ending flips. A text-mode rewrite turned techniques.yml's CRLF into LF three times
+# (self-eval 2026-10-07, 2026-10-10), staging a whole-file diff for a one-line change. Compares
+# each modified staged file's HEAD blob to its staged blob; runs last so it sees what the blocks
+# above staged. Report-only, silent-when-clean.
+if command -v py >/dev/null 2>&1; then
+  py scripts/check_line_endings.py || true
+elif command -v python >/dev/null 2>&1; then
+  python scripts/check_line_endings.py || true
+elif command -v python3 >/dev/null 2>&1; then
+  python3 scripts/check_line_endings.py || true
 fi
 exit 0

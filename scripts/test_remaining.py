@@ -151,6 +151,34 @@ class OpenMockTests(unittest.TestCase):
                     self.assertEqual(remaining.open_mock(schedule, self.LABEL), expected)
 
 
+class MethodLabelTests(unittest.TestCase):
+    """The board line names the due method only for a problem with 2+ tracker rows."""
+
+    LABEL = "Mon Oct 12"
+    BASE = "[{n} T](dsa/x.py) · [LC](https://x)"
+
+    def test_label_cases(self):
+        cases = [
+            ("single-row problem: no suffix", "| [9 Two Sum](../x.py) · [LC](u) | 🟢 | | | Hash |",
+             {"9": 1}, "9", ""),
+            ("multi-row, due row is the 2nd variant: suffix",
+             "| [53 Maximum Subarray (Prefix Sum)](../x.py) · [LC](u) | 🟢 | | | Prefix-sum |",
+             {"53": 2}, "53", " · method: Prefix Sum"),
+            ("real-title parenthetical, single row: unchanged",
+             "| [208 Implement Trie (Prefix Tree)](../x.py) · [LC](u) | 🟢 | | | Trie |",
+             {"208": 1}, "208", ""),
+        ]
+        for name, row, counts, number, suffix in cases:
+            with self.subTest(name=name):
+                text = f"| ▸ **{self.LABEL}** · 1.0 units — t |  |  |  |  |\n{row}\n"
+                with tempfile.TemporaryDirectory() as tmp:
+                    schedule = Path(tmp) / "20261012_schedule.md"
+                    schedule.write_text(text, encoding="utf-8")
+                    methods = remaining.open_row_methods(schedule, self.LABEL)
+                line = self.BASE.format(n=number)
+                self.assertEqual(remaining.label_line(line, number, methods, counts), line + suffix)
+
+
 class OrderByPriorityTests(unittest.TestCase):
     """order_by_priority() is the tie-break main() applies between unstruck_numbers()'s
     file order and schedule_priority.day_order()'s priority order: a day whose file order

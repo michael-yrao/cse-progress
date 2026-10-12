@@ -18,6 +18,7 @@ import copy
 import datetime as dt
 import io
 import json
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -59,6 +60,35 @@ class ReadLinesTests(unittest.TestCase):
         path = self.dir / "trailing.py"
         _write(path, "a = 1\n")
         self.assertEqual(es.read_lines(path), ["a = 1", ""])
+
+
+class IndexReadsTests(unittest.TestCase):
+    """`index_reads()` (the pre-commit hook's --from-index) reads STAGED content: an
+    unstaged working-tree change to a file — here an emptied scaffold — neither alters nor
+    aborts what is read. Default reads stay on the working tree. Uses a throwaway git repo."""
+
+    def _git(self, repo: Path, *args: str) -> None:
+        subprocess.run(["git", "-C", str(repo), *args], check=True, capture_output=True)
+
+    def test_unstaged_working_tree_change_does_not_affect_staged_read(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            repo = Path(tmp)
+            self._git(repo, "init", "-q")
+            staged = repo / "1_staged.py"
+            _write(staged, "x = 1\n")
+            self._git(repo, "add", "1_staged.py")
+            _write(staged, "")  # the empty scaffold: working tree only, never staged
+            untracked = repo / "2_new.py"
+            _write(untracked, "y = 2\n")
+
+            with es.index_reads(repo):
+                in_index = es.read_lines(staged)
+                not_in_index = es.read_lines(untracked)
+            default = es.read_lines(staged)
+
+        self.assertEqual(in_index, ["x = 1", ""])
+        self.assertEqual(not_in_index, ["y = 2", ""])  # unstaged path falls back
+        self.assertEqual(default, [""])  # no flag: working tree, unchanged behaviour
 
 
 class DefStartLineAndSymbolTableTests(unittest.TestCase):
