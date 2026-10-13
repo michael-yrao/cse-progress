@@ -320,7 +320,8 @@
         "endNote": { "type": ["string", "null"], "maxLength": 16, "description": "The E cell's free-form note after its glyph, stripped/collapsed/lowercased — vocabulary seen in real weeks: s0, s1, s2, prov, dropped. Only ever set when endComfort is non-null; null otherwise, even if the raw cell had trailing text." },
         "nextReview": { "type": ["string", "null"], "format": "date", "description": "The row's Next-review date (col Next) iff that cell is, once stripped, nothing but an ISO date; null for a free-form or blank Next cell." },
         "file": { "type": ["string", "null"], "description": "Repo-relative POSIX path of the learner's own solution file for this number (links.solution_files(), keyed by lcNumber; a twin takes the first sorted path); null when no file exists under the configured source roots. A PATH, never code — progress.json stays code-free; the site turns it into a blob/<branch>/<path> link. Null when the row has no lcNumber." },
-        "deferredTo": { "type": ["string", "null"], "format": "date", "description": "ISO date the row was moved to when it was not done on its planned day: the Next cell of a row that is not struck. null otherwise." }
+        "deferredTo": { "type": ["string", "null"], "format": "date", "description": "ISO date the row was moved to when it was not done on its planned day: the Next cell of a row that is not struck. null otherwise." },
+        "pulledIn": { "type": "boolean", "description": "True for the destination copy of a row pulled to an earlier day: a leading `←` with no deferredTo. False for the origin row (it carries deferredTo), a `→` row and every other row." }
       }
     },
     "problem": {

@@ -943,7 +943,7 @@ class ParseCurrentWeekScheduleTests(unittest.TestCase):
                                  "url": "https://leetcode.com/problems/generate-parentheses/",
                                  "file": None,
                                  "tags": ["protected", "backfill"], "kind": "rep",
-                                 "done": False, "deferredTo": None,
+                                 "done": False, "deferredTo": None, "pulledIn": False,
                                  "endComfort": None, "endNote": None, "nextReview": None})
         # The 100 row's E cell is "🎓" (no trailing note) and Next is "2026-10-01" — pins
         # endComfort/nextReview are emitted, and a glyph with nothing following it yields
@@ -954,7 +954,7 @@ class ParseCurrentWeekScheduleTests(unittest.TestCase):
                                 "url": "https://leetcode.com/problems/same-tree/",
                                 "file": None,
                                 "tags": [], "kind": "rep",
-                                "done": True, "deferredTo": None,
+                                "done": True, "deferredTo": None, "pulledIn": False,
                                 "endComfort": "🎓", "endNote": None, "nextReview": "2026-10-01"})
         # 55 has a real lcNumber but is deliberately absent from TRACKER_FIXTURE — the
         # honest-null case for `difficulty` (a number the tracker doesn't have yet). `url`
@@ -966,7 +966,7 @@ class ParseCurrentWeekScheduleTests(unittest.TestCase):
                                      "url": "https://leetcode.com/problems/jump-game/",
                                      "file": None,
                                      "tags": [], "kind": "rep",
-                                     "done": False, "deferredTo": None,
+                                     "done": False, "deferredTo": None, "pulledIn": False,
                                      "endComfort": None, "endNote": None, "nextReview": None})
 
     def test_new_intake_row_gets_lcnumber_from_fallback_and_url_from_own_link(self):
@@ -983,7 +983,7 @@ class ParseCurrentWeekScheduleTests(unittest.TestCase):
                                            "url": "https://leetcode.com/problems/combination-sum/",
                                            "file": None,
                                            "tags": ["new"], "kind": "new",
-                                           "done": False, "deferredTo": None,
+                                           "done": False, "deferredTo": None, "pulledIn": False,
                                            "endComfort": None, "endNote": None, "nextReview": None})
 
     def test_row_own_link_url_wins_over_tracker_join(self):
@@ -998,7 +998,7 @@ class ParseCurrentWeekScheduleTests(unittest.TestCase):
                                            "url": "https://leetcode.com/problems/word-break/",
                                            "file": None,
                                            "tags": [], "kind": "rep",
-                                           "done": False, "deferredTo": None,
+                                           "done": False, "deferredTo": None, "pulledIn": False,
                                            "endComfort": None, "endNote": None, "nextReview": None})
 
     def test_primer_row_has_no_lcnumber_and_kind_primer(self):
@@ -1015,7 +1015,7 @@ class ParseCurrentWeekScheduleTests(unittest.TestCase):
             "difficulty": None, "url": None,
             "file": None,
             "tags": ["primer"], "kind": "primer",
-            "done": False, "deferredTo": None,
+            "done": False, "deferredTo": None, "pulledIn": False,
             "endComfort": None, "endNote": None, "nextReview": None})
 
     def test_emphasis_before_glyph_does_not_blank_out_tags(self):
@@ -1034,7 +1034,7 @@ class ParseCurrentWeekScheduleTests(unittest.TestCase):
             "url": "https://leetcode.com/problems/combination-sum/",
             "file": None,
             "tags": ["new"], "kind": "new",
-            "done": True, "deferredTo": None,
+            "done": True, "deferredTo": None, "pulledIn": False,
             "endComfort": None, "endNote": None, "nextReview": None})
 
     def test_complexity_technique_wins_kind_over_the_probe_tag(self):
@@ -1066,7 +1066,7 @@ class ParseCurrentWeekScheduleTests(unittest.TestCase):
             "url": "https://leetcode.com/problems/number-of-islands/",
             "file": None,
             "tags": [], "kind": "rep",
-            "done": False, "deferredTo": None,
+            "done": False, "deferredTo": None, "pulledIn": False,
             "endComfort": None, "endNote": None, "nextReview": None})
 
     def test_nc_only_row_with_no_tracker_entry_uses_nc_as_last_resort(self):
@@ -1082,7 +1082,7 @@ class ParseCurrentWeekScheduleTests(unittest.TestCase):
             "url": "https://neetcode.io/problems/foreign-dictionary",
             "file": None,
             "tags": [], "kind": "rep",
-            "done": False, "deferredTo": None,
+            "done": False, "deferredTo": None, "pulledIn": False,
             "endComfort": None, "endNote": None, "nextReview": None})
 
     def test_day_with_no_block_has_no_items(self):
@@ -1155,6 +1155,29 @@ class ParseCurrentWeekScheduleTests(unittest.TestCase):
         item = result["days"][3]["items"][0]
         self.assertEqual(item["deferredTo"], "2026-09-28")
         self.assertEqual(item["title"], "Happy Number")
+
+    def test_pulled_in_flag_over_arrow_and_struck_combinations(self):
+        link = ("[202 Happy Number](../../../dsa/leetcode/graphs/202_happy_number.py) · "
+                "[LC](https://leetcode.com/problems/happy-number/)")
+        cases = [
+            ("left-arrow struck copy", f"| ← ~~{link}~~ | 🟢 s1 | 🟢 |  | Cycle-detection |", True),
+            ("left-arrow origin with Next", f"| ← {link} | 🟢 s1 |  | 2026-09-28 | Cycle-detection |", False),
+            ("right-arrow struck copy", f"| → ~~{link}~~ | 🟢 s1 | 🟢 |  | Cycle-detection |", False),
+            ("plain struck row", f"| ~~{link}~~ | 🟢 s1 | 🟢 |  | Cycle-detection |", False),
+        ]
+        for name, row, expected in cases:
+            with self.subTest(name):
+                fixture = (
+                    "## Daily Schedule\n\n"
+                    "| Problem | S | E | Next | Technique |\n"
+                    "|---|:-:|:-:|:-:|---|\n"
+                    "| ▸ **Thu Oct 1** · 7.8 units — pulled-in test |  |  |  |  |\n"
+                    f"{row}\n"
+                )
+                (Path(self._tmpdir.name) / "20260928_schedule.md").write_text(
+                    fixture, encoding="utf-8")
+                result = gamify.parse_current_week_schedule(dt.date(2026, 9, 28), self.URLS)
+                self.assertIs(result["days"][3]["items"][0]["pulledIn"], expected)
 
     def test_mock_rows_tags_kind_and_lcnumber_before_and_after_the_session(self):
         # The pre-session row names no problem (lcNumber null); the post-session row is

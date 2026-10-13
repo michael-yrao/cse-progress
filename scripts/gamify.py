@@ -396,6 +396,8 @@ _TAG_TOKEN = re.compile("|".join(re.escape(g) for g in sorted(TAG_BY_GLYPH, key=
 # one go.
 _LEADING_EMPHASIS = re.compile(r"^(?:~~|\*\*)+")
 
+PULLED_IN_ARROW = "←"
+
 KIND_REP = "rep"
 KIND_COMPLEXITY = "complexity"
 # KIND_NEW/KIND_PRIMER/KIND_PROBE deliberately don't exist: those three `kind` values are
@@ -416,16 +418,27 @@ def _leading_tags(cell: str) -> list[str]:
     another tag, `🔥 ~~🎯 ...~~` — so a leading `~~`/`**` run is stripped (_LEADING_EMPHASIS)
     before EVERY glyph match attempt, not just once at the very front of the cell.
     """
-    tags: list[str] = []
+    return [TAG_BY_GLYPH[glyph] for glyph in _leading_glyphs(cell)]
+
+
+def _leading_glyphs(cell: str) -> list[str]:
+    """The raw tag glyphs of the Problem cell's leading run, in order (see _leading_tags)."""
+    glyphs: list[str] = []
     rest = cell.lstrip()
     while True:
         rest = _LEADING_EMPHASIS.sub("", rest).lstrip()
         token = _TAG_TOKEN.match(rest)
         if not token:
             break
-        tags.append(TAG_BY_GLYPH[token.group(0)])
+        glyphs.append(token.group(0))
         rest = rest[token.end():].lstrip()
-    return tags
+    return glyphs
+
+
+def _is_pulled_in(cell: str, deferred_to: str | None) -> bool:
+    """True for the DESTINATION copy of a pulled-earlier row: a leading `←` with no
+    `deferredTo`. The stale origin row (also `←`) carries its destination date, so it is not."""
+    return PULLED_IN_ARROW in _leading_glyphs(cell) and deferred_to is None
 
 
 def _schedule_item_kind(technique: str | None, tags: list[str]) -> str:
@@ -601,6 +614,7 @@ def _parse_schedule_day_full(
         start = eb.GLYPH.search(m["c2"] or "")
         technique = (m["c5"] or "").strip() or None
         tags = _leading_tags(cell)
+        deferred_to = eb.deferred_to("~~" in cell, m["c4"] or "")
         items.append({
             # lcNumber is honestly null only when NEITHER eb.SCHED_NUM nor the bare-number
             # fallback finds one (see _schedule_item_lc_number) — the dashboard then omits
@@ -617,7 +631,8 @@ def _parse_schedule_day_full(
             "done": "~~" in cell,
             # Shares eb.deferred_to's rule with parse_sched_line() and remaining.py's
             # skip check (schedule-item-deferred-to-sep29) -- never re-derived here.
-            "deferredTo": eb.deferred_to("~~" in cell, m["c4"] or ""),
+            "deferredTo": deferred_to,
+            "pulledIn": _is_pulled_in(cell, deferred_to),
             **_schedule_item_outcome(m["c3"], m["c4"]),
         })
     return items, label, units
