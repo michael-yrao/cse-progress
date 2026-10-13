@@ -75,17 +75,19 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/dsa/mastery/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **137+6** problems &nbsp;·&nbsp; **147+6** solutions &nbsp;·&nbsp; **668+6** reps
+> **137+6** problems &nbsp;·&nbsp; **147+6** solutions &nbsp;·&nbsp; **670+6** reps
 
 | | 🏆 Retired | 🎓 Graduated | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|:---:|
-| **Solutions** | 0 | 27 | 108 | 12 | 0 |
+| **Solutions** | 0 | 29 | 106 | 12 | 0 |
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Rep Date | Rep Dates |
 |---|---|---|---|---|---|---|
 | Medium | [9004. Minimum Spanning Tree (Kruskal)](https://progressiveoverflow.com/practice/9004) | 🟢 | 1 | 2026-11-11 | 2026-10-12 | 2026-10-02, 2026-10-12 |
 | Medium | [40. Combination Sum II](https://leetcode.com/problems/combination-sum-ii/) | 🟢 | 1 | 2026-11-11 | 2026-10-12 | 2026-09-28, 2026-09-30, 2026-10-02, 2026-10-12 |
 | Medium | [1462. Course Schedule IV (Floyd-Warshall / Transitive Closure)](https://leetcode.com/problems/course-schedule-iv/) | 🟢 | 2 | 2026-12-11 | 2026-10-12 | 2026-08-25, 2026-09-04, 2026-10-12 |
+| Hard | [42. Trapping Rain Water (Array)](https://leetcode.com/problems/trapping-rain-water/) | 🎓 | 3 | 2027-04-10 | 2026-10-12 | 2026-04-15, 2026-06-29, 2026-07-08, 2026-08-07, 2026-10-12 |
+| Medium | [973. K Closest Points to Origin](https://leetcode.com/problems/k-closest-points-to-origin/) | 🎓 | 3 | 2027-04-10 | 2026-10-12 | 2026-06-23, 2026-07-03, 2026-08-07, 2026-10-12 |
 | Medium | [9003. Lost Map (Prim's MST)](https://progressiveoverflow.com/practice/9003) | 🟢 | 0 | 2026-10-21 | 2026-10-11 | 2026-10-09, 2026-10-11 |
 | Medium | [133. Clone Graph](https://leetcode.com/problems/clone-graph/) | 🟢 | 2 | 2026-12-10 | 2026-10-11 | 2026-06-04, 2026-06-05, 2026-06-07, 2026-08-09, 2026-08-19, 2026-08-29, 2026-09-08, 2026-10-11 |
 | Medium | [189. Rotate Array](https://leetcode.com/problems/rotate-array/) | 🎓 | 3 | 2027-04-09 | 2026-10-11 | 2026-01-11, 2026-04-04, 2026-06-24, 2026-07-26, 2026-10-11 |
@@ -210,8 +212,6 @@ Notes for future agents:
 | Easy | [100. Same Tree](https://leetcode.com/problems/same-tree/) | 🎓 | 3 | 2027-02-04 | 2026-08-08 | 2026-05-01, 2026-06-05, 2026-08-08 |
 | Easy | [88. Merge Sorted Array](https://leetcode.com/problems/merge-sorted-array/) | 🎓 | 3 | 2027-02-04 | 2026-08-08 | 2026-01-10, 2026-04-03, 2026-06-04, 2026-08-08 |
 | Easy | [21. Merge Two Sorted Lists (Iterative)](https://leetcode.com/problems/merge-two-sorted-lists/) | 🎓 | 3 | 2027-02-04 | 2026-08-08 | 2026-04-26, 2026-06-12, 2026-08-08 |
-| Hard | [42. Trapping Rain Water (Array)](https://leetcode.com/problems/trapping-rain-water/) | 🟢 | 2 | 2026-10-06 | 2026-08-07 | 2026-04-15, 2026-06-29, 2026-07-08, 2026-08-07 |
-| Medium | [973. K Closest Points to Origin](https://leetcode.com/problems/k-closest-points-to-origin/) | 🟢 | 2 | 2026-10-06 | 2026-08-07 | 2026-06-23, 2026-07-03, 2026-08-07 |
 | Medium | [130. Surrounded Regions (Union-Find)](https://leetcode.com/problems/surrounded-regions/) | 🟢 | 2 | 2026-10-06 | 2026-08-07 | 2026-06-21, 2026-06-23, 2026-07-03, 2026-08-07 |
 | Easy | [110. Balanced Binary Tree](https://leetcode.com/problems/balanced-binary-tree/) | 🎓 | 3 | 2027-02-03 | 2026-08-07 | 2026-05-01, 2026-06-04, 2026-06-14, 2026-06-24, 2026-07-03, 2026-08-07 |
 | Medium | [122. Best Time to Buy and Sell Stock II](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/) | 🟢 | 2 | 2026-10-06 | 2026-08-07 | 2026-01-28, 2026-04-17, 2026-08-07 |
@@ -271,7 +271,7 @@ note is the failure mode this section exists to prevent.
 | Hard | [472. Concatenated Words](https://leetcode.com/problems/concatenated-words/) | `rated:139` | **Re-parked Sep 9, 2026 — phase-gated blank.** Attempted cold, came back 🔴: its binding technique is **Word Break** (string decomposition), never encoded — the trie is incidental. Retry only after 139 Word Break (the pure form) is rated. `discovery_skip`'d so it doesn't churn. (Was seated this week on `rated:211`, the Trie trigger — that gated the wrong technique; see self_eval 2026-09-09.) |
 | Medium | [1472. Design Browser History](https://leetcode.com/problems/design-browser-history/) | `rated:146` | **2nd problem for HashMap + Doubly Linked List** — the technique had exactly one (146 LRU). A design problem where the DLL is the point and there is no eviction policy to hide behind. |
 | Medium | [53. Maximum Subarray (Divide and Conquer)](https://leetcode.com/problems/maximum-subarray/) | `rated:912` + `surplus>=1` | **D&C consolidation rep.** ⚠️ *Original trigger "active block week of Jul 6" **expired unfired** — caught Jul 26, 2026, three weeks stale. A dead stub (`maxSubarrayDivideNConquer`, body `return`) sits in the solution file from that abandoned setup.* **Re-triggered as a condition, not a date: pull once (a) 912 Merge Sort has its RATED rep (Jul 29 — D&C was taught unrated Jul 25, so 912 measures retention first) AND (b) surplus ≥ 1.** Rationale: D&C currently has exactly **one** problem (912) where a technique wants 3–4, and this is the natural second — but running it before 912 is rated would measure the teaching, not the technique. See [[project_dandc_coding_gap]]. |
-| Hard | [42. Trapping Rain Water (Two Pointer)](https://leetcode.com/problems/trapping-rain-water/) | `graduates:42` | O(1) space optimization. **Trigger: pull into rotation when 42 Array GRADUATES (🎓).** ⚠️ Wording corrected Aug 7, 2026 — it read "retires (🏆)", which predates the Jul 26 label swap; the `graduate_at_streak` tier is 🎓 Graduated, and 🏆 Retired is the terminal tier well beyond it. Gating on 🏆 would have deferred this variant by ~a year past its intended trigger. **Array method 🟢 streak 2 as of Aug 7 → the NEXT clean rep (due Oct 6) fires this trigger.** |
+| Hard | [42. Trapping Rain Water (Two Pointer)](https://leetcode.com/problems/trapping-rain-water/) | `graduates:42` | O(1) space optimization. **Trigger: pull into rotation when 42 Array GRADUATES (🎓).** ⚠️ Wording corrected Aug 7, 2026 — it read "retires (🏆)", which predates the Jul 26 label swap; the `graduate_at_streak` tier is 🎓 Graduated, and 🏆 Retired is the terminal tier well beyond it. Gating on 🏆 would have deferred this variant by ~a year past its intended trigger. **Array method 🟢 streak 2 as of Aug 7 → the NEXT clean rep (due Oct 6) fires this trigger.** ✅ **Fired 2026-10-12** (42 Array 🟢 → 🎓); the Oct 19 build slots it. |
 | Medium | [210. Course Schedule II (DFS postorder)](https://leetcode.com/problems/course-schedule-ii/) | `graduates:210` | **Method variant — the only unqueued variant gap in [`technique_coverage.md`](technique_coverage.md).** Topological sort has three problems (207, 210, 269) and **all three are Kahn's**; DFS-topo has never been written once. Gated by the method-variant rule — needs 210 itself at 🎓 (currently 🟢 streak 1, next Aug 23). **Why it earns a rep rather than a footnote:** DFS-topo requires a *three-state* visited (unvisited / in-progress / done) to detect a cycle as a back edge, plus reverse-postorder to emit forward — machinery Kahn's never makes you build, so three Kahn's reps leave it genuinely untrained. Surfaced Jul 28, 2026 by the coverage report. |
 | Hard | Digit DP (technique) — e.g. [233. Number of Digit One](https://leetcode.com/problems/number-of-digit-one/) | `phase:2D-DP` | Technique: counting numbers in a range by digit constraints. Not in NC150; advanced DP. Best learned AFTER the 1D/2D DP blocks (Oct–Dec) once DP foundation is solid. |
 | Medium | [300. Longest Increasing Subsequence (O(n log n))](https://leetcode.com/problems/longest-increasing-subsequence/) | `phase:1D-DP` | DP enrichment: patience-sorting / binary-search LIS. Base O(n²) LIS is NC150; this is the optimized form. Learn after the 1D DP block. |

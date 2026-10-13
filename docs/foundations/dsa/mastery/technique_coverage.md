@@ -135,7 +135,7 @@ Every declared technique gets a row, started or not — a not-started row's Gaps
 | Multi-source BFS | graphs | core | 2 (2+0) | 1 (994) | 🟢 | ✅ | — | thin (1/2) · queued: 286 `surplus>=1`, 542 `surplus>=1` |
 | Topological Sort | graphs | core | 3 (3+0) | 3 (207, 210, 269) | 🎓 | ✅ | Kahn's (BFS) ×3 · ~~DFS postorder~~ *(queued: `graduates:210`)* | queued: 802 `surplus>=1`, 2115 `surplus>=1` |
 | Union-Find | graphs | core | 3 (3+0) | 4 (130, 261, 684, 721) | 🎓 | ✅ | — | queued: 1202 `surplus>=1` |
-| Heap / Priority Queue | heap | core | 5 (5+0) | 6 (347, 355, 621, 703, 973, 1046) | 🟢 | ✅ | — | queued: 23 `surplus>=1`, 215 `surplus>=1`, 295 `surplus>=1` |
+| Heap / Priority Queue | heap | core | 5 (5+0) | 6 (347, 355, 621, 703, 973, 1046) | 🎓 | ✅ | — | queued: 23 `surplus>=1`, 215 `surplus>=1`, 295 `surplus>=1` |
 | Interval List Intersection (two pointers) | intervals | core | 1 (1+0) | 0 (—) | — | ❌ | **Two sorted lists, advance the earlier end ×0** | *not started* |
 | Interval Scheduling (sort by end) | intervals | core | 1 (1+0) | 1 (435) | 🟢 | ✅ | Keep max non-overlapping / min removals ×1 | — |
 | Intervals: Merge & Insert (sort by start) | intervals | core | 2 (2+0) | 3 (56, 57, 452) | 🟢 | ✅ | Merge overlapping (sort by start) ×1 · Insert into sorted (3-phase sweep) ×1 · Stab / shrink-the-overlap (min end) ×1 | queued: 252 `surplus>=1` |
@@ -171,7 +171,7 @@ Every declared technique gets a row, started or not — a not-started row's Gaps
 | Trie | tries | core | 4 (3+1) | 3 (208, 211, 648) | 🟢 | ✅ | — | thin (3/4) · queued: 212 `surplus>=1`, 472 `rated:139` |
 | Dutch National Flag | two_pointers | core | 1 (1+0) | 1 (75) | 🟢 | ✅ | — | — |
 | Fast/Slow In-Place Write | two_pointers | core | 2 (2+0) | 4 (26, 27, 80, 283) | 🎓 | ✅ | — | — |
-| Prefix/Suffix Max | two_pointers | core | 1 (1+0) | 1 (42) | 🟢 | ✅ | Array ×1 · ~~Two Pointer~~ *(queued: `graduates:42`)* | — |
+| Prefix/Suffix Max | two_pointers | core | 1 (1+0) | 1 (42) | 🎓 | ✅ | Array ×1 · ~~Two Pointer~~ *(queued: `graduates:42`)* | — |
 | Two Pointers (converging) | two_pointers | core | 4 (4+0) | 8 (11, 15, 88, 125, 167, 344, 680, 1768) | 🎓 | ✅ | — | — |
 
 ## Vocabulary maintenance

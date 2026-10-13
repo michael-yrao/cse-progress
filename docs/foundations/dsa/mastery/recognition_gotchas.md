@@ -290,3 +290,5 @@
   absorbed span with each entry) both needed coach input. → 🟡.
 - **2026-10-09 · 332 Reconstruct Itinerary (min-heap ordering)** (🟢 s1 review; retry, half-spoiled: graphs folder) — ✅ **hit.** Euler path named unaided (start fixed at JFK, end unknown, every ticket used once = edges, not nodes) → Hierholzer, min-heap per airport for lexical order. → 🟡 (execution: the post-order append).
 - **2026-10-10 · 269 Alien Dictionary** (🟢 s1 review; retry, half-spoiled: graphs folder) — ✅ **hit.** Top comment, unaided: the first differing char of adjacent words makes the first a prereq of the second → topological sort (Kahn's), letters with no constraint go anywhere. → 🟢 s2.
+- **2026-10-12 · 42 Trapping Rain Water (Array)** (🟢 s2 review; retry, half-spoiled: two_pointers folder) — ✅ **hit.** Top comment, unaided: water at a bar = min(max to its left, max to its right) − its height → prefix-max and suffix-max arrays, traced on the example before coding. → 🟢 → 🎓.
+- **2026-10-12 · 973 K Closest Points to Origin** (🟢 s2 review; retry, half-spoiled: heap folder) — ✅ **hit.** Top comment, unaided: "k closest" → heap; max heap capped at k so the farthest is evicted. → 🟢 → 🎓.

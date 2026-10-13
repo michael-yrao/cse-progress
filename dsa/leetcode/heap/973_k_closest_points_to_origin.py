@@ -32,6 +32,27 @@ from typing import List
 
 class Solution:
 
+    # ── Attempt · 2026-10-12 ──────────────
+    def kClosest_20261012(self, points: List[List[int]], k: int) -> List[List[int]]:
+        # k closest point, so this is heap
+        # closest, so we want maxheap
+
+        max_heap = []
+
+        for x,y in points:
+            euclidean_distance = math.sqrt(x**2 + y**2)
+            heapq.heappush(max_heap, (-euclidean_distance, x, y))
+            while len(max_heap) > k:
+                heapq.heappop(max_heap)
+        
+        result = []
+
+        while max_heap:
+            weight,x,y = heapq.heappop(max_heap)
+            result.append([x,y])
+        
+        return result
+
     # ── Attempt · 2026-08-07 ──────────────
     def kClosest_20260807(self, points: List[List[int]], k: int) -> List[List[int]]:
         # maxHeap of size k

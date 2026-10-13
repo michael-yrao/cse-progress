@@ -4036,8 +4036,8 @@
         {
           "kind": "attempt",
           "symbol": "kClosest_20260703",
-          "startLine": 82,
-          "endLine": 103,
+          "startLine": 103,
+          "endLine": 124,
           "lines": [
             "    def kClosest_20260703(self, points: List[List[int]], k: int) -> List[List[int]]:",
             "        # kth closest so we need to use a heap",
@@ -6523,8 +6523,8 @@
         {
           "kind": "attempt",
           "symbol": "trap",
-          "startLine": 53,
-          "endLine": 78,
+          "startLine": 82,
+          "endLine": 107,
           "lines": [
             "    def trap(self, height: List[int]) -> int:",
             "        # knowing water at each index = min(leftMax, rightMax) - height[i]",
@@ -6578,8 +6578,8 @@
         {
           "kind": "attempt",
           "symbol": "trapTwoPointer",
-          "startLine": 80,
-          "endLine": 125,
+          "startLine": 109,
+          "endLine": 154,
           "lines": [
             "    def trapTwoPointer(self, height: List[int]) -> int:",
             "",

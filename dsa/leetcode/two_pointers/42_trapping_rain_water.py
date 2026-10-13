@@ -24,6 +24,35 @@ from typing import List
 
 class Solution:
 
+    # ── Attempt · 2026-10-12 ──────────────
+    def trap_20261012(self, height: List[int]) -> int:
+        # water at each point has potential to be min(left_wall,right_wall)
+        # then subtract by height at current index
+        # height = [0,1,0,2,1,0,1,3,2,1,2,1]
+        # left   = [0,0,1,1,2,2,2,2,3,3,3,3]
+        # right  = [3,3,3,3,3,3,3,2,2,2,1,0]
+        # min    = [0,0,1,1,2,2,2,2,2,2,1,0]
+        # water  = [0,0,1,0,1,2,1,0,0,1,0,0]
+
+        n = len(height)
+
+        result = [0] * n
+
+        left = [0] * n
+        right = [0] * n
+
+        for i in range(1,n):
+            left[i] = max(left[i-1], height[i-1])
+        
+        for i in range(n-2,-1,-1):
+            right[i] = max(right[i+1], height[i+1])
+        
+        for i in range(n):
+            water = max(0,min(left[i],right[i]) - height[i])
+            result[i] = water
+        
+        return sum(result)
+
     # ── Attempt · 2026-08-07 ──────────────
     def trap_20260807(self, height: List[int]) -> int:
         # potential water at each index = min(left,right)
