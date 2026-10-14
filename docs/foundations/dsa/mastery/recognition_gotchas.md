@@ -1,3 +1,18 @@
+- **2026-10-13 · 56 Merge Intervals** (🟢 s1 review; retry, half-spoiled: intervals folder) — ✅ **hit, not
+  measured.** Top comment, unaided: sort by start, overlap when `start <= prior_end`, extend with `max` of the ends.
+  Blank page, no hints; spec 28/28. O(n log n) / O(n) right. → 🟢 s2.
+- **2026-10-13 · 90 Subsets II** (🟡 conversion; retry, half-spoiled: backtracking folder) — ✅ **hit, not
+  measured.** Top comment, unaided: subsets with duplicate values, order irrelevant → sort, then pick/skip
+  backtracking, the skip branch stepping past equal values. Blank page, no hints; spec 32/32. Time O(n log n + n · 2ⁿ)
+  and space O(n) right and itemized. → 🟢 s1.
+- **2026-10-13 · 1489 Find Critical and Pseudo-Critical Edges in MST** (🟡 conversion; retry, fully spoiled: title
+  names MST, schedule row names Kruskal) — ⚠️ **partial, not measured.** Top comment names Kruskal; asked for the
+  picking feature over Prim's: "Prim's constructs from nothing, this problem already gives us all the edges" — not it
+  (both read the same edge list). The feature: each check excludes or forces one edge by index, a `continue` or a
+  pre-`union` on Kruskal's sorted edge list, awkward on Prim's vertex-grown heap. The Sep 23 attempt's comment had it
+  ("ban specific edges, thus it has to be UF and Kruskal"). Code from a blank page; two coach-localized bugs
+  (`-math.inf` disconnected sentinel, sorted-position vs original-index check). Coach proposed 🟡 → 🟢 s1 (learner
+  override: two small mistakes, not worth a rewrite).
 - **2026-10-12 · 1462 Course Schedule IV** (🟢 s1 review; retry, half-spoiled: graphs folder) — ✅ **hit, not
   measured.** Top comment, unaided: Floyd-Warshall, because n ≤ 100 makes the V³ precompute cheap and many queries
   then cost O(1) each. Blank page, no hints. Time missed the O(Q) query loop (carded). → 🟢 s2.

@@ -6,7 +6,7 @@
 
 > The tracker is keyed by **problem**; this is keyed by **technique**. Use it at the weekly build to decide what to pull, and at phase exit to check the per-algorithm bar (recognition + execution, ≥1 🟢 each).
 
-> **62/109** techniques started &nbsp;·&nbsp; **2** with no 🟢 &nbsp;·&nbsp; **9** thin &nbsp;·&nbsp; **0** unqueued variant gaps
+> **62/109** techniques started &nbsp;·&nbsp; **2** with no 🟢 &nbsp;·&nbsp; **8** thin &nbsp;·&nbsp; **0** unqueued variant gaps
 
 ## ⚠️ Action list
 
@@ -23,7 +23,6 @@
 - **Multi-source BFS** (graphs) — 1/2: 994
 - **Bellman-Ford** (advanced_graphs) — 2/3: 787, 9001
 - **Hierholzer (Eulerian path)** (advanced_graphs) — 2/3 (3 rows): 332, 2097
-- **Kruskal's MST** (advanced_graphs) — 2/3: 1489, 9004
 - **Trie** (tries) — 3/4: 208, 211, 648
 - **Dijkstra** (advanced_graphs) — 5/6: 743, 778, 1631, 2812, 3620
 
@@ -69,7 +68,7 @@ Every declared technique gets a row, started or not — a not-started row's Gaps
 | Dijkstra | advanced_graphs | core | 6 (5+1) | 5 (743, 778, 1631, 2812, 3620) | 🟢 | ✅ | Min-over-max (minimize the maximum edge) ×1 · Max-min bottleneck (maximize the minimum edge) ×1 · ~~0/1 edge weights (0-1 BFS vs Dijkstra)~~ *(queued: `surplus>=1`)* · ~~Multiplicative relaxation (maximize the product)~~ *(queued: `surplus>=1`)* | thin (5/6) · queued: 1102 `surplus>=1`, 1368 `surplus>=1`, 1514 `surplus>=1`, 3650 `surplus>=1` |
 | Floyd-Warshall (all-pairs shortest path) | advanced_graphs | core | 2 (2+0) | 2 (1334, 1462) | 🟢 | ✅ | — | queued: 399 `rated:1334` |
 | Hierholzer (Eulerian path) | advanced_graphs | core | 3 (3+0) | 2 *+1v* (332, 2097) | 🟢 | ✅ | pre-sorted adjacency ×1 · min-heap ordering ×1 | thin (2/3) · queued: 753 `surplus>=1` |
-| Kruskal's MST | advanced_graphs | core | 3 (2+1) | 2 (1489, 9004) | 🟢 | ✅ | — | thin (2/3) · queued: 1135 `surplus>=1` |
+| Kruskal's MST | advanced_graphs | core | 2 (2+0) | 2 (1489, 9004) | 🟢 | ✅ | — | queued: 1135 `surplus>=1` |
 | Prim's MST | advanced_graphs | core | 2 (2+0) | 2 (1584, 9003) | 🟢 | ✅ | — | queued: 9005 `solved:9003` |
 | Array/String Fundamentals | arrays_and_hash | core | 2 (2+0) | 3 (14, 66, 1929) | 🟢 | ✅ | — | — |
 | Boyer-Moore Voting | arrays_and_hash | core | 1 (1+0) | 2 (169, 229) | 🎓 | ✅ | — | — |
@@ -79,7 +78,7 @@ Every declared technique gets a row, started or not — a not-started row's Gaps
 | In-Place Array Rotation | arrays_and_hash | core | 1 (1+0) | 1 (189) | 🎓 | ✅ | — | — |
 | Length-Prefix Encoding | arrays_and_hash | core | 1 (1+0) | 1 (271) | 🟢 | ✅ | — | — |
 | Prefix/Suffix Products | arrays_and_hash | core | 1 (1+0) | 1 (238) | 🟢 | ✅ | — | — |
-| Backtracking | backtracking | core | 9 (5+4) | 9 (17, 22, 39, 40, 46, 78, 79, 90, 131) | 🟢 | ✅ | — | queued: 51 `phase:Backtracking`, 212 `phase:Backtracking` |
+| Backtracking | backtracking | core | 8 (5+3) | 9 (17, 22, 39, 40, 46, 78, 79, 90, 131) | 🟢 | ✅ | — | queued: 51 `phase:Backtracking`, 212 `phase:Backtracking` |
 | Binary Search (exact match) | binary_search | core | 1 (1+0) | 2 (33, 704) | 🎓 | ✅ | — | — |
 | Binary Search (max boundary) | binary_search | core | 3 (2+1) | 4 (34, 74, 1552, 3620) | 🟢 | ✅ | — | — |
 | Binary Search (min boundary) | binary_search | core | 4 (4+0) | 7 (34, 153, 162, 540, 875, 1011, 2300) | 🎓 | ✅ | — | queued: 4 `surplus>=1` |

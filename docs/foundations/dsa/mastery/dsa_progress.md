@@ -75,14 +75,17 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/dsa/mastery/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **137+6** problems &nbsp;·&nbsp; **147+6** solutions &nbsp;·&nbsp; **670+6** reps
+> **137+6** problems &nbsp;·&nbsp; **147+6** solutions &nbsp;·&nbsp; **673+6** reps
 
 | | 🏆 Retired | 🎓 Graduated | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|:---:|
-| **Solutions** | 0 | 29 | 106 | 12 | 0 |
+| **Solutions** | 0 | 29 | 108 | 10 | 0 |
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Rep Date | Rep Dates |
 |---|---|---|---|---|---|---|
+| Hard | [1489. Find Critical and Pseudo-Critical Edges in MST (Kruskal)](https://leetcode.com/problems/find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree/) | 🟢 | 1 | 2026-11-12 | 2026-10-13 | 2026-09-13, 2026-09-23, 2026-10-03, 2026-10-13 |
+| Medium | [90. Subsets II](https://leetcode.com/problems/subsets-ii/) | 🟢 | 1 | 2026-11-12 | 2026-10-13 | 2026-10-01, 2026-10-03, 2026-10-13 |
+| Medium | [56. Merge Intervals](https://leetcode.com/problems/merge-intervals/) | 🟢 | 2 | 2026-12-12 | 2026-10-13 | 2026-08-24, 2026-09-03, 2026-09-13, 2026-10-13 |
 | Medium | [9004. Minimum Spanning Tree (Kruskal)](https://progressiveoverflow.com/practice/9004) | 🟢 | 1 | 2026-11-11 | 2026-10-12 | 2026-10-02, 2026-10-12 |
 | Medium | [40. Combination Sum II](https://leetcode.com/problems/combination-sum-ii/) | 🟢 | 1 | 2026-11-11 | 2026-10-12 | 2026-09-28, 2026-09-30, 2026-10-02, 2026-10-12 |
 | Medium | [1462. Course Schedule IV (Floyd-Warshall / Transitive Closure)](https://leetcode.com/problems/course-schedule-iv/) | 🟢 | 2 | 2026-12-11 | 2026-10-12 | 2026-08-25, 2026-09-04, 2026-10-12 |
@@ -108,9 +111,7 @@ Notes for future agents:
 | Medium | [39. Combination Sum](https://leetcode.com/problems/combination-sum/) | 🟢 | 1 | 2026-11-04 | 2026-10-05 | 2026-09-23, 2026-09-25, 2026-10-05 |
 | Medium | [261. Graph Valid Tree (DFS)](https://neetcode.io/problems/valid-tree) | 🟡 | 0 | 2026-10-15 | 2026-10-05 | 2026-06-15, 2026-06-17, 2026-06-21, 2026-06-23, 2026-08-06, 2026-08-16, 2026-10-05 |
 | Medium | [131. Palindrome Partitioning](https://leetcode.com/problems/palindrome-partitioning/) | 🟡 | 0 | 2026-10-14 | 2026-10-04 | 2026-09-30, 2026-10-02, 2026-10-04 |
-| Medium | [90. Subsets II](https://leetcode.com/problems/subsets-ii/) | 🟡 | 0 | 2026-10-13 | 2026-10-03 | 2026-10-01, 2026-10-03 |
 | Medium | [9001. Single Source Shortest Path, Negative Weights (Bellman-Ford)](https://progressiveoverflow.com/practice/9001) | 🟡 | 0 | 2026-10-13 | 2026-10-03 | 2026-10-01, 2026-10-03 |
-| Hard | [1489. Find Critical and Pseudo-Critical Edges in MST (Kruskal)](https://leetcode.com/problems/find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree/) | 🟡 | 0 | 2026-10-13 | 2026-10-03 | 2026-09-13, 2026-09-23, 2026-10-03 |
 | Medium | [1552. Magnetic Force Between Two Balls](https://leetcode.com/problems/magnetic-force-between-two-balls/) | 🟢 | 1 | 2026-11-01 | 2026-10-02 | 2026-09-20, 2026-09-22, 2026-10-02 |
 | Medium | [901. Online Stock Span](https://leetcode.com/problems/online-stock-span/) | 🟢 | 1 | 2026-11-01 | 2026-10-02 | 2026-07-12, 2026-07-14, 2026-08-13, 2026-08-23, 2026-09-22, 2026-10-02 |
 | Hard | [127. Word Ladder (BFS)](https://leetcode.com/problems/word-ladder/) | 🟢 | 2 | 2026-12-01 | 2026-10-02 | 2026-07-18, 2026-07-21, 2026-08-03, 2026-08-13, 2026-08-23, 2026-09-02, 2026-10-02 |
@@ -164,7 +165,6 @@ Notes for future agents:
 | Easy | [226. Invert Binary Tree](https://leetcode.com/problems/invert-binary-tree/) | 🎓 | 3 | 2027-03-13 | 2026-09-14 | 2026-04-30, 2026-05-26, 2026-06-25, 2026-07-20, 2026-09-14 |
 | Medium | [162. Find Peak Element](https://leetcode.com/problems/find-peak-element/) | 🎓 | 3 | 2027-03-13 | 2026-09-14 | 2026-05-02, 2026-06-12, 2026-06-13, 2026-07-16, 2026-09-14 |
 | Medium | [207. Course Schedule I](https://leetcode.com/problems/course-schedule/) | 🎓 | 3 | 2027-03-13 | 2026-09-14 | 2026-06-08, 2026-06-12, 2026-06-13, 2026-07-16, 2026-09-14 |
-| Medium | [56. Merge Intervals](https://leetcode.com/problems/merge-intervals/) | 🟢 | 1 | 2026-10-13 | 2026-09-13 | 2026-08-24, 2026-09-03, 2026-09-13 |
 | Medium | [167. Two Sum II](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/) | 🎓 | 3 | 2027-03-11 | 2026-09-12 | 2026-01-19, 2026-07-14, 2026-09-12 |
 | Medium | [739. Daily Temperatures](https://leetcode.com/problems/daily-temperatures/) | 🟢 | 1 | 2026-10-06 | 2026-09-06 | 2026-08-14, 2026-08-27, 2026-09-06 |
 | Medium | [417. Pacific Atlantic Water Flow (BFS)](https://leetcode.com/problems/pacific-atlantic-water-flow/) | 🟢 | 2 | 2026-11-05 | 2026-09-06 | 2026-06-11, 2026-07-19, 2026-07-31, 2026-09-06 |

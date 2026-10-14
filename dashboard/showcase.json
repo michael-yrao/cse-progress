@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-12",
+  "generatedAt": "2026-10-14",
   "entries": [
     {
       "key": "733:bfs",
@@ -7152,8 +7152,8 @@
         {
           "kind": "attempt",
           "symbol": "merge_20260903",
-          "startLine": 44,
-          "endLine": 72,
+          "startLine": 69,
+          "endLine": 97,
           "lines": [
             "    # ── Attempt · 2026-09-03 ──────────────",
             "    def merge_20260903(self, intervals: List[List[int]]) -> List[List[int]]:",

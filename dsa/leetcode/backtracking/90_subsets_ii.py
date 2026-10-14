@@ -26,6 +26,38 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-10-13 ──────────────
+    def subsetsWithDup_20261013(self, nums: List[int]) -> List[List[int]]:
+        # subset, so ordering doesn't matter, so we will sort so we can do the no duplicate check easily
+        # path: current subset
+        # state: index
+        # decision: pick or not pick
+        # validity: 
+        #   if pick: n/a
+        #   if not pick: skip until number isn't same
+        # base case: index >= len(nums): add into result
+
+        result = []
+        nums.sort()
+        def backtrack(path, index):
+            if index >= len(nums):
+                result.append(path.copy())
+                return
+            
+            # decision 1
+            path.append(nums[index])
+            backtrack(path, index + 1)
+            path.pop()
+
+            # decision 2
+            while index + 1 < len(nums) and nums[index] == nums[index + 1]:
+                index+=1
+            
+            backtrack(path, index + 1)
+        
+        backtrack([], 0)
+        return result
+
     # ── Attempt · 2026-10-03 ──────────────
     def subsetsWithDup_20261003(self, nums: List[int]) -> List[List[int]]:
         # sort then backtrack

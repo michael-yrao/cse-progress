@@ -19,6 +19,31 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-10-13 ──────────────
+    def merge_20261013(self, intervals: List[List[int]]) -> List[List[int]]:
+        # merge intervals is sorting by start
+        # so example 1 and 2 are already in that form, so let's analyze them
+        # since we order by start, we know the start is always min
+        # so what we do is when we go to next interval, see if it overlaps
+        # if it does, it has start<=prior_end, then we set prior_end to max of the two ends
+
+        intervals.sort()
+
+        result = []
+
+        result.append(intervals[0])
+
+        for i in range(1,len(intervals)):
+            prior_interval_end = result[-1][1]
+            current_interval_start = intervals[i][0]
+            current_interval_end = intervals[i][1]
+            if current_interval_start <= prior_interval_end:
+                result[-1][1] = max(prior_interval_end, current_interval_end)
+            else:
+                result.append(intervals[i])
+        
+        return result
+
     # ── Attempt · 2026-09-13 ──────────────
     def merge_20260913(self, intervals: List[List[int]]) -> List[List[int]]:
         # we want to sort by beginning interval
