@@ -12,7 +12,7 @@ Enumerate every candidate by extending a partial choice one step, recursing, the
 
 The output is EVERY valid arrangement (all subsets / permutations / combinations), so exponential work is unavoidable — choose, recurse, un-choose.
 
-- **not memoization** — the question is a count / min / max over choices and the same sub-state recurs — cache states instead of enumerating every path
+- **not dynamic-programming** — the question is a count / min / max over choices and the same sub-state recurs — cache states instead of enumerating every path
 
 ## Quick Reference
 

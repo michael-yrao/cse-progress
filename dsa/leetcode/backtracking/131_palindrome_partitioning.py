@@ -24,6 +24,38 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-10-14 ──────────────
+    def partition_20261014(self, s: str) -> List[List[str]]:
+        # abba gives us [a,b,b,a] and [abba]
+        # this tells us we need start index and end index for substring
+        # path: current list of palindromes
+        # state: start index and end index
+        # decision: always pick if palindrome
+        # validity: if we can make a palindrome, pick it. otherwise, increment end
+        # base case: our start index tells us if we have used up the palindromes or not, so if start index >= len(s), we add to result. if end index > len(s), we just return. len(s) since substr at end is exclusive
+
+        result = []
+
+        def isPalindrome(string):
+            return string == string[::-1]
+
+        def backtrack(path, start, end):
+            if start >= len(s):
+                result.append(path.copy())
+                return
+            if end > len(s):
+                return
+            
+            substr = s[start:end]
+            if isPalindrome(substr):
+                path.append(substr)
+                backtrack(path,end,end+1)
+                path.pop()
+            backtrack(path,start,end+1)
+
+        backtrack([], 0, 1)
+        return result
+
     # ── Attempt · 2026-10-04 ──────────────
     def partition_20261004(self, s: str) -> List[List[str]]:
         # if we use abba as an example, we cant build on a path incrementally

@@ -6,17 +6,19 @@
 
 > The tracker is keyed by **problem**; this is keyed by **technique**. Use it at the weekly build to decide what to pull, and at phase exit to check the per-algorithm bar (recognition + execution, ≥1 🟢 each).
 
-> **62/109** techniques started &nbsp;·&nbsp; **2** with no 🟢 &nbsp;·&nbsp; **8** thin &nbsp;·&nbsp; **0** unqueued variant gaps
+> **63/109** techniques started &nbsp;·&nbsp; **3** with no 🟢 &nbsp;·&nbsp; **9** thin &nbsp;·&nbsp; **0** unqueued variant gaps
 
 ## ⚠️ Action list
 
 **No 🟢 — blocks per-algorithm phase exit.** Execution is unproven.
 
+- **1D Dynamic Programming** (dynamic_programming) — best 🟡 across 70
 - **Dense Dijkstra** (advanced_graphs) — best 🟡 across 743
 - **Graph Cycle Detection (DFS)** (graphs) — best 🟡 across 261
 
 **Thin — below its computed coverage bar** (`cse.config.yml`'s `coverage_threshold`). One instance trains recall of that problem, not the skill.
 
+- **1D Dynamic Programming** (dynamic_programming) — 1/6: 70
 - **BFS on Implicit Graph** (graphs) — 1/2: 127
 - **Dense Dijkstra** (advanced_graphs) — 1/3: 743
 - **Graph Cycle Detection (DFS)** (graphs) — 1/2: 261
@@ -28,6 +30,7 @@
 
 **Queued — declared, and already sitting in the Waiting Room / Expansion Queue.** A known gap with a fill already picked, not a new finding.
 
+- **1D Dynamic Programming** (dynamic_programming) — queued: 5 (`phase:1D-DP`), 91 (`phase:1D-DP`), 139 (`phase:1D-DP`), 152 (`phase:1D-DP`), 198 (`phase:1D-DP`), 213 (`phase:1D-DP`), 647 (`phase:1D-DP`), 746 (`phase:1D-DP`)
 - **BFS on Implicit Graph** (graphs) — queued: 815 (`solved:127`), 1197 (`solved:127`)
 - **BST Descent** (trees) — queued: 230 (`surplus>=1`)
 - **Backtracking** (backtracking) — queued: 51 (`phase:Backtracking`), 212 (`phase:Backtracking`)
@@ -78,14 +81,14 @@ Every declared technique gets a row, started or not — a not-started row's Gaps
 | In-Place Array Rotation | arrays_and_hash | core | 1 (1+0) | 1 (189) | 🎓 | ✅ | — | — |
 | Length-Prefix Encoding | arrays_and_hash | core | 1 (1+0) | 1 (271) | 🟢 | ✅ | — | — |
 | Prefix/Suffix Products | arrays_and_hash | core | 1 (1+0) | 1 (238) | 🟢 | ✅ | — | — |
-| Backtracking | backtracking | core | 8 (5+3) | 9 (17, 22, 39, 40, 46, 78, 79, 90, 131) | 🟢 | ✅ | — | queued: 51 `phase:Backtracking`, 212 `phase:Backtracking` |
+| Backtracking | backtracking | core | 7 (5+2) | 9 (17, 22, 39, 40, 46, 78, 79, 90, 131) | 🟢 | ✅ | — | queued: 51 `phase:Backtracking`, 212 `phase:Backtracking` |
 | Binary Search (exact match) | binary_search | core | 1 (1+0) | 2 (33, 704) | 🎓 | ✅ | — | — |
 | Binary Search (max boundary) | binary_search | core | 3 (2+1) | 4 (34, 74, 1552, 3620) | 🟢 | ✅ | — | — |
 | Binary Search (min boundary) | binary_search | core | 4 (4+0) | 7 (34, 153, 162, 540, 875, 1011, 2300) | 🎓 | ✅ | — | queued: 4 `surplus>=1` |
 | Binary Search on Answer | binary_search | core | 3 (2+1) | 4 (875, 1011, 1552, 3620) | 🟢 | ✅ | — | — |
 | Bit Manipulation | bit_manipulation | core | 3 (3+0) | 0 (—) | — | ❌ | — | *not started* |
 | Design (composed data structures) | design | core | 2 (2+0) | 0 (—) | — | ❌ | — | *not started* |
-| 1D Dynamic Programming | dynamic_programming | dp | 5 (5+0) | 0 (—) | — | ❌ | — | *not started* |
+| 1D Dynamic Programming | dynamic_programming | dp | 6 (5+1) | 1 (70) | 🟡 | ❌ | — | **no-green** · thin (1/6) · queued: 5 `phase:1D-DP`, 91 `phase:1D-DP`, 139 `phase:1D-DP`, 152 `phase:1D-DP`, 198 `phase:1D-DP`, 213 `phase:1D-DP`, 647 `phase:1D-DP`, 746 `phase:1D-DP` |
 | 2D Dynamic Programming | dynamic_programming | dp | 4 (4+0) | 0 (—) | — | ❌ | — | *not started* |
 | Interval DP | dynamic_programming | dp | 1 (1+0) | 0 (—) | — | ❌ | — | *not started* |
 | Knapsack | dynamic_programming | dp | 2 (2+0) | 0 (—) | — | ❌ | — | *not started* |
@@ -175,7 +178,7 @@ Every declared technique gets a row, started or not — a not-started row's Gaps
 
 ## Vocabulary maintenance
 
-**Queued (83)** — listed in the Action list above; a known gap with a fill already picked, not counted below.
+**Queued (82)** — listed in the Action list above; a known gap with a fill already picked, not counted below.
 
 **Declared, not queued (1)** — declared in the vocabulary, no tracker row, and not yet in any queue. This is the normal state for curriculum ahead of the learner; it is a roadmap, not a finding: 547
 

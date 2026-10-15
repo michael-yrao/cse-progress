@@ -1327,3 +1327,22 @@ the close-out showcase errors and the text-mode CRLF flip (`hook-trigger-precisi
 space claim and three report-from-proxy claims became one review-workflow.md §2 paragraph. Also landed: the
 743 array-scan tracker hold (`tracker-hold-oct11`).
 Cadence reset.
+## 2026-10-14 [P3] tool: a retry scaffold on a problem with a practice spec took the spec's method name but dropped its signature — 9001 got a bare `shortestPaths_20261014(self)`
+**What:** Kickoff scaffold of 9001. The spec (`dsa/tests/9001_…yml`) names `entry.method: shortestPaths` and a full `signature:`; the prior attempts in the file used `singleSourceShortestPathNegativeWeights(...)`. `new_problem.py` took the spec's method name, found no prior method by that name to read a signature from, and wrote `(self)`. Caught on the post-scaffold read; the stub was set by hand to the spec's signature before the hand-over.
+**Why:** The retry path reads the signature from the existing method of the same name, and only a NEW problem reads the spec's `signature:`. A spec whose method name differs from the file's prior method falls through both.
+**Fix/ladder:** Rung 1 candidate (source): on a retry where no prior method matches the stub name, fall back to the spec's `signature:` before `(self)`, and warn. fam: scaffold-signature-drop. `open`
+
+## 2026-10-14 [P3] coaching: kept up Socratic questions on 70 after the learner had said they lacked the basics — learner: "these questions wont get us anywhere when i dont have the basics down"
+**What:** In the primer the learner said "i dont know how to even solve this, i dont understand the tree". On 70's "a bit stuck" I still answered with a trace plus a question ("what should ways(3) return?"). The learner asked to switch to a teach.
+**Why:** I read "stuck" as a gap of one step, as the hint ladder assumes, and missed that the earlier message had already flagged a missing foundation for a technique on its first day of intake. On a new technique with a stated gap, a question has nothing to stand on.
+**Fix/ladder:** Rung 4 (lesson): a first-day intake rep where the learner has already said the basics are missing → teach procedure-first (spine + a by-hand table) on "stuck", not a guiding question. Rung 3 candidate if it recurs: one line in review-workflow.md §2. fam: hint-vs-teach-misread. `open`
+
+## 2026-10-14 [P3] hook: the starting-problem hook read "line 15" in a subagent hand-back as "Learner is starting problem 15"
+**What:** An engineer's report quoted `backtracking.md` "line 15". On that turn the UserPromptSubmit hook injected "Learner is starting problem 15 now … Scaffold 15". Ignored; nothing was scaffolded.
+**Why:** The hook matches a bare number in the prompt and does not tell a subagent hand-back (a harness-framed agent message) from the learner's words.
+**Fix/ladder:** Rung 1 candidate (source): skip prompts that carry the subagent hand-back frame, and require a problem cue ("doing", "start", a title) next to the number. fam: hook-trigger-precision. `open`
+
+## 2026-10-14 [P3] brief: the memoization → dynamic_programming fold took four engineer rounds; the brief left three grep hits and two decisions unclassified
+**What:** Round 1's brief listed the reference edits but skipped the `**not memoization**` bullets in backtracking.md:15 and recursion.md:15. Both were in my own grep output, and I read them as prose. Those bullets feed the /learn notWhen links, which broke two golden tests. The brief also left the stale seed fixture undecided ("report, don't rewrite"), and the plan never covered the old `/learn/memoization` slug. Rounds 2–4 closed each one.
+**Why:** I classified the grep by reading, not per hit. A removed page's name is an identifier wherever a resolver reads it, including a bolded bullet.
+**Fix/ladder:** Rung 4 (lesson): a brief that removes or renames a page or id classifies EVERY grep hit as edit or leave + why, and settles up front what happens to snapshot fixtures and old public URLs (redirect). fam: brief-fidelity. `open`

@@ -31,7 +31,7 @@ O(1)  <  O(log n)  <  O(n)  <  O(n log n)  <  O(n²)  <  O(2ⁿ)  <  O(n!)
 | [tree_bfs](../patterns/techniques/tree_bfs.md) | O(n) | O(w) | w = max level width |
 | [topological_sort](../patterns/techniques/topological_sort.md) | O(V + E) | O(V) | Kahn's or DFS |
 | [union_find](../patterns/techniques/union_find.md) | ~O(1) amortized (O(α(n))) | O(n) | With path compression + union by rank |
-| [memoization](../patterns/techniques/memoization.md) | O(#states × work/state) | O(#states) | Top-down DP; complexity = the state space |
+| [dynamic programming](../patterns/techniques/dynamic_programming.md) | O(#states × work/state) | O(#states) | DP; complexity = distinct states × work per state |
 | [backtracking](../patterns/techniques/backtracking.md) | O(bᵈ) — exponential | O(d) | b = branching factor, d = depth; pruning cuts the constant |
 | [recursion](../patterns/techniques/recursion.md) | varies | O(depth) | Space is the call-stack depth |
 | [dummy_node](../patterns/techniques/dummy_node.md) | O(1) overhead | O(1) | Not a complexity — an edge-case simplifier |

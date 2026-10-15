@@ -1,3 +1,15 @@
+- **2026-10-14 · 70 Climbing Stairs** (🆕 new; not measured: the folder names 1D DP and the same-day primer walked
+  the same structure) — ✅ **hit, not measured.** Top comment: "we will try memo"; state `i`, the 1-or-2 split and
+  the `i == n` base were written before any teach. Overshoot base and the memo store were taught. → 🟡.
+- **2026-10-14 · 9001 Single Source Shortest Path, Negative Weights** (🟡 re-rep; retry, fully spoiled: the board
+  names Bellman-Ford) — ✅ **hit, not measured.** Top comment, unaided: n ≤ 1000 → Floyd-Warshall too slow; negative
+  weights → not Dijkstra; → Bellman-Ford, n − 1 rounds then a detection pass. The picking feature over each neighbour
+  named. Code needed two assists (1D vs 2D, the relaxation test). → 🟡.
+- **2026-10-14 · 131 Palindrome Partitioning** (🟡 conversion; retry, half-spoiled: backtracking folder) — ✅ **hit, not
+  measured.** Top comment, unaided: `abba` splits as `[a,b,b,a]` and `[abba]` → a (start, end) state with an
+  exclusive end; path, decision, validity and both base cases filled before code. The Oct 4 open question on the
+  decision slot is gone. Blank page, no hints; correct on the `"aab"` trace. Time O(n · 2ⁿ) right; space missed
+  (O(n) → O(n²), see complexity_gotchas). → 🟢 s1.
 - **2026-10-13 · 56 Merge Intervals** (🟢 s1 review; retry, half-spoiled: intervals folder) — ✅ **hit, not
   measured.** Top comment, unaided: sort by start, overlap when `start <= prior_end`, extend with `max` of the ends.
   Blank page, no hints; spec 28/28. O(n log n) / O(n) right. → 🟢 s2.

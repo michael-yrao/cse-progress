@@ -1089,11 +1089,11 @@ techniques:
   # problem (680, Valid Palindrome II) is already credited to "Two Pointers (converging)"
   # above with no memoization-specific tag in dsa_progress.md — and, like every entry in
   # this not-started block, nothing is credited yet. Accurate, not a gap to fill.
+  # Oct 14, 2026 — memoization.md folded into dynamic_programming.md; the doc key now sits on 1D Dynamic Programming.
   - name: Memoization
     family: dynamic_programming
     builds_on: ["Recursion", "Backtracking"]
     tier: dp
-    doc: memoization
     problems: []
 
   - name: Knapsack
@@ -1146,9 +1146,10 @@ techniques:
     family: dynamic_programming
     builds_on: ["Memoization"]
     tier: dp
+    doc: dynamic_programming
     # Declared Sep 26, 2026 (decision `mastery-ratio-done-over-planned-sep26`) — roadmap.yml.
     problems:
-      - {number: 70, queued: "phase:1D-DP"}
+      - {number: 70}   # fixed jumps: ways(i) = ways(i+1) + ways(i+2), land on n → 1, past n → 0; top-down memo (Oct 14, 2026)
       - {number: 746, queued: "phase:1D-DP"}
       - {number: 198, queued: "phase:1D-DP"}
       - {number: 213, queued: "phase:1D-DP"}

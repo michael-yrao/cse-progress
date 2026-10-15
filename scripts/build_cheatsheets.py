@@ -32,7 +32,10 @@ Design constraints this file honours (see CLAUDE.md, docs/cse-coach/learn_cheats
   * THE SEED IS THE TARGET, NOT THE INPUT. scripts/fixtures/cheat-sheets.seed.json is a
     byte copy of the site's Phase-B seed (tech-lead-authored content the docs did not yet
     carry). This generator's job is to REPRODUCE it once the docs conform — see
-    scripts/test_build_cheatsheets.py's golden test — never to read from it.
+    scripts/test_build_cheatsheets.py's golden test — never to read from it. When a change
+    to the doc set (a page added, removed or renamed) legitimately changes the output,
+    refresh the seed as a byte copy of the site's src/assets/cheat-sheets.json after
+    syncing it (first done 2026-10-14, memoization -> dynamic_programming).
 
 Markdown stripping (see the plan's "The markdown contract" section): the markdown noise
 carried into emitted text is `**bold**`, single-`*` `*italic*` and `[text](url)` links —
@@ -123,19 +126,16 @@ DOC_URL_TMPL = ("https://github.com/michael-yrao/cse-progress/blob/main/"
 
 # The intuition_cheatsheet.md "Reach for" cell usually carries its qualifier as a
 # parenthetical after the base label ("two pointers (converge from ends)" -> note
-# "converge from ends" — see default_note()). Six of the current 23 rows don't fit that
-# shape: either the whole cell IS the qualifier with no base/paren split ("monotonic
-# deque", "sort by **start**, sweep", "DFS postorder", "DFS inorder"), or the base/paren
-# roles are inverted ("DP (memoization)" -> note "DP", not "memoization", since
-# "memoization" is just the technique's own name repeated). Fitted to the CURRENT 23-row
-# table (2026-09-22) — a new row follows default_note() unless it needs adding here too.
+# "converge from ends" — see default_note()). Five of the current 23 rows don't fit that
+# shape: the whole cell IS the qualifier with no base/paren split ("monotonic
+# deque", "sort by **start**, sweep", "DFS postorder", "DFS inorder"). Fitted to the
+# 23-row table (2026-09-22) — a new row follows default_note() unless it needs adding here too.
 REACH_NOTE_OVERRIDES = {
     "monotonic deque": "monotonic deque",
     "sort by start, sweep": "sort by start, sweep",
     "sort by end, greedy frontier": "sort by end, greedy frontier",
     "DFS postorder": "DFS postorder",
     "DFS inorder": "DFS inorder",
-    "DP (memoization)": "DP",
 }
 
 

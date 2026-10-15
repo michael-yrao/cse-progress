@@ -15,7 +15,7 @@ A binary tree is nodes with `left`/`right` children. Almost everything is a trav
 | **Tree DFS** (pre/in/post) | Property depends on children, parent-context, or BST order | [techniques/tree_dfs](../techniques/tree_dfs.md) |
 | **Tree BFS** (level order) | Level grouping, min depth, side views | [techniques/tree_bfs](../techniques/tree_bfs.md) |
 | **Recursion** | The default framing for DFS; trust-the-recursion | [techniques/recursion](../techniques/recursion.md) |
-| **Memoization** | Tree DP (results reused across subtrees/paths) | [techniques/memoization](../techniques/memoization.md) |
+| **Memoization** | Tree DP (results reused across subtrees/paths) | [techniques/dynamic_programming](../techniques/dynamic_programming.md) |
 
 ## Picking the DFS order
 

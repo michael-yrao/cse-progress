@@ -12,7 +12,7 @@ The structure is self-similar (a list is a node plus a smaller list; a tree is a
 Where the work sits relative to the recursive call is the whole decision: BEFORE it (head / pre-order) when the current node decides what comes next; AFTER it (tail / post-order) when you need the answer from the end first.
 
 - **not tree-dfs** — the structure is a TREE — same idea, but the pre / in / post vocabulary is the one to reason with
-- **not memoization** — the recursion revisits the same state — add a cache or the call tree explodes
+- **not dynamic-programming** — the recursion revisits the same state — add a cache or the call tree explodes
 
 ## Quick Reference
 

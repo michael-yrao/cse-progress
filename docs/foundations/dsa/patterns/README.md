@@ -38,7 +38,7 @@ contract and why it's headings, not a sidecar file.
 | Hub | Techniques it points to |
 |-----|-------------------------|
 | [linked_list](data-structures/linked_list.md) | dummy_node · fast_slow_pointer · in_place_reversal · recursion |
-| [tree](data-structures/tree.md) | tree_dfs · tree_bfs · recursion · memoization |
+| [tree](data-structures/tree.md) | tree_dfs · tree_bfs · recursion · dynamic_programming |
 | [graph](data-structures/graph.md) | union_find · topological_sort · BFS/DFS traversal |
 | [array_string](data-structures/array_string.md) | two_pointer · sliding_window · prefix_sum · binary_search · monotonic_stack |
 | [stack_queue](data-structures/stack_queue.md) | monotonic_stack · monotonic_deque · plain stack · BFS queue |
@@ -52,7 +52,7 @@ contract and why it's headings, not a sidecar file.
 | [dummy_node](techniques/dummy_node.md) | Linked-list head may change; building/merging a list |
 | [fast_slow_pointer](techniques/fast_slow_pointer.md) | Cycle detection, middle of list, find-the-duplicate |
 | [in_place_reversal](techniques/in_place_reversal.md) | Reverse a list/sublist by rewiring `next` |
-| [memoization](techniques/memoization.md) | Overlapping subproblems → cache (top-down DP) |
+| [dynamic_programming](techniques/dynamic_programming.md) | Overlapping subproblems → solve each state once (memo or table) |
 | [monotonic_stack](techniques/monotonic_stack.md) | Nearest greater/smaller (+ deque for moving-window max/min) |
 | [prefix_sum](techniques/prefix_sum.md) | Range sums; "subarrays summing to k" (+ hashmap) |
 | [recursion](techniques/recursion.md) | Self-similar subproblems; trust-the-recursion |

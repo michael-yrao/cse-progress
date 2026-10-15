@@ -23,7 +23,7 @@ Fast triage: scan the **signal** column for a clue that matches your problem, th
 | Tree property that **depends on children** (height, balanced, diameter) | DFS postorder | [tree_dfs](techniques/tree_dfs.md) |
 | **BST** "sorted output" or "validate" | DFS inorder | [tree_dfs](techniques/tree_dfs.md) |
 | "**All** subsets / permutations / combinations", "find every way" | backtracking | [backtracking](techniques/backtracking.md) |
-| Overlapping subproblems / "min/max/count ways" with optimal substructure | DP (memoization) | [memoization](techniques/memoization.md) |
+| Overlapping subproblems / "min/max/count ways" with optimal substructure | DP | [dynamic_programming](techniques/dynamic_programming.md) |
 | "**Kth largest / smallest**", "top k", "k closest" | heap | [big_o](../fundamentals/big_o.md) |
 | "**Majority** element" (> n/2 or > n/3) | Boyer-Moore voting | *below* |
 | Array of `1..n`, find the **missing / duplicate** | cyclic sort | *below* |
@@ -75,7 +75,7 @@ then the cue, then the technique.** Walk down; every leaf is a technique.
     - "Running median" → **two heaps**
   - No structure stands out — what is the **ask**?
     - "All" subsets / permutations / combinations, "find every way" → [backtracking](techniques/backtracking.md)
-    - Min / max / count ways, with overlapping subproblems → [DP](techniques/memoization.md) (memoization)
+    - Min / max / count ways, with overlapping subproblems → [DP](techniques/dynamic_programming.md)
 
 ## Single-trick techniques (recall by name)
 

@@ -296,12 +296,6 @@ class SignalTableResolutionTests(unittest.TestCase):
                          "min/max boundary")
         self.assertEqual(bc.default_note("sliding window"), "")
 
-    def test_override_wins_over_default_paren_rule(self):
-        # "DP (memoization)" would default to note="memoization" (the paren content);
-        # the override table says the base "DP" is the note instead (see the constant's
-        # own comment in build_cheatsheets.py).
-        self.assertEqual(bc.REACH_NOTE_OVERRIDES["DP (memoization)"], "DP")
-
 
 # ── decision tree fixtures ────────────────────────────────────────────────────────────
 

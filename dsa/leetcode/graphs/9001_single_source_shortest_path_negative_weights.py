@@ -40,6 +40,51 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-10-14 ──────────────
+    def shortestPaths_20261014(self, n: int, edges: List[List[int]], s: int, queries: List[int]) -> List[float]:
+        # shortest distance, n is 1000, so floyd warshall is not ideal
+        # dijkstra is out since we have negative weight
+        # bellman ford is the way to go here
+        # distance array where s is 0 to start, otherwise it is math.inf
+        # standard bellman ford says in n - 1 cycles, we should get absolute min values for each node if there is no cycle
+        distance = [math.inf] * n
+        distance[s] = 0
+
+        for _ in range(n):
+            working_distance = distance.copy()
+            for src,dst,weight in edges:
+                # if we can't even get to src, don't need to continue
+                if distance[src] == math.inf:
+                    continue
+                # if current weight to get dst is bigger than this iteration, replace it
+                if distance[src] + weight < working_distance[dst]:
+                    working_distance[dst] = distance[src] + weight
+            distance = working_distance
+
+        # now that we have supposedly gotten all nodes to minimum
+        # check if there are cycles
+        # we can do this just by doing another round of bellman ford
+        # if any value changes, it is just infinitely small
+
+        for _ in range(n):
+            working_distance = distance.copy()
+            for src,dst,weight in edges:
+                # if we can't even get to src, don't need to continue
+                if distance[src] == math.inf:
+                    continue
+                # if current weight to get dst is bigger than this iteration, replace it
+                if distance[src] + weight < working_distance[dst]:
+                    working_distance[src] = -math.inf
+                    working_distance[dst] = -math.inf
+            distance = working_distance
+
+        result = []
+
+        for query in queries:
+            result.append(distance[query])
+
+        return result
+
     # ── Attempt · 2026-10-03 ──────────────
     def singleSourceShortestPathNegativeWeights_20261003(self, n: int, edges: List[List[int]], s: int, queries: List[int]) -> List[int]:
         # shortest path with negative weights with 1000 nodes and edges of 5000 means this should be bellman ford

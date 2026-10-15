@@ -75,14 +75,17 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/dsa/mastery/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **137+6** problems &nbsp;·&nbsp; **147+6** solutions &nbsp;·&nbsp; **673+6** reps
+> **138+6** problems &nbsp;·&nbsp; **148+6** solutions &nbsp;·&nbsp; **676+6** reps
 
 | | 🏆 Retired | 🎓 Graduated | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|:---:|
-| **Solutions** | 0 | 29 | 108 | 10 | 0 |
+| **Solutions** | 0 | 29 | 109 | 10 | 0 |
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Rep Date | Rep Dates |
 |---|---|---|---|---|---|---|
+| Medium | [131. Palindrome Partitioning](https://leetcode.com/problems/palindrome-partitioning/) | 🟢 | 1 | 2026-11-13 | 2026-10-14 | 2026-09-30, 2026-10-02, 2026-10-04, 2026-10-14 |
+| Medium | [9001. Single Source Shortest Path, Negative Weights (Bellman-Ford)](https://progressiveoverflow.com/practice/9001) | 🟡 | 0 | 2026-10-24 | 2026-10-14 | 2026-10-01, 2026-10-03, 2026-10-14 |
+| Easy | [70. Climbing Stairs](https://leetcode.com/problems/climbing-stairs/) | 🟡 | 0 | 2026-10-24 | 2026-10-14 | 2026-10-14 |
 | Hard | [1489. Find Critical and Pseudo-Critical Edges in MST (Kruskal)](https://leetcode.com/problems/find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree/) | 🟢 | 1 | 2026-11-12 | 2026-10-13 | 2026-09-13, 2026-09-23, 2026-10-03, 2026-10-13 |
 | Medium | [90. Subsets II](https://leetcode.com/problems/subsets-ii/) | 🟢 | 1 | 2026-11-12 | 2026-10-13 | 2026-10-01, 2026-10-03, 2026-10-13 |
 | Medium | [56. Merge Intervals](https://leetcode.com/problems/merge-intervals/) | 🟢 | 2 | 2026-12-12 | 2026-10-13 | 2026-08-24, 2026-09-03, 2026-09-13, 2026-10-13 |
@@ -110,8 +113,6 @@ Notes for future agents:
 | Medium | [2812. Find the Safest Path in a Grid (Dijkstra)](https://leetcode.com/problems/find-the-safest-path-in-a-grid/) | 🟢 | 1 | 2026-11-04 | 2026-10-05 | 2026-09-27, 2026-10-05 |
 | Medium | [39. Combination Sum](https://leetcode.com/problems/combination-sum/) | 🟢 | 1 | 2026-11-04 | 2026-10-05 | 2026-09-23, 2026-09-25, 2026-10-05 |
 | Medium | [261. Graph Valid Tree (DFS)](https://neetcode.io/problems/valid-tree) | 🟡 | 0 | 2026-10-15 | 2026-10-05 | 2026-06-15, 2026-06-17, 2026-06-21, 2026-06-23, 2026-08-06, 2026-08-16, 2026-10-05 |
-| Medium | [131. Palindrome Partitioning](https://leetcode.com/problems/palindrome-partitioning/) | 🟡 | 0 | 2026-10-14 | 2026-10-04 | 2026-09-30, 2026-10-02, 2026-10-04 |
-| Medium | [9001. Single Source Shortest Path, Negative Weights (Bellman-Ford)](https://progressiveoverflow.com/practice/9001) | 🟡 | 0 | 2026-10-13 | 2026-10-03 | 2026-10-01, 2026-10-03 |
 | Medium | [1552. Magnetic Force Between Two Balls](https://leetcode.com/problems/magnetic-force-between-two-balls/) | 🟢 | 1 | 2026-11-01 | 2026-10-02 | 2026-09-20, 2026-09-22, 2026-10-02 |
 | Medium | [901. Online Stock Span](https://leetcode.com/problems/online-stock-span/) | 🟢 | 1 | 2026-11-01 | 2026-10-02 | 2026-07-12, 2026-07-14, 2026-08-13, 2026-08-23, 2026-09-22, 2026-10-02 |
 | Hard | [127. Word Ladder (BFS)](https://leetcode.com/problems/word-ladder/) | 🟢 | 2 | 2026-12-01 | 2026-10-02 | 2026-07-18, 2026-07-21, 2026-08-03, 2026-08-13, 2026-08-23, 2026-09-02, 2026-10-02 |
