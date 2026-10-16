@@ -17,6 +17,28 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-10-15 ──────────────
+    def permute_20261015(self, nums: List[int]) -> List[List[int]]:
+        # all possible permutations, so looking at first example, every element can be the first
+        # so what that means is we can't just do pick or not pick
+        # what we are doing is pick the element to put next instead
+
+        result = []
+
+        def backtrack(path):
+            if len(path) == len(nums):
+                result.append(path.copy())
+                return
+            
+            for i in range(len(nums)):
+                if nums[i] not in path:
+                    path.append(nums[i])
+                    backtrack(path)
+                    path.pop()
+        
+        backtrack([])
+        return result
+
     # ── Attempt · 2026-10-05 ──────────────
     def permute_20261005(self, nums: List[int]) -> List[List[int]]:
         # all possible permutations mean each permutation is of len(nums)

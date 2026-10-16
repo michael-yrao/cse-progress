@@ -1,3 +1,6 @@
+- **2026-10-15 · 46 Permutations** (🟡 conversion; retry, half-spoiled: backtracking folder) — ✅ **hit, not
+  measured.** Top comment, unaided: every element can be first, so not pick/skip; pick the element to put next. The
+  Oct 5 partial (subsets-style choose-or-not slot) is gone. The used-element state was the stuck point. → 🟡.
 - **2026-10-14 · 70 Climbing Stairs** (🆕 new; not measured: the folder names 1D DP and the same-day primer walked
   the same structure) — ✅ **hit, not measured.** Top comment: "we will try memo"; state `i`, the 1-or-2 split and
   the `i == n` base were written before any teach. Overshoot base and the memo store were taught. → 🟡.

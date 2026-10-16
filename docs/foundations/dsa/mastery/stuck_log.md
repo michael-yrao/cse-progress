@@ -3051,3 +3051,7 @@ Sticking point: **the relaxation test.** Recognition (n ≤ 1000 rules out Floyd
 ### 2026-10-14 · 70 Climbing Stairs · 🆕 → 🟡 (1D DP intake 1/2, first attempt, same day as the primer)
 
 Sticking point: **the two edges of the recursion.** State `i`, the 1-or-2 split (`ways(i + 1) + ways(i + 2)`), the `i == n` base and the memo lookup were the learner's. The overshoot case (`i > n` → 0; without it the recursion never stops) and the memo store (`memo[i] = …` before returning) were taught, at the learner's request, procedure-first with an n = 3 table. Spec 30/30 after. Complexity: time missed, O(2ⁿ) for the memoized version (carded; new category: distinct states × work per state). Watch item: **name both endings before coding: landed exactly → 1, overshot → 0.**
+
+### 2026-10-15 · 46 Permutations · 🟡 → 🟡
+
+Sticking point: **the state that stops reuse.** The pick-next framing over pick/skip was unaided (top comment). The learner asked for help on the state: the loop ran `range(len(path))` (empty on the first call) and nothing excluded used elements. After a pointer to the loop range and a `[1,1,1]` trace question, the learner added `nums[i] not in path`; correct after. Complexity: time O(n · n!) and space O(n²), both missed (carded). Watch item: **one call fills one slot; the loop is that slot's menu, and the state says which items are still on it.**

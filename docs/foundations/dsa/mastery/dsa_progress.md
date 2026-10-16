@@ -75,7 +75,7 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/dsa/mastery/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **138+6** problems &nbsp;·&nbsp; **148+6** solutions &nbsp;·&nbsp; **676+6** reps
+> **138+6** problems &nbsp;·&nbsp; **148+6** solutions &nbsp;·&nbsp; **677+6** reps
 
 | | 🏆 Retired | 🎓 Graduated | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|:---:|
@@ -83,6 +83,7 @@ Notes for future agents:
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Rep Date | Rep Dates |
 |---|---|---|---|---|---|---|
+| Medium | [46. Permutations](https://leetcode.com/problems/permutations/) | 🟡 | 0 | 2026-10-25 | 2026-10-15 | 2026-09-25, 2026-10-05, 2026-10-15 |
 | Medium | [131. Palindrome Partitioning](https://leetcode.com/problems/palindrome-partitioning/) | 🟢 | 1 | 2026-11-13 | 2026-10-14 | 2026-09-30, 2026-10-02, 2026-10-04, 2026-10-14 |
 | Medium | [9001. Single Source Shortest Path, Negative Weights (Bellman-Ford)](https://progressiveoverflow.com/practice/9001) | 🟡 | 0 | 2026-10-24 | 2026-10-14 | 2026-10-01, 2026-10-03, 2026-10-14 |
 | Easy | [70. Climbing Stairs](https://leetcode.com/problems/climbing-stairs/) | 🟡 | 0 | 2026-10-24 | 2026-10-14 | 2026-10-14 |
@@ -108,7 +109,6 @@ Notes for future agents:
 | Hard | [3620. Network Recovery Pathways (Dijkstra)](https://leetcode.com/problems/network-recovery-pathways/) | 🟡 | 0 | 2026-10-16 | 2026-10-06 | 2026-10-04, 2026-10-06 |
 | Medium | [648. Replace Words](https://leetcode.com/problems/replace-words/) | 🟡 | 0 | 2026-10-16 | 2026-10-06 | 2026-09-14, 2026-09-24, 2026-09-26, 2026-10-06 |
 | Easy | [219. Contains Duplicate II](https://leetcode.com/problems/contains-duplicate-ii/) | 🎓 | 3 | 2027-04-04 | 2026-10-06 | 2026-03-22, 2026-04-14, 2026-06-25, 2026-07-04, 2026-08-03, 2026-10-06 |
-| Medium | [46. Permutations](https://leetcode.com/problems/permutations/) | 🟡 | 0 | 2026-10-15 | 2026-10-05 | 2026-09-25, 2026-10-05 |
 | Medium | [55. Jump Game](https://leetcode.com/problems/jump-game/) | 🟢 | 1 | 2026-11-04 | 2026-10-05 | 2026-09-05, 2026-09-15, 2026-09-25, 2026-10-05 |
 | Medium | [2812. Find the Safest Path in a Grid (Dijkstra)](https://leetcode.com/problems/find-the-safest-path-in-a-grid/) | 🟢 | 1 | 2026-11-04 | 2026-10-05 | 2026-09-27, 2026-10-05 |
 | Medium | [39. Combination Sum](https://leetcode.com/problems/combination-sum/) | 🟢 | 1 | 2026-11-04 | 2026-10-05 | 2026-09-23, 2026-09-25, 2026-10-05 |
