@@ -75,14 +75,15 @@ Notes for future agents:
 
 > **Auto-refresh note:** this table is regenerated automatically when `docs/foundations/dsa/mastery/dsa_progress.md` is staged for commit or when the helper script is run.
 
-> **138+6** problems &nbsp;·&nbsp; **148+6** solutions &nbsp;·&nbsp; **677+6** reps
+> **138+6** problems &nbsp;·&nbsp; **148+6** solutions &nbsp;·&nbsp; **678+6** reps
 
 | | 🏆 Retired | 🎓 Graduated | 🟢 Clean | 🟡 Shaky | 🔴 Blank |
 |:---|:---:|:---:|:---:|:---:|:---:|
-| **Solutions** | 0 | 29 | 109 | 10 | 0 |
+| **Solutions** | 0 | 29 | 109 | 9 | 1 |
 
 | Difficulty | Problem | Comfort | Streak | Next Review Date | Latest Rep Date | Rep Dates |
 |---|---|---|---|---|---|---|
+| Hard | [3620. Network Recovery Pathways (Dijkstra)](https://leetcode.com/problems/network-recovery-pathways/) | 🔴 | 0 | 2026-10-18 | 2026-10-16 | 2026-10-04, 2026-10-06, 2026-10-16 |
 | Medium | [46. Permutations](https://leetcode.com/problems/permutations/) | 🟡 | 0 | 2026-10-25 | 2026-10-15 | 2026-09-25, 2026-10-05, 2026-10-15 |
 | Medium | [131. Palindrome Partitioning](https://leetcode.com/problems/palindrome-partitioning/) | 🟢 | 1 | 2026-11-13 | 2026-10-14 | 2026-09-30, 2026-10-02, 2026-10-04, 2026-10-14 |
 | Medium | [9001. Single Source Shortest Path, Negative Weights (Bellman-Ford)](https://progressiveoverflow.com/practice/9001) | 🟡 | 0 | 2026-10-24 | 2026-10-14 | 2026-10-01, 2026-10-03, 2026-10-14 |
@@ -106,8 +107,7 @@ Notes for future agents:
 | Medium | [452. Minimum Number of Arrows to Burst Balloons](https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/) | 🟢 | 0 | 2026-10-18 | 2026-10-08 | 2026-10-06, 2026-10-08 |
 | Medium | [853. Car Fleet](https://leetcode.com/problems/car-fleet/) | 🟡 | 0 | 2026-10-18 | 2026-10-08 | 2026-08-15, 2026-08-17, 2026-08-29, 2026-09-28, 2026-10-08 |
 | Medium | [57. Insert Interval](https://leetcode.com/problems/insert-interval/) | 🟢 | 2 | 2026-12-06 | 2026-10-07 | 2026-08-26, 2026-08-28, 2026-09-07, 2026-10-07 |
-| Hard | [3620. Network Recovery Pathways (Dijkstra)](https://leetcode.com/problems/network-recovery-pathways/) | 🟡 | 0 | 2026-10-16 | 2026-10-06 | 2026-10-04, 2026-10-06 |
-| Medium | [648. Replace Words](https://leetcode.com/problems/replace-words/) | 🟡 | 0 | 2026-10-16 | 2026-10-06 | 2026-09-14, 2026-09-24, 2026-09-26, 2026-10-06 |
+| Medium | [648. Replace Words](https://leetcode.com/problems/replace-words/) | 🟡 | 0 | 2026-10-17 | 2026-10-06 | 2026-09-14, 2026-09-24, 2026-09-26, 2026-10-06 |
 | Easy | [219. Contains Duplicate II](https://leetcode.com/problems/contains-duplicate-ii/) | 🎓 | 3 | 2027-04-04 | 2026-10-06 | 2026-03-22, 2026-04-14, 2026-06-25, 2026-07-04, 2026-08-03, 2026-10-06 |
 | Medium | [55. Jump Game](https://leetcode.com/problems/jump-game/) | 🟢 | 1 | 2026-11-04 | 2026-10-05 | 2026-09-05, 2026-09-15, 2026-09-25, 2026-10-05 |
 | Medium | [2812. Find the Safest Path in a Grid (Dijkstra)](https://leetcode.com/problems/find-the-safest-path-in-a-grid/) | 🟢 | 1 | 2026-11-04 | 2026-10-05 | 2026-09-27, 2026-10-05 |
@@ -171,7 +171,7 @@ Notes for future agents:
 | Medium | [417. Pacific Atlantic Water Flow (BFS)](https://leetcode.com/problems/pacific-atlantic-water-flow/) | 🟢 | 2 | 2026-11-05 | 2026-09-06 | 2026-06-11, 2026-07-19, 2026-07-31, 2026-09-06 |
 | Easy | [1. Two Sum](https://leetcode.com/problems/two-sum/) | 🎓 | 3 | 2027-03-05 | 2026-09-06 | 2026-01-02, 2026-03-25, 2026-07-14, 2026-09-06 |
 | Medium | [36. Valid Sudoku](https://leetcode.com/problems/valid-sudoku/) | 🟢 | 1 | 2026-10-05 | 2026-09-05 | 2026-01-25, 2026-05-22, 2026-06-30, 2026-07-09, 2026-08-21, 2026-09-05 |
-| Hard | [124. Binary Tree Maximum Path Sum](https://leetcode.com/problems/binary-tree-maximum-path-sum/) | 🟢 | 1 | 2026-10-03 | 2026-09-03 | 2026-07-11, 2026-07-13, 2026-07-23, 2026-08-21, 2026-09-03 |
+| Hard | [124. Binary Tree Maximum Path Sum](https://leetcode.com/problems/binary-tree-maximum-path-sum/) | 🟢 | 1 | 2026-10-19 | 2026-09-03 | 2026-07-11, 2026-07-13, 2026-07-23, 2026-08-21, 2026-09-03 |
 | Medium | [143. Reorder List](https://leetcode.com/problems/reorder-list/) | 🟢 | 2 | 2026-11-02 | 2026-09-03 | 2026-04-26, 2026-07-06, 2026-07-15, 2026-07-25, 2026-08-04, 2026-09-03 |
 | Medium | [229. Majority Element II](https://leetcode.com/problems/majority-element-ii/) | 🟢 | 2 | 2026-11-01 | 2026-09-02 | 2026-01-30, 2026-04-14, 2026-06-27, 2026-06-29, 2026-07-12, 2026-07-24, 2026-08-03, 2026-09-02 |
 | Medium | [355. Design Twitter](https://leetcode.com/problems/design-twitter/) | 🟢 | 2 | 2026-10-30 | 2026-08-31 | 2026-06-24, 2026-06-26, 2026-07-06, 2026-07-15, 2026-07-25, 2026-08-31 |

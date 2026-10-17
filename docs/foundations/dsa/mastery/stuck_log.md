@@ -22,6 +22,27 @@ Log every non-Clean result. Add new entries at the top. Format is proportional t
 
 ---
 
+## 🔴 3620. Network Recovery Pathways — 2026-10-16 *(🟡 re-rep of Oct 6 — Dijkstra as the check inside a max-boundary binary search on the answer)*
+**Topic**: The outer frame held; the inner algorithm (Dijkstra) did not.
+
+### Where did I get stuck?
+- **Recognition — unaided, a hit.** Top comment: the score is a path's smallest edge, we want the max of those → "max boundary binary search on the answer"; the check is Dijkstra with edges below `m` skipped. The −1 guard (`can_finish_route(-inf)`) was also remembered unaided.
+- **Dijkstra procedure — supplied.** "i can't remember how to write dijkstra." The first draft pushed edges into `adj_map[src]` with `heappush`, putting the heap on the adjacency list instead of the frontier. The coach gave the loop: heap of `(total so far, node)`, a `distance` map, pop the cheapest, skip stale entries, relax each neighbor, plus a hand trace on Example 1 at `m = 3`. The learner then wrote the loop with a `visited` set and a `> k` prune.
+- **Relaxation — the Oct 6 bug again, coach-flagged.** `distance[neighbor] = new_cost` was written on every push, so a later, worse total could overwrite a better one (pushed at 7, then at 9 → 9). The answer came out right only because the `> k` prune meant any recorded value was ≤ k, so the return check was really "was the target ever pushed?". Fixed by adding `new_cost < distance[neighbor]` to the push condition.
+- Complexity: space O(V + E), right. Time given as O(E log E · log k): the O(V) `distance = [inf] * n` rebuild on every check was dropped (queued in `complexity_gotchas.md`).
+
+### Core Realization
+Dijkstra has two pieces of state, and each has one job. **The heap is the frontier**: `(total cost so far, node)`, popped cheapest first. **`distance` is the best total found so far** for each node, and a push happens only when it improves that value. Pop → skip if stale or already settled → for each neighbor, `new = d + w`; if `new < distance[nbr]`, record it and push. The adjacency list is a plain list, never a heap.
+
+### Code Snippet
+```python
+if neighbor not in visited and new_cost < distance[neighbor]:
+    heapq.heappush(min_heap, (new_cost, neighbor))
+    distance[neighbor] = new_cost
+```
+
+---
+
 ## 🟡 79. Word Search — 2026-10-09
 **Sticking point**: put the every-cell start loop inside `backtrack` (twice: from (0,0), then from `(row, col)` onward), so a call matched any later cell instead of its own; then no per-path visited set, so `"ABCB"` reused (0,1); coach placed the loop and, on request, explained removing the mark on return.
 

@@ -53,6 +53,68 @@ from typing import List, Optional
 
 class Solution:
 
+    # ── Attempt · 2026-10-16 ──────────────
+    def findMaxPathScore_20261016(self, edges: List[List[int]], online: List[bool], k: int) -> int:
+        # so given a path, a score is its smallest edge
+        # so we have multiple pathes from 0 to n - 1 and we want to find maximum of scores
+        # so what we really want to do is see if we can finish if we had x as our score
+        # if we can, we try to use something with a bit higher
+        # this is max boundary binary search on the answer
+        # min cost is 0, and max cost cannot be past k
+        n = len(online)
+        l, r = 0, k
+
+        # can finish route is dijkstra where if the edge value is less than m, we don't use it
+        # we need to consider online to build our adjacency map, then we will do a lazy dijkstra
+        adj_map = collections.defaultdict(list)
+
+        for src,dst,cost in edges:
+            # if both are online, add to adj map
+            if online[src] and online[dst]:
+                adj_map[src].append((dst,cost))
+        
+        def can_finish_route(min_edge_cost):
+            # keeps track if we've already used this node
+            visited = set()
+            # will do min heap dijkstra
+            min_heap = []
+            # starting node takes 0 to get there
+            heapq.heappush(min_heap, (0,0))
+            # initialize the rest as math.inf
+            distance = [math.inf] * n
+            distance[0] = 0
+
+            while min_heap:
+                cost, current_node = heapq.heappop(min_heap)
+                if current_node in visited:
+                    continue
+                visited.add(current_node)
+                for neighbor, neighbor_cost in adj_map[current_node]:
+                    if neighbor_cost < min_edge_cost:
+                        continue
+                    new_cost = cost + neighbor_cost
+                    if new_cost > k:
+                        continue
+                    if neighbor not in visited and new_cost < distance[neighbor]:
+                        heapq.heappush(min_heap, (new_cost, neighbor))
+                        distance[neighbor] = new_cost
+            
+            return distance[n-1]<=k
+
+        # if we cannot finish no matter what, return -1
+        if not can_finish_route(-math.inf):
+            return -1
+
+        while l < r:
+            m = (l + r + 1) // 2
+            # if we can do this with a min edge value of m, we keep it as a result
+            if can_finish_route(m):
+                l = m
+            else:
+                r = m - 1
+        
+        return l
+
     # ── Attempt · 2026-10-06 ──────────────
     def findMaxPathScore_20261006(self, edges: List[List[int]], online: List[bool], k: int) -> int:
         # we need maximum possible edge on the path from 0 -> n - 1 under k

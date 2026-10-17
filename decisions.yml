@@ -2226,3 +2226,22 @@ decisions:
       duplicate-name warning stays as the net when it cannot rename (no stamp, unparseable
       body). Learner, Oct 12: renaming pasted helpers by hand was manual effort for nothing.
     affects: [restore-history, new-problem, retry-and-restore]
+
+  - id: sun-oct18-over-ceiling-for-3620
+    date: 2026-10-16
+    summary: >-
+      One-day exception to the Oct 5 – Nov 29 at-or-under-the-ceiling rule: 3620 went 🔴 on Fri
+      Oct 16 and is seated on its ladder date, Sun Oct 18, which builds that day 0.6 units over
+      `effort_budget.ceiling`. The three proven 🟢 s2 reviews on the day (994 · 323 BFS · 1929)
+      were carried to make room. The alternative offered, a one-day hold to Mon Oct 19, was
+      declined. Learner, Oct 16.
+    affects: [scheduling, effort-budget]
+
+  - id: reseat-648-124-oct16
+    date: 2026-10-16
+    summary: >-
+      Fri Oct 16 closed after 3620; 648 and 124 were not attempted. Both are unproven, so neither
+      is carried: 648 (🟡) moves to Sat Oct 17, which stays under `effort_budget.ceiling`; 124
+      (🟢 s1) leads the Oct 19 build. Held in holds.yml so the tracker dates match the seats.
+      Learner, Oct 16.
+    affects: [scheduling, holds]

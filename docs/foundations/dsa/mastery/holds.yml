@@ -8,3 +8,13 @@
   until: 2026-12-07
   since: 2026-10-05
   why: tracker-hold-oct11
+
+# Fri Oct 16 ended early; 648 moves to Sat, 124 to the Oct 19 build (reseat-648-124-oct16).
+- row: "648. Replace Words"
+  until: 2026-10-17
+  since: 2026-10-16
+  why: reseat-648-124-oct16
+- row: "124. Binary Tree Maximum Path Sum"
+  until: 2026-10-19
+  since: 2026-10-16
+  why: reseat-648-124-oct16
